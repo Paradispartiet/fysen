@@ -272,6 +272,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       assert.match(notice, /Fotograf: Alberta Studios/u);
       assert.match(notice, /Pexels-lisensen/u);
       assert.match(notice, /Bearbeidelse:/u);
+    } else if (photo.id === "naan") {
+      assert.equal(photo.catalogId, "naan");
+      assert.equal(photo.photoSource, "https://www.pexels.com/photo/flavorful-garlic-naan-bread-close-up-30203311/");
+      assert.equal(photo.photoLicense, "https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/naan-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "naan-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Nosh Caterers/u);
+      assert.match(notice, /Pexels-lisensen/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "peking-duck") {
       assert.equal(photo.catalogId, "peking-duck");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:Peking_Duck/u);
