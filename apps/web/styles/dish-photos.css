@@ -156,11 +156,10 @@
   background: #000 url("/dish-images/rekesmorbrod-thumb-512.avif") center / contain no-repeat;
 }
 
-/* Sharp chicken tandoori, with roast marks and lemon on pure black.
-   Representative chicken variant only; not a specific restaurant dish. */
+/* Dedicated 512px photo of tandoori chicken. */
 .dishPhotoThumb.dishPhotoTandoori,
 .dishPhotoSmall.dishPhotoTandoori {
-  background: #000 url("/dish-images/tandoori-chicken-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/tandoori-chicken-thumb-512.avif") center / contain no-repeat;
 }
 
 
