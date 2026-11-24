@@ -183,6 +183,81 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice = readFileSync(path.join(imageRoot, "pizza-marinara-LICENSE.txt"), "utf8");
       assert.match(notice, /Foto: Peter Van den Bossche/u);
       assert.match(notice, /CC BY-SA 2\.0/u);
+    } else if (photo.id === "cacio-e-pepe") {
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /DocteurCosmos.*CC BY-SA 3\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/3.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/cacio-e-pepe-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "cacio-e-pepe-LICENSE.txt"), "utf8");
+      assert.match(notice, /Foto: DC \(DocteurCosmos\)/u);
+      assert.match(notice, /CC BY-SA 3\.0/u);
+    } else if (photo.id === "bibimbap") {
+      assert.equal(photo.catalogId, null);
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /Andy Li.*CC0 1\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/publicdomain/zero/1.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/bibimbap-LICENSE.txt");
+      const notice=readFileSync(path.join(imageRoot, "bibimbap-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Andy Li/u);
+      assert.match(notice, /CC0 1\.0/u);
+    } else if (photo.id === "udon") {
+      assert.equal(photo.catalogId, "udon");
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      assert.match(photo.photoCredit, /Immanuelle.*CC BY 4\.0/u);
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/udon-tempura-LICENSE.txt");
+      const notice=readFileSync(path.join(imageRoot,"udon-tempura-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Immanuelle/u);
+      assert.match(notice,/CC BY 4\.0/u);
+      assert.match(notice,/Bearbeidelse:/u);
+    } else if (photo.id === "yakitori") {
+      assert.equal(photo.catalogId, "yakitori");
+      assert.equal(photo.photoLicense, "https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/yakitori-LICENSE.txt");
+      assert.match(photo.photoCredit, /Airam Dato-on.*Pexels/u);
+      const notice = readFileSync(path.join(imageRoot,"yakitori-LICENSE.txt"),"utf8");
+      assert.match(notice, /Fotograf: Airam Dato-on/u);
+      assert.match(notice, /Pexels License/u);
+    } else if (photo.id === "katsu") {
+      assert.equal(photo.catalogId,"katsu");
+      assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice,"/dish-images/chicken-katsu-LICENSE.txt");
+      assert.match(photo.photoCredit,/Cohesion Singapore.*Pexels/u);
+      const notice=readFileSync(path.join(imageRoot,"chicken-katsu-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Cohesion Singapore/u);
+      assert.match(notice,/Pexels License/u);
+    } else if (photo.id === "dosa") {
+      assert.equal(photo.catalogId,"dosa");
+      assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice,"/dish-images/masala-dosa-LICENSE.txt");
+      assert.match(photo.photoCredit,/Jack Baghel.*Pexels/u);
+      const notice=readFileSync(path.join(imageRoot,"masala-dosa-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Jack Baghel/u);
+      assert.match(notice,/Pexels License/u);
+    } else if (photo.id === "chana-masala") {
+      assert.equal(photo.catalogId,"chana-masala");
+      assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice,"/dish-images/chana-masala-LICENSE.txt");
+      assert.match(photo.photoCredit,/Muhammad Khawar Nazir.*Pexels/u);
+      const notice=readFileSync(path.join(imageRoot,"chana-masala-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Muhammad Khawar Nazir/u);
+      assert.match(notice,/Pexels License/u);
+    } else if (photo.id === "tacos-al-pastor") {
+      assert.equal(photo.catalogId, "tacos-al-pastor");
+      assert.equal(photo.photoLicense, "https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/tacos-al-pastor-LICENSE.txt");
+      assert.match(photo.photoCredit, /Abner Velázquez.*Pexels/u);
+      const notice = readFileSync(path.join(imageRoot, "tacos-al-pastor-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Abner Velázquez/u);
+      assert.match(notice, /Pexels License/u);
+    } else if (photo.id === "falafel") {
+      assert.equal(photo.catalogId,"falafel");
+      assert.equal(photo.photoLicense,"https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice,"/dish-images/falafel-LICENSE.txt");
+      assert.match(photo.photoCredit,/Saya P.*Pexels/u);
+      const notice=readFileSync(path.join(imageRoot,"falafel-LICENSE.txt"),"utf8");
+      assert.match(notice,/Fotograf: Saya P/u);
+      assert.match(notice,/Pexels License/u);
     } else if (photo.id === "pizza-prosciutto") {
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
       assert.match(photo.photoCredit, /Amin.*CC BY-SA 4\.0/u);
