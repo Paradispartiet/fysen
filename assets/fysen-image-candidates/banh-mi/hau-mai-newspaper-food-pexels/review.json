@@ -1,0 +1,19 @@
+{
+  "dish_id": "banh-mi",
+  "catalog_id": "banh-mi",
+  "photo_page": "https://www.pexels.com/photo/delicious-vietnamese-banh-mi-sandwich-on-newspaper-32961654/",
+  "original_url": "https://images.pexels.com/photos/32961654/pexels-photo-32961654.jpeg",
+  "photographer": "Hậu Mai / Pexels",
+  "photo_license": "https://www.pexels.com/license/",
+  "claimed_variant": "Vietnamese bánh mì with fresh ingredients, on newspaper",
+  "review_caution": "Require one complete baguette with visible meat and pickles. Reject if photo is clipped or surrounding objects cannot be excluded.",
+  "native_width": 5491,
+  "native_height": 3661,
+  "original_sha256": "aeb59cfde53ab5b5e7465fca35d3a2082f03feacb2087fab8d182a94bd8c9547",
+  "source_download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Whole clearly identifiable single dish; original-native 1400px detail; no false ingredient/variant claims. Isolated full dish on genuine black background without synthetic food, objects or zoomed cropping. Licenses and source credit documented. No restaurant menu/price mapping."
+}

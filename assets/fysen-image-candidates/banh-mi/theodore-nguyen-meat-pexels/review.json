@@ -1,0 +1,19 @@
+{
+  "dish_id": "banh-mi",
+  "catalog_id": "banh-mi",
+  "photo_page": "https://www.pexels.com/photo/a-sandwich-with-meat-and-vegetables-on-top-of-a-paper-bag-26619988/",
+  "original_url": "https://images.pexels.com/photos/26619988/pexels-photo-26619988.jpeg",
+  "photographer": "Theodore Nguyen / Pexels",
+  "photo_license": "https://www.pexels.com/license/",
+  "claimed_variant": "Vietnamese bánh mì with meat and vegetables",
+  "review_caution": "Confirm whole baguette and actual filling; do not claim pork, pâté or chili without visually verifying.",
+  "native_width": 4000,
+  "native_height": 6000,
+  "original_sha256": "fda4ad2e4a42d9b94be6cd77232359ffaaf3f70f1fcbfa6739fa87db8408bc3f",
+  "source_download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Whole clearly identifiable single dish; original-native 1400px detail; no false ingredient/variant claims. Isolated full dish on genuine black background without synthetic food, objects or zoomed cropping. Licenses and source credit documented. No restaurant menu/price mapping."
+}

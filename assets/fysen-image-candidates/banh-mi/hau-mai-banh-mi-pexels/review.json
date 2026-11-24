@@ -1,0 +1,19 @@
+{
+  "dish_id": "banh-mi",
+  "catalog_id": "banh-mi",
+  "photo_page": "https://www.pexels.com/photo/vibrant-vietnamese-banh-mi-sandwich-close-up-32961648/",
+  "original_url": "https://images.pexels.com/photos/32961648/pexels-photo-32961648.jpeg",
+  "photographer": "Hậu Mai / Pexels",
+  "photo_license": "https://www.pexels.com/license/",
+  "claimed_variant": "Vietnamese bánh mì with vegetables",
+  "review_caution": "Check meat and pâté against exact dish description. Do not use if the baguette is cropped or contents ambiguous.",
+  "native_width": 6000,
+  "native_height": 4000,
+  "original_sha256": "53af16347a42bc40286c416ed11da534faf09605433c0f03ff97311951ef900f",
+  "source_download_verified": true,
+  "no_upscale": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "quality_gate": "Whole clearly identifiable single dish; original-native 1400px detail; no false ingredient/variant claims. Isolated full dish on genuine black background without synthetic food, objects or zoomed cropping. Licenses and source credit documented. No restaurant menu/price mapping."
+}
