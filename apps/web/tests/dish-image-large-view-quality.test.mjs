@@ -281,6 +281,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       assert.match(notice, /Fotograf: Nosh Caterers/u);
       assert.match(notice, /Pexels-lisensen/u);
       assert.match(notice, /Bearbeidelse:/u);
+    } else if (photo.id === "dal-makhani") {
+      assert.equal(photo.catalogId, "dal-makhani");
+      assert.equal(photo.photoSource, "https://www.pexels.com/photo/dal-makhani-on-a-white-bowl-12737916/");
+      assert.equal(photo.photoLicense, "https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/dal-makhani-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "dal-makhani-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: dhiraj jain/u);
+      assert.match(notice, /Pexels-lisensen/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "peking-duck") {
       assert.equal(photo.catalogId, "peking-duck");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:Peking_Duck/u);
