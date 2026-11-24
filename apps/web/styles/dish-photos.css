@@ -169,10 +169,10 @@
   background: #000 url("/dish-images/naan-thumb-512.avif") center / contain no-repeat;
 }
 
-/* Dal makhani: sharp 768px black-lentil curry, rich dairy variant, pure black background. */
+/* Dedicated 512px photo of dal makhani. */
 .dishPhotoThumb.dishPhotoDalMakhani,
 .dishPhotoSmall.dishPhotoDalMakhani {
-  background: #000 url("/dish-images/dal-makhani-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/dal-makhani-thumb-512.avif") center / contain no-repeat;
 }
 
 /* Idli: fluffy steamed rice-and-lentil cakes, sambar and chutneys, black background. */
