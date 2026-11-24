@@ -263,6 +263,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       assert.match(notice, /Fotograf: Ser Amantio di Nicolao/u);
       assert.match(notice, /CC BY-SA 4\.0/u);
       assert.match(notice, /Bearbeidelse:/u);
+    } else if (photo.id === "tandoori") {
+      assert.equal(photo.catalogId, "tandoori");
+      assert.equal(photo.photoSource, "https://www.pexels.com/photo/delicious-tandoori-chicken-on-a-sizzling-plate-9738994/");
+      assert.equal(photo.photoLicense, "https://www.pexels.com/license/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/tandoori-chicken-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "tandoori-chicken-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Alberta Studios/u);
+      assert.match(notice, /Pexels-lisensen/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "peking-duck") {
       assert.equal(photo.catalogId, "peking-duck");
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:Peking_Duck/u);
