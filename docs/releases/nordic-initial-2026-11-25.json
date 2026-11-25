@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "action": "publish-initial-nordic-archive",
+  "readerCommit": "1465f3bea00f8ab352ef6e3033c66a89a0cb3605",
+  "expectedArchiveVersion": 1,
+  "restaurants": 3,
+  "dishes": 124
+}

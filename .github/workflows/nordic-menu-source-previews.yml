@@ -7,6 +7,11 @@ on:
       - "apps/menu-worker/package.json"
       - "docs/nordic-*.json"
       - ".github/workflows/nordic-menu-source-previews.yml"
+  # One explicitly reviewed release record can trigger the initial migration.
+  push:
+    branches: [main]
+    paths:
+      - "docs/releases/nordic-initial-2026-11-25.json"
   workflow_dispatch:
     inputs:
       publish_initial_archive:
@@ -104,9 +109,13 @@ jobs:
           if-no-files-found: error
 
   publish-initial-nordic-archive:
-    # No pull request, cron, or ordinary manual preview can write production.
-    # Explicitly dispatch on main only after both deployed readers support v2.
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_initial_archive == true
+    # No PR, cron, ordinary push, or ordinary manual preview can write production.
+    # The single-use reviewed release record is accepted only immediately after
+    # the exact already-deployed v2-compatible web/API revision.
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      ((github.event_name == 'workflow_dispatch' && inputs.publish_initial_archive == true) ||
+       (github.event_name == 'push' && github.event.before == '1465f3bea00f8ab352ef6e3033c66a89a0cb3605'))
     needs: stage-current-nordic-archive
     permissions:
       contents: write
@@ -132,6 +141,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24.18.0
+      - name: Verify one-time release record on main
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          actual = json.loads(Path("docs/releases/nordic-initial-2026-11-25.json").read_text())
+          expected = {"version":1,"action":"publish-initial-nordic-archive","readerCommit":"1465f3bea00f8ab352ef6e3033c66a89a0cb3605","expectedArchiveVersion":1,"restaurants":3,"dishes":124}
+          if actual != expected:
+              raise SystemExit("Invalid initial release record")
+          PY
       - name: Require fresh observations from this workflow
         shell: bash
         run: |
