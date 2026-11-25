@@ -5,6 +5,8 @@ on:
     paths:
       - "scripts/build-fysen-nordic-candidate.py"
       - "scripts/verify-fysen-nordic-candidate.mjs"
+      - "scripts/refresh-fysen-nordic-candidate.py"
+      - "scripts/test-fysen-nordic-refresh.py"
       - "docs/nordic-live-proof-2026-11-25/**"
       - ".github/workflows/verify-nordic-archive-candidate.yml"
   workflow_dispatch:
@@ -32,6 +34,8 @@ jobs:
         run: python3 scripts/build-fysen-nordic-candidate.py public-index docs/nordic-live-proof-2026-11-25 "${RUNNER_TEMP}/nordic-candidate"
       - name: Verify original rows, quarantines and actual web/API search
         run: node scripts/verify-fysen-nordic-candidate.mjs public-index "${RUNNER_TEMP}/nordic-candidate" docs/nordic-live-proof-2026-11-25
+      - name: Test whole-menu updates on the real candidate (simulation only)
+        run: python3 scripts/test-fysen-nordic-refresh.py "${RUNNER_TEMP}/nordic-candidate" docs/nordic-live-proof-2026-11-25
       - uses: actions/upload-artifact@v4
         with:
           name: nordic-archive-candidate-not-published

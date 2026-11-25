@@ -36,6 +36,81 @@ def when(value):
 def normalized(value):
     return " ".join(re.sub(r"[\W_]+", " ", unicodedata.normalize("NFKC", value).lower()).split())
 
+def stage_report(key, report, review, identity, source_map):
+    """Validate a complete reviewed restaurant report; local row IDs start at zero."""
+    slug, city, currency, expected_count = SOURCES[key]
+    out = {"restaurants": [], "sources": [], "items": []}
+    provenance = {}
+    require(review["status"] == "review-only-not-runtime" and identity["status"] == "reviewed-samples-not-production",
+            "Unrecognized review data")
+    menu = next(m for m in review["menus"] if m["restaurantSlug"] == slug)
+    restaurant = next(r for r in identity["restaurants"] if r["slug"] == slug)
+    require(menu["city"] == restaurant["city"] == city and menu["currency"] == restaurant["currency"] == currency,
+            "Identity/currency mismatch")
+    require(all(r["publishEligible"] is False for r in menu["items"]), "Unexpected review status")
+    require(report["status"] == "review-required" and report["publication"] == "none", "Not a read-only source report")
+    require(report.get("city", city) == city and report["priceChanges"] == [], "City mismatch or unreviewed price change")
+    expected = {r["name"]: r for r in menu["items"]}
+    actual = report["items"]
+    require(len(expected) == len(actual) == expected_count and {r["name"] for r in actual} == set(expected),
+            "Incomplete or duplicate menu")
+    if key == "schonnemann":
+        evidence = report["evidence"]
+        sections = {s["sourceUrl"]: s["listedItems"] for s in source_map["sections"]}
+        require(len(evidence) == len(sections) and {e["sourceUrl"]: e["items"] for e in evidence} == sections,
+                "Incomplete category proof")
+        require(valid_digest(report["menuIndexSha256"]), "Missing menu index proof")
+        require(report["validFrom"] == source_map["validFrom"] and report["validThrough"] == source_map["validThrough"],
+                "Wrong seasonal scope")
+    else:
+        require(report["sourceUrl"] == menu["source"], "Source URL mismatch")
+        if key == "pelikan":
+            require(report["menuPage"] == restaurant["menuPage"] and valid_digest(report["menuPageSha256"]),
+                    "Missing first-party PDF link proof")
+        evidence = [{"sourceUrl": report["sourceUrl"], "observedAt": report["observedAt"],
+                     "rawSha256": report["rawSha256"], "items": expected_count}]
+    require(all(valid_digest(e["rawSha256"]) for e in evidence), "Missing source digest")
+    times = [when(e["observedAt"]) for e in evidence]
+    require(max(times) - min(times) <= timedelta(minutes=10), "Category snapshot not coherent")
+    # One conservative snapshot timestamp groups all category pages into a
+    # complete menu. Exact per-page timestamps remain in the private proof.
+    snapshot = min(times).isoformat().replace("+00:00", "Z")
+    require(not any(r[1] == slug for r in out["restaurants"]), "Restaurant already exists")
+    ri = len(out["restaurants"])
+    out["restaurants"].append([restaurant["name"], slug, restaurant["address"], city, ""])
+    source_ids = {}
+    for e in evidence:
+        source_ids[e["sourceUrl"]] = len(out["sources"])
+        out["sources"].append([ri, e["sourceUrl"], snapshot])
+    flags = []
+    for item in actual:
+        name = item["name"]
+        previous = expected[name]
+        source = previous.get("sourceUrl", menu["source"])
+        require(source in source_ids, "Unknown item source")
+        if key == "schonnemann":
+            require(set(item["sourceUrls"]) == {source, *previous.get("alternateSourceUrls", [])}, "Item provenance mismatch")
+        price = item["priceMinor"]
+        max_price = item["priceMaxMinor"]
+        kind = item["priceKind"]
+        require(item["currency"] == currency and type(price) is int and price > 0, "Invalid local price")
+        require((kind == "exact" and max_price is None) or
+                (kind == "multiple" and type(max_price) is int and max_price > price), "Invalid price range")
+        # Recheck the reviewed price fields independently; do not rely solely
+        # on the probe's empty priceChanges list.
+        parts = previous["priceField"].split("/")
+        require(1 <= len(parts) <= 2 and all(re.fullmatch(r"\d{1,5}(?:[.,]\d{1,2})?", p.strip()) for p in parts),
+                "Invalid reviewed price field")
+        amounts = [int(Decimal(p.strip().replace(",", ".")) * 100) for p in parts]
+        require(price == amounts[0] and max_price == (amounts[1] if len(amounts) == 2 else None),
+                "Reviewed price mismatch")
+        out["items"].append([source_ids[source], name, normalized(name), price, kind, max_price, "", "", currency])
+        if previous.get("note") or item.get("perPerson") or item.get("requiresAvailabilityConfirmation"):
+            flags.append({"name": name, "reviewNote": previous.get("note"), "perPerson": bool(item.get("perPerson")),
+                          "requiresAvailabilityConfirmation": bool(item.get("requiresAvailabilityConfirmation"))})
+    provenance[key] = {"slug": slug, "snapshotAt": snapshot, "evidence": evidence, "flags": flags}
+    return out, provenance[key]
+
 def make_candidate(manifest, index, reports, review, identity, source_map):
     require(manifest["version"] == index["version"] == 1, "Expected untouched v1 Oslo archive")
     require(manifest["archiveDate"] == index["archiveDate"], "Archive date mismatch")
@@ -56,74 +131,15 @@ def make_candidate(manifest, index, reports, review, identity, source_map):
     provenance = {}
     require(review["status"] == "review-only-not-runtime" and identity["status"] == "reviewed-samples-not-production",
             "Unrecognized review data")
-    for key, (slug, city, currency, expected_count) in SOURCES.items():
-        report = reports[key]
-        menu = next(m for m in review["menus"] if m["restaurantSlug"] == slug)
-        restaurant = next(r for r in identity["restaurants"] if r["slug"] == slug)
-        require(menu["city"] == restaurant["city"] == city and menu["currency"] == restaurant["currency"] == currency,
-                "Identity/currency mismatch")
-        require(all(r["publishEligible"] is False for r in menu["items"]), "Unexpected review status")
-        require(report["status"] == "review-required" and report["publication"] == "none", "Not a read-only source report")
-        require(report.get("city", city) == city and report["priceChanges"] == [], "City mismatch or unreviewed price change")
-        expected = {r["name"]: r for r in menu["items"]}
-        actual = report["items"]
-        require(len(expected) == len(actual) == expected_count and {r["name"] for r in actual} == set(expected),
-                "Incomplete or duplicate menu")
-        if key == "schonnemann":
-            evidence = report["evidence"]
-            sections = {s["sourceUrl"]: s["listedItems"] for s in source_map["sections"]}
-            require(len(evidence) == len(sections) and {e["sourceUrl"]: e["items"] for e in evidence} == sections,
-                    "Incomplete category proof")
-            require(valid_digest(report["menuIndexSha256"]), "Missing menu index proof")
-            require(report["validFrom"] == source_map["validFrom"] and report["validThrough"] == source_map["validThrough"],
-                    "Wrong seasonal scope")
-        else:
-            require(report["sourceUrl"] == menu["source"], "Source URL mismatch")
-            if key == "pelikan":
-                require(report["menuPage"] == restaurant["menuPage"] and valid_digest(report["menuPageSha256"]),
-                        "Missing first-party PDF link proof")
-            evidence = [{"sourceUrl": report["sourceUrl"], "observedAt": report["observedAt"],
-                         "rawSha256": report["rawSha256"], "items": expected_count}]
-        require(all(valid_digest(e["rawSha256"]) for e in evidence), "Missing source digest")
-        times = [when(e["observedAt"]) for e in evidence]
-        require(max(times) - min(times) <= timedelta(minutes=10), "Category snapshot not coherent")
-        # One conservative snapshot timestamp groups all category pages into a
-        # complete menu. Exact per-page timestamps remain in the private proof.
-        snapshot = min(times).isoformat().replace("+00:00", "Z")
-        require(not any(r[1] == slug for r in out["restaurants"]), "Restaurant already exists")
-        ri = len(out["restaurants"])
-        out["restaurants"].append([restaurant["name"], slug, restaurant["address"], city, ""])
-        source_ids = {}
-        for e in evidence:
-            source_ids[e["sourceUrl"]] = len(out["sources"])
-            out["sources"].append([ri, e["sourceUrl"], snapshot])
-        flags = []
-        for item in actual:
-            name = item["name"]
-            previous = expected[name]
-            source = previous.get("sourceUrl", menu["source"])
-            require(source in source_ids, "Unknown item source")
-            if key == "schonnemann":
-                require(set(item["sourceUrls"]) == {source, *previous.get("alternateSourceUrls", [])}, "Item provenance mismatch")
-            price = item["priceMinor"]
-            max_price = item["priceMaxMinor"]
-            kind = item["priceKind"]
-            require(item["currency"] == currency and type(price) is int and price > 0, "Invalid local price")
-            require((kind == "exact" and max_price is None) or
-                    (kind == "multiple" and type(max_price) is int and max_price > price), "Invalid price range")
-            # Recheck the reviewed price fields independently; do not rely solely
-            # on the probe's empty priceChanges list.
-            parts = previous["priceField"].split("/")
-            require(1 <= len(parts) <= 2 and all(re.fullmatch(r"\d{1,5}(?:[.,]\d{1,2})?", p.strip()) for p in parts),
-                    "Invalid reviewed price field")
-            amounts = [int(Decimal(p.strip().replace(",", ".")) * 100) for p in parts]
-            require(price == amounts[0] and max_price == (amounts[1] if len(amounts) == 2 else None),
-                    "Reviewed price mismatch")
-            out["items"].append([source_ids[source], name, normalized(name), price, kind, max_price, "", "", currency])
-            if previous.get("note") or item.get("perPerson") or item.get("requiresAvailabilityConfirmation"):
-                flags.append({"name": name, "reviewNote": previous.get("note"), "perPerson": bool(item.get("perPerson")),
-                              "requiresAvailabilityConfirmation": bool(item.get("requiresAvailabilityConfirmation"))})
-        provenance[key] = {"slug": slug, "snapshotAt": snapshot, "evidence": evidence, "flags": flags}
+    for key in SOURCES:
+        staged, proof = stage_report(key, reports[key], review, identity, source_map)
+        restaurant = staged["restaurants"][0]
+        require(not any(r[1] == restaurant[1] for r in out["restaurants"]), "Restaurant already exists")
+        ri, si = len(out["restaurants"]), len(out["sources"])
+        out["restaurants"].append(restaurant)
+        out["sources"].extend([[ri, row[1], row[2]] for row in staged["sources"]])
+        out["items"].extend([[row[0] + si, *row[1:]] for row in staged["items"]])
+        provenance[key] = proof
     meta.update(restaurants=len(out["restaurants"]), sources=len(out["sources"]), dishes=len(out["items"]))
     return meta, out, {"status": "candidate-not-published", "publication": "none", "sources": provenance}
 

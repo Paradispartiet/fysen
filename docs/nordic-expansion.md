@@ -45,3 +45,7 @@ At head df029713, the affected-package quality workflow completed 27/27 tasks, i
 ## Oslo refresh compatibility
 
 The existing bounded Oslo refresh accepts either archive schema, checks explicit city/currency consistency before and after updating, writes a ninth NOK field on v2 rows, and cannot replace a foreign menu through the Norwegian parser. All Nordic rows and their source timestamps remain unchanged by an Oslo-only refresh. This is compatibility work, not the dedicated atomic Nordic refresh or a production migration.
+
+## Complete Nordic menu refresh
+
+`scripts/refresh-fysen-nordic-candidate.py <v2-copy> <savotta|pelikan|schonnemann> <probe-report.json> <new-output-dir>` validates the complete reviewed menu and all category evidence before replacing any rows. It keeps source IDs, unrelated menus and quarantines intact. Replays are idempotent, stale and partial reports fail closed, and source URL/identity or unreviewed price changes require review. The existing candidate workflow tests all three on the real v2 archive with recorded proof and synthetic timestamps in memory only. No schedule or production writes have been enabled.
