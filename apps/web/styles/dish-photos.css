@@ -175,10 +175,10 @@
   background: #000 url("/dish-images/dal-makhani-thumb-512.avif") center / contain no-repeat;
 }
 
-/* Idli: fluffy steamed rice-and-lentil cakes, sambar and chutneys, black background. */
+/* Dedicated 512px photo of idli. */
 .dishPhotoThumb.dishPhotoIdli,
 .dishPhotoSmall.dishPhotoIdli {
-  background: #000 url("/dish-images/idli-512.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/idli-thumb-512.avif") center / contain no-repeat;
 }
 
 /* South Indian lentil-and-vegetable sambar, not a bowl of idli.

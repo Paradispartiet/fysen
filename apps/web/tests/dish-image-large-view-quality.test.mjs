@@ -281,6 +281,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       assert.match(notice, /Fotograf: Nosh Caterers/u);
       assert.match(notice, /Pexels-lisensen/u);
       assert.match(notice, /Bearbeidelse:/u);
+    } else if (photo.id === "idli") {
+      assert.equal(photo.catalogId, "idli");
+      assert.equal(photo.photoSource, "https://commons.wikimedia.org/wiki/File:Idly_Chutney_Sambar.jpg");
+      assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by/4.0/");
+      assert.equal(photo.photoLicenseNotice, "/dish-images/idli-LICENSE.txt");
+      const notice = readFileSync(path.join(imageRoot, "idli-LICENSE.txt"), "utf8");
+      assert.match(notice, /Fotograf: Sarathprabhavu/u);
+      assert.match(notice, /CC BY 4.0/u);
+      assert.match(notice, /Bearbeidelse:/u);
     } else if (photo.id === "dal-makhani") {
       assert.equal(photo.catalogId, "dal-makhani");
       assert.equal(photo.photoSource, "https://www.pexels.com/photo/dal-makhani-on-a-white-bowl-12737916/");
