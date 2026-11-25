@@ -1,0 +1,21 @@
+name: Iceland street food source probe (read-only)
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/src/reykjavik-street-food-probe.ts"
+      - "docs/reykjavik-101-street-food-review.json"
+      - ".github/workflows/reykjavik-source-preview.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  street-food:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-node-pnpm
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec tsx src/reykjavik-street-food-probe.ts

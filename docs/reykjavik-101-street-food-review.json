@@ -1,0 +1,81 @@
+{
+  "status": "manual-source-review-only-not-production",
+  "reviewDate": "2026-11-25",
+  "restaurant": {
+    "name": "101 Reykjavik Street Food",
+    "slug": "101-reykjavik-street-food-skolavordustigur",
+    "address": "Skolavordustig 8, 101 Reykjavik, Iceland",
+    "city": "Reykjavík",
+    "countryCode": "IS",
+    "currency": "ISK",
+    "timezone": "Atlantic/Reykjavik"
+  },
+  "menuIndex": "https://101reykjavikstreetfood.is/all-food-menu/",
+  "evidenceLimit": "Search-indexed first-party menu and individual dish pages; direct page fetch timed out or returned 502. Eight listed food cards, not a claim of complete menu or current availability.",
+  "items": [
+    {
+      "name": "Plokkfiskur",
+      "priceField": "3290 Ikr",
+      "priceMinor": 329000,
+      "currency": "ISK",
+      "sourceUrl": "https://101reykjavikstreetfood.is/food-menu/icelandic-fish-stew/",
+      "publishEligible": false
+    },
+    {
+      "name": "Humarsúpa",
+      "priceField": "2890 Ikr",
+      "priceMinor": 289000,
+      "currency": "ISK",
+      "sourceUrl": "https://101reykjavikstreetfood.is/food-menu/lobster-soup/",
+      "publishEligible": false
+    },
+    {
+      "name": "Kjúklinganúðlusúpa",
+      "priceField": "2590 Ikr",
+      "priceMinor": 259000,
+      "currency": "ISK",
+      "sourceUrl": "https://101reykjavikstreetfood.is/food-menu/chicken-noodle-soup/",
+      "publishEligible": false
+    },
+    {
+      "name": "Sjávarréttasúpa",
+      "priceField": "2890 Ikr",
+      "priceMinor": 289000,
+      "currency": "ISK",
+      "sourceUrl": "https://101reykjavikstreetfood.is/food-menu/seafood-soup/",
+      "publishEligible": false
+    },
+    {
+      "name": "Fish&Chips",
+      "priceField": "3290 Ikr",
+      "priceMinor": 329000,
+      "currency": "ISK",
+      "sourceUrl": "https://101reykjavikstreetfood.is/food-menu/fish-and-chips/",
+      "publishEligible": false
+    },
+    {
+      "name": "Nautanúðlusúpa",
+      "priceField": "2890 Ikr",
+      "priceMinor": 289000,
+      "currency": "ISK",
+      "sourceUrl": "https://101reykjavikstreetfood.is/food-menu/beef-noodle-soup/",
+      "publishEligible": false
+    },
+    {
+      "name": "Grænmetisnúðlusúpa (Vegan)",
+      "priceField": "2490 Ikr",
+      "priceMinor": 249000,
+      "currency": "ISK",
+      "sourceUrl": "https://101reykjavikstreetfood.is/food-menu/vegetable-noodle-soup/",
+      "publishEligible": false
+    },
+    {
+      "name": "Íslensk Kjötsúpa",
+      "priceField": "2890 Ikr",
+      "priceMinor": 289000,
+      "currency": "ISK",
+      "sourceUrl": "https://101reykjavikstreetfood.is/food-menu/lamb-meat-soup/",
+      "publishEligible": false
+    }
+  ]
+}
