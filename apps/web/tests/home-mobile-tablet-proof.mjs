@@ -1,4 +1,4 @@
-/* global URL, process, document, Node, getComputedStyle */
+/* global URL, process, document, Node, getComputedStyle, window */
 import assert from "node:assert/strict";
 import { mkdirSync, readFileSync } from "node:fs";
 import path from "node:path";
@@ -34,6 +34,17 @@ try {
       assert.equal(response?.status(), 200, "Home page must respond HTTP 200");
       await page.getByRole("heading", { name: "Hva har du lyst på?" }).waitFor({ state: "visible" });
       await page.getByRole("searchbox", { name: "Retten du vil spise" }).waitFor({ state: "visible" });
+
+      const header = page.locator(".globalHeader");
+      await page.evaluate(() => window.scrollTo(0, 500));
+      await page.waitForFunction(() => window.scrollY > 100);
+      const headerBox = await header.boundingBox();
+      assert.ok(headerBox && Math.abs(headerBox.y) <= 2, "Navigation stays at the viewport top while scrolling");
+      const menu = header.locator("details.siteMenu");
+      await menu.locator("summary").tap();
+      assert.equal(await menu.locator(".siteMenuPanel").isVisible(), true, "Menu remains usable while scrolled");
+      await menu.locator("summary").tap();
+      await page.evaluate(() => window.scrollTo(0, 0));
 
       const kitchenMenu = page.locator("details.cuisineBrowseDisclosure");
       await kitchenMenu.waitFor({ state: "visible" });
