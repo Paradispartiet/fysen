@@ -1,0 +1,27 @@
+name: Nordic second-wave source review (read-only)
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/src/nordic-wave-2-*.ts"
+      - "docs/nordic-wave-2-menu-review.json"
+      - ".github/workflows/nordic-wave-2-preview.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  second-wave-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [puk, kvarnen, taulu]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-node-pnpm
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec vitest run src/nordic-wave-2-preview.test.ts
+      - name: Check reviewed rows against live source
+        run: pnpm --filter @fysen/menu-worker exec tsx src/nordic-wave-2-probe.ts ${{ matrix.source }}
