@@ -65,7 +65,7 @@ async function publicManifest(db) {
   }
   return meta;
 }
-function parseSearch(searchParams) {
+export function parseSearch(searchParams) {
   const allowed = new Set(["q", "city", "limit"]);
   if ([...searchParams.keys()].some(k => !allowed.has(k))
       || [...allowed].some(k => searchParams.getAll(k).length > 1)) {
@@ -82,6 +82,17 @@ function parseSearch(searchParams) {
       || city.length > 80 || !city.trim() || limit > MAX_RESULTS) return null;
   return { q, normalized, city, limit };
 }
+export function runArchiveSearch(db, parsed, { sample = false } = {}) {
+  const sql = sample
+    ? PUBLIC_FTS_SELECT.replace("fysen_public_trigrams", "fysen_sample_trigrams")
+      .replace("fysen_public_items", "fysen_sample_items")
+    : PUBLIC_FTS_SELECT;
+  const { city, normalized } = parsed;
+  return db.prepare(sql)
+    .bind(city.trim().toLowerCase(), "%" + normalized + "%", normalized, normalized, normalized)
+    .all();
+}
+
 function formatSearch(meta, parsed, rows) {
   const results = [], perRestaurant = new Map(), seen = new Set();
   for (const row of rows) {
@@ -152,11 +163,7 @@ export default {
           sha256: meta.sha256, publicRowsSha256: meta.publicRowsSha256,
         });
       }
-      const { results } = await env.PUBLIC_DB.prepare(PUBLIC_FTS_SELECT)
-        .bind(parsed.city.trim().toLowerCase(),
-          "%" + parsed.normalized + "%",
-          parsed.normalized, parsed.normalized, parsed.normalized)
-        .all();
+      const { results } = await runArchiveSearch(env.PUBLIC_DB, parsed);
       return response(formatSearch(meta, parsed, results || []));
     } catch {
       // Never expose D1 SQL details or credentials in public errors.
