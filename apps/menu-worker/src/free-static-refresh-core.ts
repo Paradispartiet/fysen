@@ -1,6 +1,6 @@
 import type { MenuObservedItem } from "@fysen/menu-core";
 
-export type FreeCurrency = "NOK" | "DKK" | "SEK" | "EUR";
+export type FreeCurrency = "NOK" | "DKK" | "SEK" | "EUR" | "ISK";
 export type FreeMenu = [number, string, string, number | null, string, number | null, string, string, FreeCurrency?];
 export function freeCityCurrency(city: string): FreeCurrency | undefined {
   switch (city.normalize("NFKC").trim().toLowerCase()) {
@@ -8,6 +8,7 @@ export function freeCityCurrency(city: string): FreeCurrency | undefined {
     case "københavn": case "copenhagen": case "kobenhavn": return "DKK";
     case "stockholm": return "SEK";
     case "helsinki": case "helsingfors": return "EUR";
+    case "reykjavík": case "reykjavik": return "ISK";
     default: return undefined;
   }
 }
@@ -33,7 +34,8 @@ export function assertFreeIndexCurrencies(index: FreeIndex): void {
     const currency = restaurant && freeCityCurrency(restaurant[3]);
     if (!Number.isInteger(row[0]) || !currency ||
       (index.version === 1 ? currency !== "NOK" || row.length !== 8 :
-        row.length !== 9 || row[8] !== currency)) {
+        row.length !== 9 || row[8] !== currency ||
+        (currency === "ISK" && [row[3], row[5]].some(p => p !== null && p % 100 !== 0)))) {
       throw new Error("Invalid published archive currency or source reference");
     }
   }

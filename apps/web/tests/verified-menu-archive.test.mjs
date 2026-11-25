@@ -212,7 +212,7 @@ test("only the most recent complete menu for a restaurant is used within the arc
 });
 
 test("v2 Nordic archive isolates cities, preserves local currencies and supports city aliases", () => {
-  const nordic = [ ["København", "DKK"], ["Stockholm", "SEK"], ["Helsinki", "EUR"] ];
+  const nordic = [ ["København", "DKK"], ["Stockholm", "SEK"], ["Helsinki", "EUR"], ["Reykjavík", "ISK"] ];
   const mixed = JSON.parse(JSON.stringify(index));
   mixed.version = 2;
   mixed.items = mixed.items.map((row) => [...row, "NOK"]);
@@ -235,6 +235,10 @@ test("v2 Nordic archive isolates cities, preserves local currencies and supports
   }
   assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen", "Copenhagen")[0].currency, "DKK");
   assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen", "Helsingfors")[0].currency, "EUR");
+  assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen", "Reykjavik")[0].currency, "ISK");
+  mixed.items.at(-1)[3] = 1501;
+  assert.throws(() => archiveModule.parsePublicMenuArchive(manifest, mixed), /currency/u);
+  mixed.items.at(-1)[3] = 1500;
   assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen", "Oslo").length, 3);
   assert.equal(archiveModule.archiveHasCity(archive, "Bergen"), false);
   mixed.items.at(-1)[8] = "NOK";
