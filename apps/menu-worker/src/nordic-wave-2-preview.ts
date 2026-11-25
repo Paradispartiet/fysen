@@ -36,7 +36,7 @@ export function verifyWave2Text(html: string, service: string, currency: NordicC
   let scopes = sections(lines, allowed, boundaries);
   if (restaurant === "taulu") {
     const start = lines.findIndex(l => l === "starters");
-    const end = lines.findIndex((l,i) => i > start && /prices (?:last )?checked|price check|prices updated/u.test(l));
+    const end = lines.findIndex((l,i) => i > start && /^(?:please tell our staff about any allergies|prices (?:last )?checked|price check|prices updated)/u.test(l));
     if (start < 0 || end < 0) throw new Error("Taulu primary menu or price check marker missing");
     const body = lines.slice(start, end);
     scopes = new Map(allowed.map(s => [s, body]));
@@ -53,7 +53,11 @@ export function verifyWave2Text(html: string, service: string, currency: NordicC
       const line = scope[i]!;
       if (!titlePrefix(line,row.name)) continue;
       const tail = line.slice(norm(row.name).length).trim();
-      const inline = priceAt(tail,currency);
+      const inline = priceAt(tail,currency) ?? (restaurant === "taulu" && row.name === "Artisan ice cream"
+        ? (() => {
+          const portions = /^(\d+,\d{2})\s*\/\s*1 scoop\s*,\s*(\d+,\d{2})\s*\/\s*2 scoops$/u.exec(tail);
+          return portions ? priceAt(portions[1] + "/" + portions[2], currency) : null;
+        })() : null);
       if (inline) candidates.push({price:inline,index:i});
       // Only the title and its following description/price block; never cross
       // another reviewed title or accept an unlabelled arbitrary number.
