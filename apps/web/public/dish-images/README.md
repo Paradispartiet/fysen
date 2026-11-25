@@ -314,7 +314,7 @@ En variant med svin, kylling, sjømat, peanøtter eller annet særskilt innhold 
 
 Pad thai har eksakt katalogkobling til det allerede godkjente 128px-miniatyrbildet «Pad thai med reker» (galleriindeks 12). Nye uklare utsnitt erstatter ikke godkjente bilder. Bildet er kun en representativ rekevariant, og skal ikke brukes som vegetar- eller kyllingversjon.
 
-- `idli-512.avif` er et separat 512 × 512-bilde av dampede ris- og linsekaker med sambar og chutney. Serveringsvariant, ikke restaurantfoto.
+- `idli-thumb-512.avif` viser to idli med sambar og kokoschutney. Storbilde: `idli-master-3072.avif`. Fotograf: Sarathprabhavu / Wikimedia Commons ([CC BY 4.0 og kilde](idli-LICENSE.txt)).
 
 - `sambar-768.avif` er et separat skarpt 768 × 768-bilde av sørindisk sambar, og viser ikke idli som hovedrett. Oppskrifter og ingredienser varierer; KI-illustrasjonen er ikke et restaurantfotografi.
 
