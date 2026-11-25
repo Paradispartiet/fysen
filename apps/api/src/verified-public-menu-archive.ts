@@ -317,13 +317,14 @@ export function archivedPublicSearch(
   };
 }
 
-export function archivedPublicBrowse(archive: VerifiedPublicArchive, city: string): {
+export function archivedPublicBrowse(archive: VerifiedPublicArchive, city: string, offset?: number): {
   readonly source: "verified-menu-archive";
   readonly realtime: false;
   readonly archiveDate: string;
   readonly lastRefreshAt: string | null;
   readonly city: string;
   readonly count: number;
+  readonly nextOffset?: number | null;
   readonly dishes: readonly {
     readonly name: string;
     readonly query: string;
@@ -354,10 +355,12 @@ export function archivedPublicBrowse(archive: VerifiedPublicArchive, city: strin
     restaurantCount: item.restaurants.size,
     restaurantExamples: [...item.restaurants.values()].slice(0, 2),
   })).sort((a, b) => b.restaurantCount - a.restaurantCount ||
-    a.name.localeCompare(b.name, "nb")).slice(0, 60);
+    a.name.localeCompare(b.name, "nb") || a.query.localeCompare(b.query, "nb"));
+  const page = dishes.slice(offset ?? 0, (offset ?? 0) + 60);
   return {
     source: "verified-menu-archive", realtime: false,
     archiveDate: archive.archiveDate, lastRefreshAt: archive.lastRefreshAt,
-    city, count: grouped.size, dishes,
+    city, count: grouped.size, dishes: page,
+    ...(offset === undefined ? {} : { nextOffset: offset + page.length < dishes.length ? offset + page.length : null }),
   };
 }

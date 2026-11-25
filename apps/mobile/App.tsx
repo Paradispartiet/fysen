@@ -20,7 +20,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { loadFeatured, searchDishes, searchArchivedCity, nordicCities, type NordicCity, type ArchivedNativeDish, type FeaturedResponse } from "./src/api";
+import { loadFeatured, searchDishes, searchArchivedCity, loadArchivedMatlyst, type ArchivedBrowseDish, nordicCities, type NordicCity, type ArchivedNativeDish, type FeaturedResponse } from "./src/api";
 import { cleanDishName, formatPrice, safeHttpsUrl, validateSearchTerm } from "./src/format";
 import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from "./src/favorites";
 import { createFavoritesController, type FavoritesSnapshot } from "./src/favorites-controller";
@@ -409,6 +409,49 @@ function PopularDishCard({ dish, rank, onPick }: {
   );
 }
 
+
+function NordicMatlystScreen({city,wide,onPick}:{city:NordicCity;wide:boolean;onPick:(query:string)=>void}) {
+  const [dishes,setDishes]=useState<ArchivedBrowseDish[]>([]);
+  const [next,setNext]=useState<number|null>(null);
+  const [loading,setLoading]=useState(true);
+  const [error,setError]=useState(false);
+  const current=useRef<AbortController|null>(null);
+  const run=useCallback(async(offset=0)=>{
+    current.current?.abort();
+    const controller=new AbortController();
+    current.current=controller;
+    setLoading(true);setError(false);
+    if(offset===0){setDishes([]);setNext(null);}
+    try {
+      const page=await loadArchivedMatlyst(city,offset,controller.signal);
+      if(!controller.signal.aborted){
+        setDishes(old=>offset===0?page.dishes:[...old,...page.dishes]);
+        setNext(page.nextOffset);
+      }
+    }catch{if(!controller.signal.aborted)setError(true);}
+    finally{if(!controller.signal.aborted)setLoading(false);}
+  },[city]);
+  useEffect(()=>{void run();return ()=>current.current?.abort();},[run]);
+  return <ScrollView contentContainerStyle={[styles.screenContent,wide&&styles.wideContent]}
+    refreshControl={<RefreshControl refreshing={loading} onRefresh={()=>void run()}/>}>
+    <SectionHeading kicker={city.toLocaleUpperCase("nb-NO")+" • MENYARKIV"} title="Matlyst"
+      intro="Utforsk retter i registrerte restaurantmenyer. Antallet viser registrerte restauranter, ikke popularitet eller sanntid."/>
+    {error?<View style={styles.notice}><Text style={styles.noticeText}>Kunne ikke hente Matlyst.</Text><PrimaryButton label="Prøv igjen" onPress={()=>void run()}/></View>:null}
+    {loading?<ActivityIndicator color={colors.green}/>:null}
+    {!loading&&!error&&dishes.length===0?<Text style={styles.muted}>Ingen registrerte retter i {city} ennå.</Text>:null}
+    <View style={wide?styles.tabletGrid:undefined}>
+      {dishes.map(dish=><View key={dish.query} style={wide?styles.tabletGridCell:undefined}>
+        <Pressable accessibilityRole="button" style={styles.card} onPress={()=>onPick(dish.query)}>
+          <Text style={styles.dishName}>{cleanDishName(dish.name)}</Text>
+          <Text style={styles.muted}>{dish.restaurantCount} {dish.restaurantCount===1?"restaurant":"restauranter"} i menyarkivet</Text>
+          <Text style={styles.arrow}>Finn retten →</Text>
+        </Pressable>
+      </View>)}
+    </View>
+    {next!==null?<PrimaryButton label="Vis flere retter" disabled={loading} onPress={()=>void run(next)}/>:null}
+  </ScrollView>;
+}
+
 function MatlystScreen({
   featured, loading, error, retry, onPick, wide,
 }: {
@@ -623,7 +666,7 @@ function NativeFysen() {
             favorites={favoriteState.items} favoritesReady={favoriteState.ready}
             onFavorite={toggleFavorite} /> : <NordicArchiveScreen key={city} city={city} value={query} setValue={setQuery} wide={wide} searchRequest={searchRequest} refreshRequest={refreshRequest}/>}
         </View>
-        {tab === "matlyst" && city !== "Oslo" ? <View style={styles.screenContent}><SectionHeading title="Matlyst" intro={"Matlyst for "+city+" er under oppbygging. Søk i registrerte menyer i mellomtiden."}/><PrimaryButton label="Søk i menyarkivet" onPress={()=>setTab("search")}/></View> : null}
+        {tab === "matlyst" && city !== "Oslo" ? <NordicMatlystScreen key={city} city={city} wide={wide} onPick={navigateToSearch}/> : null}
         {tab === "matlyst" && city === "Oslo" ? (
           <MatlystScreen wide={wide} featured={featured} loading={loadingFeatured} error={featuredError}
             retry={() => void refreshFeatured()} onPick={navigateToSearch} />

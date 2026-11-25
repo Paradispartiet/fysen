@@ -18,3 +18,12 @@ test("Nordic native search uses archive provenance and explicit pagination",()=>
  assert.match(api,/\/v1\/dishes\/archive\/search\?/);
  assert.match(api,/nextOffset/);
 });
+
+test("Nordic Matlyst browses selected city's complete archive, not fabricated trends",()=>{
+ const app=fs.readFileSync(new URL("../App.tsx",import.meta.url),"utf8");
+ const api=fs.readFileSync(new URL("../src/api.ts",import.meta.url),"utf8");
+ assert.match(app,/NordicMatlystScreen key=\{city\}/);
+ assert.match(app,/Vis flere retter/);
+ assert.match(app,/onPick\(dish.query\)/);
+ assert.match(api,/\/v1\/dishes\/archive\/browse\?/);
+});

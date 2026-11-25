@@ -40,7 +40,14 @@ export class VerifiedPublicArchiveController {
 
   @Get("browse")
   async browse(@Query() query: unknown) {
-    const parsed = dishBrowseQuerySchema.safeParse(query);
+    const raw = query && typeof query === "object" ? query as Record<string, unknown> : {};
+    const { offset: offsetValue, ...browseQuery } = raw;
+    const offset = offsetValue === undefined ? undefined :
+      typeof offsetValue === "string" && /^\d{1,6}$/u.test(offsetValue) ? Number(offsetValue) : NaN;
+    if (offset !== undefined && (!Number.isSafeInteger(offset) || offset < 0)) {
+      throw new BadRequestException("Invalid archive browse offset");
+    }
+    const parsed = dishBrowseQuerySchema.safeParse(browseQuery);
     if (!parsed.success) {
       throw new BadRequestException({
         code: "INVALID_ARCHIVED_DISH_BROWSE_QUERY",
@@ -48,7 +55,7 @@ export class VerifiedPublicArchiveController {
       });
     }
     const archive = await archiveOrUnavailable();
-    return archivedPublicBrowse(archive, parsed.data.city);
+    return archivedPublicBrowse(archive, parsed.data.city, offset);
   }
 
   @Get("search")

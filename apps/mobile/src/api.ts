@@ -79,3 +79,18 @@ export async function searchArchivedCity(term:string, city:NordicCity, offset=0,
   }
   return {results:data.results as ArchivedNativeDish[],nextOffset:data.nextOffset as number|null};
 }
+
+export type ArchivedBrowseDish = {name:string;query:string;restaurantCount:number};
+export async function loadArchivedMatlyst(city:NordicCity,offset=0,signal?:AbortSignal):Promise<{dishes:ArchivedBrowseDish[];nextOffset:number|null}> {
+  const params=new URLSearchParams({city,offset:String(offset)});
+  const data=await getJson("/v1/dishes/archive/browse?"+params.toString(),signal);
+  if(!data||typeof data!=="object"||!("source" in data)||data.source!=="verified-menu-archive"||
+    !("realtime" in data)||data.realtime!==false||!("city" in data)||data.city!==city||
+    !("dishes" in data)||!Array.isArray(data.dishes)||!("nextOffset" in data)||
+    !(data.nextOffset===null||typeof data.nextOffset==="number"&&Number.isSafeInteger(data.nextOffset)&&data.nextOffset>offset)) {
+    throw new Error("Ugyldig Matlyst-arkivsvar");
+  }
+  if(data.dishes.some((dish:ArchivedBrowseDish)=>typeof dish?.name!=="string"||typeof dish?.query!=="string"||
+    !Number.isSafeInteger(dish?.restaurantCount)||dish.restaurantCount<1)) throw new Error("Ugyldig rettoversikt");
+  return {dishes:data.dishes as ArchivedBrowseDish[],nextOffset:data.nextOffset as number|null};
+}
