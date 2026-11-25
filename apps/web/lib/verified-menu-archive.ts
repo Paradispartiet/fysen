@@ -55,6 +55,7 @@ export interface ArchivedMenuMatch {
   readonly priceMinor: number | null;
   readonly priceMaxMinor: number | null;
   readonly priceKind: string;
+  readonly priceNote?: string;
   readonly currency: NordicCurrency;
   readonly sourceUrl: string;
   readonly observedAt: string;
@@ -230,6 +231,7 @@ export function searchPublicMenuArchive(
         priceMinor: row[3],
         priceMaxMinor: row[5],
         priceKind: row[4],
+        ...(archive.version === 2 && currency !== "NOK" && row[6] ? { priceNote: row[6] } : {}),
         currency,
         sourceUrl: source[1],
         observedAt: source[2],

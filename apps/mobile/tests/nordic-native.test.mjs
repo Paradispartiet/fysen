@@ -27,3 +27,10 @@ test("Nordic Matlyst browses selected city's complete archive, not fabricated tr
  assert.match(app,/onPick\(dish.query\)/);
  assert.match(api,/\/v1\/dishes\/archive\/browse\?/);
 });
+
+test("Nordic native cards retain reviewed price conditions",()=>{
+ const app=fs.readFileSync(new URL("../App.tsx",import.meta.url),"utf8");
+ const api=fs.readFileSync(new URL("../src/api.ts",import.meta.url),"utf8");
+ assert.match(app,/\{dish\.priceNote\}/);
+ assert.match(api,/priceNote\?: string/);
+});

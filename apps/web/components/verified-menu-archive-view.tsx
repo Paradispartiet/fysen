@@ -48,6 +48,7 @@ export function ArchivedMenuResults({
                 </div>
                 <strong>{priceLabel(result.priceMinor, result.priceMaxMinor, result.priceKind, result.currency)}</strong>
               </div>
+              {result.priceNote ? <p>{result.priceNote}</p> : null}
               <p className={styles.restaurant}>{result.restaurantName}</p>
               <p>{result.address}, {city}</p>
               <p>Meny sist registrert <time dateTime={result.observedAt}>{result.observedAt.slice(0, 10)}</time></p>

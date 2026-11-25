@@ -356,6 +356,7 @@ function NordicArchiveScreen({city,value,setValue,wide,searchRequest,refreshRequ
           <Text style={styles.dishName}>{dish.name}</Text>
           <Text style={styles.restaurantName}>{dish.restaurant.name}</Text>
           <Text style={styles.price}>{formatPrice(dish)}</Text>
+          {dish.priceNote?<Text style={styles.muted}>{dish.priceNote}</Text>:null}
           <Text style={styles.address}>{dish.restaurant.address}</Text>
           <Text style={styles.freshness}>Meny sist registrert {new Date(dish.menu.observedAt).toLocaleDateString("nb-NO")} · Kontroller alltid meny og pris</Text>
           <View style={styles.actions}>

@@ -48,6 +48,18 @@ for (const [key, city, currency, slug, count] of [
       assert.equal(match.priceMaxMinor, item.priceMaxMinor);
       assert.equal(match.currency, currency);
     }
+    if (key === "savotta" && item.perPerson) {
+      assert.equal(webMatch.priceNote, "Pris per person");
+      assert.equal(apiMatch.priceNote, "Pris per person");
+    }
+    if (key === "savotta" && item.requiresAvailabilityConfirmation) {
+      assert.equal(webMatch.priceNote, "Spør restauranten om tilgjengelighet");
+      assert.equal(apiMatch.priceNote, "Spør restauranten om tilgjengelighet");
+    }
+    if (key === "schonnemann" && item.name === "Dagens ostetallerken") {
+      assert.equal(webMatch.priceNote, "Pris for fat til to personer");
+      assert.equal(apiMatch.priceNote, "Pris for fat til to personer");
+    }
     assert.ok(web.searchPublicMenuArchive(selected, query, "Oslo", Infinity).every((r) => r.restaurantSlug !== slug));
     checked++;
   }

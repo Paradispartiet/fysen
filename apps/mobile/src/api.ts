@@ -60,7 +60,7 @@ export const nordicCities = ["Oslo", "København", "Stockholm", "Helsinki"] as c
 export type NordicCity = typeof nordicCities[number];
 export type ArchivedNativeDish = {
   name: string; normalizedName: string; priceMinor: number | null;
-  priceMaxMinor: number | null; priceKind: "exact" | "from" | "multiple"; currency: string;
+  priceMaxMinor: number | null; priceKind: "exact" | "from" | "multiple"; currency: string; priceNote?: string;
   restaurant: {name:string;slug:string;address:string;city:string};
   menu: {sourceUrl:string;observedAt:string};
 };
@@ -74,7 +74,7 @@ export async function searchArchivedCity(term:string, city:NordicCity, offset=0,
   }
   const currency = {Oslo:"NOK",København:"DKK",Stockholm:"SEK",Helsinki:"EUR"}[city];
   if (data.results.some((row:ArchivedNativeDish)=>row?.restaurant?.city!==city||row?.currency!==currency||
-    typeof row?.name!=="string"||typeof row?.menu?.sourceUrl!=="string"||!Number.isFinite(Date.parse(row?.menu?.observedAt)))) {
+    typeof row?.name!=="string"||(row.priceNote!==undefined&&typeof row.priceNote!=="string")||typeof row?.menu?.sourceUrl!=="string"||!Number.isFinite(Date.parse(row?.menu?.observedAt)))) {
     throw new Error("Ugyldig by, valuta eller menykilde");
   }
   return {results:data.results as ArchivedNativeDish[],nextOffset:data.nextOffset as number|null};
