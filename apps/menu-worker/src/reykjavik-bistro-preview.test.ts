@@ -25,3 +25,12 @@ describe("Bistro split title",()=>{
   expect(()=>verifyBistroMenu(text.replace("Caramel sauce","Chocolate sauce"),menu)).toThrow();
  });
 });
+
+describe("Bistro dinner heading joined to age condition",()=>{
+ it("splits the reviewed heading without moving child prices into sides",()=>{
+  const menu:BistroMenu={service:"dinner",heading:"Dinner menu",localServiceTime:{from:"16:00",through:"21:30"},source:"https://example.org",excluded:[],items:[{section:"Sides",name:"Mayonnaise",priceMinor:40000,publishEligible:false},{section:"Childrens MENU",name:"Childrens cheese burger",priceMinor:190000,note:"Barn til og med 12 år",publishEligible:false}]};
+  const text=["Dinner menu","Served daily from 16:00 - 21:30","Sides","Mayonnaise","ISK 400","Childrens MENU*For 12 years and younger","Childrens cheese burger","ISK 1,900","Contact"].join("\n");
+  expect(verifyBistroMenu(text,menu)).toHaveLength(2);
+  expect(()=>verifyBistroMenu(text.replace("12 years","14 years"),menu)).toThrow();
+ });
+});

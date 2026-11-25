@@ -17,8 +17,17 @@ export function verifyBistroMenu(text:string,menu:BistroMenu){
   const scopes=new Map<string,string[]>();
   let section:string|undefined;
   for(const line of lines.slice(start+2,end)){
+    // Wix can concatenate the children's section heading and its age notice.
+    // Split only the exact reviewed heading and exact age qualification.
     const h=headings.find(s=>norm(s)===line);
-    if(h){if(scopes.has(h))throw new Error("Repeated heading: "+h);scopes.set(h,[]);section=h;continue;}
+    const ageHeading=headings.find(s=>norm(s)==="childrens menu"&&
+      new RegExp("^childrens menu\\s*\\*?\\s*for 12 years and younger$","u").test(line));
+    const nextHeading=h??ageHeading;
+    if(nextHeading){
+      if(scopes.has(nextHeading))throw new Error("Repeated heading: "+nextHeading);
+      scopes.set(nextHeading,ageHeading?["for 12 years and younger"]:[]);
+      section=nextHeading;continue;
+    }
     if(section)scopes.get(section)!.push(line);
   }
   const result=[];
