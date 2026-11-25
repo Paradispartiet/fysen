@@ -1,11 +1,11 @@
 {
-  "version": 1,
+  "version": 2,
   "archiveDate": "2026-11-02",
-  "restaurants": 973,
-  "sources": 973,
-  "dishes": 47357,
-  "bytes": 1240279,
-  "sha256": "758c4586c6c9d0dc372ba4ca4fcf06cf5d27ce2c53f8559df4dbf38560238060",
+  "restaurants": 976,
+  "sources": 988,
+  "dishes": 47481,
+  "bytes": 1252939,
+  "sha256": "13242b110e2440c0170a31e723499647d14ca80db059aefefc2e2ba1f6d8fd01",
   "disclaimer": "Historiske, sist verifiserte menyer. Ikke sanntid. Sjekk restauranten for dagens pris og tilgjengelighet.",
   "lastRefreshAt": "2026-11-25T18:26:40.357Z",
   "refreshedSourceIndices": [
