@@ -344,7 +344,8 @@ export function reconcileMenuVersions(archive: PublicMenuArchive, live: readonly
     // exactly the same observation timestamp.
     const officialTie = identity.startsWith("verified:") && previous &&
       at === previous.at && new URL(source[1]).hostname.replace(/^www\./u, "") === "benares.no" &&
-      new URL(archive.sources[previous.index][1]).hostname.replace(/^www\./u, "") !== "benares.no";
+      archive.sources[previous.index] !== undefined &&
+      new URL(archive.sources[previous.index]![1]).hostname.replace(/^www\./u, "") !== "benares.no";
     if (!previous || at > previous.at || officialTie) latest.set(identity, { index, at });
   });
   const liveByIdentity = new Map<string, MenuVersion>();
