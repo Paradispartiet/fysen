@@ -33,6 +33,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Verify CI scope policy
+        run: node --test scripts/ci-scope.test.mjs
+
       - name: Classify changed scope
         id: scope
         shell: bash
