@@ -28,7 +28,6 @@ import { CuisineCountryFlag } from "./cuisine-country-flag";
 type RestaurantExample = DishBrowseRestaurantExample & {
   /** Verified archive examples include the original menu URL. Both sources may include a menu date. */
   readonly sourceUrl?: string;
-  readonly observedAt?: string;
 };
 
 type DishCoverage = {

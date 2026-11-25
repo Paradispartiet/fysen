@@ -148,7 +148,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 initialFoodTypeName={first(params.mat)}
                 initialAreaName={first(params.region)}
                 archive={archive}
-                liveDishes={browseState.data?.dishes.map((dish) => {
+                liveDishes={(browseState.data?.dishes ?? []).map((dish) => {
                   const restaurantExamples = dish.restaurantExamples.filter((restaurant) => !suppressedLiveIds.has(restaurant.id));
                   return { ...dish, restaurantExamples, restaurantCount: restaurantExamples.length };
                 }).filter((dish) => dish.restaurantCount > 0)}
