@@ -15,6 +15,6 @@ export function menuEvidenceLabel(kind: MenuEvidenceKind, restaurantCount: numbe
   }
   const restaurants = restaurantCount === 1 ? "restaurant" : "restauranter";
   return kind === "archive"
-    ? `Arkivert menytreff hos ${restaurantCount} ${restaurants} · ikke bekreftet nå`
-    : `Registrert hos ${restaurantCount} ${restaurants} i de hentede menyene`;
+    ? `Registrert hos ${restaurantCount} ${restaurants}`
+    : `Registrert hos ${restaurantCount} ${restaurants}`;
 }

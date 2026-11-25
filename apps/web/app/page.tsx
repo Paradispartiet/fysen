@@ -4,7 +4,7 @@ import { DishLearningSection } from "../components/dish-learning-section";
 import { DishSearch } from "../components/dish-search";
 import { GlobalHeader } from "../components/global-header";
 import { browseDishes } from "../lib/fysen-api";
-import { getPublicMenuArchive } from "../lib/verified-menu-archive";
+import { getPublicMenuArchive, reconcileMenuVersions } from "../lib/verified-menu-archive";
 import { summarizeArchivedMatlyst, type ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
 import { homeCuisines } from "../components/cuisine-explorer-data";
 import { dishBrowseHref } from "../lib/public-path";
@@ -14,15 +14,23 @@ export default async function HomePage() {
   try {
     browseData = await browseDishes({ city: "Oslo" });
     // A successful but empty live index should still expose the verified archive.
-    if (browseData.dishes.length === 0) browseData = null;
+    if (browseData.dishes.length === 0 && !browseData.menuVersions) browseData = null;
   } catch {
     browseData = null;
   }
 
   let archiveCoverage: ArchivedMatlystCoverage | null = null;
-  if (!browseData) {
+  {
     try {
-      const archive = await getPublicMenuArchive();
+      const stored = await getPublicMenuArchive();
+      const { archive, suppressedLiveIds } = reconcileMenuVersions(stored, browseData?.menuVersions ?? []);
+      if (browseData) {
+        const filtered = browseData.dishes.map((dish) => {
+          const restaurantExamples = dish.restaurantExamples.filter((restaurant) => !suppressedLiveIds.has(restaurant.id));
+          return { ...dish, restaurantExamples, restaurantCount: restaurantExamples.length };
+        }).filter((dish) => dish.restaurantCount > 0);
+        browseData = { ...browseData, dishes: filtered, count: filtered.length };
+      }
       const dishes = homeCuisines.flatMap((cuisine) => cuisine.areas.flatMap((area) => area.dishes));
       archiveCoverage = summarizeArchivedMatlyst(archive, dishes);
     } catch {

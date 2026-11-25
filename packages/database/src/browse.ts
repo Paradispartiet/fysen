@@ -22,6 +22,7 @@ export interface DishBrowseDatabaseResult {
     readonly id: string;
     readonly name: string;
     readonly address: string;
+    readonly observedAt: string;
   }[];
 }
 
@@ -123,7 +124,7 @@ export async function browseDishes(
   const result = await pool.query<CompactRestaurantRow>(
     `
       WITH latest_snapshots AS (
-        SELECT DISTINCT ON (snapshot.menu_source_id)
+        SELECT DISTINCT ON (source.restaurant_id)
           snapshot.id,
           snapshot.menu_source_id,
           snapshot.fetched_at
@@ -134,9 +135,7 @@ export async function browseDishes(
           AND restaurant.active = true
           AND restaurant.slug <> ALL($2::text[])
           AND source.last_checked_at IS NOT NULL
-          AND now() <= source.last_checked_at
-            + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
-        ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
+        ORDER BY source.restaurant_id, snapshot.fetched_at DESC, snapshot.created_at DESC, snapshot.id DESC
       ), browse_rows AS (
       SELECT
           concept.slug AS concept_slug,
@@ -296,12 +295,13 @@ export async function browseDishes(
     const representative = rankedRows[0]!;
     const seenRestaurants = new Set<string>();
     const restaurantExamples = rankedRows.flatMap((row) => {
-      if (seenRestaurants.has(row.restaurant_id) || seenRestaurants.size >= 2) return [];
+      if (seenRestaurants.has(row.restaurant_id)) return [];
       seenRestaurants.add(row.restaurant_id);
       return [{
         id: row.restaurant_id,
         name: row.restaurant_name,
         address: row.restaurant_address,
+        observedAt: row.fetched_at.toISOString(),
       }];
     });
     const name = representative.concept_name ?? canonicalMenuDishName(representative.original_name);

@@ -9,7 +9,7 @@ export type RestaurantOpeningState = "open" | "closed" | "unknown";
 export interface DishSearchDatabaseInput {
   readonly normalizedQuery: string;
   readonly city: string;
-  readonly limit: number;
+  readonly limit: number | null;
   readonly latitude: number | null;
   readonly longitude: number | null;
   readonly sort: DishSearchSort;
@@ -197,7 +197,7 @@ export async function searchDishes(
   const result = await pool.query<DishSearchRow>(
     `
       WITH latest_snapshots AS (
-        SELECT DISTINCT ON (snapshot.menu_source_id)
+        SELECT DISTINCT ON (source.restaurant_id)
           snapshot.id,
           snapshot.menu_source_id,
           snapshot.fetched_at
@@ -208,9 +208,7 @@ export async function searchDishes(
           AND restaurant.active = true
           AND restaurant.slug <> ALL($7::text[])
           AND source.last_checked_at IS NOT NULL
-          AND now() <= source.last_checked_at
-            + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
-        ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
+        ORDER BY source.restaurant_id, snapshot.fetched_at DESC, snapshot.created_at DESC, snapshot.id DESC
       ),
       latest_hours AS (
         SELECT DISTINCT ON (hours_source.restaurant_id)
@@ -411,11 +409,39 @@ export async function searchDishes(
         item.confidence DESC,
         latest.fetched_at DESC,
         restaurant.name ASC,
-        item.position ASC
+        item.position ASC,
+        item.id ASC
       LIMIT $3
     `,
     [input.normalizedQuery, input.city, input.limit, input.latitude, input.longitude, input.sort, [...publicIdentityQuarantineSlugs]],
   );
 
   return result.rows.map(mapRow);
+}
+
+export interface LatestMenuVersion {
+  readonly restaurantSlug: string;
+  readonly restaurantId: string;
+  readonly observedAt: string;
+}
+
+/** Include menus even if none of their dishes match the query. */
+export async function listLatestMenuVersions(pool: Pool, city: string): Promise<LatestMenuVersion[]> {
+  const result = await pool.query<{ restaurant_slug: string; restaurant_id: string; observed_at: Date }>(
+    `SELECT restaurant.slug AS restaurant_slug, restaurant.id AS restaurant_id,
+        max(snapshot.fetched_at) AS observed_at
+      FROM fysen.menu_snapshots AS snapshot
+      JOIN fysen.menu_sources AS source ON source.id = snapshot.menu_source_id
+      JOIN fysen.restaurants AS restaurant ON restaurant.id = source.restaurant_id
+      WHERE source.enabled = true AND restaurant.active = true
+        AND source.last_checked_at IS NOT NULL
+        AND lower(restaurant.city) = lower($1)
+        AND restaurant.slug <> ALL($2::text[])
+      GROUP BY restaurant.slug, restaurant.id`,
+    [city, [...publicIdentityQuarantineSlugs]],
+  );
+  return result.rows.map((row) => ({
+    restaurantSlug: row.restaurant_slug, restaurantId: row.restaurant_id,
+    observedAt: row.observed_at.toISOString(),
+  }));
 }

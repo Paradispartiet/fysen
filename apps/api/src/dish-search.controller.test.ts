@@ -51,3 +51,12 @@ describe("dish search query parsing", () => {
     expect(() => parseDishSearchQuery({ q: ["ramen", "tartar"] })).toThrow(BadRequestException);
   });
 });
+
+
+describe("complete restaurant search", () => {
+  it("accepts explicit full search without changing bounded defaults", () => {
+    expect(parseDishSearchQuery({ q: "ramen", all: "true" }).all).toBe("true");
+    expect(parseDishSearchQuery({ q: "ramen" }).all).toBeUndefined();
+    expect(() => parseDishSearchQuery({ q: "ramen", all: "false" })).toThrow(BadRequestException);
+  });
+});

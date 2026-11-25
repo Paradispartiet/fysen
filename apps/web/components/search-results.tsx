@@ -116,7 +116,7 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
         </div>
         <p className={styles.limitNote}>
           Filtrene gjelder kun treffene som allerede er hentet
-          {searchLimitReached ? " (maksimalt 20). Flere restauranter kan finnes." : "."}
+          {searchLimitReached ? " (API-et har ikke bekreftet fullstendig dekning). Flere restauranter kan finnes." : "."}
           {" "}Ukjent pris, avstand eller åpningstid regnes ikke som et bekreftet filtertreff.
         </p>
       </div>

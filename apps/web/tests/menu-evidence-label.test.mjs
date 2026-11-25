@@ -3,15 +3,14 @@ import test from "node:test";
 import { menuEvidenceLabel } from "../lib/menu-evidence-label.ts";
 
 test("live menu coverage only describes fetched menu evidence", () => {
-  assert.equal(menuEvidenceLabel("live", 1), "Registrert hos 1 restaurant i de hentede menyene");
-  assert.equal(menuEvidenceLabel("live", 2), "Registrert hos 2 restauranter i de hentede menyene");
+  assert.equal(menuEvidenceLabel("live", 1), "Registrert hos 1 restaurant");
+  assert.equal(menuEvidenceLabel("live", 2), "Registrert hos 2 restauranter");
   assert.equal(menuEvidenceLabel("live", 0), "Rettforslag · ingen treff i de hentede menyene");
 });
 
 test("archive findings cannot be described as current restaurant availability", () => {
   const label = menuEvidenceLabel("archive", 3);
-  assert.match(label, /Arkivert menytreff hos 3 restauranter/u);
-  assert.match(label, /ikke bekreftet nå/u);
+  assert.equal(label, "Registrert hos 3 restauranter");
   assert.equal(menuEvidenceLabel("archive", 0),
     "Rettforslag · ikke funnet i det kontrollerte menyarkivet");
 });

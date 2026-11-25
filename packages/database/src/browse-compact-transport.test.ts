@@ -22,10 +22,10 @@ describe("compact browse transport", () => {
     ]);
     const result = await browseDishes(pool, { city: "Oslo" });
     expect(result.dishes).toEqual([
-      { id: "menu:laks maki", name: "Laks Maki", query: "laks maki", restaurantCount: 1, restaurantExamples: [{ id: "a", name: "Bistro Æ", address: "Gate 1" }] },
+      { id: "menu:laks maki", name: "Laks Maki", query: "laks maki", restaurantCount: 1, restaurantExamples: [{ id: "a", name: "Bistro Æ", address: "Gate 1", observedAt: "2026-10-30T10:00:00.000Z" }] },
       { id: "concept:ramen", name: "Ramen", query: "ramen", restaurantCount: 2, restaurantExamples: [
-        { id: "b", name: "Bistro Ø", address: "Gate 2" },
-        { id: "a", name: "Bistro Æ", address: "Gate 1" },
+        { id: "b", name: "Bistro Ø", address: "Gate 2", observedAt: "2026-10-31T10:00:00.000Z" },
+        { id: "a", name: "Bistro Æ", address: "Gate 1", observedAt: "2026-10-30T10:00:00.000Z" },
       ] },
     ]);
     expect(result.quality).toMatchObject({ rawItemCount: 5, validItemCount: 3, excludedItemCount: 2, deduplicatedItemCount: 1, exclusions: { beverage: 1, allergen_or_information: 1 } });
@@ -42,5 +42,19 @@ describe("compact browse transport", () => {
     expect(result.dishes).toHaveLength(1);
     expect(result.dishes[0]?.query).toBe("new query");
     expect(result.dishes[0]?.restaurantExamples).toHaveLength(1);
+  });
+});
+
+
+describe("complete restaurant lists", () => {
+  it("does not truncate a dish with 35 restaurants", async () => {
+    const pool = poolFor(Array.from({ length: 35 }, (_, i) => ({
+      restaurant_id: String(i), restaurant_name: "Bistro " + i, restaurant_address: "Gate " + i,
+      menu_rows: [["ramen", "Ramen", "ramen", "Ramen", "ramen", null, "Middag", 20000, 0.95, 0, "2020-01-01T10:00:00Z"]],
+    })));
+    const result = await browseDishes(pool, { city: "Oslo" });
+    expect(result.dishes[0]?.restaurantCount).toBe(35);
+    expect(result.dishes[0]?.restaurantExamples).toHaveLength(35);
+    expect(result.dishes[0]?.restaurantExamples.every((item) => item.observedAt.startsWith("2020-01-01"))).toBe(true);
   });
 });

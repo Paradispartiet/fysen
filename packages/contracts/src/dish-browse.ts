@@ -8,6 +8,7 @@ export const dishBrowseRestaurantExampleSchema = z.object({
   id: z.string().uuid(),
   name: z.string().trim().min(1).max(200),
   address: z.string().trim().min(1).max(500),
+  observedAt: z.string().datetime({ offset: true }).optional(),
 });
 
 export const dishBrowseItemSchema = z.object({
@@ -15,7 +16,7 @@ export const dishBrowseItemSchema = z.object({
   name: z.string().trim().min(1).max(300),
   query: z.string().trim().min(1).max(300),
   restaurantCount: z.number().int().positive(),
-  restaurantExamples: z.array(dishBrowseRestaurantExampleSchema).max(2).default([]),
+  restaurantExamples: z.array(dishBrowseRestaurantExampleSchema).default([]),
 });
 
 export const recentlyAddedDishSchema = z.object({
@@ -60,6 +61,11 @@ export const dishBrowseResponseSchema = z.object({
   city: z.string().trim().min(1).max(120),
   count: z.number().int().nonnegative(),
   dishes: z.array(dishBrowseItemSchema),
+  menuVersions: z.array(z.object({
+    restaurantSlug: z.string().min(1),
+    restaurantId: z.string().uuid(),
+    observedAt: z.string().datetime({ offset: true }),
+  })).optional(),
   // Optional while older API versions are rolling out.
   recentDishes: z.array(recentlyAddedDishSchema).max(8).optional(),
   popularDishes: z.array(popularDishSchema).max(6).optional(),
