@@ -159,6 +159,7 @@ test("a successful empty live API response still exposes the historical menu rou
   assert.match(search, /searchPublicMenuArchive\(archive, q, city, Infinity\)/u);
   assert.match(search, /archive=\{archive\}/u);
   assert.match(home, /browseData\.dishes\.length === 0/u);
+  assert.match(home, /reconcileMenuVersions\(stored, browseData\?\.menuVersions/u);
   assert.match(preview, /response\.browse\?\.dishes\.length === 0/u);
   assert.match(preview, /response\.search\?\.results\.length === 0/u);
   assert.match(archivedView, /browseArchivedMenuDishes\(archive, city, 48\)/u);
@@ -180,4 +181,26 @@ test("full archive search returns all 35 restaurants even with old menus", () =>
   assert.equal(complete.length, 35);
   assert.equal(new Set(complete.map((item) => item.restaurantSlug)).size, 35);
   assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen").length, 20);
+});
+
+test("newer full menu suppresses a removed dish even when the live search returns no dish matches", () => {
+  const archive = archiveModule.parsePublicMenuArchive(metadata, index);
+  const selected = archiveModule.reconcileMenuVersions(archive, [{
+    restaurantSlug: "king-falafel-brugata-oslo", restaurantId: "live-king",
+    observedAt: "2026-11-25T12:00:00Z",
+  }]);
+  const matches = archiveModule.searchPublicMenuArchive(selected.archive, "ramen", "Oslo", Infinity);
+  assert.ok(!matches.some((match) => match.restaurantSlug === "king-falafel-brugata-oslo"));
+  assert.ok(matches.some((match) => match.restaurantSlug === "another-ramen-place-oslo"));
+  assert.ok(!selected.suppressedLiveIds.has("live-king"));
+});
+
+test("newer archive menu replaces the older live version regardless of searched dish", () => {
+  const archive = archiveModule.parsePublicMenuArchive(metadata, index);
+  const selected = archiveModule.reconcileMenuVersions(archive, [{
+    restaurantSlug: "king-falafel-brugata-oslo", restaurantId: "live-king",
+    observedAt: "2020-01-01T12:00:00Z",
+  }]);
+  assert.ok(selected.suppressedLiveIds.has("live-king"));
+  assert.ok(archiveModule.searchPublicMenuArchive(selected.archive, "ramen", "Oslo", Infinity).some((match) => match.restaurantSlug === "king-falafel-brugata-oslo"));
 });

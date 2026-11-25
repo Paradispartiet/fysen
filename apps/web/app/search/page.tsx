@@ -2,7 +2,7 @@ import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
 import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
-import { getPublicMenuArchive, searchPublicMenuArchive, normalizeArchiveQuery, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
+import { getPublicMenuArchive, searchPublicMenuArchive, reconcileMenuVersions, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
@@ -94,23 +94,24 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const error = searchState.error;
   let archive: PublicMenuArchive | null = null;
   let archiveMatches: ArchivedMenuMatch[] = [];
+  let suppressedLiveSlugs = new Set<string>();
   // Registered menus remain searchable even when the live index has some results.
   if (q.length !== 1 && city.toLocaleLowerCase("nb-NO") === "oslo") {
     try {
-      archive = await getPublicMenuArchive();
+      const stored = await getPublicMenuArchive();
+      const versions = q.length === 0 ? browseState.data?.menuVersions : data?.menuVersions;
+      const selected = reconcileMenuVersions(stored, versions ?? []);
+      archive = selected.archive;
+      suppressedLiveSlugs = selected.suppressedLiveSlugs;
       if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city, Infinity);
     } catch {
       // Preserve the existing clear unavailable state, never invent menu data.
       archive = null;
     }
   }
-  const primaryResults = data?.results.filter((result) => result.match.type !== "fuzzy") ?? [];
-  const nearResults = data?.results.filter((result) => result.match.type === "fuzzy") ?? [];
-
-  const liveKeys = new Set((data?.results ?? []).map((result) =>
-    result.restaurant.slug + ":" + normalizeArchiveQuery(result.dish.name)));
-  archiveMatches = archiveMatches.filter((result) =>
-    !liveKeys.has(result.restaurantSlug + ":" + normalizeArchiveQuery(result.name)));
+  const eligibleLive = (data?.results ?? []).filter((result) => !suppressedLiveSlugs.has(result.restaurant.slug));
+  const primaryResults = eligibleLive.filter((result) => result.match.type !== "fuzzy");
+  const nearResults = eligibleLive.filter((result) => result.match.type === "fuzzy");
   const countLabel = archive && q.length >= 2
     ? `${archiveMatches.length + primaryResults.length} menytreff`
     : data
@@ -167,7 +168,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
               <DishKnowledgeNote query={q} />
 
-              {archive && (archiveMatches.length > 0 || !data?.results.length) ? (
+              {archive && (archiveMatches.length > 0 || !eligibleLive.length) ? (
                 <ArchivedMenuResults results={archiveMatches} query={q} city={city} />
               ) : null}
 
@@ -191,7 +192,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 />
               ) : null}
 
-              {data && data.results.length > 0 ? (
+              {data && eligibleLive.length > 0 ? (
                 <SearchResults
                   primaryResults={primaryResults}
                   nearResults={nearResults}

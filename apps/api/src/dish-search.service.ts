@@ -9,7 +9,7 @@ import {
   type DishSearchQuery,
   type DishSearchResponse,
 } from "@fysen/contracts";
-import { browseDishes, recordSearchFunnel, searchDishes } from "@fysen/database";
+import { browseDishes, listLatestMenuVersions, recordSearchFunnel, searchDishes } from "@fysen/database";
 import { normalizeDishName } from "@fysen/menu-core";
 import { DatabaseService } from "./database.service.js";
 
@@ -19,9 +19,11 @@ export class DishSearchService {
 
   async browse(input: DishBrowseQuery): Promise<DishBrowseResponse> {
     const result = await browseDishes(this.databaseService.pool(), { city: input.city });
+    const menuVersions = await listLatestMenuVersions(this.databaseService.pool(), input.city);
     return dishBrowseResponseSchema.parse({
       city: input.city,
       count: result.dishes.length,
+      menuVersions,
       dishes: result.dishes,
       recentDishes: result.recentDishes,
       popularDishes: result.popularDishes,
@@ -74,7 +76,7 @@ export class DishSearchService {
       city: input.city,
       sort: input.sort,
       count: rows.length,
-      ...(input.all === "true" ? { complete: true } : {}),
+      ...(input.all === "true" ? { complete: true, menuVersions: await listLatestMenuVersions(this.databaseService.pool(), input.city) } : {}),
       results: rows.map((row) => ({
         impressionId: impressionIdsByMenuItemId[row.menuItemId] ?? null,
         menuItemId: row.menuItemId,

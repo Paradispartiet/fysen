@@ -124,7 +124,7 @@ export async function browseDishes(
   const result = await pool.query<CompactRestaurantRow>(
     `
       WITH latest_snapshots AS (
-        SELECT DISTINCT ON (snapshot.menu_source_id)
+        SELECT DISTINCT ON (source.restaurant_id)
           snapshot.id,
           snapshot.menu_source_id,
           snapshot.fetched_at
@@ -135,7 +135,7 @@ export async function browseDishes(
           AND restaurant.active = true
           AND restaurant.slug <> ALL($2::text[])
           AND source.last_checked_at IS NOT NULL
-        ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
+        ORDER BY source.restaurant_id, snapshot.fetched_at DESC, snapshot.created_at DESC, snapshot.id DESC
       ), browse_rows AS (
       SELECT
           concept.slug AS concept_slug,

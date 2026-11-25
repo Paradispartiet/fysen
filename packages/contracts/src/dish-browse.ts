@@ -61,6 +61,11 @@ export const dishBrowseResponseSchema = z.object({
   city: z.string().trim().min(1).max(120),
   count: z.number().int().nonnegative(),
   dishes: z.array(dishBrowseItemSchema),
+  menuVersions: z.array(z.object({
+    restaurantSlug: z.string().min(1),
+    restaurantId: z.string().uuid(),
+    observedAt: z.string().datetime({ offset: true }),
+  })).optional(),
   // Optional while older API versions are rolling out.
   recentDishes: z.array(recentlyAddedDishSchema).max(8).optional(),
   popularDishes: z.array(popularDishSchema).max(6).optional(),

@@ -220,6 +220,11 @@ export const dishSearchResponseSchema = z.object({
   sort: dishSearchSortSchema.default("relevance"),
   count: z.number().int().nonnegative(),
   complete: z.boolean().optional(),
+  menuVersions: z.array(z.object({
+    restaurantSlug: z.string().min(1),
+    restaurantId: z.string().uuid(),
+    observedAt: z.string().datetime({ offset: true }),
+  })).optional(),
   results: z.array(dishSearchResultSchema),
 });
 
