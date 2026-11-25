@@ -996,11 +996,18 @@
       "label": "Sambar med linser og grønnsaker",
       "query": "sambar",
       "index": 42,
-      "atlas": "sambar-768.avif",
+      "atlas": "sambar-512.avif",
       "surface": "Matlyst",
       "kind": "AI-illustrasjon",
       "catalogId": "sambar",
-      "variantCaution": "Sørindisk linse- og grønnsaksgryte med tamarind, karriblader, sennepsfrø og chili. Tilberedning og ingredienser varierer; ikke autentisk restaurantfoto."
+      "variantCaution": "AI-bearbeidet og oppskalert illustrasjon av sambar med linser. Ikke restaurantfoto; ingredienser og allergener kan ikke utledes fra bildet.",
+      "upscaledSource": "sambar-3072.avif",
+      "upscaledSourceWidth": 3072,
+      "upscaledSourceHeight": 3072,
+      "upscaledSourceSha256": "4b62838fd0008dad1751a9ce3ca0d957818255e7762d22829ac6bda435ce20c0",
+      "aiProcessed": true,
+      "upscaled": true,
+      "processingNotice": "/dish-images/sambar-PROCESSING.txt"
     },
     {
       "id": "vada",
