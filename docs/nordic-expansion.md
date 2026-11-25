@@ -27,3 +27,7 @@ Alle 124 research-only oppføringer (69 København, 33 Stockholm, 22 Helsinki) k
 ## Danish source probe
 
 `pnpm --filter @fysen/menu-worker probe:nordic:schonnemann` fetches the 13 reviewed first-party categories using the existing robots-aware HTTP client, records source digests and compares 70 priced rows against 69 unique reviewed dishes. It fails closed outside the reviewed seasonal date range, on missing or unmapped rows, changed identity, or conflicting cross-listed prices. This is read-only research; no publication, database or archive writes. The live HTML layout and tests still need verification.
+
+## Swedish source probe
+
+`pnpm --filter @fysen/menu-worker probe:nordic:pelikan` verifies the current first-party menu link and fetches the reviewed PDF through the robots-aware HTTP client. It scopes the first of two pages to three food columns, preserves half/full portions and SEK, and rejects missing, unknown or duplicate priced rows. The PDF layout was visually reviewed, but automated live extraction is not yet proven. No archive or database writes.

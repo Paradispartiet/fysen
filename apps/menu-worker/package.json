@@ -10,6 +10,7 @@
     "probe": "tsx src/index.ts probe",
     "probe:nordic:savotta": "tsx src/nordic-savotta-probe.ts",
     "probe:nordic:schonnemann": "tsx src/nordic-schonnemann-probe.ts",
+    "probe:nordic:pelikan": "tsx src/nordic-pelikan-probe.ts",
     "pilot:rodeo": "tsx src/index.ts pilot:rodeo",
     "run:due": "node dist/index.js run:due",
     "watch:hours": "node dist/index.js watch:hours",
