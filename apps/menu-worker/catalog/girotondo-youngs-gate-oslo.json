@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 42,
+    "minimumExpectedItems": 41,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -39,8 +39,8 @@
       "PRINCIPESSA",
       "PICCANTE",
       "FOCACCIA ROSMARINO",
-      "COPPA E BURRATA AL TARTUFO",
-      "TIRAMISU"
+      "TIRAMISU",
+      "SCAMORZA AFFUMICATA TARTUFO E PARMA"
     ],
     "requiredDishVariants": [
       {
@@ -57,23 +57,23 @@
       },
       {
         "name": "PRINCIPESSA",
-        "priceMinor": 28500
+        "priceMinor": 29000
       },
       {
         "name": "PICCANTE",
-        "priceMinor": 28000
+        "priceMinor": 29000
       },
       {
         "name": "FOCACCIA ROSMARINO",
         "priceMinor": 13000
       },
       {
-        "name": "COPPA E BURRATA AL TARTUFO",
-        "priceMinor": 29500
+        "name": "TIRAMISU",
+        "priceMinor": 15500
       },
       {
-        "name": "TIRAMISU",
-        "priceMinor": 15000
+        "name": "SCAMORZA AFFUMICATA TARTUFO E PARMA",
+        "priceMinor": 28000
       }
     ],
     "forbiddenDishNames": [
