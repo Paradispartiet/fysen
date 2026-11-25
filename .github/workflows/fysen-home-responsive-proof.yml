@@ -6,7 +6,17 @@ on:
   pull_request:
     paths:
       - "apps/web/**"
+      - "!apps/web/public/dish-images/**/*.avif"
+      - "!apps/web/public/dish-images/**/*.png"
+      - "!apps/web/public/dish-images/**/*.webp"
+      - "!apps/web/public/dish-images/**/*.jpg"
+      - "!apps/web/public/dish-images/**/*.jpeg"
+      - "!apps/web/public/dish-images/**/*-LICENSE.txt"
+      - "!apps/web/public/dish-images/manifest.json"
+      - "!apps/web/public/dish-images/README.md"
+      - "!apps/web/public/dish-images/COVERAGE.md"
       - ".github/workflows/fysen-home-responsive-proof.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read

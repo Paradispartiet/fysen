@@ -6,6 +6,10 @@ on:
       - "apps/mobile/**"
       - "packages/contracts/**"
       - ".github/workflows/native-js-bundle.yml"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/actions/setup-node-pnpm/**"
   workflow_dispatch:
 
 permissions:

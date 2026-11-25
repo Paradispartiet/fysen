@@ -5,6 +5,8 @@ name: CI
 on:
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '17 2 * * *'
 
 permissions:
   contents: read
@@ -22,6 +24,7 @@ jobs:
       database: ${{ steps.scope.outputs.database }}
       browser: ${{ steps.scope.outputs.browser }}
       restaurant_data: ${{ steps.scope.outputs.restaurant_data }}
+      dish_images: ${{ steps.scope.outputs.dish_images }}
       base_sha: ${{ steps.scope.outputs.base_sha }}
       head_sha: ${{ steps.scope.outputs.head_sha }}
     steps:
@@ -29,6 +32,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Verify CI scope policy
+        run: node --test scripts/ci-scope.test.mjs
 
       - name: Classify changed scope
         id: scope
@@ -59,6 +65,7 @@ jobs:
               echo "database=true"
               echo "browser=true"
               echo "restaurant_data=true"
+              echo "dish_images=true"
             } >> "$GITHUB_OUTPUT"
             echo "No trustworthy comparison base; failing closed to full CI."
             exit 0
@@ -69,14 +76,18 @@ jobs:
           database=false
           browser=false
           restaurant_data=false
+          dish_images=false
 
-          git diff --name-only "$BASE_SHA" "$HEAD_SHA" > /tmp/fysen-changed-files.txt
+          git diff --no-renames --name-only "$BASE_SHA" "$HEAD_SHA" > /tmp/fysen-changed-files.txt
           cat /tmp/fysen-changed-files.txt
 
           while IFS= read -r path; do
             [[ -z "$path" ]] && continue
 
             case "$path" in
+              apps/web/public/dish-images/*.avif|apps/web/public/dish-images/*.png|apps/web/public/dish-images/*.webp|apps/web/public/dish-images/*.jpg|apps/web/public/dish-images/*.jpeg|apps/web/public/dish-images/*-LICENSE.txt|apps/web/public/dish-images/manifest.json|apps/web/public/dish-images/README.md|apps/web/public/dish-images/COVERAGE.md|assets/fysen-dish-originals/*.png)
+                dish_images=true
+                ;;
               apps/menu-worker/candidates/*|apps/menu-worker/catalog/*)
                 restaurant_data=true
                 ;;
@@ -118,6 +129,7 @@ jobs:
             echo "database=$database"
             echo "browser=$browser"
             echo "restaurant_data=$restaurant_data"
+            echo "dish_images=$dish_images"
           } >> "$GITHUB_OUTPUT"
 
   quality:
@@ -126,14 +138,25 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: No generic code gates required
-        if: needs.scope.outputs.code != 'true'
+        if: needs.scope.outputs.code != 'true' && needs.scope.outputs.dish_images != 'true'
         run: echo "Only restaurant data, research or documentation changed; domain-specific workflows own validation."
 
       - name: Checkout
-        if: needs.scope.outputs.code == 'true'
+        if: needs.scope.outputs.code == 'true' || needs.scope.outputs.dish_images == 'true'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Set up Node for pure dish-image changes
+        if: needs.scope.outputs.code != 'true' && needs.scope.outputs.dish_images == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Targeted dish image integrity
+        if: needs.scope.outputs.code != 'true' && needs.scope.outputs.dish_images == 'true'
+        run: |
+          node --test apps/web/tests/dish-image-resolution-contract.test.mjs apps/web/tests/dish-image-large-view-quality.test.mjs apps/web/tests/dish-photo-gallery.test.mjs apps/web/tests/dish-image-source-preflight.test.mjs
 
       - name: Setup Fysen workspace
         if: needs.scope.outputs.code == 'true'
