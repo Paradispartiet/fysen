@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   applicationName: "Fysen",
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/fysen-app-icon.webp",
-    apple: "/fysen-app-icon.webp",
+    icon: "/fysen-wordmark-icon-320.png",
+    apple: "/fysen-wordmark-icon-320.png",
   },
   appleWebApp: {
     capable: true,

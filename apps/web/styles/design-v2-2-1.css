@@ -1,4 +1,4 @@
-/* Fysen Design v2.2.1 — lock the selected mascot and hero geometry. */
+/* Fysen Design v2.2.1 — wordmark and hero geometry. */
 
 .fysenLogoLink,
 .fysenBrandLockup {
@@ -14,7 +14,7 @@
 
 .fysenBrandMark {
   display: block;
-  width: 84px;
+  width: 152px;
   height: auto;
   flex: 0 0 auto;
   object-fit: contain;
@@ -86,7 +86,7 @@
   }
 
   .fysenBrandMark {
-    width: 68px;
+    width: 116px;
     height: auto;
   }
 
