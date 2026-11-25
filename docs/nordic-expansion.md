@@ -41,3 +41,7 @@ At head df029713, the affected-package quality workflow completed 27/27 tasks, i
 ## Staging the v2 archive
 
 `scripts/build-fysen-nordic-candidate.py <v1-copy> <probe-reports> <new-output-dir>` prepares a local-only v2 candidate from three successful, complete live probe JSON reports. It preserves Oslo rows, source indices and quarantines; adds explicit currency and an atomic menu snapshot; and saves exact per-page evidence and portion/availability notes in a separate proof file. Price changes require review before staging. No production branch or database writes. The existing v1 refresh workflow cannot yet refresh v2: keep production on v1 until compatibility, note rendering and end-to-end validation are complete.
+
+## Oslo refresh compatibility
+
+The existing bounded Oslo refresh accepts either archive schema, checks explicit city/currency consistency before and after updating, writes a ninth NOK field on v2 rows, and cannot replace a foreign menu through the Norwegian parser. All Nordic rows and their source timestamps remain unchanged by an Oslo-only refresh. This is compatibility work, not the dedicated atomic Nordic refresh or a production migration.

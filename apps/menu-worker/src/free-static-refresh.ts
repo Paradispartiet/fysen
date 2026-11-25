@@ -8,7 +8,7 @@ import { assertNoImplicitQuarantineRelease, readReviewedIdentityQuarantines, res
 import { canonicalizeUniqueMenuSourceKeys } from "./menu-source-key-canonicalizer.js";
 import { readRestaurantOnboardingManifest, type RestaurantOnboardingManifest } from "./onboarding-manifest.js";
 import { extractMenuSource, fetchMenuSource } from "./menu-source-runtime.js";
-import { findMatchingFreeSourceIndex, prioritizeEditedFreeSources, readRecentCatalogEdits, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, quarantineUnverifiedFreeSource, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
+import { assertFreeIndexCurrencies, freeCityCurrency, findMatchingFreeSourceIndex, prioritizeEditedFreeSources, readRecentCatalogEdits, prioritizeOneRecoverableFreeQualityFailure, prioritizeUnpublishedMenuMigrations, quarantineUnverifiedFreeSource, recordFreeSourceFailure, replaceOneSource, publishedFreeObservationTime, retainPublishableFreeMenuObservations, selectBoundedFreeRefreshEntries, type FreeIndex, type FreeManifest } from "./free-static-refresh-core.js";
 
 async function main(): Promise<void> {
   const [archiveDir, catalogDir, countArg, changeLogPath] = process.argv.slice(2);
@@ -29,11 +29,12 @@ async function main(): Promise<void> {
     throw new Error("Existing public index failed SHA-256 checksum");
   }
   const index = JSON.parse(gunzipSync(compressed).toString("utf8")) as FreeIndex;
-  if (index.version !== 1 || manifest.version !== 1 || index.archiveDate !== manifest.archiveDate ||
+  if ((index.version !== 1 && index.version !== 2) || manifest.version !== index.version || index.archiveDate !== manifest.archiveDate ||
     index.restaurants.length !== manifest.restaurants || index.sources.length !== manifest.sources ||
     index.items.length !== manifest.dishes) {
     throw new Error("Existing public index and manifest disagree; refusing refresh");
   }
+  assertFreeIndexCurrencies(index);
   const counts = index.items.reduce((acc, row) => {
     if (!Number.isInteger(row[0]) || row[0] < 0 || row[0] >= index.sources.length) {
       throw new Error("Corrupted source reference in published index");
@@ -60,6 +61,8 @@ async function main(): Promise<void> {
       index, entry.restaurant.slug, entry.menuSource.url,
     );
     if (sourceIndex === null || ambiguous.has(sourceIndex)) continue;
+    const restaurant = index.restaurants[index.sources[sourceIndex]![0]];
+    if (!restaurant || freeCityCurrency(restaurant[3]) !== "NOK") continue;
     if (matching.has(sourceIndex)) {
       matching.delete(sourceIndex);
       ambiguous.add(sourceIndex);
@@ -207,6 +210,7 @@ async function main(): Promise<void> {
   // Even when all external providers fail, remember attempted times so a failing
   // oldest source does not starve all other restaurants on every scheduled run.
   if (accepted > 0 || quarantineItemsRemoved > 0) {
+    assertFreeIndexCurrencies(nextIndex);
     const output = gzipSync(Buffer.from(JSON.stringify(nextIndex), "utf8"), { level: 9 });
     await writeFile(indexPath, output);
     manifest.bytes = output.byteLength;
