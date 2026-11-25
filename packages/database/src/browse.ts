@@ -22,6 +22,7 @@ export interface DishBrowseDatabaseResult {
     readonly id: string;
     readonly name: string;
     readonly address: string;
+    readonly observedAt: string;
   }[];
 }
 
@@ -300,6 +301,7 @@ export async function browseDishes(
         id: row.restaurant_id,
         name: row.restaurant_name,
         address: row.restaurant_address,
+        observedAt: row.fetched_at.toISOString(),
       }];
     });
     const name = representative.concept_name ?? canonicalMenuDishName(representative.original_name);

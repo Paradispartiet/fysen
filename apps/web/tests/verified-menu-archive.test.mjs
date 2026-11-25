@@ -166,3 +166,18 @@ test("a successful empty live API response still exposes the historical menu rou
   assert.match(archivedView, /Finn retten/u);
   assert.doesNotMatch(archivedView, /arkivtreff|Meny sist kontrollert|Fersksøket har ingen treff/u);
 });
+
+
+test("full archive search returns all 35 restaurants even with old menus", () => {
+  const archive = {
+    archiveDate: "2026-11-02", lastRefreshAt: null,
+    restaurants: Array.from({ length: 35 }, (_, i) => ["Bistro " + i, "bistro-" + i, "Gate " + i, "Oslo", ""]),
+    sources: Array.from({ length: 35 }, (_, i) => [i, "https://example.org/" + i, "2020-01-01T00:00:00Z"]),
+    items: Array.from({ length: 35 }, (_, i) => [i, "Ramen", "ramen", 20000, "exact", null, "NOK", ""]),
+    quarantinedSourceIndices: new Set(), quarantinedSlugs: new Set(),
+  };
+  const complete = archiveModule.searchPublicMenuArchive(archive, "ramen", "Oslo", Infinity);
+  assert.equal(complete.length, 35);
+  assert.equal(new Set(complete.map((item) => item.restaurantSlug)).size, 35);
+  assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen").length, 20);
+});

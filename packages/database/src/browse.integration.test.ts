@@ -200,11 +200,13 @@ integrationDescribe("dish browse integration", () => {
             id: expect.any(String),
             name: "Browse Bistro",
             address: "Rettgata 1",
+            observedAt: expect.any(String),
           },
           {
             id: expect.any(String),
             name: "Browse Brasserie",
             address: "Rettgata 2",
+            observedAt: expect.any(String),
           },
         ],
       },

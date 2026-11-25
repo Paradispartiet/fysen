@@ -8,6 +8,7 @@ export const dishBrowseRestaurantExampleSchema = z.object({
   id: z.string().uuid(),
   name: z.string().trim().min(1).max(200),
   address: z.string().trim().min(1).max(500),
+  observedAt: z.string().datetime({ offset: true }).optional(),
 });
 
 export const dishBrowseItemSchema = z.object({

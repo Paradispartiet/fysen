@@ -26,7 +26,7 @@ import { FoodIllustration } from "./food-illustration";
 import { CuisineCountryFlag } from "./cuisine-country-flag";
 
 type RestaurantExample = DishBrowseRestaurantExample & {
-  /** Only archived examples have a verified original-menu URL and observation timestamp. */
+  /** Verified archive examples include the original menu URL. Both sources may include a menu date. */
   readonly sourceUrl?: string;
   readonly observedAt?: string;
 };
@@ -123,7 +123,13 @@ function coverageForDish(
         .toLocaleLowerCase("nb-NO").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
     const restaurants = new Map<string, RestaurantExample>();
     for (const restaurant of coverage.restaurantExamples) restaurants.set(key(restaurant), restaurant);
-    for (const restaurant of stored?.restaurantExamples ?? []) restaurants.set(key(restaurant), restaurant);
+    for (const restaurant of stored?.restaurantExamples ?? []) {
+      const identity = key(restaurant);
+      const existing = restaurants.get(identity);
+      if (!existing || !existing.observedAt || Date.parse(existing.observedAt) <= Date.parse(restaurant.observedAt)) {
+        restaurants.set(identity, restaurant);
+      }
+    }
     const restaurantExamples = [...restaurants.values()];
     return {
       dish,
