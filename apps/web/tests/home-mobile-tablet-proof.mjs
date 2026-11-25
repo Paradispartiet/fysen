@@ -71,10 +71,8 @@ try {
         "Overview should start with up to twelve suggestions");
       const restaurantDetails = kitchenDialog.locator("details.cuisineExploreRestaurantDetails").first();
       if (await restaurantDetails.count()) {
-        assert.equal(await restaurantDetails.getAttribute("open"), null,
-          "Individual restaurant examples must begin collapsed");
-        await restaurantDetails.locator("summary").click();
-        assert.notEqual(await restaurantDetails.getAttribute("open"), null);
+        assert.notEqual(await restaurantDetails.getAttribute("open"), null,
+          "All registered restaurants must begin visible");
         assert.ok(await restaurantDetails.locator("li .cuisineExploreRestaurantExample").count() > 0,
           "Opening restaurant examples must show documented restaurant names and addresses");
         for (const link of await restaurantDetails.locator("a.cuisineExploreRestaurantSource").all()) {

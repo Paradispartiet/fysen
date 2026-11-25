@@ -168,6 +168,16 @@ integrationDescribe("dish browse integration", () => {
     await pool.end();
   });
 
+  it("keeps dated menus in the ordinary browse index", async () => {
+    await pool.query("UPDATE fysen.menu_sources SET last_checked_at = now() - interval '90 days'");
+    try {
+      const result = await browseDishes(pool, { city: "Oslo" });
+      expect(result.dishes.find((dish) => dish.id === "concept:beef-tartare")?.restaurantCount).toBe(2);
+    } finally {
+      await pool.query("UPDATE fysen.menu_sources SET last_checked_at = now()");
+    }
+  });
+
   it("groups canonical aliases across restaurants and ignores older snapshots", async () => {
     await pool.query(
       `INSERT INTO fysen.search_events (normalized_query, city, result_count, demand_source)

@@ -208,8 +208,6 @@ export async function searchDishes(
           AND restaurant.active = true
           AND restaurant.slug <> ALL($7::text[])
           AND source.last_checked_at IS NOT NULL
-          AND now() <= source.last_checked_at
-            + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
         ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
       ),
       latest_hours AS (

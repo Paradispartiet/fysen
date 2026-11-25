@@ -115,10 +115,20 @@ function coverageForDish(
 ): DishCoverage {
   if (hasLiveData) {
     const coverage = discoveryCoverage(dishes, dish);
+    const stored = archiveCoverage?.byDish[dish.id];
+    // Archive identity uses slugs; live identity uses UUIDs. Deduplicate across
+    // sources by normalized restaurant name and address, preserving dated evidence.
+    const key = (restaurant: RestaurantExample) =>
+      (restaurant.name + " " + restaurant.address).normalize("NFKC")
+        .toLocaleLowerCase("nb-NO").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+    const restaurants = new Map<string, RestaurantExample>();
+    for (const restaurant of coverage.restaurantExamples) restaurants.set(key(restaurant), restaurant);
+    for (const restaurant of stored?.restaurantExamples ?? []) restaurants.set(key(restaurant), restaurant);
+    const restaurantExamples = [...restaurants.values()];
     return {
       dish,
-      restaurantCount: coverage.restaurantCount,
-      restaurantExamples: coverage.restaurantExamples,
+      restaurantCount: Math.max(coverage.restaurantCount, stored?.restaurantCount ?? 0, restaurantExamples.length),
+      restaurantExamples,
       evidenceKind: "live",
     };
   }
@@ -188,14 +198,14 @@ function DiscoveryDishList({
                 </button>
               ) : null}
               <a href={dishSearchHref(dish.query)}>
-                {restaurantCount > 0 && evidenceKind === "live" ? "Se menytreff" : "Søk etter retten"} <span aria-hidden="true">→</span>
+                {restaurantCount > 0 ? "Se menytreff" : "Søk etter retten"} <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>
           {restaurantExamples.length > 0 ? (
-            <details className="cuisineExploreRestaurantDetails">
+            <details className="cuisineExploreRestaurantDetails" open>
               <summary>
-                Vis {restaurantExamples.length} {restaurantExamples.length === 1 ? "restauranteksempel" : "restauranteksempler"}
+                {restaurantExamples.length} {restaurantExamples.length === 1 ? "restaurant" : "restauranter"}
               </summary>
               <ul>
                 {restaurantExamples.map((restaurant) => (
@@ -204,7 +214,7 @@ function DiscoveryDishList({
                       <strong>{restaurant.name}</strong>
                       <small>{restaurant.address}</small>
                       {restaurant.observedAt ? (
-                        <small>Observert {restaurant.observedAt.slice(0, 10)}</small>
+                        <small>Meny sist registrert {restaurant.observedAt.slice(0, 10)}</small>
                       ) : null}
                       {restaurant.sourceUrl ? (
                         <a
@@ -221,9 +231,7 @@ function DiscoveryDishList({
                 ))}
               </ul>
               <p className="cuisineExploreRestaurantNote">
-                {evidenceKind === "archive"
-                  ? "Arkiverte menykilder er historiske. Kontroller gjeldende meny hos restauranten."
-                  : "Eksempler fra menyoversikten. Bruk «Se menytreff» for å søke etter retten."}
+                Menyer og priser kan ha endret seg siden registreringen.
               </p>
             </details>
           ) : null}
@@ -249,7 +257,6 @@ export function CuisineExplorer({
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const effectiveBrowseData = browseData ?? previewBrowseData;
   const liveDishes = effectiveBrowseData?.dishes ?? [];
-  const isArchived = archiveCoverage !== null && effectiveBrowseData === null;
 
   useEffect(() => {
     if (browseData || archiveCoverage) return;
@@ -308,9 +315,9 @@ export function CuisineExplorer({
           }))
       : [];
     return rankDishCoverage([...matchingDishes, ...supplementalDishes].map((dish) =>
-      coverageForDish(liveDishes, dish, isArchived ? archiveCoverage : null, effectiveBrowseData !== null)
+      coverageForDish(liveDishes, dish, archiveCoverage, effectiveBrowseData !== null)
     ));
-  }, [liveDishes, selectedArea, selectedCuisine, selectedFoodType, archiveCoverage, isArchived, effectiveBrowseData]);
+  }, [liveDishes, selectedArea, selectedCuisine, selectedFoodType, archiveCoverage, effectiveBrowseData]);
 
   useEffect(() => {
     const dialog = dialogRef.current;

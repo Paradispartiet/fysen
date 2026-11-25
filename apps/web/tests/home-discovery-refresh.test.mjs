@@ -77,7 +77,7 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
   assert.match(explorer, /restaurant\.observedAt\.slice\(0, 10\)/u);
   assert.doesNotMatch(explorer, /<a href=\{dishSearchHref\(dish\.query\)\}>\s*<strong>\{restaurant\.name\}<\/strong>/u);
   assert.match(explorer, /<summary>/u);
-  assert.doesNotMatch(explorer, /<details className="cuisineExploreRestaurantDetails"[^>]*\sopen(?:\s|>)/u);
+  assert.match(explorer, /<details className="cuisineExploreRestaurantDetails" open>/u);
   assert.match(styles, /\.cuisineExploreDishIdentity \.dishPhotoSmall/u);
   assert.match(styles, /width: 38px;\s*height: 38px/u);
   assert.match(styles, /width: 34px;\s*height: 34px/u);

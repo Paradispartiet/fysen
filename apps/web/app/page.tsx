@@ -20,7 +20,7 @@ export default async function HomePage() {
   }
 
   let archiveCoverage: ArchivedMatlystCoverage | null = null;
-  if (!browseData) {
+  {
     try {
       const archive = await getPublicMenuArchive();
       const dishes = homeCuisines.flatMap((cuisine) => cuisine.areas.flatMap((area) => area.dishes));

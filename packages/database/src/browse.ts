@@ -134,8 +134,6 @@ export async function browseDishes(
           AND restaurant.active = true
           AND restaurant.slug <> ALL($2::text[])
           AND source.last_checked_at IS NOT NULL
-          AND now() <= source.last_checked_at
-            + make_interval(mins => GREATEST(source.check_interval_minutes * 3, 1440))
         ORDER BY snapshot.menu_source_id, snapshot.fetched_at DESC, snapshot.created_at DESC
       ), browse_rows AS (
       SELECT
@@ -296,7 +294,7 @@ export async function browseDishes(
     const representative = rankedRows[0]!;
     const seenRestaurants = new Set<string>();
     const restaurantExamples = rankedRows.flatMap((row) => {
-      if (seenRestaurants.has(row.restaurant_id) || seenRestaurants.size >= 2) return [];
+      if (seenRestaurants.has(row.restaurant_id)) return [];
       seenRestaurants.add(row.restaurant_id);
       return [{
         id: row.restaurant_id,

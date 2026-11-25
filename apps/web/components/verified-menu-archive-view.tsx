@@ -49,6 +49,7 @@ export function ArchivedMenuResults({
               </div>
               <p className={styles.restaurant}>{result.restaurantName}</p>
               <p>{result.address}, {city}</p>
+              <p>Meny sist registrert <time dateTime={result.observedAt}>{result.observedAt.slice(0, 10)}</time></p>
               <a href={result.sourceUrl} target="_blank" rel="noopener noreferrer">
                 Se meny <span aria-hidden="true">↗</span>
               </a>

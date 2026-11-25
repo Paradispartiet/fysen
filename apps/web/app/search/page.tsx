@@ -2,7 +2,7 @@ import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
 import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
-import { getPublicMenuArchive, searchPublicMenuArchive, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
+import { getPublicMenuArchive, searchPublicMenuArchive, normalizeArchiveQuery, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
@@ -94,15 +94,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const error = searchState.error;
   let archive: PublicMenuArchive | null = null;
   let archiveMatches: ArchivedMenuMatch[] = [];
-  // An HTTP 200 with zero fresh dishes is not proof that Oslo has no menus.
-  // Offer the checksum-verified archive when either live endpoint is empty or down.
-  const primaryUnavailable = q.length === 0
-    ? Boolean(browseState.error) || browseState.data?.dishes.length === 0
-    : q.length >= 2 && (Boolean(error) || data?.results.length === 0);
-  if (primaryUnavailable && city.toLocaleLowerCase("nb-NO") === "oslo") {
+  // Registered menus remain searchable even when the live index has some results.
+  if (q.length !== 1 && city.toLocaleLowerCase("nb-NO") === "oslo") {
     try {
       archive = await getPublicMenuArchive();
-      if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city);
+      if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city, Infinity);
     } catch {
       // Preserve the existing clear unavailable state, never invent menu data.
       archive = null;
@@ -111,8 +107,12 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const primaryResults = data?.results.filter((result) => result.match.type !== "fuzzy") ?? [];
   const nearResults = data?.results.filter((result) => result.match.type === "fuzzy") ?? [];
 
+  const liveKeys = new Set((data?.results ?? []).map((result) =>
+    result.restaurant.slug + ":" + normalizeArchiveQuery(result.dish.name)));
+  archiveMatches = archiveMatches.filter((result) =>
+    !liveKeys.has(result.restaurantSlug + ":" + normalizeArchiveQuery(result.name)));
   const countLabel = archive && q.length >= 2
-    ? `${archiveMatches.length} menytreff`
+    ? `${archiveMatches.length + primaryResults.length} menytreff`
     : data
     ? primaryResults.length > 0
       ? `${primaryResults.length} menytreff${data.results.length === 20 ? " blant de 20 viste" : ""}`
@@ -167,7 +167,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
               <DishKnowledgeNote query={q} />
 
-              {archive ? (
+              {archive && (archiveMatches.length > 0 || !data?.results.length) ? (
                 <ArchivedMenuResults results={archiveMatches} query={q} city={city} />
               ) : null}
 

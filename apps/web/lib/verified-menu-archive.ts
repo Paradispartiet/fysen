@@ -194,11 +194,11 @@ export function searchPublicMenuArchive(
   for (const { result } of candidates) {
     const seenKey = result.restaurantSlug + ":" + normalizeArchiveQuery(result.name) +
       ":" + (result.priceMinor ?? "unknown");
-    if (seen.has(seenKey) || (perRestaurant.get(result.restaurantSlug) ?? 0) >= 2) continue;
+    if (seen.has(seenKey) || (Number.isFinite(limit) && (perRestaurant.get(result.restaurantSlug) ?? 0) >= 2)) continue;
     seen.add(seenKey);
     perRestaurant.set(result.restaurantSlug, (perRestaurant.get(result.restaurantSlug) ?? 0) + 1);
     results.push(result);
-    if (results.length >= Math.min(Math.max(limit, 1), 20)) break;
+    if (Number.isFinite(limit) && results.length >= Math.min(Math.max(limit, 1), 20)) break;
   }
   return results;
 }

@@ -15,7 +15,7 @@ export const dishBrowseItemSchema = z.object({
   name: z.string().trim().min(1).max(300),
   query: z.string().trim().min(1).max(300),
   restaurantCount: z.number().int().positive(),
-  restaurantExamples: z.array(dishBrowseRestaurantExampleSchema).max(2).default([]),
+  restaurantExamples: z.array(dishBrowseRestaurantExampleSchema).default([]),
 });
 
 export const recentlyAddedDishSchema = z.object({
