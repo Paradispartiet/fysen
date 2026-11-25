@@ -16,7 +16,7 @@
     "fetchMode": "http",
     "userAgent": "FysenMenuBot/0.1",
     "checkIntervalMinutes": 720,
-    "minimumExpectedItems": 27,
+    "minimumExpectedItems": 26,
     "sourceSupport": {
       "redirectOrigins": [],
       "browserDataOrigins": [],
@@ -35,12 +35,12 @@
     "requiredDishNames": [
       "Fries & Hvitløksmajones",
       "Chilinøtter/Peanøtter",
-      "Dagens",
-      "SCAMPI",
-      "FISH & CHIPS",
-      "VEGETARBURGER & FRIES",
       "DEKONSTRUERT OSTEKAKE",
-      "PASTA CARBONARA"
+      "PASTA CARBONARA",
+      "DAGENS (Serveres til utsolgt)",
+      "JULETALLERKEN",
+      "PINNEKJØTT",
+      "TORSHOVBURGER & FRIES"
     ],
     "requiredDishVariants": [
       {
@@ -52,28 +52,28 @@
         "priceMinor": 5900
       },
       {
-        "name": "Dagens",
-        "priceMinor": 25500
-      },
-      {
-        "name": "SCAMPI",
-        "priceMinor": 15500
-      },
-      {
-        "name": "FISH & CHIPS",
-        "priceMinor": 28500
-      },
-      {
-        "name": "VEGETARBURGER & FRIES",
-        "priceMinor": 28900
-      },
-      {
         "name": "DEKONSTRUERT OSTEKAKE",
         "priceMinor": 16500
       },
       {
         "name": "PASTA CARBONARA",
         "priceMinor": 13900
+      },
+      {
+        "name": "DAGENS (Serveres til utsolgt)",
+        "priceMinor": 25500
+      },
+      {
+        "name": "JULETALLERKEN",
+        "priceMinor": 49500
+      },
+      {
+        "name": "PINNEKJØTT",
+        "priceMinor": 49500
+      },
+      {
+        "name": "TORSHOVBURGER & FRIES",
+        "priceMinor": 28900
       }
     ],
     "forbiddenDishNames": [
