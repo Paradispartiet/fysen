@@ -8,7 +8,7 @@ const review = JSON.parse(readFileSync(new URL("../../../docs/nordic-pilot-revie
 describe("reviewed Nordic food menu fixtures", () => {
   it("parses every reviewed food price in local units without publishing fixtures", () => {
     expect(review.status).toBe("review-only-not-runtime");
-    expect(review.menus.map((m) => m.items.length)).toEqual([33, 22]);
+    expect(review.menus.map((m) => m.items.length)).toEqual([33, 22, 69]);
     for (const menu of review.menus) {
       expect(new Set(menu.items.map((r) => r.name)).size).toBe(menu.items.length);
       for (const row of menu.items) {
@@ -16,6 +16,7 @@ describe("reviewed Nordic food menu fixtures", () => {
         expect(parseNordicMenuPrice(row.priceField, menu.currency)?.currency).toBe(menu.currency);
       }
     }
+    expect(parseNordicMenuPrice("118/173", "DKK")?.priceMaxMinor).toBe(17300);
     expect(parseNordicMenuPrice("195/295", "SEK")?.priceMaxMinor).toBe(29500);
     expect(parseNordicMenuPrice("7,90", "EUR")?.priceMinor).toBe(790);
   });
