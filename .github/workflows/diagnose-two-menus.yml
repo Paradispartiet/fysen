@@ -1,0 +1,38 @@
+name: Diagnose two menu quality failures
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/diagnose-two-menus.yml'
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-node-pnpm
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Compare current extraction against catalog requirements
+        working-directory: apps/menu-worker
+        run: |
+          node --input-type=module <<'JS'
+          import { readRestaurantOnboardingManifest } from './dist/onboarding-manifest.js';
+          import { fetchMenuSource, extractMenuSource } from './dist/menu-source-runtime.js';
+          import { evaluateManifestMenuQuality } from './dist/manifest-quality.js';
+          import { canonicalizeUniqueMenuSourceKeys } from './dist/menu-source-key-canonicalizer.js';
+          import { retainPublishableFreeMenuObservations } from './dist/free-static-refresh-core.js';
+          for (const slug of ['girotondo-youngs-gate-oslo','grisen-torshov-oslo']) {
+            try {
+              const r = await readRestaurantOnboardingManifest('catalog/'+slug+'.json');
+              const f = await fetchMenuSource({...r.menuSource, etag:null,lastModified:null,maxResponseBytes:r.menuSource.maxResponseBytes??null});
+              if(f.kind !== 'content') throw Error('No content');
+              const e = await extractMenuSource(r.menuSource.sourceType,f);
+              const {items,discarded}=retainPublishableFreeMenuObservations(canonicalizeUniqueMenuSourceKeys(e.items));
+              const q=evaluateManifestMenuQuality({...r,qualityAssertions:{...r.qualityAssertions,requiredDishVariants:r.qualityAssertions.requiredDishVariants.map(({name,sectionName})=>({name,...(sectionName?{sectionName}:{})}))}},items);
+              console.log(JSON.stringify({slug,count:items.length,minimum:r.menuSource.minimumExpectedItems,discarded,quality:q,items}));
+            } catch(e) { console.error(slug,String(e)); process.exitCode=1; }
+          }
+          JS
