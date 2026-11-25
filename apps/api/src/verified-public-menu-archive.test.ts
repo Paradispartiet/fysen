@@ -194,3 +194,32 @@ describe("Nordic v2 public archive", () => {
     expect(() => parseVerifiedPublicArchive(manifest, mixed)).toThrow(/currency/u);
   });
 });
+
+describe("Opt-in archive pagination", () => {
+  it("returns all matching menu variants and restaurants through bounded pages", () => {
+    const raw = structuredClone(rawIndex);
+    raw.items.push([4,"Ramen special","ramen special",29000,"exact",null,"",""]);
+    const archive = parseVerifiedPublicArchive({...metadata,dishes:raw.items.length},raw);
+    const first = archivedPublicSearch(archive,"ramen","Oslo",2,0);
+    const second = archivedPublicSearch(archive,"ramen","Oslo",2,first.nextOffset!);
+    expect(first.nextOffset).toBe(2);
+    expect(second.nextOffset).toBeNull();
+    expect([...first.results,...second.results]).toHaveLength(4);
+    expect(archivedPublicSearch(archive,"ramen","Oslo",20).results).toHaveLength(3);
+  });
+});
+
+describe("Archive Matlyst pagination",()=>{
+  it("returns all distinct dish names across pages without inventing popularity",()=>{
+    const raw=structuredClone(rawIndex);
+    for(let i=0;i<65;i++)raw.items.push([4,"Dish "+i,"dish "+i,10000,"exact",null,"",""]);
+    const archive=parseVerifiedPublicArchive({...metadata,dishes:raw.items.length},raw);
+    const first=archivedPublicBrowse(archive,"Oslo",0);
+    const second=archivedPublicBrowse(archive,"Oslo",first.nextOffset!);
+    expect(first.dishes).toHaveLength(60);
+    expect(second.dishes).toHaveLength(7);
+    expect(second.nextOffset).toBeNull();
+    expect(new Set([...first.dishes,...second.dishes].map(d=>d.query)).size).toBe(67);
+    expect(archivedPublicBrowse(archive,"Helsinki",0).dishes).toEqual([]);
+  });
+});

@@ -256,6 +256,7 @@ export function archivedPublicSearch(
   query: string,
   city: string,
   limit = 20,
+  offset?: number,
 ): {
   readonly source: "verified-menu-archive";
   readonly realtime: false;
@@ -264,6 +265,7 @@ export function archivedPublicSearch(
   readonly query: string;
   readonly city: string;
   readonly count: number;
+  readonly nextOffset?: number | null;
   readonly results: readonly ArchivedPublicDish[];
 } {
   const normalizedQuery = normalizeArchiveDishName(query);
@@ -283,7 +285,7 @@ export function archivedPublicSearch(
   const seen = new Set<string>();
   for (const { row, source, restaurant } of matches) {
     const key = restaurant[1] + ":" + row[2] + ":" + (row[3] ?? "unknown");
-    if (seen.has(key) || (perRestaurant.get(restaurant[1]) ?? 0) >= 2) continue;
+    if (seen.has(key) || (offset === undefined && (perRestaurant.get(restaurant[1]) ?? 0) >= 2)) continue;
     seen.add(key);
     perRestaurant.set(restaurant[1], (perRestaurant.get(restaurant[1]) ?? 0) + 1);
     const currency = itemCurrency(archive.version ?? 1, restaurant[3], row);
@@ -304,24 +306,27 @@ export function archivedPublicSearch(
       },
       menu: { sourceUrl: source[1], observedAt: source[2] },
     });
-    if (results.length >= Math.min(Math.max(limit, 1), 50)) break;
+    if (offset === undefined && results.length >= Math.min(Math.max(limit, 1), 50)) break;
   }
+  const page = offset === undefined ? results : results.slice(offset, offset + Math.min(Math.max(limit, 1), 50));
   return {
     source: "verified-menu-archive",
     realtime: false,
     archiveDate: archive.archiveDate,
     lastRefreshAt: archive.lastRefreshAt,
-    query, city, count: results.length, results,
+    query, city, count: page.length, results: page,
+    ...(offset === undefined ? {} : { nextOffset: offset + page.length < results.length ? offset + page.length : null }),
   };
 }
 
-export function archivedPublicBrowse(archive: VerifiedPublicArchive, city: string): {
+export function archivedPublicBrowse(archive: VerifiedPublicArchive, city: string, offset?: number): {
   readonly source: "verified-menu-archive";
   readonly realtime: false;
   readonly archiveDate: string;
   readonly lastRefreshAt: string | null;
   readonly city: string;
   readonly count: number;
+  readonly nextOffset?: number | null;
   readonly dishes: readonly {
     readonly name: string;
     readonly query: string;
@@ -352,10 +357,12 @@ export function archivedPublicBrowse(archive: VerifiedPublicArchive, city: strin
     restaurantCount: item.restaurants.size,
     restaurantExamples: [...item.restaurants.values()].slice(0, 2),
   })).sort((a, b) => b.restaurantCount - a.restaurantCount ||
-    a.name.localeCompare(b.name, "nb")).slice(0, 60);
+    a.name.localeCompare(b.name, "nb") || a.query.localeCompare(b.query, "nb"));
+  const page = dishes.slice(offset ?? 0, (offset ?? 0) + 60);
   return {
     source: "verified-menu-archive", realtime: false,
     archiveDate: archive.archiveDate, lastRefreshAt: archive.lastRefreshAt,
-    city, count: grouped.size, dishes,
+    city, count: grouped.size, dishes: page,
+    ...(offset === undefined ? {} : { nextOffset: offset + page.length < dishes.length ? offset + page.length : null }),
   };
 }
