@@ -1,0 +1,30 @@
+name: Menu source inventory
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/menu-source-inventory.yml'
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inventory catalog without fetching menus
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, collections, urllib.parse
+          counts = collections.Counter()
+          delivery = []
+          for p in sorted(pathlib.Path('apps/menu-worker/catalog').glob('*.json')):
+              d = json.loads(p.read_text())
+              if not isinstance(d, dict) or not isinstance(d.get('menuSource'), dict): continue
+              r = d.get('restaurant', {})
+              url = d['menuSource'].get('url', '')
+              host = (urllib.parse.urlparse(url).hostname or '').lower()
+              kind = next((x for x in ('wolt','foodora') if host == x+'.com' or host.endswith('.'+x+'.com') or host == x+'.no' or host.endswith('.'+x+'.no')), 'other')
+              counts[kind] += 1
+              if kind != 'other': delivery.append({'slug':r.get('slug',p.stem),'source':url,'website':r.get('websiteUrl')})
+          print(json.dumps(dict(counts), ensure_ascii=False))
+          for item in delivery: print(json.dumps(item, ensure_ascii=False))
+          PY
