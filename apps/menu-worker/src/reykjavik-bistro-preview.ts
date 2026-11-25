@@ -36,7 +36,7 @@ export function verifyBistroMenu(text:string,menu:BistroMenu){
       if(price===null)continue;
       const title=scope.slice(last+1,i);
       const matches=all.filter(r=>title.includes(norm(r.name))&&r.priceMinor===price);
-      if(matches.length!==1)throw new Error("Missing, changed or ambiguous dish price in "+h);
+      if(matches.length!==1)throw new Error("Missing, changed or ambiguous dish price in "+menu.service+"/"+h+"; observed minor="+price+"; reviewed names in field="+JSON.stringify(all.filter(r=>title.includes(norm(r.name))).map(r=>({name:r.name,priceMinor:r.priceMinor})))+"; candidate field count="+title.length);
       const row=matches[0]!;
       if(used.has(row.name))throw new Error("Duplicate dish within section");
       used.add(row.name);
