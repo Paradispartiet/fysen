@@ -52,8 +52,14 @@ test("Native Fysen icon is a real 1024px PNG matching brand setup", () => {
 
 test("iPhone simulator smoke runs for native UI changes and checks distinct tab content", () => {
   const workflow = fs.readFileSync(new URL("../../.github/workflows/native-ios-simulator.yml", base), "utf8");
-  assert.ok(workflow.includes('"apps/mobile/App.tsx"'));
-  assert.ok(workflow.includes('"apps/mobile/src/**"'));
+  const triggers = workflow.split("\npermissions:")[0];
+  assert.ok(triggers.includes('"apps/mobile/**"'));
+  assert.ok(triggers.includes('"pnpm-lock.yaml"'));
+  assert.ok(triggers.includes('"package.json"'));
+  assert.ok(triggers.includes("workflow_dispatch:"));
+  assert.doesNotMatch(triggers, /"packages\/contracts\//u);
+  const bundles = fs.readFileSync(new URL("../../.github/workflows/native-js-bundle.yml", base), "utf8");
+  assert.ok(bundles.includes('"packages/contracts/**"'));
   assert.ok(workflow.includes("ios/fysen-iphone-favorites.png"));
   assert.ok(workflow.includes("cropToHeightWidth 1700 1080"));
   assert.ok(workflow.includes("ios/qa-content/matlyst.png"));
