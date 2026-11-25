@@ -1,0 +1,369 @@
+{
+  "version": 1,
+  "status": "review-only-not-runtime",
+  "reviewDate": "2026-11-25",
+  "menus": [
+    {
+      "restaurantSlug": "pelikan-blekingegatan-stockholm",
+      "city": "Stockholm",
+      "currency": "SEK",
+      "source": "https://static.thatsup.website/123/83188/Stora-menyn-Sve-oktober-26.pdf?v=1793355069",
+      "sourcePage": 1,
+      "scope": "Individually priced food, starters, mains and desserts; excludes drinks and fixed-price package. Portion notation normalized after visual review.",
+      "items": [
+        {
+          "section": "Förrätter",
+          "name": "S.O.S",
+          "priceField": "195/295",
+          "note": "second price full portion",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Toast Skagen",
+          "priceField": "195/295",
+          "note": "second price full portion",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Råbiff",
+          "priceField": "205/295",
+          "note": "second price full portion",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Gubbröra",
+          "priceField": "165",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Rostad pumpasoppa",
+          "priceField": "175",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Matjessill från Norröna",
+          "priceField": "175",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Toast Pelle Janzon",
+          "priceField": "285",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Löjrom",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Ankleverterrin",
+          "priceField": "225",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Tomatsallad",
+          "priceField": "90",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Grönsallad",
+          "priceField": "95",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Halstrad röding",
+          "priceField": "375",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Lenrimmad fjordlax",
+          "priceField": "325",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Ångad torskrygg",
+          "priceField": "425",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Räksallad",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Svampfyllda kroppkakor från Öland",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Varm getost",
+          "priceField": "255",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Doppsko",
+          "priceField": "255",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Hjortinnanlår",
+          "priceField": "395",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Pelikans köttbullar",
+          "priceField": "285",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Stekt sidfläsk",
+          "priceField": "255",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Kalvlever anglaise",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Fläsklägg",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Biff Rydberg",
+          "priceField": "430",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Konjaksflamberad pepparstek",
+          "priceField": "495",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Boeuf bourguignon",
+          "priceField": "305",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Crème brûlée",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Chokladbrownie",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Smuldegspaj på äpple",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Fläderpannacotta",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Marängsviss",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Pelikans smågodis",
+          "priceField": "75",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "En kula sorbet",
+          "priceField": "75",
+          "publishEligible": false
+        }
+      ]
+    },
+    {
+      "restaurantSlug": "savotta-aleksanterinkatu-helsinki",
+      "city": "Helsinki",
+      "currency": "EUR",
+      "source": "https://ravintolasavotta.fi/menu/",
+      "validFrom": "2026-09-08",
+      "validThrough": "2027-04-07",
+      "overridePeriod": {
+        "from": "2026-12-21",
+        "through": "2027-01-03",
+        "status": "requires separate review"
+      },
+      "scope": "Individually priced ordinary à la carte dishes; excludes set menus, drinks and optional add-on. Conditional items and per-person bread retained with notes.",
+      "items": [
+        {
+          "section": "Eturuuat",
+          "name": "Peuratartar ja kurpitsaa",
+          "priceField": "17,60",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Maa-artisokkapiirakka ja omenaa",
+          "priceField": "14,80",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Kevyesti suolattua taimenta ja giniä",
+          "priceField": "15,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Paahdettu palsternakkakeitto",
+          "priceField": "14,20/22,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Suursavotta",
+          "priceField": "23,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Uittopaikan kalasaaliin mukaan vaihtuva kermainen kalakeitto",
+          "priceField": "14,20/22,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Talon leipälajitelma ja suomalaista kirnuvoita",
+          "priceField": "3,50",
+          "note": "per person; source 3,50/hlö",
+          "publishEligible": false
+        },
+        {
+          "section": "Väliruokia",
+          "name": "Karhumaistiainen",
+          "priceField": "24,90",
+          "note": "confirm availability with staff",
+          "publishEligible": false
+        },
+        {
+          "section": "Väliruokia",
+          "name": "Mustaa makkaraa",
+          "priceField": "7,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Väliruokia",
+          "name": "Loimutettua leipäjuustoa",
+          "priceField": "7,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Savotan porkkanaohukaiset",
+          "priceField": "27,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Paistettua kuhaa",
+          "priceField": "38,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Sitrusliemessä haudutettua kirjolohta",
+          "priceField": "34,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Karjalanpaistia perinnereseptillä",
+          "priceField": "29,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Paahdettua poronpaistia ja pororyynimakkaraa",
+          "priceField": "42,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Ahvenanmaan karitsaburgeri ja yrttimaustettuja krossiperunoita",
+          "priceField": "28,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Hirvirillette",
+          "priceField": "46,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Savotan karhustroganoff",
+          "priceField": "69,00",
+          "note": "confirm availability with staff",
+          "publishEligible": false
+        },
+        {
+          "section": "Jälkimakiat",
+          "name": "Uuniomenahyvettä ja korvapuustijäätelöä",
+          "priceField": "14,50",
+          "publishEligible": false
+        },
+        {
+          "section": "Jälkimakiat",
+          "name": "Jogurttivanukasta, suolakaramelligranolaa ja ruusunmarjakastiketta",
+          "priceField": "14,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Jälkimakiat",
+          "name": "Lämmintä mustikkakukkoa ja vaniljajäätelöä",
+          "priceField": "14,50",
+          "publishEligible": false
+        },
+        {
+          "section": "Jälkimakiat",
+          "name": "Kotimaisia juustoja, kuminanäkkileipää ja pihlajanmarjahilloketta",
+          "priceField": "15,90",
+          "publishEligible": false
+        }
+      ]
+    }
+  ]
+}

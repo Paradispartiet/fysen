@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "restaurantSlug": "schonnemann-hauser-plads-kobenhavn",
+  "city": "København",
+  "currency": "DKK",
+  "reviewDate": "2026-11-25",
+  "status": "source-map-only-not-runtime",
+  "indexUrl": "https://www.restaurantschonnemann.dk/menu/",
+  "validFrom": "2026-11-12",
+  "validThrough": "2026-12-23",
+  "sections": [
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/konserves-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/laks-hellefisk-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/saeson-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tarteletter-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/gris-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tatar-jul/",
+      "status": "linked-category; item extraction pending"
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+      "status": "linked-category; item extraction pending"
+    }
+  ],
+  "excluded": "Drinks and separate set Christmas menus; do not treat as ordinary individual dishes."
+}
