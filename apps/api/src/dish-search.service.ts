@@ -41,7 +41,7 @@ export class DishSearchService {
     const rows = await searchDishes(this.databaseService.pool(), {
       normalizedQuery,
       city: input.city,
-      limit: input.limit,
+      limit: input.all === "true" ? null : input.limit,
       latitude: input.lat ?? null,
       longitude: input.lon ?? null,
       sort: input.sort,
@@ -74,6 +74,7 @@ export class DishSearchService {
       city: input.city,
       sort: input.sort,
       count: rows.length,
+      ...(input.all === "true" ? { complete: true } : {}),
       results: rows.map((row) => ({
         impressionId: impressionIdsByMenuItemId[row.menuItemId] ?? null,
         menuItemId: row.menuItemId,

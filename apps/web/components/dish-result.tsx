@@ -94,6 +94,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
       <div className="dishResultBottomline">
         <div className="dishResultSignals">
           <span className="openingStatus" data-state={result.opening.state}>{openingLabel(result)}</span>
+          <span>Meny sist kontrollert <time dateTime={result.menu.lastCheckedAt}>{result.menu.lastCheckedAt.slice(0, 10)}</time></span>
         </div>
         <div className={actionsClassName}>
           {ahaMinMatPilotEnabled ? <SaveMinMatButton menuItemId={result.menuItemId} /> : null}

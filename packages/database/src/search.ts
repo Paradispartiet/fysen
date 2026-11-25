@@ -9,7 +9,7 @@ export type RestaurantOpeningState = "open" | "closed" | "unknown";
 export interface DishSearchDatabaseInput {
   readonly normalizedQuery: string;
   readonly city: string;
-  readonly limit: number;
+  readonly limit: number | null;
   readonly latitude: number | null;
   readonly longitude: number | null;
   readonly sort: DishSearchSort;
@@ -409,7 +409,8 @@ export async function searchDishes(
         item.confidence DESC,
         latest.fetched_at DESC,
         restaurant.name ASC,
-        item.position ASC
+        item.position ASC,
+        item.id ASC
       LIMIT $3
     `,
     [input.normalizedQuery, input.city, input.limit, input.latitude, input.longitude, input.sort, [...publicIdentityQuarantineSlugs]],

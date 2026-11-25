@@ -170,6 +170,12 @@ integrationDescribe("dish search integration", () => {
     expect(oldSnapshot).toEqual([]);
   });
 
+  it("accepts an unlimited search without changing the bounded API default", async () => {
+    const complete = await searchDishes(pool, searchInput("biff tartar", { limit: null }));
+    expect(complete).toHaveLength(1);
+    expect(complete).toEqual(await searchDishes(pool, searchInput("biff tartar")));
+  });
+
   it("keeps the latest menu searchable after the check deadline", async () => {
     await pool.query("UPDATE fysen.menu_sources SET last_checked_at = now() - interval '90 days'");
     try {

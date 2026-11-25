@@ -108,6 +108,7 @@ export const dishSearchQuerySchema = z
     q: z.string().trim().min(2).max(80),
     city: z.string().trim().min(1).max(120).default("Oslo"),
     limit: z.coerce.number().int().min(1).max(50).default(20),
+    all: z.literal("true").optional(),
     lat: optionalCoordinate(-90, 90),
     lon: optionalCoordinate(-180, 180),
     sort: dishSearchSortSchema.default("relevance"),
@@ -218,6 +219,7 @@ export const dishSearchResponseSchema = z.object({
   city: z.string().trim().min(1).max(120),
   sort: dishSearchSortSchema.default("relevance"),
   count: z.number().int().nonnegative(),
+  complete: z.boolean().optional(),
   results: z.array(dishSearchResultSchema),
 });
 

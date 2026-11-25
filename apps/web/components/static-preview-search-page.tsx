@@ -76,7 +76,7 @@ export function StaticPreviewSearchPage() {
       return;
     }
 
-    if (!clientPreviewApiBaseUrl) {
+    if (query.city.toLocaleLowerCase("nb-NO") === "oslo" || !clientPreviewApiBaseUrl) {
       window.location.replace(productionSearchUrl(query));
       return;
     }

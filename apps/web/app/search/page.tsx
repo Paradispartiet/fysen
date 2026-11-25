@@ -67,7 +67,7 @@ async function loadResults(
 
   try {
     const location = latitude !== null && longitude !== null ? { lat: latitude, lon: longitude } : {};
-    const data = await searchDishes({ q, city, limit: 20, sort, ...location });
+    const data = await searchDishes({ q, city, limit: 20, all: "true", sort, ...location });
     return { data, error: null };
   } catch {
     return {
@@ -115,7 +115,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
     ? `${archiveMatches.length + primaryResults.length} menytreff`
     : data
     ? primaryResults.length > 0
-      ? `${primaryResults.length} menytreff${data.results.length === 20 ? " blant de 20 viste" : ""}`
+      ? `${primaryResults.length} menytreff${data.complete !== true && data.results.length >= 20 ? " blant de hentede treffene" : ""}`
       : nearResults.length > 0
         ? "Ingen eksakte treff"
         : "Ingen treff"
@@ -196,7 +196,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                   primaryResults={primaryResults}
                   nearResults={nearResults}
                   hasLocation={hasLocation}
-                  searchLimitReached={data.results.length === 20}
+                  searchLimitReached={data.complete !== true && data.results.length >= 20}
                 />
               ) : null}
             </>
