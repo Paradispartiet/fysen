@@ -115,7 +115,7 @@ jobs:
     if: >-
       github.ref == 'refs/heads/main' &&
       ((github.event_name == 'workflow_dispatch' && inputs.publish_initial_archive == true) ||
-       (github.event_name == 'push' && github.event.before == '9b2a7fd86751eea8abb0a897c7d211e9de236b22'))
+       (github.event_name == 'push' && github.event.before == 'bf7be8fcc2cce10738b93c9200d5ef12707c30f3'))
     needs: stage-current-nordic-archive
     permissions:
       contents: write
