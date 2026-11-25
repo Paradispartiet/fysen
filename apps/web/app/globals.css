@@ -4,6 +4,7 @@
 
 html {
   min-height: 100%;
+  scroll-padding-top: 110px;
   color-scheme: light;
   background: var(--color-bg);
 }
@@ -51,17 +52,11 @@ a {
 /* Brand and header */
 
 .globalHeader {
-  width: 100%;
-}
-
-.globalHeaderResults {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(244, 240, 232, 0.94);
-  border-bottom: 1px solid transparent;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  width: 100%;
+  background: var(--color-bg);
 }
 
 .globalHeaderInner {
@@ -97,37 +92,13 @@ a {
   font-weight: 680;
 }
 
-.globalHeaderSearch {
-  width: 100%;
+.globalHeaderSearchRegion {
+  width: min(var(--content-wide), 100%);
+  margin: 0 auto;
 }
 
-@media (min-width: 768px) {
-  .globalHeaderResults .globalHeaderInner {
-    display: grid;
-    grid-template-columns: auto minmax(320px, 680px) auto;
-    align-items: center;
-    gap: 32px;
-  }
-
-  .globalHeaderResults .globalHeaderTopline {
-    display: contents;
-  }
-
-  .globalHeaderResults .fysenLogoLink {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .globalHeaderResults .globalHeaderSearch {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .globalHeaderResults .locationText {
-    grid-column: 3;
-    grid-row: 1;
-    justify-self: end;
-  }
+.globalHeaderSearch {
+  width: 100%;
 }
 
 /* Search */
@@ -524,14 +495,6 @@ a {
 @media (max-width: 767px) {
   .globalHeaderInner {
     padding: 18px 20px;
-  }
-
-  .globalHeaderResults .globalHeaderInner {
-    padding-bottom: 12px;
-  }
-
-  .globalHeaderResults .globalHeaderSearch {
-    margin-top: 12px;
   }
 
   .fysenLogo {
