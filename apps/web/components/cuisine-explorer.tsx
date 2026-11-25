@@ -171,6 +171,48 @@ function rankDishCoverage(coverage: readonly DishCoverage[]): DishCoverage[] {
   });
 }
 
+const restaurantPreviewLimit = 4;
+
+function RestaurantNames({ restaurants }: { readonly restaurants: readonly RestaurantExample[] }) {
+  return (
+    <ul className="cuisineExploreRestaurantNames">
+      {restaurants.map((restaurant) => (
+        <li key={restaurant.id}>
+          {restaurant.sourceUrl ? (
+            <a className="cuisineExploreRestaurantName" href={restaurant.sourceUrl} target="_blank" rel="noopener noreferrer">
+              {restaurant.name}
+            </a>
+          ) : (
+            <span className="cuisineExploreRestaurantName">{restaurant.name}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function RestaurantPreview({ restaurants, dishLabel }: {
+  readonly restaurants: readonly RestaurantExample[];
+  readonly dishLabel: string;
+}) {
+  const remaining = restaurants.slice(restaurantPreviewLimit);
+  return (
+    <div className="cuisineExploreRestaurantPreview">
+      <RestaurantNames restaurants={restaurants.slice(0, restaurantPreviewLimit)} />
+      {remaining.length > 0 ? (
+        <details className="cuisineExploreRestaurantDetails">
+          <summary aria-label={`Flere restauranter med ${dishLabel}`}>
+            <span className="cuisineExploreRestaurantMoreLabel">Se mer ({remaining.length})</span>
+            <span className="cuisineExploreRestaurantLessLabel">Vis mindre</span>
+            <span className="cuisineExploreRestaurantChevron" aria-hidden="true">⌄</span>
+          </summary>
+          <RestaurantNames restaurants={remaining} />
+        </details>
+      ) : null}
+    </div>
+  );
+}
+
 function DiscoveryDishList({
   coverage,
   onOpenKnowledge,
@@ -208,37 +250,7 @@ function DiscoveryDishList({
             </div>
           </div>
           {restaurantExamples.length > 0 ? (
-            <details className="cuisineExploreRestaurantDetails" open>
-              <summary>
-                {restaurantExamples.length} {restaurantExamples.length === 1 ? "restaurant" : "restauranter"}
-              </summary>
-              <ul>
-                {restaurantExamples.map((restaurant) => (
-                  <li key={restaurant.id}>
-                    <span className="cuisineExploreRestaurantExample">
-                      <strong>{restaurant.name}</strong>
-                      <small>{restaurant.address}</small>
-                      {restaurant.observedAt ? (
-                        <small>Meny sist registrert {restaurant.observedAt.slice(0, 10)}</small>
-                      ) : null}
-                      {restaurant.sourceUrl ? (
-                        <a
-                          className="cuisineExploreRestaurantSource"
-                          href={restaurant.sourceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Åpne menykilden <span aria-hidden="true">↗</span>
-                        </a>
-                      ) : null}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="cuisineExploreRestaurantNote">
-                Menyer og priser kan ha endret seg siden registreringen.
-              </p>
-            </details>
+            <RestaurantPreview restaurants={restaurantExamples} dishLabel={dish.label} />
           ) : null}
         </article>
       ))}
@@ -525,7 +537,7 @@ export function CuisineExplorer({
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              <span>Utforsk flere retter eller åpne restaurantens meny for nærmere informasjon.</span>
+              <span>Restaurantnavn bygger på registrerte menyer. Avstand er ikke tilgjengelig i denne oversikten. Se menytreff for mer informasjon.</span>
               {selectedArea?.flagFile && !selectedFoodType ? (
                 <a
                   href={`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(selectedArea.flagFile)}`}

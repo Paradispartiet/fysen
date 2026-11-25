@@ -80,19 +80,25 @@ try {
       const initialDishCount = await kitchenDialog.locator(".cuisineExploreDish").count();
       assert.ok(initialDishCount > 0 && initialDishCount <= 12,
         "Overview should start with up to twelve suggestions");
-      const restaurantDetails = kitchenDialog.locator("details.cuisineExploreRestaurantDetails").first();
-      if (await restaurantDetails.count()) {
-        assert.notEqual(await restaurantDetails.getAttribute("open"), null,
-          "All registered restaurants must begin visible");
-        assert.ok(await restaurantDetails.locator("li .cuisineExploreRestaurantExample").count() > 0,
-          "Opening restaurant examples must show documented restaurant names and addresses");
-        for (const link of await restaurantDetails.locator("a.cuisineExploreRestaurantSource").all()) {
-          const href = await link.getAttribute("href");
-          assert.ok(/^https?:\/\//u.test(href ?? ""),
-            "Only actual archive-menu URLs may be linked from restaurant examples");
+      const preview = kitchenDialog.locator(".cuisineExploreRestaurantPreview").first();
+      if (await preview.count()) {
+        const names = preview.locator(":scope > .cuisineExploreRestaurantNames > li");
+        const count = await names.count();
+        assert.ok(count > 0 && count <= 4, "At most four restaurant names are shown initially");
+        const restaurantDetails = preview.locator("details.cuisineExploreRestaurantDetails");
+        if (await restaurantDetails.count()) {
+          assert.equal(count, 4);
+          assert.equal(await restaurantDetails.getAttribute("open"), null);
+          await restaurantDetails.locator("summary").tap();
+          assert.notEqual(await restaurantDetails.getAttribute("open"), null);
+          assert.ok(await restaurantDetails.locator("li").count() > 0);
+          await restaurantDetails.locator("summary").tap();
+          assert.equal(await restaurantDetails.getAttribute("open"), null);
         }
-        await restaurantDetails.locator("summary").click();
-        assert.equal(await restaurantDetails.getAttribute("open"), null);
+        for (const link of await preview.locator("a.cuisineExploreRestaurantName").all()) {
+          const href = await link.getAttribute("href");
+          assert.ok(/^https?:\/\//u.test(href ?? ""), "Names only link to actual menu sources");
+        }
       }
       const expandDishes = kitchenDialog.locator(".cuisineExploreShowMore");
       if (await expandDishes.count()) {

@@ -1169,40 +1169,66 @@
   outline: 2px solid var(--color-brand);
   outline-offset: 2px;
 }
-.cuisineExploreRestaurantDetails {
-  margin: 7px 0 0 48px;
+.cuisineExploreRestaurantPreview {
+  margin: 8px 0 0 48px;
 }
-.cuisineExploreRestaurantDetails > summary {
-  display: list-item;
-  width: fit-content;
-  padding: 2px 3px;
-  color: var(--color-muted);
-  font-size: 10px;
-  cursor: pointer;
-}
-.cuisineExploreRestaurantDetails[open] > summary {
-  color: var(--color-soft);
-}
-.cuisineExploreRestaurantDetails ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
-  gap: 5px;
-  margin: 7px 0 0;
+.cuisineExploreRestaurantNames {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
-.cuisineExploreRestaurantDetails li a {
-  min-height: 0;
-  padding: 8px 9px;
-  background: #0b0d0b;
-  border: 1px solid rgba(255,255,255,.09);
-  border-radius: 5px;
+.cuisineExploreRestaurantNames li {
+  min-width: 0;
+  max-width: 100%;
 }
-.cuisineExploreRestaurantDetails li strong {
-  font-size: 11px;
+.cuisineExploreRestaurantName {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--color-ink);
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 }
-.cuisineExploreRestaurantDetails li small {
-  font-size: 10px;
+a.cuisineExploreRestaurantName {
+  text-decoration: underline;
+  text-decoration-color: var(--color-line);
+  text-underline-offset: 3px;
+}
+a.cuisineExploreRestaurantName:hover,
+a.cuisineExploreRestaurantName:focus-visible {
+  color: var(--color-brand);
+}
+.cuisineExploreRestaurantDetails {
+  margin-top: 2px;
+}
+.cuisineExploreRestaurantDetails > summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  min-height: 44px;
+  color: var(--color-brand);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.cuisineExploreRestaurantDetails > summary::-webkit-details-marker {
+  display: none;
+}
+.cuisineExploreRestaurantLessLabel,
+.cuisineExploreRestaurantDetails[open] .cuisineExploreRestaurantMoreLabel {
+  display: none;
+}
+.cuisineExploreRestaurantDetails[open] .cuisineExploreRestaurantLessLabel {
+  display: inline;
+}
+.cuisineExploreRestaurantDetails[open] .cuisineExploreRestaurantChevron {
+  transform: rotate(180deg);
 }
 @media (max-width: 580px) {
   .cuisineExploreDish {
@@ -1224,60 +1250,7 @@
     margin-left: 44px;
     flex-wrap: wrap;
   }
-  .cuisineExploreRestaurantDetails {
+  .cuisineExploreRestaurantPreview {
     margin-left: 44px;
   }
-}
-
-
-/* Restaurant names in the compact preview are evidence, not fake deep links:
-   the browse payload exposes IDs and addresses but no source/menu URL. */
-.cuisineExploreRestaurantDetails .cuisineExploreRestaurantExample {
-  display: block;
-  min-height: 0;
-  padding: 8px 9px;
-  color: var(--color-ink);
-  background: #0b0d0b;
-  border: 1px solid rgba(255,255,255,.09);
-  border-radius: 5px;
-}
-.cuisineExploreRestaurantDetails .cuisineExploreRestaurantExample strong {
-  display: block;
-  font-size: 11px;
-}
-.cuisineExploreRestaurantDetails .cuisineExploreRestaurantExample small {
-  display: block;
-  margin-top: 3px;
-  color: var(--color-muted);
-  font-size: 10px;
-  line-height: 1.4;
-}
-.cuisineExploreRestaurantDetails .cuisineExploreRestaurantNote {
-  margin: 8px 0 0;
-  color: var(--color-muted);
-  font-size: 10px;
-  line-height: 1.4;
-}
-
-
-.cuisineExploreRestaurantDetails li a.cuisineExploreRestaurantSource {
-  display: inline-block;
-  width: fit-content;
-  min-height: 0;
-  margin-top: 5px;
-  padding: 2px 0;
-  color: var(--color-soft);
-  background: transparent;
-  border: 0;
-  font-size: 10px;
-  font-weight: 570;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.cuisineExploreRestaurantDetails li a.cuisineExploreRestaurantSource:hover {
-  color: var(--color-ink);
-}
-.cuisineExploreRestaurantDetails li a.cuisineExploreRestaurantSource:focus-visible {
-  outline: 2px solid var(--color-brand);
-  outline-offset: 2px;
 }

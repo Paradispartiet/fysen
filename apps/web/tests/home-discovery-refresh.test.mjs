@@ -70,18 +70,18 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
   assert.match(explorer, /evidenceKind: "unavailable"/u);
   assert.match(explorer, /evidenceKind: coverage \? "archive" : "unchecked"/u);
   assert.match(explorer, /"Søk etter retten"/u);
-  assert.match(explorer, /className="cuisineExploreRestaurantDetails"/u);
-  assert.match(explorer, /className="cuisineExploreRestaurantExample"/u);
-  assert.match(explorer, /restaurant\.sourceUrl \?/u);
-  assert.match(explorer, /href=\{restaurant\.sourceUrl\}/u);
-  assert.match(explorer, /restaurant\.observedAt\.slice\(0, 10\)/u);
-  assert.doesNotMatch(explorer, /<a href=\{dishSearchHref\(dish\.query\)\}>\s*<strong>\{restaurant\.name\}<\/strong>/u);
-  assert.match(explorer, /<summary>/u);
-  assert.match(explorer, /<details className="cuisineExploreRestaurantDetails" open>/u);
+  assert.match(explorer, /const restaurantPreviewLimit = 4/u);
+  assert.match(explorer, /restaurants\.slice\(0, restaurantPreviewLimit\)/u);
+  assert.match(explorer, /restaurants\.slice\(restaurantPreviewLimit\)/u);
+  assert.match(explorer, /href=\{restaurant.sourceUrl\}/u);
+  assert.match(explorer, /<details className="cuisineExploreRestaurantDetails">/u);
+  assert.doesNotMatch(explorer, /<details className="cuisineExploreRestaurantDetails" open>/u);
+  assert.match(explorer, /Se mer/u);
+  assert.doesNotMatch(explorer, /<small>\{restaurant.address\}/u);
   assert.match(styles, /\.cuisineExploreDishIdentity \.dishPhotoSmall/u);
   assert.match(styles, /width: 38px;\s*height: 38px/u);
   assert.match(styles, /width: 34px;\s*height: 34px/u);
-  assert.match(styles, /\.cuisineExploreRestaurantDetails ul/u);
+  assert.match(styles, /\.cuisineExploreRestaurantNames/u);
 });
 
 test("Matlyst gallery is closed by default and shows all approved images only on request", () => {
