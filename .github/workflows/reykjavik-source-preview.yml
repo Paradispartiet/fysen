@@ -30,3 +30,14 @@ jobs:
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm --filter @fysen/menu-worker... build
       - run: pnpm --filter @fysen/menu-worker exec tsx src/reykjavik-rok-probe.ts
+
+  kitchen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-node-pnpm
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec tsx src/reykjavik-kitchen-probe.ts
