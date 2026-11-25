@@ -194,3 +194,17 @@ describe("Nordic v2 public archive", () => {
     expect(() => parseVerifiedPublicArchive(manifest, mixed)).toThrow(/currency/u);
   });
 });
+
+describe("Opt-in archive pagination", () => {
+  it("returns all matching menu variants and restaurants through bounded pages", () => {
+    const raw = structuredClone(rawIndex);
+    raw.items.push([4,"Ramen special","ramen special",29000,"exact",null,"",""]);
+    const archive = parseVerifiedPublicArchive({...metadata,dishes:raw.items.length},raw);
+    const first = archivedPublicSearch(archive,"ramen","Oslo",2,0);
+    const second = archivedPublicSearch(archive,"ramen","Oslo",2,first.nextOffset!);
+    expect(first.nextOffset).toBe(2);
+    expect(second.nextOffset).toBeNull();
+    expect([...first.results,...second.results]).toHaveLength(4);
+    expect(archivedPublicSearch(archive,"ramen","Oslo",20).results).toHaveLength(3);
+  });
+});

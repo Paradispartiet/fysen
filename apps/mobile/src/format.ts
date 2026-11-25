@@ -12,14 +12,15 @@ export function formatPrice(price: Price): string {
     maximumFractionDigits: 2,
   });
   const prefix = price.priceKind === "from" ? "Fra " : "";
+  const currency = price.currency === "NOK" ? "kr" : price.currency === "EUR" ? "€" : price.currency;
   if (price.priceKind === "multiple" && price.priceMaxMinor !== null && price.priceMaxMinor !== undefined) {
     const max = (price.priceMaxMinor / 100).toLocaleString("nb-NO", {
       minimumFractionDigits: 0,
       maximumFractionDigits: 2,
     });
-    return amount + "–" + max + " kr";
+    return amount + "–" + max + " " + currency;
   }
-  return prefix + amount + " kr";
+  return prefix + amount + " " + currency;
 }
 
 export function cleanDishName(name: string): string {
