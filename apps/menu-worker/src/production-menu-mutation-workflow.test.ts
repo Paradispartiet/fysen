@@ -53,7 +53,7 @@ describe("production menu mutation workflows", () => {
     expect(watcher).not.toContain("workflow_run:");
     expect(watcher).toContain('FYSEN_MENU_WATCH_BATCH_SIZE: "100"');
 
-    expect(freeRefresh).toContain('cron: "31 0,3,6,9,12,15,18,21 * * *"');
+    expect(freeRefresh).toContain('cron: "31 0,4,8,12,16,20 * * *"');
     expect(freeRefresh).toContain("group: fysen-free-public-index");
     expect(freeRefresh).toContain("cancel-in-progress: false");
     expect(freeRefresh).toContain("free-static-refresh.js");
@@ -63,8 +63,8 @@ describe("production menu mutation workflows", () => {
 
     // Free checks are gradual, not a claim that all original sources keep
     // their old 12-hour freshness requirement.
-    const maxFreeChecksPerDay = 8 * 12;
-    expect(maxFreeChecksPerDay).toBe(96);
+    const maxFreeChecksPerDay = 6 * 12;
+    expect(maxFreeChecksPerDay).toBe(72);
     expect(maxFreeChecksPerDay).toBeLessThan(973);
   });
 
