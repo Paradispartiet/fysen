@@ -43,7 +43,7 @@ test("First release does not ask for GPS or account access", () => {
 test("Native Fysen icon is a real 1024px PNG matching brand setup", () => {
   const app = JSON.parse(read("app.json"));
   assert.equal(app.expo.icon, "./assets/icon.png");
-  assert.equal(app.expo.android.adaptiveIcon.foregroundImage, "./assets/icon.png");
+  assert.equal(app.expo.android.adaptiveIcon.foregroundImage, "./assets/adaptive-icon.png");
   const icon = fs.readFileSync(new URL("assets/icon.png", base));
   assert.equal(icon.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
   assert.equal(icon.readUInt32BE(16), 1024);
@@ -57,4 +57,14 @@ test("iPhone simulator smoke runs for native UI changes and checks distinct tab 
   assert.ok(workflow.includes("ios/fysen-iphone-favorites.png"));
   assert.ok(workflow.includes("cropToHeightWidth 1700 1080"));
   assert.ok(workflow.includes("ios/qa-content/matlyst.png"));
+});
+
+test("Native header and adaptive icon use the same new Fysen wordmark", () => {
+  assert.match(read("App.tsx"), /require\("\.\/assets\/fysen-wordmark\.png"\)/u);
+  for (const [file, width, height] of [["adaptive-icon.png", 1024, 1024], ["fysen-wordmark.png", 568, 266]]) {
+    const png = fs.readFileSync(new URL(`assets/${file}`, base));
+    assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+    assert.equal(png.readUInt32BE(16), width);
+    assert.equal(png.readUInt32BE(20), height);
+  }
 });
