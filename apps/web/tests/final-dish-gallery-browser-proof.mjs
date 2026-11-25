@@ -1,4 +1,4 @@
-/* global document, getComputedStyle, Image, window */
+/* global document, getComputedStyle, Image, process */
 import assert from "node:assert/strict";
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
