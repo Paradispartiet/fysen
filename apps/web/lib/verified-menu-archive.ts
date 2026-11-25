@@ -311,26 +311,76 @@ export interface MenuVersion {
   readonly observedAt: string;
 }
 
+/**
+ * Explicitly verified aliases only. Address and name must both match.
+ * The official Benares menu and its SeMeny listing refer to the same
+ * restaurant at Tordenskiolds gate 8, Oslo. Do not infer other aliases
+ * from similar names or shared addresses.
+ */
+function archiveRestaurantIdentity(restaurant: RestaurantRow): string {
+  const name = normalizeArchiveQuery(restaurant[0]);
+  const address = normalizeArchiveQuery(restaurant[2]);
+  if (normalizeArchiveQuery(restaurant[3]) === "oslo" &&
+      /^(benares|benares indisk restaurant bar)$/u.test(name) &&
+      /^tordenskiolds gate 8(?: 0160 oslo| 0160| oslo)?$/u.test(address)) {
+    return "verified:benares-tordenskiolds-gate-8-oslo";
+  }
+  return restaurant[1];
+}
+
 /** Decide between complete menu versions before matching any dish. */
 export function reconcileMenuVersions(archive: PublicMenuArchive, live: readonly MenuVersion[]) {
+  const identities = new Map(archive.restaurants.map((restaurant) =>
+    [restaurant[1], archiveRestaurantIdentity(restaurant)] as const));
+  const identityFor = (slug: string) => identities.get(slug) ?? slug;
   const latest = new Map<string, { index: number; at: number }>();
   archive.sources.forEach((source, index) => {
     const restaurant = archive.restaurants[source[0]];
     if (!restaurant || archive.quarantinedSourceIndices.has(index) || archive.quarantinedSlugs.has(restaurant[1])) return;
     const at = Date.parse(source[2]);
-    const previous = latest.get(restaurant[1]);
-    if (!previous || at > previous.at) latest.set(restaurant[1], { index, at });
+    const identity = identityFor(restaurant[1]);
+    const previous = latest.get(identity);
+    // Prefer the official menu when both verified alias sources have
+    // exactly the same observation timestamp.
+    const officialTie = identity.startsWith("verified:") && previous &&
+      at === previous.at && new URL(source[1]).hostname.replace(/^www\./u, "") === "benares.no" &&
+      new URL(archive.sources[previous.index][1]).hostname.replace(/^www\./u, "") !== "benares.no";
+    if (!previous || at > previous.at || officialTie) latest.set(identity, { index, at });
   });
-  const liveBySlug = new Map(live.map((version) => [version.restaurantSlug, version]));
-  const archiveWins = new Set<string>();
-  for (const [slug, version] of latest) {
-    const other = liveBySlug.get(slug);
-    if (!other || version.at > Date.parse(other.observedAt)) archiveWins.add(slug);
+  const liveByIdentity = new Map<string, MenuVersion>();
+  for (const version of live) {
+    const identity = identityFor(version.restaurantSlug);
+    const previous = liveByIdentity.get(identity);
+    if (!previous || Date.parse(version.observedAt) > Date.parse(previous.observedAt)) {
+      liveByIdentity.set(identity, version);
+    }
   }
-  const visibleSources = new Set([...latest].filter(([slug]) => archiveWins.has(slug)).map(([, version]) => version.index));
+  const archiveWins = new Set<string>();
+  for (const [identity, version] of latest) {
+    const other = liveByIdentity.get(identity);
+    if (!other || version.at > Date.parse(other.observedAt)) archiveWins.add(identity);
+  }
+  const visibleSources = new Set([...latest].filter(([identity]) => archiveWins.has(identity)).map(([, version]) => version.index));
+  const suppressedLive = live.filter((version) => {
+    const identity = identityFor(version.restaurantSlug);
+    const selected = liveByIdentity.get(identity);
+    return archiveWins.has(identity) ||
+      (identity.startsWith("verified:") && selected?.restaurantId !== version.restaurantId);
+  });
+  const suppressedLiveSlugs = new Set<string>();
+  for (const [slug, identity] of identities) {
+    if (archiveWins.has(identity)) suppressedLiveSlugs.add(slug);
+  }
+  for (const version of suppressedLive) {
+    const selected = liveByIdentity.get(identityFor(version.restaurantSlug));
+    if (archiveWins.has(identityFor(version.restaurantSlug)) ||
+        selected?.restaurantSlug !== version.restaurantSlug) {
+      suppressedLiveSlugs.add(version.restaurantSlug);
+    }
+  }
   return {
     archive: { ...archive, items: archive.items.filter((row) => visibleSources.has(row[0])) },
-    suppressedLiveIds: new Set(live.filter((version) => archiveWins.has(version.restaurantSlug)).map((version) => version.restaurantId)),
-    suppressedLiveSlugs: archiveWins,
+    suppressedLiveIds: new Set(suppressedLive.map((version) => version.restaurantId)),
+    suppressedLiveSlugs,
   };
 }
