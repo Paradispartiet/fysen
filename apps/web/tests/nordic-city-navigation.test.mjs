@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { URL } from "node:url";
 import { citySwitchHref, nordicCities } from "../lib/public-path.ts";
 
 test("Nordic cities have distinct canonical city names and local currencies", () => {

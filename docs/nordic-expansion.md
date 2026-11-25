@@ -19,3 +19,7 @@ Fase 1 er navigasjon og et byregister med lokal valuta. Den eksisterende Oslo-de
 V1 beholdes uendret og gir bare Oslo-treff i NOK. V2 beholder de eksisterende feltene i restaurant-, kilde- og rett-tuplene, men krever valutakode på posisjon 8 (niende felt) i hver rett-tuple. Manifest og indeks må ha samme versjon. Bare NOK/Oslo, DKK/København, SEK/Stockholm og EUR/Helsinki aksepteres. Manglende eller feil valuta stopper hele v2-innlesingen. Eksisterende integritets- og karantenekrav beholdes. Web/API kan lese v2, men produsenten må fortsatt utvides og verifiseres. Ingen syntetiske testmenyer skal materialiseres i offentlige data.
 
 Arkivfallback brukes bare dersom arkivet har verifiserbare data for valgt by. De nye testene bruker eksplisitt syntetiske fixtures. Menyobservasjonsdato vises ved prisen. Gjeldende begrensninger på antall treff og prioritering av nyeste meny må koordineres med det separate arbeidet på søkevisningen før lansering.
+
+## Pilot-til-søk: isolert integrasjonstest
+
+Alle 124 research-only oppføringer (69 København, 33 Stockholm, 22 Helsinki) konverteres i minnet til arkivformat v2 av webtesten. Den bruker de faktiske arkivleser-, browse- og søkefunksjonene og sjekker hver retts pris, valuta, kilde, observasjonsdato og byisolasjon. Oslo-fixturen beholdes. Ingen offentlig fil, database, arkivgren eller produksjonsmeny skrives av testen. Oppføringene er fortsatt ikke produksjonsgodkjent; dette er en integrasjonstest av utviklingsdata, ikke et nytt live-kildebevis.

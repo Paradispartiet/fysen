@@ -1,20 +1,12 @@
 import assert from "node:assert/strict";
-import { Buffer } from "node:buffer";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import process from "node:process";
 import { URL } from "node:url";
-import ts from "typescript";
 
-// Exercise the actual server-only archive implementation without network access.
-// The web package already depends on TypeScript; no new test package is needed.
-const source = readFileSync(new URL("../lib/verified-menu-archive.ts", import.meta.url), "utf8");
-const transpiled = ts.transpileModule(source, {
-  compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
-}).outputText;
-const archiveModule = await import(
-  "data:text/javascript;base64," + Buffer.from(transpiled).toString("base64")
-);
+// Use the same direct TypeScript imports as the other Node 24 web tests.
+import * as archiveModule from "../lib/verified-menu-archive.ts";
+import { parseNordicMenuPrice } from "../../menu-worker/src/nordic-menu-price.ts";
 
 const metadata = {
   version: 1,
@@ -171,7 +163,7 @@ test("a successful empty live API response still exposes the historical menu rou
 
 test("v2 Nordic archive isolates cities, preserves local currencies and supports city aliases", () => {
   const nordic = [ ["København", "DKK"], ["Stockholm", "SEK"], ["Helsinki", "EUR"] ];
-  const mixed = structuredClone(index);
+  const mixed = JSON.parse(JSON.stringify(index));
   mixed.version = 2;
   mixed.items = mixed.items.map((row) => [...row, "NOK"]);
   for (const [city, currency] of nordic) {
@@ -202,4 +194,64 @@ test("v2 Nordic archive isolates cities, preserves local currencies and supports
   const legacy = archiveModule.parsePublicMenuArchive(metadata, index);
   assert.equal(archiveModule.archiveHasCity(legacy, "Stockholm"), false);
   assert.equal(archiveModule.searchPublicMenuArchive(legacy, "ramen")[0].currency, "NOK");
+});
+
+test("reviewed Nordic pilot dishes reach the real archive search without entering production", () => {
+  const review = JSON.parse(readFileSync(new URL("../../../docs/nordic-pilot-reviewed-food-menus.json", import.meta.url), "utf8"));
+  const identity = JSON.parse(readFileSync(new URL("../../../docs/nordic-pilot-source-review.json", import.meta.url), "utf8"));
+  assert.equal(review.status, "review-only-not-runtime");
+  const mixed = JSON.parse(JSON.stringify(index));
+  mixed.version = 2;
+  mixed.items = mixed.items.map((row) => [...row, "NOK"]);
+  let reviewedCount = 0;
+  for (const menu of review.menus) {
+    const restaurant = identity.restaurants.find((r) => r.slug === menu.restaurantSlug);
+    assert.ok(restaurant);
+    assert.equal(restaurant.currency, menu.currency);
+    assert.equal(restaurant.city, menu.city);
+    const restaurantIndex = mixed.restaurants.length;
+    mixed.restaurants.push([restaurant.name, restaurant.slug, restaurant.address, restaurant.city, ""]);
+    const sourceIds = new Map();
+    for (const dish of menu.items) {
+      assert.equal(dish.publishEligible, false);
+      const price = parseNordicMenuPrice(dish.priceField, menu.currency);
+      assert.ok(price, dish.name);
+      const sourceUrl = dish.sourceUrl ?? menu.source;
+      let sourceIndex = sourceIds.get(sourceUrl);
+      if (sourceIndex === undefined) {
+        sourceIndex = mixed.sources.length;
+        sourceIds.set(sourceUrl, sourceIndex);
+        mixed.sources.push([restaurantIndex, sourceUrl, review.reviewDate]);
+      }
+      mixed.items.push([sourceIndex, dish.name, archiveModule.normalizeArchiveQuery(dish.name),
+        price.priceMinor, price.priceKind, price.priceMaxMinor, "", "", price.currency]);
+      reviewedCount++;
+    }
+  }
+  assert.equal(reviewedCount, 124);
+  const manifest = { ...metadata, version: 2, restaurants: mixed.restaurants.length,
+    sources: mixed.sources.length, dishes: mixed.items.length };
+  const archive = archiveModule.parsePublicMenuArchive(manifest, mixed);
+  for (const menu of review.menus) {
+    assert.ok(archiveModule.archiveHasCity(archive, menu.city));
+    assert.equal(archiveModule.browseArchivedMenuDishes(archive, menu.city, 100).length, menu.items.length);
+    for (const dish of menu.items) {
+      const price = parseNordicMenuPrice(dish.priceField, menu.currency);
+      const query = archiveModule.normalizeArchiveQuery(dish.name);
+      const result = archiveModule.searchPublicMenuArchive(archive, query, menu.city)
+        .find((r) => r.name === dish.name && r.restaurantSlug === menu.restaurantSlug);
+      assert.ok(result, menu.city + ": " + dish.name);
+      assert.equal(result.priceMinor, price.priceMinor);
+      assert.equal(result.priceMaxMinor, price.priceMaxMinor);
+      assert.equal(result.currency, menu.currency);
+      assert.equal(result.sourceUrl, dish.sourceUrl ?? menu.source);
+      assert.equal(result.observedAt, review.reviewDate);
+      for (const other of review.menus.filter((m) => m.city !== menu.city)) {
+        assert.ok(archiveModule.searchPublicMenuArchive(archive, query, other.city)
+          .every((r) => r.restaurantSlug !== menu.restaurantSlug));
+      }
+    }
+  }
+  assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen", "Oslo").length, 3);
+  assert.equal(archiveModule.archiveHasCity(archive, "Bergen"), false);
 });
