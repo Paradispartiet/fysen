@@ -14,6 +14,7 @@ import { discoveryCoverage } from "../lib/dish-discovery";
 import { menuEvidenceLabel, type MenuEvidenceKind } from "../lib/menu-evidence-label";
 import type { ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
 import { dishSearchHref } from "../lib/public-path";
+import { rankRestaurantsByDistance, type Coordinates } from "../lib/restaurant-distance";
 import {
   homeCuisines,
   type Cuisine,
@@ -171,11 +172,76 @@ function rankDishCoverage(coverage: readonly DishCoverage[]): DishCoverage[] {
   });
 }
 
+const restaurantPreviewLimit = 4;
+
+function RestaurantNames({ restaurants }: { readonly restaurants: readonly RestaurantExample[] }) {
+  return (
+    <ul className="cuisineExploreRestaurantNames">
+      {restaurants.map((restaurant) => (
+        <li key={restaurant.id}>
+          {restaurant.sourceUrl ? (
+            <a className="cuisineExploreRestaurantName" href={restaurant.sourceUrl} target="_blank" rel="noopener noreferrer">
+              {restaurant.name}
+            </a>
+          ) : (
+            <span className="cuisineExploreRestaurantName">{restaurant.name}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function RestaurantPreview({ restaurants, dishLabel, location }: {
+  readonly restaurants: readonly RestaurantExample[];
+  readonly dishLabel: string;
+  readonly location: Coordinates | null;
+}) {
+  const { known, unknown } = rankRestaurantsByDistance(restaurants, location);
+  const ranked = known.length > 0;
+  const preview = (ranked ? known : restaurants).slice(0, restaurantPreviewLimit);
+  const remaining = ranked ? [...known.slice(restaurantPreviewLimit), ...unknown] : restaurants.slice(restaurantPreviewLimit);
+  return (
+    <div className="cuisineExploreRestaurantPreview">
+      {location ? (
+        <p className="cuisineExploreDistanceNote">
+          {ranked
+            ? `Nærmest blant ${known.length} treff med kjent posisjon${unknown.length ? ` · ${unknown.length} uten avstandsdata` : ""}`
+            : "Ingen avstandsdata for disse treffene"}
+        </p>
+      ) : null}
+      <RestaurantNames restaurants={preview} />
+      {remaining.length > 0 ? (
+        <details className="cuisineExploreRestaurantDetails">
+          <summary aria-label={`Flere restauranter med ${dishLabel}`}>
+            <span className="cuisineExploreRestaurantMoreLabel">Se mer ({remaining.length})</span>
+            <span className="cuisineExploreRestaurantLessLabel">Vis mindre</span>
+            <span className="cuisineExploreRestaurantChevron" aria-hidden="true">⌄</span>
+          </summary>
+          {ranked ? (
+            <>
+              {known.length > restaurantPreviewLimit ? <RestaurantNames restaurants={known.slice(restaurantPreviewLimit)} /> : null}
+              {unknown.length > 0 ? (
+                <>
+                  <p className="cuisineExploreDistanceNote">Uten avstandsdata</p>
+                  <RestaurantNames restaurants={unknown} />
+                </>
+              ) : null}
+            </>
+          ) : <RestaurantNames restaurants={remaining} />}
+        </details>
+      ) : null}
+    </div>
+  );
+}
+
 function DiscoveryDishList({
   coverage,
   onOpenKnowledge,
+  location,
 }: {
   readonly coverage: readonly DishCoverage[];
+  readonly location: Coordinates | null;
   readonly onOpenKnowledge: (dishId: string) => void;
 }) {
   return (
@@ -208,37 +274,7 @@ function DiscoveryDishList({
             </div>
           </div>
           {restaurantExamples.length > 0 ? (
-            <details className="cuisineExploreRestaurantDetails" open>
-              <summary>
-                {restaurantExamples.length} {restaurantExamples.length === 1 ? "restaurant" : "restauranter"}
-              </summary>
-              <ul>
-                {restaurantExamples.map((restaurant) => (
-                  <li key={restaurant.id}>
-                    <span className="cuisineExploreRestaurantExample">
-                      <strong>{restaurant.name}</strong>
-                      <small>{restaurant.address}</small>
-                      {restaurant.observedAt ? (
-                        <small>Meny sist registrert {restaurant.observedAt.slice(0, 10)}</small>
-                      ) : null}
-                      {restaurant.sourceUrl ? (
-                        <a
-                          className="cuisineExploreRestaurantSource"
-                          href={restaurant.sourceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Åpne menykilden <span aria-hidden="true">↗</span>
-                        </a>
-                      ) : null}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="cuisineExploreRestaurantNote">
-                Menyer og priser kan ha endret seg siden registreringen.
-              </p>
-            </details>
+            <RestaurantPreview restaurants={restaurantExamples} dishLabel={dish.label} location={location} />
           ) : null}
         </article>
       ))}
@@ -258,6 +294,9 @@ export function CuisineExplorer({
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
   const [selectedTypeName, setSelectedTypeName] = useState<string>("");
   const [showAllDishes, setShowAllDishes] = useState(false);
+  const [location, setLocation] = useState<Coordinates | null>(null);
+  const [locating, setLocating] = useState(false);
+  const [locationStatus, setLocationStatus] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const effectiveBrowseData = browseData ?? previewBrowseData;
@@ -328,6 +367,27 @@ export function CuisineExplorer({
     const dialog = dialogRef.current;
     if (selectedCuisine && dialog && !dialog.open) dialog.showModal();
   }, [selectedCuisine]);
+
+  function requestLocation(): void {
+    if (!navigator.geolocation) {
+      setLocationStatus("Posisjon støttes ikke i denne nettleseren.");
+      return;
+    }
+    setLocating(true);
+    setLocationStatus("");
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        // Position is used only in memory in this browser; no API call or storage.
+        setLocation({ latitude: coords.latitude, longitude: coords.longitude });
+        setLocating(false);
+      },
+      () => {
+        setLocationStatus("Kunne ikke hente posisjon. Du kan fortsatt utforske alle retter.");
+        setLocating(false);
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+    );
+  }
 
   function openCuisine(cuisine: Cuisine, trigger: HTMLButtonElement): void {
     triggerRef.current = trigger;
@@ -508,7 +568,14 @@ export function CuisineExplorer({
                 <span>{selectedDishCoverage.length} rettforslag · Oslo</span>
               </div>
 
+              <div className="cuisineExploreLocation">
+                <button type="button" disabled={locating} onClick={location ? () => { setLocation(null); setLocationStatus(""); } : requestLocation}>
+                  {location ? "Slå av avstandssortering" : locating ? "Henter posisjon …" : "Vis nærmest meg"}
+                </button>
+                <span role="status">{location ? "Sortert etter luftlinje der posisjon er kjent." : locationStatus || "Posisjon brukes bare i denne nettleseren."}</span>
+              </div>
               <DiscoveryDishList
+                location={location}
                 coverage={showAllDishes ? selectedDishCoverage : selectedDishCoverage.slice(0, 12)}
                 onOpenKnowledge={openFoodKnowledge}
               />
@@ -525,7 +592,7 @@ export function CuisineExplorer({
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              <span>Utforsk flere retter eller åpne restaurantens meny for nærmere informasjon.</span>
+              <span>Restaurantnavn bygger på registrerte menyer. Avstand er bare tilgjengelig for treff med kjent posisjon. Se menytreff for mer informasjon.</span>
               {selectedArea?.flagFile && !selectedFoodType ? (
                 <a
                   href={`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(selectedArea.flagFile)}`}
