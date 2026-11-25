@@ -402,6 +402,7 @@ export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: s
   const isButterChicken = index === 11;
   const isPizzaMarinara = index === 15;
   const isCacioEPepe = index === 16;
+  const isGyoza = index === 17;
   const isFalafel = index === 20;
   const isTacosAlPastor = index === 21;
   const isChanaMasala = index === 22;
