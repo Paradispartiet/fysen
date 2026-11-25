@@ -86,3 +86,7 @@ packages/
 - kommersiell plassering kan aldri gjøre en uverifisert rett til et organisk treff
 
 Fysen er foreløpig et privat kommersielt prosjekt. Ingen lisens er gitt for gjenbruk av kildekoden.
+
+## Menykildeprioritet
+
+Offisiell restaurantmeny prioriteres foran leveringsplattformer. Wolt og Foodora er sekundærkilder; leveringspriser skal ikke overskrive restaurantpriser. Se [menykildepolicyen](docs/menu-source-policy.md) for kildehierarki, oppdateringsintervall og migreringsregler.

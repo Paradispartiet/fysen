@@ -68,3 +68,7 @@ The first live observation is accepted only if all ordinary watcher gates pass, 
 CI tests extraction with deterministic fixtures and tests migrations against PostgreSQL/PostGIS. It deliberately does not depend on a restaurant website being available during a build.
 
 Live crawling runs only from the production watcher workflow against sources that already exist in the canonical database. CI and pull requests never require a third-party restaurant site to be online.
+
+## Menykildeprioritet
+
+Offisiell restaurantmeny prioriteres foran leveringsplattformer. Wolt og Foodora er sekundærkilder; leveringspriser skal ikke overskrive restaurantpriser. Se [menykildepolicyen](menu-source-policy.md) for kildehierarki, oppdateringsintervall og migreringsregler.
