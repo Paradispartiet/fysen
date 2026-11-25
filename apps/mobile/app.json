@@ -16,7 +16,7 @@
       "package": "no.fysen.app",
       "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#070807"
       }
     },

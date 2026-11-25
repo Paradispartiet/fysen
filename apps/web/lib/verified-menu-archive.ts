@@ -248,11 +248,11 @@ export function searchPublicMenuArchive(
   for (const { result } of candidates) {
     const seenKey = result.restaurantSlug + ":" + normalizeArchiveQuery(result.name) +
       ":" + (result.priceMinor ?? "unknown");
-    if (seen.has(seenKey) || (perRestaurant.get(result.restaurantSlug) ?? 0) >= 2) continue;
+    if (seen.has(seenKey) || (Number.isFinite(limit) && (perRestaurant.get(result.restaurantSlug) ?? 0) >= 2)) continue;
     seen.add(seenKey);
     perRestaurant.set(result.restaurantSlug, (perRestaurant.get(result.restaurantSlug) ?? 0) + 1);
     results.push(result);
-    if (results.length >= Math.min(Math.max(limit, 1), 20)) break;
+    if (Number.isFinite(limit) && results.length >= Math.min(Math.max(limit, 1), 20)) break;
   }
   return results;
 }
@@ -358,4 +358,35 @@ export function browseArchivedMenuDishes(
       right.restaurantCount - left.restaurantCount ||
       left.name.localeCompare(right.name, "nb-NO"))
     .slice(0, Math.max(0, Math.min(limit, 100)));
+}
+
+export interface MenuVersion {
+  readonly restaurantSlug: string;
+  readonly restaurantId: string;
+  readonly observedAt: string;
+}
+
+/** Decide between complete menu versions before matching any dish. */
+export function reconcileMenuVersions(archive: PublicMenuArchive, live: readonly MenuVersion[]) {
+  const latest = new Map<string, { indices: number[]; at: number }>();
+  archive.sources.forEach((source, index) => {
+    const restaurant = archive.restaurants[source[0]];
+    if (!restaurant || archive.quarantinedSourceIndices.has(index) || archive.quarantinedSlugs.has(restaurant[1])) return;
+    const at = Date.parse(source[2]);
+    const previous = latest.get(restaurant[1]);
+    if (!previous || at > previous.at) latest.set(restaurant[1], { indices: [index], at });
+    else if (archive.version === 2 && at === previous.at) previous.indices.push(index);
+  });
+  const liveBySlug = new Map(live.map((version) => [version.restaurantSlug, version]));
+  const archiveWins = new Set<string>();
+  for (const [slug, version] of latest) {
+    const other = liveBySlug.get(slug);
+    if (!other || version.at > Date.parse(other.observedAt)) archiveWins.add(slug);
+  }
+  const visibleSources = new Set([...latest].filter(([slug]) => archiveWins.has(slug)).flatMap(([, version]) => version.indices));
+  return {
+    archive: { ...archive, items: archive.items.filter((row) => visibleSources.has(row[0])) },
+    suppressedLiveIds: new Set(live.filter((version) => archiveWins.has(version.restaurantSlug)).map((version) => version.restaurantId)),
+    suppressedLiveSlugs: archiveWins,
+  };
 }

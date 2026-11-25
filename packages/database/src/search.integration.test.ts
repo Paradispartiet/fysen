@@ -170,6 +170,24 @@ integrationDescribe("dish search integration", () => {
     expect(oldSnapshot).toEqual([]);
   });
 
+  it("accepts an unlimited search without changing the bounded API default", async () => {
+    const complete = await searchDishes(pool, searchInput("biff tartar", { limit: null }));
+    expect(complete).toHaveLength(1);
+    expect(complete).toEqual(await searchDishes(pool, searchInput("biff tartar")));
+  });
+
+  it("keeps the latest menu searchable after the check deadline", async () => {
+    await pool.query("UPDATE fysen.menu_sources SET last_checked_at = now() - interval '90 days'");
+    try {
+      const results = await searchDishes(pool, searchInput("biff tartar"));
+      expect(results).toHaveLength(1);
+      expect(Date.parse(results[0]!.freshUntil)).toBeLessThan(Date.now());
+      expect(await searchDishes(pool, searchInput("ramen"))).toEqual([]);
+    } finally {
+      await pool.query("UPDATE fysen.menu_sources SET last_checked_at = now()");
+    }
+  });
+
   it("matches only explicitly curated full aliases to the same canonical dish concept", async () => {
     const canonical = await searchDishes(pool, searchInput("beef tartare"));
     expect(canonical).toHaveLength(1);
@@ -284,3 +302,5 @@ integrationDescribe("dish search integration", () => {
     expect(distance[1]!.distanceMeters!).toBeGreaterThan(4_000);
   });
 });
+
+// Freshness is display metadata, never a condition for retaining a verified menu.

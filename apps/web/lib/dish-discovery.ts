@@ -86,14 +86,14 @@ export function discoveryCoverage(
   const strongest = ranked.filter((entry) => entry.score === best.score).map((entry) => entry.item);
   const seenRestaurants = new Set<string>();
   const restaurantExamples = strongest.flatMap((item) => item.restaurantExamples).filter((restaurant) => {
-    if (seenRestaurants.has(restaurant.id) || seenRestaurants.size >= 2) return false;
+    if (seenRestaurants.has(restaurant.id)) return false;
     seenRestaurants.add(restaurant.id);
     return true;
   });
   return {
     // Multiple menu spellings can overlap at the same restaurant. Use the strongest single live
     // identity for the count and deduplicate the representative restaurant proof across spellings.
-    restaurantCount: Math.max(...strongest.map((item) => item.restaurantCount)),
+    restaurantCount: Math.max(restaurantExamples.length, ...strongest.map((item) => item.restaurantCount)),
     restaurantExamples,
     matchedDishes: strongest,
   };

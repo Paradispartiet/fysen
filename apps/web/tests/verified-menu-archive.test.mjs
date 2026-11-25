@@ -148,10 +148,10 @@ test("a successful empty live API response still exposes the historical menu rou
   const home = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
   const preview = readFileSync(new URL("../components/static-preview-search-page.tsx", import.meta.url), "utf8");
   const archivedView = readFileSync(new URL("../components/verified-menu-archive-view.tsx", import.meta.url), "utf8");
-  assert.match(search, /browseState\.data\?\.dishes\.length === 0/u);
-  assert.match(search, /data\?\.results\.length === 0/u);
+  assert.match(search, /searchPublicMenuArchive\(archive, q, city, Infinity\)/u);
   assert.match(search, /archive=\{archive\}/u);
   assert.match(home, /browseData\.dishes\.length === 0/u);
+  assert.match(home, /reconcileMenuVersions\(stored, browseData\?\.menuVersions/u);
   assert.match(preview, /response\.browse\?\.dishes\.length === 0/u);
   assert.match(preview, /response\.search\?\.results\.length === 0/u);
   assert.match(archivedView, /browseArchivedMenuDishes\(archive, city, 48\)/u);
@@ -160,6 +160,56 @@ test("a successful empty live API response still exposes the historical menu rou
   assert.doesNotMatch(archivedView, /arkivtreff|Meny sist kontrollert|Fersksøket har ingen treff/u);
 });
 
+
+test("full archive search returns all 35 restaurants even with old menus", () => {
+  const archive = {
+    archiveDate: "2026-11-02", lastRefreshAt: null,
+    restaurants: Array.from({ length: 35 }, (_, i) => ["Bistro " + i, "bistro-" + i, "Gate " + i, "Oslo", ""]),
+    sources: Array.from({ length: 35 }, (_, i) => [i, "https://example.org/" + i, "2020-01-01T00:00:00Z"]),
+    items: Array.from({ length: 35 }, (_, i) => [i, "Ramen", "ramen", 20000, "exact", null, "NOK", ""]),
+    quarantinedSourceIndices: new Set(), quarantinedSlugs: new Set(),
+  };
+  const complete = archiveModule.searchPublicMenuArchive(archive, "ramen", "Oslo", Infinity);
+  assert.equal(complete.length, 35);
+  assert.equal(new Set(complete.map((item) => item.restaurantSlug)).size, 35);
+  assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen").length, 20);
+});
+
+test("newer full menu suppresses a removed dish even when the live search returns no dish matches", () => {
+  const archive = archiveModule.parsePublicMenuArchive(metadata, index);
+  const selected = archiveModule.reconcileMenuVersions(archive, [{
+    restaurantSlug: "king-falafel-brugata-oslo", restaurantId: "live-king",
+    observedAt: "2026-11-25T12:00:00Z",
+  }]);
+  const matches = archiveModule.searchPublicMenuArchive(selected.archive, "ramen", "Oslo", Infinity);
+  assert.ok(!matches.some((match) => match.restaurantSlug === "king-falafel-brugata-oslo"));
+  assert.ok(matches.some((match) => match.restaurantSlug === "another-ramen-place-oslo"));
+  assert.ok(!selected.suppressedLiveIds.has("live-king"));
+});
+
+test("newer archive menu replaces the older live version regardless of searched dish", () => {
+  const archive = archiveModule.parsePublicMenuArchive(metadata, index);
+  const selected = archiveModule.reconcileMenuVersions(archive, [{
+    restaurantSlug: "king-falafel-brugata-oslo", restaurantId: "live-king",
+    observedAt: "2020-01-01T12:00:00Z",
+  }]);
+  assert.ok(selected.suppressedLiveIds.has("live-king"));
+  assert.ok(archiveModule.searchPublicMenuArchive(selected.archive, "ramen", "Oslo", Infinity).some((match) => match.restaurantSlug === "king-falafel-brugata-oslo"));
+});
+
+test("only the most recent complete menu for a restaurant is used within the archive", () => {
+  const original = archiveModule.parsePublicMenuArchive(metadata, index);
+  const withReplacement = {
+    ...original,
+    sources: [...original.sources, [1, "https://example.org/new-menu", "2026-11-25T00:00:00Z"]],
+    items: [...original.items, [3, "Pizza", "pizza", 20000, "exact", null, "NOK", ""]],
+  };
+  const selected = archiveModule.reconcileMenuVersions(withReplacement, []);
+  assert.ok(!archiveModule.searchPublicMenuArchive(selected.archive, "ramen", "Oslo", Infinity)
+    .some((match) => match.restaurantSlug === "king-falafel-brugata-oslo"));
+  assert.ok(archiveModule.searchPublicMenuArchive(selected.archive, "pizza", "Oslo", Infinity)
+    .some((match) => match.restaurantSlug === "king-falafel-brugata-oslo"));
+});
 
 test("v2 Nordic archive isolates cities, preserves local currencies and supports city aliases", () => {
   const nordic = [ ["København", "DKK"], ["Stockholm", "SEK"], ["Helsinki", "EUR"] ];

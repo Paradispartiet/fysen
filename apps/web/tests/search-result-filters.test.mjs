@@ -46,7 +46,8 @@ describe("Client map and list contract", () => {
     assert.match(code, /openstreetmap\.org\/export\/embed\.html/u);
     assert.match(code, /filteredNear\.map/u);
     assert.match(code, /filteredPrimary\.map/u);
-    assert.match(code, /maksimalt 20/u);
+    assert.doesNotMatch(code, /maksimalt 20/u);
+    assert.match(page, /all: "true"/u);
     assert.match(page, /<SearchResults/u);
   });
 });

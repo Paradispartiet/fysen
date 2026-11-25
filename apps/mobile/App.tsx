@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Alert,
   AppState,
+  Image,
   Keyboard,
   Linking,
   Platform,
@@ -539,8 +540,14 @@ function NativeFysen() {
     <SafeAreaView style={styles.safe} edges={["top", "bottom", "left", "right"]}>
       <StatusBar barStyle="light-content" backgroundColor={colors.bg} />
       <View style={styles.header}>
-        <View style={styles.logoMark}><Text style={styles.logoGlyph}>F</Text></View>
-        <Text style={styles.brand}>fysen</Text>
+        <Image
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          source={require("./assets/fysen-wordmark.png")}
+          style={styles.brandWordmark}
+          resizeMode="contain"
+          accessible
+          accessibilityLabel="Fysen"
+        />
         <View style={styles.osloTag}><Text style={styles.osloTagText}>OSLO</Text></View>
       </View>
       <View style={styles.flex}>
@@ -582,9 +589,7 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   hidden: { display: "none" },
   header: { height: 62, flexDirection: "row", alignItems: "center", paddingHorizontal: 22, borderBottomWidth: 1, borderBottomColor: colors.border },
-  logoMark: { width: 30, height: 30, borderRadius: 9, backgroundColor: colors.green, alignItems: "center", justifyContent: "center" },
-  logoGlyph: { fontSize: 21, fontWeight: "900", color: colors.inkOnGreen },
-  brand: { color: colors.white, fontSize: 26, fontWeight: "800", letterSpacing: -1, marginLeft: 9 },
+  brandWordmark: { width: 116, height: 54 },
   osloTag: { marginLeft: "auto", borderWidth: 1, borderColor: colors.border, borderRadius: 20, paddingHorizontal: 12, paddingVertical: 5 },
   osloTagText: { color: colors.muted, fontSize: 11, letterSpacing: 1.5, fontWeight: "700" },
   screenContent: { paddingHorizontal: 20, paddingTop: 22, paddingBottom: 44 },

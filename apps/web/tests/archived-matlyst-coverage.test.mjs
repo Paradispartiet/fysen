@@ -125,3 +125,17 @@ test("the published public menu archive powers actual homepage restaurant covera
       !archive.quarantinedSlugs.has(example.id)));
   }
 });
+
+
+test("all restaurants remain visible regardless of the menu observation date", () => {
+  const archive = {
+    ...fixture,
+    restaurants: [...fixture.restaurants, ["Third Ramen", "third-ramen-oslo", "Gate 5", "Oslo", ""]],
+    sources: [...fixture.sources, [5, "https://example.org/third", "2020-01-01T01:00:00Z"]],
+    items: [...fixture.items, [5, "Ramen", "ramen", 19000, "exact", null, "NOK", ""]],
+  };
+  const result = summarizeArchivedMatlyst(archive, descriptors).byDish.ramen;
+  assert.equal(result.restaurantCount, 3);
+  assert.equal(result.restaurantExamples.length, 3);
+  assert.equal(result.restaurantExamples.find((item) => item.id === "third-ramen-oslo").observedAt, "2020-01-01T01:00:00Z");
+});

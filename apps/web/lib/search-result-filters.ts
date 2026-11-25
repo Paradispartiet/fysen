@@ -6,7 +6,7 @@ export interface SearchResultFilters {
   readonly maxDistanceMeters: number | null;
 }
 
-// Filter only returned results. The API currently caps searches at 20 rows.
+// Filter returned results without inventing unknown price, location or opening data.
 export function filterSearchResults<T extends Pick<DishSearchResult, "dish" | "opening" | "distanceMeters">>(
   results: readonly T[],
   filters: SearchResultFilters,

@@ -64,6 +64,7 @@ export async function searchDishes(input: DishSearchQuery): Promise<DishSearchRe
     limit: String(query.limit),
     sort: query.sort,
   });
+  if (query.all === "true") params.set("all", "true");
   if (query.lat !== undefined && query.lon !== undefined) {
     params.set("lat", String(query.lat));
     params.set("lon", String(query.lon));

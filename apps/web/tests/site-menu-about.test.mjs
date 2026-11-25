@@ -34,3 +34,13 @@ test("ordinary pages keep status details exclusively behind the menu", () => {
   assert.doesNotMatch(result, /<FreshnessStatus/u);
   assert.match(archive, /Alle retter i \{city\}/u);
 });
+
+test("global navigation stays sticky while the results search scrolls normally", () => {
+  const header = read("../components/global-header.tsx");
+  const globals = read("../app/globals.css");
+  const results = read("../styles/results-v2-1.css");
+  assert.match(globals, /\.globalHeader\s*\{[^}]*position: sticky;[^}]*top: 0;[^}]*z-index: 30;[^}]*background: var\(--color-bg\);/u);
+  assert.ok(header.indexOf("</header>") < header.indexOf('className="globalHeaderSearchRegion"'));
+  assert.doesNotMatch(results, /\.globalHeaderResults\s*\{[^}]*position: static/u);
+  assert.match(results, /\.globalHeaderResults \+ \.globalHeaderSearchRegion/u);
+});

@@ -95,7 +95,7 @@ export function summarizeArchivedMatlyst(
       restaurants = new Map();
       buckets.set(bestId, restaurants);
     }
-    if (!restaurants.has(restaurant[1])) {
+    if (!restaurants.has(restaurant[1]) || restaurants.get(restaurant[1])!.observedAt < source[2]) {
       restaurants.set(restaurant[1], {
         id: restaurant[1],
         name: restaurant[0],
@@ -111,7 +111,7 @@ export function summarizeArchivedMatlyst(
     const restaurants = buckets.get(id);
     byDish[id] = {
       restaurantCount: restaurants?.size ?? 0,
-      restaurantExamples: restaurants ? [...restaurants.values()].slice(0, 2) : [],
+      restaurantExamples: restaurants ? [...restaurants.values()] : [],
     };
   }
   return { archiveDate: archive.archiveDate, byDish };

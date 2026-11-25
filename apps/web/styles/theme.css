@@ -14,11 +14,6 @@ body {
   background: rgba(121, 201, 135, 0.24);
 }
 
-.globalHeaderResults {
-  background: var(--color-header);
-  border-bottom-color: var(--color-line);
-}
-
 .fysenLogo {
   font-weight: 700;
   letter-spacing: -0.035em;
