@@ -150,7 +150,7 @@ export function StaticPreviewSearchPage() {
 
   return (
     <div className="resultsPage">
-      <GlobalHeader results city={city}>
+      <GlobalHeader results city={city} query={q}>
         <DishSearch
           key={`${q}-${city}`}
           defaultValue={q}

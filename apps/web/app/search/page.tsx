@@ -123,7 +123,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
   return (
     <div className="resultsPage">
-      <GlobalHeader results city={city}>
+      <GlobalHeader results city={city} query={q}>
         <DishSearch
           defaultValue={q}
           city={city}

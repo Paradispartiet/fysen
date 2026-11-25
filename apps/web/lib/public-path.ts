@@ -53,3 +53,16 @@ export function restaurantClaimHref(restaurantSlug: string): string {
   const params = new URLSearchParams({ restaurant: restaurantSlug });
   return `${withPublicBasePath("/claim")}?${params.toString()}`;
 }
+
+// The Nordic expansion uses local city names and ISO currencies. This is a
+// navigation registry, not a claim that verified restaurant coverage exists.
+export const nordicCities = [
+  { name: "Oslo", country: "NO", currency: "NOK" },
+  { name: "København", country: "DK", currency: "DKK" },
+  { name: "Stockholm", country: "SE", currency: "SEK" },
+  { name: "Helsinki", country: "FI", currency: "EUR" },
+] as const;
+
+export function citySwitchHref(city: string, query = ""): string {
+  return query.trim().length >= 2 ? dishSearchHref(query, city) : dishBrowseHref(city);
+}

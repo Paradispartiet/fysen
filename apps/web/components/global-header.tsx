@@ -1,16 +1,18 @@
 import type { ReactNode } from "react";
 import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
-import { dishBrowseHref, withPublicBasePath } from "../lib/public-path";
+import { citySwitchHref, dishBrowseHref, nordicCities, withPublicBasePath } from "../lib/public-path";
 import { FysenLogo } from "./fysen-logo";
 
 export function GlobalHeader({
   children,
   results = false,
   city = "Oslo",
+  query = "",
 }: {
   children?: ReactNode;
   results?: boolean;
   city?: string;
+  query?: string;
 }) {
   return (
     <header className={results ? "globalHeader globalHeaderResults" : "globalHeader"}>
@@ -29,6 +31,12 @@ export function GlobalHeader({
               <nav className="siteMenuPanel" aria-label="Hovedmeny">
                 <a href={withPublicBasePath("/")}>Forsiden</a>
                 <a href={dishBrowseHref(city)}>Finn retter</a>
+                <span>Velg by</span>
+                {nordicCities.map(({ name }) => (
+                  <a key={name} href={citySwitchHref(name, query)} aria-current={city === name ? "true" : undefined}>
+                    {name}
+                  </a>
+                ))}
                 {ahaMinMatPilotEnabled ? <a href={withPublicBasePath("/min-mat")}>Min mat</a> : null}
                 <a href={withPublicBasePath("/om")}>Om Fysen</a>
                 <a href={withPublicBasePath("/om") + "#menydata"}>Om menydata</a>
