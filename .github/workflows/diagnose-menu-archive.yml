@@ -1,0 +1,40 @@
+name: Diagnose public menu archive failures
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/diagnose-menu-archive.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read and validate public archive
+        env:
+          ARCHIVE_BASE: https://raw.githubusercontent.com/Paradispartiet/fysen/fysen-free-public-index
+        run: |
+          python3 - <<'PY'
+          import os, json, gzip, hashlib, urllib.request
+          base = os.environ['ARCHIVE_BASE']
+          def read(name):
+              with urllib.request.urlopen(base + '/' + name, timeout=30) as response:
+                  return response.read()
+          manifest = json.loads(read('manifest.json'))
+          raw = read('index.json.gz')
+          assert hashlib.sha256(raw).hexdigest() == manifest['sha256'], 'Archive changed or checksum mismatch'
+          index = json.loads(gzip.decompress(raw))
+          assert index['version'] == manifest['version'] == 1
+          assert len(index['sources']) == manifest['sources']
+          assert len(index['restaurants']) == manifest['restaurants']
+          failures = sorted(manifest['sourceFailures'].items(), key=lambda entry: (-entry[1]['consecutive'], int(entry[0])))
+          for key, failure in failures:
+              i = int(key)
+              assert 0 <= i < len(index['sources'])
+              source = index['sources'][i]
+              assert 0 <= source[0] < len(index['restaurants'])
+              restaurant = index['restaurants'][source[0]]
+              print(json.dumps({'index': i, 'restaurant': restaurant, 'menuUrl': source[1], 'observedAt': source[2], 'code': failure['code'], 'consecutive': failure['consecutive']}, ensure_ascii=True))
+          print('Total failed sources:', len(failures))
+          PY
