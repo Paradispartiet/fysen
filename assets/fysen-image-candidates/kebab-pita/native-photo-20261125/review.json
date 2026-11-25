@@ -34,5 +34,19 @@
     "reason": "AI editing output is below 1600 pixels on both axes; high-resolution source retained separately. Not an unmodified source photograph.",
     "avif_sha256": "858fb08e3caecb477f79aa43c67243a01a820c9ef3069ed812ce2701c149365c",
     "thumbnail_sha256": "d9e8c154d5f480d2c120ca81e44f6f2f59801a63d9e6c4f697446d7bff910a55"
+  },
+  "native_mask_result": {
+    "dimensions": [
+      4000,
+      3000
+    ],
+    "source_rgb_preserved": true,
+    "ai_mask_processed": true,
+    "generated_food_pixels": false,
+    "upscaled": false,
+    "approved_for_draft_gallery": true,
+    "published": false,
+    "png_sha256": "010b26762efa2628ed12dc7ff9b2f971a3c81e7a4c42a0678429b4ef05fad4e2",
+    "master_sha256": "5e5dde9494b8d7825dca03ab4d6c80b32f4f4a4c3f4793a4120a78752d15d1e9"
   }
 }
