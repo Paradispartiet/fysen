@@ -305,3 +305,23 @@ test("reviewed Nordic pilot dishes reach the real archive search without enterin
   assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen", "Oslo").length, 3);
   assert.equal(archiveModule.archiveHasCity(archive, "Bergen"), false);
 });
+
+test("v2 keeps all category sources in the same latest complete menu snapshot", () => {
+  const original = archiveModule.parsePublicMenuArchive(metadata, index);
+  const mixed = { ...original, version: 2,
+    restaurants: [...original.restaurants, ["Fixture København", "fixture-dk", "Test 1", "København", ""]],
+    sources: [...original.sources,
+      [original.restaurants.length, "https://example.org/old", "2026-11-20T12:00:00Z"],
+      [original.restaurants.length, "https://example.org/fish", "2026-11-25T12:00:00Z"],
+      [original.restaurants.length, "https://example.org/meat", "2026-11-25T12:00:00Z"]],
+    items: [...original.items.map((row) => [...row, "NOK"]),
+      [original.sources.length, "Old dish", "old dish", 10000, "exact", null, "", "", "DKK"],
+      [original.sources.length + 1, "New fish", "new fish", 15000, "exact", null, "", "", "DKK"],
+      [original.sources.length + 2, "New meat", "new meat", 20000, "exact", null, "", "", "DKK"]],
+  };
+  const selected = archiveModule.reconcileMenuVersions(mixed, []);
+  assert.deepEqual(archiveModule.searchPublicMenuArchive(selected.archive, "new", "København", Infinity).map((r) => r.name).sort(), ["New fish", "New meat"]);
+  assert.equal(archiveModule.searchPublicMenuArchive(selected.archive, "old dish", "København", Infinity).length, 0);
+  const newer = archiveModule.reconcileMenuVersions(mixed, [{restaurantSlug:"fixture-dk",restaurantId:"live-dk",observedAt:"2026-11-26T12:00:00Z"}]);
+  assert.equal(archiveModule.searchPublicMenuArchive(newer.archive, "new", "København", Infinity).length, 0);
+});

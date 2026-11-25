@@ -22,6 +22,16 @@ describe("Schønnemann seasonal source preview", () => {
     expect(() => extractSchonnemannCategory("Other overview" + footer, [], url)).toThrow(/overview/u);
     expect(extractSchonnemannCategory("Julen er traditionernes tid\nOverview\n138 - 243" + footer, [], url)).toEqual([]);
   });
+  it("accepts the reviewed tatar attribution layouts but rejects unrelated intervening text", () => {
+    const names = ["Michel Roux Jr. rørt tatar", "Ristet rørt tatar"];
+    const rows = [
+      names[0], "Michel Roux Jr. / Restaurant Le Gavroche – London", "– beskrivelse", "203",
+      names[1], "Ole Troelsø / Gastronomiredaktør, dagbladet BØRSEN", "– beskrivelse", "198",
+    ].join("\n");
+    const result = extractSchonnemannCategory(rows + footer, names, url);
+    expect(result.map((item) => item.priceMinor)).toEqual([20300, 19800]);
+    expect(() => extractSchonnemannCategory(rows.replace("Michel Roux Jr. / Restaurant Le Gavroche – London", "Unknown intervening line") + footer, names, url)).toThrow(/Unmapped/u);
+  });
   it("deduplicates equal prices without losing source links and rejects conflicts", () => {
     const a = extractSchonnemannCategory("Madam Schønnemann\n178" + footer, ["Madam Schønnemann"], url);
     const b = extractSchonnemannCategory("Madam Schønnemann\n178" + footer, ["Madam Schønnemann"], url + "/other");

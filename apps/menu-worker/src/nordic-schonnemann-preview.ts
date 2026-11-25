@@ -24,6 +24,17 @@ export function extractSchonnemannCategory(text: string, names: readonly string[
     // The original page has the title immediately before the price or
     // separated by a single description. A hero illustration has no price.
     const candidates = [body[i - 1], body[i - 2]].filter((line): line is string => Boolean(line));
+    // Only the two explicitly reviewed tatar attributions permit a third line.
+    const attributedTitle = normalize(body[i - 3] ?? "");
+    const attribution = normalize(body[i - 2] ?? "");
+    const reviewedAttribution =
+      (attributedTitle === "michel roux jr. rørt tatar" &&
+        /^michel roux jr\. \/ restaurant le gavroche(?: [–-] london)?$/u.test(attribution)) ||
+      (attributedTitle === "ristet rørt tatar" &&
+        /^ole troelsø \/ gastronomiredaktør, dagbladet børsen$/u.test(attribution));
+    if (reviewedAttribution && /^[–—-]\s*/u.test(body[i - 1] ?? "")) {
+      candidates.push(body[i - 3]!);
+    }
     const matched = candidates.map((line) => expected.get(normalize(line))).filter((name): name is string => Boolean(name));
     if (matched.length !== 1) throw new Error("Unmapped or ambiguous priced row: " + field);
     const name = matched[0]!;
