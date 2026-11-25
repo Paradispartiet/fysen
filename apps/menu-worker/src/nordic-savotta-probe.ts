@@ -2,8 +2,9 @@ import { readFileSync } from "node:fs";
 import { HttpMenuClient } from "./http-client.js";
 import { extractSavottaHtmlPreview } from "./nordic-savotta-preview.js";
 import { parseNordicMenuPrice } from "./nordic-menu-price.js";
+import { assertOrdinaryMenuPeriod, localMenuDate, type MenuDateRange } from "./nordic-menu-period.js";
 
-type ReviewedFile = { status: string; menus: { restaurantSlug: string; source: string; currency: string; items: { name: string; priceField: string; publishEligible: boolean }[] }[] };
+type ReviewedFile = { status: string; menus: (MenuDateRange & { restaurantSlug: string; source: string; currency: string; items: { name: string; priceField: string; publishEligible: boolean }[] })[] };
 
 async function main(): Promise<void> {
   const review = JSON.parse(readFileSync(new URL("../../../docs/nordic-pilot-reviewed-food-menus.json", import.meta.url), "utf8")) as ReviewedFile;
@@ -12,6 +13,7 @@ async function main(): Promise<void> {
     menu.source !== "https://ravintolasavotta.fi/menu/" || menu.items.some((item) => item.publishEligible !== false)) {
     throw new Error("Invalid research-only Savotta source");
   }
+  assertOrdinaryMenuPeriod(localMenuDate(new Date(), "Europe/Helsinki"), menu);
   const fetched = await new HttpMenuClient().fetchSource({
     url: menu.source, userAgent: "FysenMenuBot/0.1", etag: null, lastModified: null,
   });

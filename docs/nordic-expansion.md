@@ -31,3 +31,9 @@ Alle 124 research-only oppføringer (69 København, 33 Stockholm, 22 Helsinki) k
 ## Swedish source probe
 
 `pnpm --filter @fysen/menu-worker probe:nordic:pelikan` verifies the current first-party menu link and fetches the reviewed PDF through the robots-aware HTTP client. It scopes the first of two pages to three food columns, preserves half/full portions and SEK, and rejects missing, unknown or duplicate priced rows. The PDF layout was visually reviewed, but automated live extraction is not yet proven. No archive or database writes.
+
+## Seasonal guard and regression status (2026-11-25)
+
+Savotta ordinary-menu previews stop during 21 December 2026–3 January 2027, when the separate Christmas menu applies; other dates outside the reviewed season also stop. Schønnemann checks the published menu index date text and all thirteen category links before fetching individual categories. These are additional fail-closed checks, not live proof of successful automated extraction.
+
+At head df029713, the affected-package quality workflow completed 27/27 tasks, including the 124-row search integration test and Savotta parser tests. The existing Oslo batch-03 intake failed for five DIGG locations, all with HTTP 404 on the same historical menu URL (job 139301330239). Do not replace the historical price evidence or bypass source validation; find and verify a current first-party menu separately. The latest Nordic source-preview workflow has not yet returned a result.
