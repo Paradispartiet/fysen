@@ -13,3 +13,9 @@ Fase 1 er navigasjon og et byregister med lokal valuta. Den eksisterende Oslo-de
 - Støtt lokale rettnavn, norske aliaser og København/Copenhagen/Kobenhavn, Stockholm, Helsinki/Helsingfors.
 - Bygg restaurantdekning batchvis med offisielle menykilder; mål faktisk dekning separat for hver by.
 - Verifiser søk, tomtilstander, mobil/desktop, prisformat, byisolasjon og Oslo-regresjon før publisering. Native iOS-klient må også kontrolleres.
+
+## Arkivkontrakt v2 (lesere, ikke publisert datasett)
+
+V1 beholdes uendret og gir bare Oslo-treff i NOK. V2 beholder de eksisterende feltene i restaurant-, kilde- og rett-tuplene, men krever valutakode på posisjon 8 (niende felt) i hver rett-tuple. Manifest og indeks må ha samme versjon. Bare NOK/Oslo, DKK/København, SEK/Stockholm og EUR/Helsinki aksepteres. Manglende eller feil valuta stopper hele v2-innlesingen. Eksisterende integritets- og karantenekrav beholdes. Web/API kan lese v2, men produsenten må fortsatt utvides og verifiseres. Ingen syntetiske testmenyer skal materialiseres i offentlige data.
+
+Arkivfallback brukes bare dersom arkivet har verifiserbare data for valgt by. De nye testene bruker eksplisitt syntetiske fixtures. Menyobservasjonsdato vises ved prisen. Gjeldende begrensninger på antall treff og prioritering av nyeste meny må koordineres med det separate arbeidet på søkevisningen før lansering.

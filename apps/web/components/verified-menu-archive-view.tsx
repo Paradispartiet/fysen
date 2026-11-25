@@ -8,14 +8,14 @@ import { illustrationForDishName } from "./food-illustration-match";
 import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
 
-function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string): string {
+function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string, currency: ArchivedMenuMatch["currency"]): string {
   if (priceMinor === null) return "Pris ikke oppgitt";
   const price = new Intl.NumberFormat("nb-NO", {
-    style: "currency", currency: "NOK", maximumFractionDigits: 2,
+    style: "currency", currency, maximumFractionDigits: 2,
   }).format(priceMinor / 100);
   if (kind === "multiple") {
     const max = priceMaxMinor === null ? null : new Intl.NumberFormat("nb-NO", {
-      style: "currency", currency: "NOK", maximumFractionDigits: 2,
+      style: "currency", currency, maximumFractionDigits: 2,
     }).format(priceMaxMinor / 100);
     return max ? price + " – " + max : "Flere priser fra " + price;
   }
@@ -45,10 +45,11 @@ export function ArchivedMenuResults({
                   ) : null}
                   <h4>{result.name}</h4>
                 </div>
-                <strong>{priceLabel(result.priceMinor, result.priceMaxMinor, result.priceKind)}</strong>
+                <strong>{priceLabel(result.priceMinor, result.priceMaxMinor, result.priceKind, result.currency)}</strong>
               </div>
               <p className={styles.restaurant}>{result.restaurantName}</p>
               <p>{result.address}, {city}</p>
+              <p>Meny observert: <time dateTime={result.observedAt}>{result.observedAt.slice(0, 10)}</time></p>
               <a href={result.sourceUrl} target="_blank" rel="noopener noreferrer">
                 Se meny <span aria-hidden="true">↗</span>
               </a>

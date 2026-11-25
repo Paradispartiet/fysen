@@ -2,7 +2,7 @@ import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
 import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
-import { getPublicMenuArchive, searchPublicMenuArchive, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
+import { archiveHasCity, getPublicMenuArchive, searchPublicMenuArchive, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
@@ -99,10 +99,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const primaryUnavailable = q.length === 0
     ? Boolean(browseState.error) || browseState.data?.dishes.length === 0
     : q.length >= 2 && (Boolean(error) || data?.results.length === 0);
-  if (primaryUnavailable && city.toLocaleLowerCase("nb-NO") === "oslo") {
+  if (primaryUnavailable) {
     try {
-      archive = await getPublicMenuArchive();
-      if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city);
+      const candidate = await getPublicMenuArchive();
+      archive = archiveHasCity(candidate, city) ? candidate : null;
+      if (archive && q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city);
     } catch {
       // Preserve the existing clear unavailable state, never invent menu data.
       archive = null;

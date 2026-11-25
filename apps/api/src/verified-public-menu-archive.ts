@@ -8,9 +8,36 @@ const cacheDurationMs = 120_000;
 
 type RestaurantRow = readonly [string, string, string, string, string];
 type SourceRow = readonly [number, string, string];
-type ItemRow = readonly [number, string, string, number | null, "exact" | "from" | "multiple", number | null, string, string];
+type ItemRow = readonly [number, string, string, number | null, "exact" | "from" | "multiple", number | null, string, string, NordicCurrency?];
+
+type NordicCurrency = "NOK" | "DKK" | "SEK" | "EUR";
+
+// Keep the v1 Oslo-only reader and v2 Nordic reader in sync with the API/web counterpart.
+function archiveCity(value: string): string {
+  const key = value.trim().normalize("NFKC").toLowerCase();
+  if (["københavn", "copenhagen", "kobenhavn"].includes(key)) return "københavn";
+  if (["helsinki", "helsingfors"].includes(key)) return "helsinki";
+  return key;
+}
+
+function archiveCityCurrency(city: string): NordicCurrency | undefined {
+  switch (archiveCity(city)) {
+    case "oslo": return "NOK";
+    case "københavn": return "DKK";
+    case "stockholm": return "SEK";
+    case "helsinki": return "EUR";
+    default: return undefined;
+  }
+}
+
+function itemCurrency(version: 1 | 2, city: string, row: ItemRow): NordicCurrency | undefined {
+  if (version === 1) return archiveCity(city) === "oslo" ? "NOK" : undefined;
+  const expected = archiveCityCurrency(city);
+  return expected && row[8] === expected ? expected : undefined;
+}
 
 export interface VerifiedPublicArchive {
+  readonly version?: 1 | 2;
   readonly archiveDate: string;
   readonly lastRefreshAt: string | null;
   readonly restaurants: readonly RestaurantRow[];
@@ -26,7 +53,7 @@ export interface ArchivedPublicDish {
   readonly priceMinor: number | null;
   readonly priceKind: "exact" | "from" | "multiple";
   readonly priceMaxMinor: number | null;
-  readonly currency: "NOK";
+  readonly currency: NordicCurrency;
   readonly restaurant: {
     readonly name: string;
     readonly slug: string;
@@ -71,7 +98,7 @@ export function normalizeArchiveDishName(value: string): string {
 export function parseVerifiedPublicArchive(manifestValue: unknown, indexValue: unknown): VerifiedPublicArchive {
   const manifest = record(manifestValue);
   const index = record(indexValue);
-  if (manifest.version !== 1 || index.version !== 1 ||
+  if ((manifest.version !== 1 && manifest.version !== 2) || index.version !== manifest.version ||
       !date(manifest.archiveDate) || manifest.archiveDate !== index.archiveDate ||
       !Array.isArray(index.restaurants) || !Array.isArray(index.sources) ||
       !Array.isArray(index.items) ||
@@ -105,6 +132,17 @@ export function parseVerifiedPublicArchive(manifestValue: unknown, indexValue: u
     throw new Error("Invalid verified public archive items");
   }
 
+  // V2 requires an explicit ISO currency per item, consistent with its city.
+  // Do not infer a foreign price's currency from a bare number or a kr symbol.
+  if (manifest.version === 2 && !items.every((value) => {
+    const row = value as ItemRow;
+    const source = sources[row[0]] as SourceRow;
+    const restaurant = restaurants[source[0]] as RestaurantRow;
+    return itemCurrency(2, restaurant[3], row) !== undefined;
+  })) {
+    throw new Error("Invalid Nordic archive item currency");
+  }
+
   // A missing or invalid quarantine list is unsafe even when the raw menu
   // index is checksum-valid. Verify that each index maps to the stated slug.
   const quarantine = record(manifest.sourceQuarantines);
@@ -132,6 +170,7 @@ export function parseVerifiedPublicArchive(manifestValue: unknown, indexValue: u
   }
 
   return {
+    version: manifest.version,
     archiveDate: manifest.archiveDate,
     lastRefreshAt: date(manifest.lastRefreshAt) ? manifest.lastRefreshAt : null,
     restaurants: restaurants as RestaurantRow[],
@@ -196,7 +235,7 @@ function selectedItems(archive: VerifiedPublicArchive, city: string): Array<{
   source: SourceRow;
   restaurant: RestaurantRow;
 }> {
-  if (city.trim().toLocaleLowerCase("nb-NO") !== "oslo") return [];
+  if (!archiveCityCurrency(city)) return [];
   const selected: Array<{ row: ItemRow; source: SourceRow; restaurant: RestaurantRow }> = [];
   for (const row of archive.items) {
     if (archive.quarantinedSources.has(row[0])) continue;
@@ -204,7 +243,8 @@ function selectedItems(archive: VerifiedPublicArchive, city: string): Array<{
     if (!source) continue;
     const restaurant = archive.restaurants[source[0]];
     if (!restaurant || archive.quarantinedSlugs.has(restaurant[1])) continue;
-    if (restaurant[3].toLocaleLowerCase("nb-NO") !== "oslo") continue;
+    if (archiveCity(restaurant[3]) !== archiveCity(city) ||
+        !itemCurrency(archive.version ?? 1, restaurant[3], row)) continue;
     selected.push({ row, source, restaurant });
   }
   return selected;
@@ -245,13 +285,15 @@ export function archivedPublicSearch(
     if (seen.has(key) || (perRestaurant.get(restaurant[1]) ?? 0) >= 2) continue;
     seen.add(key);
     perRestaurant.set(restaurant[1], (perRestaurant.get(restaurant[1]) ?? 0) + 1);
+    const currency = itemCurrency(archive.version ?? 1, restaurant[3], row);
+    if (!currency) continue;
     results.push({
       name: row[1],
       normalizedName: row[2],
       priceMinor: row[3],
       priceKind: row[4],
       priceMaxMinor: row[5],
-      currency: "NOK",
+      currency,
       restaurant: {
         name: restaurant[0],
         slug: restaurant[1],

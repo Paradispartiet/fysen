@@ -159,3 +159,38 @@ describe("Fysen verified public archive read API", () => {
     await expect(controller.browse({ city: ["Oslo", "Bergen"] })).rejects.toThrow();
   });
 });
+
+
+describe("Nordic v2 public archive", () => {
+  it("isolates city results and refuses missing or incorrect foreign currency", () => {
+    const nordic = [["København", "DKK"], ["Stockholm", "SEK"], ["Helsinki", "EUR"]] as const;
+    const mixed = structuredClone(rawIndex);
+    mixed.version = 2;
+    mixed.items = mixed.items.map((row) => [...row, "NOK"]);
+    for (const [city, currency] of nordic) {
+      const restaurant = mixed.restaurants.length;
+      const source = mixed.sources.length;
+      mixed.restaurants.push(["Fixture " + city, "fixture-" + city, "Test 1", city, ""]);
+      mixed.sources.push([restaurant, "https://example.org/" + source, "2026-11-10T12:00:00Z"]);
+      mixed.items.push([source, "Ramen", "ramen", 1500, "exact", null, "", "", currency]);
+    }
+    const manifest = { ...metadata, version: 2, restaurants: mixed.restaurants.length, sources: mixed.sources.length, dishes: mixed.items.length };
+    const archive = parseVerifiedPublicArchive(manifest, mixed);
+    for (const [city, currency] of nordic) {
+      const result = archivedPublicSearch(archive, "ramen", city);
+      expect(result.results).toHaveLength(1);
+      expect(result.results[0]?.currency).toBe(currency);
+      expect(result.results[0]?.priceMinor).toBe(1500);
+      expect(archivedPublicBrowse(archive, city).dishes[0]?.restaurantCount).toBe(1);
+    }
+    expect(archivedPublicSearch(archive, "ramen", "Copenhagen").results[0]?.currency).toBe("DKK");
+    expect(archivedPublicSearch(archive, "ramen", "Helsingfors").results[0]?.currency).toBe("EUR");
+    expect(archivedPublicSearch(archive, "ramen", "Oslo").results).toHaveLength(3);
+    expect(archivedPublicSearch(archive, "ramen", "Bergen").results).toEqual([]);
+    const last = mixed.items.at(-1)!;
+    last[8] = "NOK";
+    expect(() => parseVerifiedPublicArchive(manifest, mixed)).toThrow(/currency/u);
+    last.pop();
+    expect(() => parseVerifiedPublicArchive(manifest, mixed)).toThrow(/currency/u);
+  });
+});

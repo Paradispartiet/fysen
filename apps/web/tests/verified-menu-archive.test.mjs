@@ -167,3 +167,39 @@ test("a successful empty live API response still exposes the historical menu rou
   assert.match(archivedView, /Finn retten/u);
   assert.doesNotMatch(archivedView, /arkivtreff|Meny sist kontrollert|Fersksøket har ingen treff/u);
 });
+
+
+test("v2 Nordic archive isolates cities, preserves local currencies and supports city aliases", () => {
+  const nordic = [ ["København", "DKK"], ["Stockholm", "SEK"], ["Helsinki", "EUR"] ];
+  const mixed = structuredClone(index);
+  mixed.version = 2;
+  mixed.items = mixed.items.map((row) => [...row, "NOK"]);
+  for (const [city, currency] of nordic) {
+    const restaurant = mixed.restaurants.length;
+    const source = mixed.sources.length;
+    mixed.restaurants.push(["Fixture " + city, "fixture-" + city, "Test 1", city, ""]);
+    mixed.sources.push([restaurant, "https://example.org/" + source, "2026-11-10T12:00:00Z"]);
+    mixed.items.push([source, "Ramen", "ramen", 1500, "exact", null, "", "", currency]);
+  }
+  const manifest = { ...metadata, version: 2, restaurants: mixed.restaurants.length, sources: mixed.sources.length, dishes: mixed.items.length };
+  const archive = archiveModule.parsePublicMenuArchive(manifest, mixed);
+  for (const [city, currency] of nordic) {
+    const results = archiveModule.searchPublicMenuArchive(archive, "ramen", city);
+    assert.equal(results.length, 1);
+    assert.equal(results[0].currency, currency);
+    assert.equal(results[0].priceMinor, 1500);
+    assert.equal(archiveModule.browseArchivedMenuDishes(archive, city)[0].restaurantCount, 1);
+    assert.equal(archiveModule.archiveHasCity(archive, city), true);
+  }
+  assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen", "Copenhagen")[0].currency, "DKK");
+  assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen", "Helsingfors")[0].currency, "EUR");
+  assert.equal(archiveModule.searchPublicMenuArchive(archive, "ramen", "Oslo").length, 3);
+  assert.equal(archiveModule.archiveHasCity(archive, "Bergen"), false);
+  mixed.items.at(-1)[8] = "NOK";
+  assert.throws(() => archiveModule.parsePublicMenuArchive(manifest, mixed), /currency/u);
+  mixed.items.at(-1).pop();
+  assert.throws(() => archiveModule.parsePublicMenuArchive(manifest, mixed), /currency/u);
+  const legacy = archiveModule.parsePublicMenuArchive(metadata, index);
+  assert.equal(archiveModule.archiveHasCity(legacy, "Stockholm"), false);
+  assert.equal(archiveModule.searchPublicMenuArchive(legacy, "ramen")[0].currency, "NOK");
+});
