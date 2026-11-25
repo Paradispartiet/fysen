@@ -1254,3 +1254,10 @@ a.cuisineExploreRestaurantName:focus-visible {
     margin-left: 44px;
   }
 }
+
+/* Local, opt-in distance sorting. */
+.cuisineExploreLocation { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 0 0 8px; }
+.cuisineExploreLocation button { min-height: 44px; padding: 0 10px; border: 1px solid var(--color-line); border-radius: 8px; color: var(--color-brand); background: var(--color-paper); font: inherit; font-size: 12px; cursor: pointer; }
+.cuisineExploreLocation button:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+.cuisineExploreLocation span, .cuisineExploreDistanceNote { color: var(--color-muted); font-size: 11px; line-height: 1.4; }
+.cuisineExploreDistanceNote { margin: 4px 0; }

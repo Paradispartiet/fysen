@@ -100,6 +100,17 @@ try {
           assert.ok(/^https?:\/\//u.test(href ?? ""), "Names only link to actual menu sources");
         }
       }
+      await context.grantPermissions(["geolocation"]);
+      await context.setGeolocation({ latitude: 59.91465, longitude: 10.72082 });
+      await kitchenDialog.getByRole("button", { name: "Vis nærmest meg" }).tap();
+      await kitchenDialog.getByRole("button", { name: "Slå av avstandssortering" }).waitFor({ state: "visible" });
+      assert.match(await kitchenDialog.locator(".cuisineExploreLocation [role=status]").textContent() ?? "", /luftlinje/u);
+      if (await preview.count()) {
+        assert.ok(await preview.locator(":scope > .cuisineExploreRestaurantNames > li").count() <= 4);
+        assert.ok(await preview.locator(".cuisineExploreDistanceNote").first().isVisible());
+      }
+      await kitchenDialog.getByRole("button", { name: "Slå av avstandssortering" }).tap();
+      await kitchenDialog.getByRole("button", { name: "Vis nærmest meg" }).waitFor({ state: "visible" });
       const expandDishes = kitchenDialog.locator(".cuisineExploreShowMore");
       if (await expandDishes.count()) {
         await expandDishes.click();

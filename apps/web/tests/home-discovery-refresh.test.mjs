@@ -71,7 +71,7 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
   assert.match(explorer, /evidenceKind: coverage \? "archive" : "unchecked"/u);
   assert.match(explorer, /"Søk etter retten"/u);
   assert.match(explorer, /const restaurantPreviewLimit = 4/u);
-  assert.match(explorer, /restaurants\.slice\(0, restaurantPreviewLimit\)/u);
+  assert.match(explorer, /\(ranked \? known : restaurants\)\.slice\(0, restaurantPreviewLimit\)/u);
   assert.match(explorer, /restaurants\.slice\(restaurantPreviewLimit\)/u);
   assert.match(explorer, /href=\{restaurant.sourceUrl\}/u);
   assert.match(explorer, /<details className="cuisineExploreRestaurantDetails">/u);
@@ -114,4 +114,12 @@ test("disclosure uses semantic HTML with no Javascript dependency or fake availa
   assert.match(gallery, /Illustrasjoner og foto av rettetyper, ikke restaurantbilder/u);
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
   assert.doesNotMatch(gallery, /Tilgjengelig nå|Åpent nå/u);
+});
+
+test("distance ranking is opt-in and unknown coordinates stay separate", () => {
+  assert.match(explorer, /navigator\.geolocation\.getCurrentPosition/u);
+  assert.match(explorer, /Vis nærmest meg/u);
+  assert.match(explorer, /rankRestaurantsByDistance\(restaurants, location\)/u);
+  assert.match(explorer, /Uten avstandsdata/u);
+  assert.doesNotMatch(explorer, /localStorage|sessionStorage/u);
 });
