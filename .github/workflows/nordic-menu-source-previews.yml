@@ -1,0 +1,176 @@
+name: Nordic menu source previews (read-only)
+
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/src/nordic-*.ts"
+      - "apps/menu-worker/package.json"
+      - "docs/nordic-*.json"
+      - ".github/workflows/nordic-menu-source-previews.yml"
+  workflow_dispatch:
+    inputs:
+      publish_initial_archive:
+        description: "Publish the initial v2 archive only after v2 web/API readers are deployed"
+        type: boolean
+        default: false
+  # Two read-only source checks per month, once on main.
+  schedule:
+    - cron: "17 4 1,15 * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nordic-source-previews-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  nordic-source-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [savotta, schonnemann, pelikan]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-node-pnpm
+      - name: Build worker dependencies
+        run: pnpm --filter @fysen/menu-worker... build
+      - name: Test Nordic price and source parser
+        run: pnpm --filter @fysen/menu-worker exec vitest run src/nordic-menu-price.test.ts src/nordic-${{ matrix.source }}-preview.test.ts
+      - name: Read-only live source preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          report="$RUNNER_TEMP/${{ matrix.source }}.json"
+          pnpm --filter @fysen/menu-worker exec tsx src/nordic-${{ matrix.source }}-probe.ts | tee "$report"
+          python3 -m json.tool "$report" > /dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nordic-source-report-${{ matrix.source }}
+          path: ${{ runner.temp }}/${{ matrix.source }}.json
+          retention-days: 14
+          if-no-files-found: error
+
+  stage-current-nordic-archive:
+    needs: nordic-source-preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: public-index
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: nordic-source-report-*
+          path: fresh-reports
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Stage the latest complete Nordic menus without publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(python3 -c 'import json; print(json.load(open("public-index/manifest.json"))["version"])')"
+          if [[ "$version" == 1 ]]; then
+            python3 scripts/build-fysen-nordic-candidate.py public-index fresh-reports "$RUNNER_TEMP/nordic-fresh"
+            node scripts/verify-fysen-nordic-candidate.mjs public-index "$RUNNER_TEMP/nordic-fresh" fresh-reports
+          elif [[ "$version" == 2 ]]; then
+            previous=public-index
+            for source in savotta pelikan schonnemann; do
+              output="$RUNNER_TEMP/nordic-refresh-$source"
+              python3 scripts/refresh-fysen-nordic-candidate.py "$previous" "$source" "fresh-reports/$source.json" "$output"
+              previous="$output"
+            done
+            mv "$previous" "$RUNNER_TEMP/nordic-fresh"
+          else
+            echo "Unsupported public archive version" >&2
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nordic-fresh-archive-not-published
+          path: ${{ runner.temp }}/nordic-fresh/
+          retention-days: 14
+          if-no-files-found: error
+
+  publish-initial-nordic-archive:
+    # No pull request, cron, or ordinary manual preview can write production.
+    # Explicitly dispatch on main only after both deployed readers support v2.
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_initial_archive == true
+    needs: stage-current-nordic-archive
+    permissions:
+      contents: write
+    concurrency:
+      group: fysen-free-public-index
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: public-index
+          persist-credentials: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: nordic-source-report-*
+          path: fresh-reports
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Require fresh observations from this workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from datetime import datetime, timezone, timedelta
+          from pathlib import Path
+          now = datetime.now(timezone.utc)
+          for key in ("savotta", "pelikan", "schonnemann"):
+              report = json.loads(Path("fresh-reports", key + ".json").read_text())
+              times = [e["observedAt"] for e in report["evidence"]] if key == "schonnemann" else [report["observedAt"]]
+              if not times or any(not timedelta(0) <= now - datetime.fromisoformat(t.replace("Z", "+00:00")) <= timedelta(hours=2) for t in times):
+                  raise SystemExit("Stale or future-dated source evidence: " + key)
+          PY
+      - name: Rebuild and verify against latest locked public archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          # No v2 replacement on replay: this workflow is migration-only.
+          python3 scripts/build-fysen-nordic-candidate.py public-index fresh-reports "$RUNNER_TEMP/nordic-release"
+          node scripts/verify-fysen-nordic-candidate.mjs public-index "$RUNNER_TEMP/nordic-release" fresh-reports
+          printf '%s\n' "$(git -C public-index rev-parse HEAD)" > "$RUNNER_TEMP/nordic-base-sha"
+      - name: Publish only verified index and matching manifest
+        shell: bash
+        working-directory: public-index
+        run: |
+          set -euo pipefail
+          expected="$(cat "$RUNNER_TEMP/nordic-base-sha")"
+          remote="$(git ls-remote origin refs/heads/fysen-free-public-index | cut -f1)"
+          test "$remote" = "$expected"
+          main="$(git ls-remote origin refs/heads/main | cut -f1)"
+          test "$main" = "$GITHUB_SHA"
+          cp "$RUNNER_TEMP/nordic-release/index.json.gz" index.json.gz
+          cp "$RUNNER_TEMP/nordic-release/manifest.json" manifest.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.json.gz manifest.json
+          git diff --cached --quiet && { echo 'Expected initial migration changes' >&2; exit 1; }
+          git commit -m 'data: verified initial Nordic v2 menu archive'
+          # Non-force push is the final compare-and-swap protection.
+          git push origin HEAD:refs/heads/fysen-free-public-index

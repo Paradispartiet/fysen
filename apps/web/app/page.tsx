@@ -7,7 +7,7 @@ import { browseDishes } from "../lib/fysen-api";
 import { getPublicMenuArchive, reconcileMenuVersions } from "../lib/verified-menu-archive";
 import { summarizeArchivedMatlyst, type ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
 import { homeCuisines } from "../components/cuisine-explorer-data";
-import { dishBrowseHref } from "../lib/public-path";
+import { dishBrowseHref, nordicCities } from "../lib/public-path";
 
 export default async function HomePage() {
   let browseData: DishBrowseResponse | null = null;
@@ -53,10 +53,14 @@ export default async function HomePage() {
               Søk etter en rett og finn restauranter som har den på menyen.
             </p>
             <DishSearch />
-            <a className="homeDishBrowseLink" href={dishBrowseHref("Oslo")}>
-              Se alle retter i Oslo
-              <span aria-hidden="true">→</span>
-            </a>
+            <nav aria-label="Finn retter i en by">
+              {nordicCities.map(({ name }) => (
+                <a key={name} className="homeDishBrowseLink" href={dishBrowseHref(name)}>
+                  Se alle retter i {name}
+                  <span aria-hidden="true">→</span>
+                </a>
+              ))}
+            </nav>
           </div>
         </section>
         <CuisineExplorer browseData={browseData} archiveCoverage={archiveCoverage} />

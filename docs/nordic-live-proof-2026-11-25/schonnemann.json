@@ -1,0 +1,782 @@
+{
+  "status": "review-required",
+  "city": "København",
+  "publication": "none",
+  "validFrom": "2026-11-12",
+  "validThrough": "2026-12-23",
+  "menuIndexSha256": "84b2affe8ee19fac59c296f6233453c84bae873663b195df220bb906fa807444",
+  "evidence": [
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+      "observedAt": "2026-11-25T16:17:13.312Z",
+      "rawSha256": "a87083ab4d7e047539f8ea7b53c9d781dc02059f2ed25a4b958c4287e093f299",
+      "items": 11
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/konserves-jul/",
+      "observedAt": "2026-11-25T16:17:14.928Z",
+      "rawSha256": "9ed3d88a5e7078ae511bdbedccdb0841874028f14d910d0401df668ea19bcec0",
+      "items": 2
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/",
+      "observedAt": "2026-11-25T16:17:16.519Z",
+      "rawSha256": "682a2e751cec38d80276a1e4b82f5c437d206ee18cee8a6b7692e62ae1137187",
+      "items": 4
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/laks-hellefisk-jul/",
+      "observedAt": "2026-11-25T16:17:18.074Z",
+      "rawSha256": "514d298763a60bfb08a4f89ff9c32a5a899833162db3c9609c57d94be1cbf08f",
+      "items": 3
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/",
+      "observedAt": "2026-11-25T16:17:19.626Z",
+      "rawSha256": "e679f879b98e30686fd2395c0319d72ef917f0cb9895dfa3caef9dca6ca61c63",
+      "items": 6
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/saeson-jul/",
+      "observedAt": "2026-11-25T16:17:21.237Z",
+      "rawSha256": "2b4bf84a19481904db3045761907289ab23cf07382ea5d0bac87c984e60c9bae",
+      "items": 0
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/",
+      "observedAt": "2026-11-25T16:17:22.770Z",
+      "rawSha256": "91a2c9b082f4cd4f1c0160180433c1b77dd81c28089870503ada2fa996a95ae6",
+      "items": 4
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tarteletter-jul/",
+      "observedAt": "2026-11-25T16:17:24.408Z",
+      "rawSha256": "3ef1495a7f8e53f6fa313b3baf9c747e6d3d1758648f0d49c505afd100be1a91",
+      "items": 1
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+      "observedAt": "2026-11-25T16:17:26.011Z",
+      "rawSha256": "d81f677a32a63969ebeb81d91c4d1ede9a82a89782fecda8bceb3db6da49b87b",
+      "items": 7
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/gris-jul/",
+      "observedAt": "2026-11-25T16:17:27.642Z",
+      "rawSha256": "9d254f1272ecb6bb5c729173ad7a8fe557be71fe33792b0752e984fdfafe1f03",
+      "items": 6
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+      "observedAt": "2026-11-25T16:17:29.223Z",
+      "rawSha256": "9af848127f8425d76d80cca8a83c0e62c11b72595cbdeb48bd17dfaf8f8780bb",
+      "items": 10
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tatar-jul/",
+      "observedAt": "2026-11-25T16:17:30.796Z",
+      "rawSha256": "570ac6964e975bbc5b7ed5398e472624fc59563a1dd6b5d989def310aa8930de",
+      "items": 5
+    },
+    {
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+      "observedAt": "2026-11-25T16:17:32.386Z",
+      "rawSha256": "bcc510b752beb97865af1538e9c875f8c2a0af483453b7aeca4485b7ee256e2e",
+      "items": 11
+    }
+  ],
+  "items": [
+    {
+      "currency": "DKK",
+      "priceMinor": 13800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Marinerede sild",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 13800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Karrysild",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Blomme i madeirasild",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Sennepssild",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 13800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Krydret Linie Julesild",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 13800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kryddersild - Fruens",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 13800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kryddersild - Herrens",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 13800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kryddersild - Hovmesterens",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Schønnemanns snapsemad",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 13800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Ruths Christiansø sild - original",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 13800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Stegt sild i øllage",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/sild-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 17300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Nordens sardiner",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/konserves-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 17300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Røgede blåmuslinger",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/konserves-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 17300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Rødspættefilet",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 19800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Rødspættefilet - \"en nordmand\"",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Rødspættefilet - \"en dansker\"",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Rødspættefilet - \"en svensker\"",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 16300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Gravad laks",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/laks-hellefisk-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Koldrøget laks",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/laks-hellefisk-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Half & Half",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/laks-hellefisk-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 19800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Grønlandske rejer i pyramide",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 16800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Æg & rejer",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Schønnemanns skaldyrssalat",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 22800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Tatar af røget ål",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 21300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Røget ål",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 23300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Søren Special",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 13500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kartoffelmad - klassisk",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 13500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Botanisk Have",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Jyttes kartoffelmad",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Vegansk Paté",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 11800,
+      "priceKind": "multiple",
+      "priceMaxMinor": 17300,
+      "name": "Tartelet/ter",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/tarteletter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Sprængt andebryst",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Hr. Schønnemann",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Stegt andebryst",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Julepate af and",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Hønsesalat",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 15800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Jomfruens natmad",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 17800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Madam Schønnemann",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Julerullepølse",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/gris-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Æbleflæsk",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/gris-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Blodpølse",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/gris-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Julemedister",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/gris-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 17300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Mørbradbøf",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/gris-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 17800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Lun ribbensteg",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/gris-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kalvetunge",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 15800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Sylte af kalv",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 15300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Dyrlægens natmad",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Roastbeef",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 15800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kokkens roastbeef",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "krydret kalveleverpostej",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kalvelever - pandestegt",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 17800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Lun oksebryst",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 19800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Pariserbøf",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Tatar - klassisk",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/tatar-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 18300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kokkens tatar",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/tatar-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 19800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Slagterens rørt tatar",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/tatar-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 20300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Michel Roux Jr. rørt tatar",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/tatar-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 19800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Ristet rørt tatar",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/tatar-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Camembert frites",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Gammel ost",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Fuldmåneost",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Den hvide dame",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 15300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "St. Clemens Blue 60+",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 14800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Blå kornblomst",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 24300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Dagens ostetallerken",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 7300,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Små søde",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 7800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Lun kransekage",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 9800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Ingeborgs kiksekage",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    },
+    {
+      "currency": "DKK",
+      "priceMinor": 12800,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Ris á l'amande",
+      "sourceUrls": [
+        "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/"
+      ]
+    }
+  ],
+  "priceChanges": []
+}

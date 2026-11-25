@@ -20,7 +20,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { loadFeatured, searchDishes, type FeaturedResponse } from "./src/api";
+import { loadFeatured, searchDishes, searchArchivedCity, loadArchivedMatlyst, type ArchivedBrowseDish, nordicCities, type NordicCity, type ArchivedNativeDish, type FeaturedResponse } from "./src/api";
 import { cleanDishName, formatPrice, safeHttpsUrl, validateSearchTerm } from "./src/format";
 import { favoriteKey, readFavorites, writeFavorites, type FavoriteDish } from "./src/favorites";
 import { createFavoritesController, type FavoritesSnapshot } from "./src/favorites-controller";
@@ -307,6 +307,70 @@ function SearchScreen({
   );
 }
 
+
+/** Archive results retain their own provenance rather than pretending to be live database rows. */
+function NordicArchiveScreen({city,value,setValue,wide,searchRequest,refreshRequest}:{
+  city:NordicCity;value:string;setValue:(v:string)=>void;wide:boolean;searchRequest:number;refreshRequest:number;
+}) {
+  const [results,setResults]=useState<ArchivedNativeDish[]>([]);
+  const [next,setNext]=useState<number|null>(null);
+  const [loading,setLoading]=useState(false);
+  const [searched,setSearched]=useState(false);
+  const [error,setError]=useState(false);
+  const current=useRef<AbortController|null>(null);
+  const lastTerm=useRef<string|null>(null);
+  const run=useCallback(async(term:string,offset=0)=>{
+    current.current?.abort();
+    const validated=validateSearchTerm(term);
+    if (!validated) {setResults([]);setNext(null);setSearched(false);setError(false);setLoading(false);lastTerm.current=null;return;}
+    const controller=new AbortController();
+    current.current=controller;
+    lastTerm.current=validated;
+    setLoading(true);setError(false);setSearched(true);
+    if(offset===0){setResults([]);setNext(null);}
+    try {
+      const page=await searchArchivedCity(validated,city,offset,controller.signal);
+      if(!controller.signal.aborted){setResults(old=>offset===0?page.results:[...old,...page.results]);setNext(page.nextOffset);}
+    }catch{if(!controller.signal.aborted)setError(true);}
+    finally{if(!controller.signal.aborted)setLoading(false);}
+  },[city]);
+  useEffect(()=>{if(searchRequest>0||value.trim())void run(value);},[searchRequest,run]);
+  useEffect(()=>{if(refreshRequest>0&&lastTerm.current)void run(lastTerm.current);},[refreshRequest,run]);
+  useEffect(()=>()=>current.current?.abort(),[]);
+  return <ScrollView contentContainerStyle={[styles.screenContent,wide&&styles.wideContent]} keyboardShouldPersistTaps="handled"
+    refreshControl={<RefreshControl refreshing={loading} onRefresh={()=>{if(lastTerm.current)void run(lastTerm.current);}}/>}>
+    <SectionHeading kicker={city.toLocaleUpperCase("nb-NO")+" • MENYARKIV"} title="Hva har du lyst på?"
+      intro="Søk i sist registrerte menyer. Dato og lokal valuta vises ved hvert treff."/>
+    <View style={styles.searchBox}>
+      <TextInput value={value} onChangeText={setValue} onSubmitEditing={()=>void run(value)}
+        placeholder="Søk etter en matrett" placeholderTextColor={colors.soft} accessibilityLabel="Søk etter en matrett" maxLength={80} style={styles.searchInput}/>
+      <PrimaryButton label="Søk" onPress={()=>void run(value)} disabled={loading}/>
+    </View>
+    {error?<View style={styles.notice}><Text style={styles.noticeText}>Kunne ikke hente menyarkivet. Prøv igjen.</Text></View>:null}
+    {loading?<ActivityIndicator color={colors.green}/>:null}
+    {searched&&!loading&&!error&&results.length===0?<Text style={styles.muted}>Ingen registrerte treff i {city}.</Text>:null}
+    {results.length>0?<Text style={styles.resultsLabel}>Viser {results.length} menytreff i {city}</Text>:null}
+    <View style={wide?styles.tabletGrid:undefined}>
+      {results.map((dish,i)=><View key={dish.restaurant.slug+":"+dish.normalizedName+":"+i} style={wide?styles.tabletGridCell:undefined}>
+        <View style={styles.card}>
+          <Text style={styles.dishName}>{dish.name}</Text>
+          <Text style={styles.restaurantName}>{dish.restaurant.name}</Text>
+          <Text style={styles.price}>{formatPrice(dish)}</Text>
+          {dish.priceNote?<Text style={styles.muted}>{dish.priceNote}</Text>:null}
+          <Text style={styles.address}>{dish.restaurant.address}</Text>
+          <Text style={styles.freshness}>Meny sist registrert {new Date(dish.menu.observedAt).toLocaleDateString("nb-NO")} · Kontroller alltid meny og pris</Text>
+          <View style={styles.actions}>
+            <Pill label="Se meny ↗" onPress={()=>void openExternal(dish.menu.sourceUrl)}/>
+            <Pill label="Veibeskrivelse ↗" onPress={()=>void openExternal(restaurantDirectionsUrl(Platform.OS,{...dish.restaurant,latitude:null,longitude:null}))}/>
+          </View>
+        </View>
+      </View>)}
+    </View>
+    {next!==null?<PrimaryButton label="Vis flere menytreff" disabled={loading} onPress={()=>{if(lastTerm.current)void run(lastTerm.current,next);}}/>:null}
+    <Text style={styles.footerNote}>Menyarkivet er ikke en garanti for tilgjengelighet.</Text>
+  </ScrollView>;
+}
+
 function RecentDishCard({ dish, onPick }: {
   dish: RecentlyAddedDishItem;
   onPick: (query: string) => void;
@@ -344,6 +408,49 @@ function PopularDishCard({ dish, rank, onPick }: {
       <Text style={styles.arrow}>→</Text>
     </Pressable>
   );
+}
+
+
+function NordicMatlystScreen({city,wide,onPick}:{city:NordicCity;wide:boolean;onPick:(query:string)=>void}) {
+  const [dishes,setDishes]=useState<ArchivedBrowseDish[]>([]);
+  const [next,setNext]=useState<number|null>(null);
+  const [loading,setLoading]=useState(true);
+  const [error,setError]=useState(false);
+  const current=useRef<AbortController|null>(null);
+  const run=useCallback(async(offset=0)=>{
+    current.current?.abort();
+    const controller=new AbortController();
+    current.current=controller;
+    setLoading(true);setError(false);
+    if(offset===0){setDishes([]);setNext(null);}
+    try {
+      const page=await loadArchivedMatlyst(city,offset,controller.signal);
+      if(!controller.signal.aborted){
+        setDishes(old=>offset===0?page.dishes:[...old,...page.dishes]);
+        setNext(page.nextOffset);
+      }
+    }catch{if(!controller.signal.aborted)setError(true);}
+    finally{if(!controller.signal.aborted)setLoading(false);}
+  },[city]);
+  useEffect(()=>{void run();return ()=>current.current?.abort();},[run]);
+  return <ScrollView contentContainerStyle={[styles.screenContent,wide&&styles.wideContent]}
+    refreshControl={<RefreshControl refreshing={loading} onRefresh={()=>void run()}/>}>
+    <SectionHeading kicker={city.toLocaleUpperCase("nb-NO")+" • MENYARKIV"} title="Matlyst"
+      intro="Utforsk retter i registrerte restaurantmenyer. Antallet viser registrerte restauranter, ikke popularitet eller sanntid."/>
+    {error?<View style={styles.notice}><Text style={styles.noticeText}>Kunne ikke hente Matlyst.</Text><PrimaryButton label="Prøv igjen" onPress={()=>void run()}/></View>:null}
+    {loading?<ActivityIndicator color={colors.green}/>:null}
+    {!loading&&!error&&dishes.length===0?<Text style={styles.muted}>Ingen registrerte retter i {city} ennå.</Text>:null}
+    <View style={wide?styles.tabletGrid:undefined}>
+      {dishes.map(dish=><View key={dish.query} style={wide?styles.tabletGridCell:undefined}>
+        <Pressable accessibilityRole="button" style={styles.card} onPress={()=>onPick(dish.query)}>
+          <Text style={styles.dishName}>{cleanDishName(dish.name)}</Text>
+          <Text style={styles.muted}>{dish.restaurantCount} {dish.restaurantCount===1?"restaurant":"restauranter"} i menyarkivet</Text>
+          <Text style={styles.arrow}>Finn retten →</Text>
+        </Pressable>
+      </View>)}
+    </View>
+    {next!==null?<PrimaryButton label="Vis flere retter" disabled={loading} onPress={()=>void run(next)}/>:null}
+  </ScrollView>;
 }
 
 function MatlystScreen({
@@ -449,6 +556,7 @@ function NativeFysen() {
   const { width } = useWindowDimensions();
   const wide = isWideLayout(width);
   const [tab, setTab] = useState<Tab>("search");
+  const [city,setCity] = useState<NordicCity>("Oslo");
   const [query, setQuery] = useState("");
   const [searchRequest, setSearchRequest] = useState(0);
   const [refreshRequest, setRefreshRequest] = useState(0);
@@ -548,15 +656,19 @@ function NativeFysen() {
           accessible
           accessibilityLabel="Fysen"
         />
-        <View style={styles.osloTag}><Text style={styles.osloTagText}>OSLO</Text></View>
+        <View style={styles.osloTag}><Text style={styles.osloTagText}>{city.toLocaleUpperCase("nb-NO")}</Text></View>
+      </View>
+      <View style={[styles.actions,{paddingHorizontal:12,paddingVertical:8,justifyContent:"center"}]}>
+        {nordicCities.map(name=><Pressable key={name} accessibilityRole="button" accessibilityState={{selected:city===name}} style={[styles.pill,city===name&&{borderColor:colors.green}]} onPress={()=>{setCity(name);setTab("search");}}><Text style={styles.pillText}>{name}</Text></Pressable>)}
       </View>
       <View style={styles.flex}>
         <View style={[styles.flex, tab !== "search" && styles.hidden]}>
-          <SearchScreen value={query} setValue={setQuery} wide={wide} searchRequest={searchRequest} refreshRequest={refreshRequest}
+          {city === "Oslo" ? <SearchScreen value={query} setValue={setQuery} wide={wide} searchRequest={searchRequest} refreshRequest={refreshRequest}
             favorites={favoriteState.items} favoritesReady={favoriteState.ready}
-            onFavorite={toggleFavorite} />
+            onFavorite={toggleFavorite} /> : <NordicArchiveScreen key={city} city={city} value={query} setValue={setQuery} wide={wide} searchRequest={searchRequest} refreshRequest={refreshRequest}/>}
         </View>
-        {tab === "matlyst" ? (
+        {tab === "matlyst" && city !== "Oslo" ? <NordicMatlystScreen key={city} city={city} wide={wide} onPick={navigateToSearch}/> : null}
+        {tab === "matlyst" && city === "Oslo" ? (
           <MatlystScreen wide={wide} featured={featured} loading={loadingFeatured} error={featuredError}
             retry={() => void refreshFeatured()} onPick={navigateToSearch} />
         ) : null}

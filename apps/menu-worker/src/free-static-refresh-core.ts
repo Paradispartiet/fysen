@@ -1,15 +1,44 @@
 import type { MenuObservedItem } from "@fysen/menu-core";
 
-export type FreeMenu = [number, string, string, number | null, string, number | null, string, string];
+export type FreeCurrency = "NOK" | "DKK" | "SEK" | "EUR";
+export type FreeMenu = [number, string, string, number | null, string, number | null, string, string, FreeCurrency?];
+export function freeCityCurrency(city: string): FreeCurrency | undefined {
+  switch (city.normalize("NFKC").trim().toLowerCase()) {
+    case "oslo": return "NOK";
+    case "københavn": case "copenhagen": case "kobenhavn": return "DKK";
+    case "stockholm": return "SEK";
+    case "helsinki": case "helsingfors": return "EUR";
+    default: return undefined;
+  }
+}
 export type FreeSource = [number, string, string];
 export type FreeRestaurant = [string, string, string, string, string];
 export interface FreeIndex {
-  version: 1;
+  version: 1 | 2;
   archiveDate: string;
   restaurants: FreeRestaurant[];
   sources: FreeSource[];
   items: FreeMenu[];
 }
+/** Validate local currency and stable source/restaurant references before any refresh. */
+export function assertFreeIndexCurrencies(index: FreeIndex): void {
+  for (const source of index.sources) {
+    if (!Number.isInteger(source[0]) || !index.restaurants[source[0]]) {
+      throw new Error("Corrupted restaurant reference in published index");
+    }
+  }
+  for (const row of index.items) {
+    const source = index.sources[row[0]];
+    const restaurant = source && index.restaurants[source[0]];
+    const currency = restaurant && freeCityCurrency(restaurant[3]);
+    if (!Number.isInteger(row[0]) || !currency ||
+      (index.version === 1 ? currency !== "NOK" || row.length !== 8 :
+        row.length !== 9 || row[8] !== currency)) {
+      throw new Error("Invalid published archive currency or source reference");
+    }
+  }
+}
+
 export type FreeSourceFailureCode = "http-404" | "http-error" | "quality" | "currency" | "no-content" | "other";
 export interface FreeSourceFailure {
   code: FreeSourceFailureCode;
@@ -264,7 +293,7 @@ export function prioritizeOneRecoverableFreeQualityFailure<T>(
 }
 
 export interface FreeManifest {
-  version: 1;
+  version: 1 | 2;
   archiveDate: string;
   restaurants: number;
   sources: number;
@@ -346,6 +375,12 @@ export function replaceOneSource(
     }
   }
   const old = index.sources[sourceIndex]!;
+  // The legacy parser is Norwegian only. Multi-source foreign snapshots
+  // must be refreshed together by the dedicated Nordic producer.
+  const restaurant = index.restaurants[old[0]];
+  if (!restaurant || freeCityCurrency(restaurant[3]) !== "NOK") {
+    throw new Error("Norwegian refresh cannot replace a foreign menu source");
+  }
   const updated: FreeSource[] = index.sources.map((source, indexOfSource): FreeSource =>
     indexOfSource === sourceIndex ? [old[0], approvedSourceUrl ?? old[1], observedAt] : source
   );
@@ -356,11 +391,13 @@ export function replaceOneSource(
     if (item.priceMinor !== null && (!Number.isSafeInteger(item.priceMinor) || item.priceMinor < 0)) {
       throw new Error("Invalid dish price");
     }
-    return [
+    const row: FreeMenu = [
       sourceIndex, item.name, item.normalizedName, item.priceMinor,
       item.priceKind ?? "exact", item.priceMaxMinor ?? null,
       (item.description ?? "").slice(0, 180), item.sectionName ?? "",
     ];
+    if (index.version === 2) row.push("NOK");
+    return row;
   });
   return {
     ...index,

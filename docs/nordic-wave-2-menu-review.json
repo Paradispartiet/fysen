@@ -1,0 +1,747 @@
+{
+  "version": 1,
+  "status": "manual-source-review-only-not-production",
+  "reviewDate": "2026-11-25",
+  "restaurants": [
+    {
+      "restaurantSlug": "puk-vandkunsten-kobenhavn",
+      "name": "Restaurant PUK",
+      "city": "København",
+      "countryCode": "DK",
+      "currency": "DKK",
+      "address": "Vandkunsten 8, 1467 København K",
+      "menus": [
+        {
+          "service": "lunch",
+          "source": "https://www.restaurantpuk.dk/da/menus/",
+          "items": [
+            {
+              "section": "Herring",
+              "name": "House Signature Herring",
+              "priceField": "95",
+              "publishEligible": false
+            },
+            {
+              "section": "Herring",
+              "name": "Karrysild",
+              "priceField": "95",
+              "publishEligible": false
+            },
+            {
+              "section": "Herring",
+              "name": "Christiansø Herring",
+              "priceField": "95",
+              "publishEligible": false
+            },
+            {
+              "section": "Herring",
+              "name": "Stegt sild",
+              "priceField": "115",
+              "publishEligible": false
+            },
+            {
+              "section": "Herring",
+              "name": "Fried Herring",
+              "priceField": "115",
+              "publishEligible": false
+            },
+            {
+              "section": "The Green One",
+              "name": "Deep-Fried Egg",
+              "priceField": "115",
+              "publishEligible": false
+            },
+            {
+              "section": "The Green One",
+              "name": "Avocado",
+              "priceField": "115",
+              "publishEligible": false
+            },
+            {
+              "section": "Oste & desserter",
+              "name": "Extra lagret ost",
+              "priceField": "95",
+              "publishEligible": false
+            },
+            {
+              "section": "Oste & desserter",
+              "name": "Camembert Frites",
+              "priceField": "110",
+              "publishEligible": false
+            },
+            {
+              "section": "Oste & desserter",
+              "name": "Selection of Danish Cheese",
+              "priceField": "125",
+              "publishEligible": false
+            },
+            {
+              "section": "Oste & desserter",
+              "name": "Classic Crème Brûlée",
+              "priceField": "95",
+              "publishEligible": false
+            },
+            {
+              "section": "Oste & desserter",
+              "name": "Traditional Danish Lemon Pudding",
+              "priceField": "95",
+              "publishEligible": false
+            },
+            {
+              "section": "Oste & desserter",
+              "name": "Classic Tarte Tatin",
+              "priceField": "95",
+              "publishEligible": false
+            },
+            {
+              "section": "Fish & Shellfish",
+              "name": "Egg & Shrimps",
+              "priceField": "125",
+              "publishEligible": false
+            },
+            {
+              "section": "Fish & Shellfish",
+              "name": "Hand-Peeled Cold Water Shrimps",
+              "priceField": "130",
+              "publishEligible": false
+            },
+            {
+              "section": "Fish & Shellfish",
+              "name": "Smoked Salmon",
+              "priceField": "145",
+              "publishEligible": false
+            },
+            {
+              "section": "Fish & Shellfish",
+              "name": "Crab Meat",
+              "priceField": "145",
+              "publishEligible": false
+            },
+            {
+              "section": "Fish & Shellfish",
+              "name": "Butter-Fried Fillet of Plaice",
+              "priceField": "120",
+              "note": "Remoulade variant",
+              "publishEligible": false
+            },
+            {
+              "section": "Fish & Shellfish",
+              "name": "Butter-Fried Fillet of Plaice",
+              "priceField": "135",
+              "note": "Shrimp variant",
+              "publishEligible": false
+            },
+            {
+              "section": "Fish & Shellfish",
+              "name": "Steamed and Fried Fillet of Plaice",
+              "priceField": "145",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "Roastbeef",
+              "priceField": "110",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "Classic Roastbeef",
+              "priceField": "100",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "The Veterinarian’s Midnight Snack",
+              "priceField": "110",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "The House Signature",
+              "priceField": "125",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "Creamy Chicken Salad",
+              "priceField": "100",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "Pork Tenderloin",
+              "priceField": "120",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "Vol au Vent",
+              "priceField": "60",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "Classic Steak Tartare",
+              "priceField": "140",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "Stirred Tartare of Beef",
+              "priceField": "140",
+              "publishEligible": false
+            },
+            {
+              "section": "Open Sandwich | Meat",
+              "name": "Seared Steak Tartare",
+              "priceField": "145",
+              "publishEligible": false
+            }
+          ]
+        },
+        {
+          "service": "dinner",
+          "source": "https://www.restaurantpuk.dk/da/evening-menu/",
+          "items": [
+            {
+              "section": "Forretter",
+              "name": "Nordisk fiskesuppe",
+              "priceField": "145",
+              "publishEligible": false
+            },
+            {
+              "section": "Forretter",
+              "name": "Røget laks",
+              "priceField": "145",
+              "publishEligible": false
+            },
+            {
+              "section": "Forretter",
+              "name": "Rørt tatar af okseinderlår",
+              "priceField": "145",
+              "publishEligible": false
+            },
+            {
+              "section": "Forretter",
+              "name": "PUK's Gravad laks",
+              "priceField": "125",
+              "publishEligible": false
+            },
+            {
+              "section": "De Grønne",
+              "name": "Salade de chèvre chaud",
+              "priceField": "145",
+              "publishEligible": false
+            },
+            {
+              "section": "De Grønne",
+              "name": "Avocado",
+              "priceField": "135",
+              "publishEligible": false
+            },
+            {
+              "section": "De Grønne",
+              "name": "PUK's blomkål",
+              "priceField": "225",
+              "publishEligible": false
+            },
+            {
+              "section": "Hovedretter | Fisk",
+              "name": "Moules frites",
+              "priceField": "245",
+              "publishEligible": false
+            },
+            {
+              "section": "Hovedretter | Fisk",
+              "name": "Klassisk torsk",
+              "priceField": "395",
+              "publishEligible": false
+            },
+            {
+              "section": "Hovedretter | Fisk",
+              "name": "Søtunge à la meunière",
+              "priceField": "395",
+              "publishEligible": false
+            },
+            {
+              "section": "Hovedretter | Kød",
+              "name": "Klassisk plankebøf på oksefilet",
+              "priceField": "335",
+              "publishEligible": false
+            },
+            {
+              "section": "Hovedretter | Kød",
+              "name": "Wienerschnitzel",
+              "priceField": "295",
+              "publishEligible": false
+            },
+            {
+              "section": "Hovedretter | Kød",
+              "name": "PUKs Biksemad",
+              "priceField": "295",
+              "publishEligible": false
+            },
+            {
+              "section": "Hovedretter | Kød",
+              "name": "Chateaubriand bearnaise",
+              "priceField": "395",
+              "publishEligible": false
+            },
+            {
+              "section": "Hovedretter | Kød",
+              "name": "Steak au poivre",
+              "priceField": "395",
+              "publishEligible": false
+            },
+            {
+              "section": "Børnemenu",
+              "name": "Rødspættefilet",
+              "priceField": "125",
+              "note": "Under 12 years only",
+              "publishEligible": false
+            },
+            {
+              "section": "Oste",
+              "name": "Friteret camembert",
+              "priceField": "115",
+              "publishEligible": false
+            },
+            {
+              "section": "Oste",
+              "name": "PUKs udvalg af danske oste",
+              "priceField": "135",
+              "publishEligible": false
+            },
+            {
+              "section": "Desserter",
+              "name": "Crème Brûlée",
+              "priceField": "115",
+              "publishEligible": false
+            },
+            {
+              "section": "Desserter",
+              "name": "Citron fromage",
+              "priceField": "105",
+              "publishEligible": false
+            },
+            {
+              "section": "Desserter",
+              "name": "Risalamande",
+              "priceField": "120",
+              "publishEligible": false
+            }
+          ]
+        }
+      ],
+      "reviewNotes": [
+        "Exclude fixed-price group and holiday packages; distinct lunch and evening service, not successive versions.",
+        "Confirm holiday service restrictions for 2026. Older 2025 restriction page is not current evidence.",
+        "Duplicate plaice titles are distinct variants, not interchangeable prices."
+      ]
+    },
+    {
+      "restaurantSlug": "kvarnen-tjarhovsgatan-stockholm",
+      "name": "Kvarnen",
+      "city": "Stockholm",
+      "countryCode": "SE",
+      "currency": "SEK",
+      "address": "Tjärhovsgatan 4, 116 21 Stockholm",
+      "menus": [
+        {
+          "service": "a-la-carte",
+          "source": "https://www.kvarnen.com/sv/meny",
+          "items": [
+            {
+              "section": "Förrätt",
+              "name": "Västerbottenpaj",
+              "priceField": "160",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "Pumpasoppa",
+              "priceField": "165",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "SOS",
+              "priceField": "285",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "Gubbröra",
+              "priceField": "185",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "Kalix Löjromstoast",
+              "priceField": "330",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "Toast Skagen",
+              "priceField": "280",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "Charkbricka",
+              "priceField": "195",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "Toast Pelle Janzon",
+              "priceField": "295",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "Råbiff",
+              "priceField": "215/295",
+              "note": "Two portion sizes",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "Tomatsallad",
+              "priceField": "90",
+              "publishEligible": false
+            },
+            {
+              "section": "Förrätt",
+              "name": "Mixsallad",
+              "priceField": "90",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Kronhjort",
+              "priceField": "430",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Biff Rydberg",
+              "priceField": "425",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Rödvinsbräserad oxkind",
+              "priceField": "345",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Kryddstekt ankbröst",
+              "priceField": "385",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Steak Hasse",
+              "priceField": "495",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Gödkalvlever Anglais",
+              "priceField": "295",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Ångad torsk",
+              "priceField": "420",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Smörstekt gösfilé",
+              "priceField": "420",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Fisk- och skaldjursgryta",
+              "priceField": "345",
+              "publishEligible": false
+            },
+            {
+              "section": "Huvudrätt",
+              "name": "Svampfyllda kroppkakor",
+              "priceField": "285",
+              "publishEligible": false
+            },
+            {
+              "section": "Kvarnens Klassiker",
+              "name": "Isterband från Vaggeryds Chark",
+              "priceField": "260",
+              "publishEligible": false
+            },
+            {
+              "section": "Kvarnens Klassiker",
+              "name": "Pytt i panna",
+              "priceField": "270",
+              "publishEligible": false
+            },
+            {
+              "section": "Kvarnens Klassiker",
+              "name": "Kvarnens köttbullar",
+              "priceField": "275",
+              "publishEligible": false
+            },
+            {
+              "section": "Kvarnens Klassiker",
+              "name": "Stekt strömming",
+              "priceField": "270",
+              "publishEligible": false
+            },
+            {
+              "section": "Kvarnens Klassiker",
+              "name": "Ren- och viltskavspanna",
+              "priceField": "320",
+              "publishEligible": false
+            },
+            {
+              "section": "Kvarnens Klassiker",
+              "name": "Kvarnens rimmade lax",
+              "priceField": "330",
+              "publishEligible": false
+            },
+            {
+              "section": "Dessertmeny",
+              "name": "Chokladfondant",
+              "priceField": "140",
+              "publishEligible": false
+            },
+            {
+              "section": "Dessertmeny",
+              "name": "Gårdsost från Paverås Gårdsmejeri",
+              "priceField": "95",
+              "publishEligible": false
+            },
+            {
+              "section": "Dessertmeny",
+              "name": "Dagens sorbet",
+              "priceField": "90",
+              "note": "Selection varies",
+              "publishEligible": false
+            },
+            {
+              "section": "Dessertmeny",
+              "name": "Äppelsmulpaj",
+              "priceField": "135",
+              "publishEligible": false
+            },
+            {
+              "section": "Dessertmeny",
+              "name": "Crème Brûlée",
+              "priceField": "125",
+              "publishEligible": false
+            },
+            {
+              "section": "Dessertmeny",
+              "name": "Kvarnens chokladtryffel",
+              "priceField": "70",
+              "publishEligible": false
+            },
+            {
+              "section": "Dessertmeny",
+              "name": "Småländsk ostkaka",
+              "priceField": "135",
+              "publishEligible": false
+            },
+            {
+              "section": "Dessertmeny",
+              "name": "Björnbärskaka",
+              "priceField": "135",
+              "publishEligible": false
+            }
+          ]
+        }
+      ],
+      "reviewNotes": [
+        "Exclude beverages, fixed-price autumn menu and group Christmas menu.",
+        "Christmas menu advertised 23 Nov–23 Dec; verify ordinary à la carte service in that period."
+      ]
+    },
+    {
+      "restaurantSlug": "taulu-kaivokatu-helsinki",
+      "name": "Ravintola Taulu",
+      "city": "Helsinki",
+      "countryCode": "FI",
+      "currency": "EUR",
+      "address": "Kaivokatu 1, 00100 Helsinki",
+      "menus": [
+        {
+          "service": "a-la-carte",
+          "source": "https://ravintolataulu.fi/en/menu/",
+          "sourceDeclaredPriceCheckDate": "2026-10-19",
+          "items": [
+            {
+              "section": "Starters and mains",
+              "name": "Salmon soup",
+              "priceField": "12,90/22,90",
+              "note": "Starter/main",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Sugar-cured salmon",
+              "priceField": "12,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Beef tartare",
+              "priceField": "13,90/23,90",
+              "note": "70g/120g",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Skagen",
+              "priceField": "12,90",
+              "note": "Vegan variant available; confirm",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Mozzarella",
+              "priceField": "12,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Meatballs",
+              "priceField": "19,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Vegan vegetable balls",
+              "priceField": "19,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Sautéed reindeer",
+              "priceField": "25,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Pepper steak à la Taulu",
+              "priceField": "35,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Oscar-style pork schnitzel",
+              "priceField": "25,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Fish of the day",
+              "priceField": "28,90",
+              "note": "Selection varies",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Pan-fried farmhouse chicken breast",
+              "priceField": "24,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Starters and mains",
+              "name": "Autumn salad",
+              "priceField": "21,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Desserts",
+              "name": "Chocolate Heaven",
+              "priceField": "11,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Desserts",
+              "name": "Blackcurrant panna cotta",
+              "priceField": "11,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Desserts",
+              "name": "Leipäjuusto (Finnish bread cheese)",
+              "priceField": "11,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Desserts",
+              "name": "Apple pie",
+              "priceField": "11,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Desserts",
+              "name": "Slice of cake",
+              "priceField": "11,90",
+              "note": "Selection varies",
+              "publishEligible": false
+            },
+            {
+              "section": "Desserts",
+              "name": "Artisan ice cream",
+              "priceField": "5,90/9,90",
+              "note": "One/two scoops",
+              "publishEligible": false
+            },
+            {
+              "section": "Extras",
+              "name": "Roasted potatoes",
+              "priceField": "4,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Extras",
+              "name": "House bread basket",
+              "priceField": "5,50",
+              "publishEligible": false
+            },
+            {
+              "section": "Extras",
+              "name": "Marinated olives",
+              "priceField": "3,90",
+              "publishEligible": false
+            },
+            {
+              "section": "Extras",
+              "name": "Side salad",
+              "priceField": "4,50",
+              "publishEligible": false
+            },
+            {
+              "section": "Extras",
+              "name": "Extra sauce",
+              "priceField": "3,90",
+              "publishEligible": false
+            }
+          ]
+        }
+      ],
+      "reviewNotes": [
+        "Do not replace source-declared price-check date with browsing date.",
+        "Use first menu block, not repeated editorial summary tables.",
+        "Merge same dish portion variants; retain serving size, changing selection and extras."
+      ]
+    }
+  ]
+}

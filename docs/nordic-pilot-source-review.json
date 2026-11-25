@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "status": "reviewed-samples-not-production",
+  "reviewDate": "2026-11-25",
+  "restaurants": [
+    {
+      "name": "Schønnemann",
+      "slug": "schonnemann-hauser-plads-kobenhavn",
+      "city": "København",
+      "countryCode": "DK",
+      "currency": "DKK",
+      "timeZone": "Europe/Copenhagen",
+      "address": "Hauser Plads 16, 1127 København K",
+      "menuPage": "https://www.restaurantschonnemann.dk/menu/",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/",
+      "sourceType": "html",
+      "validFrom": "2026-11-12",
+      "validThrough": "2026-12-23",
+      "samples": [
+        {
+          "name": "Rødspættefilet",
+          "rawPrice": "173",
+          "priceMinor": 17300
+        },
+        {
+          "name": "Rødspættefilet – en nordmand",
+          "rawPrice": "198",
+          "priceMinor": 19800
+        }
+      ],
+      "note": "Ordinary seasonal lunch category, not group dinner. Other categories still need extraction."
+    },
+    {
+      "name": "Pelikan",
+      "slug": "pelikan-blekingegatan-stockholm",
+      "city": "Stockholm",
+      "countryCode": "SE",
+      "currency": "SEK",
+      "timeZone": "Europe/Stockholm",
+      "address": "Blekingegatan 40, 116 62 Stockholm",
+      "menuPage": "https://pelikan.se/meny",
+      "sourceUrl": "https://static.thatsup.website/123/83188/Stora-menyn-Sve-oktober-26.pdf?v=1793355069",
+      "sourceType": "pdf",
+      "samples": [
+        {
+          "name": "Pelikans köttbullar",
+          "rawPrice": "285",
+          "priceMinor": 28500
+        },
+        {
+          "name": "Fläsklägg",
+          "rawPrice": "295",
+          "priceMinor": 29500
+        }
+      ],
+      "note": "Official menu link and page 1 visual inspection. Multi-column PDF and half/full portion notation need source-specific handling."
+    },
+    {
+      "name": "Savotta",
+      "slug": "savotta-aleksanterinkatu-helsinki",
+      "city": "Helsinki",
+      "countryCode": "FI",
+      "currency": "EUR",
+      "timeZone": "Europe/Helsinki",
+      "address": "Aleksanterinkatu 22, 00170 Helsinki",
+      "menuPage": "https://ravintolasavotta.fi/menu/",
+      "sourceUrl": "https://ravintolasavotta.fi/menu/",
+      "sourceType": "html",
+      "validFrom": "2026-09-08",
+      "validThrough": "2027-04-07",
+      "samples": [
+        {
+          "name": "Karjalanpaistia perinnereseptillä",
+          "rawPrice": "29,90",
+          "priceMinor": 2990
+        },
+        {
+          "name": "Paahdettu palsternakkakeitto",
+          "rawPrice": "14,20/22,20",
+          "priceMinor": 1420,
+          "priceMaxMinor": 2220
+        }
+      ],
+      "note": "Ordinary à la carte section; holiday menu 21 Dec–3 Jan must take precedence when applicable. Do not publish availability-conditional dishes as guaranteed."
+    }
+  ]
+}

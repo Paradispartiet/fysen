@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "restaurantSlug": "schonnemann-hauser-plads-kobenhavn",
+  "city": "København",
+  "currency": "DKK",
+  "reviewDate": "2026-11-25",
+  "status": "reviewed-categories-not-runtime",
+  "indexUrl": "https://www.restaurantschonnemann.dk/menu/",
+  "validFrom": "2026-11-12",
+  "validThrough": "2026-12-23",
+  "sections": [
+    {
+      "section": "Sild",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+      "listedItems": 11,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Konserves",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/konserves-jul/",
+      "listedItems": 2,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Rødspætter",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/",
+      "listedItems": 4,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Laks",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/laks-hellefisk-jul/",
+      "listedItems": 3,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Skaldyr & ål",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/",
+      "listedItems": 6,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Sæson",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/saeson-jul/",
+      "listedItems": 0,
+      "status": "overview-only; no individual dish"
+    },
+    {
+      "section": "Kartofler & grønt",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/",
+      "listedItems": 4,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Tarteletter",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tarteletter-jul/",
+      "listedItems": 1,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "And & høns",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+      "listedItems": 7,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Gris",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/gris-jul/",
+      "listedItems": 6,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Kalv & okse",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+      "listedItems": 10,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Tatar",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tatar-jul/",
+      "listedItems": 5,
+      "status": "reviewed-price-fields"
+    },
+    {
+      "section": "Oste & desserter",
+      "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+      "listedItems": 11,
+      "status": "reviewed-price-fields"
+    }
+  ],
+  "excluded": "Drinks and separate set Christmas menus; do not treat as ordinary individual dishes.",
+  "reviewedUniqueItems": 69,
+  "listedItems": 70
+}

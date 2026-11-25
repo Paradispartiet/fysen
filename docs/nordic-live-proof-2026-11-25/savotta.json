@@ -1,0 +1,230 @@
+{
+  "status": "review-required",
+  "items": [
+    {
+      "currency": "EUR",
+      "priceMinor": 1760,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Peuratartar ja kurpitsaa",
+      "section": "Eturuuat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 1480,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Maa-artisokkapiirakka ja omenaa",
+      "section": "Eturuuat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 1520,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kevyesti suolattua taimenta ja giniä",
+      "section": "Eturuuat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 1420,
+      "priceKind": "multiple",
+      "priceMaxMinor": 2220,
+      "name": "Paahdettu palsternakkakeitto",
+      "section": "Eturuuat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 2390,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Suursavotta",
+      "section": "Eturuuat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 1420,
+      "priceKind": "multiple",
+      "priceMaxMinor": 2220,
+      "name": "Uittopaikan kalasaaliin mukaan vaihtuva kermainen kalakeitto",
+      "section": "Eturuuat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 350,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Talon leipälajitelma ja suomalaista kirnuvoita",
+      "section": "Eturuuat",
+      "perPerson": true,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 2490,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Karhumaistiainen",
+      "section": "Väliruokia",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": true
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 790,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Mustaa makkaraa",
+      "section": "Väliruokia",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 790,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Loimutettua leipäjuustoa",
+      "section": "Väliruokia",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 2790,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Savotan porkkanaohukaiset",
+      "section": "Varsinaiset",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 3820,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Paistettua kuhaa",
+      "section": "Varsinaiset",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 3490,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Sitrusliemessä haudutettua kirjolohta",
+      "section": "Varsinaiset",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 2990,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Karjalanpaistia perinnereseptillä",
+      "section": "Varsinaiset",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 4220,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Paahdettua poronpaistia ja pororyynimakkaraa",
+      "section": "Varsinaiset",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 2890,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Ahvenanmaan karitsaburgeri ja yrttimaustettuja krossiperunoita",
+      "section": "Varsinaiset",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 4690,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Hirvirillette",
+      "section": "Varsinaiset",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 6900,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Savotan karhustroganoff",
+      "section": "Varsinaiset",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": true
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 1450,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Uuniomenahyvettä ja korvapuustijäätelöä",
+      "section": "Jälkimakiat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 1420,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Jogurttivanukasta, suolakaramelligranolaa ja ruusunmarjakastiketta",
+      "section": "Jälkimakiat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 1450,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Lämmintä mustikkakukkoa ja vaniljajäätelöä",
+      "section": "Jälkimakiat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    },
+    {
+      "currency": "EUR",
+      "priceMinor": 1590,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kotimaisia juustoja, kuminanäkkileipää ja pihlajanmarjahilloketta",
+      "section": "Jälkimakiat",
+      "perPerson": false,
+      "requiresAvailabilityConfirmation": false
+    }
+  ],
+  "sourceUrl": "https://ravintolasavotta.fi/menu/",
+  "observedAt": "2026-11-25T16:17:36.937Z",
+  "rawSha256": "16bd2f074f56bf013b9aa0169cf6e3ddeb450ccf0a639c484f22a45918c86a83",
+  "priceChanges": [],
+  "publication": "none"
+}

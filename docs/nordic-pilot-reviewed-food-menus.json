@@ -1,0 +1,868 @@
+{
+  "version": 1,
+  "status": "review-only-not-runtime",
+  "reviewDate": "2026-11-25",
+  "menus": [
+    {
+      "restaurantSlug": "pelikan-blekingegatan-stockholm",
+      "city": "Stockholm",
+      "currency": "SEK",
+      "source": "https://static.thatsup.website/123/83188/Stora-menyn-Sve-oktober-26.pdf?v=1793355069",
+      "sourcePage": 1,
+      "scope": "Individually priced food, starters, mains and desserts; excludes drinks and fixed-price package. Portion notation normalized after visual review.",
+      "items": [
+        {
+          "section": "Förrätter",
+          "name": "S.O.S",
+          "priceField": "195/295",
+          "note": "second price full portion",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Toast Skagen",
+          "priceField": "195/295",
+          "note": "second price full portion",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Råbiff",
+          "priceField": "205/295",
+          "note": "second price full portion",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Gubbröra",
+          "priceField": "165",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Rostad pumpasoppa",
+          "priceField": "175",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Matjessill från Norröna",
+          "priceField": "175",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Toast Pelle Janzon",
+          "priceField": "285",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Löjrom",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Ankleverterrin",
+          "priceField": "225",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Tomatsallad",
+          "priceField": "90",
+          "publishEligible": false
+        },
+        {
+          "section": "Förrätter",
+          "name": "Grönsallad",
+          "priceField": "95",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Halstrad röding",
+          "priceField": "375",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Lenrimmad fjordlax",
+          "priceField": "325",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Ångad torskrygg",
+          "priceField": "425",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Räksallad",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Svampfyllda kroppkakor från Öland",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Varm getost",
+          "priceField": "255",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Doppsko",
+          "priceField": "255",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Hjortinnanlår",
+          "priceField": "395",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Pelikans köttbullar",
+          "priceField": "285",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Stekt sidfläsk",
+          "priceField": "255",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Kalvlever anglaise",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Fläsklägg",
+          "priceField": "295",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Biff Rydberg",
+          "priceField": "430",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Konjaksflamberad pepparstek",
+          "priceField": "495",
+          "publishEligible": false
+        },
+        {
+          "section": "Huvudrätter",
+          "name": "Boeuf bourguignon",
+          "priceField": "305",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Crème brûlée",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Chokladbrownie",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Smuldegspaj på äpple",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Fläderpannacotta",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Marängsviss",
+          "priceField": "135",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "Pelikans smågodis",
+          "priceField": "75",
+          "publishEligible": false
+        },
+        {
+          "section": "Efterrätter",
+          "name": "En kula sorbet",
+          "priceField": "75",
+          "publishEligible": false
+        }
+      ]
+    },
+    {
+      "restaurantSlug": "savotta-aleksanterinkatu-helsinki",
+      "city": "Helsinki",
+      "currency": "EUR",
+      "source": "https://ravintolasavotta.fi/menu/",
+      "validFrom": "2026-09-08",
+      "validThrough": "2027-04-07",
+      "overridePeriod": {
+        "from": "2026-12-21",
+        "through": "2027-01-03",
+        "status": "requires separate review"
+      },
+      "scope": "Individually priced ordinary à la carte dishes; excludes set menus, drinks and optional add-on. Conditional items and per-person bread retained with notes.",
+      "items": [
+        {
+          "section": "Eturuuat",
+          "name": "Peuratartar ja kurpitsaa",
+          "priceField": "17,60",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Maa-artisokkapiirakka ja omenaa",
+          "priceField": "14,80",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Kevyesti suolattua taimenta ja giniä",
+          "priceField": "15,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Paahdettu palsternakkakeitto",
+          "priceField": "14,20/22,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Suursavotta",
+          "priceField": "23,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Uittopaikan kalasaaliin mukaan vaihtuva kermainen kalakeitto",
+          "priceField": "14,20/22,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Eturuuat",
+          "name": "Talon leipälajitelma ja suomalaista kirnuvoita",
+          "priceField": "3,50",
+          "note": "per person; source 3,50/hlö",
+          "publishEligible": false
+        },
+        {
+          "section": "Väliruokia",
+          "name": "Karhumaistiainen",
+          "priceField": "24,90",
+          "note": "confirm availability with staff",
+          "publishEligible": false
+        },
+        {
+          "section": "Väliruokia",
+          "name": "Mustaa makkaraa",
+          "priceField": "7,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Väliruokia",
+          "name": "Loimutettua leipäjuustoa",
+          "priceField": "7,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Savotan porkkanaohukaiset",
+          "priceField": "27,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Paistettua kuhaa",
+          "priceField": "38,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Sitrusliemessä haudutettua kirjolohta",
+          "priceField": "34,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Karjalanpaistia perinnereseptillä",
+          "priceField": "29,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Paahdettua poronpaistia ja pororyynimakkaraa",
+          "priceField": "42,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Ahvenanmaan karitsaburgeri ja yrttimaustettuja krossiperunoita",
+          "priceField": "28,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Hirvirillette",
+          "priceField": "46,90",
+          "publishEligible": false
+        },
+        {
+          "section": "Varsinaiset",
+          "name": "Savotan karhustroganoff",
+          "priceField": "69,00",
+          "note": "confirm availability with staff",
+          "publishEligible": false
+        },
+        {
+          "section": "Jälkimakiat",
+          "name": "Uuniomenahyvettä ja korvapuustijäätelöä",
+          "priceField": "14,50",
+          "publishEligible": false
+        },
+        {
+          "section": "Jälkimakiat",
+          "name": "Jogurttivanukasta, suolakaramelligranolaa ja ruusunmarjakastiketta",
+          "priceField": "14,20",
+          "publishEligible": false
+        },
+        {
+          "section": "Jälkimakiat",
+          "name": "Lämmintä mustikkakukkoa ja vaniljajäätelöä",
+          "priceField": "14,50",
+          "publishEligible": false
+        },
+        {
+          "section": "Jälkimakiat",
+          "name": "Kotimaisia juustoja, kuminanäkkileipää ja pihlajanmarjahilloketta",
+          "priceField": "15,90",
+          "publishEligible": false
+        }
+      ]
+    },
+    {
+      "restaurantSlug": "schonnemann-hauser-plads-kobenhavn",
+      "city": "København",
+      "currency": "DKK",
+      "source": "https://www.restaurantschonnemann.dk/menu/",
+      "validFrom": "2026-11-12",
+      "validThrough": "2026-12-23",
+      "scope": "Individually priced food from all 13 linked food categories. Seasonal overview without individual dish excluded; duplicate cross-listed title deduplicated with alternate provenance. Separate Christmas set menus and drinks excluded.",
+      "items": [
+        {
+          "section": "Sild",
+          "name": "Marinerede sild",
+          "priceField": "138",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Karrysild",
+          "priceField": "138",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Blomme i madeirasild",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Sennepssild",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Krydret Linie Julesild",
+          "priceField": "138",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Kryddersild - Fruens",
+          "priceField": "138",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Kryddersild - Herrens",
+          "priceField": "138",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Kryddersild - Hovmesterens",
+          "priceField": "138",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Schønnemanns snapsemad",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Ruths Christiansø sild - original",
+          "priceField": "138",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Sild",
+          "name": "Stegt sild i øllage",
+          "priceField": "138",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/sild-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Konserves",
+          "name": "Nordens sardiner",
+          "priceField": "173",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/konserves-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Konserves",
+          "name": "Røgede blåmuslinger",
+          "priceField": "173",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/konserves-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Rødspætter",
+          "name": "Rødspættefilet",
+          "priceField": "173",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Rødspætter",
+          "name": "Rødspættefilet - \"en nordmand\"",
+          "priceField": "198",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Rødspætter",
+          "name": "Rødspættefilet - \"en dansker\"",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Rødspætter",
+          "name": "Rødspættefilet - \"en svensker\"",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/roedspaetter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Laks",
+          "name": "Gravad laks",
+          "priceField": "163",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/laks-hellefisk-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Laks",
+          "name": "Koldrøget laks",
+          "priceField": "188",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/laks-hellefisk-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Laks",
+          "name": "Half & Half",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/laks-hellefisk-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Skaldyr & ål",
+          "name": "Grønlandske rejer i pyramide",
+          "priceField": "198",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/",
+          "publishEligible": false
+        },
+        {
+          "section": "Skaldyr & ål",
+          "name": "Æg & rejer",
+          "priceField": "168",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/",
+          "publishEligible": false
+        },
+        {
+          "section": "Skaldyr & ål",
+          "name": "Schønnemanns skaldyrssalat",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/",
+          "publishEligible": false
+        },
+        {
+          "section": "Skaldyr & ål",
+          "name": "Tatar af røget ål",
+          "priceField": "228",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/",
+          "publishEligible": false
+        },
+        {
+          "section": "Skaldyr & ål",
+          "name": "Røget ål",
+          "priceField": "213",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/",
+          "publishEligible": false
+        },
+        {
+          "section": "Skaldyr & ål",
+          "name": "Søren Special",
+          "priceField": "233",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/skaldyr-aal/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kartofler & grønt",
+          "name": "Kartoffelmad - klassisk",
+          "priceField": "135",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kartofler & grønt",
+          "name": "Botanisk Have",
+          "priceField": "135",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kartofler & grønt",
+          "name": "Jyttes kartoffelmad",
+          "priceField": "188",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kartofler & grønt",
+          "name": "Vegansk Paté",
+          "priceField": "145",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/groent-kartofler-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Tarteletter",
+          "name": "Tartelet/ter",
+          "priceField": "118/173",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tarteletter-jul/",
+          "publishEligible": false,
+          "note": "Alternative portion prices; preserve original slash notation."
+        },
+        {
+          "section": "And & høns",
+          "name": "Sprængt andebryst",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "And & høns",
+          "name": "Hr. Schønnemann",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "And & høns",
+          "name": "Stegt andebryst",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "And & høns",
+          "name": "Julepate af and",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "And & høns",
+          "name": "Hønsesalat",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "And & høns",
+          "name": "Jomfruens natmad",
+          "priceField": "158",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "And & høns",
+          "name": "Madam Schønnemann",
+          "priceField": "178",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/and-hoens-jul/",
+          "publishEligible": false,
+          "alternateSourceUrls": [
+            "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/"
+          ]
+        },
+        {
+          "section": "Gris",
+          "name": "Julerullepølse",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/gris-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Gris",
+          "name": "Æbleflæsk",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/gris-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Gris",
+          "name": "Blodpølse",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/gris-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Gris",
+          "name": "Julemedister",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/gris-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Gris",
+          "name": "Mørbradbøf",
+          "priceField": "173",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/gris-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Gris",
+          "name": "Lun ribbensteg",
+          "priceField": "178",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/gris-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kalv & okse",
+          "name": "Kalvetunge",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kalv & okse",
+          "name": "Sylte af kalv",
+          "priceField": "158",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kalv & okse",
+          "name": "Dyrlægens natmad",
+          "priceField": "153",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kalv & okse",
+          "name": "Roastbeef",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kalv & okse",
+          "name": "Kokkens roastbeef",
+          "priceField": "158",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kalv & okse",
+          "name": "krydret kalveleverpostej",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kalv & okse",
+          "name": "Kalvelever - pandestegt",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kalv & okse",
+          "name": "Lun oksebryst",
+          "priceField": "178",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Kalv & okse",
+          "name": "Pariserbøf",
+          "priceField": "198",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/kalv-okse-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Tatar",
+          "name": "Tatar - klassisk",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tatar-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Tatar",
+          "name": "Kokkens tatar",
+          "priceField": "183",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tatar-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Tatar",
+          "name": "Slagterens rørt tatar",
+          "priceField": "198",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tatar-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Tatar",
+          "name": "Michel Roux Jr. rørt tatar",
+          "priceField": "203",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tatar-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Tatar",
+          "name": "Ristet rørt tatar",
+          "priceField": "198",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/tatar-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Camembert frites",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Gammel ost",
+          "priceField": "143",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Fuldmåneost",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Den hvide dame",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "St. Clemens Blue 60+",
+          "priceField": "153",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Blå kornblomst",
+          "priceField": "148",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Dagens ostetallerken",
+          "priceField": "243",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false,
+          "note": "Shared portion for two people; price is for platter."
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Små søde",
+          "priceField": "73",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Lun kransekage",
+          "priceField": "78",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Ingeborgs kiksekage",
+          "priceField": "98",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        },
+        {
+          "section": "Oste & desserter",
+          "name": "Ris á l'amande",
+          "priceField": "128",
+          "sourceUrl": "https://www.restaurantschonnemann.dk/menukort/oste-desserter-jul/",
+          "publishEligible": false
+        }
+      ]
+    }
+  ]
+}

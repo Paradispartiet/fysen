@@ -1,0 +1,310 @@
+{
+  "status": "review-required",
+  "city": "Stockholm",
+  "publication": "none",
+  "sourceUrl": "https://static.thatsup.website/123/83188/Stora-menyn-Sve-oktober-26.pdf?v=1793355069",
+  "observedAt": "2026-11-25T16:17:16.105Z",
+  "rawSha256": "32c4a056f2ae19b83ab2f2335dabad79213e14625f44b09f21a9e62b10262da5",
+  "menuPage": "https://pelikan.se/meny",
+  "menuPageSha256": "8a89146fb0b6c4ee4bf29f9c11095dfe81c2b40aff48d505f3da3ae4ae71bbb9",
+  "items": [
+    {
+      "currency": "SEK",
+      "priceMinor": 19500,
+      "priceKind": "multiple",
+      "priceMaxMinor": 29500,
+      "name": "S.O.S",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 19500,
+      "priceKind": "multiple",
+      "priceMaxMinor": 29500,
+      "name": "Toast Skagen",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 20500,
+      "priceKind": "multiple",
+      "priceMaxMinor": 29500,
+      "name": "Råbiff",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 16500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Gubbröra",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 17500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Rostad pumpasoppa",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 17500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Matjessill från Norröna",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 28500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Toast Pelle Janzon",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 29500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Löjrom",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 22500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Ankleverterrin",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 9000,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Tomatsallad",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 9500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Grönsallad",
+      "section": "Förrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 37500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Halstrad röding",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 32500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Lenrimmad fjordlax",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 42500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Ångad torskrygg",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 29500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Räksallad",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 29500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Svampfyllda kroppkakor från Öland",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 25500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Varm getost",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 25500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Doppsko",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 39500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Hjortinnanlår",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 28500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Pelikans köttbullar",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 25500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Stekt sidfläsk",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 29500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Kalvlever anglaise",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 29500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Fläsklägg",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 43000,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Biff Rydberg",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 49500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Konjaksflamberad pepparstek",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 30500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Boeuf bourguignon",
+      "section": "Huvudrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 13500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Crème brûlée",
+      "section": "Efterrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 13500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Chokladbrownie",
+      "section": "Efterrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 13500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Smuldegspaj på äpple",
+      "section": "Efterrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 13500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Fläderpannacotta",
+      "section": "Efterrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 13500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Marängsviss",
+      "section": "Efterrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 7500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "Pelikans smågodis",
+      "section": "Efterrätter",
+      "page": 1
+    },
+    {
+      "currency": "SEK",
+      "priceMinor": 7500,
+      "priceKind": "exact",
+      "priceMaxMinor": null,
+      "name": "En kula sorbet",
+      "section": "Efterrätter",
+      "page": 1
+    }
+  ],
+  "priceChanges": []
+}

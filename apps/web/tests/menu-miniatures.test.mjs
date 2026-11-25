@@ -18,8 +18,9 @@ test("public menu archive uses only decorative local illustrations and retains s
   assert.match(source, /illustrationForDishName\(dish\.label\)/u);
   assert.match(source, /illustrationForDishName\(dish\.name\)/u);
   assert.match(source, /<FoodIllustration/u);
-  assert.match(source, /priceLabel\(result\.priceMinor, result\.priceMaxMinor, result\.priceKind\)/u);
+  assert.match(source, /priceLabel\(result\.priceMinor, result\.priceMaxMinor, result\.priceKind, result\.currency\)/u);
   assert.match(source, /result\.sourceUrl/u);
+  assert.match(source, /dateTime=\{result\.observedAt\}/u);
   assert.match(source, /result\.restaurantName/u);
   assert.match(source, /dish\.restaurantCount/u);
 });

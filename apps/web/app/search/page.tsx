@@ -2,7 +2,7 @@ import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
 import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
-import { getPublicMenuArchive, searchPublicMenuArchive, reconcileMenuVersions, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
+import { archiveHasCity, getPublicMenuArchive, searchPublicMenuArchive, reconcileMenuVersions, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
@@ -97,15 +97,17 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   let suppressedLiveSlugs = new Set<string>();
   let suppressedLiveIds = new Set<string>();
   // Registered menus remain searchable even when the live index has some results.
-  if (q.length !== 1 && city.toLocaleLowerCase("nb-NO") === "oslo") {
+  if (q.length !== 1) {
     try {
       const stored = await getPublicMenuArchive();
+      if (archiveHasCity(stored, city)) {
       const versions = q.length === 0 ? browseState.data?.menuVersions : data?.menuVersions;
       const selected = reconcileMenuVersions(stored, versions ?? []);
       archive = selected.archive;
       suppressedLiveSlugs = selected.suppressedLiveSlugs;
       suppressedLiveIds = selected.suppressedLiveIds;
       if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city, Infinity);
+      }
     } catch {
       // Preserve the existing clear unavailable state, never invent menu data.
       archive = null;
@@ -126,7 +128,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
   return (
     <div className="resultsPage">
-      <GlobalHeader results city={city}>
+      <GlobalHeader results city={city} query={q}>
         <DishSearch
           defaultValue={q}
           city={city}
