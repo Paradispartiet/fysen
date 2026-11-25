@@ -1,0 +1,24 @@
+{
+  "id": "vada",
+  "filename": "Medu_Vada_-_Calcutta_16_2026-07-11.jpg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Medu_Vada_-_Calcutta_16_2026-07-11.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Medu_Vada_-_Calcutta_16_2026-07-11.jpg",
+  "author": "Andy Li",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "dimensions": [
+    8160,
+    6144
+  ],
+  "sha256": "e1de8c0584c5f5157a8173f1ec016e216abf895ccdf6f1c369fb84040725f16d",
+  "variant": "Tre medu vada med sambar og tre chutney-varianter. Originalfotoets restaurant er ikke en Fysen-restaurantkobling.",
+  "source_verified": true,
+  "no_upscale": true,
+  "original_photo_visual_review_completed": true,
+  "black_background": false,
+  "black_background_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "ai_processed": false,
+  "generated_food_pixels": false
+}

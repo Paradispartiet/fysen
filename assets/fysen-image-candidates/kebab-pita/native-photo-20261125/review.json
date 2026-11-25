@@ -1,0 +1,24 @@
+{
+  "id": "kebab-pita",
+  "filename": "Doener_Kebab_(9682662957).jpg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Doener_Kebab_%289682662957%29.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Doener_Kebab_(9682662957).jpg",
+  "author": "Lauren Travis",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0/",
+  "dimensions": [
+    4000,
+    3000
+  ],
+  "sha256": "257d6f340413eff6ca615c65661a75ae7be9834a218077509a32f009b3e89baa",
+  "variant": "Döner i brød med kjøtt, salat og hvit saus. Kjøttype og allergener er ikke dokumentert. Originalfotoets restaurant er ikke en Fysen-restaurantkobling.",
+  "source_verified": true,
+  "no_upscale": true,
+  "original_photo_visual_review_completed": true,
+  "black_background": false,
+  "black_background_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "ai_processed": false,
+  "generated_food_pixels": false
+}
