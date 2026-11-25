@@ -1,0 +1,29 @@
+name: Stage last two native dish photo candidates
+on:
+  push:
+    branches: [art/vada-kebab-native-sources-20261125]
+    paths:
+      - scripts/stage-vada-kebab-native-sources.py
+      - .github/workflows/stage-vada-kebab-native-sources.yml
+permissions:
+  contents: write
+jobs:
+  stage:
+    if: "!contains(github.event.head_commit.message, '[native-source-bot]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - run: python scripts/stage-vada-kebab-native-sources.py
+      - name: Preserve verified source candidates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/vada/native-photo-20261125 assets/fysen-image-candidates/kebab-pita/native-photo-20261125
+          git diff --cached --quiet && exit 0
+          git commit -m "[native-source-bot] Preserve native Vada and kebab source photos and provenance"
+          git push origin HEAD:"$GITHUB_REF_NAME"
