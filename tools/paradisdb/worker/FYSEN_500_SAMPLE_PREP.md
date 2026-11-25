@@ -1,0 +1,91 @@
+# Fysen – kontrollert, verifisert 500-raders prøve før eventuell fjernimport
+
+**Status:** Kun eksportkode, tester og lokal CI. **Ingen ekstern import, API-aktivering eller betaling.**
+
+## Hvorfor gjør vi dette?
+
+Den virkelige Cloudflare Free-testen med fire syntetiske retter var vellykket: 6 SQL-spørringer, 12 leste og 9 skrevne rader, 32,77 kB lagring etter testen. D1-kontoen hadde da to databaser og samlet 45,06 kB lagring. Dette beviser kun en svært liten prøve, ikke kostnaden ved en full import av ~47 270 offentlige menyposter.
+
+Den eksisterende `paradisdb-fysen-public` forblir tom. `paradisdb-fysen-preview` inneholder allerede `fysen_probe_items` og `fysen_probe_trigrams`, så vi må **ikke** kjøre full eksport beregnet på en tom database der.
+
+## Hva er implementert?
+
+`export_sample_d1.py` gjør en *rent lokal* operasjon:
+
+1. Kontrollerer hele manifestet og komprimert arkiv med Fysens SHA-256 og ekskluderer kilder med identitetskarantene via `verified_fysen_rows`.
+2. Velger inntil **500 offentlige poster** deterministisk ved hashing på original rad-ID og restaurant-slug. Det er et spredt testutvalg, ikke en statistisk garanti for alle menytyper.
+3. Skriver kun `fysen_sample_items`, `fysen_sample_meta` og `fysen_sample_trigrams` med FTS5-trigram. Ingen `documents`, private data eller `public_ready`.
+4. Skriver **aldri over** en eksisterende SQL-fil, bruker maks **1 MB** SQL og maks **64 kB per INSERT-setning**. SQL-en krever at preview-tabellen `fysen_probe_items` finnes, som en ekstra beskyttelse mot feilmålretting.
+5. Skriver en lokal JSON-kvittering med antall utvalgte rader, antall restauranter, kildehash og utvalgshash.
+
+## Kun lokalt/CI: Generer 500-raders prøve
+
+Fra repo-roten med en sjekket ut `fysen-free-public-index` i `verified-index/`:
+
+```bash
+python3 tools/paradisdb/worker/export_sample_d1.py \
+  verified-index/manifest.json \
+  verified-index/index.json.gz \
+  /tmp/paradisdb-fysen-500-preview.sql --rows 500
+```
+
+GitHub Actions jobben `ParadisDB local-only SQLite pilot` kjører denne eksporten mot de verifiserte offentlige filene og importerer resultatet **kun til isolert lokal SQLite**. Den kontrollerer 500 rader og FTS5-søkeparitet. Etter at **hele** jobben er bestått, laster den opp et **GitHub Actions-artifact for manuell gjennomgang**, med navnet `fysen-500-preview-offline-only`: SQL-filen, eksportkvitteringen (JSON) og begge filenes SHA-256 (`.sha256`). Artifactet beholdes i 7 dager og kan åpnes fra den **beståtte** kjøringen under *Artifacts*. Dette er **ikke** en Cloudflare-import, ikke et deploy-script og bruker ingen Cloudflare-token. **Ikke lim inn hele SQL-filen i Cloudflare Console** før en særskilt, mål-ID-verifisert importplan er godkjent.
+
+## Verifiserte Cloudflare-mål (16. november 2026)
+
+**Kun `paradisdb-fysen-preview` er testmålet.** Database-ID: `8b6616b4-11df-4ddc-9817-378f51ee0b69`.
+
+Permanent `paradisdb-fysen-public` har **en annen** ID: `882a3393-71c3-43f9-9dec-efc2bbcab409`, og skal aldri motta prøveimport. Begge ID-er er kontrollert fra kontoeierens Cloudflare Dashboard-lenker; behold dem adskilt. Ikke lagre Cloudflare API-token i repoet.
+
+ID-ene står i [FYSEN_PREVIEW_TARGET.json](./FYSEN_PREVIEW_TARGET.json), som **ikke er en Wrangler-deploykonfigurasjon**. `remote_import_approved=false` betyr at ingen ekstern import er godkjent. Den offentlige Worker-eksempelkonfigurasjonen skal fortsatt binde til den *permanente* databasen, men er deaktivert.
+
+Den 16. november kl. 09.24 CET viste previewens **Last 24 hours** 0 queries, 0 rows read, 0 rows written, **32,77 kB** lagring og **6 tabeller**. Dette er ingen ny kapasitetsmåling for 500-radersprøven, og 24-timers null betyr ikke at prøveinnholdet er slettet.
+
+### Bekreftet kontobaseline før prøven – 16. november 2026 kl. 10.38 CET
+
+Cloudflare **D1 Database → Daily (Nov 16)** for Fysen-kontoen viser:
+
+| Måling | Faktisk brukt | Gratisgrense |
+| --- | ---: | ---: |
+| Databaser | **2** | 10 |
+| Leste D1-rader, dagens konto | **15** | 5 000 000 |
+| Skrevne D1-rader, dagens konto | **0** | 100 000 |
+| Samlet D1-lagring | **45,06 kB** | 5 GB |
+
+Tabelloversikten viste **2 queries / 15 read / 0 written** i preview, **0 / 0 / 0** i permanent database. Tallene bekrefter at **denne målingen** er langt under Free-grensene, men er **ikke** en forhåndsgodkjenning av 500-radersimport eller framtidig trafikk. Sjekk ferskt konto-forbruk igjen før enhver fjernimport; Cloudflares målinger kan oppdateres med forsinkelse.
+
+Kontoeieren kjørte 16. november kl. 09.50 CET:
+```sql
+SELECT name,type FROM sqlite_master
+WHERE name IN ('fysen_sample_items','fysen_sample_meta','fysen_sample_trigrams')
+ORDER BY name;
+```
+Cloudflare svarte **`This query returned no data.`** Ingen av prøveimportens tre tabeller fantes på målet. Dette var en skrivebeskyttet kontroll – ingen 500-radersimport er utført.
+
+## Neste trygge kontroll på Cloudflare-previewen (kun lesing)
+
+Før en eventuell 500-raders import, åpne **`paradisdb-fysen-preview` → Console** i Cloudflare. Bekreft at database-ID-en i URL-en er `8b6616b4-11df-4ddc-9817-378f51ee0b69`. Kjør bare:
+
+```sql
+SELECT name, type
+FROM sqlite_master
+WHERE name IN ('fysen_sample_items', 'fysen_sample_meta', 'fysen_sample_trigrams')
+ORDER BY name;
+```
+
+**Forventet: ingen rader.** Hvis noen av disse tabellene allerede finnes, **stopp**. De fire tidligere syntetiske prøveradene og FTS5-indeksen deres kan ligge der; de skal ikke slettes. Denne SQL-en er skrivebeskyttet og starter ingen import.
+
+## Før ekstern kjøring må følgende bekreftes
+
+- **STOPP** dersom kontoen ikke lenger har Workers Free, kapasitet eller uventet annet D1-forbruk.
+- Kontroller før hver eventuell fjernkommando at **previewens** database-ID er `8b6616b4-11df-4ddc-9817-378f51ee0b69`; **stopp** ved enhver annen ID, spesielt den permanente `882a3393-71c3-43f9-9dec-efc2bbcab409`.
+- Ta fersk baseline av **kontoens daglige** D1-rader lest/skrevet og **previewens** lagring.
+- Bekreft SQL-filens SHA-256, maksimumsgrenser, kildekvittering og at alle tre `fysen_sample_*`-tabeller mangler i previewen.
+- Lag en eksplisitt import-/måleprosedyre som kan stoppe mellom trinnene, og test at søk bare bruker den **nye** FTS5-indeksen. For hver spørring trengs faktisk `rows_read` og `rows_written` fra D1-metadata/Cloudflare Analytics.
+- **Ingen automatisk remote-import** bare fordi de lokale CI-testene er grønne. Importen krever separat godkjenning, full måling og tilbakeføringsplan.
+- Ved feil i testimporten: *ikke* kjør hele SQL-filen på nytt. Behold tilstanden for diagnose; den ferdige, offentlige databasen er uberørt.
+- Ikke fjern Supabase, endre Fysen-ruting, slå på `PARADISDB_PUBLIC_ENABLED` eller oppgrader til Workers Paid.
+
+**Daglige Free-kvoter nullstilles ved midnatt UTC**, ikke nødvendigvis på norsk midnatt. En 24-timersgraf er derfor ikke samme periode som kontoens daglige forbruksoversikt.
+
+Offisielle kilder: [D1 Free-grenser](https://developers.cloudflare.com/d1/platform/limits/), [D1-målinger](https://developers.cloudflare.com/d1/worker-api/return-object/), [D1 Free-grensehåndheving](https://developers.cloudflare.com/changelog/post/2026-09-01-d1-free-tier-limit-enforcement/).

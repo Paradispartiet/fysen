@@ -1,0 +1,15 @@
+{
+  // Preview only. Enable and attach an authenticated route only after approval.
+  // Set MEASUREMENT_TOKEN as a Worker secret before adding any route.
+  "name": "paradisdb-fysen-preview-measurement",
+  "main": "preview-measurement.mjs",
+  "compatibility_date": "2026-11-12",
+  "workers_dev": false,
+  "preview_urls": false,
+  "vars": { "ENABLE_D1_MEASUREMENT": "false" },
+  "d1_databases": [{
+    "binding": "PREVIEW_DB",
+    "database_name": "paradisdb-fysen-preview",
+    "database_id": "8b6616b4-11df-4ddc-9817-378f51ee0b69"
+  }]
+}
