@@ -325,3 +325,54 @@ test("v2 keeps all category sources in the same latest complete menu snapshot", 
   const newer = archiveModule.reconcileMenuVersions(mixed, [{restaurantSlug:"fixture-dk",restaurantId:"live-dk",observedAt:"2026-11-26T12:00:00Z"}]);
   assert.equal(archiveModule.searchPublicMenuArchive(newer.archive, "new", "København", Infinity).length, 0);
 });
+
+test("verified Benares aliases use the newest complete menu without merging unrelated restaurants", () => {
+  const archive = {
+    archiveDate: "2026-11-25", lastRefreshAt: null,
+    restaurants: [
+      ["Benares", "benares-official", "Tordenskiolds gate 8, 0160 Oslo", "Oslo", ""],
+      ["Benares Indisk Restaurant & Bar", "benares-listing", "Tordenskiolds gate 8, 0160 Oslo", "Oslo", ""],
+      ["Other Restaurant", "other", "Tordenskiolds gate 8, 0160 Oslo", "Oslo", ""],
+      ["Benares", "other-branch", "Gate 9", "Oslo", ""],
+    ],
+    sources: [
+      [0, "https://benares.no/meny", "2026-11-20T20:39:17Z"],
+      [1, "https://semeny.no/sted/638benaresindiskrestaurantbar", "2026-11-20T09:00:00Z"],
+      [2, "https://example.org/other", "2026-11-20T09:00:00Z"],
+      [3, "https://example.org/branch", "2026-11-20T09:00:00Z"],
+    ],
+    items: [
+      [0, "Butter Chicken", "butter chicken", 27900, "exact", null, "NOK", ""],
+      [1, "Butter Chicken", "butter chicken", 26900, "exact", null, "NOK", ""],
+      [1, "Ramen", "ramen", 20000, "exact", null, "NOK", ""],
+      [2, "Butter Chicken", "butter chicken", 22900, "exact", null, "NOK", ""],
+      [3, "Butter Chicken", "butter chicken", 23900, "exact", null, "NOK", ""],
+    ],
+    quarantinedSourceIndices: new Set(), quarantinedSlugs: new Set(),
+  };
+  const selected = archiveModule.reconcileMenuVersions(archive, []);
+  const matches = archiveModule.searchPublicMenuArchive(selected.archive, "butter chicken", "Oslo", Infinity);
+  assert.equal(matches.length, 3);
+  assert.equal(matches.find((match) => match.restaurantSlug === "benares-official")?.priceMinor, 27900);
+  assert.ok(!matches.some((match) => match.restaurantSlug === "benares-listing"));
+  assert.ok(matches.some((match) => match.restaurantSlug === "other"));
+  assert.ok(matches.some((match) => match.restaurantSlug === "other-branch"));
+  assert.equal(archiveModule.searchPublicMenuArchive(selected.archive, "ramen", "Oslo", Infinity).length, 0);
+
+  const newerListing = { ...archive, sources: archive.sources.map((row, i) =>
+    i === 1 ? [row[0], row[1], "2026-11-21T00:00:00Z"] : row) };
+  const latest = archiveModule.reconcileMenuVersions(newerListing, []);
+  assert.ok(archiveModule.searchPublicMenuArchive(latest.archive, "butter chicken", "Oslo", Infinity)
+    .some((match) => match.restaurantSlug === "benares-listing" && match.priceMinor === 26900));
+
+  const live = archiveModule.reconcileMenuVersions(archive, [
+    { restaurantSlug: "benares-official", restaurantId: "live-old", observedAt: "2026-11-19T00:00:00Z" },
+    { restaurantSlug: "benares-listing", restaurantId: "live-new", observedAt: "2026-11-25T00:00:00Z" },
+  ]);
+  assert.ok(live.suppressedLiveIds.has("live-old"));
+  assert.ok(live.suppressedLiveSlugs.has("benares-official"));
+  assert.ok(!live.suppressedLiveIds.has("live-new"));
+  assert.ok(!live.suppressedLiveSlugs.has("benares-listing"));
+  assert.ok(!archiveModule.searchPublicMenuArchive(live.archive, "butter chicken", "Oslo", Infinity)
+    .some((match) => match.restaurantSlug.startsWith("benares-")));
+});
