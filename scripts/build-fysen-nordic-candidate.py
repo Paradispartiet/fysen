@@ -8,6 +8,7 @@ import json
 import re
 import unicodedata
 from datetime import datetime, timedelta
+from decimal import Decimal
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -110,7 +111,15 @@ def make_candidate(manifest, index, reports, review, identity, source_map):
             require(item["currency"] == currency and type(price) is int and price > 0, "Invalid local price")
             require((kind == "exact" and max_price is None) or
                     (kind == "multiple" and type(max_price) is int and max_price > price), "Invalid price range")
-            out["items"].append([source_ids[source], name, normalized(name), price, kind, max_price, currency, "", currency])
+            # Recheck the reviewed price fields independently; do not rely solely
+            # on the probe's empty priceChanges list.
+            parts = previous["priceField"].split("/")
+            require(1 <= len(parts) <= 2 and all(re.fullmatch(r"\d{1,5}(?:[.,]\d{1,2})?", p.strip()) for p in parts),
+                    "Invalid reviewed price field")
+            amounts = [int(Decimal(p.strip().replace(",", ".")) * 100) for p in parts]
+            require(price == amounts[0] and max_price == (amounts[1] if len(amounts) == 2 else None),
+                    "Reviewed price mismatch")
+            out["items"].append([source_ids[source], name, normalized(name), price, kind, max_price, "", "", currency])
             if previous.get("note") or item.get("perPerson") or item.get("requiresAvailabilityConfirmation"):
                 flags.append({"name": name, "reviewNote": previous.get("note"), "perPerson": bool(item.get("perPerson")),
                               "requiresAvailabilityConfirmation": bool(item.get("requiresAvailabilityConfirmation"))})
