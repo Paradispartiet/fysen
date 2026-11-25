@@ -65,3 +65,15 @@ jobs:
       - run: pnpm --filter @fysen/menu-worker... build
       - run: pnpm --filter @fysen/menu-worker exec vitest run src/reykjavik-gamla-preview.test.ts
       - run: pnpm --filter @fysen/menu-worker exec tsx src/reykjavik-gamla-probe.ts
+
+  krons:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-node-pnpm
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec vitest run src/reykjavik-krons-preview.test.ts
+      - run: pnpm --filter @fysen/menu-worker exec tsx src/reykjavik-krons-probe.ts

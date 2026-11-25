@@ -16,3 +16,12 @@ describe("Bistro ISK and service constraints",()=>{
     expect(()=>verifyBistroMenu(source.replace("12:00","11:00"),menu)).toThrow();
   });
 });
+
+describe("Bistro split title",()=>{
+ it("accepts an exact title split across two adjacent visible fields",()=>{
+  const menu:BistroMenu={service:"lunch",heading:"Lunch Offers",localServiceTime:{from:"12:00",through:"16:00"},source:"https://example.org",excluded:[],items:[{section:"Desserts",name:"Vanilla ice cream & Caramel sauce",priceMinor:129000,publishEligible:false}]};
+  const text=["Lunch Offers","Served between 12:00 - 16:00","Desserts","Vanilla ice cream &","Caramel sauce","ISK 1,290","Contact"].join("\n");
+  expect(verifyBistroMenu(text,menu)).toHaveLength(1);
+  expect(()=>verifyBistroMenu(text.replace("Caramel sauce","Chocolate sauce"),menu)).toThrow();
+ });
+});
