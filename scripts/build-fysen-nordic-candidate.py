@@ -104,7 +104,21 @@ def stage_report(key, report, review, identity, source_map):
         amounts = [int(Decimal(p.strip().replace(",", ".")) * 100) for p in parts]
         require(price == amounts[0] and max_price == (amounts[1] if len(amounts) == 2 else None),
                 "Reviewed price mismatch")
-        out["items"].append([source_ids[source], name, normalized(name), price, kind, max_price, "", "", currency])
+        # A small, reviewed display vocabulary; never copy raw source HTML.
+        note = previous.get("note")
+        label = {
+            "second price full portion": "Liten og stor porsjon",
+            "per person; source 3,50/hlö": "Pris per person",
+            "confirm availability with staff": "Spør restauranten om tilgjengelighet",
+            "Alternative portion prices; preserve original slash notation.": "Alternative porsjonspriser",
+            "Shared portion for two people; price is for platter.": "Pris for fat til to personer",
+        }.get(note, "")
+        require(not note or bool(label), "Unreviewed public price condition")
+        if key == "savotta":
+            require(bool(item.get("perPerson")) == (label == "Pris per person") and
+                    bool(item.get("requiresAvailabilityConfirmation")) == (label == "Spør restauranten om tilgjengelighet"),
+                    "Changed serving or availability condition")
+        out["items"].append([source_ids[source], name, normalized(name), price, kind, max_price, label, "", currency])
         if previous.get("note") or item.get("perPerson") or item.get("requiresAvailabilityConfirmation"):
             flags.append({"name": name, "reviewNote": previous.get("note"), "perPerson": bool(item.get("perPerson")),
                           "requiresAvailabilityConfirmation": bool(item.get("requiresAvailabilityConfirmation"))})

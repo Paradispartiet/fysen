@@ -52,6 +52,7 @@ export interface ArchivedPublicDish {
   readonly normalizedName: string;
   readonly priceMinor: number | null;
   readonly priceKind: "exact" | "from" | "multiple";
+  readonly priceNote?: string;
   readonly priceMaxMinor: number | null;
   readonly currency: NordicCurrency;
   readonly restaurant: {
@@ -292,6 +293,7 @@ export function archivedPublicSearch(
       normalizedName: row[2],
       priceMinor: row[3],
       priceKind: row[4],
+      ...(archive.version === 2 && currency !== "NOK" && row[6] ? { priceNote: row[6] } : {}),
       priceMaxMinor: row[5],
       currency,
       restaurant: {
