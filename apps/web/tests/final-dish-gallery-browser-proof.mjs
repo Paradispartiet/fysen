@@ -1,4 +1,4 @@
-/* global document, getComputedStyle, Image, process */
+/* global document, getComputedStyle, Image, process, URL, console */
 import assert from "node:assert/strict";
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -40,7 +40,7 @@ try {
           size: getComputedStyle(node).backgroundSize,
         }));
         assert.ok(styles.image.includes(entry.atlas), entry.id + " thumbnail mismatch");
-        if (["sambar", "vada", "kebab-pita"].includes(entry.id)) assert.equal(styles.size, "contain");
+        if (["sambar", "vada", "kebab-pita"].includes(entry.id)) assert.equal(styles.size, "contain", entry.id + " must not crop its image");
         const url = new URL(await card.getAttribute("href"), base);
         assert.equal(url.pathname, "/search");
         assert.equal(url.searchParams.get("q"), entry.query);
