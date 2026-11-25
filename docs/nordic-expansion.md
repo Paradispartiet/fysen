@@ -49,3 +49,7 @@ The existing bounded Oslo refresh accepts either archive schema, checks explicit
 ## Complete Nordic menu refresh
 
 `scripts/refresh-fysen-nordic-candidate.py <v2-copy> <savotta|pelikan|schonnemann> <probe-report.json> <new-output-dir>` validates the complete reviewed menu and all category evidence before replacing any rows. It keeps source IDs, unrelated menus and quarantines intact. Replays are idempotent, stale and partial reports fail closed, and source URL/identity or unreviewed price changes require review. The existing candidate workflow tests all three on the real v2 archive with recorded proof and synthetic timestamps in memory only. No schedule or production writes have been enabled.
+
+## Daily source verification
+
+The existing Nordic preview workflow now retains the actual JSON from each successful live probe and stages an isolated archive using those exact reports. It handles either an original v1 archive or a v2 archive by applying complete restaurant snapshots in sequence. The staging job runs only when all three probes succeed. It has read-only repository permissions and no publish step. The proposed daily cadence is 04:17 UTC; GitHub only runs schedules once the workflow is on the default branch. Failed, incomplete, or changed unreviewed menus leave the existing public index untouched. Source coverage is still limited to the three reviewed pilot menus, and newly discovered dishes, price changes and seasonal migrations need review before staging.

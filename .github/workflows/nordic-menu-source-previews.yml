@@ -8,6 +8,9 @@ on:
       - "docs/nordic-*.json"
       - ".github/workflows/nordic-menu-source-previews.yml"
   workflow_dispatch:
+  # One read-only verification per day, once this workflow is on main.
+  schedule:
+    - cron: "17 4 * * *"
 
 permissions:
   contents: read
@@ -34,4 +37,63 @@ jobs:
       - name: Test Nordic price and source parser
         run: pnpm --filter @fysen/menu-worker exec vitest run src/nordic-menu-price.test.ts src/nordic-${{ matrix.source }}-preview.test.ts
       - name: Read-only live source preview
-        run: pnpm --filter @fysen/menu-worker probe:nordic:${{ matrix.source }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          report="$RUNNER_TEMP/${{ matrix.source }}.json"
+          pnpm --filter @fysen/menu-worker exec tsx src/nordic-${{ matrix.source }}-probe.ts | tee "$report"
+          python3 -m json.tool "$report" > /dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nordic-source-report-${{ matrix.source }}
+          path: ${{ runner.temp }}/${{ matrix.source }}.json
+          retention-days: 14
+          if-no-files-found: error
+
+  stage-current-nordic-archive:
+    needs: nordic-source-preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: public-index
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: nordic-source-report-*
+          path: fresh-reports
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Stage the latest complete Nordic menus without publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(python3 -c 'import json; print(json.load(open("public-index/manifest.json"))["version"])')"
+          if [[ "$version" == 1 ]]; then
+            python3 scripts/build-fysen-nordic-candidate.py public-index fresh-reports "$RUNNER_TEMP/nordic-fresh"
+            node scripts/verify-fysen-nordic-candidate.mjs public-index "$RUNNER_TEMP/nordic-fresh" fresh-reports
+          elif [[ "$version" == 2 ]]; then
+            previous=public-index
+            for source in savotta pelikan schonnemann; do
+              output="$RUNNER_TEMP/nordic-refresh-$source"
+              python3 scripts/refresh-fysen-nordic-candidate.py "$previous" "$source" "fresh-reports/$source.json" "$output"
+              previous="$output"
+            done
+            mv "$previous" "$RUNNER_TEMP/nordic-fresh"
+          else
+            echo "Unsupported public archive version" >&2
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nordic-fresh-archive-not-published
+          path: ${{ runner.temp }}/nordic-fresh/
+          retention-days: 14
+          if-no-files-found: error
