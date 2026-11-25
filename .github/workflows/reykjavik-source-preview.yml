@@ -2,7 +2,7 @@ name: Iceland street food source probe (read-only)
 on:
   pull_request:
     paths:
-      - "apps/menu-worker/src/reykjavik-*-probe.ts"
+      - "apps/menu-worker/src/reykjavik-*.ts"
       - "docs/reykjavik-*-review.json"
       - ".github/workflows/reykjavik-source-preview.yml"
   workflow_dispatch:
@@ -41,3 +41,15 @@ jobs:
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm --filter @fysen/menu-worker... build
       - run: pnpm --filter @fysen/menu-worker exec tsx src/reykjavik-kitchen-probe.ts
+
+  bistro:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-node-pnpm
+      - run: pnpm --filter @fysen/menu-worker... build
+      - run: pnpm --filter @fysen/menu-worker exec vitest run src/reykjavik-bistro-preview.test.ts
+      - run: pnpm --filter @fysen/menu-worker exec tsx src/reykjavik-bistro-probe.ts
