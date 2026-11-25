@@ -1,12 +1,20 @@
 import { cuisines, homeCuisines, discoveryDishesForCuisine } from "./cuisine-explorer-data";
 import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/public-path";
-import { browseArchivedMenuDishes, type ArchivedMenuMatch, type PublicMenuArchive } from "../lib/verified-menu-archive";
+import type { ArchivedMenuMatch } from "../lib/verified-menu-archive";
 import styles from "./verified-menu-archive-view.module.css";
 import { FoodIllustration } from "./food-illustration";
 import { CuisineCountryFlag } from "./cuisine-country-flag";
+import { SaveArchivedMinMatButton } from "./save-archived-min-mat-button";
+import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
+
 import { illustrationForDishName } from "./food-illustration-match";
 import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
+
+function normalizeSavedArchiveName(value: string): string {
+  return value.normalize("NFKC").toLocaleLowerCase("nb-NO")
+    .replace(/[^\p{L}\p{N}]+/gu, " ").trim().replace(/\s+/gu, " ");
+}
 
 function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string): string {
   if (priceMinor === null) return "Pris ikke oppgitt";
@@ -52,6 +60,15 @@ export function ArchivedMenuResults({
               <a href={result.sourceUrl} target="_blank" rel="noopener noreferrer">
                 Se meny <span aria-hidden="true">↗</span>
               </a>
+              {ahaMinMatPilotEnabled ? <SaveArchivedMinMatButton evidence={{
+                restaurantSlug: result.restaurantSlug,
+                sourceUrl: result.sourceUrl,
+                observedAt: result.observedAt,
+                normalizedName: normalizeSavedArchiveName(result.name),
+                priceMinor: result.priceMinor,
+                priceKind: result.priceKind as "exact" | "from" | "multiple",
+                priceMaxMinor: result.priceMaxMinor,
+              }} /> : null}
             </article>
           ))}
         </div>
@@ -61,13 +78,17 @@ export function ArchivedMenuResults({
 }
 
 export function ArchivedMenuBrowse({
-  city, initialCuisineName, initialFoodTypeName = "", initialAreaName = "", archive,
+  city, initialCuisineName, initialFoodTypeName = "", initialAreaName = "", dishes,
 }: {
   readonly city: string;
   readonly initialCuisineName: string;
   readonly initialFoodTypeName?: string;
   readonly initialAreaName?: string;
-  readonly archive: PublicMenuArchive;
+  readonly dishes: readonly {
+    readonly name: string;
+    readonly query: string;
+    readonly restaurantCount: number;
+  }[];
 }) {
   // The twelve main kitchen families and their 101 undercategories are
   // discoverable in archive fallback as well as the live-API homepage.
@@ -120,7 +141,7 @@ export function ArchivedMenuBrowse({
         }))
     : [];
   const visibleSuggestions = [...suggestions, ...supplementalFoodTypeDishes];
-  const archivedDishes = selectedCuisine ? [] : browseArchivedMenuDishes(archive, city, 48);
+  const archivedDishes = selectedCuisine ? [] : dishes;
 
   function cuisineHref(name: string, option?: { readonly region?: string; readonly mat?: string }): string {
     const params = new URLSearchParams({ city, cuisine: name });

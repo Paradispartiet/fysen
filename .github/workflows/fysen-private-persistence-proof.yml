@@ -1,0 +1,78 @@
+name: Fysen private state isolation proof
+
+# Focused lifecycle proof for AHA Min mat, restaurant ownership and Fysen Pro.
+# This workflow has no Supabase credentials and NEVER connects to a remote DB.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/fysen-private-persistence-proof.yml"
+      - "packages/database/src/aha-min-mat.ts"
+      - "packages/database/src/aha-min-mat.integration.test.ts"
+      - "packages/database/src/restaurant-claims.ts"
+      - "packages/database/src/restaurant-claims.integration.test.ts"
+      - "packages/database/src/fysen-pro.ts"
+      - "packages/database/src/fysen-pro.integration.test.ts"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  private-state:
+    name: Private writes in isolated Postgres
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_USER: fysen
+          POSTGRES_PASSWORD: local-private-test-only
+          POSTGRES_DB: fysen_private
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U fysen -d fysen_private"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://fysen:local-private-test-only@127.0.0.1:5432/fysen_private
+      DATABASE_SSL: "0"
+      CI: "1"
+    steps:
+      - name: Checkout candidate code
+        uses: actions/checkout@v4
+
+      - name: Set up existing Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build database and existing dependencies
+        run: pnpm --filter @fysen/database... build
+
+      - name: Create canonical schema and migration register (isolated only)
+        run: |
+          pnpm --filter @fysen/database migrate
+          pnpm --filter @fysen/database verify:production
+
+      # Each legacy suite resets its own tables. They MUST NOT run in parallel.
+      - name: AHA Min mat session, save/remove, one-time handoff
+        run: pnpm --filter @fysen/database exec vitest run src/aha-min-mat.integration.test.ts
+
+      - name: Restaurant claim and verified ownership lifecycle
+        run: pnpm --filter @fysen/database exec vitest run src/restaurant-claims.integration.test.ts
+
+      - name: Fysen Pro setup, session and dashboard
+        run: pnpm --filter @fysen/database exec vitest run src/fysen-pro.integration.test.ts
+
+      - name: State what the proof does and does not verify
+        if: success()
+        run: |
+          {
+            echo "## Private Fysen state: isolated PostgreSQL proof"
+            echo
+            echo "- PASS: Canonical schema, migration ledger and three targeted private write suites"
+            echo "- All operations used disposable PostGIS PostgreSQL 17 on the GitHub runner"
+            echo "- No connection to original Fysen or recovery Supabase"
+            echo "- Does NOT prove recovery Supabase has the migration ledger, quota headroom or live API write permissions"
+          } >> "$GITHUB_STEP_SUMMARY"

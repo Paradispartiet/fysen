@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
-import { listMigrationFiles } from "./migrate.js";
+import { listMigrationFiles, runMigrations } from "./migrate.js";
+import type { Pool } from "pg";
 
 describe("database migrations", () => {
   it("keeps migrations ordered and creates the required spatial/search extensions", async () => {
@@ -185,5 +186,23 @@ describe("database migrations", () => {
     );
     expect(menuSourceResponseLimit6MibSql).toContain("max_response_bytes >= 65536");
     expect(menuSourceResponseLimit6MibSql).toContain("max_response_bytes <= 6291456");
+  });
+});
+
+describe("recovered migration ledger safety", () => {
+  it("rejects a populated Fysen schema without a ledger before any database write", async () => {
+    const statements: string[] = [];
+    const client = {
+      query: async (statement: string) => {
+        statements.push(statement);
+        return { rows: [{ has_ledger: false, has_application_tables: true }] };
+      },
+      release: () => undefined,
+    };
+    const pool = { connect: async () => client } as unknown as Pool;
+    await expect(runMigrations(pool)).rejects.toThrow(/FYSEN_UNVERIFIED_MIGRATION_HISTORY/u);
+    expect(statements).toHaveLength(1);
+    expect(statements[0]).toContain("to_regclass");
+    expect(statements[0]).not.toMatch(/CREATE|ALTER|DELETE|INSERT|TRUNCATE/iu);
   });
 });

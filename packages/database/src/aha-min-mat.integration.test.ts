@@ -9,6 +9,7 @@ import {
   removeMinMatItem,
   revokeAhaConsumerSession,
   saveMinMatItem,
+  resolveVerifiedArchiveMenuItem,
 } from "./aha-min-mat.js";
 import { runMigrations } from "./migrate.js";
 import { MenuIndexRepository } from "./repository.js";
@@ -85,6 +86,29 @@ integrationDescribe("AHA Min mat integration", () => {
   });
 
   afterAll(async () => { await pool.end(); });
+
+  it("resolves only a unique canonical menu match from verified archived source data", async () => {
+    const snapshot = await pool.query<{ fetched_at: Date }>(
+      "SELECT fetched_at FROM fysen.menu_snapshots WHERE id = $1", [snapshotId],
+    );
+    const evidence = {
+      restaurantSlug: "aha-min-mat-test-oslo",
+      sourceUrl: "https://minmat.example/menu",
+      observedAt: snapshot.rows[0]!.fetched_at.toISOString(),
+      normalizedName: "daal makhani",
+      priceMinor: 19900,
+      priceKind: "exact" as const,
+      priceMaxMinor: null,
+    };
+    expect(await resolveVerifiedArchiveMenuItem(pool, evidence)).toBe(menuItemId);
+    expect(await resolveVerifiedArchiveMenuItem(pool, { ...evidence, priceMinor: 100 })).toBeNull();
+    expect(await resolveVerifiedArchiveMenuItem(pool, {
+      ...evidence, sourceUrl: "https://other.example/menu",
+    })).toBeNull();
+    expect(await resolveVerifiedArchiveMenuItem(pool, {
+      ...evidence, observedAt: "2020-01-01T00:00:00Z",
+    })).toBeNull();
+  });
 
   it("keeps AHA consumer auth hash-only, replay-safe and separate from Fysen Pro", async () => {
     const authorization = {

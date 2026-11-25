@@ -13,6 +13,7 @@ import {
 import {
   ahaConsumerSessionCreateSchema,
   minMatSaveInputSchema,
+  minMatArchiveSaveInputSchema,
   minMatSavedItemIdSchema,
   type AhaAnalysisHandoffReceipt,
   type AhaConsumerLogoutReceipt,
@@ -22,6 +23,7 @@ import {
   type MinMatItem,
   type MinMatList,
   type MinMatSaveInput,
+  type MinMatArchiveSaveInput,
 } from "@fysen/contracts/aha-min-mat";
 import { UnauthorizedException } from "@nestjs/common";
 import { AhaMinMatService } from "./aha-min-mat.service.js";
@@ -44,6 +46,15 @@ export function parseMinMatSave(value: unknown): MinMatSaveInput {
   throw invalidBody("INVALID_MIN_MAT_SAVE", "Invalid Min mat save request.", parsed.error.issues.map((issue) => ({
     path: issue.path.join("."), code: issue.code, message: issue.message,
   })));
+}
+
+export function parseMinMatArchiveSave(value: unknown): MinMatArchiveSaveInput {
+  const parsed = minMatArchiveSaveInputSchema.safeParse(value);
+  if (parsed.success) return parsed.data;
+  throw invalidBody("INVALID_MIN_MAT_ARCHIVE_SAVE", "Invalid archived menu reference.",
+    parsed.error.issues.map((issue) => ({
+      path: issue.path.join("."), code: issue.code, message: issue.message,
+    })));
 }
 
 export function parseAhaConsumerBearer(value: string | undefined): string {
@@ -88,6 +99,18 @@ export class AhaMinMatController {
     @Body() body: unknown,
   ): Promise<MinMatItem> {
     return this.service.save(parseAhaConsumerBearer(authorization), parseMinMatSave(body).menuItemId);
+  }
+
+  @Post("min-mat/archive")
+  @HttpCode(201)
+  async saveArchived(
+    @Headers("authorization") authorization: string | undefined,
+    @Body() body: unknown,
+  ): Promise<MinMatItem> {
+    return this.service.saveArchived(
+      parseAhaConsumerBearer(authorization),
+      parseMinMatArchiveSave(body),
+    );
   }
 
   @Delete("min-mat/items/:savedItemId")

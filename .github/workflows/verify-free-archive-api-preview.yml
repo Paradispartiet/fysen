@@ -1,22 +1,27 @@
 name: Verify Fysen free archived API on isolated Vercel preview
 
+# A Vercel deployment consumes daily Free-plan quota. Never publish a
+# preview automatically for every PR update. Explicit dispatch only, after
+# code-only CI and free capacity have been reviewed.
 on:
-  pull_request:
-    paths:
-      - "apps/api/src/verified-public-menu-archive*"
-      - "apps/api/src/app.module.ts"
-      - ".github/workflows/verify-free-archive-api-preview.yml"
+  workflow_dispatch:
+    inputs:
+      allow_preview_deploy:
+        description: "Explicitly permit one temporary Vercel preview deployment"
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   contents: read
 
 concurrency:
-  group: fysen-free-archive-preview-${{ github.event.pull_request.number }}
+  group: fysen-free-archive-preview-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   proof:
-    if: ${{ github.event.pull_request.head.repo.full_name }} == github.repository
+    if: github.event_name == 'workflow_dispatch' && inputs.allow_preview_deploy == true
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
@@ -27,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
       - uses: ./.github/actions/setup-node-pnpm
       - name: Build API dependencies only
         run: |
@@ -45,7 +50,7 @@ jobs:
           pnpm dlx vercel@latest build --token="$VERCEL_TOKEN"
           candidate="$(pnpm dlx vercel@latest deploy --prebuilt --token="$VERCEL_TOKEN" \
             --meta "fysenVerification=free-archive-api-preview" \
-            --meta "fysenSourceSha=${{ github.event.pull_request.head.sha }}")"
+            --meta "fysenSourceSha=${{ github.sha }}")"
           [[ "$candidate" =~ ^https://[a-zA-Z0-9-]+\.vercel\.app$ ]]
           echo "url=$candidate" >> "$GITHUB_OUTPUT"
       - name: Check actual checksum-verified API routes and archive provenance

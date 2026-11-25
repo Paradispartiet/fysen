@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { gunzipSync } from "node:zlib";
+import type { MinMatArchiveSaveInput } from "@fysen/contracts/aha-min-mat";
 
 const archiveRoot = "https://raw.githubusercontent.com/Paradispartiet/fysen/fysen-free-public-index/";
 const maximumCompressedBytes = 4 * 1024 * 1024;
@@ -314,4 +315,26 @@ export function archivedPublicBrowse(archive: VerifiedPublicArchive, city: strin
     archiveDate: archive.archiveDate, lastRefreshAt: archive.lastRefreshAt,
     city, count: grouped.size, dishes,
   };
+}
+
+// Matching archived source evidence does not imply a database identity.
+// Callers must still resolve a unique canonical menu_item_id before any save.
+export function matchesVerifiedPublicArchiveItem(
+  archive: VerifiedPublicArchive,
+  input: MinMatArchiveSaveInput,
+): boolean {
+  if (normalizeArchiveDishName(input.normalizedName) !== input.normalizedName) return false;
+  let count = 0;
+  for (const { row, source, restaurant } of selectedItems(archive, "Oslo")) {
+    if (restaurant[1] === input.restaurantSlug &&
+        source[1] === input.sourceUrl &&
+        new Date(source[2]).getTime() === new Date(input.observedAt).getTime() &&
+        row[2] === input.normalizedName &&
+        row[3] === input.priceMinor && row[4] === input.priceKind &&
+        row[5] === input.priceMaxMinor) {
+      count += 1;
+      if (count > 1) return false;
+    }
+  }
+  return count === 1;
 }
