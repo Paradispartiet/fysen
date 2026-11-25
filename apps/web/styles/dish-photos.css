@@ -185,7 +185,7 @@
    768px standalone illustration on pure black, not a restaurant photo. */
 .dishPhotoThumb.dishPhotoSambar,
 .dishPhotoSmall.dishPhotoSambar {
-  background: #000 url("/dish-images/sambar-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/sambar-512.avif") center / cover no-repeat;
 }
 
 /* Medu vada: separate sharp 768px illustration on pure black, not restaurant photography. */
