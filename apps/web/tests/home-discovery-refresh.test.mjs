@@ -99,7 +99,7 @@ test("Matlyst gallery uses compact side thumbnails across desktop, iPad and phon
   assert.match(css, /tom-yum-thumb-512\.avif/u);
   assert.match(css, /\.dishPhotos \.dishPhotoCard \.dishPhotoThumb/u);
   assert.match(css, /grid-template-columns:\s*68px\s+minmax\(0,\s*1fr\)/u);
-  assert.match(css, /grid-row:\s*1\s*\/\s*span\s*2/u);
+  assert.match(css, /\.dishPhotos \.dishPhotoCard \{[^}]*align-items:\s*center/u);
   assert.match(css, /grid-template-columns:\s*60px\s+minmax\(0,\s*1fr\)/u);
   assert.match(css, /grid-template-columns:\s*50px\s+minmax\(0,\s*1fr\)/u);
   assert.match(css, /max-width:\s*68px/u);
@@ -107,7 +107,7 @@ test("Matlyst gallery uses compact side thumbnails across desktop, iPad and phon
   assert.match(css, /max-width:\s*50px/u);
   assert.doesNotMatch(css, /image-rendering:\s*pixelated/u);
   assert.ok(layout.indexOf("home-discovery-refresh.css") > layout.indexOf("dish-photos.css"));
-  assert.match(gallery, /<a href=\{dishSearchHref\(dish\.query\)\} key=\{dish\.id\} className="dishPhotoCard">/u);
+  assert.match(gallery, /<a href=\{dishSearchHref\(dish\.query\)\} className="dishPhotoSearch">/u);
 });
 
 test("disclosure uses semantic HTML with no Javascript dependency or fake availability", () => {
