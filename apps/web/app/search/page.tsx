@@ -95,6 +95,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   let archive: PublicMenuArchive | null = null;
   let archiveMatches: ArchivedMenuMatch[] = [];
   let suppressedLiveSlugs = new Set<string>();
+  let suppressedLiveIds = new Set<string>();
   // Registered menus remain searchable even when the live index has some results.
   if (q.length !== 1 && city.toLocaleLowerCase("nb-NO") === "oslo") {
     try {
@@ -103,6 +104,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
       const selected = reconcileMenuVersions(stored, versions ?? []);
       archive = selected.archive;
       suppressedLiveSlugs = selected.suppressedLiveSlugs;
+      suppressedLiveIds = selected.suppressedLiveIds;
       if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city, Infinity);
     } catch {
       // Preserve the existing clear unavailable state, never invent menu data.
@@ -146,6 +148,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 initialFoodTypeName={first(params.mat)}
                 initialAreaName={first(params.region)}
                 archive={archive}
+                liveDishes={browseState.data?.dishes.map((dish) => {
+                  const restaurantExamples = dish.restaurantExamples.filter((restaurant) => !suppressedLiveIds.has(restaurant.id));
+                  return { ...dish, restaurantExamples, restaurantCount: restaurantExamples.length };
+                }).filter((dish) => dish.restaurantCount > 0)}
               />
             ) : (
               <DishBrowse

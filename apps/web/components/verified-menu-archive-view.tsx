@@ -1,7 +1,8 @@
 import { cuisines, homeCuisines, discoveryDishesForCuisine } from "./cuisine-explorer-data";
 import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/public-path";
-import { browseArchivedMenuDishes, type ArchivedMenuMatch, type PublicMenuArchive } from "../lib/verified-menu-archive";
+import { browseArchivedMenuDishes, normalizeArchiveQuery, type ArchivedMenuMatch, type PublicMenuArchive } from "../lib/verified-menu-archive";
 import styles from "./verified-menu-archive-view.module.css";
+import type { DishBrowseItem } from "@fysen/contracts/dish-browse";
 import { FoodIllustration } from "./food-illustration";
 import { CuisineCountryFlag } from "./cuisine-country-flag";
 import { illustrationForDishName } from "./food-illustration-match";
@@ -62,13 +63,14 @@ export function ArchivedMenuResults({
 }
 
 export function ArchivedMenuBrowse({
-  city, initialCuisineName, initialFoodTypeName = "", initialAreaName = "", archive,
+  city, initialCuisineName, initialFoodTypeName = "", initialAreaName = "", archive, liveDishes = [],
 }: {
   readonly city: string;
   readonly initialCuisineName: string;
   readonly initialFoodTypeName?: string;
   readonly initialAreaName?: string;
   readonly archive: PublicMenuArchive;
+  readonly liveDishes?: readonly DishBrowseItem[];
 }) {
   // The twelve main kitchen families and their 101 undercategories are
   // discoverable in archive fallback as well as the live-API homepage.
@@ -122,6 +124,19 @@ export function ArchivedMenuBrowse({
     : [];
   const visibleSuggestions = [...suggestions, ...supplementalFoodTypeDishes];
   const archivedDishes = selectedCuisine ? [] : browseArchivedMenuDishes(archive, city, 48);
+  const mergedDishes = new Map(archivedDishes.map((dish) => [dish.query, { ...dish }]));
+  if (!selectedCuisine) {
+    for (const dish of liveDishes) {
+      const query = normalizeArchiveQuery(dish.query);
+      const stored = mergedDishes.get(query);
+      const dates = dish.restaurantExamples.flatMap((restaurant) => restaurant.observedAt ? [restaurant.observedAt] : []).sort();
+      const newestObservedAt = [stored?.newestObservedAt ?? "", dates.at(-1) ?? ""].sort().at(-1) ?? "";
+      mergedDishes.set(query, { name: stored?.name ?? dish.name, query,
+        restaurantCount: (stored?.restaurantCount ?? 0) + dish.restaurantCount, newestObservedAt });
+    }
+  }
+  const visibleDishes = [...mergedDishes.values()].sort((a, b) =>
+    b.restaurantCount - a.restaurantCount || a.name.localeCompare(b.name, "nb-NO")).slice(0, 48);
 
   function cuisineHref(name: string, option?: { readonly region?: string; readonly mat?: string }): string {
     const params = new URLSearchParams({ city, cuisine: name });
@@ -270,7 +285,7 @@ export function ArchivedMenuBrowse({
           <h2>Utforsk retter</h2>
           <p className={styles.meta}>Se hvor du finner rettene, eller bruk søkefeltet for å finne flere.</p>
           <div className={styles.dishList}>
-            {archivedDishes.map((dish) => (
+            {visibleDishes.map((dish) => (
               <article className={styles.suggestion} key={dish.query}>
                 <div className={styles.dishNameWithArtwork}>
                   {illustrationForDishName(dish.name) ? (

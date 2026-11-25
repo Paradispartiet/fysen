@@ -204,3 +204,17 @@ test("newer archive menu replaces the older live version regardless of searched 
   assert.ok(selected.suppressedLiveIds.has("live-king"));
   assert.ok(archiveModule.searchPublicMenuArchive(selected.archive, "ramen", "Oslo", Infinity).some((match) => match.restaurantSlug === "king-falafel-brugata-oslo"));
 });
+
+test("only the most recent complete menu for a restaurant is used within the archive", () => {
+  const original = archiveModule.parsePublicMenuArchive(metadata, index);
+  const withReplacement = {
+    ...original,
+    sources: [...original.sources, [1, "https://example.org/new-menu", "2026-11-25T00:00:00Z"]],
+    items: [...original.items, [3, "Pizza", "pizza", 20000, "exact", null, "NOK", ""]],
+  };
+  const selected = archiveModule.reconcileMenuVersions(withReplacement, []);
+  assert.ok(!archiveModule.searchPublicMenuArchive(selected.archive, "ramen", "Oslo", Infinity)
+    .some((match) => match.restaurantSlug === "king-falafel-brugata-oslo"));
+  assert.ok(archiveModule.searchPublicMenuArchive(selected.archive, "pizza", "Oslo", Infinity)
+    .some((match) => match.restaurantSlug === "king-falafel-brugata-oslo"));
+});

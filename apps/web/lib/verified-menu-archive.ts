@@ -323,11 +323,9 @@ export function reconcileMenuVersions(archive: PublicMenuArchive, live: readonly
   });
   const liveBySlug = new Map(live.map((version) => [version.restaurantSlug, version]));
   const archiveWins = new Set<string>();
-  const liveWins = new Set<string>();
   for (const [slug, version] of latest) {
     const other = liveBySlug.get(slug);
     if (!other || version.at > Date.parse(other.observedAt)) archiveWins.add(slug);
-    else liveWins.add(slug);
   }
   const visibleSources = new Set([...latest].filter(([slug]) => archiveWins.has(slug)).map(([, version]) => version.index));
   return {
