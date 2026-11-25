@@ -159,7 +159,17 @@ test("Editorial food photos are only large-view enabled with real provenance and
     assert.match(photo.largeSource, /-master-\d+\.avif$/u);
     assert.notEqual(photo.atlas, photo.largeSource);
     assert.match(photo.photoLicense, /^https:\/\//u);
-    if (photo.id === "rekesmorbrod") {
+    if (["vada", "kebab-pita"].includes(photo.id)) {
+      assert.equal(photo.aiMaskProcessed, true);
+      assert.equal(photo.generatedFoodPixels, false);
+      assert.equal(photo.upscaled, false);
+      assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
+      const notice = readFileSync(path.join(imageRoot, `${photo.id}-LICENSE.txt`), "utf8");
+      assert.match(notice, /AI-generert frileggingsmaske/u);
+      assert.match(notice, /ikke oppskalert/u);
+      assert.match(photo.photoCredit, photo.id === "vada" ? /Andy Li.*CC0/u : /Lauren Travis.*CC BY 2\.0/u);
+      assert.equal(photo.photoLicense, photo.id === "vada" ? "https://creativecommons.org/publicdomain/zero/1.0/" : "https://creativecommons.org/licenses/by/2.0/");
+    } else if (photo.id === "rekesmorbrod") {
       assert.match(photo.photoSource, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/u);
       assert.match(photo.photoCredit, /Susanne Nilsson.*CC BY-SA 2\.0/u);
       assert.equal(photo.photoLicense, "https://creativecommons.org/licenses/by-sa/2.0/");

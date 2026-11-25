@@ -185,13 +185,13 @@
    768px standalone illustration on pure black, not a restaurant photo. */
 .dishPhotoThumb.dishPhotoSambar,
 .dishPhotoSmall.dishPhotoSambar {
-  background: #000 url("/dish-images/sambar-512.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/sambar-512.avif") center / contain no-repeat;
 }
 
 /* Medu vada: separate sharp 768px illustration on pure black, not restaurant photography. */
 .dishPhotoThumb.dishPhotoVada,
 .dishPhotoSmall.dishPhotoVada {
-  background: #000 url("/dish-images/medu-vada-768.avif") center / cover no-repeat;
+  background: #000 url("/dish-images/medu-vada-thumb-512.avif") center / contain no-repeat;
 }
 
 
@@ -243,7 +243,7 @@
 /* New gallery-only dish-type artwork (never restaurant photography or generic catalog evidence). */
 .dishPhotoThumb.dishPhotoBolognese { background: #000 url("/dish-images/pasta-bolognese-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoProsciutto { background: #000 url("/dish-images/pizza-prosciutto-thumb-512.avif") center / contain no-repeat; }
-.dishPhotoThumb.dishPhotoKebabPita { background: #000 url("/dish-images/kebab-pita-768.avif") center / cover no-repeat; }
+.dishPhotoThumb.dishPhotoKebabPita { background: #000 url("/dish-images/kebab-pita-thumb-512.avif") center / contain no-repeat; }
 
 /* Nye KI-illustrasjoner: fiskeart/bibimbapvariant er ikke bevis for restaurantretter.
    Al pastor kan kun brukes som redaksjonell illustrasjon med nøyaktig samme rett-ID. */
@@ -280,4 +280,5 @@
 .dishPhotoSmall.dishPhotoDanDanNoodles { background: #000 url("/dish-images/dan-dan-noodles-thumb-512.avif") center / contain no-repeat; }
 .dishPhotoThumb.dishPhotoGreenCurry,
 .dishPhotoSmall.dishPhotoGreenCurry { background: #000 url("/dish-images/green-curry-thumb-512.avif") center / contain no-repeat; }
+
 

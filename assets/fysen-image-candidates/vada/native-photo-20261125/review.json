@@ -1,0 +1,52 @@
+{
+  "id": "vada",
+  "filename": "Medu_Vada_-_Calcutta_16_2026-07-11.jpg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Medu_Vada_-_Calcutta_16_2026-07-11.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Medu_Vada_-_Calcutta_16_2026-07-11.jpg",
+  "author": "Andy Li",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "dimensions": [
+    8160,
+    6144
+  ],
+  "sha256": "e1de8c0584c5f5157a8173f1ec016e216abf895ccdf6f1c369fb84040725f16d",
+  "variant": "Tre medu vada med sambar og tre chutney-varianter. Originalfotoets restaurant er ikke en Fysen-restaurantkobling.",
+  "source_verified": true,
+  "no_upscale": true,
+  "original_photo_visual_review_completed": true,
+  "black_background": false,
+  "black_background_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "ai_processed": false,
+  "generated_food_pixels": false,
+  "processed_candidate": {
+    "file": "black-ai-candidate.png",
+    "width": 1445,
+    "height": 1088,
+    "sha256": "551204774b9f9f3c2619f6e2762d2f05644647b83a534c70b7c40eea62560a9f",
+    "ai_processed": true,
+    "upscaled": false,
+    "black_background": true,
+    "native_source_pixels_preserved": false,
+    "approved_for_fysen": false,
+    "reason": "AI editing output is below 1600 pixels on both axes; high-resolution source retained separately. Not an unmodified source photograph.",
+    "avif_sha256": "877732b10b7642d9267a3e0ec9b406fe9585ec11d7de32c77f566a50af9aabd5",
+    "thumbnail_sha256": "d86e5d58c57cf06bcaee675b7a67cfcb79f0c174c30e1c090aa72936bfc1ae6d"
+  },
+  "native_mask_result": {
+    "dimensions": [
+      8160,
+      6144
+    ],
+    "source_rgb_preserved": true,
+    "ai_mask_processed": true,
+    "generated_food_pixels": false,
+    "upscaled": false,
+    "approved_for_draft_gallery": true,
+    "published": false,
+    "png_sha256": "b4d4eec82d4bfd6e4b541440b19df9f74d9a789edac8087b4e0b6244b9c42a73",
+    "master_sha256": "ad4f401725daa1d7aa5b94e0b3c480187e33d5edce862bbd079837a6b2c9320d"
+  }
+}
