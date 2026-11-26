@@ -1261,3 +1261,74 @@ a.cuisineExploreRestaurantName:focus-visible {
 .cuisineExploreLocation button:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
 .cuisineExploreLocation span, .cuisineExploreDistanceNote { color: var(--color-muted); font-size: 11px; line-height: 1.4; }
 .cuisineExploreDistanceNote { margin: 4px 0; }
+
+/* Compact restaurant identities override the older large menu-link tiles. */
+.cuisineExploreDish .cuisineExploreRestaurantNames {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+}
+.cuisineExploreDish .cuisineExploreRestaurantNames > li {
+  min-width: 0;
+}
+.cuisineExploreDish .cuisineExploreRestaurantName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 60px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #0d100d;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.cuisineExploreDish .cuisineExploreRestaurantMonogram {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  border-radius: 8px;
+  background: #203326;
+  color: #c5edcd;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+.cuisineExploreDish .cuisineExploreRestaurantCopy {
+  display: block;
+  min-width: 0;
+  margin: 0;
+  color: inherit;
+}
+.cuisineExploreDish .cuisineExploreRestaurantCopy strong {
+  font-size: 14px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.cuisineExploreDish .cuisineExploreRestaurantCopy small {
+  margin-top: 3px;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.cuisineExploreDish a.cuisineExploreRestaurantName:hover {
+  border-color: var(--color-brand);
+}
+.cuisineExploreDish a.cuisineExploreRestaurantName:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+@media (max-width: 580px) {
+  .cuisineExploreRestaurantPreview { margin-left: 0; }
+  .cuisineExploreDish .cuisineExploreRestaurantNames {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

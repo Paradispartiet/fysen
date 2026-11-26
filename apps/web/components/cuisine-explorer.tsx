@@ -174,6 +174,12 @@ function rankDishCoverage(coverage: readonly DishCoverage[]): DishCoverage[] {
 
 const restaurantPreviewLimit = 4;
 
+/** A restaurant identity, not an imitation of its official logo. */
+function restaurantInitials(name: string): string {
+  const words = name.match(/[\p{L}\p{N}]+(?:['’][\p{L}\p{N}]+)*/gu) ?? [];
+  return words.slice(0, 2).map((word) => Array.from(word)[0]).join("").toLocaleUpperCase("nb-NO") || "R";
+}
+
 function RestaurantNames({ restaurants }: { readonly restaurants: readonly RestaurantExample[] }) {
   return (
     <ul className="cuisineExploreRestaurantNames">
@@ -181,10 +187,20 @@ function RestaurantNames({ restaurants }: { readonly restaurants: readonly Resta
         <li key={restaurant.id}>
           {restaurant.sourceUrl ? (
             <a className="cuisineExploreRestaurantName" href={restaurant.sourceUrl} target="_blank" rel="noopener noreferrer">
-              {restaurant.name}
+            <span className="cuisineExploreRestaurantMonogram" aria-hidden="true">{restaurantInitials(restaurant.name)}</span>
+            <span className="cuisineExploreRestaurantCopy">
+              <strong>{restaurant.name}</strong>
+              {restaurant.address ? <small>{restaurant.address}</small> : null}
+            </span>
             </a>
           ) : (
-            <span className="cuisineExploreRestaurantName">{restaurant.name}</span>
+            <div className="cuisineExploreRestaurantName">
+            <span className="cuisineExploreRestaurantMonogram" aria-hidden="true">{restaurantInitials(restaurant.name)}</span>
+            <span className="cuisineExploreRestaurantCopy">
+              <strong>{restaurant.name}</strong>
+              {restaurant.address ? <small>{restaurant.address}</small> : null}
+            </span>
+            </div>
           )}
         </li>
       ))}
