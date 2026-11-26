@@ -23,6 +23,15 @@ import { pizzaMargheritaTranslations } from "../content/food-knowledge/translati
 import { aranciniTranslations } from "../content/food-knowledge/translations/arancini.ts";
 import { pastaAllaNormaTranslations } from "../content/food-knowledge/translations/pasta-alla-norma.ts";
 import { hummusTranslations } from "../content/food-knowledge/translations/hummus.ts";
+import { shawarmaTranslations } from "../content/food-knowledge/translations/shawarma.ts";
+import { manakishTranslations } from "../content/food-knowledge/translations/manakish.ts";
+import { koshariTranslations } from "../content/food-knowledge/translations/koshari.ts";
+import { pideTranslations } from "../content/food-knowledge/translations/pide.ts";
+import { birriaTranslations } from "../content/food-knowledge/translations/birria.ts";
+import { cochinitaPibilTranslations } from "../content/food-knowledge/translations/cochinita-pibil.ts";
+import { pozoleTranslations } from "../content/food-knowledge/translations/pozole.ts";
+import { fishTacoTranslations } from "../content/food-knowledge/translations/fish-taco.ts";
+import { smashburgerTranslations } from "../content/food-knowledge/translations/smashburger.ts";
 import type { PreviewLocale } from "./locale-messages.ts";
 
 export type ArticleBody = Omit<FoodKnowledgeArticle, "dishId" | "summary" | "relatedDishIds" | "sources">;
@@ -51,6 +60,15 @@ const articles: Readonly<Record<string, Partial<Record<Exclude<PreviewLocale, "n
   "arancini": aranciniTranslations,
   "pasta-alla-norma": pastaAllaNormaTranslations,
   "hummus": hummusTranslations,
+  "shawarma": shawarmaTranslations,
+  "manakish": manakishTranslations,
+  "koshari": koshariTranslations,
+  "pide": pideTranslations,
+  "birria": birriaTranslations,
+  "cochinita-pibil": cochinitaPibilTranslations,
+  "pozole": pozoleTranslations,
+  "fish-taco": fishTacoTranslations,
+  "smashburger": smashburgerTranslations,
 };
 
 export const translatedArticleIds = Object.keys(articles);
