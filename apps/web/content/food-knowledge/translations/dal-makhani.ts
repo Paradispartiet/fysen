@@ -51,7 +51,7 @@ export const dalMakhaniTranslations = {
   "sv": {
     "overview": "Dal makhani är en fyllig baljväxtgryta. De hela uradbönorna ger den mörka färgen och en krämig konsistens när de kokas mjuka, medan kidneybönorna ger lite tuggmotstånd.",
     "history": "Dal makhani hör till det punjabiska köket i norra Indien. Rätten lagas både hemma och på restauranger, där en fyllig version med smör och grädde är vanlig.",
-    "flavor": "Uraddbönorna har en jordig smak, tomaten ger syra och smör och grädde dämpar hettan från chili och ingefära. Vissa restaurangvarianter har också en lätt rökig smak.",
+    "flavor": "Uradbönorna har en jordig smak, tomaten ger syra och smör och grädde dämpar hettan från chili och ingefära. Vissa restaurangvarianter har också en lätt rökig smak.",
     "technique": "Koka de blötlagda uradbönorna helt mjuka innan de blandas med den nedkokta tomat- och kryddbasen. Mosa några bönor mot grytans kant och låt blandningen sjuda tills den tjocknar.",
     "essentials": [
       "Hela svarta uradbönor (sabut urad dal).",
@@ -250,7 +250,7 @@ export const dalMakhaniTranslations = {
         "2 garlic cloves and 2 cm ginger, finely grated",
         "250 g tomato passata",
         "1 tsp cumin seeds, ½ tsp chilli powder and ½ tsp garam masala",
-        "2 tbsp butter, ½ dl cream and salt"
+        "2 tbsp butter, ½ dl (50 ml) cream and salt"
       ],
       "steps": [
         "Rinse the urad beans and cook them in fresh water until completely soft. Reserve some of the cooking water.",
