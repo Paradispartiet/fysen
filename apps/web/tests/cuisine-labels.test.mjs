@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { URL } from "node:url";
 import { cuisineLabel, translatedCuisineNames } from "../lib/cuisine-labels.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 
