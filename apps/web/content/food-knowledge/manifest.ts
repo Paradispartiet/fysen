@@ -70,6 +70,12 @@ export const foodKnowledgeDishIds = [
   "tom-kha-gai",
   "pad-see-ew",
   "khao-pad",
+  "chicken-tikka-masala-pakistan",
+  "palak-paneer",
+  "rogan-josh",
+  "vindaloo",
+  "malai-kofta",
+  "aloo-gobi",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
