@@ -7,6 +7,7 @@ import type {
 } from "@fysen/contracts/dish-browse";
 import { usePreviewLocale } from "./language-preview";
 import { resultText } from "../lib/result-messages";
+import { cuisineLabel } from "../lib/cuisine-labels";
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { browseDishesClient } from "../lib/client-dish-search";
 import { RecentDishes } from "./recent-dishes";
@@ -95,6 +96,7 @@ function CuisineAreaTile({
   readonly onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   readonly active?: boolean;
 }) {
+  const locale = usePreviewLocale();
   return (
     <button
       type="button"
@@ -104,7 +106,7 @@ function CuisineAreaTile({
       title={area.flagRegion ? `${area.name} · regionsflagg for ${area.flagRegion}` : area.name}
     >
       <CuisineAreaSymbol area={area} />
-      <span>{area.name}</span>
+      <span lang={locale}>{cuisineLabel(area.name, locale)}</span>
     </button>
   );
 }
@@ -450,7 +452,7 @@ export function CuisineExplorer({
                     aria-haspopup="dialog"
                     onClick={(event) => openCuisine(cuisine, event.currentTarget)}
                   >
-                    <span className="cuisineBrowseChoiceName">{cuisine.name}</span>
+                    <span className="cuisineBrowseChoiceName">{cuisineLabel(cuisine.name, locale)}</span>
                     <span className="cuisineBrowseChoiceCount">
                       {cuisine.areas.length} {cuisine.areas.length === 1 ? "underkategori" : "underkategorier"}
                     </span>
@@ -485,17 +487,17 @@ export function CuisineExplorer({
 
             <header className="cuisineExploreDialogHeader">
               <p lang={locale}>{resultText(locale, "exploreCuisine")}</p>
-              <h2 id="cuisine-dialog-title">{selectedCuisine.name}</h2>
+              <h2 id="cuisine-dialog-title" lang={locale}>{cuisineLabel(selectedCuisine.name, locale)}</h2>
               <span>{selectedCuisine.context}</span>
             </header>
 
             <div className="cuisineExploreFilterGroup" aria-label="Velg hvordan du vil utforske">
               <details className="cuisineExploreFilter cuisineExploreAreas" name="cuisine-discovery-filter">
                 <summary className="cuisineExploreFilterSummary">
-                  <span>{selectedCuisine.areasLabel}</span>
-                  <strong>{selectedFoodType ? "Velg land eller region" : selectedArea?.name ?? allAreasLabel}</strong>
+                  <span lang={locale}>{cuisineLabel(selectedCuisine.areasLabel, locale)}</span>
+                  <strong>{selectedFoodType ? "Velg land eller region" : cuisineLabel(selectedArea?.name ?? allAreasLabel, locale)}</strong>
                 </summary>
-                <div className="cuisineExploreAreaGrid" aria-label={selectedCuisine.areasLabel}>
+                <div className="cuisineExploreAreaGrid" aria-label={cuisineLabel(selectedCuisine.areasLabel, locale)}>
                 <button
                   type="button"
                   className="cuisineExploreResetChoice"
@@ -506,7 +508,7 @@ export function CuisineExplorer({
                     setShowAllDishes(false);
                     event.currentTarget.closest("details")?.removeAttribute("open");
                   }}
-                >{allAreasLabel}</button>
+                >{cuisineLabel(allAreasLabel, locale)}</button>
                 {selectedCuisine.areas.map((area) => (
                   <CuisineAreaTile
                     key={area.name}
@@ -527,7 +529,7 @@ export function CuisineExplorer({
                 <details className="cuisineExploreFilter cuisineExploreFoodTypes" name="cuisine-discovery-filter">
                   <summary className="cuisineExploreFilterSummary">
                     <span>Mattype</span>
-                    <strong>{selectedFoodType?.name ?? "Velg mattype"}</strong>
+                    <strong>{selectedFoodType ? cuisineLabel(selectedFoodType.name, locale) : "Velg mattype"}</strong>
                   </summary>
                   <div className="cuisineExploreTypeGrid" aria-label={`Mattyper i ${selectedCuisine.name}`}>
                   <button
@@ -540,7 +542,7 @@ export function CuisineExplorer({
                       setShowAllDishes(false);
                       event.currentTarget.closest("details")?.removeAttribute("open");
                     }}
-                  >Alle mattyper</button>
+                  >{cuisineLabel("Alle mattyper", locale)}</button>
                   {availableFoodTypes.map((type) => (
                     <button
                       type="button"
@@ -555,7 +557,7 @@ export function CuisineExplorer({
                       }}
                     >
                       <FoodIllustration name={type.illustration} className="cuisineItalianArtwork" size={38} />
-                      <strong>{type.name}</strong>
+                      <strong lang={locale}>{cuisineLabel(type.name, locale)}</strong>
                     </button>
                   ))}
                   </div>
@@ -566,7 +568,7 @@ export function CuisineExplorer({
             <section className="cuisineExploreResults" aria-live="polite">
               <div className="cuisineExploreResultsHeading">
                 <div>
-                  <p>{selectedFoodType?.name ?? selectedArea?.name ?? allAreasLabel}</p>
+                  <p lang={locale}>{cuisineLabel(selectedFoodType?.name ?? selectedArea?.name ?? allAreasLabel, locale)}</p>
                   <h3 lang={locale}>{resultText(locale, "dishesWhere")}</h3>
                 </div>
                 <span>{selectedDishCoverage.length} rettforslag · Oslo</span>
