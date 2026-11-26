@@ -11,6 +11,12 @@ import { gyozaTranslations } from "../content/food-knowledge/translations/gyoza.
 import { tomYumTranslations } from "../content/food-knowledge/translations/tom-yum.ts";
 import { phoTranslations } from "../content/food-knowledge/translations/pho.ts";
 import { banhMiTranslations } from "../content/food-knowledge/translations/banh-mi.ts";
+import { katsuTranslations } from "../content/food-knowledge/translations/katsu.ts";
+import { baoTranslations } from "../content/food-knowledge/translations/bao.ts";
+import { mapoTofuTranslations } from "../content/food-knowledge/translations/mapo-tofu.ts";
+import { butterChickenTranslations } from "../content/food-knowledge/translations/butter-chicken.ts";
+import { tandooriTranslations } from "../content/food-knowledge/translations/tandoori.ts";
+import { chanaMasalaTranslations } from "../content/food-knowledge/translations/chana-masala.ts";
 import type { PreviewLocale } from "./locale-messages.ts";
 
 export type ArticleBody = Omit<FoodKnowledgeArticle, "dishId" | "summary" | "relatedDishIds" | "sources">;
@@ -27,6 +33,12 @@ const articles: Readonly<Record<string, Partial<Record<Exclude<PreviewLocale, "n
   "tom-yum": tomYumTranslations,
   pho: phoTranslations,
   "banh-mi": banhMiTranslations,
+  "katsu": katsuTranslations,
+  "bao": baoTranslations,
+  "mapo-tofu": mapoTofuTranslations,
+  "butter-chicken": butterChickenTranslations,
+  "tandoori": tandooriTranslations,
+  "chana-masala": chanaMasalaTranslations,
 };
 
 export const translatedArticleIds = Object.keys(articles);
