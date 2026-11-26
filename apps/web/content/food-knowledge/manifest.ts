@@ -100,6 +100,12 @@ export const foodKnowledgeDishIds = [
   "chilaquiles",
   "mole-poblano",
   "ceviche",
+  "lahmacun",
+  "manti",
+  "doner",
+  "kofte",
+  "baba-ganoush",
+  "tabbouleh",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
