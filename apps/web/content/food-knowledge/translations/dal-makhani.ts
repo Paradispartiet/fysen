@@ -250,7 +250,7 @@ export const dalMakhaniTranslations = {
         "2 garlic cloves and 2 cm ginger, finely grated",
         "250 g tomato passata",
         "1 tsp cumin seeds, ½ tsp chilli powder and ½ tsp garam masala",
-        "2 tbsp butter, ½ dl (50 ml) cream and salt"
+        "2 tbsp butter, ½ dl cream and salt"
       ],
       "steps": [
         "Rinse the urad beans and cook them in fresh water until completely soft. Reserve some of the cooking water.",
