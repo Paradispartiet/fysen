@@ -9,12 +9,15 @@ import { article as tacosAlPastor } from "../content/food-knowledge/articles/tac
 import { article as padThai } from "../content/food-knowledge/articles/pad-thai.ts";
 import { article as sushi } from "../content/food-knowledge/articles/sushi.ts";
 import { article as gyoza } from "../content/food-knowledge/articles/gyoza.ts";
+import { article as tomYum } from "../content/food-knowledge/articles/tom-yum.ts";
+import { article as pho } from "../content/food-knowledge/articles/pho.ts";
+import { article as banhMi } from "../content/food-knowledge/articles/banh-mi.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { localizedArticleBody, translatedArticleIds } from "../lib/dish-article-translations.ts";
 
 const numericTokens = (value) => value.match(/[0-9]+|[½¼¾]/gu) ?? [];
 
-for (const original of [article, ramen, biryani, falafel, carbonara, tacosAlPastor, padThai, sushi, gyoza]) {
+for (const original of [article, ramen, biryani, falafel, carbonara, tacosAlPastor, padThai, sushi, gyoza, tomYum, pho, banhMi]) {
 test(`complete ${original.dishId} translations retain recipe quantities, times and structure`, () => {
   const article = original;
   assert.ok(translatedArticleIds.includes(article.dishId));
