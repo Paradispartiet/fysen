@@ -40,3 +40,7 @@ All 33 canonical food encyclopedia summaries now have draft translations in the 
 ### Complete article translation pilot
 
 Dal makhani now has complete editorial body and recipe drafts in Nynorsk, Swedish, Danish, Finnish, Icelandic and English. The article overlay retains the original dish ID, summary lookup, canonical query, ingredient artwork mapping, related IDs and source links; missing translations use the unchanged Bokmål body and explicit language notice. A targeted test checks field coverage, list lengths and exact numeric tokens in quantities and times. Other 32 full article bodies and several shared dialog labels remain untranslated. The last pre-pilot commit 715f904 passed CI, mobile/iPad browser proof and public archive verification. New pilot changes require fresh test results and linguistic review.
+
+### Second full article: Ramen
+
+Ramen is registered alongside Dal makhani with complete editorial body and recipe translations in the six additional preview locales. All original menu queries, article IDs, ingredient artwork, related dish IDs and source links remain unchanged. The quantity and structure test now covers both original articles. Commit e8caceb (Dal makhani pilot) passed CI, mobile/iPad proof and public menu archive verification. The Ramen changes await their own checks and language review. Full article body coverage is 2/33.
