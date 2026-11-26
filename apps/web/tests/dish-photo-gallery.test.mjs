@@ -399,7 +399,7 @@ test("Gỏi cuốn uses a dedicated 768px image and only the exact shrimp varian
 });
 
 test("Steak and shrimp sandwich use separate, sharp 512px gallery originals", () => {
-  for (const [bytes, index, id, className, file] of [
+  for (const [bytes, index, id, , file] of [
     [grilledSteak, 3, "grillet-biff", "dishPhotoGrilledSteak", "grillet-biff-thumb-512.avif"],
     [shrimpOpenSandwich, 4, "rekesmorbrod", "dishPhotoShrimpOpenSandwich", "rekesmorbrod-thumb-512.avif"],
   ]) {
