@@ -845,6 +845,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"smorrebrod","name":"Dansk smørrebrød","query":"dansk smørrebrød","aliases":["smørrebrød","smorrebrod","danish open sandwich"],"cuisine":"Nordisk","region":"Danmark","explorerPriority":88},
   {"id":"lohikeitto","name":"Lohikeitto","query":"lohikeitto","aliases":["finsk laksesuppe","finnish salmon soup"],"cuisine":"Nordisk","region":"Finland","explorerPriority":86},
   {"id":"plokkfiskur","name":"Plokkfiskur","query":"plokkfiskur","aliases":["plokkfisk","icelandic fish stew"],"cuisine":"Nordisk","region":"Island","explorerPriority":84},
+  {"id":"boeuf-bourguignon","name":"Bœuf bourguignon","query":"boeuf bourguignon","aliases":["boeuf bourguignon","beef bourguignon","biff bourguignon"],"cuisine":"Fransk","region":"Bourgogne","explorerPriority":96},
+  {"id":"coq-au-vin","name":"Coq au vin","query":"coq au vin","aliases":["kylling i rødvin"],"cuisine":"Fransk","region":"Frankrike","explorerPriority":94},
+  {"id":"ratatouille","name":"Ratatouille","query":"ratatouille","aliases":[],"cuisine":"Fransk","region":"Provence","explorerPriority":92},
+  {"id":"bouillabaisse","name":"Bouillabaisse","query":"bouillabaisse","aliases":["fransk fiskesuppe"],"cuisine":"Fransk","region":"Marseille","explorerPriority":90},
+  {"id":"quiche-lorraine","name":"Quiche lorraine","query":"quiche lorraine","aliases":["quiche lorraine med bacon"],"cuisine":"Fransk","region":"Lorraine","explorerPriority":88},
+  {"id":"croque-monsieur","name":"Croque monsieur","query":"croque monsieur","aliases":["croque-monsieur"],"cuisine":"Fransk","region":"Frankrike","explorerPriority":86},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
