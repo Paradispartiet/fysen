@@ -1,0 +1,23 @@
+{
+  "restaurant": "Egon Byporten",
+  "address": "Jernbanetorget 6, 0154 Oslo",
+  "sourcePage": "https://egon.no/restauranter/oslo/egon-byporten",
+  "referencePhotos": [
+    {
+      "role": "exterior",
+      "url": "https://egon.no/media/5fjnrqr3/fotoknoff-sven-erik-knoff.jpg"
+    },
+    {
+      "role": "interior",
+      "url": "https://egon.no/media/rvdfihh1/fotoknoff-sven-erik-knoff-3.jpg"
+    }
+  ],
+  "referenceCredit": "Foto: Sven-Erik Knoff / FotoKnoff, as named in the official source URLs",
+  "illustrations": "AI-generated illustrations based on the official reference photographs, 2026-11-26. Not photographs. Original generated PNGs preserved separately. WebP derivatives retain 1536x1024 dimensions.",
+  "logo": "Original inline SVG geometry extracted from the official page header; standalone white fill/stroke styles added for dark background. Not AI-generated.",
+  "files": {
+    "exterior.webp": "6f75076cbfd9907b9ec42b99dc30ae7267c4c3d7860d1bb8bba651d151d912f1",
+    "interior.webp": "0977f240d70a62f7388197757342110b30726859894f4eacb46e64c636500e2d",
+    "logo.svg": "0129f4c8dad2688ae6a9a1e9abc549e8bb501c63ef97685172aeef04764b4146"
+  }
+}
