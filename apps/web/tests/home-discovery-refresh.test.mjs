@@ -108,6 +108,7 @@ test("Matlyst, menu search and knowledge cards display approved originals inline
   assert.match(knowledgeNote, /<DishEditorialImage dishId=\{knowledge\.imageDishId\} priority/u);
   assert.match(learningSection, /<DishEditorialImage dishId=\{dish\.id\}/u);
   assert.match(css, /object-fit: contain/u);
+  assert.ok(layout.indexOf("home-discovery-refresh.css") > layout.indexOf("dish-photos.css"));
   assert.match(css, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/u);
   assert.match(gallery, /<a href=\{dishSearchHref\(dish\.query\)\} className="dishPhotoSearch">/u);
 });
