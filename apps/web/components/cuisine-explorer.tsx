@@ -5,6 +5,8 @@ import type {
   DishBrowseResponse,
   DishBrowseRestaurantExample,
 } from "@fysen/contracts/dish-browse";
+import { usePreviewLocale } from "./language-preview";
+import { resultText } from "../lib/result-messages";
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { browseDishesClient } from "../lib/client-dish-search";
 import { RecentDishes } from "./recent-dishes";
@@ -244,6 +246,7 @@ function DiscoveryDishList({
   readonly location: Coordinates | null;
   readonly onOpenKnowledge: (dishId: string) => void;
 }) {
+  const locale = usePreviewLocale();
   return (
     <div className="cuisineExploreDishList">
       {coverage.map(({ dish, restaurantCount, restaurantExamples, evidenceKind }) => (
@@ -265,11 +268,11 @@ function DiscoveryDishList({
             <div className="cuisineExploreDishActions">
               {dish.hasKnowledge ? (
                 <button type="button" onClick={() => onOpenKnowledge(dish.id)}>
-                  Lær om retten <span aria-hidden="true">↗</span>
+                  {resultText(locale, "learnDish")} <span aria-hidden="true">↗</span>
                 </button>
               ) : null}
               <a href={dishSearchHref(dish.query)}>
-                {restaurantCount > 0 ? "Se menytreff" : "Søk etter retten"} <span aria-hidden="true">→</span>
+                {restaurantCount > 0 ? resultText(locale, "menuMatches") : resultText(locale, "searchDish")} <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>
@@ -289,6 +292,7 @@ export function CuisineExplorer({
   readonly browseData: DishBrowseResponse | null;
   readonly archiveCoverage: ArchivedMatlystCoverage | null;
 }) {
+  const locale = usePreviewLocale();
   const [previewBrowseData, setPreviewBrowseData] = useState<DishBrowseResponse | null>(null);
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
@@ -431,13 +435,13 @@ export function CuisineExplorer({
         <summary className="cuisineBrowsePreview">
           <span className="cuisineBrowsePreviewCopy">
             <span className="foodSectionEyebrow">Matlyst</span>
-            <span className="cuisineBrowsePreviewTitle" id="cuisine-browse-title">Utforsk matretter</span>
-            <span className="cuisineBrowsePreviewHint">Kjøkken, regioner og mattyper</span>
+            <span className="cuisineBrowsePreviewTitle" id="cuisine-browse-title" lang={locale}>{resultText(locale, "explore")}</span>
+            <span className="cuisineBrowsePreviewHint" lang={locale}>{resultText(locale, "exploreHint")}</span>
           </span>
           <span className="cuisineBrowsePreviewChevron" aria-hidden="true">⌄</span>
         </summary>
         <div className="cuisineBrowseInside">
-          <ul className="cuisineBrowseList" aria-label="Velg kjøkken">
+          <ul className="cuisineBrowseList" lang={locale} aria-label={resultText(locale, "chooseCuisine")}>
             {homeCuisines.map((cuisine) => (
                 <li key={cuisine.name}>
                   <button
@@ -480,7 +484,7 @@ export function CuisineExplorer({
             </button>
 
             <header className="cuisineExploreDialogHeader">
-              <p>Utforsk kjøkken</p>
+              <p lang={locale}>{resultText(locale, "exploreCuisine")}</p>
               <h2 id="cuisine-dialog-title">{selectedCuisine.name}</h2>
               <span>{selectedCuisine.context}</span>
             </header>
@@ -563,7 +567,7 @@ export function CuisineExplorer({
               <div className="cuisineExploreResultsHeading">
                 <div>
                   <p>{selectedFoodType?.name ?? selectedArea?.name ?? allAreasLabel}</p>
-                  <h3>Retter og hvor du kan få dem</h3>
+                  <h3 lang={locale}>{resultText(locale, "dishesWhere")}</h3>
                 </div>
                 <span>{selectedDishCoverage.length} rettforslag · Oslo</span>
               </div>
