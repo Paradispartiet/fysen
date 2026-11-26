@@ -36,3 +36,7 @@ Thirty message keys now cover the encyclopedia list, search-result note and arti
 ### Complete summary coverage
 
 All 33 canonical food encyclopedia summaries now have draft translations in the six additional preview languages (198 translations, 231 language versions including the unchanged original Bokmål). The test compares the exact translation IDs against the canonical manifest. Full article body and recipe translations remain outstanding. The previous mobile/tablet browser proof timed out on the Dal makhani note because the accessible label introduced a separator; the original label format has been restored. Fresh CI and browser proof are required before activation.
+
+### Complete article translation pilot
+
+Dal makhani now has complete editorial body and recipe drafts in Nynorsk, Swedish, Danish, Finnish, Icelandic and English. The article overlay retains the original dish ID, summary lookup, canonical query, ingredient artwork mapping, related IDs and source links; missing translations use the unchanged Bokmål body and explicit language notice. A targeted test checks field coverage, list lengths and exact numeric tokens in quantities and times. Other 32 full article bodies and several shared dialog labels remain untranslated. The last pre-pilot commit 715f904 passed CI, mobile/iPad browser proof and public archive verification. New pilot changes require fresh test results and linguistic review.
