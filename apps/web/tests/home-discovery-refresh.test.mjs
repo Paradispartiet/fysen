@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { translate } from "../lib/locale-messages.ts";
+import { resultText } from "../lib/result-messages.ts";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -16,14 +18,16 @@ const manifest = JSON.parse(read("public/dish-images/manifest.json"));
 
 test("home page keeps dish search as the primary action", () => {
   assert.ok(home.indexOf("<DishSearch />") < home.indexOf("<CuisineExplorer"));
-  assert.ok(home.includes("Hva har du lyst på?"));
+  assert.ok(home.includes('<LocalizedText message="hero" />'));
+  assert.equal(translate("nb", "hero"), "Hva har du lyst på?");
   assert.match(css, /\.homePage \.homeHero/u);
 });
 
 test("Utforsk matretter is a closed-by-default accordion before the optional photo gallery", () => {
   assert.match(explorer, /<details className="cuisineBrowseDisclosure" aria-labelledby="cuisine-browse-title">/u);
   assert.match(explorer, /<summary className="cuisineBrowsePreview">/u);
-  assert.match(explorer, /Utforsk matretter/u);
+  assert.ok(explorer.includes('resultText(locale, "explore")'));
+  assert.equal(resultText("nb", "explore"), "Utforsk matretter");
   assert.doesNotMatch(explorer, /<details className="cuisineBrowseDisclosure"[^>]*\sopen(?:\s|>)/u);
   assert.ok(explorer.indexOf('className="cuisineBrowseList"') < explorer.indexOf("<DishPhotoGallery />"));
   assert.match(explorer, /<details className="cuisineBrowseDisclosure"/u);
@@ -69,7 +73,8 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
   assert.match(explorer, /menuEvidenceLabel\(evidenceKind, restaurantCount\)/u);
   assert.match(explorer, /evidenceKind: "unavailable"/u);
   assert.match(explorer, /evidenceKind: coverage \? "archive" : "unchecked"/u);
-  assert.match(explorer, /"Søk etter retten"/u);
+  assert.ok(explorer.includes('resultText(locale, "searchDish")'));
+  assert.equal(resultText("nb", "searchDish"), "Søk etter retten");
   assert.match(explorer, /const restaurantPreviewLimit = 4/u);
   assert.match(explorer, /\(ranked \? known : restaurants\)\.slice\(0, restaurantPreviewLimit\)/u);
   assert.match(explorer, /restaurants\.slice\(restaurantPreviewLimit\)/u);
