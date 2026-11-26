@@ -46,6 +46,12 @@ export const foodKnowledgeDishIds = [
   "bun-cha",
   "vietnamese-spring-rolls",
   "pizza-marinara",
+  "peking-duck",
+  "dan-dan-noodles",
+  "amatriciana",
+  "saltimbocca",
+  "cannoli",
+  "quesadilla",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
