@@ -2830,5 +2830,287 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "kung-pao-chicken"
     ],
     "sources": []
+  },
+  {
+    "dishId": "enchiladas",
+    "summary": "Mais­tortillaer med fyll og chilisaus.",
+    "overview": "Tortillaene fylles, rulles og dekkes med saus.",
+    "history": "Enchiladas finnes i mange regionale meksikanske tradisjoner.",
+    "flavor": "Fyldig, mildt syrlig og krydret.",
+    "technique": "Myk opp tortillaene før de rulles.",
+    "essentials": [
+      "12 maistortillaer",
+      "400 g kokt kylling",
+      "400 ml rød enchiladasaus"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "12 maistortillaer",
+        "400 g kokt kylling",
+        "400 ml rød enchiladasaus",
+        "150 g ost",
+        "1 løk"
+      ],
+      "steps": [
+        "Varm tortillaene kort.",
+        "Fyll med kylling og rull sammen.",
+        "Legg i form med saus og ost.",
+        "Stek ved 190 °C til gjennomvarmt."
+      ]
+    },
+    "variants": [
+      "Enchiladas verdes med grønn tomatillosaus."
+    ],
+    "serving": [
+      "Server med løk og crema."
+    ],
+    "commonMistakes": [
+      "Ikke bruk tørre tortillaer som sprekker."
+    ],
+    "relatedDishIds": [
+      "quesadilla",
+      "mole-poblano"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "burrito",
+    "summary": "Hvetetortilla rullet rundt kjøtt, bønner eller annet fyll.",
+    "overview": "En stor, myk tortilla omslutter et konsentrert fyll.",
+    "history": "Burrito forbindes med Nord-Mexico og har fått mange former i USA.",
+    "flavor": "Myk, fyldig og krydret.",
+    "technique": "Varm tortillaen og brett sidene inn før rulling.",
+    "essentials": [
+      "4 store hvetetortillaer",
+      "300 g kokte bønner",
+      "300 g kjøttdeig"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min",
+      "ingredients": [
+        "4 store hvetetortillaer",
+        "300 g kokte bønner",
+        "300 g kjøttdeig",
+        "1 løk",
+        "spisskummen",
+        "salsa"
+      ],
+      "steps": [
+        "Stek løk og kjøttdeig til gjennomstekt.",
+        "Tilsett krydder og bønner.",
+        "Varm tortillaene.",
+        "Fordel fyll og salsa og rull tett."
+      ]
+    },
+    "variants": [
+      "Mission-burrito inneholder ofte ris og flere typer tilbehør."
+    ],
+    "serving": [
+      "Server med salsa."
+    ],
+    "commonMistakes": [
+      "Unngå for mye vått fyll."
+    ],
+    "relatedDishIds": [
+      "quesadilla",
+      "tacos-al-pastor"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "tamales",
+    "summary": "Dampede pakker av maisdeig med salt eller søtt fyll.",
+    "overview": "Masa smøres på maisblad eller bananblad, fylles og dampes.",
+    "history": "Tamales har førkolumbiske røtter i Mesoamerika og er viktige i mange festtradisjoner.",
+    "flavor": "Myk maisdeig med aromatisk fyll.",
+    "technique": "Bruk masa harina beregnet på tamales og damp til deigen slipper bladet.",
+    "essentials": [
+      "300 g masa harina",
+      "250–350 ml kraft",
+      "100 g mykt fett"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer",
+      "ingredients": [
+        "300 g masa harina",
+        "250–350 ml kraft",
+        "100 g mykt fett",
+        "1 ts bakepulver",
+        "300 g kokt kylling",
+        "salsa",
+        "tørkede maisblad"
+      ],
+      "steps": [
+        "Bløtlegg maisbladene i varmt vann.",
+        "Pisk fett og bland med masa harina, bakepulver og kraft til myk deig.",
+        "Smør deig på bladene, legg på kylling og salsa og brett.",
+        "Damp i omtrent 60–90 minutter til deigen er fast og slipper bladene."
+      ]
+    },
+    "variants": [
+      "Tamales med mole, chili eller søtt fyll."
+    ],
+    "serving": [
+      "Fjern bladet før servering."
+    ],
+    "commonMistakes": [
+      "Ikke la dampgryten koke tørr."
+    ],
+    "relatedDishIds": [
+      "enchiladas",
+      "mole-poblano"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "chilaquiles",
+    "summary": "Maistortillachips vendt i rød eller grønn saus.",
+    "overview": "Sprø tortillabiter myknes delvis i varm salsa.",
+    "history": "Chilaquiles er en kjent meksikansk frokostrett.",
+    "flavor": "Sprøtt og mykt, syrlig og krydret.",
+    "technique": "Vend chipsene inn like før servering for å bevare noe sprøhet.",
+    "essentials": [
+      "200 g tortillachips",
+      "400 ml salsa roja eller verde",
+      "4 egg"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 20 min",
+      "ingredients": [
+        "200 g tortillachips",
+        "400 ml salsa roja eller verde",
+        "4 egg",
+        "100 g queso fresco",
+        "crema",
+        "løk"
+      ],
+      "steps": [
+        "Varm salsaen i en panne.",
+        "Stek eggene separat.",
+        "Vend chipsene i den varme sausen.",
+        "Topp med egg, ost, crema og løk."
+      ]
+    },
+    "variants": [
+      "Røde og grønne varianter med egg eller kylling."
+    ],
+    "serving": [
+      "Server straks."
+    ],
+    "commonMistakes": [
+      "Ikke la chipsene koke lenge hvis du ønsker sprø tekstur."
+    ],
+    "relatedDishIds": [
+      "enchiladas",
+      "quesadilla"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "mole-poblano",
+    "summary": "Meksikansk saus med tørket chili, frø, krydder og ofte sjokolade.",
+    "overview": "En rekke ristede ingredienser males og kokes sammen til en kompleks saus.",
+    "history": "Mole poblano forbindes særlig med Puebla; opphavsfortellingene varierer.",
+    "flavor": "Dyp, krydret, lett bitter og søtlig.",
+    "technique": "Rist chiliene forsiktig og la sausen småkoke.",
+    "essentials": [
+      "4 tørkede anchochilier",
+      "2 tørkede pasillachilier",
+      "30 g sesamfrø"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 75 min",
+      "ingredients": [
+        "4 tørkede anchochilier",
+        "2 tørkede pasillachilier",
+        "30 g sesamfrø",
+        "40 g mandler",
+        "1 løk",
+        "2 hvitløksfedd",
+        "1 tomat",
+        "400 ml kraft",
+        "20 g mørk sjokolade",
+        "kanel",
+        "600 g kokt kylling"
+      ],
+      "steps": [
+        "Fjern stilker og frø fra chiliene, rist kort og bløtlegg.",
+        "Rist frø og mandler og stek løk, hvitløk og tomat.",
+        "Miks med chili, kraft og krydder til glatt saus.",
+        "Småkok sausen, rør inn sjokolade og varm kyllingen i den."
+      ]
+    },
+    "variants": [
+      "Oppskriften er en forenklet hjemmevariant av en omfattende sausetradisjon."
+    ],
+    "serving": [
+      "Server med ris og sesamfrø."
+    ],
+    "commonMistakes": [
+      "Ikke brenn chiliene eller la sjokoladen dominere."
+    ],
+    "relatedDishIds": [
+      "enchiladas",
+      "tamales"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "ceviche",
+    "summary": "Fisk eller sjømat med sitrus, løk og chili.",
+    "overview": "I klassiske varianter marineres rå fisk i sitrus; syren endrer teksturen, men gjør ikke fisken mikrobiologisk trygg.",
+    "history": "Ceviche har en særlig sentral plass i Peru og finnes i ulike former langs Latin-Amerikas kyster, blant annet i Mexico.",
+    "flavor": "Frisk, syrlig, salt og aromatisk.",
+    "technique": "Hold sjømaten kald; denne hjemmevarianten bruker gjennomkokte reker.",
+    "essentials": [
+      "400 g kokte, avkjølte reker",
+      "4 lime",
+      "1 rødløk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 20 min",
+      "ingredients": [
+        "400 g kokte, avkjølte reker",
+        "4 lime",
+        "1 rødløk",
+        "chili",
+        "koriander",
+        "1 agurk",
+        "salt"
+      ],
+      "steps": [
+        "Skjær løk og agurk i små biter.",
+        "Bland limesaft, chili og salt.",
+        "Vend inn de kalde, kokte rekene og grønnsakene.",
+        "Hold kjølig og server straks med koriander."
+      ]
+    },
+    "variants": [
+      "Peruanske fiskebaserte varianter og meksikanske varianter med reker, tomat eller avokado."
+    ],
+    "serving": [
+      "Server med tostadas eller, i peruansk stil, mais og søtpotet."
+    ],
+    "commonMistakes": [
+      "Ikke regn med at limejuice dreper parasitter eller sykdomsfremkallende bakterier."
+    ],
+    "relatedDishIds": [
+      "fish-taco",
+      "tostada"
+    ],
+    "sources": []
   }
 ];
