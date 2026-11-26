@@ -118,6 +118,12 @@ export const foodKnowledgeDishIds = [
   "bouillabaisse",
   "quiche-lorraine",
   "croque-monsieur",
+  "paella-valenciana",
+  "patatas-bravas",
+  "tortilla-espanola",
+  "gazpacho",
+  "gambas-al-ajillo",
+  "croquetas",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
