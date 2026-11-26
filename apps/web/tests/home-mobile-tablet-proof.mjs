@@ -43,6 +43,20 @@ try {
       const menu = header.locator("details.siteMenu");
       await menu.locator("summary").tap();
       assert.equal(await menu.locator(".siteMenuPanel").isVisible(), true, "Menu remains usable while scrolled");
+      assert.equal(await menu.getByText("Velg by", { exact: true }).count(), 0);
+      assert.equal(await menu.getByRole("link", { name: "København", exact: true }).count(), 0);
+      const cityPicker = header.locator("details.cityMenu");
+      await cityPicker.locator("summary").tap();
+      assert.equal(await menu.locator(".siteMenuPanel").isVisible(), false, "City picker closes the main menu");
+      assert.equal(await cityPicker.locator(".cityMenuPanel").isVisible(), true);
+      assert.equal(await cityPicker.getByRole("link").count(), 5);
+      assert.equal(await cityPicker.getByRole("link", { name: "Oslo", exact: true }).getAttribute("aria-current"), "true");
+      const cityHref = await cityPicker.getByRole("link", { name: "København", exact: true }).getAttribute("href");
+      assert.equal(new URL(cityHref, base).searchParams.get("city"), "København");
+      const cityPanelBox = await cityPicker.locator(".cityMenuPanel").boundingBox();
+      assert.ok(cityPanelBox && cityPanelBox.x >= 0 && cityPanelBox.x + cityPanelBox.width <= viewport.width + 2);
+      await menu.locator("summary").tap();
+      assert.equal(await cityPicker.locator(".cityMenuPanel").isVisible(), false, "Main menu closes the city picker");
       await menu.locator("summary").tap();
       await page.evaluate(() => window.scrollTo(0, 0));
 
@@ -218,6 +232,13 @@ try {
       assert.equal(dishSearch?.status(), 200, "The Dal makhani search page must load");
       const note = page.getByRole("complementary", { name: "Om retten Dal makhani" });
       await note.waitFor({ state: "visible" });
+      const resultsCityPicker = page.getByRole("banner").locator("details.cityMenu");
+      await resultsCityPicker.locator("summary").tap();
+      const resultsCityHref = await resultsCityPicker.getByRole("link", { name: "Stockholm", exact: true }).getAttribute("href");
+      const resultsCityUrl = new URL(resultsCityHref, base);
+      assert.equal(resultsCityUrl.searchParams.get("city"), "Stockholm");
+      assert.equal(resultsCityUrl.searchParams.get("q"), "dal makhani", "City switching must preserve the active search");
+      await resultsCityPicker.locator("summary").tap();
       assert.match(await note.innerText(), /Fysen matleksikon[\s\S]*uradbønner/iu);
       const dishImage = note.locator("img.dishEditorialImage");
       await dishImage.waitFor({ state: "visible" });
