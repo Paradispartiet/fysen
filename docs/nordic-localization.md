@@ -1,0 +1,22 @@
+# Nordic localization
+
+Fysen must support Nordic languages across the whole product, not just city navigation. The Fysen brand is unchanged.
+
+## Planned language coverage
+
+- nb (Norsk bokmål), nn (Norsk nynorsk), sv (Svenska), da (Dansk), fi (Suomi), is (Íslenska), en (English).
+- fo (Føroyskt), kl (Kalaallisut), se (Davvisámegiella); further Sámi and Nordic minority languages can be added through the same architecture.
+- Only offer a locale as complete after its required translation catalog and review are complete. Faroese, Greenlandic and Sámi copy needs competent linguistic review. English is an additional international locale.
+
+## Implementation
+
+1. Typed locale registry, deterministic negotiation, explicit user preference over browser preference, existing Bokmål fallback. Locale must never implicitly change the user's selected city, query or filters.
+2. Typed UI dictionaries with completeness tests. Localized document language, page titles, metadata, accessible labels and language selector with native language names, not flags as the sole label. Persist preference; preserve routes and preview base path. Avoid forcing all public routes dynamic solely for language negotiation without assessing caching impact.
+3. Translate header, home, search forms, filters, results, restaurant cards, map, error/loading/empty states, Matlyst, food knowledge, Min mat, restaurant and legal pages. Use locale-aware plurals, numbers, dates and currencies. Currency belongs to the restaurant market, not language. Keep original brand, restaurant names and local place names where appropriate.
+4. Add localized dish aliases linked to stable canonical dish IDs. For example kjøttboller, köttbullar, kødboller, lihapullat and kjötbollur can be related search terms only where semantic equivalence is verified. Preserve culinary distinctions. Do not translate a dish into a false verified match.
+5. Translate food descriptions separately from original source menu items. Keep original menu wording, price, currency, source URL and verification date. Label any translated source text. Never create restaurant availability by translation.
+6. Test locale completeness, language switching, query/city/filter persistence, multilingual matching and non-matches, diacritics, accessible controls, localized metadata, mobile and desktop. Test the five Nordic city routes and preserve the existing Norwegian experience. Use targeted checks for each change; full production proof at release milestone.
+
+## Release
+
+This foundation is not an implemented language selector or published translation. Complete the UI and search integration in staged PRs. Do not publish until the relevant translation and regression checks pass. No changes to menu-source priority, archive freshness, restaurant verification or pricing semantics.
