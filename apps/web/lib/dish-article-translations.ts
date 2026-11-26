@@ -1,12 +1,14 @@
 import type { FoodKnowledgeArticle } from "../content/food-knowledge/types.ts";
 import { dalMakhaniTranslations } from "../content/food-knowledge/translations/dal-makhani.ts";
 import { ramenTranslations } from "../content/food-knowledge/translations/ramen.ts";
+import { biryaniTranslations } from "../content/food-knowledge/translations/biryani.ts";
 import type { PreviewLocale } from "./locale-messages.ts";
 
 export type ArticleBody = Omit<FoodKnowledgeArticle, "dishId" | "summary" | "relatedDishIds" | "sources">;
 const articles: Readonly<Record<string, Partial<Record<Exclude<PreviewLocale, "nb">, ArticleBody>>>> = {
   "dal-makhani": dalMakhaniTranslations,
   ramen: ramenTranslations,
+  biryani: biryaniTranslations,
 };
 
 export const translatedArticleIds = Object.keys(articles);
