@@ -44,3 +44,7 @@ Dal makhani now has complete editorial body and recipe drafts in Nynorsk, Swedis
 ### Second full article: Ramen
 
 Ramen is registered alongside Dal makhani with complete editorial body and recipe translations in the six additional preview locales. All original menu queries, article IDs, ingredient artwork, related dish IDs and source links remain unchanged. The quantity and structure test now covers both original articles. Commit e8caceb (Dal makhani pilot) passed CI, mobile/iPad proof and public menu archive verification. The Ramen changes await their own checks and language review. Full article body coverage is 2/33.
+
+### Third full article: Biryani
+
+Biryani has complete body and recipe drafts in all six additional preview locales. All 12 ingredient entries, five steps, four regional/vegetarian variants and original sources are retained; tests compare the numeric quantities and timing with the original. The registry and shared tests now cover three of 33 full articles. At the time of this update, the Ramen commit 02ccfbe had passed the mobile/iPad and menu archive proofs, with CI still running. Biryani is not yet independently verified or published.
