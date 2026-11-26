@@ -33,6 +33,7 @@ import { article as cochinitaPibil } from "../content/food-knowledge/articles/co
 import { article as pozole } from "../content/food-knowledge/articles/pozole.ts";
 import { article as fishTaco } from "../content/food-knowledge/articles/fish-taco.ts";
 import { article as smashburger } from "../content/food-knowledge/articles/smashburger.ts";
+import { foodKnowledgeDishIds } from "../content/food-knowledge/manifest.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { localizedArticleBody, translatedArticleIds } from "../lib/dish-article-translations.ts";
 
@@ -68,4 +69,8 @@ test("original article remains the exact fallback for missing translations", () 
   const result = localizedArticleBody(unregistered, "sv");
   assert.equal(result.lang, "nb");
   assert.equal(result.body, unregistered);
+});
+
+test("full article translation registry covers the canonical encyclopedia manifest", () => {
+  assert.deepEqual([...translatedArticleIds].sort(), [...foodKnowledgeDishIds].sort());
 });
