@@ -20,3 +20,7 @@ Fysen must support Nordic languages across the whole product, not just city navi
 ## Release
 
 This foundation is not an implemented language selector or published translation. Complete the UI and search integration in staged PRs. Do not publish until the relevant translation and regression checks pass. No changes to menu-source priority, archive freshness, restaurant verification or pricing semantics.
+
+## Partial UI preview (not launch-ready)
+
+Set `NEXT_PUBLIC_FYSEN_LANGUAGE_PREVIEW=true` in a dedicated preview build to expose the selector inside the main navigation. Default production builds keep it off. Seven draft dictionaries cover the home hero, city links, global menu and default search labels. Explicit language choice persists locally; unsupported browser languages fall back to Bokmål. The preview does not alter the URL, city, query or menu data. It does not make server routes dynamic. The document language and metadata remain Bokmål until complete route localization; translated fragments use language attributes. Search-result copy, explicit search-button overrides, Matlyst, food knowledge, all other content, minority-language dictionaries and native-speaker reviews remain outstanding. Do not enable on production until the release gates above pass.
