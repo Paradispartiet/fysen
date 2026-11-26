@@ -18,12 +18,18 @@ import { article as mapoTofu } from "../content/food-knowledge/articles/mapo-tof
 import { article as butterChicken } from "../content/food-knowledge/articles/butter-chicken.ts";
 import { article as tandoori } from "../content/food-knowledge/articles/tandoori.ts";
 import { article as chanaMasala } from "../content/food-knowledge/articles/chana-masala.ts";
+import { article as dosa } from "../content/food-knowledge/articles/dosa.ts";
+import { article as cacioEPepe } from "../content/food-knowledge/articles/cacio-e-pepe.ts";
+import { article as pizzaMargherita } from "../content/food-knowledge/articles/pizza-margherita.ts";
+import { article as arancini } from "../content/food-knowledge/articles/arancini.ts";
+import { article as pastaAllaNorma } from "../content/food-knowledge/articles/pasta-alla-norma.ts";
+import { article as hummus } from "../content/food-knowledge/articles/hummus.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { localizedArticleBody, translatedArticleIds } from "../lib/dish-article-translations.ts";
 
 const numericTokens = (value) => value.match(/[0-9]+|[½¼¾]/gu) ?? [];
 
-for (const original of [article, ramen, biryani, falafel, carbonara, tacosAlPastor, padThai, sushi, gyoza, tomYum, pho, banhMi, katsu, bao, mapoTofu, butterChicken, tandoori, chanaMasala]) {
+for (const original of [article, ramen, biryani, falafel, carbonara, tacosAlPastor, padThai, sushi, gyoza, tomYum, pho, banhMi, katsu, bao, mapoTofu, butterChicken, tandoori, chanaMasala, dosa, cacioEPepe, pizzaMargherita, arancini, pastaAllaNorma, hummus]) {
 test(`complete ${original.dishId} translations retain recipe quantities, times and structure`, () => {
   const article = original;
   assert.ok(translatedArticleIds.includes(article.dishId));
