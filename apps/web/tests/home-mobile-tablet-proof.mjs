@@ -1,4 +1,4 @@
-/* global URL, process, document, Node, getComputedStyle, window */
+/* global URL, process, document, Node, window */
 import assert from "node:assert/strict";
 import { mkdirSync, readFileSync } from "node:fs";
 import path from "node:path";
@@ -186,51 +186,29 @@ try {
       assert.equal(await page.locator(".dishPhotoCard").count(), manifest.images.length);
       assert.equal(await page.locator(".dishPhotosGrid").isVisible(), true);
       await checkOverflow("expanded");
-      for (const [index, entry] of upgraded.entries()) {
-        const file = entry.atlas;
-        assert.match(file, /\.avif$/u, `${entry.id} needs a standalone AVIF`);
-        const thumb = page.locator(".dishPhotoCard").nth(index).locator(".dishPhotoThumb");
-        await thumb.waitFor({ state: "visible" });
-        const css = await thumb.evaluate((node) => getComputedStyle(node).backgroundImage);
-        assert.ok(css.includes(file), `${entry.id} renders the wrong image: ${css}`);
-        const asset = await page.request.get(`${base}/dish-images/${file}`);
-        assert.equal(asset.status(), 200, `${file} must be served by the local Next app`);
-        assert.match(asset.headers()["content-type"] || "", /image\/avif/u);
-        const bytes = await asset.body();
-        assert.ok(bytes.length > 7000, `${file} is unexpectedly small`);
-        assert.equal(bytes.toString("ascii", 4, 12), "ftypavif");
-      }
-      if (output) await page.screenshot({ path: path.join(output, `${viewport.name}-expanded.png`), animations: "disabled" });
-
       const approved = manifest.images.filter((image) => image.largeViewEnabled === true);
       const cards = details.locator(".dishPhotosGrid .dishPhotoCard");
-      const fullSizeLinks = cards.getByRole("link", { name: /^Vis stort bilde av /u });
-      assert.deepEqual(
-        await fullSizeLinks.evaluateAll((links) => links.map((link) => link.pathname.split("/").at(-1)).sort()),
-        approved.map((image) => image.largeSource).sort(),
-        "Only cards with an approved master should link directly to a large image",
-      );
-
+      assert.equal(await cards.getByRole("link", { name: /^Vis stort bilde av /u }).count(), 0);
+      for (const [index, entry] of manifest.images.entries()) {
+        const image = cards.nth(index).locator("img.dishEditorialImage");
+        const file = entry.largeViewEnabled === true && entry.largeSource ? entry.largeSource : entry.atlas;
+        assert.ok((await image.getAttribute("src")).endsWith(`/dish-images/${file}`), entry.id);
+      }
       const prosciutto = approved.find((image) => image.id === "pizza-prosciutto");
-      assert.ok(prosciutto, "A reviewed prosciutto master is required for the browser check");
-      const imageLink = page.getByRole("link", { name: "Vis stort bilde av Pizza med prosciutto", exact: true });
-      const card = cards.filter({ has: imageLink });
+      assert.ok(prosciutto);
+      const card = cards.nth(manifest.images.indexOf(prosciutto));
+      const image = card.locator("img");
+      await image.scrollIntoViewIfNeeded();
+      const dimensions = await image.evaluate(async (node) => {
+        await node.decode();
+        return [node.naturalWidth, node.naturalHeight];
+      });
+      assert.deepEqual(dimensions, [prosciutto.largeSourceNativeWidth, prosciutto.largeSourceNativeHeight]);
       const menuLink = card.getByRole("link", { name: /Pizza med prosciutto.*Se menytreff/u });
       const menuUrl = new URL(await menuLink.getAttribute("href"), base);
       assert.equal(menuUrl.pathname, "/search");
       assert.equal(menuUrl.searchParams.get("q"), "pizza prosciutto");
-      const [popup] = await Promise.all([page.waitForEvent("popup"), imageLink.click()]);
-      try {
-        await popup.waitForURL(`${base}/dish-images/${prosciutto.largeSource}`);
-        const dimensions = await popup.locator("img").evaluate(async (image) => {
-          await image.decode();
-          return [image.naturalWidth, image.naturalHeight];
-        });
-        assert.deepEqual(dimensions, [prosciutto.largeSourceNativeWidth, prosciutto.largeSourceNativeHeight]);
-        assert.equal(page.url(), response.url(), "Opening an image must leave the gallery in its own tab");
-      } finally {
-        await popup.close();
-      }
+      if (output) await page.screenshot({ path: path.join(output, `${viewport.name}-expanded.png`), animations: "disabled" });
 
       await page.locator(".dishPhotosPreview").click();
       assert.equal(await details.getAttribute("open"), null, "Gallery should close again");
@@ -241,10 +219,12 @@ try {
       const note = page.getByRole("complementary", { name: "Om retten Dal makhani" });
       await note.waitFor({ state: "visible" });
       assert.match(await note.innerText(), /Fysen matleksikon[\s\S]*uradbønner/iu);
-      const dishImage = note.getByRole("img", { name: /KI-illustrasjon av dal makhani/u });
+      const dishImage = note.locator("img.dishEditorialImage");
       await dishImage.waitFor({ state: "visible" });
-      assert.match(await dishImage.evaluate((node) => getComputedStyle(node).backgroundImage), /dal-makhani-768\.avif/u);
-      assert.equal((await page.request.get(`${base}/dish-images/dal-makhani-768.avif`)).status(), 200);
+      const dal = manifest.images.find((entry) => entry.id === "dal-makhani");
+      const dalFile = dal.largeViewEnabled === true && dal.largeSource ? dal.largeSource : dal.atlas;
+      assert.ok((await dishImage.getAttribute("src")).endsWith(`/dish-images/${dalFile}`));
+      assert.equal((await page.request.get(`${base}/dish-images/${dalFile}`)).status(), 200);
       await checkOverflow("Dal makhani search");
       if (output) await note.screenshot({ path: path.join(output, `${viewport.name}-dish-search.png`), animations: "disabled" });
 

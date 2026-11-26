@@ -169,109 +169,27 @@
 .dishPhotosNote {
   color: var(--color-muted);
 }
-/* Link directly to approved native-size AVIFs. No large image is fetched until clicked. */
-.dishPhotosLargeLinks {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(121, 201, 135, .13);
-}
-.dishPhotosLargeLinks > span {
-  color: var(--color-muted);
-  font-size: 11px;
-}
-.dishPhotosLargeLinks a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 36px;
-  padding: 7px 10px;
-  border: 1px solid rgba(121, 201, 135, .25);
-  border-radius: 9px;
-  background: #0a0e0a;
-  color: var(--color-brand);
-  font-size: 11px;
-  font-weight: 630;
-  text-decoration: none;
-}
-.dishPhotosLargeLinks a:hover,
-.dishPhotosLargeLinks a:focus-visible {
-  border-color: var(--color-brand);
-  text-decoration: underline;
-}
-/* Compact thumbnail rows: the image should identify the dish, not dominate its card. */
-.dishPhotos .dishPhotosGrid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-}
-.dishPhotos .dishPhotoCard {
-  position: relative;
-  display: grid;
-  grid-template-columns: 68px minmax(0, 1fr);
-  align-items: center;
-  column-gap: 10px;
-  min-height: 88px;
-  padding: 9px;
-  border-radius: 11px;
-  border-color: rgba(121, 201, 135, .12);
-  background: #0a0e0a;
-}
-.dishPhotos .dishPhotoCard .dishPhotoThumb {
-  align-self: center;
-  width: 68px;
-  height: 68px;
-  max-width: 68px;
-  max-height: 68px;
-  margin: 0;
-  border-radius: 8px;
-}
-.dishPhotos .dishPhotoCard strong {
-  font-size: 12px;
-  line-height: 1.25;
-}
-.dishPhotos .dishPhotoCard .dishPhotoAction {
-  margin: 0;
-  padding: 0;
-  font-size: 10px;
-  line-height: 1.2;
-}
-.dishPhotoSearch {
-  display: grid;
-  gap: 4px;
-  color: inherit;
-  text-decoration: none;
-}
-/* Keep the card clickable for menu search while giving the image its own link. */
-.dishPhotoSearch::after {
-  position: absolute;
-  inset: 0;
-  border-radius: 11px;
-  content: "";
-}
-.dishPhotoSearch:focus-visible::after,
-.dishPhotoLargeAction:focus-visible {
-  outline: 2px solid var(--color-brand);
-  outline-offset: 2px;
-}
-.dishPhotoLargeAction {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  min-height: 24px;
-  margin-top: 2px;
-  color: var(--color-ink);
-  font-size: 11px;
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-}
+/* Inline food imagery: preserve the full dish against black, never crop. */
+.dishEditorialFigure { min-width: 0; margin: 0; }
+.dishEditorialImage { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; background: #000; border-radius: 9px; }
+.dishEditorialCredit { color: var(--color-muted); font-size: 10px; line-height: 1.4; margin-top: 5px; overflow-wrap: break-word; }
+.dishEditorialCredit a { color: inherit; position: relative; z-index: 1; }
+.dishPhotos .dishPhotosGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.dishPhotos .dishPhotoCard { position: relative; display: flex; flex-direction: column; align-items: stretch; gap: 8px; min-width: 0; padding: 9px; border-radius: 11px; background: #0a0e0a; }
+.dishPhotos .dishPhotoCard .dishPhotoThumb { width: 100%; height: auto; max-width: none; max-height: none; aspect-ratio: auto; background: none; margin: 0; }
+.dishPhotos .dishPhotoCard strong { font-size: 13px; line-height: 1.3; overflow-wrap: break-word; word-break: normal; }
+.dishPhotos .dishPhotoCard .dishPhotoAction { margin: 0; padding: 0; font-size: 11px; }
+.dishPhotoSearch { display: grid; gap: 4px; color: inherit; text-decoration: none; }
+.dishPhotoSearch::after { position: absolute; inset: 0; border-radius: 11px; content: ""; }
+.dishPhotoSearch:focus-visible::after { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+.dishKnowledgeNote.dishKnowledgeNoteWithImage { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); align-items: center; gap: 20px; }
+.dishKnowledgeNote .dishEditorialImage { aspect-ratio: 4 / 3; }
+.dishLearningCard .dishEditorialFigure { margin-bottom: 14px; }
+.dishLearningCard .dishEditorialImage { aspect-ratio: 4 / 3; }
 
 @media (max-width: 1050px) {
   .dishPhotos .dishPhotosGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 @media (max-width: 767px) {
@@ -331,19 +249,8 @@
   .dishPhotos .dishPhotosGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .dishPhotos .dishPhotoCard {
-    grid-template-columns: 60px minmax(0, 1fr);
-    column-gap: 8px;
-    row-gap: 3px;
-    min-height: 78px;
-    padding: 8px;
-  }
-  .dishPhotos .dishPhotoCard .dishPhotoThumb {
-    width: 60px;
-    height: 60px;
-    max-width: 60px;
-    max-height: 60px;
-  }
+  .dishKnowledgeNote.dishKnowledgeNoteWithImage { grid-template-columns: 1fr; }
+  .dishKnowledgeNote .dishEditorialFigure { max-width: 460px; width: 100%; margin-inline: auto; }
 }
 @media (max-width: 520px) {
   .dishPhotosPreview {
@@ -359,18 +266,7 @@
   .dishPhotos .dishPhotosGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .dishPhotos .dishPhotoCard {
-    grid-template-columns: 50px minmax(0, 1fr);
-    column-gap: 7px;
-    min-height: 72px;
-    padding: 7px;
-  }
-  .dishPhotos .dishPhotoCard .dishPhotoThumb {
-    width: 50px;
-    height: 50px;
-    max-width: 50px;
-    max-height: 50px;
-  }
+  .dishPhotos .dishPhotoCard { padding: 7px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .dishPhotosOpen > span { transition: none; }

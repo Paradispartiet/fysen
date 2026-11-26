@@ -10,6 +10,9 @@ const read = (file) => readFileSync(path.join(web, file), "utf8");
 const home = read("app/page.tsx");
 const explorer = read("components/cuisine-explorer.tsx");
 const gallery = read("components/dish-photo-gallery.tsx");
+const editorialImage = read("components/dish-editorial-image.tsx");
+const knowledgeNote = read("components/dish-knowledge-note.tsx");
+const learningSection = read("components/dish-learning-section.tsx");
 const css = read("styles/home-discovery-refresh.css");
 const layout = read("app/layout.tsx");
 const manifest = JSON.parse(read("public/dish-images/manifest.json"));
@@ -94,19 +97,19 @@ test("Matlyst gallery is closed by default and shows all approved images only on
   assert.match(gallery, new RegExp(`Utforsk ${manifest.images.length} retter`, "u"));
 });
 
-test("Matlyst gallery uses compact side thumbnails across desktop, iPad and phone", () => {
-  assert.match(css, /dishPhotosCover/u);
-  assert.match(css, /tom-yum-thumb-512\.avif/u);
-  assert.match(css, /\.dishPhotos \.dishPhotoCard \.dishPhotoThumb/u);
-  assert.match(css, /grid-template-columns:\s*68px\s+minmax\(0,\s*1fr\)/u);
-  assert.match(css, /\.dishPhotos \.dishPhotoCard \{[^}]*align-items:\s*center/u);
-  assert.match(css, /grid-template-columns:\s*60px\s+minmax\(0,\s*1fr\)/u);
-  assert.match(css, /grid-template-columns:\s*50px\s+minmax\(0,\s*1fr\)/u);
-  assert.match(css, /max-width:\s*68px/u);
-  assert.match(css, /max-width:\s*60px/u);
-  assert.match(css, /max-width:\s*50px/u);
-  assert.doesNotMatch(css, /image-rendering:\s*pixelated/u);
+test("Matlyst, menu search and knowledge cards display approved originals inline", () => {
+  assert.match(gallery, /<DishEditorialImage dishId=\{dish\.id\}/u);
+  assert.match(editorialImage, /image\.largeViewEnabled === true && image\.largeSource/u);
+  assert.match(editorialImage, /master \|\| image\.atlas/u);
+  assert.match(editorialImage, /loading=\{priority \? "eager" : "lazy"\}/u);
+  assert.match(editorialImage, /ikke restaurantfoto/u);
+  assert.match(editorialImage, /image\.photoLicense/u);
+  assert.doesNotMatch(gallery, /Vis stort bilde|dishPhotosLargeLinks/u);
+  assert.match(knowledgeNote, /<DishEditorialImage dishId=\{knowledge\.imageDishId\} priority/u);
+  assert.match(learningSection, /<DishEditorialImage dishId=\{dish\.id\}/u);
+  assert.match(css, /object-fit: contain/u);
   assert.ok(layout.indexOf("home-discovery-refresh.css") > layout.indexOf("dish-photos.css"));
+  assert.match(css, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/u);
   assert.match(gallery, /<a href=\{dishSearchHref\(dish\.query\)\} className="dishPhotoSearch">/u);
 });
 
