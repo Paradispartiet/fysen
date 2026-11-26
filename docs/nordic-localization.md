@@ -72,3 +72,7 @@ Three full article bodies and recipes were translated in the six additional prev
 ### Batch 13–18: Katsu, Bao, Mapo tofu, Butter chicken, Tandoori and Chana masala
 
 Six more full article bodies and recipes are translated into the six additional preview locales. All six files are registered and the shared structure and numeric-quantity test includes eighteen articles. Ingredient counts and numeric consistency between translations were checked before committing; original article IDs, recipes, related dish IDs, source fields and menu query mappings are unchanged. Full article body coverage is 18/33. GitHub returned no workflow runs for the previous batch commit 8f77282 at the start of the update. Fresh CI and linguistic review remain outstanding; no production activation.
+
+### Batch 19–24: Dosa, Cacio e pepe, Pizza Margherita, Arancini, Pasta alla Norma and Hummus
+
+Six additional full article bodies and recipes are translated in all six additional preview locales. The register and shared recipe tests now cover 24 of 33 articles. List and field counts were checked before committing. Canonical IDs, sources and original recipes are unchanged. No workflow runs were returned for the previous batch commit 4c59711 at the start of this update. Fresh CI and linguistic review remain outstanding; no production activation.
