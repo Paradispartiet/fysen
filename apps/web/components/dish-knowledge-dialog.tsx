@@ -3,6 +3,7 @@
 import { usePreviewLocale } from "./language-preview";
 import { knowledgeText, type KnowledgeKey } from "../lib/knowledge-messages";
 import { dishDisplayName } from "../lib/dish-display-names";
+import { localizedArticleBody } from "../lib/dish-article-translations";
 import { localizedSummary } from "../lib/dish-summary-translations";
 
 import type { DishSearchResult } from "@fysen/contracts";
@@ -85,6 +86,7 @@ export function DishKnowledgeDialog({
     if (dialog?.open) dialog.close();
   }
 
+  const article = dish ? localizedArticleBody(dish, locale) : null;
   const relatedDishes = dish ? getRelatedFoodDishes(dish) : [];
 
   return (
@@ -98,7 +100,7 @@ export function DishKnowledgeDialog({
         if (event.target === event.currentTarget) close();
       }}
     >
-      {dish ? (
+      {dish && article ? (
         <div className="dishKnowledgeDialogShell">
           <button
             type="button"
@@ -122,21 +124,21 @@ export function DishKnowledgeDialog({
               ) : null}
             </div>
             <p id="dish-knowledge-summary" lang={localizedSummary(dish.id, dish.summary, locale).lang}>{localizedSummary(dish.id, dish.summary, locale).text}</p>
-            {locale !== "nb" ? <small lang={locale}>{t("originalText")}</small> : null}
+            {locale !== "nb" && article.lang === "nb" ? <small lang={locale}>{t("originalText")}</small> : null}
             <div className="dishKnowledgeRecipeMeta" aria-label={t("recipeInfo")}>
-              <span>{dish.recipe.yield}</span>
-              <span>{dish.recipe.time}</span>
+              <span lang={article.lang}>{article.body.recipe.yield}</span>
+              <span lang={article.lang}>{article.body.recipe.time}</span>
             </div>
           </header>
 
           <div className="dishKnowledgeIntroGrid">
             <section>
               <h3>{t("what", { name: dishDisplayName(dish.id, dish.name, locale) })}</h3>
-              <p>{dish.overview}</p>
+              <p lang={article.lang}>{article.body.overview}</p>
             </section>
             <section>
               <h3>{t("history")}</h3>
-              <p>{dish.history}</p>
+              <p lang={article.lang}>{article.body.history}</p>
             </section>
           </div>
 
@@ -144,19 +146,19 @@ export function DishKnowledgeDialog({
             <section>
               <p className="dishKnowledgeMiniEyebrow">Når du spiser den</p>
               <h3>{t("taste")}</h3>
-              <p>{dish.flavor}</p>
+              <p lang={article.lang}>{article.body.flavor}</p>
             </section>
             <section>
               <p className="dishKnowledgeMiniEyebrow">Det som gjør forskjell</p>
               <h3>{t("technique")}</h3>
-              <p>{dish.technique}</p>
+              <p lang={article.lang}>{article.body.technique}</p>
             </section>
           </div>
 
           <section className="dishKnowledgeSection">
             <h3>{t("contents")}</h3>
             <ul className="dishKnowledgeList">
-              {dish.essentials.map((item) => <li key={item}>{item}</li>)}
+              {article.body.essentials.map((item) => <li key={item} lang={article.lang}>{item}</li>)}
             </ul>
           </section>
 
@@ -166,14 +168,14 @@ export function DishKnowledgeDialog({
                 <p>{t("makeHome")}</p>
                 <h3 id="dish-recipe-title">{t("recipe", { name: dishDisplayName(dish.id, dish.name, locale).toLocaleLowerCase(locale) })}</h3>
               </div>
-              <span>{dish.recipe.label}</span>
+              <span lang={article.lang}>{article.body.recipe.label}</span>
             </div>
 
             <div className="dishKnowledgeRecipeGrid">
               <div>
                 <h4>{t("ingredients")}</h4>
                 <ul className="dishKnowledgeList">
-                  {dish.recipe.ingredients.map((ingredient) => {
+                  {dish.recipe.ingredients.map((ingredient, index) => {
                     const illustration = illustrationForIngredient(ingredient);
                     return (
                       <li
@@ -183,7 +185,7 @@ export function DishKnowledgeDialog({
                         {illustration ? (
                           <FoodIllustration name={illustration} className="dishKnowledgeIngredientArtwork" size={28} />
                         ) : null}
-                        <span>{ingredient}</span>
+                        <span lang={article.lang}>{article.body.recipe.ingredients[index]}</span>
                       </li>
                     );
                   })}
@@ -192,7 +194,7 @@ export function DishKnowledgeDialog({
               <div>
                 <h4>{t("steps")}</h4>
                 <ol className="dishKnowledgeSteps">
-                  {dish.recipe.steps.map((step) => <li key={step}>{step}</li>)}
+                  {dish.recipe.steps.map((step, index) => <li key={step} lang={article.lang}>{article.body.recipe.steps[index]}</li>)}
                 </ol>
               </div>
             </div>
@@ -202,13 +204,13 @@ export function DishKnowledgeDialog({
             <section>
               <h3>{t("variants")}</h3>
               <ul className="dishKnowledgeList">
-                {dish.variants.map((variant) => <li key={variant}>{variant}</li>)}
+                {article.body.variants.map((variant) => <li key={variant} lang={article.lang}>{variant}</li>)}
               </ul>
             </section>
             <section>
               <h3>{t("serving")}</h3>
               <ul className="dishKnowledgeList">
-                {dish.serving.map((item) => <li key={item}>{item}</li>)}
+                {article.body.serving.map((item) => <li key={item} lang={article.lang}>{item}</li>)}
               </ul>
             </section>
           </div>
@@ -217,7 +219,7 @@ export function DishKnowledgeDialog({
             <section>
               <h3>{t("mistakes")}</h3>
               <ul className="dishKnowledgeList dishKnowledgeMistakes">
-                {dish.commonMistakes.map((mistake) => <li key={mistake}>{mistake}</li>)}
+                {article.body.commonMistakes.map((mistake) => <li key={mistake} lang={article.lang}>{mistake}</li>)}
               </ul>
             </section>
             <section>
