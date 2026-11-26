@@ -3,6 +3,7 @@ import { dalMakhaniTranslations } from "../content/food-knowledge/translations/d
 import { ramenTranslations } from "../content/food-knowledge/translations/ramen.ts";
 import { biryaniTranslations } from "../content/food-knowledge/translations/biryani.ts";
 import { falafelTranslations } from "../content/food-knowledge/translations/falafel.ts";
+import { carbonaraTranslations } from "../content/food-knowledge/translations/carbonara.ts";
 import type { PreviewLocale } from "./locale-messages.ts";
 
 export type ArticleBody = Omit<FoodKnowledgeArticle, "dishId" | "summary" | "relatedDishIds" | "sources">;
@@ -11,6 +12,7 @@ const articles: Readonly<Record<string, Partial<Record<Exclude<PreviewLocale, "n
   ramen: ramenTranslations,
   biryani: biryaniTranslations,
   falafel: falafelTranslations,
+  carbonara: carbonaraTranslations,
 };
 
 export const translatedArticleIds = Object.keys(articles);
