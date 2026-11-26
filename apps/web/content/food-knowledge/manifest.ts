@@ -124,6 +124,12 @@ export const foodKnowledgeDishIds = [
   "gazpacho",
   "gambas-al-ajillo",
   "croquetas",
+  "moussaka",
+  "souvlaki",
+  "gyros",
+  "spanakopita",
+  "tzatziki",
+  "pastitsio",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
