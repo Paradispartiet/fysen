@@ -88,6 +88,12 @@ export const foodKnowledgeDishIds = [
   "sukiyaki",
   "shabu-shabu",
   "katsudon",
+  "kung-pao-chicken",
+  "xiaolongbao",
+  "char-siu",
+  "chow-mein",
+  "wonton-soup",
+  "sweet-and-sour-pork",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
