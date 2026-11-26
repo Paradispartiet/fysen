@@ -277,5 +277,279 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pad-thai"
     ],
     "sources": []
+  },
+  {
+    "dishId": "udon",
+    "summary": "Tykke japanske hvetenudler med elastisk konsistens.",
+    "overview": "Udon serveres i varm kraft, kalde med dipp eller stekt.",
+    "history": "Udon har lange tradisjoner i Japan, med regionale variasjoner som sanuki udon.",
+    "flavor": "Mild hvete, myk og spenstig tekstur.",
+    "technique": "Kok nudlene separat og skyll ved behov.",
+    "essentials": [
+      "400 g udon",
+      "800 ml dashi",
+      "2 ss soyasaus"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 2–4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "400 g udon",
+        "800 ml dashi",
+        "2 ss soyasaus",
+        "2 ss mirin",
+        "vårløk"
+      ],
+      "steps": [
+        "Kok nudlene etter anvisning.",
+        "Varm dashi med soyasaus og mirin.",
+        "Fordel nudlene i skåler og hell over kraften."
+      ]
+    },
+    "variants": [
+      "Kake udon og yaki udon."
+    ],
+    "serving": [
+      "Server med vårløk eller tempura."
+    ],
+    "commonMistakes": [
+      "Ikke la nudlene stå lenge i varm kraft."
+    ],
+    "relatedDishIds": [
+      "ramen",
+      "gyoza"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "dumplings",
+    "summary": "Små fylte deigpakker, kokt, dampet eller stekt.",
+    "overview": "Kinesiske jiaozi har ofte fyll av kjøtt og grønnsaker.",
+    "history": "Jiaozi forbindes blant annet med kinesisk nyttårsfeiring.",
+    "flavor": "Saftig fyll og myk eller sprø deig.",
+    "technique": "Lukk kantene godt før koking.",
+    "essentials": [
+      "24 dumplingark",
+      "300 g svinekjøttdeig",
+      "150 g kinakål"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 2–4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "24 dumplingark",
+        "300 g svinekjøttdeig",
+        "150 g kinakål",
+        "ingefær",
+        "soyasaus"
+      ],
+      "steps": [
+        "Finhakk kål og klem ut væske.",
+        "Bland med kjøtt og krydder.",
+        "Fyll arkene og forsegl kantene.",
+        "Kok til fyllet er gjennomstekt."
+      ]
+    },
+    "variants": [
+      "Shuijiao og guotie."
+    ],
+    "serving": [
+      "Server med svart eddik og soyasaus."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll deigen."
+    ],
+    "relatedDishIds": [
+      "gyoza",
+      "bao"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "pad-kra-pao",
+    "summary": "Thailandsk wokrett med hellig basilikum, chili og hvitløk.",
+    "overview": "Hakket kjøtt stekes raskt med aromater og saus.",
+    "history": "Retten er utbredt i thailandske hverdagskjøkken og gatemat.",
+    "flavor": "Sterk, salt og urtepreget.",
+    "technique": "Bruk høy varme og tilsett basilikum mot slutten.",
+    "essentials": [
+      "400 g kjøttdeig",
+      "4 hvitløksfedd",
+      "chili etter smak"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 2–4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "400 g kjøttdeig",
+        "4 hvitløksfedd",
+        "chili etter smak",
+        "hellig basilikum",
+        "1 ss fiskesaus",
+        "1 ss østerssaus",
+        "ris"
+      ],
+      "steps": [
+        "Stek hakket hvitløk og chili raskt.",
+        "Tilsett kjøtt og stek gjennom.",
+        "Smak til med sausene.",
+        "Vend inn basilikum rett før servering."
+      ]
+    },
+    "variants": [
+      "Varianter med kylling, svin eller tofu."
+    ],
+    "serving": [
+      "Server med ris og gjerne stekt egg."
+    ],
+    "commonMistakes": [
+      "Ikke forveksle hellig basilikum med vanlig søt basilikum."
+    ],
+    "relatedDishIds": [
+      "pad-thai",
+      "green-curry"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "bun-cha",
+    "summary": "Vietnamesisk grillet svinekjøtt med risnudler, urter og dipsaus.",
+    "overview": "Grillet kjøtt serveres med en søt-syrlig fiskesausblanding.",
+    "history": "Bún chả er særlig forbundet med Hanoi.",
+    "flavor": "Røykfylt, søt-syrlig og frisk.",
+    "technique": "Grill kjøttet i små porsjoner.",
+    "essentials": [
+      "400 g svinekjøtt",
+      "200 g risnudler",
+      "fiskesaus"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 2–4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "400 g svinekjøtt",
+        "200 g risnudler",
+        "fiskesaus",
+        "lime",
+        "sukker",
+        "hvitløk",
+        "friske urter"
+      ],
+      "steps": [
+        "Mariner kjøttet med fiskesaus, hvitløk og litt sukker.",
+        "Grill til gjennomstekt.",
+        "Kok nudlene.",
+        "Bland fiskesaus, lime, vann og sukker til dipsaus."
+      ]
+    },
+    "variants": [
+      "Kjøttboller og skiver av svinekjøtt kan kombineres."
+    ],
+    "serving": [
+      "Server nudler, urter og kjøtt med dipsaus."
+    ],
+    "commonMistakes": [
+      "Ikke bruk for konsentrert fiskesaus i dippen."
+    ],
+    "relatedDishIds": [
+      "pho",
+      "banh-mi"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "vietnamese-spring-rolls",
+    "summary": "Ferske vietnamesiske vårruller i rispapir.",
+    "overview": "Gỏi cuốn fylles ofte med risnudler, reker, urter og salat.",
+    "history": "Ferske rispapirruller er en kjent del av vietnamesisk matkultur.",
+    "flavor": "Frisk, myk og sprø fra grønnsakene.",
+    "technique": "Fukt rispapiret kort og rull stramt.",
+    "essentials": [
+      "12 rispapirark",
+      "200 g kokte reker",
+      "100 g risnudler"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 2–4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "12 rispapirark",
+        "200 g kokte reker",
+        "100 g risnudler",
+        "salat",
+        "mynte",
+        "agurk"
+      ],
+      "steps": [
+        "Kok og avkjøl nudlene.",
+        "Skjær grønnsakene.",
+        "Fukt ett rispapirark av gangen.",
+        "Legg på fyll og rull sammen."
+      ]
+    },
+    "variants": [
+      "Tofu eller kokt svinekjøtt kan brukes som fyll."
+    ],
+    "serving": [
+      "Server med peanøttsaus eller fiskesausbasert dipp."
+    ],
+    "commonMistakes": [
+      "Ikke bløtlegg rispapiret for lenge."
+    ],
+    "relatedDishIds": [
+      "pho",
+      "bun-cha"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "pizza-marinara",
+    "summary": "Napolitansk pizza med tomat, hvitløk, oregano og olivenolje, uten ost.",
+    "overview": "En enkel tomatpizza der deig og råvarer står i sentrum.",
+    "history": "Marinara tilhører den klassiske napolitanske pizzatradisjonen.",
+    "flavor": "Fruktig tomat, hvitløk og ristet deig.",
+    "technique": "Stek på svært varm pizzastein eller stål.",
+    "essentials": [
+      "500 g pizzadeig",
+      "250 g knuste tomater",
+      "2 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 2–4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "500 g pizzadeig",
+        "250 g knuste tomater",
+        "2 hvitløksfedd",
+        "oregano",
+        "olivenolje"
+      ],
+      "steps": [
+        "Del og form deigen.",
+        "Fordel tomat, hvitløk og oregano.",
+        "Drypp over olje.",
+        "Stek på forvarmet pizzastål ved ovnens høyeste temperatur til ferdig."
+      ]
+    },
+    "variants": [
+      "Tomattype og mengden hvitløk varierer."
+    ],
+    "serving": [
+      "Server straks etter steking."
+    ],
+    "commonMistakes": [
+      "Ikke legg på for mye våt saus."
+    ],
+    "relatedDishIds": [
+      "pizza-margherita",
+      "carbonara"
+    ],
+    "sources": []
   }
 ];
