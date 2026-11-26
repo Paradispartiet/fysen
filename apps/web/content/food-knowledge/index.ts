@@ -1,3 +1,4 @@
+import { additionalDishes } from "./articles/additional-dishes";
 import { article as arancini } from "./articles/arancini";
 import { article as banhMi } from "./articles/banh-mi";
 import { article as bao } from "./articles/bao";
@@ -73,6 +74,7 @@ const articles: readonly FoodKnowledgeArticle[] = [
   pozole,
   fishTaco,
   smashburger,
+  ...additionalDishes,
 ];
 
 const articleByDishId = new Map<string, FoodKnowledgeArticle>();
