@@ -58,6 +58,12 @@ export const foodKnowledgeDishIds = [
   "kimchi-jjigae",
   "tteokbokki",
   "samgyeopsal",
+  "banh-xeo",
+  "bun-bo-hue",
+  "cao-lau",
+  "com-tam",
+  "bun-rieu",
+  "banh-cuon",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
