@@ -52,3 +52,7 @@ Biryani has complete body and recipe drafts in all six additional preview locale
 ### Fourth full article: Falafel
 
 Falafel now has complete article body and recipe drafts in all six additional preview locales, retaining 10 ingredient entries, five steps, four variants and original source links. The shared structure and quantity tests cover all four translated articles. The preceding Biryani commit a80c175 passed CI, responsive mobile/iPad proof and public menu archive verification. Falafel still requires fresh CI and linguistic review. Full article body coverage is 4/33; no production activation.
+
+### Fifth full article: Carbonara
+
+Carbonara now has complete article body and recipe drafts in all six additional preview locales. The original seven ingredient entries, five steps, three variants, canonical query and source links remain unchanged. The shared structure and numeric quantity tests cover all five registered articles. Ingredient numeric tokens were compared across all six new translations before committing. No workflow runs were returned for the preceding Falafel documentation commit ac3865e during this update; the new changes are not yet independently verified. Full article body coverage is 5/33. Linguistic review and release checks remain outstanding.
