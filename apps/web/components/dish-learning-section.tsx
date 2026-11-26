@@ -2,6 +2,7 @@
 
 import { usePreviewLocale } from "./language-preview";
 import { knowledgeText, type KnowledgeKey } from "../lib/knowledge-messages";
+import { dishDisplayName } from "../lib/dish-display-names";
 import { localizedSummary } from "../lib/dish-summary-translations";
 import { resultText } from "../lib/result-messages";
 
@@ -94,12 +95,12 @@ export function DishLearningSection() {
                 aria-haspopup="dialog"
                 onClick={(event) => openDish(dish, event.currentTarget)}
               >
-                <span>{dish.name}</span>
+                <span lang={locale}>{dishDisplayName(dish.id, dish.name, locale)}</span>
                 <span className="dishLearningOpenHint">{resultText(locale, "learnDish")} <span aria-hidden="true">↗</span></span>
               </button>
             </h3>
             <p lang={localizedSummary(dish.id, dish.summary, locale).lang}>{localizedSummary(dish.id, dish.summary, locale).text}</p>
-            <a href={dishSearchHref(dish.query)}>{t("find", { name: dish.name.toLocaleLowerCase(locale) })} <span aria-hidden="true">→</span></a>
+            <a href={dishSearchHref(dish.query)}>{t("find", { name: dishDisplayName(dish.id, dish.name, locale).toLocaleLowerCase(locale) })} <span aria-hidden="true">→</span></a>
           </article>
         ))}
       </div>
