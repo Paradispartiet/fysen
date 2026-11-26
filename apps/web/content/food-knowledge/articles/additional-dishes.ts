@@ -2252,5 +2252,294 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pizza-marinara"
     ],
     "sources": []
+  },
+  {
+    "dishId": "tempura",
+    "summary": "Japansk frityrrett med sjømat eller grønnsaker i lett, sprø røre.",
+    "overview": "Råvarene dyppes i kald melrøre og friteres raskt.",
+    "history": "Tempura ble utviklet i Japan med historiske forbindelser til portugisisk mattradisjon.",
+    "flavor": "Lett, sprø og mild.",
+    "technique": "Bland røren kort og hold den kald.",
+    "essentials": [
+      "200 g reker",
+      "200 g grønnsaker",
+      "100 g hvetemel"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–50 min",
+      "ingredients": [
+        "200 g reker",
+        "200 g grønnsaker",
+        "100 g hvetemel",
+        "150 ml iskaldt vann",
+        "1 egg",
+        "frityrolje"
+      ],
+      "steps": [
+        "Tørk råvarene godt.",
+        "Bland egg, vann og mel kort.",
+        "Dypp råvarene i røren.",
+        "Friter i små omganger ved 170–180 °C til gjennomstekt og sprø."
+      ]
+    },
+    "variants": [
+      "Ebi tempura med reker og yasai tempura med grønnsaker."
+    ],
+    "serving": [
+      "Server med tentsuyu eller salt."
+    ],
+    "commonMistakes": [
+      "Ikke overarbeid røren."
+    ],
+    "relatedDishIds": [
+      "udon",
+      "katsu"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "okonomiyaki",
+    "summary": "Japansk matpannekake med kål, egg og ulike fyll.",
+    "overview": "Osaka-varianten blander kål i røren, mens Hiroshima-varianten ofte bygges i lag.",
+    "history": "Retten forbindes særlig med Osaka og Hiroshima.",
+    "flavor": "Saftig, ristet og søt-salt fra sausen.",
+    "technique": "Stek på middels varme til midten er ferdig.",
+    "essentials": [
+      "250 g kål",
+      "150 g hvetemel",
+      "150 ml dashi"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–50 min",
+      "ingredients": [
+        "250 g kål",
+        "150 g hvetemel",
+        "150 ml dashi",
+        "2 egg",
+        "150 g tynne svinekjøttskiver",
+        "okonomiyakisaus",
+        "majones"
+      ],
+      "steps": [
+        "Bland mel, dashi og egg.",
+        "Vend inn finsnittet kål.",
+        "Form pannekaker i oljet panne og legg kjøtt på toppen.",
+        "Vend og stek til kjøtt og røre er gjennomstekt."
+      ]
+    },
+    "variants": [
+      "Hiroshima-stil med lag og nudler."
+    ],
+    "serving": [
+      "Topp med saus, majones og gjerne bonito og aonori."
+    ],
+    "commonMistakes": [
+      "Ikke press pannekaken flat under steking."
+    ],
+    "relatedDishIds": [
+      "takoyaki",
+      "yakitori"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "takoyaki",
+    "summary": "Runde japanske småkaker med blekksprut, stekt i spesialpanne.",
+    "overview": "Flytende dashi-røre fylles med kokt blekksprut og vendes i halvkuleformede fordypninger.",
+    "history": "Takoyaki er særlig forbundet med Osakas gatemat.",
+    "flavor": "Ristet utside og myk, varm kjerne.",
+    "technique": "Bruk takoyakipanne og vend kulene gradvis.",
+    "essentials": [
+      "150 g hvetemel",
+      "450 ml dashi",
+      "2 egg"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–50 min",
+      "ingredients": [
+        "150 g hvetemel",
+        "450 ml dashi",
+        "2 egg",
+        "150 g kokt blekksprut",
+        "vårløk",
+        "syltet ingefær",
+        "olje"
+      ],
+      "steps": [
+        "Bland mel, dashi og egg.",
+        "Smør og varm takoyakipannen.",
+        "Hell i røre og tilsett blekksprut og vårløk.",
+        "Vend gradvis med en pinne til kulene er runde og gjennomstekte."
+      ]
+    },
+    "variants": [
+      "Hjemmevarianter kan bruke reker i stedet for blekksprut."
+    ],
+    "serving": [
+      "Server med takoyakisaus, majones og bonito."
+    ],
+    "commonMistakes": [
+      "Pass på at kjernen er svært varm ved servering."
+    ],
+    "relatedDishIds": [
+      "okonomiyaki",
+      "gyoza"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "sukiyaki",
+    "summary": "Japansk gryterett med tynt storfekjøtt, tofu og grønnsaker i søtlig soyasaus.",
+    "overview": "Ingrediensene tilberedes i en grunn gryte med soyasaus, sukker og mirin.",
+    "history": "Sukiyaki er en etablert japansk gryterett med regionale tilberedningsmåter.",
+    "flavor": "Søt, salt og fyldig.",
+    "technique": "Tilbered kjøttet raskt i den konsentrerte sausen.",
+    "essentials": [
+      "400 g tynne storfekjøttskiver",
+      "200 g tofu",
+      "200 g kinakål"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–50 min",
+      "ingredients": [
+        "400 g tynne storfekjøttskiver",
+        "200 g tofu",
+        "200 g kinakål",
+        "100 g sopp",
+        "shiratakinudler",
+        "100 ml dashi",
+        "4 ss soyasaus",
+        "3 ss mirin",
+        "1 ss sukker"
+      ],
+      "steps": [
+        "Bland dashi, soyasaus, mirin og sukker.",
+        "Brun kjøttet kort i gryten.",
+        "Tilsett saus, tofu, sopp, nudler og kål.",
+        "La trekke til grønnsakene er møre og kjøttet ferdig."
+      ]
+    },
+    "variants": [
+      "Kantō- og Kansai-stil har forskjellige fremgangsmåter."
+    ],
+    "serving": [
+      "Server med ris; bruk pasteurisert egg dersom det skal serveres rått som dipp."
+    ],
+    "commonMistakes": [
+      "Ikke la de tynne kjøttskivene koke unødvendig lenge."
+    ],
+    "relatedDishIds": [
+      "shabu-shabu",
+      "yakitori"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "shabu-shabu",
+    "summary": "Japansk grytemåltid der tynne kjøttskiver og grønnsaker trekkes i varm kraft.",
+    "overview": "Ingrediensene tilberedes ved bordet og dyppes i saus.",
+    "history": "Shabu-shabu er en kjent japansk nabemono- eller gryterett.",
+    "flavor": "Mild kraft med frisk eller nøtteaktig dipp.",
+    "technique": "Trekk små porsjoner kjøtt i varm kraft til ferdig.",
+    "essentials": [
+      "400 g tynne storfekjøttskiver",
+      "1,5 l vann",
+      "kombu"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–50 min",
+      "ingredients": [
+        "400 g tynne storfekjøttskiver",
+        "1,5 l vann",
+        "kombu",
+        "200 g tofu",
+        "kinakål",
+        "sopp",
+        "ponzu",
+        "sesamsaus"
+      ],
+      "steps": [
+        "Trekk kombu i vann og ta den ut før kraften koker.",
+        "Tilsett tofu, sopp og grønnsaker.",
+        "Trekk kjøttskivene i små omganger til ferdige.",
+        "Server med ponzu og sesamsaus."
+      ]
+    },
+    "variants": [
+      "Varianter med svinekjøtt eller sjømat."
+    ],
+    "serving": [
+      "Avslutt gjerne måltidet med nudler i kraften."
+    ],
+    "commonMistakes": [
+      "Bruk separate redskaper til rått og ferdig kjøtt."
+    ],
+    "relatedDishIds": [
+      "sukiyaki",
+      "udon"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "katsudon",
+    "summary": "Japansk risbolle med panert svinekotelett, løk og egg.",
+    "overview": "Tonkatsu trekkes kort i en søt-salt dashi- og soyablanding med egg.",
+    "history": "Katsudon tilhører den japanske donburi-tradisjonen med topping over ris.",
+    "flavor": "Fyldig, søt-salt og saftig.",
+    "technique": "La det panerte kjøttet trekke kort i sausen før egget setter seg.",
+    "essentials": [
+      "4 svinekoteletter uten ben",
+      "mel",
+      "2 egg til panering"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–50 min",
+      "ingredients": [
+        "4 svinekoteletter uten ben",
+        "mel",
+        "2 egg til panering",
+        "panko",
+        "olje",
+        "600 g kokt ris",
+        "1 løk",
+        "200 ml dashi",
+        "3 ss soyasaus",
+        "2 ss mirin",
+        "4 egg"
+      ],
+      "steps": [
+        "Vend kotelettene i mel, egg og panko.",
+        "Stek i olje til gjennomstekt og skjær i strimler.",
+        "Kok løk i dashi, soyasaus og mirin.",
+        "Legg kjøttet i sausen, hell over sammenvispet egg og la det sette seg.",
+        "Server over varm ris."
+      ]
+    },
+    "variants": [
+      "Sauce katsudon serveres med saus uten eggblandingen."
+    ],
+    "serving": [
+      "Topp gjerne med vårløk."
+    ],
+    "commonMistakes": [
+      "Ikke la paneringen trekke så lenge at den går i oppløsning."
+    ],
+    "relatedDishIds": [
+      "katsu",
+      "sukiyaki"
+    ],
+    "sources": []
   }
 ];
