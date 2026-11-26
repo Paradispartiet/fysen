@@ -857,6 +857,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"gazpacho","name":"Gazpacho","query":"gazpacho","aliases":["gazpacho andaluz","andalusisk gazpacho"],"cuisine":"Spansk","region":"Andalucía","explorerPriority":90},
   {"id":"gambas-al-ajillo","name":"Gambas al ajillo","query":"gambas al ajillo","aliases":["garlic shrimp","hvitløksreker"],"cuisine":"Spansk","region":"Spania","explorerPriority":88},
   {"id":"croquetas","name":"Croquetas","query":"croquetas","aliases":["croquetas de jamon","croquetas de jamón","spanske kroketter"],"cuisine":"Spansk","region":"Spania","explorerPriority":86},
+  {"id":"moussaka","name":"Moussaka","query":"moussaka","aliases":["mousaka","mousakas","μουσακάς"],"cuisine":"Gresk","region":"Hellas","explorerPriority":96},
+  {"id":"souvlaki","name":"Souvlaki","query":"souvlaki","aliases":["kalamaki","σουβλάκι","chicken souvlaki","kylling souvlaki"],"cuisine":"Gresk","region":"Hellas","explorerPriority":94},
+  {"id":"gyros","name":"Gyros","query":"gyros","aliases":["gyro","γύρος","greek gyros"],"cuisine":"Gresk","region":"Hellas","explorerPriority":92},
+  {"id":"spanakopita","name":"Spanakopita","query":"spanakopita","aliases":["σπανακόπιτα","greek spinach pie","gresk spinatpai"],"cuisine":"Gresk","region":"Hellas","explorerPriority":90},
+  {"id":"tzatziki","name":"Tzatziki","query":"tzatziki","aliases":["tzatziki sauce","τζατζίκι","gresk yoghurtdressing"],"cuisine":"Gresk","region":"Hellas","explorerPriority":88},
+  {"id":"pastitsio","name":"Pastitsio","query":"pastitsio","aliases":["pastichio","παστίτσιο","greek pasta bake"],"cuisine":"Gresk","region":"Hellas","explorerPriority":86},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
