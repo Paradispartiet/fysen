@@ -5,6 +5,9 @@ import { biryaniTranslations } from "../content/food-knowledge/translations/biry
 import { falafelTranslations } from "../content/food-knowledge/translations/falafel.ts";
 import { carbonaraTranslations } from "../content/food-knowledge/translations/carbonara.ts";
 import { tacosAlPastorTranslations } from "../content/food-knowledge/translations/tacos-al-pastor.ts";
+import { padThaiTranslations } from "../content/food-knowledge/translations/pad-thai.ts";
+import { sushiTranslations } from "../content/food-knowledge/translations/sushi.ts";
+import { gyozaTranslations } from "../content/food-knowledge/translations/gyoza.ts";
 import type { PreviewLocale } from "./locale-messages.ts";
 
 export type ArticleBody = Omit<FoodKnowledgeArticle, "dishId" | "summary" | "relatedDishIds" | "sources">;
@@ -15,6 +18,9 @@ const articles: Readonly<Record<string, Partial<Record<Exclude<PreviewLocale, "n
   falafel: falafelTranslations,
   carbonara: carbonaraTranslations,
   "tacos-al-pastor": tacosAlPastorTranslations,
+  "pad-thai": padThaiTranslations,
+  sushi: sushiTranslations,
+  gyoza: gyozaTranslations,
 };
 
 export const translatedArticleIds = Object.keys(articles);
