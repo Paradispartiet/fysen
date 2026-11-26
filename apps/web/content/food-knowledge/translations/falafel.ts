@@ -40,7 +40,7 @@ export const falafelTranslations = {
     },
     "variants": [
       "Levantinsk kikertfalafel.",
-      "Egyptisk ta'ameya med favabønner og ofte svært grøn urtepreg.",
+      "Egyptisk ta'ameya med favabønner og ofte svært grønt urtepreg.",
       "Sesamdekt falafel.",
       "Omnsbakte variantar finst, men får ein annan tekstur enn fritert falafel."
     ],
