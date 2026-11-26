@@ -1,0 +1,477 @@
+{
+  "status": "manual-source-review-only-not-production",
+  "reviewDate": "2026-11-25",
+  "restaurant": {
+    "name": "Reykjavík Bistro",
+    "slug": "reykjavik-bistro-laugavegur",
+    "address": "Laugavegur 22a, 101 Reykjavík, Iceland",
+    "city": "Reykjavík",
+    "countryCode": "IS",
+    "currency": "ISK",
+    "timezone": "Atlantic/Reykjavik"
+  },
+  "evidenceLimit": "Official English menu pages opened on 2026-11-25, separate service offerings rather than historical versions. Automated direct source digest not yet obtained. Food and non-beverage sides only; duplicate service offers intentionally counted separately.",
+  "menus": [
+    {
+      "service": "lunch",
+      "heading": "Lunch Offers",
+      "localServiceTime": {
+        "from": "12:00",
+        "through": "16:00"
+      },
+      "source": "https://www.reykjavikbistro.com/en/menu?location=Laugavegur&menu=menu",
+      "excluded": [],
+      "items": [
+        {
+          "section": "STARTERS",
+          "name": "Icelandic lamb meat soup - Kjötsúpa- 1/2",
+          "priceField": "ISK 1,900",
+          "priceMinor": 190000,
+          "note": "Halv porsjon",
+          "publishEligible": false
+        },
+        {
+          "section": "STARTERS",
+          "name": "Lobster soup",
+          "priceField": "ISK 2,900",
+          "priceMinor": 290000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Scandinavian Fish and Chips",
+          "priceField": "ISK 2,900",
+          "priceMinor": 290000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Icelandic lamb meat soup",
+          "priceField": "ISK 2,900",
+          "priceMinor": 290000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Icelandic fish stew - Plokkfiskur",
+          "priceField": "ISK 3,900",
+          "priceMinor": 390000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Cheese burger",
+          "priceField": "ISK 2,900",
+          "priceMinor": 290000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Lamb burger",
+          "priceField": "ISK 2,900",
+          "priceMinor": 290000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Reindeer burger",
+          "priceField": "ISK 3,900",
+          "priceMinor": 390000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Flank steak salad",
+          "priceField": "ISK 3,400",
+          "priceMinor": 340000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Falafel Salad",
+          "priceField": "ISK 3,200",
+          "priceMinor": 320000,
+          "publishEligible": false
+        },
+        {
+          "section": "Bar Menu",
+          "name": "Loaded fries",
+          "priceField": "ISK 3,500",
+          "priceMinor": 350000,
+          "publishEligible": false
+        },
+        {
+          "section": "Bar Menu",
+          "name": "Trio of Icelandic cheeses",
+          "priceField": "ISK 3,400",
+          "priceMinor": 340000,
+          "publishEligible": false
+        },
+        {
+          "section": "Bar Menu",
+          "name": "Liver & blood sausage - Slátur",
+          "priceField": "ISK 1,690",
+          "priceMinor": 169000,
+          "publishEligible": false
+        },
+        {
+          "section": "Bar Menu",
+          "name": "Curry herring on rye bread - Karrísíld",
+          "priceField": "ISK 1,590",
+          "priceMinor": 159000,
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "FARM SKYR from Erpstaðir Creamery",
+          "priceField": "ISK 2,550",
+          "priceMinor": 255000,
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "Chocolate lava cake",
+          "priceField": "ISK 1,890",
+          "priceMinor": 189000,
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "Apple crumble",
+          "priceField": "ISK 2,250",
+          "priceMinor": 225000,
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "Vanilla ice cream & Caramel sauce",
+          "priceField": "ISK 1,290",
+          "priceMinor": 129000,
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "Rye bread ice cream from Valdís",
+          "priceField": "ISK 1,390",
+          "priceMinor": 139000,
+          "publishEligible": false
+        },
+        {
+          "section": "Childrens menu",
+          "name": "Childrens cheese burger",
+          "priceField": "ISK 1,900",
+          "priceMinor": 190000,
+          "note": "Barn til og med 12 år",
+          "publishEligible": false
+        },
+        {
+          "section": "Childrens menu",
+          "name": "Childrens fish 'n' chips",
+          "priceField": "ISK 1,900",
+          "priceMinor": 190000,
+          "note": "Barn til og med 12 år",
+          "publishEligible": false
+        },
+        {
+          "section": "Childrens menu",
+          "name": "Icelandic lamb meat soup - Kjötsúpa- 1/2",
+          "priceField": "ISK 1,900",
+          "priceMinor": 190000,
+          "note": "Halv porsjon; barn til og med 12 år",
+          "publishEligible": false
+        }
+      ]
+    },
+    {
+      "service": "dinner",
+      "heading": "Dinner menu",
+      "localServiceTime": {
+        "from": "16:00",
+        "through": "21:30"
+      },
+      "source": "https://www.reykjavikbistro.com/en/menu?location=Laugavegur",
+      "excluded": [
+        {
+          "section": "Desserts",
+          "name": "Irish coffee",
+          "priceMinor": 329000,
+          "reason": "beverage"
+        }
+      ],
+      "items": [
+        {
+          "section": "STARTERS",
+          "name": "Icelandic lamb meat soup - Kjötsúpa - 1/2",
+          "priceField": "ISK 2,900",
+          "priceMinor": 290000,
+          "note": "Halv porsjon",
+          "publishEligible": false
+        },
+        {
+          "section": "STARTERS",
+          "name": "Lobster soup",
+          "priceField": "ISK 3,600",
+          "priceMinor": 360000,
+          "publishEligible": false
+        },
+        {
+          "section": "STARTERS",
+          "name": "Langoustine cigar",
+          "priceField": "ISK 3,600",
+          "priceMinor": 360000,
+          "publishEligible": false
+        },
+        {
+          "section": "STARTERS",
+          "name": "Baked brie cheese",
+          "priceField": "ISK 3,100",
+          "priceMinor": 310000,
+          "publishEligible": false
+        },
+        {
+          "section": "STARTERS",
+          "name": "Smoked lamb - Hangikjöt - 1/3",
+          "priceField": "ISK 3,300",
+          "priceMinor": 330000,
+          "note": "Tredels porsjon",
+          "publishEligible": false
+        },
+        {
+          "section": "STARTERS",
+          "name": "Roasted rainbow carrots",
+          "priceField": "ISK 2,800",
+          "priceMinor": 280000,
+          "publishEligible": false
+        },
+        {
+          "section": "BAR MENU",
+          "name": "Loaded fries",
+          "priceField": "ISK 3,500",
+          "priceMinor": 350000,
+          "publishEligible": false
+        },
+        {
+          "section": "BAR MENU",
+          "name": "Tindur cheese crackers",
+          "priceField": "ISK 1,800",
+          "priceMinor": 180000,
+          "publishEligible": false
+        },
+        {
+          "section": "BAR MENU",
+          "name": "Trio of Icelandic cheeses",
+          "priceField": "ISK 3,400",
+          "priceMinor": 340000,
+          "publishEligible": false
+        },
+        {
+          "section": "BAR MENU",
+          "name": "Liver & blood sausage - Slátur",
+          "priceField": "ISK 1,690",
+          "priceMinor": 169000,
+          "publishEligible": false
+        },
+        {
+          "section": "BAR MENU",
+          "name": "Curry herring on rye bread - Karrísíld",
+          "priceField": "ISK 1,590",
+          "priceMinor": 159000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Scandinavian Fish and Chips",
+          "priceField": "ISK 3,900",
+          "priceMinor": 390000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Icelandic fish stew",
+          "priceField": "ISK 5,600",
+          "priceMinor": 560000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Icelandic lamb meat soup",
+          "priceField": "ISK 4,900",
+          "priceMinor": 490000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Arctic char",
+          "priceField": "ISK 5,790",
+          "priceMinor": 579000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Braised lamb shank",
+          "priceField": "ISK 6,900",
+          "priceMinor": 690000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Steak & Fries",
+          "priceField": "ISK 6,900",
+          "priceMinor": 690000,
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Smoked lamb - Hangikjöt - 1/1",
+          "priceField": "ISK 5,200",
+          "priceMinor": 520000,
+          "note": "Hel porsjon",
+          "publishEligible": false
+        },
+        {
+          "section": "MAIN COURSES",
+          "name": "Grilled halibut",
+          "priceField": "ISK 5,600",
+          "priceMinor": 560000,
+          "publishEligible": false
+        },
+        {
+          "section": "BURGERS",
+          "name": "Cheese burger",
+          "priceField": "ISK 4,200",
+          "priceMinor": 420000,
+          "publishEligible": false
+        },
+        {
+          "section": "BURGERS",
+          "name": "Lamb burger",
+          "priceField": "ISK 4,600",
+          "priceMinor": 460000,
+          "publishEligible": false
+        },
+        {
+          "section": "BURGERS",
+          "name": "Reindeer burger",
+          "priceField": "ISK 4,900",
+          "priceMinor": 490000,
+          "publishEligible": false
+        },
+        {
+          "section": "SALADS",
+          "name": "Falafel Salad",
+          "priceField": "ISK 3,900",
+          "priceMinor": 390000,
+          "publishEligible": false
+        },
+        {
+          "section": "SALADS",
+          "name": "Flank steak salad",
+          "priceField": "ISK 4,500",
+          "priceMinor": 450000,
+          "publishEligible": false
+        },
+        {
+          "section": "Sides",
+          "name": "French fries",
+          "priceField": "ISK 1,290",
+          "priceMinor": 129000,
+          "publishEligible": false
+        },
+        {
+          "section": "Sides",
+          "name": "Sourdough bread",
+          "priceField": "ISK 1,490",
+          "priceMinor": 149000,
+          "publishEligible": false
+        },
+        {
+          "section": "Sides",
+          "name": "Green salad",
+          "priceField": "ISK 1,690",
+          "priceMinor": 169000,
+          "publishEligible": false
+        },
+        {
+          "section": "Sides",
+          "name": "Mayonnaise and ketchup sauce",
+          "priceField": "ISK 400",
+          "priceMinor": 40000,
+          "publishEligible": false
+        },
+        {
+          "section": "Sides",
+          "name": "Garlic aioli",
+          "priceField": "ISK 400",
+          "priceMinor": 40000,
+          "publishEligible": false
+        },
+        {
+          "section": "Sides",
+          "name": "Mayonnaise",
+          "priceField": "ISK 400",
+          "priceMinor": 40000,
+          "publishEligible": false
+        },
+        {
+          "section": "Childrens MENU",
+          "name": "Childrens cheese burger",
+          "priceField": "ISK 1,900",
+          "priceMinor": 190000,
+          "note": "Barn til og med 12 år",
+          "publishEligible": false
+        },
+        {
+          "section": "Childrens MENU",
+          "name": "Childrens fish 'n' chips",
+          "priceField": "ISK 1,900",
+          "priceMinor": 190000,
+          "note": "Barn til og med 12 år",
+          "publishEligible": false
+        },
+        {
+          "section": "Childrens MENU",
+          "name": "Icelandic lamb meat soup - Kjötsúpa - 1/2",
+          "priceField": "ISK 1,900",
+          "priceMinor": 190000,
+          "note": "Halv porsjon; barn til og med 12 år",
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "FARM SKYR from Erpstaðir Creamery",
+          "priceField": "ISK 2,550",
+          "priceMinor": 255000,
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "Chocolate lava cake",
+          "priceField": "ISK 1,890",
+          "priceMinor": 189000,
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "Vanilla ice cream & Caramel sauce",
+          "priceField": "ISK 1,290",
+          "priceMinor": 129000,
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "Apple crumble",
+          "priceField": "ISK 2,250",
+          "priceMinor": 225000,
+          "publishEligible": false
+        },
+        {
+          "section": "Desserts",
+          "name": "Rye bread ice cream from Valdís",
+          "priceField": "ISK 1,390",
+          "priceMinor": 139000,
+          "publishEligible": false
+        }
+      ]
+    }
+  ]
+}

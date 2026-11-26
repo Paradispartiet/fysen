@@ -1,0 +1,47 @@
+import {describe,it,expect} from "vitest";
+import {bistroPrice,verifyBistroMenu,type BistroMenu} from "./reykjavik-bistro-preview.js";
+describe("Bistro ISK and service constraints",()=>{
+  it("accepts English thousands notation only with explicit ISK",()=>{
+    expect(bistroPrice("ISK 2,900")).toBe(290000);
+    expect(bistroPrice("2,900")).toBeNull();
+    expect(bistroPrice("ISK 29,00")).toBeNull();
+    expect(bistroPrice("EUR 2,900")).toBeNull();
+  });
+  const menu:BistroMenu={service:"lunch",heading:"Lunch Offers",localServiceTime:{from:"12:00",through:"16:00"},source:"https://example.org",excluded:[],items:[{section:"MAIN COURSES",name:"Fish and Chips",priceMinor:290000,publishEligible:false},{section:"Childrens menu",name:"Fish and Chips",priceMinor:190000,note:"Barn til og med 12 år",publishEligible:false}]};
+  const source=["Lunch Offers","Served between 12:00 - 16:00","MAIN COURSES","Fish and Chips","ISK 2,900","Childrens menu","Only served to 12 years old or younger","Fish and Chips","ISK 1,900","Contact"].join("\n");
+  it("preserves age-limited variant and rejects service or price drift",()=>{
+    expect(verifyBistroMenu(source,menu)).toHaveLength(2);
+    expect(()=>verifyBistroMenu(source.replace("12 years","14 years"),menu)).toThrow();
+    expect(()=>verifyBistroMenu(source.replace("2,900","3,900"),menu)).toThrow();
+    expect(()=>verifyBistroMenu(source.replace("12:00","11:00"),menu)).toThrow();
+  });
+});
+
+describe("Bistro split title",()=>{
+ it("accepts an exact title split across two adjacent visible fields",()=>{
+  const menu:BistroMenu={service:"lunch",heading:"Lunch Offers",localServiceTime:{from:"12:00",through:"16:00"},source:"https://example.org",excluded:[],items:[{section:"Desserts",name:"Vanilla ice cream & Caramel sauce",priceMinor:129000,publishEligible:false}]};
+  const text=["Lunch Offers","Served between 12:00 - 16:00","Desserts","Vanilla ice cream &","Caramel sauce","ISK 1,290","Contact"].join("\n");
+  expect(verifyBistroMenu(text,menu)).toHaveLength(1);
+  expect(()=>verifyBistroMenu(text.replace("Caramel sauce","Chocolate sauce"),menu)).toThrow();
+ });
+});
+
+describe("Bistro dinner heading joined to age condition",()=>{
+ it("splits the reviewed heading without moving child prices into sides",()=>{
+  const menu:BistroMenu={service:"dinner",heading:"Dinner menu",localServiceTime:{from:"16:00",through:"21:30"},source:"https://example.org",excluded:[],items:[{section:"Sides",name:"Mayonnaise",priceMinor:40000,publishEligible:false},{section:"Childrens MENU",name:"Childrens cheese burger",priceMinor:190000,note:"Barn til og med 12 år",publishEligible:false}]};
+  const text=["Dinner menu","Served daily from 16:00 - 21:30","Sides","Mayonnaise","ISK 400","Childrens MENU*For 12 years and younger","Childrens cheese burger","ISK 1,900","Contact"].join("\n");
+  expect(verifyBistroMenu(text,menu)).toHaveLength(2);
+  expect(()=>verifyBistroMenu(text.replace("12 years","14 years"),menu)).toThrow();
+ });
+});
+
+describe("Bistro exact live split dinner child heading",()=>{
+ it("separates sides from children and fails closed on age or price drift",()=>{
+  const menu:BistroMenu={service:"dinner",heading:"Dinner menu",localServiceTime:{from:"16:00",through:"21:30"},source:"https://example.org",excluded:[],items:[{section:"Sides",name:"Mayonnaise",priceMinor:40000,publishEligible:false},{section:"Childrens MENU",name:"Childrens cheese burger",priceMinor:190000,note:"Barn til og med 12 år",publishEligible:false}]};
+  const source=["Dinner menu","Served daily from 16:00 - 21:30","Sides","Mayonnaise","ISK 400","Childrens","menu","*For 12 years and younger","Childrens cheese burger","cheese, french fries and ketchup","ISK 1,900","Contact"].join("\n");
+  const rows=verifyBistroMenu(source,menu);
+  expect(rows.map(r=>[r.section,r.priceMinor,r.note])).toEqual([["Sides",40000,undefined],["Childrens MENU",190000,"Barn til og med 12 år"]]);
+  expect(()=>verifyBistroMenu(source.replace("12 years","14 years"),menu)).toThrow();
+  expect(()=>verifyBistroMenu(source.replace("1,900","2,900"),menu)).toThrow();
+ });
+});

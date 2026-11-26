@@ -1,0 +1,191 @@
+{
+  "status": "manual-source-review-only-not-production",
+  "reviewDate": "2026-11-25",
+  "restaurant": {
+    "name": "Reykjavík Kitchen",
+    "slug": "reykjavik-kitchen-raudararstigur",
+    "address": "Rauðarárstígur 8, 105 Reykjavík, Iceland",
+    "city": "Reykjavík",
+    "countryCode": "IS",
+    "currency": "ISK",
+    "timezone": "Atlantic/Reykjavik"
+  },
+  "source": "https://www.reykjavikkitchen.is/",
+  "alternateIndexedSource": "https://reykjavikkitchen.is/",
+  "evidenceLimit": "Official indexed site fragments, crawled four months ago; direct fetch timed out. Not current live proof. Exclude three-course packages, wine pairings, drinks, merchandise. The 19 reviewed rows must match a fresh full menu before publication.",
+  "items": [
+    {
+      "section": "Starters / Forréttir",
+      "name": "Hand-cut lamb fillet tartare",
+      "localName": "Handskorið lamba tartare",
+      "priceField": "3690",
+      "priceMinor": 369000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Starters / Forréttir",
+      "name": "Reimagined Icelandic plokkfiskur",
+      "localName": "Okkar útgáfa af hefðbundnum íslenskum plokkfisk",
+      "priceField": "3490",
+      "priceMinor": 349000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Starters / Forréttir",
+      "name": "Salmon Ceviche",
+      "localName": "Laxa Ceviche",
+      "priceField": "3590",
+      "priceMinor": 359000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Starters / Forréttir",
+      "name": "Salad",
+      "localName": "Salat",
+      "priceField": "3290",
+      "priceMinor": 329000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Soups / Súpur",
+      "name": "Traditional Icelandic meat soup",
+      "localName": "Íslensk kjötsúpa",
+      "priceField": "3290/4590",
+      "priceMinor": 329000,
+      "priceMaxMinor": 459000,
+      "note": "250 ml / 400 ml",
+      "publishEligible": false
+    },
+    {
+      "section": "Soups / Súpur",
+      "name": "Creamy seafood soup",
+      "localName": "Rjómalöguð sjávarréttasúpa",
+      "priceField": "3390/4690",
+      "priceMinor": 339000,
+      "priceMaxMinor": 469000,
+      "note": "250 ml / 400 ml",
+      "publishEligible": false
+    },
+    {
+      "section": "Soups / Súpur",
+      "name": "Extra basket of bread",
+      "localName": "Auka brauðkarfa",
+      "priceField": "550",
+      "priceMinor": 55000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Main course / Aðalréttir",
+      "name": "Reynisfjara",
+      "localName": "Reynisfjara",
+      "priceField": "5990",
+      "priceMinor": 599000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Main course / Aðalréttir",
+      "name": "Pan-seared plaice",
+      "localName": "Pönnusteikt rauðspretta",
+      "priceField": "5990",
+      "priceMinor": 599000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Main course / Aðalréttir",
+      "name": "Baked sweet potatoes",
+      "localName": "Bakaðar sætar kartöflur",
+      "priceField": "5290",
+      "priceMinor": 529000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Main course / Aðalréttir",
+      "name": "Vegan tagliatelle",
+      "localName": "Vegan tagliatelle",
+      "priceField": "5190",
+      "priceMinor": 519000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Main course / Aðalréttir",
+      "name": "Oven baked cod fillet",
+      "localName": "Ofnbakaður þorskhnakki",
+      "priceField": "6290",
+      "priceMinor": 629000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Main course / Aðalréttir",
+      "name": "Icelandic Lamb Shank",
+      "localName": "Gljáður íslenskur lambaskanki",
+      "priceField": "7290",
+      "priceMinor": 729000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Main course / Aðalréttir",
+      "name": "Icelandic Arctic char",
+      "localName": "Íslensk bleikja",
+      "priceField": "6290",
+      "priceMinor": 629000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Main course / Aðalréttir",
+      "name": "Beef tenderloin steak",
+      "localName": "Nautalund",
+      "priceField": "7990",
+      "priceMinor": 799000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Deserts / Eftirréttir",
+      "name": "Soft blueberry pound cake",
+      "localName": "Silkimjúk bláberjakaka",
+      "priceField": "3190",
+      "priceMinor": 319000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Deserts / Eftirréttir",
+      "name": "Chocolate Euphoria",
+      "localName": "Súkkulaði draumur",
+      "priceField": "3090",
+      "priceMinor": 309000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Deserts / Eftirréttir",
+      "name": "Skyr cheesecake",
+      "localName": "Skyr ostakaka",
+      "priceField": "3290",
+      "priceMinor": 329000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Deserts / Eftirréttir",
+      "name": "Vegan passion pavlova",
+      "localName": "Vegan ástríðumarengs",
+      "priceField": "3090",
+      "priceMinor": 309000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    }
+  ]
+}
