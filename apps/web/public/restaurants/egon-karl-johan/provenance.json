@@ -1,0 +1,16 @@
+{
+  "restaurant": "Egon Karl Johan",
+  "address": "Karl Johans gate 37, 0162 Oslo",
+  "sourcePage": "https://egon.no/restauranter/oslo/egon-karl-johan",
+  "references": {
+    "exterior": "https://egon.no/media/wobl40hd/image.png",
+    "interior": "https://egon.no/media/4bwhu14q/fotoknoff-sven-erik-knoff-4483.jpg"
+  },
+  "credit": "Interior reference: Sven-Erik Knoff / FotoKnoff, as named by official source URL. Exterior photographer unspecified.",
+  "illustrations": "AI-generated illustrations based on actual branch photographs, 2026-11-26. Original generated PNGs preserved separately; WebP copies retain 1536x1024 dimensions. Display as Illustrasjon, not photographs.",
+  "logo": "Reuse official Egon chain SVG already included for Byporten; no generated logo.",
+  "sha256": {
+    "interior.webp": "5a84d365985cb65e6cb5f3a57be03b72ea09edf5560f8ccafe34b7b90229aae6",
+    "exterior.webp": "b54a9af78badcdf46077cf2b3ac1f7dcec0650b7c711d1ff696efdb13470f8f2"
+  }
+}
