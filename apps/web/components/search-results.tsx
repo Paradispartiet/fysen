@@ -2,6 +2,8 @@
 
 import type { DishSearchResult } from "@fysen/contracts";
 import { useState } from "react";
+import { usePreviewLocale } from "./language-preview";
+import { resultText, type ResultMessageKey } from "../lib/result-messages";
 import { filterSearchResults, oneResultPerRestaurant } from "../lib/search-result-filters";
 import { DishResult } from "./dish-result";
 import { TrackedExternalLink } from "./tracked-external-link";
@@ -43,6 +45,8 @@ interface SearchResultsProps {
 }
 
 export function SearchResults({ primaryResults, nearResults, hasLocation, searchLimitReached }: SearchResultsProps) {
+  const locale = usePreviewLocale();
+  const t = (key: ResultMessageKey, values?: Record<string, string | number>) => resultText(locale, key, values);
   const [openNow, setOpenNow] = useState(false);
   const [priceCap, setPriceCap] = useState("");
   const [distanceCap, setDistanceCap] = useState("");
@@ -69,17 +73,17 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
   }
 
   return (
-    <section className={styles.surface} aria-label="Søkeresultater og filtre">
+    <section lang={locale} className={styles.surface} aria-label={t("results")}>
       <div className={styles.filterPanel}>
-        <div className={styles.filters} role="group" aria-label="Filtrer viste treff">
+        <div className={styles.filters} role="group" aria-label={t("filters")}>
           <label className={styles.checkbox}>
             <input type="checkbox" checked={openNow} onChange={(event) => setOpenNow(event.target.checked)} />
-            Kjøkken åpent nå
+            {t("openNow")}
           </label>
           <label className={styles.filterField}>
-            Makspris
+            {t("maxPrice")}
             <select value={priceCap} onChange={(event) => setPriceCap(event.target.value)}>
-              <option value="">Alle priser</option>
+              <option value="">{t("allPrices")}</option>
               <option value="15000">150 kr</option>
               <option value="25000">250 kr</option>
               <option value="35000">350 kr</option>
@@ -87,22 +91,22 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
           </label>
           {hasLocation ? (
             <label className={styles.filterField}>
-              Avstand
+              {t("distance")}
               <select value={distanceCap} onChange={(event) => setDistanceCap(event.target.value)}>
-                <option value="">Alle avstander</option>
-                <option value="1000">Innen 1 km</option>
-                <option value="3000">Innen 3 km</option>
-                <option value="5000">Innen 5 km</option>
+                <option value="">{t("allDistances")}</option>
+                <option value="1000">{t("within", { km: 1 })}</option>
+                <option value="3000">{t("within", { km: 3 })}</option>
+                <option value="5000">{t("within", { km: 5 })}</option>
               </select>
             </label>
           ) : null}
           {filterActive ? (
-            <button className={styles.reset} type="button" onClick={resetFilters}>Nullstill filtre</button>
+            <button className={styles.reset} type="button" onClick={resetFilters}>{t("reset")}</button>
           ) : null}
         </div>
         <div className={styles.viewControls}>
           <p className={styles.count} role="status" aria-live="polite">
-            Viser {visibleResults.length} av {total} hentede rettetreff
+            {t("count", { visible: visibleResults.length, total })}
           </p>
           <button
             className={styles.mapToggle}
@@ -111,21 +115,21 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
             aria-controls="fysen-search-map"
             onClick={() => setShowMap((value) => !value)}
           >
-            {showMap ? "Skjul kart" : "Vis kart"}
+            {showMap ? t("hideMap") : t("showMap")}
           </button>
         </div>
         <p className={styles.limitNote}>
-          Filtrene gjelder kun treffene som allerede er hentet
-          {searchLimitReached ? " (API-et har ikke bekreftet fullstendig dekning). Flere restauranter kan finnes." : "."}
-          {" "}Ukjent pris, avstand eller åpningstid regnes ikke som et bekreftet filtertreff.
+          {t("filterScope")}
+          {searchLimitReached ? t("limit") : "."}
+          {" "}{t("unknownFilter")}
         </p>
       </div>
 
       {showMap ? (
-        <section className={styles.mapPanel} id="fysen-search-map" aria-label="Kart over restauranter i de viste treffene">
+        <section className={styles.mapPanel} id="fysen-search-map" aria-label={t("mapRegion")}>
           {selected ? (
             <>
-              <div className={styles.mapChoices} role="group" aria-label="Velg restaurant på kartet">
+              <div className={styles.mapChoices} role="group" aria-label={t("chooseRestaurant")}>
                 {restaurants.map((result) => (
                   <button
                     type="button"
@@ -135,14 +139,14 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
                     onClick={() => setSelectedSlug(result.restaurant.slug)}
                   >
                     <strong>{result.restaurant.name}</strong>
-                    <span>{result.match.type === "fuzzy" ? "Lignende rett – kontroller menyen" : "Sikkert menytreff"}</span>
+                    <span>{result.match.type === "fuzzy" ? t("similar") : t("verified")}</span>
                   </button>
                 ))}
               </div>
               <div className={styles.mapArea}>
                 <iframe
                   key={selected.restaurant.slug}
-                  title={"Kart: " + selected.restaurant.name}
+                  title={t("mapTitle", { name: selected.restaurant.name })}
                   src={osmEmbedUrl(selected.restaurant.latitude, selected.restaurant.longitude)}
                   loading="lazy"
                   referrerPolicy="no-referrer"
@@ -152,7 +156,7 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
                   <span>{selected.restaurant.address}, {selected.restaurant.city}</span>
                   <div className={styles.mapLinks}>
                     <a href={osmPageUrl(selected.restaurant.latitude, selected.restaurant.longitude)} target="_blank" rel="noreferrer">
-                      Stort kart ↗
+                      {t("largeMap")} ↗
                     </a>
                     <TrackedExternalLink
                       href={directionsUrl(selected.restaurant.latitude, selected.restaurant.longitude)}
@@ -161,23 +165,23 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Veibeskrivelse ↗
+                      {t("directions")} ↗
                     </TrackedExternalLink>
                   </div>
                 </div>
               </div>
             </>
-          ) : <p className={styles.empty}>Ingen restauranter matcher filtrene. Nullstill et filter for å se kartet.</p>}
+          ) : <p className={styles.empty}>{t("emptyMap")}</p>}
           <p className={styles.mapNote}>
-            Kartet viser én valgt restaurant om gangen. Kartdata lastes fra OpenStreetMap først når du åpner kartet.
+            {t("mapNote")}
           </p>
         </section>
       ) : null}
 
       {visibleResults.length === 0 ? (
         <div className={styles.empty} role="status">
-          Ingen av de hentede treffene matcher filtrene.
-          {filterActive ? <button type="button" onClick={resetFilters}>Vis alle hentede treff</button> : null}
+          {t("emptyFilter")}
+          {filterActive ? <button type="button" onClick={resetFilters}>{t("allFetched")}</button> : null}
         </div>
       ) : null}
 
@@ -189,9 +193,9 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
 
       {filteredNear.length > 0 ? (
         <section className="nearResults" aria-labelledby="near-results-title">
-          <h2 id="near-results-title">Lignende retter</h2>
+          <h2 id="near-results-title">{t("nearTitle")}</h2>
           <p className="nearResultsLead">
-            Dette er bare navnelignende oppføringer, ikke sikre bevis på at den søkte retten serveres.
+            {t("nearNote")}
           </p>
           <div className="resultList">
             {filteredNear.map((result) => <DishResult result={result} key={result.menuItemId} />)}
