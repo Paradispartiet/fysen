@@ -1,3 +1,7 @@
+"use client";
+
+import { usePreviewLocale } from "./language-preview";
+import { translate } from "../lib/locale-messages";
 import type { DishSearchSort } from "@fysen/contracts";
 import { withPublicBasePath } from "../lib/public-path";
 
@@ -5,7 +9,7 @@ export function DishSearch({
   defaultValue = "",
   city = "Oslo",
   compact = false,
-  buttonLabel = "Finn retten",
+  buttonLabel,
   inputId = "dish-query",
   latitude = null,
   longitude = null,
@@ -20,13 +24,15 @@ export function DishSearch({
   longitude?: number | null;
   sort?: DishSearchSort;
 }) {
+  const locale = usePreviewLocale();
   return (
     <form
       className={compact ? "dishSearch dishSearchCompact" : "dishSearch"}
       role="search"
+      lang={locale}
       action={withPublicBasePath("/search")}
     >
-      <label className="srOnly" htmlFor={inputId}>Retten du vil spise</label>
+      <label className="srOnly" htmlFor={inputId}>{translate(locale, "dishLabel")}</label>
       <div className="dishSearchField">
         <span className="dishSearchIcon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none">
@@ -39,7 +45,7 @@ export function DishSearch({
           name="q"
           type="search"
           defaultValue={defaultValue}
-          placeholder="Biff tartar, ramen, carbonara …"
+          placeholder={translate(locale, "placeholder")}
           autoComplete="off"
           minLength={2}
           maxLength={80}
@@ -54,7 +60,7 @@ export function DishSearch({
           <input type="hidden" name="sort" value={sort} />
         </>
       ) : null}
-      <button type="submit">{buttonLabel}</button>
+      <button type="submit">{buttonLabel ?? translate(locale, "searchButton")}</button>
     </form>
   );
 }
