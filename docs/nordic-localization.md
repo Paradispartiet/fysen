@@ -56,3 +56,7 @@ Falafel now has complete article body and recipe drafts in all six additional pr
 ### Fifth full article: Carbonara
 
 Carbonara now has complete article body and recipe drafts in all six additional preview locales. The original seven ingredient entries, five steps, three variants, canonical query and source links remain unchanged. The shared structure and numeric quantity tests cover all five registered articles. Ingredient numeric tokens were compared across all six new translations before committing. No workflow runs were returned for the preceding Falafel documentation commit ac3865e during this update; the new changes are not yet independently verified. Full article body coverage is 5/33. Linguistic review and release checks remain outstanding.
+
+### Sixth full article: Tacos al pastor
+
+Tacos al pastor now has complete body and recipe drafts in the six additional preview locales. Ten ingredient entries, five steps, three variants and the original source link are retained. Numeric ingredient tokens were checked against the Bokmål original before committing; the shared tests now cover six registered articles. No workflow runs were returned for the previous Carbonara documentation commit 07e6f20 during this update. Full article body coverage is 6/33. Fresh CI, linguistic review and release checks remain outstanding; no production activation.
