@@ -12,12 +12,18 @@ import { article as gyoza } from "../content/food-knowledge/articles/gyoza.ts";
 import { article as tomYum } from "../content/food-knowledge/articles/tom-yum.ts";
 import { article as pho } from "../content/food-knowledge/articles/pho.ts";
 import { article as banhMi } from "../content/food-knowledge/articles/banh-mi.ts";
+import { article as katsu } from "../content/food-knowledge/articles/katsu.ts";
+import { article as bao } from "../content/food-knowledge/articles/bao.ts";
+import { article as mapoTofu } from "../content/food-knowledge/articles/mapo-tofu.ts";
+import { article as butterChicken } from "../content/food-knowledge/articles/butter-chicken.ts";
+import { article as tandoori } from "../content/food-knowledge/articles/tandoori.ts";
+import { article as chanaMasala } from "../content/food-knowledge/articles/chana-masala.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { localizedArticleBody, translatedArticleIds } from "../lib/dish-article-translations.ts";
 
 const numericTokens = (value) => value.match(/[0-9]+|[½¼¾]/gu) ?? [];
 
-for (const original of [article, ramen, biryani, falafel, carbonara, tacosAlPastor, padThai, sushi, gyoza, tomYum, pho, banhMi]) {
+for (const original of [article, ramen, biryani, falafel, carbonara, tacosAlPastor, padThai, sushi, gyoza, tomYum, pho, banhMi, katsu, bao, mapoTofu, butterChicken, tandoori, chanaMasala]) {
 test(`complete ${original.dishId} translations retain recipe quantities, times and structure`, () => {
   const article = original;
   assert.ok(translatedArticleIds.includes(article.dishId));
