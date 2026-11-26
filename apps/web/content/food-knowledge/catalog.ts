@@ -839,6 +839,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"kofte","name":"Köfte","query":"kofte","aliases":["kofte","turkish meatballs","tyrkiske kjøttboller"],"cuisine":"Midtøsten","region":["doner","shawarma"],"explorerPriority":88},
   {"id":"baba-ganoush","name":"Baba ganoush","query":"baba ganoush","aliases":["baba ghanoush","baba ganouj","babaganoush"],"cuisine":"Midtøsten","region":["hummus","tabbouleh"],"explorerPriority":86},
   {"id":"tabbouleh","name":"Tabbouleh","query":"tabbouleh","aliases":["tabouli","tabouleh","taboulee","tabbouli"],"cuisine":"Midtøsten","region":["fattoush","hummus"],"explorerPriority":84},
+  {"id":"farikal","name":"Fårikål","query":"fårikål","aliases":["farikal","faarikaal"],"cuisine":"Nordisk","region":"Norge","explorerPriority":94},
+  {"id":"kjottkaker","name":"Kjøttkaker","query":"kjøttkaker","aliases":["kjottkaker","kjøttkaker i brun saus"],"cuisine":"Nordisk","region":"Norge","explorerPriority":92},
+  {"id":"kottbullar","name":"Svenske kjøttboller","query":"svenske kjøttboller","aliases":["köttbullar","kottbullar","swedish meatballs"],"cuisine":"Nordisk","region":"Sverige","explorerPriority":90},
+  {"id":"smorrebrod","name":"Dansk smørrebrød","query":"dansk smørrebrød","aliases":["smørrebrød","smorrebrod","danish open sandwich"],"cuisine":"Nordisk","region":"Danmark","explorerPriority":88},
+  {"id":"lohikeitto","name":"Lohikeitto","query":"lohikeitto","aliases":["finsk laksesuppe","finnish salmon soup"],"cuisine":"Nordisk","region":"Finland","explorerPriority":86},
+  {"id":"plokkfiskur","name":"Plokkfiskur","query":"plokkfiskur","aliases":["plokkfisk","icelandic fish stew"],"cuisine":"Nordisk","region":"Island","explorerPriority":84},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
