@@ -1963,5 +1963,294 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "palak-paneer"
     ],
     "sources": []
+  },
+  {
+    "dishId": "lasagne-alla-bolognese",
+    "summary": "Ovnsbakt pasta med lag av ragù, béchamel og parmesan.",
+    "overview": "Pastaplater legges lagvis med kjøttsaus og hvit saus.",
+    "history": "Retten forbindes med Bologna og Emilia-Romagnas tradisjon for fersk pasta.",
+    "flavor": "Fyldig, kremet og med gratinert overflate.",
+    "technique": "Kok ragùen langsomt og fordel sausene jevnt.",
+    "essentials": [
+      "250 g lasagneplater",
+      "400 g kjøttdeig",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer",
+      "ingredients": [
+        "250 g lasagneplater",
+        "400 g kjøttdeig",
+        "1 løk",
+        "1 gulrot",
+        "1 selleristilk",
+        "400 g tomater",
+        "500 ml melk",
+        "40 g smør",
+        "40 g mel",
+        "80 g parmesan"
+      ],
+      "steps": [
+        "Fres finhakkede grønnsaker og brun kjøttet.",
+        "Tilsett tomater og la sausen småkoke i minst en time.",
+        "Lag béchamel av smør, mel og melk.",
+        "Legg sausene og pastaplatene lagvis i en form, topp med parmesan.",
+        "Stek ved 190 °C til pastaen er mør og toppen gyllen."
+      ]
+    },
+    "variants": [
+      "Grønne spinatpastaplater brukes tradisjonelt i Bologna."
+    ],
+    "serving": [
+      "La lasagnen hvile før den skjæres opp."
+    ],
+    "commonMistakes": [
+      "Ikke la tørre pastaplater ligge uten tilstrekkelig saus."
+    ],
+    "relatedDishIds": [
+      "carbonara",
+      "amatriciana"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "risotto-alla-milanese",
+    "summary": "Kremet risotto fra Milano med safran og parmesan.",
+    "overview": "Ris kokes gradvis med kraft og avsluttes med smør og ost.",
+    "history": "Safranrisotto er en klassisk rett i Milano, ofte servert sammen med ossobuco.",
+    "flavor": "Mildt nøtteaktig, aromatisk og fyldig.",
+    "technique": "Bruk varm kraft og avslutt med smør og ost utenfor varmen.",
+    "essentials": [
+      "320 g carnaroliris",
+      "1 liten løk",
+      "1 l varm kraft"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 35 min",
+      "ingredients": [
+        "320 g carnaroliris",
+        "1 liten løk",
+        "1 l varm kraft",
+        "1 dl hvitvin eller ekstra kraft",
+        "safran",
+        "50 g smør",
+        "60 g parmesan"
+      ],
+      "steps": [
+        "Fres løk i litt smør og tilsett risen.",
+        "Tilsett vin eller kraft og la væsken trekke inn.",
+        "Tilsett varm kraft gradvis under omrøring.",
+        "Rør inn safran mot slutten og kok til risen er al dente.",
+        "Ta av varmen og rør inn smør og parmesan."
+      ]
+    },
+    "variants": [
+      "Tradisjonelle varianter kan inneholde oksemarg."
+    ],
+    "serving": [
+      "Server straks, alene eller med ossobuco."
+    ],
+    "commonMistakes": [
+      "Ikke kok risen til grøt eller la risottoen bli tørr."
+    ],
+    "relatedDishIds": [
+      "ossobuco",
+      "arancini"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "ossobuco",
+    "summary": "Langtidsbraisert kalveskank, gjerne med gremolata.",
+    "overview": "Skanken braiseres med grønnsaker og kraft til kjøttet blir mørt.",
+    "history": "Ossobuco alla milanese hører til Milanos klassiske kjøkken.",
+    "flavor": "Fyldig kjøttsmak med frisk sitron og persille.",
+    "technique": "Braiser på lav varme under lokk.",
+    "essentials": [
+      "4 skiver kalveskank",
+      "1 løk",
+      "1 gulrot"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2,5 timer",
+      "ingredients": [
+        "4 skiver kalveskank",
+        "1 løk",
+        "1 gulrot",
+        "1 selleristilk",
+        "500 ml kraft",
+        "mel",
+        "olje",
+        "persille",
+        "sitron",
+        "hvitløk"
+      ],
+      "steps": [
+        "Vend skankene lett i mel og brun dem.",
+        "Fres hakkede grønnsaker og tilsett kraft.",
+        "Legg kjøttet tilbake og braiser under lokk til mørt, rundt to timer.",
+        "Bland hakket persille, sitronskall og hvitløk og strø over."
+      ]
+    },
+    "variants": [
+      "Varianter med tomat finnes, mens lyse sauser også er tradisjonelle."
+    ],
+    "serving": [
+      "Server med risotto alla milanese eller polenta."
+    ],
+    "commonMistakes": [
+      "Unngå hard koking som kan gjøre kjøttet tørt."
+    ],
+    "relatedDishIds": [
+      "risotto-alla-milanese",
+      "saltimbocca"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "gnocchi-al-pesto",
+    "summary": "Myke potetgnocchi vendt i basilikumpesto.",
+    "overview": "Potetbaserte deigputer kombineres med pesto av basilikum, pinjekjerner, ost og olivenolje.",
+    "history": "Pesto alla genovese har røtter i Liguria, mens gnocchi finnes i mange italienske regioner.",
+    "flavor": "Urtefrisk, nøtteaktig og myk.",
+    "technique": "Bruk lite mel i potetdeigen og vend pestoen inn uten sterk varme.",
+    "essentials": [
+      "600 g melne poteter",
+      "150 g hvetemel, omtrent",
+      "1 egg"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "600 g melne poteter",
+        "150 g hvetemel, omtrent",
+        "1 egg",
+        "40 g basilikum",
+        "25 g pinjekjerner",
+        "50 g parmesan",
+        "1 hvitløksfedd",
+        "olivenolje"
+      ],
+      "steps": [
+        "Kok potetene møre, skrell og mos dem.",
+        "Bland forsiktig med egg og akkurat nok mel til en formbar deig.",
+        "Rull ut, skjær i biter og kok til de flyter opp.",
+        "Støt eller miks pestoingrediensene og vend inn med litt kokevann."
+      ]
+    },
+    "variants": [
+      "Pesto kan også inneholde pecorino i tillegg til parmesan."
+    ],
+    "serving": [
+      "Server med revet ost."
+    ],
+    "commonMistakes": [
+      "Ikke elt inn så mye mel at gnocchiene blir tunge."
+    ],
+    "relatedDishIds": [
+      "pasta-alla-norma",
+      "cacio-e-pepe"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "tiramisu",
+    "summary": "Italiensk dessert med kaffe, savoiardi, mascarpone og kakao.",
+    "overview": "Kjeks dyppes kort i kaffe og legges lagvis med mascarponekrem.",
+    "history": "Tiramisu forbindes særlig med det nordøstlige Italia; opphavet er omdiskutert.",
+    "flavor": "Kremet, søtlig og bittersøt fra kaffe og kakao.",
+    "technique": "Bruk avkjølt kaffe og la desserten sette seg i kjøleskap.",
+    "essentials": [
+      "250 g savoiardi",
+      "500 g mascarpone",
+      "250 ml kremfløte"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25 min + 4 timer kjøling",
+      "ingredients": [
+        "250 g savoiardi",
+        "500 g mascarpone",
+        "250 ml kremfløte",
+        "70 g sukker",
+        "250 ml sterk kaffe",
+        "kakao"
+      ],
+      "steps": [
+        "Pisk fløte og sukker og vend forsiktig inn mascarpone.",
+        "Dypp kjeksene raskt i kald kaffe.",
+        "Legg kjeks og krem lagvis i en form.",
+        "Avkjøl i minst fire timer og sikt kakao over før servering."
+      ]
+    },
+    "variants": [
+      "Denne hjemmevarianten er uten rå egg; klassiske varianter bruker ofte egg."
+    ],
+    "serving": [
+      "Server kald i porsjoner."
+    ],
+    "commonMistakes": [
+      "Ikke bløtlegg kjeksene så lenge at de går i oppløsning."
+    ],
+    "relatedDishIds": [
+      "cannoli"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "focaccia",
+    "summary": "Italiensk flatbrød med olivenolje, ofte toppet med salt.",
+    "overview": "En hevet deig presses ut i en oljet form og får karakteristiske groper.",
+    "history": "Focaccia finnes i mange italienske regioner; den genovesiske varianten er særlig kjent.",
+    "flavor": "Myk, luftig og salt med gyllen skorpe.",
+    "technique": "La deigen heve godt og bruk olivenolje i formen.",
+    "essentials": [
+      "500 g hvetemel",
+      "380 ml vann",
+      "5 g tørrgjær"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min + heving",
+      "ingredients": [
+        "500 g hvetemel",
+        "380 ml vann",
+        "5 g tørrgjær",
+        "10 g salt",
+        "olivenolje",
+        "flaksalt"
+      ],
+      "steps": [
+        "Bland mel, vann, gjær og salt til en klebrig deig.",
+        "La heve til luftig, gjerne med noen brettinger underveis.",
+        "Fordel i oljet form og la etterheve.",
+        "Lag groper med oljede fingre, drypp over olje og strø salt.",
+        "Stek ved 220 °C til gyllen."
+      ]
+    },
+    "variants": [
+      "Focaccia barese toppes ofte med tomater og oliven."
+    ],
+    "serving": [
+      "Server som brød til måltidet eller som mellommåltid."
+    ],
+    "commonMistakes": [
+      "Ikke press ut all luften under formingen."
+    ],
+    "relatedDishIds": [
+      "pizza-margherita",
+      "pizza-marinara"
+    ],
+    "sources": []
   }
 ];
