@@ -825,5 +825,285 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "birria"
     ],
     "sources": []
+  },
+  {
+    "dishId": "bibimbap",
+    "summary": "Koreansk risrett med grønnsaker, gochujang og ofte egg eller kjøtt.",
+    "overview": "Ingrediensene tilberedes separat og blandes med ris ved bordet.",
+    "history": "Bibimbap finnes i flere regionale former, blant annet i Jeonju.",
+    "flavor": "Sterk, nøtteaktig og frisk, med kontraster mellom grønnsakene.",
+    "technique": "Stek eller blancher grønnsakene hver for seg.",
+    "essentials": [
+      "400 g kokt ris",
+      "200 g spinat",
+      "2 gulrøtter"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "400 g kokt ris",
+        "200 g spinat",
+        "2 gulrøtter",
+        "150 g bønnespirer",
+        "4 egg",
+        "gochujang",
+        "sesamolje"
+      ],
+      "steps": [
+        "Tilbered grønnsakene separat og smak til med sesamolje.",
+        "Stek eggene etter ønske.",
+        "Fordel varm ris i skåler og legg på grønnsaker og egg.",
+        "Server med gochujang og bland før måltidet."
+      ]
+    },
+    "variants": [
+      "Dolsot bibimbap serveres i en varm steinskål."
+    ],
+    "serving": [
+      "Server med kimchi."
+    ],
+    "commonMistakes": [
+      "Unngå å gjøre alle grønnsakene bløte."
+    ],
+    "relatedDishIds": [
+      "bulgogi",
+      "japchae"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "bulgogi",
+    "summary": "Tynne skiver marinert koreansk storfekjøtt, stekt eller grillet.",
+    "overview": "Soyasaus, hvitløk, sukker og sesamolje gir kjøttet karakteristisk smak.",
+    "history": "Bulgogi er en kjent del av koreansk grillmat.",
+    "flavor": "Søtlig, salt og ristet.",
+    "technique": "Skjær kjøttet tynt på tvers av fibrene og stek i små omganger.",
+    "essentials": [
+      "500 g storfekjøtt",
+      "3 ss soyasaus",
+      "1 ss sukker"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25 min + marinering",
+      "ingredients": [
+        "500 g storfekjøtt",
+        "3 ss soyasaus",
+        "1 ss sukker",
+        "2 hvitløksfedd",
+        "1 ss sesamolje",
+        "1 liten pære",
+        "vårløk"
+      ],
+      "steps": [
+        "Riv pæren og bland marinaden.",
+        "Skjær kjøttet tynt og mariner i kjøleskap i 30 minutter.",
+        "Stek i små omganger til kjøttet er ferdig.",
+        "Topp med vårløk."
+      ]
+    },
+    "variants": [
+      "Varianter med svin eller sterk marinade finnes også."
+    ],
+    "serving": [
+      "Server med ris, salatblader og banchan."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll stekepannen."
+    ],
+    "relatedDishIds": [
+      "bibimbap",
+      "samgyeopsal"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "japchae",
+    "summary": "Koreanske glassnudler av søtpotetstivelse med grønnsaker og soyasesamsaus.",
+    "overview": "Nudlene blandes med stekte grønnsaker og eventuelt kjøtt.",
+    "history": "Japchae serveres både til fest og som hverdagsmat i Korea.",
+    "flavor": "Elastiske nudler, mild sødme og sesamaroma.",
+    "technique": "Tilbered grønnsakene separat for å bevare teksturen.",
+    "essentials": [
+      "200 g dangmyeon",
+      "1 gulrot",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "200 g dangmyeon",
+        "1 gulrot",
+        "1 løk",
+        "150 g spinat",
+        "100 g sopp",
+        "3 ss soyasaus",
+        "sesamolje",
+        "sukker"
+      ],
+      "steps": [
+        "Kok nudlene etter pakningsanvisningen.",
+        "Stek løk, gulrot og sopp; blancher spinaten.",
+        "Bland nudlene med grønnsakene, soyasaus og litt sukker.",
+        "Smak til med sesamolje."
+      ]
+    },
+    "variants": [
+      "Varianter med storfekjøtt eller uten kjøtt."
+    ],
+    "serving": [
+      "Server lun eller ved romtemperatur som del av måltidet."
+    ],
+    "commonMistakes": [
+      "Ikke overkok glassnudlene."
+    ],
+    "relatedDishIds": [
+      "bibimbap",
+      "bulgogi"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "kimchi-jjigae",
+    "summary": "Koreansk gryte med fermentert kimchi, tofu og ofte svinekjøtt.",
+    "overview": "Moden kimchi gir gryten syre, chili og umami.",
+    "history": "Kimchi jjigae er en vanlig koreansk hjemmerett.",
+    "flavor": "Syrlig, sterk og fyldig.",
+    "technique": "Bruk godt modnet kimchi og la gryten småkoke.",
+    "essentials": [
+      "300 g kimchi",
+      "200 g tofu",
+      "200 g svinekjøtt"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "300 g kimchi",
+        "200 g tofu",
+        "200 g svinekjøtt",
+        "500 ml kraft",
+        "1 løk",
+        "gochugaru"
+      ],
+      "steps": [
+        "Stek svinekjøtt og kimchi kort.",
+        "Tilsett kraft, løk og chili etter smak.",
+        "La småkoke til kjøttet er gjennomstekt.",
+        "Tilsett tofu mot slutten."
+      ]
+    },
+    "variants": [
+      "Varianter med tunfisk eller uten kjøtt."
+    ],
+    "serving": [
+      "Server med ris og små sideretter."
+    ],
+    "commonMistakes": [
+      "Ikke salt før du har smakt på kimchikraften."
+    ],
+    "relatedDishIds": [
+      "bibimbap",
+      "samgyeopsal"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "tteokbokki",
+    "summary": "Koreanske riskaker i en søtlig og sterk chilisaus.",
+    "overview": "Sylindriske riskaker kokes i en saus med gochujang.",
+    "history": "Den røde, sterke varianten er kjent fra koreansk gatemat.",
+    "flavor": "Seig, myk og søtsterk.",
+    "technique": "La riskakene småkoke til de blir møre og sausen tykner.",
+    "essentials": [
+      "400 g koreanske riskaker",
+      "500 ml kraft",
+      "2 ss gochujang"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "400 g koreanske riskaker",
+        "500 ml kraft",
+        "2 ss gochujang",
+        "1 ss sukker",
+        "1 ss soyasaus",
+        "vårløk"
+      ],
+      "steps": [
+        "Bløtlegg riskakene ved behov etter pakningen.",
+        "Kok opp kraft med gochujang, sukker og soyasaus.",
+        "Tilsett riskakene og småkok under omrøring til møre.",
+        "Topp med vårløk."
+      ]
+    },
+    "variants": [
+      "Gungjung tteokbokki bruker en soyabasert saus."
+    ],
+    "serving": [
+      "Server gjerne med fiskekaker eller kokt egg."
+    ],
+    "commonMistakes": [
+      "Ikke la sausen koke tørr før riskakene er møre."
+    ],
+    "relatedDishIds": [
+      "japchae",
+      "kimchi-jjigae"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "samgyeopsal",
+    "summary": "Koreansk grillrett av skiver av svinebuk.",
+    "overview": "Kjøttet grilles gjerne ved bordet og spises med salatblader og tilbehør.",
+    "history": "Samgyeopsal er vanlig i koreansk sosial grillmatkultur.",
+    "flavor": "Fyldig og ristet, balansert av friskt tilbehør.",
+    "technique": "Grill i moderate omganger og la fettet renne av.",
+    "essentials": [
+      "600 g svinebuk i skiver",
+      "salatblader",
+      "hvitløk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "600 g svinebuk i skiver",
+        "salatblader",
+        "hvitløk",
+        "ssamjang",
+        "kimchi",
+        "ris"
+      ],
+      "steps": [
+        "Grill kjøttet på varm grill eller panne til gjennomstekt.",
+        "Skjær i munnfuller med ren saks eller kniv.",
+        "Legg kjøtt, ssamjang og tilbehør i salatblad.",
+        "Server straks."
+      ]
+    },
+    "variants": [
+      "Tykkelsen på kjøttskivene varierer; kjøttet kan serveres umarinert."
+    ],
+    "serving": [
+      "Server med kimchi, ris og hvitløk."
+    ],
+    "commonMistakes": [
+      "Unngå å bruke samme redskap til rått og ferdig kjøtt uten vask."
+    ],
+    "relatedDishIds": [
+      "bulgogi",
+      "kimchi-jjigae"
+    ],
+    "sources": []
   }
 ];
