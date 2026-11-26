@@ -2,6 +2,7 @@
 
 import { usePreviewLocale } from "./language-preview";
 import { knowledgeText, type KnowledgeKey } from "../lib/knowledge-messages";
+import { dishDisplayName } from "../lib/dish-display-names";
 import { localizedSummary } from "../lib/dish-summary-translations";
 
 import type { DishSearchResult } from "@fysen/contracts";
@@ -102,7 +103,7 @@ export function DishKnowledgeDialog({
           <button
             type="button"
             className="dishKnowledgeDialogClose"
-            aria-label={t("close", { name: dish.name })}
+            aria-label={t("close", { name: dishDisplayName(dish.id, dish.name, locale) })}
             onClick={close}
           >
             <span aria-hidden="true">×</span>
@@ -111,7 +112,7 @@ export function DishKnowledgeDialog({
           <header className="dishKnowledgeDialogHeader">
             <p className="dishKnowledgeDialogEyebrow">{t("lexicon")} · {dish.region}</p>
             <div className="dishKnowledgeTitleWithArtwork">
-              <h2 id="dish-knowledge-title">{dish.name}</h2>
+              <h2 id="dish-knowledge-title">{dishDisplayName(dish.id, dish.name, locale)}</h2>
               {illustrationForDishName(dish.name) ? (
                 <FoodIllustration
                   name={illustrationForDishName(dish.name)!}
@@ -130,7 +131,7 @@ export function DishKnowledgeDialog({
 
           <div className="dishKnowledgeIntroGrid">
             <section>
-              <h3>{t("what", { name: dish.name })}</h3>
+              <h3>{t("what", { name: dishDisplayName(dish.id, dish.name, locale) })}</h3>
               <p>{dish.overview}</p>
             </section>
             <section>
@@ -163,7 +164,7 @@ export function DishKnowledgeDialog({
             <div className="dishKnowledgeRecipeHeading">
               <div>
                 <p>{t("makeHome")}</p>
-                <h3 id="dish-recipe-title">{t("recipe", { name: dish.name.toLocaleLowerCase(locale) })}</h3>
+                <h3 id="dish-recipe-title">{t("recipe", { name: dishDisplayName(dish.id, dish.name, locale).toLocaleLowerCase(locale) })}</h3>
               </div>
               <span>{dish.recipe.label}</span>
             </div>
@@ -226,10 +227,10 @@ export function DishKnowledgeDialog({
                   const relatedKnowledge = getFoodKnowledgeDish(relatedDish.id);
                   return relatedKnowledge ? (
                     <button type="button" key={relatedDish.id} onClick={() => onOpenDish(relatedKnowledge)}>
-                      {relatedDish.name}
+                      {dishDisplayName(relatedDish.id, relatedDish.name, locale)}
                     </button>
                   ) : (
-                    <a href={dishSearchHref(relatedDish.query)} key={relatedDish.id}>{relatedDish.name}</a>
+                    <a href={dishSearchHref(relatedDish.query)} key={relatedDish.id}>{dishDisplayName(relatedDish.id, relatedDish.name, locale)}</a>
                   );
                 })}
               </div>
@@ -240,7 +241,7 @@ export function DishKnowledgeDialog({
             <div className="dishKnowledgeRestaurantsHeading">
               <div>
                 <p className="dishKnowledgeMiniEyebrow">{t("restaurants")}</p>
-                <h3 id="dish-knowledge-restaurants-title">{t("where", { name: dish.name.toLocaleLowerCase(locale) })}</h3>
+                <h3 id="dish-knowledge-restaurants-title">{t("where", { name: dishDisplayName(dish.id, dish.name, locale).toLocaleLowerCase(locale) })}</h3>
               </div>
               <a href={dishSearchHref(dish.query)}>{t("allMatches")} <span aria-hidden="true">→</span></a>
             </div>
