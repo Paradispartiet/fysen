@@ -819,6 +819,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"gnocchi-al-pesto","name":"Gnocchi al pesto","query":"gnocchi al pesto","aliases":["gnocchi pesto","potetgnocchi med pesto"],"cuisine":"Italiensk","region":["pasta-alla-norma","cacio-e-pepe"],"explorerPriority":92},
   {"id":"tiramisu","name":"Tiramisu","query":"tiramisu","aliases":["tiramisù"],"cuisine":"Italiensk","region":["cannoli"],"explorerPriority":90},
   {"id":"focaccia","name":"Focaccia","query":"focaccia","aliases":["focaccia genovese"],"cuisine":"Italiensk","region":["pizza-margherita","pizza-marinara"],"explorerPriority":88},
+  {"id":"tempura","name":"Tempura","query":"tempura","aliases":[],"cuisine":"Asiatisk","region":"Japan","explorerPriority":88},
+  {"id":"okonomiyaki","name":"Okonomiyaki","query":"okonomiyaki","aliases":[],"cuisine":"Asiatisk","region":"Japan","explorerPriority":86},
+  {"id":"takoyaki","name":"Takoyaki","query":"takoyaki","aliases":[],"cuisine":"Asiatisk","region":"Japan","explorerPriority":84},
+  {"id":"sukiyaki","name":"Sukiyaki","query":"sukiyaki","aliases":[],"cuisine":"Asiatisk","region":"Japan","explorerPriority":82},
+  {"id":"shabu-shabu","name":"Shabu-shabu","query":"shabu shabu","aliases":["shabu shabu"],"cuisine":"Asiatisk","region":"Japan","explorerPriority":80},
+  {"id":"katsudon","name":"Katsudon","query":"katsudon","aliases":[],"cuisine":"Asiatisk","region":"Japan","explorerPriority":78},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
