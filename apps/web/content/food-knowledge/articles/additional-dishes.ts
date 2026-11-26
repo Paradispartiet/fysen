@@ -2541,5 +2541,294 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "sukiyaki"
     ],
     "sources": []
+  },
+  {
+    "dishId": "kung-pao-chicken",
+    "summary": "Sichuanrett med wokstekt kylling, tørket chili og peanøtter.",
+    "overview": "Små kyllingbiter stekes raskt med aromater og en konsentrert sursøt saus.",
+    "history": "Gong bao ji ding er en klassiker i Sichuan-kjøkkenet, med mange internasjonale restaurantvarianter.",
+    "flavor": "Sterk, nøtteaktig, syrlig og lett bedøvende fra sichuanpepper.",
+    "technique": "Klargjør alle ingrediensene før wokken varmes opp.",
+    "essentials": [
+      "500 g kyllinglårfilet",
+      "60 g peanøtter",
+      "tørket chili"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min",
+      "ingredients": [
+        "500 g kyllinglårfilet",
+        "60 g peanøtter",
+        "tørket chili",
+        "1 ts sichuanpepper",
+        "2 ss soyasaus",
+        "1 ss svart riseddik",
+        "1 ts sukker",
+        "maisstivelse",
+        "vårløk",
+        "olje"
+      ],
+      "steps": [
+        "Skjær kyllingen i små terninger og bland med litt soyasaus og stivelse.",
+        "Bland eddik, sukker og resten av soyasausen.",
+        "Fres chili og sichuanpepper kort, tilsett kylling og stek gjennom.",
+        "Vend inn saus, vårløk og peanøtter."
+      ]
+    },
+    "variants": [
+      "Restaurantvarianter kan inneholde paprika eller andre grønnsaker."
+    ],
+    "serving": [
+      "Server med dampet ris."
+    ],
+    "commonMistakes": [
+      "Ikke la tørket chili svi seg."
+    ],
+    "relatedDishIds": [
+      "mapo-tofu",
+      "dan-dan-noodles"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "xiaolongbao",
+    "summary": "Dampede kinesiske deigpakker med kjøttfyll og varm kraft inni.",
+    "overview": "Stivnet kraft blandes i fyllet og smelter under dampingen.",
+    "history": "Xiaolongbao forbindes særlig med Jiangnan-regionen og Shanghai-området.",
+    "flavor": "Saftig, mildt krydret og rik på umami.",
+    "technique": "Avkjøl kraftgeléen godt og forsegl deigen omhyggelig.",
+    "essentials": [
+      "300 g hvetemel",
+      "150 ml vann, omtrent",
+      "300 g svinekjøttdeig"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min + kjøling av kraft",
+      "ingredients": [
+        "300 g hvetemel",
+        "150 ml vann, omtrent",
+        "300 g svinekjøttdeig",
+        "200 g fast kraftgelé",
+        "ingefær",
+        "soyasaus",
+        "vårløk"
+      ],
+      "steps": [
+        "Elt mel og vann til en glatt deig og la hvile.",
+        "Bland kjøtt med aromater og terninger av kald kraftgelé.",
+        "Kjevle ut små tynne deigskiver, fyll og lukk med folder.",
+        "Damp i kurv til kjøttfyllet er gjennomstekt."
+      ]
+    },
+    "variants": [
+      "Varianter med krabbe og svinekjøtt finnes."
+    ],
+    "serving": [
+      "Server med svart eddik og ingefær; la den varme kraften kjølne litt før du spiser."
+    ],
+    "commonMistakes": [
+      "Ikke bruk flytende kraft i fyllet eller lag hull i deigen."
+    ],
+    "relatedDishIds": [
+      "dumplings",
+      "bao"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "char-siu",
+    "summary": "Kantonesisk ovnsstekt svinekjøtt med søtlig, blank glasering.",
+    "overview": "Kjøttet marineres med soyasaus og aromatiske krydder før steking.",
+    "history": "Char siu er en del av den kantonesiske siu mei-tradisjonen med stekt kjøtt.",
+    "flavor": "Søt-salt, aromatisk og ristet.",
+    "technique": "Glaser kjøttet mot slutten for å unngå brent sukker.",
+    "essentials": [
+      "700 g svinenakke",
+      "2 ss hoisinsaus",
+      "2 ss soyasaus"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 1 time + marinering",
+      "ingredients": [
+        "700 g svinenakke",
+        "2 ss hoisinsaus",
+        "2 ss soyasaus",
+        "1 ss honning",
+        "1 ts five spice",
+        "hvitløk"
+      ],
+      "steps": [
+        "Bland marinaden og reserver en ren porsjon til glasering.",
+        "Mariner kjøttet i kjøleskap i flere timer.",
+        "Stek på rist ved 200 °C til kjøttet når minst 63 °C i kjernen; la hvile minst tre minutter.",
+        "Pensle med reservert glasering mot slutten og skjær i skiver."
+      ]
+    },
+    "variants": [
+      "Ulike stykker av svin og forskjellige søtstoffer brukes."
+    ],
+    "serving": [
+      "Server med ris, nudler eller i bao."
+    ],
+    "commonMistakes": [
+      "Ikke bruk marinade som har vært i kontakt med rått kjøtt som ferdig glasering."
+    ],
+    "relatedDishIds": [
+      "bao",
+      "peking-duck"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "chow-mein",
+    "summary": "Kinesisk rett med stekte hvetenudler, grønnsaker og eventuelt kjøtt.",
+    "overview": "Nudlene stekes med soyasaus og tilbehør; teksturen varierer fra myk til sprø.",
+    "history": "Chow mein har mange former i kinesiske kjøkken og internasjonale kinesiske restauranttradisjoner.",
+    "flavor": "Ristet, salt og aromatisk.",
+    "technique": "Kok nudlene til akkurat møre og stek i små omganger.",
+    "essentials": [
+      "350 g eggnudler",
+      "250 g kylling",
+      "150 g kål"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min",
+      "ingredients": [
+        "350 g eggnudler",
+        "250 g kylling",
+        "150 g kål",
+        "1 gulrot",
+        "bønnespirer",
+        "2 ss soyasaus",
+        "1 ss østerssaus",
+        "olje"
+      ],
+      "steps": [
+        "Kok nudlene etter anvisning og la renne av.",
+        "Skjær grønnsaker og kylling i tynne biter.",
+        "Stek kyllingen gjennom og tilsett grønnsakene.",
+        "Vend inn nudler og saus og stek raskt på høy varme."
+      ]
+    },
+    "variants": [
+      "Varianter med sprø nudler, sjømat eller tofu."
+    ],
+    "serving": [
+      "Server straks fra wokken."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll pannen slik at nudlene dampkokes."
+    ],
+    "relatedDishIds": [
+      "dan-dan-noodles",
+      "pad-see-ew"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "wonton-soup",
+    "summary": "Kinesisk suppe med små fylte deigpakker i klar kraft.",
+    "overview": "Tynne wontonark fylles med kjøtt eller reker og kokes.",
+    "history": "Wontonsuppe finnes i flere kinesiske regionale tradisjoner, blant annet kantonesisk nudelsuppe.",
+    "flavor": "Mild, aromatisk og fyldig med myke deigpakker.",
+    "technique": "Forsegl arkene godt og kok wontonene separat hvis kraften skal holdes klar.",
+    "essentials": [
+      "24 wontonark",
+      "250 g svinekjøttdeig",
+      "100 g reker"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "24 wontonark",
+        "250 g svinekjøttdeig",
+        "100 g reker",
+        "ingefær",
+        "soyasaus",
+        "1 l kyllingkraft",
+        "pak choi",
+        "vårløk"
+      ],
+      "steps": [
+        "Finhakk rekene og bland med kjøtt, ingefær og soyasaus.",
+        "Fyll wontonarkene og lukk kantene med litt vann.",
+        "Kok wontonene til fyllet er gjennomstekt.",
+        "Varm kraft med pak choi og server wontonene i suppen med vårløk."
+      ]
+    },
+    "variants": [
+      "Hongkong-stil serveres ofte med tynne eggnudler."
+    ],
+    "serving": [
+      "Server med vårløk og eventuelt chiliolje."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll de tynne arkene."
+    ],
+    "relatedDishIds": [
+      "dumplings",
+      "xiaolongbao"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "sweet-and-sour-pork",
+    "summary": "Kinesisk rett med sprøstekt svinekjøtt i søt og syrlig saus.",
+    "overview": "Kjøttbiter paneres og stekes før de vendes raskt med saus og grønnsaker.",
+    "history": "Den kantonesiske varianten gu lou yuk har blitt utbredt på kinesiske restauranter internasjonalt.",
+    "flavor": "Søt, syrlig og sprø med saftig kjøtt.",
+    "technique": "Vend kjøttet i sausen rett før servering.",
+    "essentials": [
+      "500 g svinekjøtt i terninger",
+      "1 egg",
+      "maisstivelse"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "500 g svinekjøtt i terninger",
+        "1 egg",
+        "maisstivelse",
+        "1 paprika",
+        "1 løk",
+        "150 g ananas",
+        "3 ss eddik",
+        "2 ss sukker",
+        "2 ss ketchup",
+        "olje"
+      ],
+      "steps": [
+        "Vend kjøttet i egg og stivelse.",
+        "Stek i små omganger til gyllent og gjennomstekt.",
+        "Fres paprika og løk, tilsett ananas, eddik, sukker og ketchup.",
+        "La sausen tykne litt og vend inn kjøttet rett før servering."
+      ]
+    },
+    "variants": [
+      "Varianter med kylling eller andre frukter finnes; ananas er ikke obligatorisk."
+    ],
+    "serving": [
+      "Server med ris."
+    ],
+    "commonMistakes": [
+      "Ikke la det sprøstekte kjøttet ligge lenge i sausen."
+    ],
+    "relatedDishIds": [
+      "char-siu",
+      "kung-pao-chicken"
+    ],
+    "sources": []
   }
 ];
