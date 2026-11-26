@@ -23,3 +23,15 @@ describe("Nordic reviewed price fields", () => {
     expect(parseNordicMenuPrice("22,20/14,20", "EUR")).toBeNull();
   });
 });
+
+  describe("Icelandic whole-króna menu fields", () => {
+    it("accepts unambiguous thousands separators only for ISK", () => {
+      expect(parseNordicMenuPrice("3.290 kr.", "ISK")?.priceMinor).toBe(329000);
+      expect(parseNordicMenuPrice("ISK 3 290", "ISK")?.priceMinor).toBe(329000);
+      expect(parseNordicMenuPrice("3.290,- kr.", "ISK")?.priceMinor).toBe(329000);
+      expect(parseNordicMenuPrice("3.290/4.290", "ISK")?.priceMaxMinor).toBe(429000);
+      for (const raw of ["3,29", "3.29", "3.290 EUR", "3.290 NOK", "3,290", "0"]) expect(parseNordicMenuPrice(raw, "ISK")).toBeNull();
+      expect(parseNordicMenuPrice("3.290", "SEK")).toBeNull();
+      expect(parseNordicMenuPrice("ISK 3290", "DKK")).toBeNull();
+    });
+  });

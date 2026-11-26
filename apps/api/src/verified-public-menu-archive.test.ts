@@ -163,7 +163,7 @@ describe("Fysen verified public archive read API", () => {
 
 describe("Nordic v2 public archive", () => {
   it("isolates city results and refuses missing or incorrect foreign currency", () => {
-    const nordic = [["København", "DKK"], ["Stockholm", "SEK"], ["Helsinki", "EUR"]] as const;
+    const nordic = [["København", "DKK"], ["Stockholm", "SEK"], ["Helsinki", "EUR"], ["Reykjavík", "ISK"]] as const;
     const mixed = structuredClone(rawIndex);
     mixed.version = 2;
     mixed.items = mixed.items.map((row) => [...row, "NOK"]);
@@ -185,6 +185,10 @@ describe("Nordic v2 public archive", () => {
     }
     expect(archivedPublicSearch(archive, "ramen", "Copenhagen").results[0]?.currency).toBe("DKK");
     expect(archivedPublicSearch(archive, "ramen", "Helsingfors").results[0]?.currency).toBe("EUR");
+    expect(archivedPublicSearch(archive, "ramen", "Reykjavik").results[0]?.currency).toBe("ISK");
+    mixed.items.at(-1)![3] = 1501;
+    expect(() => parseVerifiedPublicArchive(manifest, mixed)).toThrow(/currency/u);
+    mixed.items.at(-1)![3] = 1500;
     expect(archivedPublicSearch(archive, "ramen", "Oslo").results).toHaveLength(3);
     expect(archivedPublicSearch(archive, "ramen", "Bergen").results).toEqual([]);
     const last = mixed.items.at(-1)!;

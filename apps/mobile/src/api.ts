@@ -56,7 +56,7 @@ export async function loadFeatured(signal?: AbortSignal): Promise<FeaturedRespon
   return data as FeaturedResponse;
 }
 
-export const nordicCities = ["Oslo", "København", "Stockholm", "Helsinki"] as const;
+export const nordicCities = ["Oslo", "København", "Stockholm", "Helsinki", "Reykjavík"] as const;
 export type NordicCity = typeof nordicCities[number];
 export type ArchivedNativeDish = {
   name: string; normalizedName: string; priceMinor: number | null;
@@ -72,7 +72,7 @@ export async function searchArchivedCity(term:string, city:NordicCity, offset=0,
     !("nextOffset" in data) || !(data.nextOffset === null || typeof data.nextOffset === "number" && Number.isSafeInteger(data.nextOffset) && data.nextOffset > offset)) {
     throw new Error("Ugyldig arkivsvar");
   }
-  const currency = {Oslo:"NOK",København:"DKK",Stockholm:"SEK",Helsinki:"EUR"}[city];
+  const currency = {Oslo:"NOK",København:"DKK",Stockholm:"SEK",Helsinki:"EUR","Reykjavík":"ISK"}[city];
   if (data.results.some((row:ArchivedNativeDish)=>row?.restaurant?.city!==city||row?.currency!==currency||
     typeof row?.name!=="string"||(row.priceNote!==undefined&&typeof row.priceNote!=="string")||typeof row?.menu?.sourceUrl!=="string"||!Number.isFinite(Date.parse(row?.menu?.observedAt)))) {
     throw new Error("Ugyldig by, valuta eller menykilde");
