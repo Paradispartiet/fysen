@@ -77,7 +77,7 @@ export function DishKnowledgeNote({ query }: { query: string }) {
     <>
       <aside
         className={knowledge.imageDishId ? "dishKnowledgeNote dishKnowledgeNoteWithImage" : "dishKnowledgeNote"}
-        aria-label={`${t("aboutDish")} · ${knowledge.name}`}
+        aria-label={`${t("aboutDish")} ${dishDisplayName(knowledge.dish?.id ?? knowledge.imageDishId ?? "", knowledge.name, locale)}`}
       >
         {knowledge.imageDishId ? <DishPhotoThumbnail dishId={knowledge.imageDishId} label={knowledge.name} /> : null}
         <div className="dishKnowledgeNoteContent">
