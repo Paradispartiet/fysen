@@ -40,7 +40,6 @@ export function DishEditorialImage({ dishId, query, className = "", priority = f
   return (
     <figure className={`dishEditorialFigure ${className}`}>
       {/* The approved native-resolution AVIF is displayed in place, not opened in another tab. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="dishEditorialImage"
         src={withPublicBasePath(`/dish-images/${file}`)}
