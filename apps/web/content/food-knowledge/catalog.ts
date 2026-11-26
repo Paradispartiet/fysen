@@ -793,6 +793,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"com-tam","name":"Cơm tấm","query":"com tam","aliases":[],"cuisine":"Asiatisk","region":"Vietnam","explorerPriority":70},
   {"id":"bun-rieu","name":"Bún riêu","query":"bun rieu","aliases":[],"cuisine":"Asiatisk","region":"Vietnam","explorerPriority":68},
   {"id":"banh-cuon","name":"Bánh cuốn","query":"banh cuon","aliases":[],"cuisine":"Asiatisk","region":"Vietnam","explorerPriority":66},
+  {"id":"massaman-curry","name":"Massaman curry","query":"massaman curry","aliases":["massaman","matsaman"],"cuisine":"Asiatisk","region":"Thailand","explorerPriority":88},
+  {"id":"panang-curry","name":"Panang curry","query":"panang curry","aliases":["panang","phanaeng curry","panaeng"],"cuisine":"Asiatisk","region":"Thailand","explorerPriority":86},
+  {"id":"som-tam","name":"Som tam","query":"som tam","aliases":["som tum","papaya salad","green papaya salad"],"cuisine":"Asiatisk","region":"Thailand","explorerPriority":84},
+  {"id":"tom-kha-gai","name":"Tom kha gai","query":"tom kha gai","aliases":["tom kha","tom ka gai","chicken coconut soup"],"cuisine":"Asiatisk","region":"Thailand","explorerPriority":82},
+  {"id":"pad-see-ew","name":"Pad see ew","query":"pad see ew","aliases":["pad see you","pad si ew","phat si io"],"cuisine":"Asiatisk","region":"Thailand","explorerPriority":80},
+  {"id":"khao-pad","name":"Khao pad","query":"khao pad","aliases":["khao phat","thai fried rice"],"cuisine":"Asiatisk","region":"Thailand","explorerPriority":78},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
