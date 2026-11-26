@@ -7,6 +7,7 @@ import type {
 } from "@fysen/contracts/dish-browse";
 import { usePreviewLocale } from "./language-preview";
 import { resultText } from "../lib/result-messages";
+import { dishDisplayName } from "../lib/dish-display-names";
 import { cuisineLabel } from "../lib/cuisine-labels";
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { browseDishesClient } from "../lib/client-dish-search";
@@ -261,7 +262,7 @@ function DiscoveryDishList({
             <div className="cuisineExploreDishIdentity">
               <DishPhotoThumbnail dishId={dish.id} label={dish.label} />
               <div className="cuisineExploreDishCopy">
-                <h4>{dish.label}</h4>
+                <h4 lang={locale}>{dishDisplayName(dish.id, dish.label, locale)}</h4>
                 <p className="cuisineExploreDishEvidence">
                   {menuEvidenceLabel(evidenceKind, restaurantCount)}
                 </p>
