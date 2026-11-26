@@ -19,8 +19,14 @@ type DishImageEntry = {
 const entries: readonly DishImageEntry[] = manifest.images;
 const normalize = (value: string) => value.trim().toLocaleLowerCase("nb-NO").replace(/\s+/gu, " ");
 
+const imageIdAliases: Readonly<Record<string, string>> = {
+  carbonara: "pasta-carbonara",
+  "pad-thai": "pad-thai-reker",
+};
+
 export function findDishImage(dishId?: string | null, query?: string) {
-  return (dishId ? entries.find((image) => image.id === dishId || image.catalogId === dishId) : undefined)
+  const exactId = dishId ? imageIdAliases[dishId] ?? dishId : null;
+  return (exactId ? entries.find((image) => image.id === exactId || image.catalogId === exactId) : undefined)
     ?? (query ? entries.find((image) => normalize(image.query) === normalize(query)) : undefined);
 }
 
