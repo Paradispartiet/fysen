@@ -8,11 +8,13 @@ export function GlobalHeader({
   results = false,
   city = "Oslo",
   query = "",
+  citySelectionPending = false,
 }: {
   children?: ReactNode;
   results?: boolean;
   city?: string;
   query?: string;
+  citySelectionPending?: boolean;
 }) {
   return (
     <>
@@ -21,6 +23,7 @@ export function GlobalHeader({
           <div className="globalHeaderTopline">
             <FysenLogo />
             <div className="globalHeaderActions">
+              {!citySelectionPending ? (
               <details className="cityMenu" name="fysen-header-disclosure">
                 <summary className="locationText cityMenuButton" aria-label={`By: ${city}. Bytt by`}>
                   {city}
@@ -34,6 +37,7 @@ export function GlobalHeader({
                   ))}
                 </nav>
               </details>
+              ) : null}
               <details className="siteMenu" name="fysen-header-disclosure">
                 <summary className="siteMenuButton">
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
