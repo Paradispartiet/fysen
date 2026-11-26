@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { locales, resolveLocale } from "../lib/locales";
+import { locales, parseLocale } from "../lib/locales";
 import { isPreviewLocale, previewLocales, translate, type MessageKey, type PreviewLocale } from "../lib/locale-messages";
 
 const enabled = process.env.NEXT_PUBLIC_FYSEN_LANGUAGE_PREVIEW === "true";
@@ -26,10 +26,11 @@ function getSnapshot(): PreviewLocale {
   try { stored = window.localStorage.getItem(storageKey); } catch { /* storage may be blocked */ }
   const selected = sessionChoice ?? stored;
   if (selected && isPreviewLocale(selected)) return selected;
-  const browser = navigator.languages.map((tag, index) => index === 0 ? tag : tag + ";q=" + Math.max(0.1, 1 - index / 10)).join(",");
-  const available = browser.split(",").filter((part) => isPreviewLocale(resolveLocale(undefined, part)) && resolveLocale(undefined, part) !== "nb" || /^n[bo](?:-|;|$)/i.test(part));
-  const resolved = resolveLocale(undefined, available.join(","));
-  return isPreviewLocale(resolved) ? resolved : "nb";
+  for (const tag of navigator.languages ?? [navigator.language]) {
+    const locale = parseLocale(tag);
+    if (locale && isPreviewLocale(locale)) return locale;
+  }
+  return "nb";
 }
 
 function serverSnapshot(): PreviewLocale { return "nb"; }
