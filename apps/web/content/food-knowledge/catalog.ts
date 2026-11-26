@@ -851,6 +851,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"bouillabaisse","name":"Bouillabaisse","query":"bouillabaisse","aliases":["fransk fiskesuppe"],"cuisine":"Fransk","region":"Marseille","explorerPriority":90},
   {"id":"quiche-lorraine","name":"Quiche lorraine","query":"quiche lorraine","aliases":["quiche lorraine med bacon"],"cuisine":"Fransk","region":"Lorraine","explorerPriority":88},
   {"id":"croque-monsieur","name":"Croque monsieur","query":"croque monsieur","aliases":["croque-monsieur"],"cuisine":"Fransk","region":"Frankrike","explorerPriority":86},
+  {"id":"paella-valenciana","name":"Paella valenciana","query":"paella valenciana","aliases":["paella","valencian paella"],"cuisine":"Spansk","region":"Valencia","explorerPriority":96},
+  {"id":"patatas-bravas","name":"Patatas bravas","query":"patatas bravas","aliases":["papas bravas"],"cuisine":"Spansk","region":"Spania","explorerPriority":94},
+  {"id":"tortilla-espanola","name":"Tortilla española","query":"tortilla espanola","aliases":["tortilla espanola","tortilla de patatas","spanish omelette","spansk potetomelett"],"cuisine":"Spansk","region":"Spania","explorerPriority":92},
+  {"id":"gazpacho","name":"Gazpacho","query":"gazpacho","aliases":["gazpacho andaluz","andalusisk gazpacho"],"cuisine":"Spansk","region":"Andalucía","explorerPriority":90},
+  {"id":"gambas-al-ajillo","name":"Gambas al ajillo","query":"gambas al ajillo","aliases":["garlic shrimp","hvitløksreker"],"cuisine":"Spansk","region":"Spania","explorerPriority":88},
+  {"id":"croquetas","name":"Croquetas","query":"croquetas","aliases":["croquetas de jamon","croquetas de jamón","spanske kroketter"],"cuisine":"Spansk","region":"Spania","explorerPriority":86},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
