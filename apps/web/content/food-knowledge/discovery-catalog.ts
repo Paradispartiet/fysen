@@ -183,15 +183,6 @@ const productionBackedMatlystDishes: readonly FoodDishCatalogEntry[] = [
     explorerPriority: 78,
   },
   {
-    id: "chicken-tikka-masala-pakistan",
-    name: "Kylling tikka masala",
-    query: "kylling tikka masala",
-    aliases: ["chicken tikka masala"],
-    cuisine: "Pakistansk",
-    region: "Lahore",
-    explorerPriority: 100,
-  },
-  {
     id: "lahori-karahi",
     name: "Lahori karahi",
     query: "lahori karahi",
