@@ -13,7 +13,8 @@ import { DishPhotoGallery, DishPhotoThumbnail } from "./dish-photo-gallery";
 import { discoveryCoverage } from "../lib/dish-discovery";
 import { menuEvidenceLabel, type MenuEvidenceKind } from "../lib/menu-evidence-label";
 import type { ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
-import { dishSearchHref } from "../lib/public-path";
+import { dishSearchHref, withPublicBasePath } from "../lib/public-path";
+import { restaurantVisuals } from "../lib/restaurant-visuals";
 import { rankRestaurantsByDistance, type Coordinates } from "../lib/restaurant-distance";
 import {
   homeCuisines,
@@ -174,19 +175,63 @@ function rankDishCoverage(coverage: readonly DishCoverage[]): DishCoverage[] {
 
 const restaurantPreviewLimit = 4;
 
+/** A restaurant identity, not an imitation of its official logo. */
+function restaurantInitials(name: string): string {
+  const words = name.match(/[\p{L}\p{N}]+(?:['’][\p{L}\p{N}]+)*/gu) ?? [];
+  return words.slice(0, 2).map((word) => Array.from(word)[0]).join("").toLocaleUpperCase("nb-NO") || "R";
+}
+
+function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample }) {
+  const visuals = restaurantVisuals(restaurant);
+  const [failedLogo, setFailedLogo] = useState<string | null>(null);
+  const identity = (
+    <>
+      {visuals && failedLogo !== visuals.logo ? (
+        <img className="cuisineExploreRestaurantLogo" src={withPublicBasePath(visuals.logo)}
+          alt="" width={64} height={38} loading="lazy" decoding="async"
+          onError={() => setFailedLogo(visuals.logo)} />
+      ) : (
+        <span className="cuisineExploreRestaurantMonogram" aria-hidden="true">{restaurantInitials(restaurant.name)}</span>
+      )}
+      <span className="cuisineExploreRestaurantCopy">
+        <strong>{restaurant.name}</strong>
+        {restaurant.address ? <small>{restaurant.address}</small> : null}
+      </span>
+    </>
+  );
+  return (
+    <li>
+      {restaurant.sourceUrl ? (
+        <a className="cuisineExploreRestaurantName" href={restaurant.sourceUrl} target="_blank" rel="noopener noreferrer">
+          {identity}
+        </a>
+      ) : <div className="cuisineExploreRestaurantName">{identity}</div>}
+      {visuals ? (
+        <div className="cuisineExploreRestaurantArtwork">
+          <div className="cuisineExploreRestaurantScenes">
+            <figure>
+              <img src={withPublicBasePath(visuals.exterior)} alt={`Illustrasjon av fasaden til ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
+              <figcaption>Fasade · Illustrasjon</figcaption>
+            </figure>
+            <figure>
+              <img src={withPublicBasePath(visuals.interior)} alt={`Illustrasjon av interiøret hos ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
+              <figcaption>Interiør · Illustrasjon</figcaption>
+            </figure>
+          </div>
+          <a className="cuisineExploreRestaurantArtSource" href={visuals.sourceUrl} target="_blank" rel="noopener noreferrer">
+            Illustrert fra restaurantens egne bilder
+          </a>
+        </div>
+      ) : null}
+    </li>
+  );
+}
+
 function RestaurantNames({ restaurants }: { readonly restaurants: readonly RestaurantExample[] }) {
   return (
     <ul className="cuisineExploreRestaurantNames">
       {restaurants.map((restaurant) => (
-        <li key={restaurant.id}>
-          {restaurant.sourceUrl ? (
-            <a className="cuisineExploreRestaurantName" href={restaurant.sourceUrl} target="_blank" rel="noopener noreferrer">
-              {restaurant.name}
-            </a>
-          ) : (
-            <span className="cuisineExploreRestaurantName">{restaurant.name}</span>
-          )}
-        </li>
+        <RestaurantCard key={restaurant.id} restaurant={restaurant} />
       ))}
     </ul>
   );
