@@ -787,6 +787,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"japchae","name":"Japchae","query":"japchae","aliases":[],"cuisine":"Koreansk","region":"Korea","explorerPriority":88},
   {"id":"kimchi-jjigae","name":"Kimchi jjigae","query":"kimchi jjigae","aliases":["kimchi stew"],"cuisine":"Koreansk","region":"Korea","explorerPriority":86},
   {"id":"samgyeopsal","name":"Samgyeopsal","query":"samgyeopsal","aliases":[],"cuisine":"Koreansk","region":"Korea","explorerPriority":84},
+  {"id":"banh-xeo","name":"Bánh xèo","query":"banh xeo","aliases":[],"cuisine":"Asiatisk","region":"Vietnam","explorerPriority":76},
+  {"id":"bun-bo-hue","name":"Bún bò Huế","query":"bun bo hue","aliases":[],"cuisine":"Asiatisk","region":"Vietnam","explorerPriority":74},
+  {"id":"cao-lau","name":"Cao lầu","query":"cao lau","aliases":[],"cuisine":"Asiatisk","region":"Vietnam","explorerPriority":72},
+  {"id":"com-tam","name":"Cơm tấm","query":"com tam","aliases":[],"cuisine":"Asiatisk","region":"Vietnam","explorerPriority":70},
+  {"id":"bun-rieu","name":"Bún riêu","query":"bun rieu","aliases":[],"cuisine":"Asiatisk","region":"Vietnam","explorerPriority":68},
+  {"id":"banh-cuon","name":"Bánh cuốn","query":"banh cuon","aliases":[],"cuisine":"Asiatisk","region":"Vietnam","explorerPriority":66},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
