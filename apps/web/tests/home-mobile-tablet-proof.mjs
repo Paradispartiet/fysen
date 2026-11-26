@@ -230,7 +230,7 @@ try {
 
       const dishSearch = await page.goto(`${base}/search?q=dal+makhani&city=Oslo`, { timeout: 60_000 });
       assert.equal(dishSearch?.status(), 200, "The Dal makhani search page must load");
-      const resultsCityPicker = page.locator(".globalHeader details.cityMenu");
+      const resultsCityPicker = page.getByRole("banner").locator("details.cityMenu");
       await resultsCityPicker.locator("summary").tap();
       const resultsCityHref = await resultsCityPicker.getByRole("link", { name: "Stockholm", exact: true }).getAttribute("href");
       const resultsCityUrl = new URL(resultsCityHref, base);
