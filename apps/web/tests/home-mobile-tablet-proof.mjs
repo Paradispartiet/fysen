@@ -230,6 +230,8 @@ try {
 
       const dishSearch = await page.goto(`${base}/search?q=dal+makhani&city=Oslo`, { timeout: 60_000 });
       assert.equal(dishSearch?.status(), 200, "The Dal makhani search page must load");
+      const note = page.getByRole("complementary", { name: "Om retten Dal makhani" });
+      await note.waitFor({ state: "visible" });
       const resultsCityPicker = page.getByRole("banner").locator("details.cityMenu");
       await resultsCityPicker.locator("summary").tap();
       const resultsCityHref = await resultsCityPicker.getByRole("link", { name: "Stockholm", exact: true }).getAttribute("href");
@@ -237,8 +239,6 @@ try {
       assert.equal(resultsCityUrl.searchParams.get("city"), "Stockholm");
       assert.equal(resultsCityUrl.searchParams.get("q"), "dal makhani", "City switching must preserve the active search");
       await resultsCityPicker.locator("summary").tap();
-      const note = page.getByRole("complementary", { name: "Om retten Dal makhani" });
-      await note.waitFor({ state: "visible" });
       assert.match(await note.innerText(), /Fysen matleksikon[\s\S]*uradbønner/iu);
       const dishImage = note.locator("img.dishEditorialImage");
       await dishImage.waitFor({ state: "visible" });
