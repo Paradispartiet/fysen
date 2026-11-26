@@ -799,6 +799,20 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"tom-kha-gai","name":"Tom kha gai","query":"tom kha gai","aliases":["tom kha","tom ka gai","chicken coconut soup"],"cuisine":"Asiatisk","region":"Thailand","explorerPriority":82},
   {"id":"pad-see-ew","name":"Pad see ew","query":"pad see ew","aliases":["pad see you","pad si ew","phat si io"],"cuisine":"Asiatisk","region":"Thailand","explorerPriority":80},
   {"id":"khao-pad","name":"Khao pad","query":"khao pad","aliases":["khao phat","thai fried rice"],"cuisine":"Asiatisk","region":"Thailand","explorerPriority":78},
+  {
+    id: "chicken-tikka-masala-pakistan",
+    name: "Kylling tikka masala",
+    query: "kylling tikka masala",
+    aliases: ["chicken tikka masala"],
+    cuisine: "Pakistansk",
+    region: "Lahore",
+    explorerPriority: 100,
+  },
+  {"id":"palak-paneer","name":"Palak paneer","query":"palak paneer","aliases":["spinach paneer"],"cuisine":"Indisk","region":"Nord-India","explorerPriority":92},
+  {"id":"rogan-josh","name":"Rogan josh","query":"rogan josh","aliases":["rogan gosht"],"cuisine":"Indisk","region":"Kashmir","explorerPriority":90},
+  {"id":"vindaloo","name":"Vindaloo","query":"vindaloo","aliases":["vindalho"],"cuisine":"Indisk","region":"Goa","explorerPriority":88},
+  {"id":"malai-kofta","name":"Malai kofta","query":"malai kofta","aliases":[],"cuisine":"Indisk","region":"Nord-India","explorerPriority":86},
+  {"id":"aloo-gobi","name":"Aloo gobi","query":"aloo gobi","aliases":["aloo gobhi"],"cuisine":"Indisk","region":"Nord-India","explorerPriority":84},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
