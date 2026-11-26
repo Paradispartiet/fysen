@@ -757,6 +757,36 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
     region: "Baja",
     explorerPriority: 72,
   },
+  {
+    id: "bibimbap",
+    name: "Bibimbap",
+    query: "bibimbap",
+    aliases: ["bibimbap vegan"],
+    cuisine: "Koreansk",
+    region: "Korea",
+    explorerPriority: 100,
+  },
+  {
+    id: "bulgogi",
+    name: "Bulgogi",
+    query: "bulgogi",
+    aliases: ["beef bulgogi bowl", "spicy pork bulgogi bowl"],
+    cuisine: "Koreansk",
+    region: "Korea",
+    explorerPriority: 96,
+  },
+  {
+    id: "tteokbokki",
+    name: "Tteokbokki",
+    query: "tteokbokki",
+    aliases: [],
+    cuisine: "Koreansk",
+    region: "Korea",
+    explorerPriority: 94,
+  },
+  {"id":"japchae","name":"Japchae","query":"japchae","aliases":[],"cuisine":"Koreansk","region":"Korea","explorerPriority":88},
+  {"id":"kimchi-jjigae","name":"Kimchi jjigae","query":"kimchi jjigae","aliases":["kimchi stew"],"cuisine":"Koreansk","region":"Korea","explorerPriority":86},
+  {"id":"samgyeopsal","name":"Samgyeopsal","query":"samgyeopsal","aliases":[],"cuisine":"Koreansk","region":"Korea","explorerPriority":84},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
