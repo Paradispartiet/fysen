@@ -4372,5 +4372,328 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.spain.info/es/top/tapas-recomendadas-populares-espana/"
       }
     ]
+  },
+  {
+    "dishId": "moussaka",
+    "summary": "Ovnsrett med aubergine, krydret kjøttsaus og béchamel.",
+    "overview": "I den greske varianten legges stekte grønnsaker og kjøttsaus lagvis under en tykk hvit saus.",
+    "history": "Moussaka inngår i en bredere familie av retter i det østlige Middelhavet; den greske ovnsvarianten er særlig kjent for béchamellaget.",
+    "flavor": "Fyldig kjøttsmak, myk aubergine og mildt krydret saus.",
+    "technique": "Forstek auberginen og reduser kjøttsausen før retten bygges opp.",
+    "essentials": [
+      "2 auberginer",
+      "400 g kjøttdeig",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "2 auberginer",
+        "400 g kjøttdeig",
+        "1 løk",
+        "400 g hakkede tomater",
+        "kanel",
+        "40 g smør",
+        "40 g mel",
+        "500 ml melk",
+        "60 g revet ost"
+      ],
+      "steps": [
+        "Skjær auberginene i skiver, pensle med olje og stek ved 220 °C til møre.",
+        "Brun kjøtt og løk, tilsett tomat og litt kanel og kok inn.",
+        "Lag béchamel av smør, mel og melk.",
+        "Legg aubergine og kjøttsaus i en form, topp med béchamel og ost.",
+        "Stek ved 190 °C til gyllen og gjennomvarm. La hvile før oppdeling."
+      ]
+    },
+    "variants": [
+      "Poteter kan inngå i lagene; linser kan erstatte kjøttet i en vegetarvariant."
+    ],
+    "serving": [
+      "Server lun med grønn salat."
+    ],
+    "commonMistakes": [
+      "Unngå vannete kjøttsaus og rå aubergine."
+    ],
+    "relatedDishIds": [
+      "pastitsio",
+      "lasagne-alla-bolognese"
+    ],
+    "sources": [
+      {
+        "label": "My Greek Dish – Moussaka",
+        "href": "https://www.mygreekdish.com/recipe/mousakas/"
+      }
+    ]
+  },
+  {
+    "dishId": "souvlaki",
+    "summary": "Greske grillspyd med kjøtt, sitron og oregano.",
+    "overview": "Små marinerte kjøttstykker grilles på spyd og serveres med brød eller som tallerkenrett.",
+    "history": "Souvlaki er en utbredt gresk gatematrett; kalamaki brukes blant annet i Athen om kjøttspydet.",
+    "flavor": "Saftig, syrlig og urtepreget.",
+    "technique": "Skjær kjøttet i jevnstore biter og grill til gjennomstekt.",
+    "essentials": [
+      "600 g kyllinglårfilet",
+      "2 ss olivenolje",
+      "1 sitron"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min + marinering",
+      "ingredients": [
+        "600 g kyllinglårfilet",
+        "2 ss olivenolje",
+        "1 sitron",
+        "2 hvitløksfedd",
+        "2 ts oregano",
+        "salt",
+        "pitabrød"
+      ],
+      "steps": [
+        "Skjær kjøttet i biter og mariner i olje, sitron, hvitløk og oregano i kjøleskap.",
+        "Tre kjøttet på spyd.",
+        "Grill eller stek til gjennomstekt.",
+        "Server med varmt pitabrød, grønnsaker og tzatziki."
+      ]
+    },
+    "variants": [
+      "Svinekjøtt er også vanlig; andre varianter bruker lam eller grønnsaker."
+    ],
+    "serving": [
+      "Server med tomat, løk og tzatziki."
+    ],
+    "commonMistakes": [
+      "Ikke bruk marinade fra rått kjøtt som kald saus."
+    ],
+    "relatedDishIds": [
+      "gyros",
+      "tzatziki"
+    ],
+    "sources": [
+      {
+        "label": "My Greek Dish – Souvlaki",
+        "href": "https://www.mygreekdish.com/recipe/souvlaki-with-chicken-and-pita-breads/"
+      }
+    ]
+  },
+  {
+    "dishId": "gyros",
+    "summary": "Gresk kjøttrett med tynne skiver fra et roterende, vertikalt grillspyd.",
+    "overview": "Kjøttet serveres gjerne i pita med løk, tomat og tzatziki.",
+    "history": "Gyros er en sentral del av gresk grill- og gatematkultur, med likhetstrekk til döner og shawarma.",
+    "flavor": "Ristet, saftig og krydret.",
+    "technique": "Hjemme kan tynne, marinerte kjøttstrimler stekes på høy varme; dette etterligner smaken, ikke selve grillmetoden.",
+    "essentials": [
+      "600 g kyllinglårfilet",
+      "2 ss olivenolje",
+      "1 ss sitronsaft"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 35 min + marinering",
+      "ingredients": [
+        "600 g kyllinglårfilet",
+        "2 ss olivenolje",
+        "1 ss sitronsaft",
+        "hvitløk",
+        "oregano",
+        "paprikapulver",
+        "4 pitabrød",
+        "tomat",
+        "rødløk",
+        "tzatziki"
+      ],
+      "steps": [
+        "Skjær kjøttet i tynne strimler.",
+        "Mariner i olje, sitron og krydder i kjøleskap.",
+        "Stek i små omganger til gjennomstekt og brunet.",
+        "Fyll varmt pitabrød med kjøtt, grønnsaker og tzatziki."
+      ]
+    },
+    "variants": [
+      "Gyros av svinekjøtt eller kylling er utbredt; pommes frites kan inngå i pitaen."
+    ],
+    "serving": [
+      "Server som pita eller tallerkenrett."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll pannen."
+    ],
+    "relatedDishIds": [
+      "doner",
+      "souvlaki",
+      "tzatziki"
+    ],
+    "sources": [
+      {
+        "label": "My Greek Dish – Gyros",
+        "href": "https://www.mygreekdish.com/recipe/homemade-greek-chicken-gyro-recipe/"
+      }
+    ]
+  },
+  {
+    "dishId": "spanakopita",
+    "summary": "Gresk filodeigpai med spinat, feta og urter.",
+    "overview": "Tynne deigark omslutter et salt, urtepreget fyll.",
+    "history": "Spanakopita tilhører den greske tradisjonen med fylte paier, som finnes i mange former og størrelser.",
+    "flavor": "Sprø flak, saftig spinat og salt feta.",
+    "technique": "Press ut overflødig væske fra spinaten og pensle deigarkene lett med olje.",
+    "essentials": [
+      "250 g filodeig",
+      "500 g spinat",
+      "200 g feta"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "250 g filodeig",
+        "500 g spinat",
+        "200 g feta",
+        "3 vårløk",
+        "dill",
+        "2 egg",
+        "olivenolje"
+      ],
+      "steps": [
+        "Varm spinaten kort til den faller sammen; avkjøl og press ut væske.",
+        "Bland med smuldret feta, vårløk, dill og egg.",
+        "Legg flere oljepenslede filoark i en form, fordel fyllet og dekk med resten.",
+        "Stek ved 190 °C til gyllen og fyllet har satt seg."
+      ]
+    },
+    "variants": [
+      "Kan formes som små trekanter eller stor pai."
+    ],
+    "serving": [
+      "Server lun eller romtemperert etter kort avkjøling."
+    ],
+    "commonMistakes": [
+      "Ikke la filodeigen tørke ut under arbeidet."
+    ],
+    "relatedDishIds": [
+      "quiche-lorraine",
+      "tzatziki"
+    ],
+    "sources": [
+      {
+        "label": "My Greek Dish – Spanakopita",
+        "href": "https://www.mygreekdish.com/recipe/spinach-feta-filo-pie/"
+      }
+    ]
+  },
+  {
+    "dishId": "tzatziki",
+    "summary": "Kald gresk yoghurtdipp med agurk og hvitløk.",
+    "overview": "Tykk yoghurt blandes med avrent, revet agurk og aromater.",
+    "history": "Tzatziki serveres som meze og til grillmat i gresk matkultur; beslektede yoghurtsauser finnes i regionen.",
+    "flavor": "Frisk, kremet, syrlig og hvitløkspreget.",
+    "technique": "Fjern overflødig væske fra agurken før den blandes inn.",
+    "essentials": [
+      "400 g gresk yoghurt",
+      "1 agurk",
+      "1–2 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 15 min",
+      "ingredients": [
+        "400 g gresk yoghurt",
+        "1 agurk",
+        "1–2 hvitløksfedd",
+        "1 ss olivenolje",
+        "1 ss sitronsaft",
+        "dill, valgfritt",
+        "salt"
+      ],
+      "steps": [
+        "Riv agurken og press ut væsken.",
+        "Rør sammen yoghurt, agurk og finrevet hvitløk.",
+        "Tilsett olje, sitron og salt etter smak.",
+        "Avkjøl til servering."
+      ]
+    },
+    "variants": [
+      "Dill, mynte eller eddik brukes i ulike varianter."
+    ],
+    "serving": [
+      "Server med brød, grønnsaker, souvlaki eller gyros."
+    ],
+    "commonMistakes": [
+      "Ikke bruk agurk uten å la den renne av."
+    ],
+    "relatedDishIds": [
+      "souvlaki",
+      "gyros",
+      "baba-ganoush"
+    ],
+    "sources": [
+      {
+        "label": "My Greek Dish – Tzatziki",
+        "href": "https://www.mygreekdish.com/recipe/authentic-greek-tzatziki-sauce-recipe/"
+      }
+    ]
+  },
+  {
+    "dishId": "pastitsio",
+    "summary": "Gresk ovnsbakt pasta med krydret kjøttsaus og béchamel.",
+    "overview": "Rørformet pasta, kjøttsaus og hvit saus legges i en form og gratineres.",
+    "history": "Pastitsio er en kjent gresk familiematrett med trekk fra middelhavets ovnsbakte pastatradisjoner.",
+    "flavor": "Fyldig, kremet og aromatisk med varme krydder.",
+    "technique": "Kok pastaen litt kortere enn vanlig og la kjøttsausen bli tykk.",
+    "essentials": [
+      "350 g rørformet pasta",
+      "400 g kjøttdeig",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "350 g rørformet pasta",
+        "400 g kjøttdeig",
+        "1 løk",
+        "400 g tomater",
+        "kanel",
+        "40 g smør",
+        "40 g mel",
+        "500 ml melk",
+        "80 g revet ost"
+      ],
+      "steps": [
+        "Kok pastaen til nesten mør og la den renne av.",
+        "Brun kjøtt og løk, tilsett tomat og kanel og kok inn.",
+        "Lag béchamel av smør, mel og melk.",
+        "Legg pasta, kjøttsaus og béchamel lagvis i en form og topp med ost.",
+        "Stek ved 190 °C til gyllen og gjennomvarm; la hvile før oppdeling."
+      ]
+    },
+    "variants": [
+      "Lange pastitsiorør er tradisjonelle, men andre rørformede pastatyper kan brukes hjemme."
+    ],
+    "serving": [
+      "Server med salat."
+    ],
+    "commonMistakes": [
+      "Ikke la pastaen bli overkokt før ovnsstekingen."
+    ],
+    "relatedDishIds": [
+      "moussaka",
+      "lasagne-alla-bolognese"
+    ],
+    "sources": [
+      {
+        "label": "My Greek Dish – Pastitsio",
+        "href": "https://www.mygreekdish.com/recipe/pastitsio/"
+      }
+    ]
   }
 ];
