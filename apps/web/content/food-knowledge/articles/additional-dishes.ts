@@ -33,9 +33,15 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "Fres sennepsfrø og karriblader i olje og hell over."
       ]
     },
-    "variants": [],
-    "serving": [],
-    "commonMistakes": [],
+    "variants": [
+      "Udupi-sambar og varianter med kokos."
+    ],
+    "serving": [
+      "Server med ris, dosa eller idli."
+    ],
+    "commonMistakes": [
+      "Tilsett ikke tamarind før linsene er møre."
+    ],
     "relatedDishIds": [
       "idli",
       "dosa",
@@ -58,7 +64,7 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
     "recipe": {
       "label": "Hjemmevariant",
       "yield": "ca. 4 porsjoner",
-      "time": "ca. 45 min + bløtlegging og eventuell fermentering",
+      "time": "ca. 45 min + bløtlegging og fermentering",
       "ingredients": [
         "300 g idliris",
         "100 g urad dal",
@@ -72,9 +78,15 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "Damp i smurte former i 10–15 minutter."
       ]
     },
-    "variants": [],
-    "serving": [],
-    "commonMistakes": [],
+    "variants": [
+      "Rava idli med semulegryn."
+    ],
+    "serving": [
+      "Server varm med sambar og kokoschutney."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll dampformene."
+    ],
     "relatedDishIds": [
       "sambar",
       "dosa",
@@ -97,7 +109,7 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
     "recipe": {
       "label": "Hjemmevariant",
       "yield": "ca. 4 porsjoner",
-      "time": "ca. 45 min + bløtlegging og eventuell fermentering",
+      "time": "ca. 45 min + bløtlegging",
       "ingredients": [
         "250 g urad dal",
         "1 grønn chili",
@@ -113,9 +125,15 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "Friter i omganger til gyllen og gjennomstekt."
       ]
     },
-    "variants": [],
-    "serving": [],
-    "commonMistakes": [],
+    "variants": [
+      "Masala vada av chana dal."
+    ],
+    "serving": [
+      "Server med chutney eller sambar."
+    ],
+    "commonMistakes": [
+      "For våt røre gjør ringene vanskelige å forme."
+    ],
     "relatedDishIds": [
       "sambar",
       "idli",
@@ -154,9 +172,15 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "Stek i varm panne på begge sider og pensle med smør."
       ]
     },
-    "variants": [],
-    "serving": [],
-    "commonMistakes": [],
+    "variants": [
+      "Garlic naan og butter naan."
+    ],
+    "serving": [
+      "Server varmt til gryteretter."
+    ],
+    "commonMistakes": [
+      "Unngå for lav stekevarme."
+    ],
     "relatedDishIds": [
       "butter-chicken",
       "dal-makhani"
@@ -193,9 +217,15 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "Pensle med saus mot slutten og stek kyllingen gjennom."
       ]
     },
-    "variants": [],
-    "serving": [],
-    "commonMistakes": [],
+    "variants": [
+      "Shio med salt og tare med saus."
+    ],
+    "serving": [
+      "Server med sitron eller shichimi."
+    ],
+    "commonMistakes": [
+      "Ikke pensle ferdig mat med saus som har vært i kontakt med rå kylling."
+    ],
     "relatedDishIds": [
       "katsu",
       "ramen"
@@ -233,9 +263,15 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "Smak til med fiskesaus og basilikum."
       ]
     },
-    "variants": [],
-    "serving": [],
-    "commonMistakes": [],
+    "variants": [
+      "Varianter med tofu eller fisk."
+    ],
+    "serving": [
+      "Server med jasminris."
+    ],
+    "commonMistakes": [
+      "Unngå å koke basilikumen lenge."
+    ],
     "relatedDishIds": [
       "tom-yum",
       "pad-thai"
