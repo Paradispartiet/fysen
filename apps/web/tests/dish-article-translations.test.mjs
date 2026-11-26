@@ -24,12 +24,21 @@ import { article as pizzaMargherita } from "../content/food-knowledge/articles/p
 import { article as arancini } from "../content/food-knowledge/articles/arancini.ts";
 import { article as pastaAllaNorma } from "../content/food-knowledge/articles/pasta-alla-norma.ts";
 import { article as hummus } from "../content/food-knowledge/articles/hummus.ts";
+import { article as shawarma } from "../content/food-knowledge/articles/shawarma.ts";
+import { article as manakish } from "../content/food-knowledge/articles/manakish.ts";
+import { article as koshari } from "../content/food-knowledge/articles/koshari.ts";
+import { article as pide } from "../content/food-knowledge/articles/pide.ts";
+import { article as birria } from "../content/food-knowledge/articles/birria.ts";
+import { article as cochinitaPibil } from "../content/food-knowledge/articles/cochinita-pibil.ts";
+import { article as pozole } from "../content/food-knowledge/articles/pozole.ts";
+import { article as fishTaco } from "../content/food-knowledge/articles/fish-taco.ts";
+import { article as smashburger } from "../content/food-knowledge/articles/smashburger.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { localizedArticleBody, translatedArticleIds } from "../lib/dish-article-translations.ts";
 
 const numericTokens = (value) => value.match(/[0-9]+|[½¼¾]/gu) ?? [];
 
-for (const original of [article, ramen, biryani, falafel, carbonara, tacosAlPastor, padThai, sushi, gyoza, tomYum, pho, banhMi, katsu, bao, mapoTofu, butterChicken, tandoori, chanaMasala, dosa, cacioEPepe, pizzaMargherita, arancini, pastaAllaNorma, hummus]) {
+for (const original of [article, ramen, biryani, falafel, carbonara, tacosAlPastor, padThai, sushi, gyoza, tomYum, pho, banhMi, katsu, bao, mapoTofu, butterChicken, tandoori, chanaMasala, dosa, cacioEPepe, pizzaMargherita, arancini, pastaAllaNorma, hummus, shawarma, manakish, koshari, pide, birria, cochinitaPibil, pozole, fishTaco, smashburger]) {
 test(`complete ${original.dishId} translations retain recipe quantities, times and structure`, () => {
   const article = original;
   assert.ok(translatedArticleIds.includes(article.dishId));
