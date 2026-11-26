@@ -64,3 +64,7 @@ Tacos al pastor now has complete body and recipe drafts in the six additional pr
 ### Batch 7–9: Pad thai, Sushi and Gyoza
 
 Three complete article bodies and recipes were translated in the six additional preview locales and registered together. All original IDs, query mappings, sources and recipes are retained. The new translation data was checked for field counts, ingredient list lengths and numeric consistency; the shared test now covers nine articles. Full article body coverage is 9/33. Work proceeds in larger batches rather than requiring a separate user turn per dish. Fresh CI and linguistic review remain outstanding; no production activation.
+
+### Batch 10–12: Tom yum, Phở and Bánh mì
+
+Three full article bodies and recipes were translated in the six additional preview locales and registered together. All original article IDs, query mappings, source fields and recipes remain intact. Translation list counts and ingredient numeric consistency were checked before committing; shared tests now include twelve articles. Makrut lime is used as a synonym in the Tom yum translations without changing the original ingredient. Full article body coverage is 12/33. GitHub returned no workflow runs for the previous batch commit 970c445 at the start of this update. Fresh CI and linguistic review remain outstanding; no production activation.
