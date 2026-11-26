@@ -5,12 +5,13 @@ import { article as ramen } from "../content/food-knowledge/articles/ramen.ts";
 import { article as biryani } from "../content/food-knowledge/articles/biryani.ts";
 import { article as falafel } from "../content/food-knowledge/articles/falafel.ts";
 import { article as carbonara } from "../content/food-knowledge/articles/carbonara.ts";
+import { article as tacosAlPastor } from "../content/food-knowledge/articles/tacos-al-pastor.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { localizedArticleBody, translatedArticleIds } from "../lib/dish-article-translations.ts";
 
 const numericTokens = (value) => value.match(/[0-9]+|[½¼¾]/gu) ?? [];
 
-for (const original of [article, ramen, biryani, falafel, carbonara]) {
+for (const original of [article, ramen, biryani, falafel, carbonara, tacosAlPastor]) {
 test(`complete ${original.dishId} translations retain recipe quantities, times and structure`, () => {
   const article = original;
   assert.ok(translatedArticleIds.includes(article.dishId));
