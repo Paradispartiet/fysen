@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { dishDisplayName } from "../lib/dish-display-names.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { knowledgeMessages, knowledgeText } from "../lib/knowledge-messages.ts";
 import { localizedSummary, translatedSummaryIds } from "../lib/dish-summary-translations.ts";
@@ -31,4 +32,10 @@ test("featured dishes and Dal makhani have translated summaries", () => {
 test("untranslated articles and Bokmål retain the exact original text and language", () => {
   assert.deepEqual(localizedSummary("unknown", "Original tekst", "sv"), { text: "Original tekst", lang: "nb" });
   assert.deepEqual(localizedSummary("ramen", "Original tekst", "nb"), { text: "Original tekst", lang: "nb" });
+});
+
+test("dish display labels leave Norwegian and international dish names intact", () => {
+  assert.equal(dishDisplayName("fish-taco", "Fish taco", "sv"), "Fisktaco");
+  assert.equal(dishDisplayName("fish-taco", "Fish taco", "nb"), "Fish taco");
+  assert.equal(dishDisplayName("dal-makhani", "Dal makhani", "fi"), "Dal makhani");
 });
