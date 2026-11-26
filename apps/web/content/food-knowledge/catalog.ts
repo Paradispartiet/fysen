@@ -813,6 +813,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"vindaloo","name":"Vindaloo","query":"vindaloo","aliases":["vindalho"],"cuisine":"Indisk","region":"Goa","explorerPriority":88},
   {"id":"malai-kofta","name":"Malai kofta","query":"malai kofta","aliases":[],"cuisine":"Indisk","region":"Nord-India","explorerPriority":86},
   {"id":"aloo-gobi","name":"Aloo gobi","query":"aloo gobi","aliases":["aloo gobhi"],"cuisine":"Indisk","region":"Nord-India","explorerPriority":84},
+  {"id":"lasagne-alla-bolognese","name":"Lasagne alla bolognese","query":"lasagne alla bolognese","aliases":["lasagne","lasagna","lasagne bolognese"],"cuisine":"Italiensk","region":["carbonara","amatriciana"],"explorerPriority":98},
+  {"id":"risotto-alla-milanese","name":"Risotto alla milanese","query":"risotto alla milanese","aliases":["risotto milanese","saffron risotto"],"cuisine":"Italiensk","region":["ossobuco","arancini"],"explorerPriority":96},
+  {"id":"ossobuco","name":"Ossobuco","query":"ossobuco","aliases":["osso buco","ossobuco alla milanese"],"cuisine":"Italiensk","region":["risotto-alla-milanese","saltimbocca"],"explorerPriority":94},
+  {"id":"gnocchi-al-pesto","name":"Gnocchi al pesto","query":"gnocchi al pesto","aliases":["gnocchi pesto","potetgnocchi med pesto"],"cuisine":"Italiensk","region":["pasta-alla-norma","cacio-e-pepe"],"explorerPriority":92},
+  {"id":"tiramisu","name":"Tiramisu","query":"tiramisu","aliases":["tiramisù"],"cuisine":"Italiensk","region":["cannoli"],"explorerPriority":90},
+  {"id":"focaccia","name":"Focaccia","query":"focaccia","aliases":["focaccia genovese"],"cuisine":"Italiensk","region":["pizza-margherita","pizza-marinara"],"explorerPriority":88},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
