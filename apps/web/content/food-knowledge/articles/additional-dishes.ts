@@ -1388,5 +1388,291 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "banh-xeo"
     ],
     "sources": []
+  },
+  {
+    "dishId": "massaman-curry",
+    "summary": "Thailandsk curry med kokosmelk, poteter, peanøtter og varme krydder.",
+    "overview": "Kjøtt og poteter trekkes i en fyldig saus med massamanpasta.",
+    "history": "Massaman er en thailandsk currytradisjon med muslimske og sørasiatiske kulinariske forbindelser.",
+    "flavor": "Mildt sterk, søtlig, syrlig og nøtteaktig.",
+    "technique": "La kjøttet bli mørt før potetene kokes ferdig.",
+    "essentials": [
+      "500 g storfekjøtt til gryte",
+      "400 ml kokosmelk",
+      "3 ss massamanpasta"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer",
+      "ingredients": [
+        "500 g storfekjøtt til gryte",
+        "400 ml kokosmelk",
+        "3 ss massamanpasta",
+        "300 g poteter",
+        "1 løk",
+        "50 g peanøtter",
+        "tamarind og fiskesaus"
+      ],
+      "steps": [
+        "Fres currypasta i litt kokosmelk.",
+        "Tilsett kjøtt og resten av kokosmelken; la trekke til mørt.",
+        "Tilsett poteter og løk og kok til møre.",
+        "Smak til med tamarind og fiskesaus, topp med peanøtter."
+      ]
+    },
+    "variants": [
+      "Kylling og tofu kan brukes i stedet for storfekjøtt."
+    ],
+    "serving": [
+      "Server med jasminris."
+    ],
+    "commonMistakes": [
+      "Ikke kok potetene like lenge som seigt grytekjøtt."
+    ],
+    "relatedDishIds": [
+      "green-curry",
+      "panang-curry"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "panang-curry",
+    "summary": "Fyldig thailandsk curry med kokosmelk, rød currypasta og makrutlimeblader.",
+    "overview": "Panang har gjerne en tykkere saus enn mange andre thailandske curryer.",
+    "history": "Retten er en etablert del av thailandsk currykultur.",
+    "flavor": "Kremet, salt, søtlig og aromatisk.",
+    "technique": "Reduser kokosmelken forsiktig før kjøttet tilsettes.",
+    "essentials": [
+      "400 g storfekjøtt i tynne skiver",
+      "400 ml kokosmelk",
+      "2 ss panangpasta"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25–40 min",
+      "ingredients": [
+        "400 g storfekjøtt i tynne skiver",
+        "400 ml kokosmelk",
+        "2 ss panangpasta",
+        "4 makrutlimeblader",
+        "fiskesaus",
+        "palmesukker"
+      ],
+      "steps": [
+        "Fres pastaen i den tykke delen av kokosmelken.",
+        "Tilsett resten av melken og la sausen tykne litt.",
+        "Tilsett kjøttet og kok til ferdig.",
+        "Smak til med fiskesaus og sukker; topp med finsnittede limeblader."
+      ]
+    },
+    "variants": [
+      "Varianter med kylling eller tofu."
+    ],
+    "serving": [
+      "Server med ris."
+    ],
+    "commonMistakes": [
+      "Ikke fortynn sausen unødvendig med mye vann."
+    ],
+    "relatedDishIds": [
+      "massaman-curry",
+      "green-curry"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "som-tam",
+    "summary": "Thailandsk salat av strimlet grønn papaya med lime, chili og fiskesaus.",
+    "overview": "Papayaen vendes med en dressing som støtes sammen i morter.",
+    "history": "Grønn papayasalat har sterke tradisjoner i Laos og nordøstlige Thailand, med flere lokale former.",
+    "flavor": "Sprø, syrlig, sterk og salt.",
+    "technique": "Støt dressingen lett og vend inn papayaen uten å knuse den.",
+    "essentials": [
+      "400 g grønn papaya",
+      "2 lime",
+      "2 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25–40 min",
+      "ingredients": [
+        "400 g grønn papaya",
+        "2 lime",
+        "2 hvitløksfedd",
+        "chili etter smak",
+        "2 ss fiskesaus",
+        "1 ss palmesukker",
+        "cherrytomater",
+        "peanøtter"
+      ],
+      "steps": [
+        "Skrell og strimle papayaen.",
+        "Støt hvitløk og chili i morter.",
+        "Bland inn lime, fiskesaus og sukker.",
+        "Vend inn tomater, papaya og peanøtter."
+      ]
+    },
+    "variants": [
+      "Som tam Thai og varianter med fermentert fisk."
+    ],
+    "serving": [
+      "Server med klebrig ris og grillmat."
+    ],
+    "commonMistakes": [
+      "Unngå moden, søt papaya dersom målet er sprø grønn papayasalat."
+    ],
+    "relatedDishIds": [
+      "pad-kra-pao",
+      "khao-pad"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "tom-kha-gai",
+    "summary": "Thailandsk kokossuppe med kylling, galangal og sitrongress.",
+    "overview": "Kokosmelk gir fylde mens galangal og lime gir karakteristisk aroma.",
+    "history": "Tom kha er en kjent thailandsk suppetype; gai betegner kylling.",
+    "flavor": "Kremet, syrlig og aromatisk med moderat chilivarme.",
+    "technique": "Trekk aromatene i kraften og tilsett limesaft til slutt.",
+    "essentials": [
+      "400 g kylling",
+      "400 ml kokosmelk",
+      "500 ml kraft"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25–40 min",
+      "ingredients": [
+        "400 g kylling",
+        "400 ml kokosmelk",
+        "500 ml kraft",
+        "galangal",
+        "2 stilker sitrongress",
+        "makrutlimeblader",
+        "150 g sopp",
+        "lime",
+        "fiskesaus"
+      ],
+      "steps": [
+        "Varm kraft med galangal, sitrongress og limeblader.",
+        "Tilsett kokosmelk, kylling og sopp.",
+        "La småkoke til kyllingen er gjennomstekt.",
+        "Smak til med lime og fiskesaus."
+      ]
+    },
+    "variants": [
+      "Tom kha med sopp eller sjømat."
+    ],
+    "serving": [
+      "Server med ris eller som del av et større måltid."
+    ],
+    "commonMistakes": [
+      "Ikke erstatt galangal med ingefær uten å regne med en annen smak."
+    ],
+    "relatedDishIds": [
+      "tom-yum",
+      "green-curry"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "pad-see-ew",
+    "summary": "Thailandske brede risnudler stekt med soyasaus, egg og grønnsaker.",
+    "overview": "Nudlene wokstekes med mørk soyasaus, ofte sammen med kinesisk brokkoli og kjøtt.",
+    "history": "Retten tilhører thailandsk nudelmat med kinesisk kulinarisk innflytelse.",
+    "flavor": "Salt, lett søt og ristet.",
+    "technique": "Stek små porsjoner på høy varme slik at nudlene får stekeskorpe.",
+    "essentials": [
+      "400 g brede risnudler",
+      "250 g kylling",
+      "2 egg"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25–40 min",
+      "ingredients": [
+        "400 g brede risnudler",
+        "250 g kylling",
+        "2 egg",
+        "200 g gai lan",
+        "2 ss soyasaus",
+        "1 ss mørk soyasaus",
+        "hvitløk",
+        "olje"
+      ],
+      "steps": [
+        "Klargjør nudlene etter pakningen.",
+        "Stek hvitløk og kylling til gjennomstekt.",
+        "Tilsett egg og grønnsaker.",
+        "Vend inn nudler og soyasaus og stek raskt på høy varme."
+      ]
+    },
+    "variants": [
+      "Varianter med svin, storfekjøtt eller tofu."
+    ],
+    "serving": [
+      "Server med chili i eddik etter smak."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll woken eller rør så hardt at nudlene går i stykker."
+    ],
+    "relatedDishIds": [
+      "pad-thai",
+      "khao-pad"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "khao-pad",
+    "summary": "Thailandsk stekt ris med egg, grønnsaker og ofte kjøtt eller sjømat.",
+    "overview": "Kokt ris stekes med aromater og smakstilsetninger i varm panne.",
+    "history": "Khao pad er en utbredt thailandsk hverdags- og restaurantrett.",
+    "flavor": "Mildt salt, aromatisk og ristet.",
+    "technique": "Bruk avkjølt ris som er oppbevart forsvarlig, og stek raskt ved høy varme.",
+    "essentials": [
+      "600 g kokt ris",
+      "2 egg",
+      "250 g kylling"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25–40 min",
+      "ingredients": [
+        "600 g kokt ris",
+        "2 egg",
+        "250 g kylling",
+        "2 hvitløksfedd",
+        "1 løk",
+        "vårløk",
+        "fiskesaus",
+        "lime"
+      ],
+      "steps": [
+        "Stek hvitløk, løk og kylling til gjennomstekt.",
+        "Tilsett egg og rør til de setter seg.",
+        "Vend inn risen og stek til rykende varm.",
+        "Smak til med fiskesaus og topp med vårløk."
+      ]
+    },
+    "variants": [
+      "Khao pad goong med reker og khao pad gai med kylling."
+    ],
+    "serving": [
+      "Server med lime, agurk og eventuelt chili i fiskesaus."
+    ],
+    "commonMistakes": [
+      "Ikke bruk ris som har stått lenge i romtemperatur."
+    ],
+    "relatedDishIds": [
+      "pad-see-ew",
+      "pad-kra-pao"
+    ],
+    "sources": []
   }
 ];
