@@ -4,6 +4,7 @@ import { ramenTranslations } from "../content/food-knowledge/translations/ramen.
 import { biryaniTranslations } from "../content/food-knowledge/translations/biryani.ts";
 import { falafelTranslations } from "../content/food-knowledge/translations/falafel.ts";
 import { carbonaraTranslations } from "../content/food-knowledge/translations/carbonara.ts";
+import { tacosAlPastorTranslations } from "../content/food-knowledge/translations/tacos-al-pastor.ts";
 import type { PreviewLocale } from "./locale-messages.ts";
 
 export type ArticleBody = Omit<FoodKnowledgeArticle, "dishId" | "summary" | "relatedDishIds" | "sources">;
@@ -13,6 +14,7 @@ const articles: Readonly<Record<string, Partial<Record<Exclude<PreviewLocale, "n
   biryani: biryaniTranslations,
   falafel: falafelTranslations,
   carbonara: carbonaraTranslations,
+  "tacos-al-pastor": tacosAlPastorTranslations,
 };
 
 export const translatedArticleIds = Object.keys(articles);
