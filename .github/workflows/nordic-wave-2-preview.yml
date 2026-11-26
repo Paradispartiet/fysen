@@ -1,10 +1,16 @@
-name: Nordic second-wave source review (read-only)
+name: Nordic second-wave source review and one-time release
 on:
   pull_request:
     paths:
       - "apps/menu-worker/src/nordic-wave-2-*.ts"
       - "docs/nordic-wave-2-menu-review.json"
       - ".github/workflows/nordic-wave-2-preview.yml"
+      - "scripts/*fysen-nordic-wave2*.py"
+      - "scripts/*fysen-nordic-wave2*.mjs"
+  push:
+    branches: [main]
+    paths:
+      - "docs/releases/nordic-wave2-2026-11-26.json"
   workflow_dispatch:
 permissions:
   contents: read
@@ -24,4 +30,110 @@ jobs:
       - run: pnpm --filter @fysen/menu-worker... build
       - run: pnpm --filter @fysen/menu-worker exec vitest run src/nordic-wave-2-preview.test.ts
       - name: Check reviewed rows against live source
-        run: pnpm --filter @fysen/menu-worker exec tsx src/nordic-wave-2-probe.ts ${{ matrix.source }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --filter @fysen/menu-worker exec tsx src/nordic-wave-2-probe.ts ${{ matrix.source }} | tee "$RUNNER_TEMP/${{ matrix.source }}.json"
+          python3 -m json.tool "$RUNNER_TEMP/${{ matrix.source }}.json" >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wave2-source-${{ matrix.source }}
+          path: ${{ runner.temp }}/${{ matrix.source }}.json
+          if-no-files-found: error
+          retention-days: 14
+  stage-wave2:
+    needs: second-wave-source
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: public-index
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: wave2-source-*
+          path: fresh-reports
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: python3 scripts/build-fysen-nordic-wave2.py public-index fresh-reports "$RUNNER_TEMP/wave2"
+      - run: node scripts/verify-fysen-nordic-wave2.mjs public-index "$RUNNER_TEMP/wave2" fresh-reports
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wave2-reviewed-subset-not-published
+          path: ${{ runner.temp }}/wave2/
+          if-no-files-found: error
+          retention-days: 14
+
+  publish-wave2:
+    # Exact single-use release record and previous main revision, no ordinary
+    # pushes, pull requests or manual previews can write the production index.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.event.before == 'f5998b5a17f3ea89b2308cc42e66b5b3b476075a'
+    needs: stage-wave2
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: fysen-free-public-index
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify explicit one-time release record
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          actual = json.loads(Path("docs/releases/nordic-wave2-2026-11-26.json").read_text())
+          expected = {"version":1,"action":"append-reviewed-nordic-wave2","readerCommit":"1465f3bea00f8ab352ef6e3033c66a89a0cb3605","archiveVersion":2,"restaurants":3,"sources":4,"dishes":110}
+          if actual != expected:
+              raise SystemExit("Invalid second-wave release record")
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: public-index
+          persist-credentials: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: wave2-source-*
+          path: fresh-reports
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Rebuild from latest locked v2 archive and verify every offer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build-fysen-nordic-wave2.py public-index fresh-reports "$RUNNER_TEMP/wave2-release"
+          node scripts/verify-fysen-nordic-wave2.mjs public-index "$RUNNER_TEMP/wave2-release" fresh-reports
+          git -C public-index rev-parse HEAD > "$RUNNER_TEMP/wave2-base-sha"
+      - name: Append only verified index and corresponding manifest
+        shell: bash
+        working-directory: public-index
+        run: |
+          set -euo pipefail
+          expected="$(cat "$RUNNER_TEMP/wave2-base-sha")"
+          remote="$(git ls-remote origin refs/heads/fysen-free-public-index | cut -f1)"
+          test "$remote" = "$expected"
+          main="$(git ls-remote origin refs/heads/main | cut -f1)"
+          test "$main" = "$GITHUB_SHA"
+          cp "$RUNNER_TEMP/wave2-release/index.json.gz" index.json.gz
+          cp "$RUNNER_TEMP/wave2-release/manifest.json" manifest.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.json.gz manifest.json
+          git diff --cached --quiet && { echo 'Expected second-wave changes' >&2; exit 1; }
+          git commit -m 'data: append 110 verified Nordic menu offers'
+          git push origin HEAD:refs/heads/fysen-free-public-index

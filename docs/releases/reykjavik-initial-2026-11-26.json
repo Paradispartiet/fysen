@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "action": "append-reviewed-reykjavik-initial",
+  "readerCommit": "8ad939aa26c1a77331beb3d30832d74e12a28a6c",
+  "archiveVersion": 2,
+  "restaurants": 3,
+  "sources": 3,
+  "dishes": 77,
+  "withheld": 4
+}
