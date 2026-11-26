@@ -82,6 +82,12 @@ export const foodKnowledgeDishIds = [
   "gnocchi-al-pesto",
   "tiramisu",
   "focaccia",
+  "tempura",
+  "okonomiyaki",
+  "takoyaki",
+  "sukiyaki",
+  "shabu-shabu",
+  "katsudon",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
