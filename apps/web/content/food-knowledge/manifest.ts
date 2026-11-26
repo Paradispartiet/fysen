@@ -112,6 +112,12 @@ export const foodKnowledgeDishIds = [
   "smorrebrod",
   "lohikeitto",
   "plokkfiskur",
+  "boeuf-bourguignon",
+  "coq-au-vin",
+  "ratatouille",
+  "bouillabaisse",
+  "quiche-lorraine",
+  "croque-monsieur",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
