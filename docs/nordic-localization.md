@@ -68,3 +68,7 @@ Three complete article bodies and recipes were translated in the six additional 
 ### Batch 10–12: Tom yum, Phở and Bánh mì
 
 Three full article bodies and recipes were translated in the six additional preview locales and registered together. All original article IDs, query mappings, source fields and recipes remain intact. Translation list counts and ingredient numeric consistency were checked before committing; shared tests now include twelve articles. Makrut lime is used as a synonym in the Tom yum translations without changing the original ingredient. Full article body coverage is 12/33. GitHub returned no workflow runs for the previous batch commit 970c445 at the start of this update. Fresh CI and linguistic review remain outstanding; no production activation.
+
+### Batch 13–18: Katsu, Bao, Mapo tofu, Butter chicken, Tandoori and Chana masala
+
+Six more full article bodies and recipes are translated into the six additional preview locales. All six files are registered and the shared structure and numeric-quantity test includes eighteen articles. Ingredient counts and numeric consistency between translations were checked before committing; original article IDs, recipes, related dish IDs, source fields and menu query mappings are unchanged. Full article body coverage is 18/33. GitHub returned no workflow runs for the previous batch commit 8f77282 at the start of the update. Fresh CI and linguistic review remain outstanding; no production activation.
