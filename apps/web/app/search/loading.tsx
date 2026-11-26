@@ -4,7 +4,7 @@ import { GlobalHeader } from "../../components/global-header";
 export default function SearchLoading() {
   return (
     <div className="resultsPage">
-      <GlobalHeader results>
+      <GlobalHeader results citySelectionPending>
         <DishSearch compact buttonLabel="Søk" inputId="loading-dish-query" />
       </GlobalHeader>
       <main className="resultsMain">
