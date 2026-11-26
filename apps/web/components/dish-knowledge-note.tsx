@@ -7,7 +7,7 @@ import {
   type FoodKnowledgeDish,
 } from "../content/food-knowledge";
 import { DishKnowledgeDialog } from "./dish-knowledge-dialog";
-import { DishPhotoThumbnail, hasDishPhotoThumbnail } from "./dish-photo-gallery";
+import { DishEditorialImage, findDishImage } from "./dish-editorial-image";
 
 type DishKnowledge = {
   readonly name: string;
@@ -43,18 +43,21 @@ function findKnowledge(query: string): DishKnowledge | null {
   const canonical = findFoodDishByQuery(query);
   if (canonical) {
     const dish = getFoodKnowledgeDish(canonical.id);
-    const hasImage = hasDishPhotoThumbnail(canonical.id);
+    const image = findDishImage(canonical.id, query);
+    const hasImage = Boolean(image);
     if (dish || hasImage) {
       return {
         name: canonical.name,
         origin: `${canonical.region} · ${canonical.cuisine}`,
         summary: dish?.summary ?? null,
         dish,
-        imageDishId: hasImage ? canonical.id : null,
+        imageDishId: image?.id ?? null,
       };
     }
   }
 
+  const image = findDishImage(null, query);
+  if (image) return { name: image.label, origin: "", summary: null, dish: null, imageDishId: image.id };
   const legacy = legacyKnowledge[normalize(query)];
   return legacy ? { ...legacy, dish: null, imageDishId: null } : null;
 }
@@ -71,11 +74,11 @@ export function DishKnowledgeNote({ query }: { query: string }) {
         className={knowledge.imageDishId ? "dishKnowledgeNote dishKnowledgeNoteWithImage" : "dishKnowledgeNote"}
         aria-label={`Om retten ${knowledge.name}`}
       >
-        {knowledge.imageDishId ? <DishPhotoThumbnail dishId={knowledge.imageDishId} label={knowledge.name} /> : null}
+        {knowledge.imageDishId ? <DishEditorialImage dishId={knowledge.imageDishId} priority /> : null}
         <div className="dishKnowledgeNoteContent">
           <div className="dishKnowledgeTopline">
             <span>{knowledge.dish ? "Fysen matleksikon" : "Om retten"}</span>
-            <span>{knowledge.origin}</span>
+            {knowledge.origin ? <span>{knowledge.origin}</span> : null}
           </div>
           <h2>{knowledge.name}</h2>
           {knowledge.summary ? <p>{knowledge.summary}</p> : null}
