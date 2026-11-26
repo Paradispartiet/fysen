@@ -32,3 +32,7 @@ The 12 home cuisines and all names extracted from the current atlas and food-typ
 ## Food encyclopedia preview
 
 Thirty message keys now cover the encyclopedia list, search-result note and article dialog in seven preview locales. Twelve existing article summaries have six additional draft translations keyed by canonical dish ID. Untranslated summaries fall back to the unchanged Bokmål text with its language attribute. Eleven canonical dish IDs have draft localized display labels; international dish names otherwise remain unchanged. Display names never replace canonical queries or source menu text. Long articles, recipe ingredients/instructions, other summaries, region names, multilingual search matching, and the three additional planned locales are not complete. Previous CI stopped on a missing Node URL import in the cuisine label test; that import has been added. New CI and native-language review remain mandatory before release.
+
+### Complete summary coverage
+
+All 33 canonical food encyclopedia summaries now have draft translations in the six additional preview languages (198 translations, 231 language versions including the unchanged original Bokmål). The test compares the exact translation IDs against the canonical manifest. Full article body and recipe translations remain outstanding. The previous mobile/tablet browser proof timed out on the Dal makhani note because the accessible label introduced a separator; the original label format has been restored. Fresh CI and browser proof are required before activation.
