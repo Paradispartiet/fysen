@@ -1062,7 +1062,7 @@ const translations: Readonly<Record<string, readonly [string, string, string, st
     "Smårettar og galettar",
     "Smårätter och galetter",
     "Småretter og galetter",
-    "Pikkuruoat ja galetet",
+    "Pikkuruoat ja galetit",
     "Smáréttir og galettur",
     "Small dishes and galettes"
   ],
@@ -1235,7 +1235,7 @@ const translations: Readonly<Record<string, readonly [string, string, string, st
     "Risotto and rice"
   ],
   "Forretter": [
-    "Førrrettar",
+    "Førrettar",
     "Förrätter",
     "Forretter",
     "Alkuruoat",
