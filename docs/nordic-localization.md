@@ -48,3 +48,7 @@ Ramen is registered alongside Dal makhani with complete editorial body and recip
 ### Third full article: Biryani
 
 Biryani has complete body and recipe drafts in all six additional preview locales. All 12 ingredient entries, five steps, four regional/vegetarian variants and original sources are retained; tests compare the numeric quantities and timing with the original. The registry and shared tests now cover three of 33 full articles. At the time of this update, the Ramen commit 02ccfbe had passed the mobile/iPad and menu archive proofs, with CI still running. Biryani is not yet independently verified or published.
+
+### Fourth full article: Falafel
+
+Falafel now has complete article body and recipe drafts in all six additional preview locales, retaining 10 ingredient entries, five steps, four variants and original source links. The shared structure and quantity tests cover all four translated articles. The preceding Biryani commit a80c175 passed CI, responsive mobile/iPad proof and public menu archive verification. Falafel still requires fresh CI and linguistic review. Full article body coverage is 4/33; no production activation.
