@@ -825,6 +825,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"sukiyaki","name":"Sukiyaki","query":"sukiyaki","aliases":[],"cuisine":"Asiatisk","region":"Japan","explorerPriority":82},
   {"id":"shabu-shabu","name":"Shabu-shabu","query":"shabu shabu","aliases":["shabu shabu"],"cuisine":"Asiatisk","region":"Japan","explorerPriority":80},
   {"id":"katsudon","name":"Katsudon","query":"katsudon","aliases":[],"cuisine":"Asiatisk","region":"Japan","explorerPriority":78},
+  {"id":"kung-pao-chicken","name":"Kung pao chicken","query":"kung pao chicken","aliases":["gong bao ji ding","kung pao kylling","kung po chicken"],"cuisine":"Asiatisk","region":"Kina","explorerPriority":88},
+  {"id":"xiaolongbao","name":"Xiaolongbao","query":"xiaolongbao","aliases":["xiao long bao","soup dumplings"],"cuisine":"Asiatisk","region":"Kina","explorerPriority":86},
+  {"id":"char-siu","name":"Char siu","query":"char siu","aliases":["char siew","chinese barbecue pork","kinesisk bbq svin"],"cuisine":"Asiatisk","region":"Kina","explorerPriority":84},
+  {"id":"chow-mein","name":"Chow mein","query":"chow mein","aliases":["chao mian","stekte kinesiske nudler"],"cuisine":"Asiatisk","region":"Kina","explorerPriority":82},
+  {"id":"wonton-soup","name":"Wontonsuppe","query":"wonton soup","aliases":["wonton soup","wan tan soup","wonton suppe"],"cuisine":"Asiatisk","region":"Kina","explorerPriority":80},
+  {"id":"sweet-and-sour-pork","name":"Sursøtt svinekjøtt","query":"sweet and sour pork","aliases":["sweet and sour pork","sweet & sour pork","gu lou yuk","svinekjøtt i sursøt saus"],"cuisine":"Asiatisk","region":"Kina","explorerPriority":78},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
