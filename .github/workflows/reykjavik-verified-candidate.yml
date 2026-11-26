@@ -1,0 +1,66 @@
+name: Iceland verified menu candidate (read-only)
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/src/reykjavik-*.ts"
+      - "docs/reykjavik-*-review.json"
+      - "scripts/*fysen-reykjavik-candidate*"
+      - ".github/workflows/reykjavik-verified-candidate.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [rok, gamla, krons]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-node-pnpm
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Fetch fresh official menu
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --filter @fysen/menu-worker exec tsx src/reykjavik-${{ matrix.source }}-probe.ts | tee "$RUNNER_TEMP/${{ matrix.source }}.json"
+          python3 -m json.tool "$RUNNER_TEMP/${{ matrix.source }}.json" >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: island-source-${{ matrix.source }}
+          path: ${{ runner.temp }}/${{ matrix.source }}.json
+          if-no-files-found: error
+          retention-days: 14
+  stage:
+    needs: source
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: public-index
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: island-source-*
+          path: fresh-reports
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: python3 scripts/build-fysen-reykjavik-candidate.py public-index fresh-reports "$RUNNER_TEMP/island"
+      - run: node scripts/verify-fysen-reykjavik-candidate.mjs public-index "$RUNNER_TEMP/island" fresh-reports
+      - uses: actions/upload-artifact@v4
+        with:
+          name: island-candidate-not-published
+          path: ${{ runner.temp }}/island/
+          if-no-files-found: error
+          retention-days: 14

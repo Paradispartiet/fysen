@@ -1,0 +1,200 @@
+{
+  "status": "manual-source-review-only-not-production",
+  "reviewDate": "2026-11-25",
+  "restaurant": {
+    "name": "Gamla Reykjavík",
+    "slug": "gamla-reykjavik-austurstraeti",
+    "address": "Austurstræti 14, 101 Reykjavík, Iceland",
+    "city": "Reykjavík",
+    "countryCode": "IS",
+    "currency": "ISK",
+    "timezone": "Atlantic/Reykjavik"
+  },
+  "source": "https://www.gamlareykjavik.is/en",
+  "secondaryLanguageSource": "https://www.gamlareykjavik.is/",
+  "evidenceLimit": "Official English and Icelandic menu opened on 2026-11-25; direct automated digest pending. Catering, drinks and a food-and-spirit combo excluded.",
+  "localKitchenHours": {
+    "from": "12:00",
+    "through": "22:00"
+  },
+  "items": [
+    {
+      "section": "Small Courses",
+      "name": "Fries",
+      "priceMinor": 199000,
+      "priceMaxMinor": 269000,
+      "note": "Vanlig eller med topping",
+      "publishEligible": false
+    },
+    {
+      "section": "Small Courses",
+      "name": "Loaded Beef Nachos",
+      "priceMinor": 329000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Small Courses",
+      "name": "Wings",
+      "priceMinor": 349000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Small Courses",
+      "name": "Traditional Flatbread",
+      "priceMinor": 249000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Small Courses",
+      "name": "Nut Mix",
+      "priceMinor": 99000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Small Courses",
+      "name": "Olives",
+      "priceMinor": 199000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Pizzas (10\")",
+      "name": "Margherita",
+      "priceMinor": 299000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Pizzas (10\")",
+      "name": "Pepperoni",
+      "priceMinor": 349000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Pizzas (10\")",
+      "name": "Ham and Mushroom",
+      "priceMinor": 329000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Pizzas (10\")",
+      "name": "BBQ Chicken",
+      "priceMinor": 369000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Traditional Lamb Soup",
+      "priceMinor": 299000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Bacon Burger",
+      "priceMinor": 299000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Béarnaise Burger",
+      "priceMinor": 329000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "BBQ Burger",
+      "priceMinor": 369000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Fish and Chips",
+      "priceMinor": 429000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Traditional Fish Hash",
+      "priceMinor": 429000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Chicken Salad",
+      "priceMinor": 429000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Steak Sandwich",
+      "priceMinor": 469000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Guinness Beef Stew",
+      "priceMinor": 449000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Steak and Fries",
+      "priceMinor": 699000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Lamb Shank",
+      "priceMinor": 649000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Desserts",
+      "name": "Icelandic Pancakes",
+      "priceMinor": 199000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Desserts",
+      "name": "Chocolate Brownie",
+      "priceMinor": 199000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Desserts",
+      "name": "Meringue & Chocolate",
+      "priceMinor": 319000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    }
+  ],
+  "excluded": [
+    {
+      "section": "Small Courses",
+      "name": "Shark and Brennivín",
+      "priceMinor": 299000,
+      "priceMaxMinor": null,
+      "reason": "Food plus alcoholic drink package; not a standalone food price"
+    }
+  ]
+}

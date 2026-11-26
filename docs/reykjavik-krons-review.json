@@ -1,0 +1,189 @@
+{
+  "status": "manual-source-review-only-not-production",
+  "reviewDate": "2026-11-25",
+  "restaurant": {
+    "name": "Kröns kitchen & bar",
+    "slug": "krons-laugavegur-reykjavik",
+    "address": "Laugavegur 74, 101 Reykjavík, Iceland",
+    "city": "Reykjavík",
+    "countryCode": "IS",
+    "currency": "ISK",
+    "timezone": "Atlantic/Reykjavik"
+  },
+  "source": "https://krons.is/",
+  "secondaryLanguageSource": "https://krons.is/is/",
+  "olderMenuSource": "https://www.krons.is/menu",
+  "evidenceLimit": "Official homepage retrieved by web search on 2026-11-25, indexed today. Icelandic homepage corroborates the 23 current individually priced entries. Older menu indexed two months ago lists 26. No new automated digest yet. Exclude tasting sets; keep older-only Beef tartare, Celeriac and Beef tenderloin as research, not current menu.",
+  "excludedOlderOnly": [
+    "Beef tartare",
+    "Celeriac",
+    "Beef tenderloin"
+  ],
+  "items": [
+    {
+      "section": "Appetizers",
+      "name": "Icelandic scallop",
+      "priceMinor": 360000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Appetizers",
+      "name": "Lobster taco",
+      "priceMinor": 380000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Appetizers",
+      "name": "Croquetas de bacalao",
+      "priceMinor": 360000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Appetizers",
+      "name": "Bruschetta",
+      "priceMinor": 270000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Appetizers",
+      "name": "Beef tataki",
+      "priceMinor": 449000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Appetizers",
+      "name": "Wild mushroom risotto",
+      "priceMinor": 320000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Appetizers",
+      "name": "Sweet potato taco",
+      "priceMinor": 269000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Soups",
+      "name": "Vegetarian soup of the day",
+      "priceMinor": 269000,
+      "priceMaxMinor": null,
+      "note": "Dagens suppe; spør restauranten",
+      "publishEligible": false
+    },
+    {
+      "section": "Soups",
+      "name": "Icelandic lamb soup",
+      "priceMinor": 340000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Lamb fillet",
+      "priceMinor": 660000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Fish of the day",
+      "priceMinor": 469000,
+      "priceMaxMinor": null,
+      "note": "Dagens fangst",
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Kröns burger",
+      "priceMinor": 399000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Bacon burger",
+      "priceMinor": 419000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Fish and chips",
+      "priceMinor": 469000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "Braised veal cheeks",
+      "priceMinor": 480000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Mains",
+      "name": "UMI Ribeye 300 g",
+      "priceMinor": 999000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Desserts",
+      "name": "Skyr",
+      "priceMinor": 249000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Desserts",
+      "name": "Brownie",
+      "priceMinor": 320000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Desserts",
+      "name": "Dessert duo to share",
+      "priceMinor": 499000,
+      "priceMaxMinor": null,
+      "note": "Delingsdessert",
+      "publishEligible": false
+    },
+    {
+      "section": "Sides",
+      "name": "French fries",
+      "priceMinor": 169000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Sides",
+      "name": "Pan-fried potatoes",
+      "priceMinor": 169000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Sides",
+      "name": "Truffle potatoes or fries",
+      "priceMinor": 210000,
+      "priceMaxMinor": null,
+      "publishEligible": false
+    },
+    {
+      "section": "Sides",
+      "name": "Today's green salad",
+      "priceMinor": 249000,
+      "priceMaxMinor": null,
+      "note": "Dagens salat",
+      "publishEligible": false
+    }
+  ]
+}
