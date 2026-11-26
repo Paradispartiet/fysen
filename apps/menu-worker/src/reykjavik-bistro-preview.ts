@@ -16,7 +16,15 @@ export function verifyBistroMenu(text:string,menu:BistroMenu){
   const headings=[...new Set(menu.items.map(r=>r.section))];
   const scopes=new Map<string,string[]>();
   let section:string|undefined;
-  for(const line of lines.slice(start+2,end)){
+  const fields=lines.slice(start+2,end);
+  for(let i=0;i<fields.length;i++){
+    let line=fields[i]!;
+    // Exact live dinner layout, confirmed in job 139732634029.
+    // Join only the reviewed heading with its explicit age qualification.
+    if(line==="childrens"&&fields[i+1]==="menu"&&fields[i+2]==="*for 12 years and younger"){
+      line="childrens menu *for 12 years and younger";
+      i+=2;
+    }
     // Wix can concatenate the children's section heading and its age notice.
     // Split only the exact reviewed heading and exact age qualification.
     const h=headings.find(s=>norm(s)===line);

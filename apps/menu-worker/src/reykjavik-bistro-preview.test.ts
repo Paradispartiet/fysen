@@ -34,3 +34,14 @@ describe("Bistro dinner heading joined to age condition",()=>{
   expect(()=>verifyBistroMenu(text.replace("12 years","14 years"),menu)).toThrow();
  });
 });
+
+describe("Bistro exact live split dinner child heading",()=>{
+ it("separates sides from children and fails closed on age or price drift",()=>{
+  const menu:BistroMenu={service:"dinner",heading:"Dinner menu",localServiceTime:{from:"16:00",through:"21:30"},source:"https://example.org",excluded:[],items:[{section:"Sides",name:"Mayonnaise",priceMinor:40000,publishEligible:false},{section:"Childrens MENU",name:"Childrens cheese burger",priceMinor:190000,note:"Barn til og med 12 år",publishEligible:false}]};
+  const source=["Dinner menu","Served daily from 16:00 - 21:30","Sides","Mayonnaise","ISK 400","Childrens","menu","*For 12 years and younger","Childrens cheese burger","cheese, french fries and ketchup","ISK 1,900","Contact"].join("\n");
+  const rows=verifyBistroMenu(source,menu);
+  expect(rows.map(r=>[r.section,r.priceMinor,r.note])).toEqual([["Sides",40000,undefined],["Childrens MENU",190000,"Barn til og med 12 år"]]);
+  expect(()=>verifyBistroMenu(source.replace("12 years","14 years"),menu)).toThrow();
+  expect(()=>verifyBistroMenu(source.replace("1,900","2,900"),menu)).toThrow();
+ });
+});
