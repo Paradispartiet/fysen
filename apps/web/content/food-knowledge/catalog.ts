@@ -831,6 +831,11 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"chow-mein","name":"Chow mein","query":"chow mein","aliases":["chao mian","stekte kinesiske nudler"],"cuisine":"Asiatisk","region":"Kina","explorerPriority":82},
   {"id":"wonton-soup","name":"Wontonsuppe","query":"wonton soup","aliases":["wonton soup","wan tan soup","wonton suppe"],"cuisine":"Asiatisk","region":"Kina","explorerPriority":80},
   {"id":"sweet-and-sour-pork","name":"Sursøtt svinekjøtt","query":"sweet and sour pork","aliases":["sweet and sour pork","sweet & sour pork","gu lou yuk","svinekjøtt i sursøt saus"],"cuisine":"Asiatisk","region":"Kina","explorerPriority":78},
+  {"id":"enchiladas","name":"Enchiladas","query":"enchiladas","aliases":["enchilada"],"cuisine":"Mexicansk","region":["quesadilla","mole-poblano"],"explorerPriority":90},
+  {"id":"burrito","name":"Burrito","query":"burrito","aliases":["burritos"],"cuisine":"Mexicansk","region":["quesadilla","tacos-al-pastor"],"explorerPriority":88},
+  {"id":"tamales","name":"Tamales","query":"tamales","aliases":["tamal"],"cuisine":"Mexicansk","region":["enchiladas","mole-poblano"],"explorerPriority":86},
+  {"id":"chilaquiles","name":"Chilaquiles","query":"chilaquiles","aliases":[],"cuisine":"Mexicansk","region":["enchiladas","quesadilla"],"explorerPriority":84},
+  {"id":"mole-poblano","name":"Mole poblano","query":"mole poblano","aliases":["mole poblano con pollo"],"cuisine":"Mexicansk","region":["enchiladas","tamales"],"explorerPriority":82},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
