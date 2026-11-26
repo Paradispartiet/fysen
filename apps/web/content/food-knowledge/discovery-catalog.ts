@@ -3,33 +3,6 @@ import type { FoodDishCatalogEntry } from "./types";
 
 const productionBackedMatlystDishes: readonly FoodDishCatalogEntry[] = [
   {
-    id: "bibimbap",
-    name: "Bibimbap",
-    query: "bibimbap",
-    aliases: ["bibimbap vegan"],
-    cuisine: "Koreansk",
-    region: "Korea",
-    explorerPriority: 100,
-  },
-  {
-    id: "bulgogi",
-    name: "Bulgogi",
-    query: "bulgogi",
-    aliases: ["beef bulgogi bowl", "spicy pork bulgogi bowl"],
-    cuisine: "Koreansk",
-    region: "Korea",
-    explorerPriority: 96,
-  },
-  {
-    id: "tteokbokki",
-    name: "Tteokbokki",
-    query: "tteokbokki",
-    aliases: [],
-    cuisine: "Koreansk",
-    region: "Korea",
-    explorerPriority: 94,
-  },
-  {
     id: "mandu",
     name: "Mandu",
     query: "mandu",
