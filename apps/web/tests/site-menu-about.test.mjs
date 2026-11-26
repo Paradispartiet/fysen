@@ -10,7 +10,14 @@ function read(relative) {
 test("the site menu offers an About Fysen page", () => {
   const header = read("../components/global-header.tsx");
   const about = read("../app/om/page.tsx");
-  assert.match(header, /<details className="siteMenu">/u);
+  assert.match(header, /<details className="siteMenu" name="fysen-header-disclosure">/u);
+  const mainMenu = header.match(/<nav className="siteMenuPanel" aria-label="Hovedmeny">([\s\S]*?)<\/nav>/u)?.[1];
+  const cityMenu = header.match(/<nav className="siteMenuPanel cityMenuPanel" aria-label="Byvalg">([\s\S]*?)<\/nav>/u)?.[1];
+  assert.ok(mainMenu && cityMenu);
+  assert.doesNotMatch(mainMenu, /Velg by|nordicCities|citySwitchHref/u);
+  assert.match(cityMenu, /nordicCities\.map/u);
+  assert.match(cityMenu, /citySwitchHref\(name, query\)/u);
+  assert.match(mainMenu, /withPublicBasePath\("\/om"\)/u);
   assert.match(header, /withPublicBasePath\("\/om"\)/u);
   assert.match(about, /id="menydata"/u);
   assert.match(header, /#menydata/u);
