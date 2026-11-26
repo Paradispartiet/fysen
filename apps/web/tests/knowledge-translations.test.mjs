@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { foodKnowledgeDishIds } from "../content/food-knowledge/manifest.ts";
 import { dishDisplayName } from "../lib/dish-display-names.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { knowledgeMessages, knowledgeText } from "../lib/knowledge-messages.ts";
@@ -17,9 +18,10 @@ test("food encyclopedia copy preserves all interpolation placeholders", () => {
   assert.equal(knowledgeText("sv", "find", { name: "Dal makhani" }), "Hitta Dal makhani");
 });
 
-test("featured dishes and Dal makhani have translated summaries", () => {
-  assert.equal(translatedSummaryIds.length, 12);
-  for (const id of ["ramen", "biryani", "falafel", "carbonara", "tacos-al-pastor", "pad-thai", "dal-makhani"]) {
+test("every canonical encyclopedia article has translated summaries", () => {
+  assert.equal(translatedSummaryIds.length, 33);
+  assert.deepEqual([...translatedSummaryIds].sort(), [...foodKnowledgeDishIds].sort());
+  for (const id of foodKnowledgeDishIds) {
     assert.ok(translatedSummaryIds.includes(id));
     for (const locale of previewLocales.filter((value) => value !== "nb")) {
       const summary = localizedSummary(id, "original", locale);
