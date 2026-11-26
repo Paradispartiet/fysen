@@ -94,6 +94,12 @@ export const foodKnowledgeDishIds = [
   "chow-mein",
   "wonton-soup",
   "sweet-and-sour-pork",
+  "enchiladas",
+  "burrito",
+  "tamales",
+  "chilaquiles",
+  "mole-poblano",
+  "ceviche",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
