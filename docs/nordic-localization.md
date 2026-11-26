@@ -60,3 +60,7 @@ Carbonara now has complete article body and recipe drafts in all six additional 
 ### Sixth full article: Tacos al pastor
 
 Tacos al pastor now has complete body and recipe drafts in the six additional preview locales. Ten ingredient entries, five steps, three variants and the original source link are retained. Numeric ingredient tokens were checked against the Bokmål original before committing; the shared tests now cover six registered articles. No workflow runs were returned for the previous Carbonara documentation commit 07e6f20 during this update. Full article body coverage is 6/33. Fresh CI, linguistic review and release checks remain outstanding; no production activation.
+
+### Batch 7–9: Pad thai, Sushi and Gyoza
+
+Three complete article bodies and recipes were translated in the six additional preview locales and registered together. All original IDs, query mappings, sources and recipes are retained. The new translation data was checked for field counts, ingredient list lengths and numeric consistency; the shared test now covers nine articles. Full article body coverage is 9/33. Work proceeds in larger batches rather than requiring a separate user turn per dish. Fresh CI and linguistic review remain outstanding; no production activation.
