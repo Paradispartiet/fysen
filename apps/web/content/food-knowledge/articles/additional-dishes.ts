@@ -551,5 +551,279 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "carbonara"
     ],
     "sources": []
+  },
+  {
+    "dishId": "peking-duck",
+    "summary": "Kinesisk stekt and med sprøtt skinn, ofte servert i tynne pannekaker.",
+    "overview": "Skinnet tørkes før steking for å få en sprø overflate.",
+    "history": "Pekingand er særlig knyttet til Beijings restauranttradisjon.",
+    "flavor": "Rikt andekjøtt, sprøtt skinn og søtlig saus.",
+    "technique": "Tørk anden utildekket i kjøleskap og stek på rist.",
+    "essentials": [
+      "1 hel and",
+      "salt",
+      "tynne kinesiske pannekaker"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2–3 timer + tørking over natten",
+      "ingredients": [
+        "1 hel and",
+        "salt",
+        "tynne kinesiske pannekaker",
+        "agurk",
+        "vårløk",
+        "søt bønnesaus"
+      ],
+      "steps": [
+        "Tørk anden godt og salt den.",
+        "La den stå utildekket i kjøleskap over natten.",
+        "Stek på rist ved 180 °C til gjennomstekt, minst 74 °C i tykkeste del.",
+        "Skjær kjøttet og server med pannekaker og tilbehør."
+      ]
+    },
+    "variants": [
+      "Hjemmevarianten forenkler den tradisjonelle ovnsteknikken."
+    ],
+    "serving": [
+      "Server med agurk, vårløk og søt bønnesaus."
+    ],
+    "commonMistakes": [
+      "Ikke pakk inn det sprø skinnet slik at dampen gjør det mykt."
+    ],
+    "relatedDishIds": [
+      "bao",
+      "dumplings"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "dan-dan-noodles",
+    "summary": "Nudler fra Sichuan med chiliolje, krydret kjøtt og aromatisk saus.",
+    "overview": "Hvetenudler blandes med en konsentrert saus og gjerne stekt kjøttdeig.",
+    "history": "Retten forbindes med Sichuans gatemat og nudeltradisjon.",
+    "flavor": "Sterk, salt, nøtteaktig og lett bedøvende fra sichuanpepper.",
+    "technique": "Bland sausen i skålen før varme nudler tilsettes.",
+    "essentials": [
+      "300 g hvetenudler",
+      "200 g svinekjøttdeig",
+      "2 ss chiliolje"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "300 g hvetenudler",
+        "200 g svinekjøttdeig",
+        "2 ss chiliolje",
+        "2 ss sesampasta",
+        "soyasaus",
+        "sichuanpepper",
+        "syltede sennepsblader"
+      ],
+      "steps": [
+        "Stek kjøttdeigen gjennom med hakkede sennepsblader.",
+        "Bland chiliolje, sesampasta, soyasaus og sichuanpepper.",
+        "Kok nudlene og spar litt kokevann.",
+        "Fordel saus, nudler og kjøtt i skåler."
+      ]
+    },
+    "variants": [
+      "Varianter med mer kraft eller uten kjøtt."
+    ],
+    "serving": [
+      "Server med vårløk og bland før du spiser."
+    ],
+    "commonMistakes": [
+      "Unngå så mye sesampasta at chilien og krydderet overdøves."
+    ],
+    "relatedDishIds": [
+      "mapo-tofu",
+      "dumplings"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "amatriciana",
+    "summary": "Italiensk pasta med tomat, guanciale og pecorino.",
+    "overview": "Svinekjake gir fett og smak til en enkel tomatsaus.",
+    "history": "Retten knyttes til Amatrice og har også en sterk plass i romersk matkultur.",
+    "flavor": "Salt, fyldig og fruktig, gjerne med litt chili.",
+    "technique": "Stek guanciale langsomt slik at fettet smelter.",
+    "essentials": [
+      "350 g bucatini",
+      "150 g guanciale",
+      "400 g tomater"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "350 g bucatini",
+        "150 g guanciale",
+        "400 g tomater",
+        "80 g pecorino romano",
+        "chili"
+      ],
+      "steps": [
+        "Skjær guanciale i strimler og stek til gyllen.",
+        "Tilsett tomat og chili og la sausen småkoke.",
+        "Kok pasta al dente og vend inn i sausen.",
+        "Topp med revet pecorino."
+      ]
+    },
+    "variants": [
+      "Spaghetti kan brukes i stedet for bucatini."
+    ],
+    "serving": [
+      "Server varm med pecorino."
+    ],
+    "commonMistakes": [
+      "Ikke salt sausen for mye før osten er tilsatt."
+    ],
+    "relatedDishIds": [
+      "carbonara",
+      "cacio-e-pepe"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "saltimbocca",
+    "summary": "Tynne kalveskiver med prosciutto og salvie.",
+    "overview": "Kjøttet stekes raskt og serveres med en enkel sjysaus.",
+    "history": "Saltimbocca alla romana er en klassiker i romersk restauranttradisjon.",
+    "flavor": "Mørt kjøtt, salt skinke og aromatisk salvie.",
+    "technique": "Stek de tynne skivene kort for å bevare saftigheten.",
+    "essentials": [
+      "400 g tynne kalveskiver",
+      "8 skiver prosciutto",
+      "8 salvieblader"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "400 g tynne kalveskiver",
+        "8 skiver prosciutto",
+        "8 salvieblader",
+        "smør",
+        "100 ml hvitvin eller kraft"
+      ],
+      "steps": [
+        "Legg prosciutto og salvie på kalveskivene og fest med tannpirker.",
+        "Stek kort på begge sider til kjøttet er ferdig.",
+        "Ta ut kjøttet og kok ut pannen med vin eller kraft.",
+        "Rør inn smør og server sausen over kjøttet."
+      ]
+    },
+    "variants": [
+      "Enkelte hjemmevarianter bruker kylling."
+    ],
+    "serving": [
+      "Server med grønnsaker eller poteter."
+    ],
+    "commonMistakes": [
+      "Ikke stek tynne kalveskiver for lenge."
+    ],
+    "relatedDishIds": [
+      "carbonara",
+      "amatriciana"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "cannoli",
+    "summary": "Sicilianske sprø deigrør fylt med søtet ricotta.",
+    "overview": "Friterte skall fylles med en krem av avrent ricotta.",
+    "history": "Cannoli er en kjent del av Sicilias konditortradisjon.",
+    "flavor": "Sprøtt skall og mild, kremet sødme.",
+    "technique": "La ricotta renne av og fyll skallene rett før servering.",
+    "essentials": [
+      "12 ferdige cannoliskall",
+      "500 g ricotta",
+      "100 g melis"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 20 min + avrenning",
+      "ingredients": [
+        "12 ferdige cannoliskall",
+        "500 g ricotta",
+        "100 g melis",
+        "50 g mørk sjokolade",
+        "pistasjnøtter"
+      ],
+      "steps": [
+        "La ricotta renne av i kjøleskap.",
+        "Rør glatt med melis og hakket sjokolade.",
+        "Fyll skallene med sprøytepose.",
+        "Pynt endene med hakkede pistasjnøtter."
+      ]
+    },
+    "variants": [
+      "Fyll med kandisert appelsinskall eller sjokolade."
+    ],
+    "serving": [
+      "Server ferskfylt som dessert."
+    ],
+    "commonMistakes": [
+      "Ikke fyll skallene lenge før servering."
+    ],
+    "relatedDishIds": [
+      "arancini",
+      "pasta-alla-norma"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "quesadilla",
+    "summary": "Meksikansk tortilla med fyll, brettet og varmet på stekeplate.",
+    "overview": "Ost er vanlig, men fyllet og bruken av ost varierer regionalt.",
+    "history": "Quesadilla finnes i mange former i meksikansk hverdagsmat og gatemat.",
+    "flavor": "Ristet tortilla med saftig fyll og eventuelt smeltet ost.",
+    "technique": "Stek på middels varme slik at tortillaen ikke brenner før fyllet er varmt.",
+    "essentials": [
+      "8 tortillas",
+      "250 g smelteost",
+      "150 g sopp"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30–45 min",
+      "ingredients": [
+        "8 tortillas",
+        "250 g smelteost",
+        "150 g sopp",
+        "1 løk",
+        "olje",
+        "salsa"
+      ],
+      "steps": [
+        "Stek sopp og løk til væsken er fordampet.",
+        "Legg fyll og ost på tortillaene.",
+        "Brett og stek på begge sider.",
+        "Skjær opp og server med salsa."
+      ]
+    },
+    "variants": [
+      "Fyll kan være sopp, squashblomster eller kjøtt; ost er ikke obligatorisk alle steder."
+    ],
+    "serving": [
+      "Server med salsa og eventuelt guacamole."
+    ],
+    "commonMistakes": [
+      "Unngå for vått eller stort fyll."
+    ],
+    "relatedDishIds": [
+      "tacos-al-pastor",
+      "birria"
+    ],
+    "sources": []
   }
 ];
