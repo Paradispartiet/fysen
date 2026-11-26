@@ -3738,5 +3738,321 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.icelandfoodcentre.com/blog/icelandic-fish-stew-plokkfiskur"
       }
     ]
+  },
+  {
+    "dishId": "boeuf-bourguignon",
+    "summary": "Fransk storfekjøttgryte med rødvin, sopp og løk.",
+    "overview": "Grytekjøtt braiseres langsomt i en aromatisk saus.",
+    "history": "Retten forbindes med Bourgognes kjøkken og vintradisjon.",
+    "flavor": "Dyp, fyldig og aromatisk.",
+    "technique": "Brun kjøttet i omganger og la det trekke til mørt.",
+    "essentials": [
+      "800 g storfekjøtt til gryte",
+      "100 g bacon",
+      "2 gulrøtter"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 3 timer",
+      "ingredients": [
+        "800 g storfekjøtt til gryte",
+        "100 g bacon",
+        "2 gulrøtter",
+        "1 løk",
+        "400 ml rødvin",
+        "250 ml kraft",
+        "200 g sopp",
+        "timian",
+        "mel",
+        "smør"
+      ],
+      "steps": [
+        "Brun kjøttet og baconet.",
+        "Fres løk og gulrot, dryss over litt mel og tilsett vin, kraft og timian.",
+        "La trekke under lokk til kjøttet er mørt, omtrent to til tre timer.",
+        "Stek soppen separat og vend den inn før servering."
+      ]
+    },
+    "variants": [
+      "Noen varianter bruker perleløk og vinmarinering over natten."
+    ],
+    "serving": [
+      "Server med potetmos eller brød."
+    ],
+    "commonMistakes": [
+      "Unngå hard koking."
+    ],
+    "relatedDishIds": [
+      "rogan-josh",
+      "ossobuco"
+    ],
+    "sources": [
+      {
+        "label": "Good Food – Bœuf bourguignon",
+        "href": "https://www.bbcgoodfood.com/recipes/beef-bourguignon"
+      }
+    ]
+  },
+  {
+    "dishId": "coq-au-vin",
+    "summary": "Kylling braisert i vin med bacon, løk og sopp.",
+    "overview": "Kyllingstykker brunes og trekkes i vinsaus med aromater.",
+    "history": "Tradisjonelt kunne retten bruke eldre haner som trengte lang tilberedning; i dag brukes ofte kylling.",
+    "flavor": "Fyldig, urtepreget og vinaktig.",
+    "technique": "Brun kyllingen og la sausen småkoke forsiktig.",
+    "essentials": [
+      "1 kg kyllinglår",
+      "100 g bacon",
+      "200 g sopp"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "1 kg kyllinglår",
+        "100 g bacon",
+        "200 g sopp",
+        "150 g små løk",
+        "400 ml rødvin",
+        "200 ml kraft",
+        "timian",
+        "hvitløk"
+      ],
+      "steps": [
+        "Brun bacon og kylling i en gryte.",
+        "Fres løk og hvitløk.",
+        "Tilsett vin, kraft og timian og la kyllingen trekke til gjennomstekt og mør.",
+        "Stek soppen og vend den inn."
+      ]
+    },
+    "variants": [
+      "Coq au riesling er en hvitvinsvariant."
+    ],
+    "serving": [
+      "Server med poteter eller brød."
+    ],
+    "commonMistakes": [
+      "Ikke kok kyllingen så hardt at kjøttet blir tørt."
+    ],
+    "relatedDishIds": [
+      "boeuf-bourguignon"
+    ],
+    "sources": [
+      {
+        "label": "Good Food – Coq au vin",
+        "href": "https://www.bbcgoodfood.com/recipes/coq-au-vin"
+      }
+    ]
+  },
+  {
+    "dishId": "ratatouille",
+    "summary": "Fransk grønnsaksgryte med aubergine, squash, paprika og tomat.",
+    "overview": "Grønnsakene stekes og blandes i en aromatisk tomatbase.",
+    "history": "Ratatouille forbindes med det sørfranske kjøkkenet, særlig Nice og Provence.",
+    "flavor": "Fruktig, mild og urtefrisk.",
+    "technique": "Stek grønnsakene i omganger for å bevare teksturen.",
+    "essentials": [
+      "1 aubergine",
+      "2 squash",
+      "2 paprika"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 50 min",
+      "ingredients": [
+        "1 aubergine",
+        "2 squash",
+        "2 paprika",
+        "400 g tomater",
+        "1 løk",
+        "3 hvitløksfedd",
+        "olivenolje",
+        "basilikum"
+      ],
+      "steps": [
+        "Skjær grønnsakene i biter.",
+        "Brun aubergine, squash og paprika separat.",
+        "Fres løk og hvitløk og tilsett tomat.",
+        "Vend grønnsakene sammen og la småkoke til møre; smak til med basilikum."
+      ]
+    },
+    "variants": [
+      "Kan serveres rustikt i biter eller i ovnsbakte varianter."
+    ],
+    "serving": [
+      "Server som hovedrett med brød eller som tilbehør."
+    ],
+    "commonMistakes": [
+      "Ikke kok alle grønnsakene til mos."
+    ],
+    "relatedDishIds": [
+      "aloo-gobi",
+      "pasta-alla-norma"
+    ],
+    "sources": [
+      {
+        "label": "Good Food – Ratatouille",
+        "href": "https://www.bbcgoodfood.com/recipes/ratatouille"
+      }
+    ]
+  },
+  {
+    "dishId": "bouillabaisse",
+    "summary": "Provençalsk fiskesuppe med aromatisk kraft, safran og ulike fiskeslag.",
+    "overview": "Fisk trekkes i en kraft med fennikel, tomat og krydder.",
+    "history": "Bouillabaisse er særlig knyttet til Marseilles fiskertradisjon.",
+    "flavor": "Maritim, fyldig og aromatisk.",
+    "technique": "Bygg opp kraften før fisken tilsettes, slik at fiskestykkene ikke overkokes.",
+    "essentials": [
+      "700 g hvit fisk",
+      "1 l fiskekraft",
+      "1 fennikel"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "700 g hvit fisk",
+        "1 l fiskekraft",
+        "1 fennikel",
+        "1 løk",
+        "400 g tomater",
+        "hvitløk",
+        "safran",
+        "olivenolje"
+      ],
+      "steps": [
+        "Fres fennikel, løk og hvitløk i olje.",
+        "Tilsett tomat, safran og kraft og la småkoke.",
+        "Skjær fisken i store stykker og trekk den forsiktig i kraften til gjennomkokt.",
+        "Smak til og server med brød."
+      ]
+    },
+    "variants": [
+      "Tradisjonelle Marseille-varianter bruker flere lokale fiskeslag; dette er en forenklet hjemmevariant."
+    ],
+    "serving": [
+      "Server med ristet brød og rouille."
+    ],
+    "commonMistakes": [
+      "Ikke la fisken koke lenge i ferdig kraft."
+    ],
+    "relatedDishIds": [
+      "lohikeitto",
+      "plokkfiskur"
+    ],
+    "sources": [
+      {
+        "label": "Good Food – Bouillabaisse",
+        "href": "https://www.bbcgoodfood.com/recipes/bouillabaisse"
+      }
+    ]
+  },
+  {
+    "dishId": "quiche-lorraine",
+    "summary": "Fransk pai med bacon og fyll av egg og fløte.",
+    "overview": "En mørdeigsbunn fylles med en eggestand og stekes til den setter seg.",
+    "history": "Quiche lorraine har røtter i Lorraine i det nordøstlige Frankrike.",
+    "flavor": "Sprø bunn, kremet fyll og salt bacon.",
+    "technique": "Forstek bunnen før fyllet helles i.",
+    "essentials": [
+      "1 paideig til 24 cm form",
+      "150 g bacon",
+      "4 egg"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "1 paideig til 24 cm form",
+        "150 g bacon",
+        "4 egg",
+        "250 ml fløte",
+        "100 ml melk",
+        "muskat"
+      ],
+      "steps": [
+        "Kle formen med paideig, prikk bunnen og forstek ved 190 °C.",
+        "Stek baconet og la det renne av.",
+        "Visp egg, fløte, melk og muskat sammen.",
+        "Fordel bacon i bunnen, hell over eggestanden og stek ved 175 °C til fyllet har satt seg."
+      ]
+    },
+    "variants": [
+      "Mange nyere varianter tilsetter ost; den klassiske Lorraine-varianten trenger ikke ost."
+    ],
+    "serving": [
+      "Server lun med grønn salat."
+    ],
+    "commonMistakes": [
+      "Ikke hell fyllet i en uforstekt bunn dersom du ønsker en sprø bunn."
+    ],
+    "relatedDishIds": [
+      "focaccia",
+      "croque-monsieur"
+    ],
+    "sources": [
+      {
+        "label": "Good Food – Quiche lorraine",
+        "href": "https://www.bbcgoodfood.com/recipes/quiche-lorraine"
+      }
+    ]
+  },
+  {
+    "dishId": "croque-monsieur",
+    "summary": "Fransk varm ostesmørbrød med skinke, ofte gratinert med béchamel.",
+    "overview": "Brødskiver fylles med skinke og ost, toppes med saus og gratineres.",
+    "history": "Croque monsieur er en kjent del av fransk kafé- og bistromat.",
+    "flavor": "Sprøtt brød, salt skinke og smeltet ost.",
+    "technique": "Bruk en tykk béchamel som ikke gjør brødet gjennomvått.",
+    "essentials": [
+      "8 skiver brød",
+      "150 g kokt skinke",
+      "160 g gruyère"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min",
+      "ingredients": [
+        "8 skiver brød",
+        "150 g kokt skinke",
+        "160 g gruyère",
+        "25 g smør",
+        "25 g mel",
+        "250 ml melk",
+        "dijonsennep"
+      ],
+      "steps": [
+        "Lag en tykk béchamel av smør, mel og melk.",
+        "Smør brødet med litt sennep og legg skinke og ost mellom skivene.",
+        "Topp med béchamel og resten av osten.",
+        "Gratiner ved 220 °C til gyllent og gjennomvarmt."
+      ]
+    },
+    "variants": [
+      "Croque madame toppes med stekt egg."
+    ],
+    "serving": [
+      "Server med salat."
+    ],
+    "commonMistakes": [
+      "Unngå for mye tynn saus."
+    ],
+    "relatedDishIds": [
+      "quiche-lorraine",
+      "smorrebrod"
+    ],
+    "sources": [
+      {
+        "label": "Good Food – Croque monsieur",
+        "href": "https://www.bbcgoodfood.com/recipes/perfect-croque-monsieur"
+      }
+    ]
   }
 ];
