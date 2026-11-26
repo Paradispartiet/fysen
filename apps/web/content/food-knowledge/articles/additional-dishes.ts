@@ -1105,5 +1105,288 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "kimchi-jjigae"
     ],
     "sources": []
+  },
+  {
+    "dishId": "banh-xeo",
+    "summary": "Sprø vietnamesisk rispannekake med gurkemeie, bønnespirer og ofte reker eller svin.",
+    "overview": "En tynn røre stekes sprø og brettes over fyllet.",
+    "history": "Retten finnes i flere regionale former i Vietnam.",
+    "flavor": "Sprø, mildt krydret og frisk med urter.",
+    "technique": "Bruk en varm panne og et tynt lag røre.",
+    "essentials": [
+      "200 g rismel",
+      "300 ml vann",
+      "100 ml kokosmelk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "200 g rismel",
+        "300 ml vann",
+        "100 ml kokosmelk",
+        "½ ts gurkemeie",
+        "200 g reker",
+        "150 g bønnespirer",
+        "olje"
+      ],
+      "steps": [
+        "Bland mel, vann, kokosmelk og gurkemeie.",
+        "Stek rekene til gjennomstekte.",
+        "Hell et tynt lag røre i varm oljet panne.",
+        "Tilsett reker og spirer, stek til sprø og brett."
+      ]
+    },
+    "variants": [
+      "Små pannekaker i sentrale Vietnam og større varianter i sør."
+    ],
+    "serving": [
+      "Server med salat, urter og nước chấm."
+    ],
+    "commonMistakes": [
+      "Unngå for tykk røre."
+    ],
+    "relatedDishIds": [
+      "vietnamese-spring-rolls",
+      "banh-mi"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "bun-bo-hue",
+    "summary": "Sterk vietnamesisk nudelsuppe med storfekjøtt, sitrongress og chili.",
+    "overview": "Runde risnudler serveres i aromatisk kjøttkraft, ofte med fermentert rekepasta.",
+    "history": "Retten er knyttet til Huế i det sentrale Vietnam.",
+    "flavor": "Sterk, fyldig og sitruspreget.",
+    "technique": "La kraften trekke med sitrongress og smak til gradvis.",
+    "essentials": [
+      "500 g storfekjøtt til koking",
+      "1,5 l kraft",
+      "3 stilker sitrongress"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer",
+      "ingredients": [
+        "500 g storfekjøtt til koking",
+        "1,5 l kraft",
+        "3 stilker sitrongress",
+        "300 g tykke risnudler",
+        "chiliolje",
+        "fiskesaus",
+        "rekepasta etter smak"
+      ],
+      "steps": [
+        "La kjøttet trekke i kraft med banket sitrongress til mørt.",
+        "Smak til med fiskesaus, chili og litt rekepasta.",
+        "Kok nudlene separat.",
+        "Skjær kjøttet og server i kraften med nudler."
+      ]
+    },
+    "variants": [
+      "Tradisjonelle varianter kan også inneholde svinekjøtt og andre kjøttprodukter."
+    ],
+    "serving": [
+      "Server med lime, urter og skivet løk."
+    ],
+    "commonMistakes": [
+      "Ikke overdøv kraften med for mye rekepasta."
+    ],
+    "relatedDishIds": [
+      "pho",
+      "bun-cha"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "cao-lau",
+    "summary": "Nudelrett fra Hội An med svinekjøtt, urter og sprøtt tilbehør.",
+    "overview": "Faste nudler serveres med lite kraft, krydret kjøtt og grønnsaker.",
+    "history": "Cao lầu er nært forbundet med Hội Ans lokale matkultur.",
+    "flavor": "Salt, urtefrisk og med kontraster mellom mykt og sprøtt.",
+    "technique": "Bruk faste nudler og konsentrert sjy; hjemmevarianten etterligner retten.",
+    "essentials": [
+      "300 g tykke risnudler",
+      "400 g svinekjøtt",
+      "2 ss soyasaus"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer",
+      "ingredients": [
+        "300 g tykke risnudler",
+        "400 g svinekjøtt",
+        "2 ss soyasaus",
+        "hvitløk",
+        "200 ml kraft",
+        "bønnespirer",
+        "urter",
+        "sprøtt rispapir"
+      ],
+      "steps": [
+        "Braiser svinekjøttet med soyasaus, hvitløk og kraft til mørt.",
+        "Kok nudlene etter anvisning.",
+        "Skjær kjøttet og fordel nudler og grønnsaker i skåler.",
+        "Tilsett litt sjy og sprøtt rispapir."
+      ]
+    },
+    "variants": [
+      "Hjemmevarianten bruker tilgjengelige nudler i stedet for lokale cao lầu-nudler."
+    ],
+    "serving": [
+      "Server med friske urter og lime etter smak."
+    ],
+    "commonMistakes": [
+      "Ikke fyll skålen med kraft som en suppe."
+    ],
+    "relatedDishIds": [
+      "pho",
+      "bun-cha"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "com-tam",
+    "summary": "Vietnamesisk brutt ris, ofte med grillet svinekotelett.",
+    "overview": "Små riskorn serveres med kjøtt, syltede grønnsaker og fiskesausdressing.",
+    "history": "Cơm tấm forbindes særlig med sørlige Vietnam og Ho Chi Minh-byen.",
+    "flavor": "Søtlig, salt, ristet og frisk.",
+    "technique": "Mariner kjøttet og tilbered risen separat.",
+    "essentials": [
+      "300 g brutt ris",
+      "4 svinekoteletter",
+      "2 ss fiskesaus"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min + marinering",
+      "ingredients": [
+        "300 g brutt ris",
+        "4 svinekoteletter",
+        "2 ss fiskesaus",
+        "1 ss sukker",
+        "hvitløk",
+        "agurk",
+        "syltet gulrot"
+      ],
+      "steps": [
+        "Mariner kotelettene i fiskesaus, sukker og hvitløk i kjøleskap.",
+        "Kok risen etter pakningen.",
+        "Grill kjøttet til ferdig.",
+        "Server med agurk, syltet gulrot og dressing."
+      ]
+    },
+    "variants": [
+      "Kan også serveres med dampet egg- og kjøttpudding eller strimlet svineskinn."
+    ],
+    "serving": [
+      "Server med nước chấm og vårløkolje."
+    ],
+    "commonMistakes": [
+      "Unngå å brenne den sukkerholdige marinaden."
+    ],
+    "relatedDishIds": [
+      "bun-cha",
+      "banh-mi"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "bun-rieu",
+    "summary": "Vietnamesisk risnudelsuppe med tomat og ofte krabbefyll.",
+    "overview": "Kraften får syre fra tomater og smak fra krabbe eller andre sjømatprodukter.",
+    "history": "Bún riêu finnes i flere regionale og lokale varianter i Vietnam.",
+    "flavor": "Syrlig, frisk og rik på umami.",
+    "technique": "La tomatkraften småkoke og tilsett krabbeblandingen forsiktig.",
+    "essentials": [
+      "300 g risnudler",
+      "1 l kraft",
+      "400 g tomater"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "300 g risnudler",
+        "1 l kraft",
+        "400 g tomater",
+        "200 g krabbekjøtt",
+        "2 egg",
+        "200 g tofu",
+        "fiskesaus"
+      ],
+      "steps": [
+        "Kok tomater i kraft til myke.",
+        "Bland krabbekjøtt med egg og legg små porsjoner i småkokende kraft.",
+        "La eggblandingen bli gjennomkokt og tilsett tofu.",
+        "Kok nudler separat og server med kraften."
+      ]
+    },
+    "variants": [
+      "Varianter med snegler, tofu eller ulike kjøttprodukter."
+    ],
+    "serving": [
+      "Server med urter og lime."
+    ],
+    "commonMistakes": [
+      "Ikke rør kraftig mens krabbeblandingen setter seg."
+    ],
+    "relatedDishIds": [
+      "pho",
+      "bun-bo-hue"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "banh-cuon",
+    "summary": "Tynne dampede risplater, ofte rullet rundt svinekjøtt og sopp.",
+    "overview": "Myke risplater fylles med stekt kjøtt og finhakket sopp.",
+    "history": "Retten er særlig kjent fra nordvietnamesisk frokosttradisjon.",
+    "flavor": "Myk, mild og aromatisk med salt-syrlig dipp.",
+    "technique": "Bruk tynn røre og kort damptid; en panne med lokk kan brukes hjemme.",
+    "essentials": [
+      "150 g rismel",
+      "50 g tapiokastivelse",
+      "450 ml vann"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "150 g rismel",
+        "50 g tapiokastivelse",
+        "450 ml vann",
+        "250 g svinekjøttdeig",
+        "30 g tørket tresopp",
+        "løk",
+        "olje"
+      ],
+      "steps": [
+        "Bland mel, stivelse og vann og la røren hvile.",
+        "Bløtlegg soppen og stek den med løk og kjøtt til gjennomstekt.",
+        "Hell et tynt lag røre i lett oljet panne, dekk til og damp til platen setter seg.",
+        "Løft platen forsiktig ut, fyll og rull."
+      ]
+    },
+    "variants": [
+      "Bánh cuốn kan også serveres uten kjøttfyll."
+    ],
+    "serving": [
+      "Server med stekt sjalottløk og nước chấm."
+    ],
+    "commonMistakes": [
+      "Ikke stek risplatene til de blir sprø."
+    ],
+    "relatedDishIds": [
+      "vietnamese-spring-rolls",
+      "banh-xeo"
+    ],
+    "sources": []
   }
 ];
