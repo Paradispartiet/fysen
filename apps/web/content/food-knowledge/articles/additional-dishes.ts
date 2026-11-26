@@ -4054,5 +4054,323 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.bbcgoodfood.com/recipes/perfect-croque-monsieur"
       }
     ]
+  },
+  {
+    "dishId": "paella-valenciana",
+    "summary": "Risrett med kylling, kanin, bønner og safran.",
+    "overview": "Ris tilberedes i en vid, grunn panne med kjøtt, grønnsaker og kraft.",
+    "history": "Paella har røtter i Valencia-regionen, der lokale råvarer og risdyrking preger retten.",
+    "flavor": "Fyldig, aromatisk og med mulig sprø risbunn, socarrat.",
+    "technique": "Fordel risen jevnt og unngå omrøring etter at den er tilsatt.",
+    "essentials": [
+      "320 g rundkornet paellaris",
+      "400 g kylling",
+      "300 g kanin"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 75 min",
+      "ingredients": [
+        "320 g rundkornet paellaris",
+        "400 g kylling",
+        "300 g kanin",
+        "200 g grønne bønner",
+        "150 g kokte store hvite bønner",
+        "150 g tomat",
+        "1 l vann eller kraft, omtrent",
+        "safran",
+        "paprikapulver",
+        "olivenolje"
+      ],
+      "steps": [
+        "Brun kjøttstykkene i en vid panne.",
+        "Fres grønne bønner og revet tomat, tilsett paprikapulver og vann eller kraft.",
+        "La kjøttet trekke, tilsett safran, hvite bønner og ris.",
+        "Kok risen uten omrøring til mør og kjøttet er gjennomstekt; juster væskemengden ved behov.",
+        "La hvile noen minutter før servering."
+      ]
+    },
+    "variants": [
+      "Sjømatpaella er en annen paellatype, ikke den klassiske valencianske varianten."
+    ],
+    "serving": [
+      "Server direkte fra pannen."
+    ],
+    "commonMistakes": [
+      "Ikke rør som ved risotto."
+    ],
+    "relatedDishIds": [
+      "risotto-alla-milanese",
+      "arancini"
+    ],
+    "sources": [
+      {
+        "label": "Spain.info – Paella",
+        "href": "https://www.spain.info/en/recipe/paella/"
+      }
+    ]
+  },
+  {
+    "dishId": "patatas-bravas",
+    "summary": "Sprø potetbiter med krydret bravas-saus.",
+    "overview": "Poteter stekes eller friteres og toppes med en saus med paprika og chili.",
+    "history": "Patatas bravas er en populær tapasrett i spanske barer.",
+    "flavor": "Sprø, mildt søt og sterk fra sausen.",
+    "technique": "Tørk potetene før steking og tilsett sausen rett før servering.",
+    "essentials": [
+      "700 g poteter",
+      "olje",
+      "1 ss olivenolje"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "700 g poteter",
+        "olje",
+        "1 ss olivenolje",
+        "1 ss hvetemel",
+        "1 ts søtt paprikapulver",
+        "sterkt paprikapulver etter smak",
+        "200 ml kraft",
+        "salt"
+      ],
+      "steps": [
+        "Skjær potetene i biter og tørk dem.",
+        "Vend i litt olje og stek ved 220 °C til gylne og møre.",
+        "Varm olivenolje, rør inn mel og paprika uten å svi krydderet.",
+        "Spe med kraft og la sausen småkoke til passe tykk.",
+        "Topp potetene med sausen."
+      ]
+    },
+    "variants": [
+      "Noen serverer tomatbasert saus, aioli eller begge deler."
+    ],
+    "serving": [
+      "Server varmt som tapas."
+    ],
+    "commonMistakes": [
+      "Ikke hell sausen på lenge før servering."
+    ],
+    "relatedDishIds": [
+      "tortilla-espanola",
+      "croquetas"
+    ],
+    "sources": [
+      {
+        "label": "Spain.info – Spanske vegetarretter og tapas",
+        "href": "https://www.spain.info/en/discover-spain/vegetarian-dishes-spanish-cuisine/"
+      }
+    ]
+  },
+  {
+    "dishId": "tortilla-espanola",
+    "summary": "Tykk spansk omelett med poteter og eventuelt løk.",
+    "overview": "Potetskiver myknes i olje og blandes med egg før omeletten stekes.",
+    "history": "Potetomeletten er en spansk hverdagsklassiker; bruk av løk er et kjent stridsspørsmål.",
+    "flavor": "Mild, saftig og fyldig.",
+    "technique": "Stek potetene rolig før de blandes med egg.",
+    "essentials": [
+      "600 g poteter",
+      "6 egg",
+      "1 løk, valgfritt"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "600 g poteter",
+        "6 egg",
+        "1 løk, valgfritt",
+        "olivenolje",
+        "salt"
+      ],
+      "steps": [
+        "Skrell potetene og skjær i tynne skiver.",
+        "Stek potetene og eventuell løk forsiktig i olje til møre; la renne av.",
+        "Bland med sammenvispede egg og salt.",
+        "Stek i panne på middels lav varme, vend ved hjelp av en tallerken og stek til egget har satt seg."
+      ]
+    },
+    "variants": [
+      "Med eller uten løk, og ulike tykkelser."
+    ],
+    "serving": [
+      "Server lun i stykker eller som tapas."
+    ],
+    "commonMistakes": [
+      "Unngå høy varme som brenner utsiden før midten er ferdig."
+    ],
+    "relatedDishIds": [
+      "patatas-bravas",
+      "quiche-lorraine"
+    ],
+    "sources": [
+      {
+        "label": "Spain.info – Klassiske spanske retter",
+        "href": "https://www.spain.info/en/top/most-famous-spanish-food-recipes/"
+      }
+    ]
+  },
+  {
+    "dishId": "gazpacho",
+    "summary": "Kald spansk grønnsakssuppe med tomat, agurk og paprika.",
+    "overview": "Rå grønnsaker mikses med olje, eddik og eventuelt brød.",
+    "history": "Gazpacho forbindes særlig med Andalusias kjøkken og serveres gjerne i varmt vær.",
+    "flavor": "Frisk, syrlig og fruktig.",
+    "technique": "Bruk modne tomater og avkjøl suppen før servering.",
+    "essentials": [
+      "800 g modne tomater",
+      "1 agurk",
+      "1 grønn paprika"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 20 min + kjøling",
+      "ingredients": [
+        "800 g modne tomater",
+        "1 agurk",
+        "1 grønn paprika",
+        "1 hvitløksfedd",
+        "40 g brød, valgfritt",
+        "3 ss olivenolje",
+        "1–2 ss vineddik",
+        "salt",
+        "kaldt vann etter behov"
+      ],
+      "steps": [
+        "Vask og skjær grønnsakene.",
+        "Bløtlegg brødet dersom det brukes.",
+        "Miks grønnsaker, brød, olje og eddik til glatt suppe.",
+        "Smak til, juster konsistensen med vann og avkjøl."
+      ]
+    },
+    "variants": [
+      "Salmorejo er en beslektet, tykkere tomatsuppe."
+    ],
+    "serving": [
+      "Server kald med finhakkede grønnsaker."
+    ],
+    "commonMistakes": [
+      "Ikke bruk umodne tomater hvis moden tomatsmak er ønsket."
+    ],
+    "relatedDishIds": [
+      "ratatouille",
+      "tabbouleh"
+    ],
+    "sources": [
+      {
+        "label": "Spain.info – Gazpacho",
+        "href": "https://www.spain.info/en/recipe/gazpacho/"
+      }
+    ]
+  },
+  {
+    "dishId": "gambas-al-ajillo",
+    "summary": "Reker stekt i olivenolje med hvitløk og chili.",
+    "overview": "Rekene tilberedes raskt i aromatisk olje og serveres varme.",
+    "history": "Gambas al ajillo inngår i den spanske tapastradisjonen, blant annet i Madrid.",
+    "flavor": "Søtlig sjømat, hvitløk og mild chilivarme.",
+    "technique": "Varm oljen forsiktig med hvitløk før rekene tilsettes.",
+    "essentials": [
+      "400 g rå, rensede reker",
+      "5 hvitløksfedd",
+      "60 ml olivenolje"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 15 min",
+      "ingredients": [
+        "400 g rå, rensede reker",
+        "5 hvitløksfedd",
+        "60 ml olivenolje",
+        "tørket chili",
+        "salt",
+        "persille"
+      ],
+      "steps": [
+        "Tørk rekene og skjær hvitløken i skiver.",
+        "Varm olje med hvitløk og chili uten at hvitløken brenner.",
+        "Tilsett rekene og stek til gjennomstekte.",
+        "Smak til med salt og persille."
+      ]
+    },
+    "variants": [
+      "Styrken kan justeres med ulike mengder chili."
+    ],
+    "serving": [
+      "Server med brød til oljen."
+    ],
+    "commonMistakes": [
+      "Ikke la rekene steke så lenge at de blir seige."
+    ],
+    "relatedDishIds": [
+      "ceviche",
+      "bouillabaisse"
+    ],
+    "sources": [
+      {
+        "label": "Spain.info – Matkultur i Madrid",
+        "href": "https://www.spain.info/es/gastronomia/cocina-comunidad-madrid/"
+      }
+    ]
+  },
+  {
+    "dishId": "croquetas",
+    "summary": "Panerte kroketter med kremet béchamelfyll, ofte med skinke.",
+    "overview": "En fast, avkjølt béchamelmasse formes, paneres og friteres.",
+    "history": "Croquetas er en populær spansk tapasrett; skinke er et klassisk fyll.",
+    "flavor": "Sprø utside og myk, kremet kjerne.",
+    "technique": "Avkjøl fyllet grundig før forming og panering.",
+    "essentials": [
+      "60 g smør",
+      "75 g hvetemel",
+      "500 ml melk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min + kjøling",
+      "ingredients": [
+        "60 g smør",
+        "75 g hvetemel",
+        "500 ml melk",
+        "100 g finhakket skinke",
+        "2 egg",
+        "brødsmuler",
+        "olje"
+      ],
+      "steps": [
+        "Smelt smør, rør inn mel og spe gradvis med melk.",
+        "Kok til en tykk masse, vend inn skinken og smak til.",
+        "Fordel i en form og avkjøl raskt før flere timers kjøling.",
+        "Form kroketter, vend i mel, egg og brødsmuler.",
+        "Friter i små omganger ved 175 °C til gylne og gjennomvarme."
+      ]
+    },
+    "variants": [
+      "Fyll med sopp, ost eller torsk er også utbredt."
+    ],
+    "serving": [
+      "Server varmt som tapas."
+    ],
+    "commonMistakes": [
+      "Ikke form krokettene mens fyllet er varmt og løst."
+    ],
+    "relatedDishIds": [
+      "arancini",
+      "patatas-bravas"
+    ],
+    "sources": [
+      {
+        "label": "Spain.info – Populære spanske tapas",
+        "href": "https://www.spain.info/es/top/tapas-recomendadas-populares-espana/"
+      }
+    ]
   }
 ];
