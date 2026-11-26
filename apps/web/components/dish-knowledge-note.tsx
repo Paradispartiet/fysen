@@ -2,6 +2,7 @@
 
 import { usePreviewLocale } from "./language-preview";
 import { knowledgeText, type KnowledgeKey } from "../lib/knowledge-messages";
+import { dishDisplayName } from "../lib/dish-display-names";
 import { localizedSummary } from "../lib/dish-summary-translations";
 import { resultText } from "../lib/result-messages";
 
@@ -84,7 +85,7 @@ export function DishKnowledgeNote({ query }: { query: string }) {
             <span>{knowledge.dish ? t("lexicon") : t("aboutDish")}</span>
             <span>{knowledge.origin}</span>
           </div>
-          <h2>{knowledge.name}</h2>
+          <h2 lang={locale}>{dishDisplayName(knowledge.dish?.id ?? knowledge.imageDishId ?? "", knowledge.name, locale)}</h2>
           {knowledge.summary ? <p lang={localizedSummary(knowledge.dish?.id ?? "", knowledge.summary, locale).lang}>{localizedSummary(knowledge.dish?.id ?? "", knowledge.summary, locale).text}</p> : null}
           <div className="dishKnowledgeNoteBottomline">
             <small>{knowledge.imageDishId ? t("picture") : t("general")} · {t("notEvidence")}</small>
