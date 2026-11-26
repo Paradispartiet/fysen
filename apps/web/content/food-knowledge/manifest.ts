@@ -34,6 +34,12 @@ export const foodKnowledgeDishIds = [
   "pozole",
   "fish-taco",
   "smashburger",
+  "sambar",
+  "idli",
+  "vada",
+  "naan",
+  "yakitori",
+  "green-curry",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
