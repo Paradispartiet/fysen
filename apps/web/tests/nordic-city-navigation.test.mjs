@@ -6,7 +6,7 @@ import { citySwitchHref, nordicCities } from "../lib/public-path.ts";
 test("Nordic cities have distinct canonical city names and local currencies", () => {
   assert.deepEqual(nordicCities.map(({ name, country, currency }) => [name, country, currency]), [
     ["Oslo", "NO", "NOK"], ["København", "DK", "DKK"],
-    ["Stockholm", "SE", "SEK"], ["Helsinki", "FI", "EUR"],
+    ["Stockholm", "SE", "SEK"], ["Helsinki", "FI", "EUR"], ["Reykjavík", "IS", "ISK"],
   ]);
 });
 

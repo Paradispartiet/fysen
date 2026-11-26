@@ -386,17 +386,17 @@ describe("Nordic v2 compatibility of existing Oslo refresh", () => {
     ...baseline,
     version: 2,
     restaurants: [...baseline.restaurants, ["Pilot DK", "pilot-dk", "København", "København", ""],
-      ["Pilot SE", "pilot-se", "Stockholm", "Stockholm", ""], ["Pilot FI", "pilot-fi", "Helsinki", "Helsinki", ""]],
+      ["Pilot SE", "pilot-se", "Stockholm", "Stockholm", ""], ["Pilot FI", "pilot-fi", "Helsinki", "Helsinki", ""], ["Pilot IS", "pilot-is", "Reykjavík", "Reykjavík", ""]],
     sources: [...baseline.sources, [2,"https://example.org/dk/fish","2026-11-25T10:00:00Z"],
       [2,"https://example.org/dk/meat","2026-11-25T10:00:00Z"],
       [3,"https://example.org/se","2026-11-25T10:00:00Z"],
-      [4,"https://example.org/fi","2026-11-25T10:00:00Z"]],
+      [4,"https://example.org/fi","2026-11-25T10:00:00Z"], [5,"https://example.org/is","2026-11-25T10:00:00Z"]],
     items: [[0,"Gammel rett","gammel rett",10000,"exact",null,"","","NOK"],
       [1,"Bevart rett","bevart rett",20000,"exact",null,"","","NOK"],
       [2,"Fisk","fisk",16000,"exact",null,"","","DKK"],
       [3,"Kød","kød",18000,"exact",null,"","","DKK"],
       [4,"Köttbullar","köttbullar",28500,"exact",null,"","","SEK"],
-      [5,"Keitto","keitto",1420,"exact",null,"","","EUR"]],
+      [5,"Keitto","keitto",1420,"exact",null,"","","EUR"], [6,"Kjötsúpa","kjötsúpa",329000,"exact",null,"","","ISK"]],
   };
   it("preserves every foreign source, exact price, and category snapshot while updating Oslo", () => {
     assertFreeIndexCurrencies(baseline);

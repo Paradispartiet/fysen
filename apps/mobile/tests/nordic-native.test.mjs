@@ -3,7 +3,7 @@ import test from "node:test";
 import fs from "node:fs";
 import {formatPrice} from "../src/format.ts";
 test("local prices retain currency in native UI",()=>{
-  for (const [currency, suffix] of [["NOK","kr"],["DKK","DKK"],["SEK","SEK"],["EUR","€"]]) {
+  for (const [currency, suffix] of [["NOK","kr"],["DKK","DKK"],["SEK","SEK"],["EUR","€"],["ISK","ISK"]]) {
     assert.ok(formatPrice({priceMinor:1500,priceKind:"exact",currency}).endsWith(" "+suffix));
     assert.ok(formatPrice({priceMinor:1500,priceMaxMinor:2500,priceKind:"multiple",currency}).endsWith(" "+suffix));
   }

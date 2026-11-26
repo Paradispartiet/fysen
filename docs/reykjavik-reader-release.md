@@ -1,0 +1,3 @@
+# Reykjavík reader compatibility
+
+Separate the previously tested reader/city/ISK changes from the six research-only restaurant probes in #1324. No production Icelandic menu data in this release. The fixed archive amount scale remains 100; ISK source amounts must be whole krónur. Preserve all existing foreign rows during the Oslo refresh. Existing v1/v2 data stays readable. Deploy compatible web and API before importing any ISK rows. Native client compatibility is covered by existing tests. #1324 remains the source-review branch; its network errors and Bistro section boundary are not blockers for this reader-only release.

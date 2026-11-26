@@ -10,13 +10,14 @@ type RestaurantRow = readonly [string, string, string, string, string];
 type SourceRow = readonly [number, string, string];
 type ItemRow = readonly [number, string, string, number | null, "exact" | "from" | "multiple", number | null, string, string, NordicCurrency?];
 
-type NordicCurrency = "NOK" | "DKK" | "SEK" | "EUR";
+type NordicCurrency = "NOK" | "DKK" | "SEK" | "EUR" | "ISK";
 
 // Keep the v1 Oslo-only reader and v2 Nordic reader in sync with the API/web counterpart.
 function archiveCity(value: string): string {
   const key = value.trim().normalize("NFKC").toLowerCase();
   if (["københavn", "copenhagen", "kobenhavn"].includes(key)) return "københavn";
   if (["helsinki", "helsingfors"].includes(key)) return "helsinki";
+  if (["reykjavík", "reykjavik"].includes(key)) return "reykjavík";
   return key;
 }
 
@@ -26,6 +27,7 @@ function archiveCityCurrency(city: string): NordicCurrency | undefined {
     case "københavn": return "DKK";
     case "stockholm": return "SEK";
     case "helsinki": return "EUR";
+    case "reykjavík": return "ISK";
     default: return undefined;
   }
 }
@@ -33,6 +35,7 @@ function archiveCityCurrency(city: string): NordicCurrency | undefined {
 function itemCurrency(version: 1 | 2, city: string, row: ItemRow): NordicCurrency | undefined {
   if (version === 1) return archiveCity(city) === "oslo" ? "NOK" : undefined;
   const expected = archiveCityCurrency(city);
+  if (expected === "ISK" && [row[3], row[5]].some(p => p !== null && p % 100 !== 0)) return undefined;
   return expected && row[8] === expected ? expected : undefined;
 }
 

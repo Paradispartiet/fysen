@@ -61,6 +61,7 @@ export const nordicCities = [
   { name: "København", country: "DK", currency: "DKK" },
   { name: "Stockholm", country: "SE", currency: "SEK" },
   { name: "Helsinki", country: "FI", currency: "EUR" },
+  { name: "Reykjavík", country: "IS", currency: "ISK" },
 ] as const;
 
 export function citySwitchHref(city: string, query = ""): string {
