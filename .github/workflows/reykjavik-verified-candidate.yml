@@ -1,0 +1,136 @@
+name: Iceland verified menu candidate and one-time release
+on:
+  pull_request:
+    paths:
+      - "apps/menu-worker/src/reykjavik-*.ts"
+      - "docs/reykjavik-*-review.json"
+      - "scripts/*fysen-reykjavik-candidate*"
+      - ".github/workflows/reykjavik-verified-candidate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/releases/reykjavik-initial-2026-11-26.json"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [rok, gamla, krons]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-node-pnpm
+      - run: pnpm --filter @fysen/menu-worker... build
+      - name: Fetch fresh official menu
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm --filter @fysen/menu-worker exec tsx src/reykjavik-${{ matrix.source }}-probe.ts | tee "$RUNNER_TEMP/${{ matrix.source }}.json"
+          python3 -m json.tool "$RUNNER_TEMP/${{ matrix.source }}.json" >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: island-source-${{ matrix.source }}
+          path: ${{ runner.temp }}/${{ matrix.source }}.json
+          if-no-files-found: error
+          retention-days: 14
+  stage:
+    needs: source
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: public-index
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: island-source-*
+          path: fresh-reports
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: python3 scripts/build-fysen-reykjavik-candidate.py public-index fresh-reports "$RUNNER_TEMP/island"
+      - run: node scripts/verify-fysen-reykjavik-candidate.mjs public-index "$RUNNER_TEMP/island" fresh-reports
+      - uses: actions/upload-artifact@v4
+        with:
+          name: island-candidate-not-published
+          path: ${{ runner.temp }}/island/
+          if-no-files-found: error
+          retention-days: 14
+  publish-island:
+    # Exact single-use release record and previous main revision, no ordinary
+    # pushes, pull requests or manual previews can write the production index.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.event.before == '8ad939aa26c1a77331beb3d30832d74e12a28a6c'
+    needs: stage
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: fysen-free-public-index
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify explicit one-time release record
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          actual = json.loads(Path("docs/releases/reykjavik-initial-2026-11-26.json").read_text())
+          expected = {"version":1,"action":"append-reviewed-reykjavik-initial","readerCommit":"8ad939aa26c1a77331beb3d30832d74e12a28a6c","archiveVersion":2,"restaurants":3,"sources":3,"dishes":77,"withheld":4}
+          if actual != expected:
+              raise SystemExit("Invalid Reykjavík release record")
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: fysen-free-public-index
+          path: public-index
+          persist-credentials: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: island-source-*
+          path: fresh-reports
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - name: Rebuild from latest locked v2 archive and verify every offer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build-fysen-reykjavik-candidate.py public-index fresh-reports "$RUNNER_TEMP/island-release"
+          node scripts/verify-fysen-reykjavik-candidate.mjs public-index "$RUNNER_TEMP/island-release" fresh-reports
+          git -C public-index rev-parse HEAD > "$RUNNER_TEMP/island-base-sha"
+      - name: Append only verified index and corresponding manifest
+        shell: bash
+        working-directory: public-index
+        run: |
+          set -euo pipefail
+          expected="$(cat "$RUNNER_TEMP/island-base-sha")"
+          remote="$(git ls-remote origin refs/heads/fysen-free-public-index | cut -f1)"
+          test "$remote" = "$expected"
+          main="$(git ls-remote origin refs/heads/main | cut -f1)"
+          test "$main" = "$GITHUB_SHA"
+          cp "$RUNNER_TEMP/island-release/index.json.gz" index.json.gz
+          cp "$RUNNER_TEMP/island-release/manifest.json" manifest.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.json.gz manifest.json
+          git diff --cached --quiet && { echo 'Expected Iceland archive changes' >&2; exit 1; }
+          git commit -m 'data: append 77 verified Icelandic menu offers'
+          git push origin HEAD:refs/heads/fysen-free-public-index

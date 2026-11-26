@@ -1,0 +1,265 @@
+{
+  "status": "manual-source-review-only-not-production",
+  "reviewDate": "2026-11-25",
+  "restaurant": {
+    "name": "ROK",
+    "slug": "rok-frakkastigur-reykjavik",
+    "address": "Frakkastígur 26a, 101 Reykjavík, Iceland",
+    "city": "Reykjavík",
+    "countryCode": "IS",
+    "currency": "ISK",
+    "timezone": "Atlantic/Reykjavik"
+  },
+  "source": "https://www.rokrestaurant.is/dinner",
+  "secondaryLanguageSource": "https://www.rokrestaurant.is/dinnermenu",
+  "evidenceLimit": "Indexed official pages, no direct fresh observation yet; Icelandic ordinary menu only. Lunch offer, drinks, tasting menu, seasonal and whole-table set menus excluded. Four price discrepancies require confirmation.",
+  "servingNote": "Småretter; restauranten anbefaler 2–4 retter per person.",
+  "items": [
+    {
+      "section": "GRÆNT",
+      "name": "ROK salat",
+      "priceField": "1690",
+      "priceMinor": 169000,
+      "publishEligible": false
+    },
+    {
+      "section": "GRÆNT",
+      "name": "ROK sesar salat",
+      "priceField": "2790",
+      "priceMinor": 279000,
+      "publishEligible": false
+    },
+    {
+      "section": "GRÆNT",
+      "name": "Grillað baguette brauð",
+      "priceField": "1990",
+      "priceMinor": 199000,
+      "publishEligible": false
+    },
+    {
+      "section": "GRÆNT",
+      "name": "Bruchetta",
+      "priceField": "2490",
+      "priceMinor": 249000,
+      "publishEligible": false
+    },
+    {
+      "section": "GRÆNT",
+      "name": "Villisveppa risotto",
+      "priceField": "2490",
+      "priceMinor": 249000,
+      "publishEligible": false
+    },
+    {
+      "section": "GRÆNT",
+      "name": "Kastaníusveppir og hvítlaukur",
+      "priceField": "1990",
+      "priceMinor": 199000,
+      "publishEligible": false
+    },
+    {
+      "section": "GRÆNT",
+      "name": "Svartbaunaborgari",
+      "priceField": "2790",
+      "priceMinor": 279000,
+      "publishEligible": false
+    },
+    {
+      "section": "GRÆNT",
+      "name": "Tómatsúpa",
+      "priceField": "2490",
+      "priceMinor": 249000,
+      "publishEligible": false
+    },
+    {
+      "section": "SJÁVARFANG",
+      "name": "Thai risarækjur",
+      "priceField": "2690",
+      "priceMinor": 269000,
+      "publishEligible": false
+    },
+    {
+      "section": "SJÁVARFANG",
+      "name": "Laxaceviche",
+      "priceField": "2690",
+      "priceMinor": 269000,
+      "publishEligible": false
+    },
+    {
+      "section": "SJÁVARFANG",
+      "name": "Sítrónugrafinn lax",
+      "priceField": "2690",
+      "priceMinor": 269000,
+      "publishEligible": false
+    },
+    {
+      "section": "SJÁVARFANG",
+      "name": "ROK plokkfiskur",
+      "priceField": "2590",
+      "priceMinor": 259000,
+      "publishEligible": false
+    },
+    {
+      "section": "SJÁVARFANG",
+      "name": "Miðjarðarhafs baccalá",
+      "priceField": "2790",
+      "priceMinor": 279000,
+      "publishEligible": false
+    },
+    {
+      "section": "SJÁVARFANG",
+      "name": "Bleikja",
+      "priceField": "2790",
+      "priceMinor": 279000,
+      "publishEligible": false
+    },
+    {
+      "section": "SJÁVARFANG",
+      "name": "Léttsteiktur þorskur",
+      "priceField": "2790",
+      "priceMinor": 279000,
+      "publishEligible": false
+    },
+    {
+      "section": "SJÁVARFANG",
+      "name": "Taco með hvítlauksristuðum argentískum risarækjum",
+      "priceField": "2890",
+      "priceMinor": 289000,
+      "englishPriceMinor": 279000,
+      "requiresPriceConfirmation": true,
+      "publishEligible": false
+    },
+    {
+      "section": "KJÖT",
+      "name": "Grafið hreindýr",
+      "priceField": "2790",
+      "priceMinor": 279000,
+      "publishEligible": false
+    },
+    {
+      "section": "KJÖT",
+      "name": "Kjúklingalæri á spjóti",
+      "priceField": "2790",
+      "priceMinor": 279000,
+      "publishEligible": false
+    },
+    {
+      "section": "KJÖT",
+      "name": "Taco með hægelduðu nauti",
+      "priceField": "2890",
+      "priceMinor": 289000,
+      "publishEligible": false
+    },
+    {
+      "section": "KJÖT",
+      "name": "Naut í pönnuköku",
+      "priceField": "2890",
+      "priceMinor": 289000,
+      "englishPriceMinor": 279000,
+      "requiresPriceConfirmation": true,
+      "publishEligible": false
+    },
+    {
+      "section": "KJÖT",
+      "name": "Andalæri confit",
+      "priceField": "2890",
+      "priceMinor": 289000,
+      "englishPriceMinor": 279000,
+      "requiresPriceConfirmation": true,
+      "publishEligible": false
+    },
+    {
+      "section": "KJÖT",
+      "name": "Nautalund 150 gr",
+      "priceField": "3890",
+      "priceMinor": 389000,
+      "publishEligible": false
+    },
+    {
+      "section": "KJÖT",
+      "name": "Afrískar Lambakórónur",
+      "priceField": "3790",
+      "priceMinor": 379000,
+      "publishEligible": false
+    },
+    {
+      "section": "EFTIRRÉTTIR",
+      "name": "Súkkulaðikaka",
+      "priceField": "2490",
+      "priceMinor": 249000,
+      "publishEligible": false
+    },
+    {
+      "section": "EFTIRRÉTTIR",
+      "name": "Blóðappelsínu ostakaka",
+      "priceField": "2490",
+      "priceMinor": 249000,
+      "publishEligible": false
+    },
+    {
+      "section": "EFTIRRÉTTIR",
+      "name": "Lakkrís og ferskar melónur",
+      "priceField": "1290",
+      "priceMinor": 129000,
+      "publishEligible": false
+    },
+    {
+      "section": "VIÐBÓT",
+      "name": "Ristaðir kartöflubátar",
+      "priceField": "1390",
+      "priceMinor": 139000,
+      "publishEligible": false
+    },
+    {
+      "section": "VIÐBÓT",
+      "name": "Padrón pipar",
+      "priceField": "1490",
+      "priceMinor": 149000,
+      "englishPriceMinor": 139000,
+      "requiresPriceConfirmation": true,
+      "publishEligible": false
+    },
+    {
+      "section": "VIÐBÓT",
+      "name": "Steiktur aspas",
+      "priceField": "1490",
+      "priceMinor": 149000,
+      "publishEligible": false
+    },
+    {
+      "section": "VIÐBÓT",
+      "name": "Lífrænt súrdeigsbrauð",
+      "priceField": "1250",
+      "priceMinor": 125000,
+      "publishEligible": false
+    },
+    {
+      "section": "OSTAR & SNAKK",
+      "name": "Kruðerí platti",
+      "priceField": "4390",
+      "priceMinor": 439000,
+      "publishEligible": false
+    },
+    {
+      "section": "OSTAR & SNAKK",
+      "name": "Gratíneraður búri",
+      "priceField": "2390",
+      "priceMinor": 239000,
+      "publishEligible": false
+    },
+    {
+      "section": "OSTAR & SNAKK",
+      "name": "Saltaðar möndlur",
+      "priceField": "990",
+      "priceMinor": 99000,
+      "publishEligible": false
+    },
+    {
+      "section": "OSTAR & SNAKK",
+      "name": "Ólífur",
+      "priceField": "990",
+      "priceMinor": 99000,
+      "publishEligible": false
+    }
+  ]
+}
