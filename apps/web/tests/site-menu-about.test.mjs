@@ -10,7 +10,7 @@ function read(relative) {
 test("the site menu offers an About Fysen page", () => {
   const header = read("../components/global-header.tsx");
   const about = read("../app/om/page.tsx");
-  assert.match(header, /<details className="siteMenu">/u);
+  assert.match(header, /<details className="siteMenu" lang=\{locale\}>/u);
   assert.match(header, /withPublicBasePath\("\/om"\)/u);
   assert.match(about, /id="menydata"/u);
   assert.match(header, /#menydata/u);
