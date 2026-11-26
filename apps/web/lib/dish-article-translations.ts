@@ -17,6 +17,12 @@ import { mapoTofuTranslations } from "../content/food-knowledge/translations/map
 import { butterChickenTranslations } from "../content/food-knowledge/translations/butter-chicken.ts";
 import { tandooriTranslations } from "../content/food-knowledge/translations/tandoori.ts";
 import { chanaMasalaTranslations } from "../content/food-knowledge/translations/chana-masala.ts";
+import { dosaTranslations } from "../content/food-knowledge/translations/dosa.ts";
+import { cacioEPepeTranslations } from "../content/food-knowledge/translations/cacio-e-pepe.ts";
+import { pizzaMargheritaTranslations } from "../content/food-knowledge/translations/pizza-margherita.ts";
+import { aranciniTranslations } from "../content/food-knowledge/translations/arancini.ts";
+import { pastaAllaNormaTranslations } from "../content/food-knowledge/translations/pasta-alla-norma.ts";
+import { hummusTranslations } from "../content/food-knowledge/translations/hummus.ts";
 import type { PreviewLocale } from "./locale-messages.ts";
 
 export type ArticleBody = Omit<FoodKnowledgeArticle, "dishId" | "summary" | "relatedDishIds" | "sources">;
@@ -39,6 +45,12 @@ const articles: Readonly<Record<string, Partial<Record<Exclude<PreviewLocale, "n
   "butter-chicken": butterChickenTranslations,
   "tandoori": tandooriTranslations,
   "chana-masala": chanaMasalaTranslations,
+  "dosa": dosaTranslations,
+  "cacio-e-pepe": cacioEPepeTranslations,
+  "pizza-margherita": pizzaMargheritaTranslations,
+  "arancini": aranciniTranslations,
+  "pasta-alla-norma": pastaAllaNormaTranslations,
+  "hummus": hummusTranslations,
 };
 
 export const translatedArticleIds = Object.keys(articles);
