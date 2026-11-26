@@ -3428,5 +3428,315 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.themediterraneandish.com/tabouli-salad/"
       }
     ]
+  },
+  {
+    "dishId": "farikal",
+    "summary": "Lam eller fårekjøtt kokt mørt sammen med kål og hel pepper.",
+    "overview": "Kjøtt og kål legges lagvis i en gryte med litt vann.",
+    "history": "Fårikål er en norsk nasjonalrett og forbindes særlig med høstens lammesesong.",
+    "flavor": "Mild kålsødme, kraftig kjøttsmak og pepper.",
+    "technique": "La gryten trekke rolig under lokk til kjøttet løsner lett fra beinet.",
+    "essentials": [
+      "1,2 kg fårikålkjøtt",
+      "1,2 kg hodekål",
+      "2 ts hel svart pepper"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2,5 timer",
+      "ingredients": [
+        "1,2 kg fårikålkjøtt",
+        "1,2 kg hodekål",
+        "2 ts hel svart pepper",
+        "salt",
+        "300 ml vann"
+      ],
+      "steps": [
+        "Skjær kålen i båter.",
+        "Legg kjøtt og kål lagvis med salt og pepper.",
+        "Tilsett vann og la trekke under lokk i omtrent to timer, til kjøttet er mørt.",
+        "Smak til med salt."
+      ]
+    },
+    "variants": [
+      "Noen jevner kraften lett med mel."
+    ],
+    "serving": [
+      "Server med kokte poteter."
+    ],
+    "commonMistakes": [
+      "Unngå hard koking og for mye vann."
+    ],
+    "relatedDishIds": [
+      "kjottkaker"
+    ],
+    "sources": [
+      {
+        "label": "MatPrat – Fårikål",
+        "href": "https://www.matprat.no/oppskrifter/tradisjon/farikal/"
+      }
+    ]
+  },
+  {
+    "dishId": "kjottkaker",
+    "summary": "Norske kjøttkaker med brun saus, poteter og tradisjonelt tilbehør.",
+    "overview": "Krydret kjøttfarse formes til flate kaker, brunes og trekkes ferdig i saus.",
+    "history": "Kjøttkaker i brun saus er en etablert del av norsk husmannskost.",
+    "flavor": "Fyldig kjøttsmak med mildt krydder og brunet saus.",
+    "technique": "Spe farsen gradvis med kald melk og brun kakene før de trekkes ferdig.",
+    "essentials": [
+      "500 g kjøttdeig",
+      "1 ts salt",
+      "2 ss potetmel"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "500 g kjøttdeig",
+        "1 ts salt",
+        "2 ss potetmel",
+        "150 ml melk",
+        "pepper og muskat",
+        "smør",
+        "3 ss hvetemel",
+        "500 ml kraft"
+      ],
+      "steps": [
+        "Bland kjøttdeig med salt, potetmel og krydder; spe med melk.",
+        "Form kaker og brun i smør.",
+        "Brun mel i smør og visp gradvis inn kraft.",
+        "La kjøttkakene trekke i sausen til gjennomstekte."
+      ]
+    },
+    "variants": [
+      "Serveres blant annet med kålstuing eller ertestuing."
+    ],
+    "serving": [
+      "Server med poteter og tyttebær."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett all melken på én gang."
+    ],
+    "relatedDishIds": [
+      "kottbullar",
+      "farikal"
+    ],
+    "sources": [
+      {
+        "label": "MatPrat – Kjøttkaker med kålstuing",
+        "href": "https://www.matprat.no/oppskrifter/tradisjon/kjottkaker/"
+      }
+    ]
+  },
+  {
+    "dishId": "kottbullar",
+    "summary": "Små svenske kjøttboller, ofte med fløtesaus, potetmos og tyttebær.",
+    "overview": "Kjøttfarse med løk og oppbløtte brødsmuler rulles til små boller.",
+    "history": "Köttbullar hører til svensk husmanskost og er også vanlig på julebordet.",
+    "flavor": "Saftig, mildt krydret og fyldig.",
+    "technique": "Form små, jevne boller og stek i omganger.",
+    "essentials": [
+      "500 g kjøttdeig",
+      "1 liten løk",
+      "50 g brødsmuler"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "500 g kjøttdeig",
+        "1 liten løk",
+        "50 g brødsmuler",
+        "100 ml melk",
+        "1 egg",
+        "salt og pepper",
+        "smør",
+        "200 ml fløte",
+        "200 ml kraft"
+      ],
+      "steps": [
+        "La brødsmulene trekke i melken.",
+        "Bland med kjøtt, finhakket løk, egg og krydder.",
+        "Form små boller og stek til gjennomstekte.",
+        "Kok ut pannen med kraft og fløte til saus."
+      ]
+    },
+    "variants": [
+      "Blandingsfarse av storfe og svin er vanlig."
+    ],
+    "serving": [
+      "Server med potetmos, tyttebær og gjerne agurk."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll stekepannen."
+    ],
+    "relatedDishIds": [
+      "kjottkaker",
+      "kofte"
+    ],
+    "sources": [
+      {
+        "label": "Visit Sweden – Traditional Swedish meatballs",
+        "href": "https://visitsweden.com/what-to-do/food-drink/recipes/traditional-swedish-meatballs-recipe/"
+      }
+    ]
+  },
+  {
+    "dishId": "smorrebrod",
+    "summary": "Åpent dansk smørbrød, ofte på rugbrød med pålegg og garnityr.",
+    "overview": "Brødet toppes med gjennomtenkte kombinasjoner av fisk, kjøtt, egg eller grønnsaker.",
+    "history": "Smørrebrød er en sentral del av dansk lunsj- og restaurantkultur.",
+    "flavor": "Kontraster mellom kraftig rugbrød, kremet pålegg og friskt eller syrlig tilbehør.",
+    "technique": "Velg pålegg som passer sammen, og monter like før servering.",
+    "essentials": [
+      "4 skiver rugbrød",
+      "smør",
+      "2 kokte egg"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 20 min",
+      "ingredients": [
+        "4 skiver rugbrød",
+        "smør",
+        "2 kokte egg",
+        "150 g kokte reker",
+        "majones",
+        "sitron",
+        "dill"
+      ],
+      "steps": [
+        "Smør rugbrødet.",
+        "Skjær eggene i skiver og legg på brødet.",
+        "Fordel reker og litt majones.",
+        "Pynt med dill og sitron."
+      ]
+    },
+    "variants": [
+      "Sild, roastbiff med remulade og leverpostei er andre vanlige varianter."
+    ],
+    "serving": [
+      "Server som lunsj med kniv og gaffel."
+    ],
+    "commonMistakes": [
+      "Unngå å la fuktig pålegg ligge lenge på brødet."
+    ],
+    "relatedDishIds": [
+      "manakish"
+    ],
+    "sources": [
+      {
+        "label": "VisitDenmark – Traditional Danish food",
+        "href": "https://www.visitdenmark.com/denmark/things-to-do/eat-drink/traditional-danish-food"
+      }
+    ]
+  },
+  {
+    "dishId": "lohikeitto",
+    "summary": "Finsk laksesuppe med poteter, dill og ofte fløte.",
+    "overview": "Poteter og grønnsaker kokes i kraft før laksen tilsettes mot slutten.",
+    "history": "Lohikeitto er en finsk fiskesuppe med både kremete og klare regionale varianter.",
+    "flavor": "Mild, fyldig og frisk av dill.",
+    "technique": "La laksen trekke forsiktig, uten langvarig koking.",
+    "essentials": [
+      "500 g laksefilet uten bein",
+      "500 g poteter",
+      "1 purre"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 35 min",
+      "ingredients": [
+        "500 g laksefilet uten bein",
+        "500 g poteter",
+        "1 purre",
+        "2 gulrøtter",
+        "800 ml fiskekraft",
+        "200 ml fløte",
+        "dill",
+        "smør"
+      ],
+      "steps": [
+        "Fres purre i smør.",
+        "Tilsett kraft, poteter og gulrot og kok til møre.",
+        "Tilsett fløte og laks i terninger; trekk til fisken er gjennomkokt.",
+        "Smak til og tilsett dill."
+      ]
+    },
+    "variants": [
+      "I Kainuu finnes en variant uten fløte."
+    ],
+    "serving": [
+      "Server med rugbrød."
+    ],
+    "commonMistakes": [
+      "Ikke kok laksen så lenge at den blir tørr."
+    ],
+    "relatedDishIds": [
+      "plokkfiskur"
+    ],
+    "sources": [
+      {
+        "label": "This is Finland – Northern Finnish recipes: Lohikeitto",
+        "href": "https://finland.fi/life-society/delicacies-from-the-top-of-the-world-go-down-well-northern-finnish-recipes/"
+      }
+    ]
+  },
+  {
+    "dishId": "plokkfiskur",
+    "summary": "Islandsk fiskerett med kokt hvit fisk, poteter og lys saus.",
+    "overview": "Flaket fisk og poteter vendes i en kremet saus med løk.",
+    "history": "Plokkfiskur er tradisjonell islandsk hverdagsmat som også egner seg til å bruke fiskerester.",
+    "flavor": "Mild, kremet og mettende.",
+    "technique": "Vend fisken forsiktig inn i sausen så noe av flakstrukturen beholdes.",
+    "essentials": [
+      "500 g torsk eller hyse",
+      "500 g poteter",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "500 g torsk eller hyse",
+        "500 g poteter",
+        "1 løk",
+        "40 g smør",
+        "40 g mel",
+        "400 ml melk",
+        "salt og pepper"
+      ],
+      "steps": [
+        "Kok potetene møre og trekk fisken til gjennomkokt.",
+        "Fres løk i smør og rør inn mel.",
+        "Spe med melk og la sausen småkoke.",
+        "Vend inn potetbiter og flaket fisk, varm gjennom og smak til."
+      ]
+    },
+    "variants": [
+      "Noen varianter gratineres med ost."
+    ],
+    "serving": [
+      "Server med islandsk rugbrød eller annet mørkt brød."
+    ],
+    "commonMistakes": [
+      "Ikke rør så hardt at fisken blir helt most."
+    ],
+    "relatedDishIds": [
+      "lohikeitto"
+    ],
+    "sources": [
+      {
+        "label": "Iceland Food Centre – Icelandic fish stew",
+        "href": "https://www.icelandfoodcentre.com/blog/icelandic-fish-stew-plokkfiskur"
+      }
+    ]
   }
 ];
