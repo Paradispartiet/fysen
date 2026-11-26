@@ -836,6 +836,9 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"tamales","name":"Tamales","query":"tamales","aliases":["tamal"],"cuisine":"Mexicansk","region":["enchiladas","mole-poblano"],"explorerPriority":86},
   {"id":"chilaquiles","name":"Chilaquiles","query":"chilaquiles","aliases":[],"cuisine":"Mexicansk","region":["enchiladas","quesadilla"],"explorerPriority":84},
   {"id":"mole-poblano","name":"Mole poblano","query":"mole poblano","aliases":["mole poblano con pollo"],"cuisine":"Mexicansk","region":["enchiladas","tamales"],"explorerPriority":82},
+  {"id":"kofte","name":"Köfte","query":"kofte","aliases":["kofte","turkish meatballs","tyrkiske kjøttboller"],"cuisine":"Midtøsten","region":["doner","shawarma"],"explorerPriority":88},
+  {"id":"baba-ganoush","name":"Baba ganoush","query":"baba ganoush","aliases":["baba ghanoush","baba ganouj","babaganoush"],"cuisine":"Midtøsten","region":["hummus","tabbouleh"],"explorerPriority":86},
+  {"id":"tabbouleh","name":"Tabbouleh","query":"tabbouleh","aliases":["tabouli","tabouleh","taboulee","tabbouli"],"cuisine":"Midtøsten","region":["fattoush","hummus"],"explorerPriority":84},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
