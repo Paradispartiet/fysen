@@ -1674,5 +1674,294 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pad-kra-pao"
     ],
     "sources": []
+  },
+  {
+    "dishId": "chicken-tikka-masala-pakistan",
+    "summary": "Marinerte, grillede kyllingbiter i en krydret tomatbasert saus.",
+    "overview": "Kylling tikka kombineres med en kremet masalasaus.",
+    "history": "Retten har sørasiatiske røtter og er særlig kjent fra britisk curryrestauranttradisjon. Det nøyaktige opphavet er omdiskutert.",
+    "flavor": "Fyldig, lett syrlig og aromatisk.",
+    "technique": "Mariner kyllingen, grill den separat og la den bli ferdig i sausen.",
+    "essentials": [
+      "600 g kyllinglårfilet",
+      "150 g yoghurt",
+      "garam masala"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min + marinering",
+      "ingredients": [
+        "600 g kyllinglårfilet",
+        "150 g yoghurt",
+        "garam masala",
+        "ingefær og hvitløk",
+        "400 g tomater",
+        "1 løk",
+        "100 ml fløte"
+      ],
+      "steps": [
+        "Mariner kyllingen i yoghurt og krydder i kjøleskap.",
+        "Grill kyllingen under ovnsgrill.",
+        "Stek løk, ingefær og hvitløk, tilsett tomat og krydder og la småkoke.",
+        "Tilsett kylling og fløte og kok til kyllingen er gjennomstekt."
+      ]
+    },
+    "variants": [
+      "Styrke og mengde fløte varierer."
+    ],
+    "serving": [
+      "Server med ris eller naan."
+    ],
+    "commonMistakes": [
+      "Ikke bruk rå marinade som ferdig saus."
+    ],
+    "relatedDishIds": [
+      "butter-chicken",
+      "tandoori"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "palak-paneer",
+    "summary": "Nordindisk rett med paneer i krydret spinatsaus.",
+    "overview": "Spinat pureres til en grønn saus som omgir terninger av ferskost.",
+    "history": "Palak paneer forbindes med nordindisk, særlig punjabisk, matkultur.",
+    "flavor": "Mild, jordaktig og kremet.",
+    "technique": "Forvell spinaten kort for å bevare fargen.",
+    "essentials": [
+      "400 g spinat",
+      "250 g paneer",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40–60 min",
+      "ingredients": [
+        "400 g spinat",
+        "250 g paneer",
+        "1 løk",
+        "2 hvitløksfedd",
+        "ingefær",
+        "spisskummen",
+        "garam masala",
+        "olje"
+      ],
+      "steps": [
+        "Forvell spinaten kort og kjør til puré.",
+        "Fres løk, hvitløk, ingefær og krydder.",
+        "Tilsett spinat og la småkoke kort.",
+        "Vend inn paneer og varm gjennom."
+      ]
+    },
+    "variants": [
+      "Saag paneer kan inneholde andre bladgrønnsaker enn spinat."
+    ],
+    "serving": [
+      "Server med roti, naan eller ris."
+    ],
+    "commonMistakes": [
+      "Ikke kok spinaten unødvendig lenge."
+    ],
+    "relatedDishIds": [
+      "naan",
+      "dal-makhani"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "rogan-josh",
+    "summary": "Aromatisk kashmirsk kjøttgryte, ofte med lam eller geit.",
+    "overview": "Kjøttet braiseres med krydder og chili som gir sausen en rød farge.",
+    "history": "Rogan josh har en sentral plass i kashmirsk matkultur, med ulike kryddertradisjoner.",
+    "flavor": "Rik, aromatisk og varm uten nødvendigvis å være svært sterk.",
+    "technique": "Braiser kjøttet på lav varme til mørt.",
+    "essentials": [
+      "600 g lammekjøtt til gryte",
+      "150 g yoghurt",
+      "2 ts kashmirchili"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer",
+      "ingredients": [
+        "600 g lammekjøtt til gryte",
+        "150 g yoghurt",
+        "2 ts kashmirchili",
+        "1 ts fennikelfrø",
+        "tørket ingefær",
+        "kardemomme",
+        "nellik",
+        "olje"
+      ],
+      "steps": [
+        "Brun kjøttet i olje.",
+        "Fres krydderne forsiktig.",
+        "Rør inn yoghurt gradvis og tilsett litt vann.",
+        "La trekke under lokk til kjøttet er mørt."
+      ]
+    },
+    "variants": [
+      "Kashmirske varianter varierer blant annet i bruk av løk og hvitløk."
+    ],
+    "serving": [
+      "Server med ris."
+    ],
+    "commonMistakes": [
+      "Ikke la krydderne svi seg i oljen."
+    ],
+    "relatedDishIds": [
+      "biryani",
+      "vindaloo"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "vindaloo",
+    "summary": "Syrlig og krydret gryterett fra Goa, tradisjonelt ofte med svinekjøtt.",
+    "overview": "Eddik, hvitløk og chili preger marinaden og sausen.",
+    "history": "Vindaloo har forbindelser til portugisisk marineringstradisjon, tilpasset lokale råvarer og krydder i Goa.",
+    "flavor": "Syrlig, sterk og aromatisk.",
+    "technique": "Mariner kjøttet og braiser det forsiktig.",
+    "essentials": [
+      "600 g svinekjøtt til gryte",
+      "3 ss eddik",
+      "5 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer + marinering",
+      "ingredients": [
+        "600 g svinekjøtt til gryte",
+        "3 ss eddik",
+        "5 hvitløksfedd",
+        "tørket chili",
+        "spisskummen",
+        "korianderfrø",
+        "1 løk",
+        "olje"
+      ],
+      "steps": [
+        "Mal chili og krydder med eddik og hvitløk.",
+        "Mariner kjøttet i kjøleskap.",
+        "Fres løk og tilsett kjøtt og marinade.",
+        "Tilsett litt vann og braiser til mørt."
+      ]
+    },
+    "variants": [
+      "Restaurantvarianter bruker også kylling eller lam."
+    ],
+    "serving": [
+      "Server med ris eller brød."
+    ],
+    "commonMistakes": [
+      "Ikke gjør retten til bare en sterk chilisaus; syren er viktig."
+    ],
+    "relatedDishIds": [
+      "rogan-josh",
+      "biryani"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "malai-kofta",
+    "summary": "Indisk rett med myke grønnsaks- eller paneerboller i en fyldig saus.",
+    "overview": "Boller av potet og paneer stekes eller friteres og serveres med kremet saus.",
+    "history": "Retten er kjent fra nordindisk restaurant- og festmat.",
+    "flavor": "Mildt krydret, kremet og myk.",
+    "technique": "Hold koftabollene forholdsvis tørre før steking.",
+    "essentials": [
+      "300 g kokte poteter",
+      "200 g paneer",
+      "2 ss maisstivelse"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40–60 min",
+      "ingredients": [
+        "300 g kokte poteter",
+        "200 g paneer",
+        "2 ss maisstivelse",
+        "1 løk",
+        "300 g tomater",
+        "50 g cashewnøtter",
+        "100 ml fløte",
+        "garam masala",
+        "olje"
+      ],
+      "steps": [
+        "Mos potet og paneer, bland med stivelse og form boller.",
+        "Stek eller friter bollene til gylne.",
+        "Kok løk, tomater og cashewnøtter og kjør glatt.",
+        "Smak sausen til med krydder og fløte; legg i bollene rett før servering."
+      ]
+    },
+    "variants": [
+      "Kofta kan også lages med andre grønnsaker."
+    ],
+    "serving": [
+      "Server med naan eller ris."
+    ],
+    "commonMistakes": [
+      "Ikke la bollene ligge lenge i sausen før servering."
+    ],
+    "relatedDishIds": [
+      "palak-paneer",
+      "naan"
+    ],
+    "sources": []
+  },
+  {
+    "dishId": "aloo-gobi",
+    "summary": "Indisk grønnsaksrett med poteter, blomkål og krydder.",
+    "overview": "Poteter og blomkål stekes eller trekkes sammen med aromater.",
+    "history": "Aloo gobi er vanlig i nordindisk og pakistansk hjemmemat.",
+    "flavor": "Jordaktig, mildt sterk og aromatisk.",
+    "technique": "Tilpass koketiden slik at blomkålen beholder formen.",
+    "essentials": [
+      "400 g poteter",
+      "1 liten blomkål",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40–60 min",
+      "ingredients": [
+        "400 g poteter",
+        "1 liten blomkål",
+        "1 løk",
+        "2 tomater",
+        "ingefær",
+        "spisskummen",
+        "gurkemeie",
+        "koriander",
+        "olje"
+      ],
+      "steps": [
+        "Fres spisskummen, løk og ingefær.",
+        "Tilsett tomat og krydder.",
+        "Vend inn potetbiter og litt vann; la trekke under lokk.",
+        "Tilsett blomkål og kok til grønnsakene er møre."
+      ]
+    },
+    "variants": [
+      "Tørre og mer sausete varianter finnes."
+    ],
+    "serving": [
+      "Server med roti og dal."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett for mye vann eller kok blomkålen til mos."
+    ],
+    "relatedDishIds": [
+      "chana-masala",
+      "palak-paneer"
+    ],
+    "sources": []
   }
 ];
