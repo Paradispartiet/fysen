@@ -76,6 +76,12 @@ export const foodKnowledgeDishIds = [
   "vindaloo",
   "malai-kofta",
   "aloo-gobi",
+  "lasagne-alla-bolognese",
+  "risotto-alla-milanese",
+  "ossobuco",
+  "gnocchi-al-pesto",
+  "tiramisu",
+  "focaccia",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
