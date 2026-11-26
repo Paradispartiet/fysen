@@ -1,12 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { article } from "../content/food-knowledge/articles/dal-makhani.ts";
+import { article as ramen } from "../content/food-knowledge/articles/ramen.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { localizedArticleBody, translatedArticleIds } from "../lib/dish-article-translations.ts";
 
 const numericTokens = (value) => value.match(/[0-9]+|[½¼¾]/gu) ?? [];
 
-test("complete Dal makhani translations retain recipe quantities, times and structure", () => {
+for (const original of [article, ramen]) {
+test(`complete ${original.dishId} translations retain recipe quantities, times and structure`, () => {
+  const article = original;
   assert.ok(translatedArticleIds.includes(article.dishId));
   for (const locale of previewLocales) {
     const { body, lang } = localizedArticleBody(article, locale);
@@ -26,6 +29,7 @@ test("complete Dal makhani translations retain recipe quantities, times and stru
     }
   }
 });
+}
 
 test("original article remains the exact fallback for missing translations", () => {
   assert.equal(localizedArticleBody(article, "nb").body, article);
