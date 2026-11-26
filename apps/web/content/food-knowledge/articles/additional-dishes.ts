@@ -3112,5 +3112,321 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "tostada"
     ],
     "sources": []
+  },
+  {
+    "dishId": "lahmacun",
+    "summary": "Tynt flatbrød med krydret kjøttdeig, tomat og urter.",
+    "overview": "En finhakket kjøttblanding fordeles over tynn deig og stekes ved høy varme.",
+    "history": "Lahmacun er utbredt i Tyrkia, med regionale varianter blant annet i Gaziantep og Şanlıurfa.",
+    "flavor": "Sprø kanter, saftig fyll og aromatiske krydder.",
+    "technique": "Kjevle deigen tynt og bruk et tynt lag fyll.",
+    "essentials": [
+      "300 g hvetemel",
+      "170 ml vann",
+      "salt"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "300 g hvetemel",
+        "170 ml vann",
+        "salt",
+        "250 g kjøttdeig av lam eller storfe",
+        "1 tomat",
+        "1 løk",
+        "persille",
+        "paprikapulver"
+      ],
+      "steps": [
+        "Elt mel, vann og salt til glatt deig og la hvile.",
+        "Finhakk grønnsakene og bland med kjøtt og krydder.",
+        "Del deigen i seks og kjevle tynt; fordel kjøttblandingen.",
+        "Stek ved 240–250 °C til deigen er gyllen og kjøttfyllet gjennomstekt."
+      ]
+    },
+    "variants": [
+      "Krydder og mengden hvitløk varierer regionalt."
+    ],
+    "serving": [
+      "Server med persille, løk og sitron."
+    ],
+    "commonMistakes": [
+      "Ikke legg på et tykt, vått lag fyll."
+    ],
+    "relatedDishIds": [
+      "pide",
+      "doner"
+    ],
+    "sources": [
+      {
+        "label": "Go Türkiye – Lahmacun og tyrkiske mattradisjoner",
+        "href": "https://goturkiye.com/gastronomy/blog/16-foods-you-have-to-try-on-your-trip-to-turkiye"
+      }
+    ]
+  },
+  {
+    "dishId": "manti",
+    "summary": "Små tyrkiske deigpakker med kjøttfyll, ofte med hvitløksyoghurt.",
+    "overview": "Tynne deigbiter fylles, lukkes og kokes før saus tilsettes.",
+    "history": "Kayseri er særlig kjent for sine små mantı; andre regioner har større varianter.",
+    "flavor": "Myk deig, saftig fyll og syrlig yoghurt.",
+    "technique": "Hold deigen dekket mens du former små pakker.",
+    "essentials": [
+      "300 g hvetemel",
+      "1 egg",
+      "vann og salt"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "300 g hvetemel",
+        "1 egg",
+        "vann og salt",
+        "250 g kjøttdeig",
+        "1 liten løk",
+        "300 g yoghurt",
+        "2 hvitløksfedd",
+        "smør",
+        "paprikaflak"
+      ],
+      "steps": [
+        "Elt mel, egg, vann og salt til fast deig og la hvile.",
+        "Bland kjøttdeig med revet løk og salt.",
+        "Kjevle ut, skjær i små firkanter, fyll og forsegl.",
+        "Kok til deigen er mør og kjøttet gjennomstekt; topp med hvitløksyoghurt og paprikasmør."
+      ]
+    },
+    "variants": [
+      "Kayseri mantısı og større hingel-varianter."
+    ],
+    "serving": [
+      "Server varmt med kjølig yoghurt."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll de små deigpakkene."
+    ],
+    "relatedDishIds": [
+      "dumplings",
+      "lahmacun"
+    ],
+    "sources": [
+      {
+        "label": "Go Türkiye – Mantı: tradisjoner og regionale varianter",
+        "href": "https://goturkiye.com/blog/turkish-manti"
+      }
+    ]
+  },
+  {
+    "dishId": "doner",
+    "summary": "Tyrkisk kebab av kjøtt stekt på roterende, stående spyd.",
+    "overview": "Kjøttet skjæres av i tynne skiver etter hvert som overflaten blir stekt.",
+    "history": "Döner er en etablert tyrkisk kjøtt- og gatemattradisjon og serveres også som tallerkenrett.",
+    "flavor": "Ristet, saftig og krydret.",
+    "technique": "Hjemmevarianten bruker tynne kjøttskiver i varm panne, ikke et roterende spyd.",
+    "essentials": [
+      "600 g benfri kyllinglårfilet",
+      "2 ss yoghurt",
+      "1 ss olje"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min + marinering",
+      "ingredients": [
+        "600 g benfri kyllinglårfilet",
+        "2 ss yoghurt",
+        "1 ss olje",
+        "paprikapulver",
+        "spisskummen",
+        "hvitløk",
+        "salt",
+        "brød og salat"
+      ],
+      "steps": [
+        "Skjær kyllingen i tynne strimler.",
+        "Mariner med yoghurt, olje og krydder i kjøleskap.",
+        "Stek i små omganger på høy varme til gjennomstekt.",
+        "Server i brød eller på tallerken med salat."
+      ]
+    },
+    "variants": [
+      "Döner av lam, storfe eller kylling; dürüm i rullet flatbrød."
+    ],
+    "serving": [
+      "Server med løk, tomat og ønsket saus."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll stekepannen eller bruk rå marinade som saus."
+    ],
+    "relatedDishIds": [
+      "shawarma",
+      "lahmacun"
+    ],
+    "sources": [
+      {
+        "label": "Go Türkiye – Döner: tilberedning og tradisjon",
+        "href": "https://goturkiye.com/blog/doner"
+      }
+    ]
+  },
+  {
+    "dishId": "kofte",
+    "summary": "Tyrkiske kjøttboller eller kjøttkaker, ofte grillet.",
+    "overview": "Kjøttdeig formes med løk og krydder; sammensetningen varierer regionalt.",
+    "history": "Tyrkia har en rekke lokale köfte-tradisjoner, blant annet i Tekirdağ og Burdur.",
+    "flavor": "Saftig, ristet og aromatisk.",
+    "technique": "Form jevne kaker og stek til gjennomstekt.",
+    "essentials": [
+      "500 g kjøttdeig",
+      "1 liten løk",
+      "2 ss brødsmuler"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "500 g kjøttdeig",
+        "1 liten løk",
+        "2 ss brødsmuler",
+        "persille",
+        "spisskummen",
+        "pepper",
+        "salt"
+      ],
+      "steps": [
+        "Riv løken og bland med kjøtt og krydder.",
+        "Form små, flate kjøttkaker.",
+        "La hvile kjølig i 20 minutter.",
+        "Grill eller pannestek til gjennomstekt."
+      ]
+    },
+    "variants": [
+      "Şiş köfte på spyd og İzmir köfte med tomatsaus."
+    ],
+    "serving": [
+      "Server med salat, brød eller piyaz."
+    ],
+    "commonMistakes": [
+      "Ikke stek på så høy varme at utsiden brenner før midten er ferdig."
+    ],
+    "relatedDishIds": [
+      "doner",
+      "shawarma"
+    ],
+    "sources": [
+      {
+        "label": "Go Türkiye – regionale köfte-tradisjoner",
+        "href": "https://goturkiye.com/mediterranean/taste"
+      }
+    ]
+  },
+  {
+    "dishId": "baba-ganoush",
+    "summary": "Auberginedipp med røykpreg, sitron og ofte tahini.",
+    "overview": "Auberginen grilles eller ovnsstekes til myk og blandes med smakstilsetninger.",
+    "history": "Retten inngår i levantinske mezetradisjoner; navn og ingredienser varierer lokalt.",
+    "flavor": "Røykfylt, syrlig og kremet.",
+    "technique": "La den stekte auberginen renne av før den moses.",
+    "essentials": [
+      "2 store auberginer",
+      "2 ss tahini",
+      "1 sitron"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 50 min",
+      "ingredients": [
+        "2 store auberginer",
+        "2 ss tahini",
+        "1 sitron",
+        "1 hvitløksfedd",
+        "olivenolje",
+        "salt"
+      ],
+      "steps": [
+        "Prikk auberginene og stek ved 230 °C til helt myke.",
+        "Avkjøl litt, del og skrap ut innmaten.",
+        "La overflødig væske renne av.",
+        "Mos med tahini, sitron, hvitløk og salt; topp med olje."
+      ]
+    },
+    "variants": [
+      "Tahini-baserte varianter omtales også som mutabbal i deler av Levanten."
+    ],
+    "serving": [
+      "Server med pitabrød og andre småretter."
+    ],
+    "commonMistakes": [
+      "Ikke bruk aubergine som fortsatt er fast inni."
+    ],
+    "relatedDishIds": [
+      "hummus",
+      "tabbouleh"
+    ],
+    "sources": [
+      {
+        "label": "The Mediterranean Dish – Baba ganoush",
+        "href": "https://www.themediterraneandish.com/baba-ganoush-recipe/"
+      }
+    ]
+  },
+  {
+    "dishId": "tabbouleh",
+    "summary": "Levantinsk urtesalat med persille, tomat, bulgur og sitron.",
+    "overview": "Finhakkede urter blandes med litt bulgur og en enkel sitron- og oljedressing.",
+    "history": "Tabbouleh er særlig kjent fra libanesisk og syrisk matkultur og serveres ofte som meze.",
+    "flavor": "Frisk, syrlig og urtepreget.",
+    "technique": "Tørk urtene godt og finhakk dem med skarp kniv.",
+    "essentials": [
+      "2 store bunter bladpersille",
+      "1 liten bunt mynte",
+      "3 tomater"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25 min",
+      "ingredients": [
+        "2 store bunter bladpersille",
+        "1 liten bunt mynte",
+        "3 tomater",
+        "50 g fin bulgur",
+        "2 vårløk",
+        "1–2 sitroner",
+        "3 ss olivenolje",
+        "salt"
+      ],
+      "steps": [
+        "Tilbered bulguren etter pakningen og la renne av.",
+        "Vask og tørk urtene; finhakk dem.",
+        "Skjær tomat og vårløk smått.",
+        "Bland alt med sitronsaft, olivenolje og salt."
+      ]
+    },
+    "variants": [
+      "Forholdet mellom bulgur og urter varierer; persille dominerer i mange levantinske varianter."
+    ],
+    "serving": [
+      "Server kjølig som meze eller til grillmat."
+    ],
+    "commonMistakes": [
+      "Ikke la bulguren dominere salaten dersom du ønsker en urtepreget variant."
+    ],
+    "relatedDishIds": [
+      "fattoush",
+      "hummus"
+    ],
+    "sources": [
+      {
+        "label": "The Mediterranean Dish – Tabbouleh",
+        "href": "https://www.themediterraneandish.com/tabouli-salad/"
+      }
+    ]
   }
 ];
