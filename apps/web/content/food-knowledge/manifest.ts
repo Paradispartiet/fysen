@@ -190,6 +190,12 @@ export const foodKnowledgeDishIds = [
   "jambalaya",
   "gumbo",
   "philly-cheesesteak",
+  "lomo-saltado",
+  "aji-de-gallina",
+  "anticuchos",
+  "empanadas",
+  "asado",
+  "pastel-de-choclo",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
