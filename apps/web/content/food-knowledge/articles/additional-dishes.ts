@@ -6963,5 +6963,329 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://refugeeprojectmaastricht.nl/a-cookbook-without-borders-interview-with-vasylyna-saievych/"
       }
     ]
+  },
+  {
+    "dishId": "khachapuri",
+    "summary": "Georgisk brød fylt med ost.",
+    "overview": "Det finnes flere regionale former, blant annet runde ostefylte brød og båtformede brød fra Adsjaria.",
+    "history": "Khachapuri er en sentral del av georgisk matkultur med tydelige regionale særpreg.",
+    "flavor": "Fyldig, salt og mykt med gyllen brødskorpe.",
+    "technique": "Bruk en elastisk gjærdeig og ost som smelter godt.",
+    "essentials": [
+      "400 g hvetemel",
+      "250 ml vann",
+      "5 g tørrgjær"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "2 brød",
+      "time": "ca. 45 min + heving",
+      "ingredients": [
+        "400 g hvetemel",
+        "250 ml vann",
+        "5 g tørrgjær",
+        "1 ts salt",
+        "250 g mozzarella",
+        "150 g feta",
+        "2 egg",
+        "smør"
+      ],
+      "steps": [
+        "Elt mel, vann, gjær og salt og la deigen heve til omtrent dobbel størrelse.",
+        "Del i to, kjevle ut og form båtformede brød med oppbrettede kanter.",
+        "Fordel revet ost og stek ved 220 °C til gylne.",
+        "Knekk et egg i hver båt mot slutten og stek videre til egget har satt seg. Topp med litt smør."
+      ]
+    },
+    "variants": [
+      "Imeruli er rundt og fylt med ost; adjaruli har åpen båtform. Mozzarella og feta er en hjemmetilpasning til georgiske oster."
+    ],
+    "serving": [
+      "Server varmt, gjerne delt mellom flere."
+    ],
+    "commonMistakes": [
+      "Ikke fyll brødene så mye at osten renner ut."
+    ],
+    "relatedDishIds": [
+      "pide",
+      "focaccia"
+    ],
+    "sources": [
+      {
+        "label": "Georgia Travel – Khachapuri",
+        "href": "https://georgia.travel/rediscovering-khachapuri-georgias-must-try-classic"
+      }
+    ]
+  },
+  {
+    "dishId": "khinkali",
+    "summary": "Store kokte georgiske deigpakker med saftig fyll og kraft inni.",
+    "overview": "En fast meldeig brettes i folder rundt kjøttfyll med tilsatt væske.",
+    "history": "Khinkali har sterke tradisjoner i georgiske fjellregioner og finnes i flere regionale utgaver.",
+    "flavor": "Saftig, pepperpreget og fyldig.",
+    "technique": "Forsegl deigen godt og hold kjøttfyllet kjølig under formingen.",
+    "essentials": [
+      "400 g hvetemel",
+      "200 ml vann",
+      "1 ts salt"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "400 g hvetemel",
+        "200 ml vann",
+        "1 ts salt",
+        "400 g kjøttdeig",
+        "1 løk",
+        "100 ml kald kraft",
+        "pepper",
+        "koriander etter smak"
+      ],
+      "steps": [
+        "Elt mel, vann og salt til fast deig og la hvile.",
+        "Bland kjøttdeig, finhakket løk, krydder og kald kraft gradvis.",
+        "Kjevle ut deigen, stikk ut store sirkler, fyll og samle kantene i folder.",
+        "Kok i omganger i saltet vann til deigen og kjøttfyllet er gjennomkokt (minst 71 °C for storfe- eller svinefarse)."
+      ]
+    },
+    "variants": [
+      "Fjellvarianter og byvarianter kan ha ulike urter og kjøttslag; soppfyll finnes også."
+    ],
+    "serving": [
+      "Server med svart pepper. La kraften kjøle seg litt før første bit."
+    ],
+    "commonMistakes": [
+      "Unngå hull i deigen og for mye væske i fyllet."
+    ],
+    "relatedDishIds": [
+      "xiaolongbao",
+      "manti"
+    ],
+    "sources": [
+      {
+        "label": "Georgia Travel – Georgisk matkultur",
+        "href": "https://georgia.travel/georgian-cuisine"
+      }
+    ]
+  },
+  {
+    "dishId": "lobio",
+    "summary": "Georgisk bønnerett, gjerne med løk, koriander og krydder.",
+    "overview": "Kokte bønner moses delvis til en tykk gryte med aromater.",
+    "history": "Bønner har en etablert plass i georgisk matkultur, og lobio finnes i både varme og kalde former.",
+    "flavor": "Jordaktig, urtepreget og fyldig.",
+    "technique": "Bruk ferdigkokte bønner og behold litt av væsken til konsistensen.",
+    "essentials": [
+      "800 g kokte kidneybønner, avrent",
+      "1 løk",
+      "3 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 35 min",
+      "ingredients": [
+        "800 g kokte kidneybønner, avrent",
+        "1 løk",
+        "3 hvitløksfedd",
+        "1 ts malt koriander",
+        "frisk koriander",
+        "2 ss olje",
+        "150 ml vann",
+        "vineddik etter smak"
+      ],
+      "steps": [
+        "Fres finhakket løk og hvitløk i olje.",
+        "Tilsett bønner, vann og malt koriander.",
+        "La småkoke og mos noen av bønnene mot gryteveggen.",
+        "Smak til med salt, eddik og frisk koriander."
+      ]
+    },
+    "variants": [
+      "Noen varianter inneholder valnøtter eller andre krydder; kalde bønnesalater finnes også."
+    ],
+    "serving": [
+      "Server med maisbrød eller brød og syltede grønnsaker."
+    ],
+    "commonMistakes": [
+      "Ikke bruk ukokte kidneybønner direkte i gryten."
+    ],
+    "relatedDishIds": [
+      "feijoada",
+      "shiro"
+    ],
+    "sources": [
+      {
+        "label": "Georgia Travel – Georgiske mattradisjoner",
+        "href": "https://georgia.travel/why-georgia-come-with-us"
+      }
+    ]
+  },
+  {
+    "dishId": "chakhokhbili",
+    "summary": "Georgisk kyllinggryte med tomater, løk og friske urter.",
+    "overview": "Kylling brunes og trekkes i en tomatbasert saus som avsluttes med urter.",
+    "history": "Chakhokhbili inngår i det georgiske kjøkkenets gryterettstradisjon.",
+    "flavor": "Fruktig tomatsmak, saftig kylling og friske urter.",
+    "technique": "Brun kyllingen før den trekkes ferdig i sausen.",
+    "essentials": [
+      "800 g kyllinglår",
+      "3 løk",
+      "600 g tomater"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "800 g kyllinglår",
+        "3 løk",
+        "600 g tomater",
+        "3 hvitløksfedd",
+        "frisk koriander",
+        "basilikum",
+        "chili etter smak",
+        "olje"
+      ],
+      "steps": [
+        "Brun kyllingen i en gryte.",
+        "Fres løken til myk og tilsett hakket tomat, hvitløk og chili.",
+        "Legg kyllingen tilbake og la trekke under lokk til gjennomstekt og mør.",
+        "Ta av lokket ved behov for å redusere sausen og tilsett urtene mot slutten."
+      ]
+    },
+    "variants": [
+      "Mengden chili og hvilke urter som brukes varierer."
+    ],
+    "serving": [
+      "Server med brød eller ris."
+    ],
+    "commonMistakes": [
+      "Ikke kok de friske urtene unødvendig lenge."
+    ],
+    "relatedDishIds": [
+      "coq-au-vin",
+      "doro-wat"
+    ],
+    "sources": [
+      {
+        "label": "Georgia Travel – Georgisk kjøkken",
+        "href": "https://georgia.travel/why-georgia-delicious-cuisine"
+      }
+    ]
+  },
+  {
+    "dishId": "khorovats",
+    "summary": "Armensk grillmat, ofte kjøtt på spyd med grillede grønnsaker.",
+    "overview": "Kjøtt grilles over sterk varme og serveres gjerne med brød, løk og urter.",
+    "history": "Khorovats er en betydningsfull armensk grilltradisjon med egne matfestivaler.",
+    "flavor": "Ristet, saftig og aromatisk.",
+    "technique": "Skjær jevne stykker og grill kontrollert til ferdige.",
+    "essentials": [
+      "700 g svinenakke i biter",
+      "2 løk",
+      "salt og pepper"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min + marinering",
+      "ingredients": [
+        "700 g svinenakke i biter",
+        "2 løk",
+        "salt og pepper",
+        "2 paprika",
+        "1 aubergine",
+        "lavash"
+      ],
+      "steps": [
+        "Bland kjøttet med skivet løk og krydder og la marinere kjølig.",
+        "Tre kjøttet på spyd og grill over moderat til sterk varme.",
+        "Kontroller at hele svinekjøttstykker når minst 63 °C og får minst tre minutters hvile.",
+        "Grill grønnsakene separat og server sammen med lavash."
+      ]
+    },
+    "variants": [
+      "Storfekjøtt, lam og grillede grønnsaker brukes også."
+    ],
+    "serving": [
+      "Server med lavash, løk og friske urter."
+    ],
+    "commonMistakes": [
+      "Ikke bruk rå marinade på ferdiggrillet kjøtt."
+    ],
+    "relatedDishIds": [
+      "souvlaki",
+      "kofte"
+    ],
+    "sources": [
+      {
+        "label": "Armenia Travel – Armensk matkultur",
+        "href": "https://armenia.travel/things-to-do/armenian-cuisine/"
+      },
+      {
+        "label": "Armenia Travel – Tradisjonelle retter",
+        "href": "https://armenia.travel/articles/explore-armenias-must-try-dishes/"
+      }
+    ]
+  },
+  {
+    "dishId": "dolma",
+    "summary": "Fylte vinblader eller grønnsaker; her en armenskinspirert variant med kjøtt og ris.",
+    "overview": "Vinblader brettes rundt krydret fyll og trekkes forsiktig i en gryte.",
+    "history": "Tolma er en etablert armensk mattradisjon. Beslektede dolma-retter finnes i Kaukasus, Midtøsten og middelhavslandene.",
+    "flavor": "Urtepreget, fyldig og lett syrlig.",
+    "technique": "Skyll saltede vinblader godt og rull med plass til at risen sveller.",
+    "essentials": [
+      "30 vinblader på glass",
+      "400 g kjøttdeig",
+      "80 g ris"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "30 vinblader på glass",
+        "400 g kjøttdeig",
+        "80 g ris",
+        "1 løk",
+        "persille",
+        "mynte",
+        "400 ml kraft",
+        "sitron"
+      ],
+      "steps": [
+        "Skyll vinbladene og skjær bort harde stilker.",
+        "Bland kjøttdeig med skylt ris, finhakket løk og urter.",
+        "Fordel litt fyll på hvert blad og brett til små ruller.",
+        "Legg rullene tett i gryten, tilsett kraft og trekk under lokk til risen er mør og kjøttfyllet gjennomstekt (minst 71 °C for storfe- eller svinefarse)."
+      ]
+    },
+    "variants": [
+      "Vegetariske varianter med ris, bønner eller linser finnes, blant annet armensk pasuts tolma."
+    ],
+    "serving": [
+      "Server med yoghurt og sitron."
+    ],
+    "commonMistakes": [
+      "Ikke rull så stramt at bladene sprekker når risen sveller."
+    ],
+    "relatedDishIds": [
+      "golabki",
+      "tabbouleh"
+    ],
+    "sources": [
+      {
+        "label": "Armenia Travel – Armensk matkultur",
+        "href": "https://armenia.travel/things-to-do/armenian-cuisine/"
+      },
+      {
+        "label": "Armenia Travel – Plantebaserte mattradisjoner",
+        "href": "https://armenia.travel/articles/enjoy-your-trip-through-vegan-local-food-experiences/"
+      }
+    ]
   }
 ];
