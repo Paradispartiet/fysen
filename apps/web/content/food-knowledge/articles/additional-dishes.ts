@@ -47,7 +47,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "dosa",
       "vada"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Swasthi’s Recipes – Idli sambar",
+        "href": "https://www.indianhealthyrecipes.com/idli-sambar-recipe-tiffin-sambar/"
+      }
+    ]
   },
   {
     "dishId": "idli",
@@ -92,7 +97,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "dosa",
       "vada"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Swasthi’s Recipes – Idli og fermentering",
+        "href": "https://www.indianhealthyrecipes.com/soft-idli-recipe-using-idli-rava/"
+      }
+    ]
   },
   {
     "dishId": "vada",
@@ -139,7 +149,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "idli",
       "dosa"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Dassana’s Veg Recipes – Medu vada",
+        "href": "https://www.vegrecipesofindia.com/medu-vada-recipe-medu-vada/"
+      }
+    ]
   },
   {
     "dishId": "naan",
@@ -185,7 +200,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "butter-chicken",
       "dal-makhani"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Swasthi’s Recipes – Naan",
+        "href": "https://www.indianhealthyrecipes.com/naan/"
+      }
+    ]
   },
   {
     "dishId": "yakitori",
@@ -230,7 +250,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "katsu",
       "ramen"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Just One Cookbook – Yakitori",
+        "href": "https://www.justonecookbook.com/yakitori/"
+      },
+      {
+        "label": "Just One Cookbook – Izakaya-mat",
+        "href": "https://www.justonecookbook.com/collection/izakaya/"
+      }
+    ]
   },
   {
     "dishId": "green-curry",
@@ -276,7 +305,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "tom-yum",
       "pad-thai"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Hot Thai Kitchen – Grønn curry",
+        "href": "https://hot-thai-kitchen.com/green-curry-new-2/"
+      }
+    ]
   },
   {
     "dishId": "udon",
@@ -320,7 +354,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "ramen",
       "gyoza"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Just One Cookbook – Udon",
+        "href": "https://www.justonecookbook.com/udon-noodles/"
+      },
+      {
+        "label": "Just One Cookbook – Udon-varianter",
+        "href": "https://www.justonecookbook.com/best-authentic-japanese-udon-noodle-recipes/"
+      }
+    ]
   },
   {
     "dishId": "dumplings",
@@ -365,7 +408,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "gyoza",
       "bao"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "The Woks of Life – Kinesiske dumplings",
+        "href": "https://thewoksoflife.com/dumpling-recipe-youll-ever-need/"
+      }
+    ]
   },
   {
     "dishId": "pad-kra-pao",
@@ -412,7 +460,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pad-thai",
       "green-curry"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Hot Thai Kitchen – Pad kra pao",
+        "href": "https://hot-thai-kitchen.com/pad-kra-pao-anything/"
+      }
+    ]
   },
   {
     "dishId": "bun-cha",
@@ -459,7 +512,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pho",
       "banh-mi"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Vietnam National Authority of Tourism – Hanoi-matkultur",
+        "href": "https://vietnamtourism.gov.vn/en/post/18886"
+      }
+    ]
   },
   {
     "dishId": "vietnamese-spring-rolls",
@@ -505,7 +563,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pho",
       "bun-cha"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Vietnam Tourism – Vietnamesiske retter",
+        "href": "https://vietnam.travel/things-to-do/21-must-try-vietnamese-dishes/"
+      },
+      {
+        "label": "Vietnam Airlines – Gỏi cuốn",
+        "href": "https://www.vietnamairlines.com/gb/en/plan-book/travel/travel-guide/street-food-ho-chi-minh"
+      }
+    ]
   },
   {
     "dishId": "pizza-marinara",
@@ -550,7 +617,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pizza-margherita",
       "carbonara"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Associazione Verace Pizza Napoletana – Napolitansk pizza",
+        "href": "https://www.pizzanapoletana.org/en/decalogo"
+      },
+      {
+        "label": "Pizzamani – Marinara",
+        "href": "https://pizzamani.no/pizza-marinara-oppskrift/"
+      }
+    ]
   },
   {
     "dishId": "peking-duck",
@@ -596,7 +672,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "bao",
       "dumplings"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Beijing Government – Beijing cuisine",
+        "href": "https://english.beijing.gov.cn/beijinginfo/culture/202005/t20200525_1908295.html"
+      }
+    ]
   },
   {
     "dishId": "dan-dan-noodles",
@@ -643,7 +724,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "mapo-tofu",
       "dumplings"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "The Woks of Life – Dan dan-nudler",
+        "href": "https://thewoksoflife.com/dan-dan-noodles/"
+      }
+    ]
   },
   {
     "dishId": "amatriciana",
@@ -688,7 +774,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "carbonara",
       "cacio-e-pepe"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "EUR-Lex – Amatriciana Tradizionale",
+        "href": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A52019XC1120%2802%29"
+      },
+      {
+        "label": "La Cucina Italiana – Amatriciana",
+        "href": "https://www.lacucinaitaliana.com/italian-food/italian-dishes/how-to-make-the-original-bucatini-allamatriciana"
+      }
+    ]
   },
   {
     "dishId": "saltimbocca",
@@ -733,7 +828,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "carbonara",
       "amatriciana"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "La Cucina Italiana – Saltimbocca alla romana",
+        "href": "https://www.lacucinaitaliana.it/ricetta/secondi/saltimbocca-alla-romana-la-ricetta-originale/"
+      }
+    ]
   },
   {
     "dishId": "cannoli",
@@ -778,7 +878,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "arancini",
       "pasta-alla-norma"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "La Cucina Italiana – Sicilianske cannoli",
+        "href": "https://www.lacucinaitaliana.com/recipe/cakes-and-desserts/sicilian-cannoli"
+      },
+      {
+        "label": "La Cucina Italiana – Cannoli, historie og oppskrift",
+        "href": "https://www.lacucinaitaliana.com/italian-food/italian-dishes/digging-into-the-sweet-history-of-sicilian-cannoli"
+      }
+    ]
   },
   {
     "dishId": "quesadilla",
@@ -824,7 +933,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "tacos-al-pastor",
       "birria"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Mexico in My Kitchen – Quesadillas av maisdeig",
+        "href": "https://www.mexicoinmykitchen.com/corn-dough-quesadillas/"
+      }
+    ]
   },
   {
     "dishId": "bibimbap",
