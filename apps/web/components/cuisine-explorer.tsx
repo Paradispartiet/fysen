@@ -183,10 +183,11 @@ function restaurantInitials(name: string): string {
 
 function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample }) {
   const visuals = restaurantVisuals(restaurant);
+  const photo = visuals && "photoCredit" in visuals ? visuals : null;
   const [failedLogo, setFailedLogo] = useState<string | null>(null);
   const identity = (
     <>
-      {visuals && failedLogo !== visuals.logo ? (
+      {visuals?.logo && failedLogo !== visuals.logo ? (
         <img className="cuisineExploreRestaurantLogo" src={withPublicBasePath(visuals.logo)}
           alt="" width={64} height={38} loading="lazy" decoding="async"
           onError={() => setFailedLogo(visuals.logo)} />
@@ -210,8 +211,8 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
         <div className="cuisineExploreRestaurantArtwork">
           <div className="cuisineExploreRestaurantScenes">
             <figure>
-              <img src={withPublicBasePath(visuals.exterior)} alt={`Illustrasjon av fasaden til ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
-              <figcaption>Fasade · Illustrasjon</figcaption>
+              <img src={withPublicBasePath(visuals.exterior)} alt={`${photo ? "Foto" : "Illustrasjon"} av fasaden til ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
+              <figcaption>{photo ? "Fasade · Foto fra 2017" : "Fasade · Illustrasjon"}</figcaption>
             </figure>
             {visuals.interior ? (
             <figure>
@@ -221,8 +222,9 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
             ) : null}
           </div>
           <a className="cuisineExploreRestaurantArtSource" href={visuals.sourceUrl} target="_blank" rel="noopener noreferrer">
-            Illustrert fra restaurantens egne bilder
+            {photo ? `Foto: ${photo.photoCredit} · Wikimedia Commons` : "Illustrert fra restaurantens egne bilder"}
           </a>
+          {photo ? <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">CC BY-SA 3.0 · Nedskalert, uten beskjæring</a> : null}
         </div>
       ) : null}
     </li>

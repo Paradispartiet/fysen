@@ -60,3 +60,12 @@ test('Ullevål requires its own branch address and leaves interior pending', () 
   assert.equal(make('Sognsveien 77D'), null);
   assert.equal(make('Sognsveien 770C'), null);
 });
+
+test('Ensjø photo keeps attribution and rejects other branches', () => {
+  const photo = restaurantVisuals({name: 'Peppes Pizza - Ensjø', address: 'Rolf Hofmos gate 34, 0655 Oslo'});
+  assert.ok(photo);
+  assert.equal(photo.photoCredit, 'Kjetil Ree');
+  assert.equal(photo.photoDate, '2017-10-08');
+  assert.equal(photo.interior, null);
+  assert.equal(restaurantVisuals({name: 'Peppes Pizza - Ensjø', address: 'Rolf Hofmos gate 340'}), null);
+});
