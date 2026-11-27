@@ -995,6 +995,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"golabki","name":"Gołąbki","query":"golabki","aliases":["golabki","gołąbki","golumpki","polish cabbage rolls"],"cuisine":"Polsk","region":"Polen","explorerPriority":94},
   {"id":"borsjtsj","name":"Borsjtsj","query":"borsjtsj","aliases":["borscht","borsch","borshch","borsjt","borsj","борщ"],"cuisine":"Ukrainsk","region":"Ukraina","explorerPriority":92},
   {"id":"varenyky","name":"Varenyky","query":"varenyky","aliases":["vareniki","wareniki","вареники","ukrainian dumplings"],"cuisine":"Ukrainsk","region":"Ukraina","explorerPriority":90},
+  {"id":"khachapuri","name":"Khachapuri","query":"khachapuri","aliases":["hatchapuri","adjaruli khachapuri","ხაჭაპური"],"cuisine":"Georgisk","region":"Georgia","explorerPriority":94},
+  {"id":"khinkali","name":"Khinkali","query":"khinkali","aliases":["chinkali","ხინკალი","georgian soup dumplings"],"cuisine":"Georgisk","region":"Georgia","explorerPriority":92},
+  {"id":"lobio","name":"Lobio","query":"lobio","aliases":["lobio beans","ლობიო"],"cuisine":"Georgisk","region":"Georgia","explorerPriority":90},
+  {"id":"chakhokhbili","name":"Chakhokhbili","query":"chakhokhbili","aliases":["chahohbili","chakhokhbili chicken","ჩახოხბილი"],"cuisine":"Georgisk","region":"Georgia","explorerPriority":88},
+  {"id":"khorovats","name":"Khorovats","query":"khorovats","aliases":["khorovatz","armenian barbecue","խորոված"],"cuisine":"Armensk","region":"Armenia","explorerPriority":86},
+  {"id":"dolma","name":"Dolma","query":"dolma","aliases":["tolma","dolmades","stuffed vine leaves","տոլմա"],"cuisine":"Armensk","region":"Armenia og Midtøsten","explorerPriority":84},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
