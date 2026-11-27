@@ -985,7 +985,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "bulgogi",
       "japchae"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Korean Bapsang – Bibimbap",
+        "href": "https://www.koreanbapsang.com/bibimbap/"
+      }
+    ]
   },
   {
     "dishId": "bulgogi",
@@ -1032,7 +1037,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "bibimbap",
       "samgyeopsal"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Korean Bapsang – Bulgogi",
+        "href": "https://www.koreanbapsang.com/bulgogi-korean-bbq-beef/"
+      }
+    ]
   },
   {
     "dishId": "japchae",
@@ -1080,7 +1090,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "bibimbap",
       "bulgogi"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Korean Bapsang – Japchae",
+        "href": "https://www.koreanbapsang.com/japchae-korean-stir-fried-starch/"
+      }
+    ]
   },
   {
     "dishId": "kimchi-jjigae",
@@ -1126,7 +1141,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "bibimbap",
       "samgyeopsal"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Korean Bapsang – Kimchi jjigae",
+        "href": "https://www.koreanbapsang.com/kimchi-jjigae-kimchi-stew/"
+      }
+    ]
   },
   {
     "dishId": "tteokbokki",
@@ -1172,7 +1192,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "japchae",
       "kimchi-jjigae"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Korean Bapsang – Tteokbokki",
+        "href": "https://www.koreanbapsang.com/tteokbokki-spicy-stir-fried-rice-cakes/"
+      },
+      {
+        "label": "Korean Bapsang – Gungjung tteokbokki",
+        "href": "https://www.koreanbapsang.com/gungjung-tteokbokki-and-lunar-new-year/"
+      }
+    ]
   },
   {
     "dishId": "samgyeopsal",
@@ -1218,7 +1247,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "bulgogi",
       "kimchi-jjigae"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Korean Bapsang – Samgyupsal gui",
+        "href": "https://www.koreanbapsang.com/samgyupsal-gui-grilled-pork-belly-and/"
+      }
+    ]
   },
   {
     "dishId": "banh-xeo",
@@ -1265,7 +1299,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "vietnamese-spring-rolls",
       "banh-mi"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Vietnam Tourism – 21 must-try Vietnamese dishes",
+        "href": "https://vietnam.travel/things-to-do/21-must-try-vietnamese-dishes/"
+      },
+      {
+        "label": "Vietnam Airlines – Traditional food in Vietnam",
+        "href": "https://www.vietnamairlines.com/vn/en/plan-book/travel/travel-guide/traditional-food-in-vietnam"
+      }
+    ]
   },
   {
     "dishId": "bun-bo-hue",
@@ -1312,7 +1355,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pho",
       "bun-cha"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Vietnam Tourism – 21 must-try Vietnamese dishes",
+        "href": "https://vietnam.travel/things-to-do/21-must-try-vietnamese-dishes/"
+      },
+      {
+        "label": "Vietnam Airlines – Traditional food in Vietnam",
+        "href": "https://www.vietnamairlines.com/vn/en/plan-book/travel/travel-guide/traditional-food-in-vietnam"
+      }
+    ]
   },
   {
     "dishId": "cao-lau",
@@ -1360,7 +1412,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pho",
       "bun-cha"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Vietnam Tourism – 21 must-try Vietnamese dishes",
+        "href": "https://vietnam.travel/things-to-do/21-must-try-vietnamese-dishes/"
+      },
+      {
+        "label": "Vietnam Airlines – Traditional food in Vietnam",
+        "href": "https://www.vietnamairlines.com/vn/en/plan-book/travel/travel-guide/traditional-food-in-vietnam"
+      }
+    ]
   },
   {
     "dishId": "com-tam",
@@ -1407,7 +1468,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "bun-cha",
       "banh-mi"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Vietnam Airlines – Traditional food in Vietnam",
+        "href": "https://www.vietnamairlines.com/vn/en/plan-book/travel/travel-guide/traditional-food-in-vietnam"
+      }
+    ]
   },
   {
     "dishId": "bun-rieu",
@@ -1454,7 +1520,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pho",
       "bun-bo-hue"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Vietnam Tourism – 21 must-try Vietnamese dishes",
+        "href": "https://vietnam.travel/things-to-do/21-must-try-vietnamese-dishes/"
+      },
+      {
+        "label": "Vietnam Airlines – Traditional food in Vietnam",
+        "href": "https://www.vietnamairlines.com/vn/en/plan-book/travel/travel-guide/traditional-food-in-vietnam"
+      }
+    ]
   },
   {
     "dishId": "banh-cuon",
@@ -1501,7 +1576,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "vietnamese-spring-rolls",
       "banh-xeo"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Vietnam Tourism – 21 must-try Vietnamese dishes",
+        "href": "https://vietnam.travel/things-to-do/21-must-try-vietnamese-dishes/"
+      },
+      {
+        "label": "Vietnam Airlines – Traditional food in Vietnam",
+        "href": "https://www.vietnamairlines.com/vn/en/plan-book/travel/travel-guide/traditional-food-in-vietnam"
+      }
+    ]
   },
   {
     "dishId": "massaman-curry",
@@ -1548,11 +1632,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "green-curry",
       "panang-curry"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Hot Thai Kitchen – Massaman curry",
+        "href": "https://hot-thai-kitchen.com/massaman-curry/"
+      }
+    ]
   },
   {
     "dishId": "panang-curry",
-    "summary": "Fyldig thailandsk curry med kokosmelk, rød currypasta og makrutlimeblader.",
+    "summary": "Fyldig thailandsk curry med kokosmelk, panang-currypasta og makrutlimeblader.",
     "overview": "Panang har gjerne en tykkere saus enn mange andre thailandske curryer.",
     "history": "Retten er en etablert del av thailandsk currykultur.",
     "flavor": "Kremet, salt, søtlig og aromatisk.",
@@ -1594,7 +1683,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "massaman-curry",
       "green-curry"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Hot Thai Kitchen – Panang curry",
+        "href": "https://hot-thai-kitchen.com/panang-curry/"
+      },
+      {
+        "label": "Hot Thai Kitchen – Panang currypasta",
+        "href": "https://hot-thai-kitchen.com/panang-curry-paste/"
+      }
+    ]
   },
   {
     "dishId": "som-tam",
@@ -1642,7 +1740,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pad-kra-pao",
       "khao-pad"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Hot Thai Kitchen – Som tam",
+        "href": "https://hot-thai-kitchen.com/papaya-salad-v3/"
+      }
+    ]
   },
   {
     "dishId": "tom-kha-gai",
@@ -1691,7 +1794,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "tom-yum",
       "green-curry"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Hot Thai Kitchen – Tom kha gai",
+        "href": "https://hot-thai-kitchen.com/tom-ka-gai/"
+      }
+    ]
   },
   {
     "dishId": "pad-see-ew",
@@ -1739,7 +1847,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pad-thai",
       "khao-pad"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Hot Thai Kitchen – Pad see ew",
+        "href": "https://hot-thai-kitchen.com/pad-see-ew-new/"
+      }
+    ]
   },
   {
     "dishId": "khao-pad",
@@ -1787,7 +1900,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pad-see-ew",
       "pad-kra-pao"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "The Woks of Life – Thai fried rice",
+        "href": "https://thewoksoflife.com/thai-fried-rice/"
+      }
+    ]
   },
   {
     "dishId": "chicken-tikka-masala-pakistan",
