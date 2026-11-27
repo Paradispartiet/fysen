@@ -1021,6 +1021,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"jambalaya","name":"Jambalaya","query":"jambalaya","aliases":["cajun jambalaya","creole jambalaya"],"cuisine":"Amerikansk","region":"Louisiana","explorerPriority":88},
   {"id":"gumbo","name":"Gumbo","query":"gumbo","aliases":["chicken and sausage gumbo","seafood gumbo","louisiana gumbo"],"cuisine":"Amerikansk","region":"Louisiana","explorerPriority":86},
   {"id":"philly-cheesesteak","name":"Philly cheesesteak","query":"philly cheesesteak","aliases":["cheesesteak","philly cheese steak","philadelphia cheesesteak"],"cuisine":"Amerikansk","region":"Philadelphia","explorerPriority":84},
+  {"id":"lomo-saltado","name":"Lomo saltado","query":"lomo saltado","aliases":["peruvian stir fried beef","lomo saltado peruano"],"cuisine":"Peruansk","region":"Peru","explorerPriority":94},
+  {"id":"aji-de-gallina","name":"Ají de gallina","query":"aji de gallina","aliases":["aji de gallina","ají de pollo","aji de pollo"],"cuisine":"Peruansk","region":"Peru","explorerPriority":92},
+  {"id":"anticuchos","name":"Anticuchos","query":"anticuchos","aliases":["anticuchos de corazon","anticuchos de corazón","peruvian skewers"],"cuisine":"Peruansk","region":"Peru","explorerPriority":90},
+  {"id":"empanadas","name":"Empanadas","query":"empanadas","aliases":["empanada","empanadas argentinas","empanadas de carne"],"cuisine":"Argentinsk","region":"Argentina og Latin-Amerika","explorerPriority":88},
+  {"id":"asado","name":"Asado","query":"asado","aliases":["asado argentino","argentine barbecue","parrillada"],"cuisine":"Argentinsk","region":"Argentina og Uruguay","explorerPriority":86},
+  {"id":"pastel-de-choclo","name":"Pastel de choclo","query":"pastel de choclo","aliases":["chilean corn pie","pastel choclo"],"cuisine":"Chilensk","region":"Chile","explorerPriority":84},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
