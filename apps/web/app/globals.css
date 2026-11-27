@@ -646,9 +646,57 @@ a {
   flex-shrink: 0;
 }
 
-.siteMenu {
+.siteMenu,
+.cityMenu {
   position: relative;
   z-index: 60;
+}
+
+.cityMenuButton {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 5px;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.cityMenuButton::-webkit-details-marker { display: none; }
+.cityMenuButton::marker { content: ""; }
+
+.cityMenuButton svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cityMenu[open] .cityMenuButton,
+.cityMenuButton:hover {
+  color: var(--color-ink);
+}
+
+.cityMenu[open] .cityMenuButton svg {
+  transform: rotate(180deg);
+}
+
+.cityMenuButton:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.siteMenuPanel.cityMenuPanel {
+  width: min(180px, calc(100vw - 40px));
+}
+
+.cityMenuPanel a[aria-current="true"] {
+  color: var(--color-brand);
+  font-weight: 650;
 }
 
 .siteMenuButton {

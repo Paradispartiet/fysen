@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { getFoodKnowledgeDish, type FoodKnowledgeDish } from "../content/food-knowledge";
 import { dishSearchHref } from "../lib/public-path";
 import { DishKnowledgeDialog } from "./dish-knowledge-dialog";
+import { DishEditorialImage } from "./dish-editorial-image";
 import {
   featuredLearningDishCount,
   learningDishes,
@@ -87,6 +88,7 @@ export function DishLearningSection() {
       <div className={`dishLearningGrid${showAll ? " dishLearningGridExpanded" : ""}`}>
         {visibleDishes.map((dish) => (
           <article className="dishLearningCard" id={`learn-card-${dish.id}`} key={dish.id}>
+            <DishEditorialImage dishId={dish.id} query={dish.query} />
             <span className="dishLearningRegion">{dish.region}</span>
             <h3>
               <button

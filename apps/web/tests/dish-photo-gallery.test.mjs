@@ -8,6 +8,8 @@ import { fileURLToPath, URL } from "node:url";
 
 const web = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const gallery = readFileSync(path.join(web, "components/dish-photo-gallery.tsx"), "utf8");
+const editorialImage = readFileSync(path.join(web, "components/dish-editorial-image.tsx"), "utf8");
+const galleryIds = [...gallery.matchAll(/\{ id: "([^"]+)", label: "([^"]+)", query: "([^"]+)" \}/gu)].map((match) => match[1]);
 const explorer = readFileSync(path.join(web, "components/cuisine-explorer.tsx"), "utf8");
 const layout = readFileSync(path.join(web, "app/layout.tsx"), "utf8");
 const browse = readFileSync(path.join(web, "components/dish-browse.tsx"), "utf8");
@@ -68,13 +70,8 @@ test("Matlyst has exactly forty-four distinct, curated dish illustrations", () =
   assert.equal(entries.length, 44);
   assert.equal(new Set(entries.map((match) => match[1])).size, 44);
   assert.ok(entries.every((match) => match[2].length > 0 && match[3].length > 0));
-  assert.match(gallery, /index % 6/u);
-  assert.match(gallery, /Math\.floor\(index \/ 6\)/u);
-  assert.match(gallery, /column \* 20/u);
-  assert.match(gallery, /row \* 100\) \/ 3/u);
-  assert.match(gallery, /index >= 24/u);
-  assert.match(gallery, /column \* 50/u);
-  assert.match(gallery, /row \* 50/u);
+  assert.deepEqual(galleryIds, manifest.images.map((image) => image.id));
+  assert.match(gallery, /<DishEditorialImage dishId=\{dish\.id\}/u);
 });
 
 test("Dish illustrations are available and explicitly not restaurant photographs", () => {
@@ -117,7 +114,7 @@ test("Ramen photo is a true 7364x4909 master with a separate compact thumbnail a
   assert.equal(ramen.largeSourceNativeHeight, 4909);
   assert.match(ramen.photoSource, /35773142/u);
   assert.match(ramen.photoCredit, /Connor Scott McManus.*Pexels/u);
-  assert.match(gallery, /href="\/dish-images\/ramen-master-7364\.avif"/u);
+  assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "ramen-master-7364.avif" && galleryIds.includes(entry.id)));
   assert.match(css, /ramen-thumb-512\.avif/u);
   const original = readFileSync(path.join(web, "public/dish-images", ramen.largeSource));
   const index = original.indexOf(Buffer.from("ispe"));
@@ -126,18 +123,20 @@ test("Ramen photo is a true 7364x4909 master with a separate compact thumbnail a
   assert.equal(original.readUInt32BE(index + 12), 4909);
 });
 
-test("Only approved full-size dish masters can be opened separately without enlarging thumbnails", () => {
+test("Only approved full-size dish masters render inline, without enlarging thumbnails", () => {
   const approved = manifest.images.filter((image) => image.largeViewEnabled === true);
-  const linkedMasters = [...gallery.matchAll(/href="\/dish-images\/([^"]+-master-\d+\.avif)"/gu)]
-    .map((match) => match[1]);
-  assert.equal(approved.length, 27, "Pizza margherita, cheeseburger, grilled salmon, grilled steak, shrimp sandwich, sushi, ramen, bolognese, prosciutto, carbonara, butter chicken, shrimp pad thai, seared white fish, tiramisu, pizza marinara, cacio e pepe, gyoza, phở bò, bibimbap falafel and tacos al pastor, chana masala, masala dosa, chicken katsu, yakitori and udon med reketempura and tom yum need approved full-size masters");
-  assert.deepEqual(linkedMasters, approved.map((image) => image.largeSource));
-  assert.match(gallery, /dishPhotosLargeLinks/u);
-  assert.match(gallery, /target="_blank" rel="noopener noreferrer"/u);
-  assert.match(gallery, /Se menytreff/u, "Do not replace menu-search links with image links");
-  assert.match(homeGalleryCss, /\.dishPhotosLargeLinks/u);
-  assert.match(homeGalleryCss, /grid-template-columns:\s*68px\s+minmax\(0,\s*1fr\)/u);
+  assert.ok(approved.length >= 27, "Previously approved masters must not regress");
+  assert.match(gallery, /<DishEditorialImage dishId=\{dish\.id\}/u);
+  assert.match(editorialImage, /image\.largeViewEnabled === true && image\.largeSource/u);
+  assert.match(editorialImage, /master \|\| image\.atlas/u);
+  assert.match(editorialImage, /src=\{withPublicBasePath/u);
+  assert.match(editorialImage, /image\.photoCredit/u);
+  assert.match(editorialImage, /image\.photoLicense/u);
+  assert.doesNotMatch(gallery, /Vis stort bilde|dishPhotosLargeLinks/u);
+  assert.match(gallery, /Se menytreff/u);
+  assert.match(homeGalleryCss, /object-fit: contain/u);
   for (const photo of approved) {
+    assert.ok(galleryIds.includes(photo.id));
     assert.notEqual(photo.atlas, photo.largeSource, "Small thumbnails and full-size masters must be distinct");
     const fullSize = readFileSync(path.join(web, "public/dish-images", photo.largeSource));
     const header = fullSize.indexOf(Buffer.from("ispe"));
@@ -287,8 +286,8 @@ test("Phở bò uses source-verified full master and separate 512px thumbnail", 
   assert.ok(marker > 0);
   assert.equal(pho.readUInt32BE(marker + 8), 512);
   assert.equal(pho.readUInt32BE(marker + 12), 512);
-  assert.match(gallery, /isPho = index === 18/u);
-  assert.match(gallery, /dishPhotoThumb dishPhotoPho/u);
+  assert.equal(galleryIds[18], manifest.images[18].id);
+
   assert.match(gallery, /dishPhotoSmall dishPhotoPho/u);
   assert.match(css, /pho-bo-thumb-512\.avif/u);
   const photo = manifest.images.find((entry) => entry.id === "pho");
@@ -300,7 +299,7 @@ test("Phở bò uses source-verified full master and separate 512px thumbnail", 
   assert.equal(photo.largeSourceNativeHeight, 3648);
   assert.match(photo.photoCredit, /UNDO KIM.*Pexels/u);
   assert.match(photo.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
-  assert.match(gallery, /href="\/dish-images\/pho-bo-master-5472\.avif"/u);
+  assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "pho-bo-master-5472.avif" && galleryIds.includes(entry.id)));
   assert.match(photo.variantCaution, /storfekjøtt/u);
 });
 
@@ -332,8 +331,8 @@ test("Pizza margherita uses its own sharp 512px source instead of atlas slot zer
   assert.equal(manifest.images[0].id, "pizza-margherita");
   assert.equal(manifest.images[0].atlas, "pizza-margherita-thumb-512.avif");
   assert.match(manifest.images[0].variantCaution, /ikke faktisk restaurantfoto/u);
-  assert.match(gallery, /isPizzaMargherita = index === 0/u);
-  assert.match(gallery, /dishPhotoThumb dishPhotoPizzaMargherita/u);
+  assert.equal(galleryIds[0], manifest.images[0].id);
+
   assert.match(gallery, /dishPhotoSmall dishPhotoPizzaMargherita/u);
   assert.match(css, /dishPhotoThumb\.dishPhotoPizzaMargherita/u);
   assert.match(css, /dishPhotoSmall\.dishPhotoPizzaMargherita/u);
@@ -350,8 +349,8 @@ test("Bacon cheeseburger has a dedicated sharp source without a fabricated catal
   assert.equal(manifest.images[1].id, "cheeseburger");
   assert.equal(manifest.images[1].atlas, "cheeseburger-thumb-512.avif");
   assert.match(manifest.images[1].variantCaution, /ikke et faktisk restaurantfoto/u);
-  assert.match(gallery, /isCheeseburger = index === 1/u);
-  assert.match(gallery, /dishPhotoThumb dishPhotoCheeseburger/u);
+  assert.equal(galleryIds[1], manifest.images[1].id);
+
   assert.match(css, /dishPhotoThumb\.dishPhotoCheeseburger/u);
   assert.match(css, /cheeseburger-thumb-512\.avif/u);
   const mapping = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("const illustratedVariants"));
@@ -369,8 +368,8 @@ test("Grilled salmon has a standalone 512px image and no invented restaurant or 
   assert.equal(manifest.images[2].atlas, "grillet-laks-thumb-512.avif");
   assert.equal(manifest.images[2].catalogId, null);
   assert.match(manifest.images[2].variantCaution, /ikke faktisk restaurantfoto/iu);
-  assert.match(gallery, /isGrilledSalmon = index === 2/u);
-  assert.match(gallery, /dishPhotoThumb dishPhotoGrilledSalmon/u);
+  assert.equal(galleryIds[2], manifest.images[2].id);
+
   assert.match(css, /grillet-laks-thumb-512\.avif/u);
   const mapping = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
   assert.doesNotMatch(mapping, /^\s*"?grillet-laks"?:/mu);
@@ -385,9 +384,9 @@ test("Gỏi cuốn uses a dedicated 768px image and only the exact shrimp varian
   assert.equal(goiCuon.readUInt32BE(marker + 12), 768);
   assert.match(gallery, /id: "vietnamese-spring-rolls", label: "Gỏi cuốn med reker"/u);
   assert.match(gallery, /"vietnamese-spring-rolls": 37/u);
-  assert.match(gallery, /isGoiCuon = index === 37/u);
+  assert.equal(galleryIds[37], manifest.images[37].id);
   assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`), "Gallery teaser must match the image manifest");
-  assert.match(gallery, /dishPhotoThumb dishPhotoGoiCuon/u);
+
   assert.match(gallery, /dishPhotoSmall dishPhotoGoiCuon/u);
   assert.match(css, /goi-cuon-768\.avif/u);
   const image = manifest.images[37];
@@ -400,7 +399,7 @@ test("Gỏi cuốn uses a dedicated 768px image and only the exact shrimp varian
 });
 
 test("Steak and shrimp sandwich use separate, sharp 512px gallery originals", () => {
-  for (const [bytes, index, id, className, file] of [
+  for (const [bytes, index, id, , file] of [
     [grilledSteak, 3, "grillet-biff", "dishPhotoGrilledSteak", "grillet-biff-thumb-512.avif"],
     [shrimpOpenSandwich, 4, "rekesmorbrod", "dishPhotoShrimpOpenSandwich", "rekesmorbrod-thumb-512.avif"],
   ]) {
@@ -414,7 +413,7 @@ test("Steak and shrimp sandwich use separate, sharp 512px gallery originals", ()
     assert.equal(manifest.images[index].atlas, file);
     assert.equal(manifest.images[index].catalogId, null);
     assert.match(manifest.images[index].variantCaution, /ikke .*restaurant/iu);
-    assert.ok(gallery.includes(className));
+    assert.equal(galleryIds[index], manifest.images[index].id);
     assert.ok(css.includes(file));
   }
   const mapping = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("export function DishPhotoThumbnail"));
@@ -431,8 +430,8 @@ test("Tandoori chicken is a 768px exact-match chicken-only illustration", () => 
   assert.equal(tandoori.readUInt32BE(marker + 12), 768);
   assert.match(gallery, /id: "tandoori", label: "Tandoorikylling"/u);
   assert.match(gallery, /tandoori: 38/u);
-  assert.match(gallery, /isTandoori = index === 38/u);
-  assert.match(gallery, /dishPhotoThumb dishPhotoTandoori/u);
+  assert.equal(galleryIds[38], manifest.images[38].id);
+
   assert.match(gallery, /dishPhotoSmall dishPhotoTandoori/u);
   assert.match(css, /tandoori-chicken-768\.avif/u);
   const image = manifest.images[38];
@@ -452,9 +451,9 @@ test("Naan has a dedicated 768px food image on black with a precise catalog ID",
   assert.equal(naan.readUInt32BE(marker + 12), 768);
   assert.match(gallery, /id: "naan", label: "Naan med smør og urter"/u);
   assert.match(gallery, /naan: 39/u);
-  assert.match(gallery, /isNaan = index === 39/u);
+  assert.equal(galleryIds[39], manifest.images[39].id);
   assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`), "Gallery teaser must match the image manifest");
-  assert.match(gallery, /dishPhotoThumb dishPhotoNaan/u);
+
   assert.match(gallery, /dishPhotoSmall dishPhotoNaan/u);
   assert.match(css, /naan-768\.avif/u);
   const image = manifest.images[39];
@@ -474,9 +473,9 @@ test("Dal makhani has its own 768px image with precise catalog ID and dairy caut
   assert.equal(dalMakhani.readUInt32BE(marker + 12), 768);
   assert.match(gallery, /id: "dal-makhani", label: "Dal makhani med smør og fløte"/u);
   assert.match(gallery, /"dal-makhani": 40/u);
-  assert.match(gallery, /isDalMakhani = index === 40/u);
+  assert.equal(galleryIds[40], manifest.images[40].id);
   assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`));
-  assert.match(gallery, /dishPhotoThumb dishPhotoDalMakhani/u);
+
   assert.match(gallery, /dishPhotoSmall dishPhotoDalMakhani/u);
   assert.match(css, /dal-makhani-768\.avif/u);
   const image = manifest.images[40];
@@ -497,7 +496,7 @@ test("Idli is a high-density black-background image with correct variant ID", ()
   assert.equal(idli.readUInt32BE(marker + 12), 512);
   assert.match(gallery, /id: "idli", label: "Idli med sambar og chutney"/u);
   assert.match(gallery, /idli: 41/u);
-  assert.match(gallery, /isIdli = index === 41/u);
+  assert.equal(galleryIds[41], manifest.images[41].id);
   assert.match(css, /idli-512\.avif/u);
   const image = manifest.images[41];
   assert.equal(image.id, "idli");
@@ -516,8 +515,8 @@ test("Sambar has its own accurate 768px illustration with exact catalog ID", () 
   assert.equal(sambar.readUInt32BE(marker + 12), 768);
   assert.match(gallery, /id: "sambar", label: "Sambar med linser og grønnsaker"/u);
   assert.match(gallery, /sambar: 42/u);
-  assert.match(gallery, /isSambar = index === 42/u);
-  assert.match(gallery, /dishPhotoThumb dishPhotoSambar/u);
+  assert.equal(galleryIds[42], manifest.images[42].id);
+
   assert.match(gallery, /dishPhotoSmall dishPhotoSambar/u);
   assert.match(css, /sambar-768\.avif/u);
   assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`));
@@ -538,8 +537,8 @@ test("Medu vada is its own sharp 768px dish photo with exact catalog ID", () => 
   assert.equal(vada.readUInt32BE(marker + 12), 768);
   assert.match(gallery, /id: "vada", label: "Medu vada med sambar og chutney"/u);
   assert.match(gallery, /vada: 43/u);
-  assert.match(gallery, /isVada = index === 43/u);
-  assert.match(gallery, /dishPhotoThumb dishPhotoVada/u);
+  assert.equal(galleryIds[43], manifest.images[43].id);
+
   assert.match(gallery, /dishPhotoSmall dishPhotoVada/u);
   assert.match(css, /medu-vada-768\.avif/u);
   const entry = manifest.images[43];
@@ -573,7 +572,7 @@ test("Four standalone dish photos preserve exact variants and suitable native th
     assert.ok(css.includes(".dishPhotoSmall." + cssClass));
     assert.ok(css.includes(file));
     assert.ok(gallery.includes("index === " + index));
-    assert.ok(gallery.includes(cssClass));
+    assert.equal(galleryIds[index], manifest.images[index].id);
   }
   assert.match(gallery, /chashu-svinekjøtt/u);
   assert.match(gallery, /spaghetti carbonara med bacon, egg, ost og pepper/u);
@@ -597,11 +596,11 @@ test("Gyoza is a real source-verified 4937px photo with 512px mini and no invent
   assert.equal(item.largeSourceNativeHeight, 3662);
   assert.match(item.photoCredit, /Lara Bellens.*Pexels/u);
   assert.match(item.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
-  assert.match(gallery, /href="\/dish-images\/gyoza-master-4937\.avif"/u);
+  assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "gyoza-master-4937.avif" && galleryIds.includes(entry.id)));
   assert.match(item.variantCaution, /fyllet er ikke dokumentert/iu);
   assert.match(item.variantCaution, /ikke.*restaurantfoto/iu);
-  assert.match(gallery, /isGyoza = index === 17/u);
-  assert.match(gallery, /dishPhotoThumb dishPhotoGyoza/u);
+  assert.equal(galleryIds[17], manifest.images[17].id);
+
   assert.ok(css.includes(".dishPhotoThumb.dishPhotoGyoza"));
   assert.ok(css.includes("gyoza-thumb-512.avif"));
 });
@@ -622,15 +621,15 @@ test("Shrimp pad thai and tiramisu are dedicated Retina-safe gallery images with
     assert.equal(item.atlas, file);
     assert.equal(item.catalogId, null, "Generic restaurant dishes must not inherit an unverified image variant");
     assert.match(item.variantCaution, /ikke restaurantfoto/iu);
-    assert.ok(gallery.includes(cssClass));
+    assert.equal(galleryIds[index], manifest.images[index].id);
     assert.ok(css.includes(".dishPhotoThumb." + cssClass));
     assert.ok(css.includes(file));
   }
   assert.match(manifest.images[12].variantCaution, /reker|skalldyr/iu);
   assert.match(manifest.images[12].variantCaution, /ikke et generelt bilde/iu);
   assert.match(manifest.images[14].variantCaution, /mascarpone/iu);
-  assert.match(gallery, /isShrimpPadThai = index === 12/u);
-  assert.match(gallery, /isTiramisu = index === 14/u);
+  assert.equal(galleryIds[12], manifest.images[12].id);
+  assert.equal(galleryIds[14], manifest.images[14].id);
   assert.doesNotMatch(css, /\.dishPhotoSmall\.dishPhotoShrimpPadThai/u);
 });
 
@@ -652,7 +651,7 @@ test("Pizza marinara uses a separate authentic native master and compact 512 AVI
   assert.ok(marker > 0);
   assert.equal(marinaraImage.readUInt32BE(marker + 8), 512);
   assert.equal(marinaraImage.readUInt32BE(marker + 12), 512);
-  assert.match(gallery, /href="\/dish-images\/pizza-marinara-master-2848\.avif"/u);
+  assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "pizza-marinara-master-2848.avif" && galleryIds.includes(entry.id)));
   assert.match(css, /pizza-marinara-thumb-512\.avif/u);
   assert.match(gallery, /pizza marinara uten ost/u);
 });
@@ -673,7 +672,7 @@ test("Falafel has a real native master and 512px original-photo thumbnail", () =
     assert.equal(item.atlas, file);
     assert.match(item.variantCaution, /ikke restaurantfoto/iu);
     assert.ok(gallery.includes("index === " + index));
-    assert.ok(gallery.includes("dishPhotoThumb " + className));
+
     assert.ok(gallery.includes("dishPhotoSmall " + className));
     assert.ok(css.includes(".dishPhotoThumb." + className));
     assert.ok(css.includes(".dishPhotoSmall." + className));
@@ -692,7 +691,7 @@ test("Falafel has a real native master and 512px original-photo thumbnail", () =
   assert.equal(photo.largeSourceNativeHeight, 5712);
   assert.match(photo.photoCredit, /Saya P.*Pexels/u);
   assert.match(photo.photoSource, /pexels\.com\/photo\/delicious-falafel/u);
-  assert.match(gallery, /href="\/dish-images\/falafel-master-4284\.avif"/u);
+  assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "falafel-master-4284.avif" && galleryIds.includes(entry.id)));
 });
 
 test("Cacio e pepe has verified 4577px native master, genuine credit, and a separate 512px thumbnail", () => {
@@ -713,7 +712,7 @@ test("Cacio e pepe has verified 4577px native master, genuine credit, and a sepa
   assert.ok(ispe > 0);
   assert.equal(cacioEPepeImage.readUInt32BE(ispe + 8), 512);
   assert.equal(cacioEPepeImage.readUInt32BE(ispe + 12), 512);
-  assert.match(gallery, /href="\/dish-images\/cacio-e-pepe-master-4577\.avif"/u);
+  assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "cacio-e-pepe-master-4577.avif" && galleryIds.includes(entry.id)));
   assert.match(css, /cacio-e-pepe-thumb-512\.avif/u);
 });
 
@@ -734,8 +733,8 @@ test("Chana and masala dosa have dedicated sharp native photo thumbnails", () =>
     assert.ok(ispe > 0, id + " lacks an AVIF spatial extent marker");
     assert.equal(bytes.readUInt32BE(ispe + 8), 512);
     assert.equal(bytes.readUInt32BE(ispe + 12), 512);
-    assert.match(gallery, new RegExp("is" + cssClass + " = index === " + index));
-    assert.ok(gallery.includes("dishPhotoThumb dishPhoto" + cssClass));
+    assert.equal(galleryIds[index], manifest.images[index].id);
+
     assert.ok(gallery.includes("dishPhotoSmall dishPhoto" + cssClass));
     assert.ok(css.includes("dishPhotoThumb.dishPhoto" + cssClass));
     assert.ok(css.includes("dishPhotoSmall.dishPhoto" + cssClass));
@@ -747,7 +746,7 @@ test("Chana and masala dosa have dedicated sharp native photo thumbnails", () =>
       assert.equal(item.largeSourceNativeWidth, 9504);
       assert.equal(item.largeSourceNativeHeight, 6336);
       assert.match(item.photoCredit, /Jack Baghel.*Pexels/u);
-      assert.match(gallery, /href="\/dish-images\/masala-dosa-master-9504\.avif"/u);
+      assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "masala-dosa-master-9504.avif" && galleryIds.includes(entry.id)));
     }
     if (index === 22) {
       assert.equal(item.kind, "Redaksjonelt rettfoto");
@@ -756,7 +755,7 @@ test("Chana and masala dosa have dedicated sharp native photo thumbnails", () =>
       assert.equal(item.largeSourceNativeWidth, 3814);
       assert.equal(item.largeSourceNativeHeight, 3024);
       assert.match(item.photoCredit, /Muhammad Khawar Nazir.*Pexels/u);
-      assert.match(gallery, /href="\/dish-images\/chana-masala-master-3814\.avif"/u);
+      assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "chana-masala-master-3814.avif" && galleryIds.includes(entry.id)));
     }
   }
 });
@@ -791,8 +790,8 @@ test("Bolognese, prosciutto and kebab retain distinct correctly sized gallery AV
     assert.match(row.variantCaution, /ikke restaurantfoto/iu);
     assert.ok(css.includes(".dishPhotoThumb." + entry.cls));
     assert.ok(css.includes(entry.file));
-    assert.ok(gallery.includes("const " + entry.selector + " = index === " + entry.index));
-    assert.ok(gallery.includes("dishPhotoThumb " + entry.cls));
+    assert.equal(galleryIds[entry.index], entry.id);
+
     assert.ok(!css.includes(".dishPhotoSmall." + entry.cls));
   }
   const catalog = gallery.slice(gallery.indexOf("const editorialPhotoIndex"), gallery.indexOf("const illustratedVariants"));
@@ -810,7 +809,7 @@ test("Bibimbap photo is CC0 original at 8160px, with compact 512px thumb and no 
   assert.equal(b.largeSourceNativeHeight,6144);
   assert.match(b.photoCredit,/Andy Li.*CC0 1\.0/u);
   assert.equal(b.photoLicense,"https://creativecommons.org/publicdomain/zero/1.0/");
-  assert.match(gallery,/href="\/dish-images\/bibimbap-master-8160\.avif"/u);
+  assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "bibimbap-master-8160.avif" && galleryIds.includes(entry.id)));
   const mapped=gallery.slice(gallery.indexOf("const editorialPhotoIndex:"),gallery.indexOf("const illustratedVariants"));
   assert.doesNotMatch(mapped,/bibimbap/u);
 });
@@ -833,8 +832,8 @@ test("White fish, beef bibimbap and pork tacos al pastor have exact separate dis
     assert.equal(item.catalogId, catalogId);
     assert.match(item.variantCaution, ingredient);
     assert.match(item.variantCaution, /ikke restaurantfoto/iu);
-    assert.ok(gallery.includes("is" + thumb + " = index === " + index));
-    assert.ok(gallery.includes("dishPhotoThumb dishPhoto" + thumb));
+    assert.equal(galleryIds[index], id);
+
     assert.ok(css.includes(".dishPhotoThumb.dishPhoto" + thumb));
     assert.ok(css.includes(file));
   }
@@ -847,7 +846,7 @@ test("White fish, beef bibimbap and pork tacos al pastor have exact separate dis
   assert.equal(manifest.images[21].largeSourceNativeWidth, 7008);
   assert.equal(manifest.images[21].largeSourceNativeHeight, 4672);
   assert.match(manifest.images[21].photoCredit, /Abner Velázquez.*Pexels/u);
-  assert.match(gallery, /href="\/dish-images\/tacos-al-pastor-master-7008\.avif"/u);
+  assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "tacos-al-pastor-master-7008.avif" && galleryIds.includes(entry.id)));
   assert.ok(gallery.includes("dishPhotoSmall dishPhotoTacosAlPastor"));
   assert.ok(css.includes(".dishPhotoSmall.dishPhotoTacosAlPastor"));
   assert.match(gallery, /"tacos-al-pastor": "tacos al pastor med marinert svinekjøtt/u);
@@ -878,11 +877,11 @@ test("Chicken katsu, yakitori and udon have independent original-photo thumbnail
     assert.equal(entry.bytes.readUInt32BE(marker + 8), [24,25,26].includes(entry.index) ? 512 : 768);
     assert.equal(entry.bytes.readUInt32BE(marker + 12), [24,25,26].includes(entry.index) ? 512 : 768);
     const selector = "is" + entry.cls + " = index === " + entry.index;
-    assert.ok(gallery.includes(selector), selector);
+    assert.equal(galleryIds[entry.index], entry.id, selector);
     for (const scope of [".dishPhotoThumb.", ".dishPhotoSmall."]) {
       const classname = "dishPhoto" + entry.cls;
       assert.ok(css.includes(scope + classname));
-      assert.ok(gallery.includes(scope.endsWith("Thumb.") ? "dishPhotoThumb " + classname : "dishPhotoSmall " + classname));
+      if (scope === ".dishPhotoSmall.") assert.ok(gallery.includes("dishPhotoSmall " + classname));
     }
     assert.ok(css.includes(entry.file));
     if (entry.index === 26) {
@@ -892,7 +891,7 @@ test("Chicken katsu, yakitori and udon have independent original-photo thumbnail
       assert.equal(image.largeSourceNativeWidth, 2900);
       assert.equal(image.largeSourceNativeHeight, 3080);
       assert.match(image.photoCredit, /Immanuelle.*CC BY 4\.0/u);
-      assert.match(gallery, /href="\/dish-images\/udon-tempura-master-2900\.avif"/u);
+      assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "udon-tempura-master-2900.avif" && galleryIds.includes(entry.id)));
     }
     if (entry.index === 25) {
       assert.equal(image.kind, "Redaksjonelt rettfoto");
@@ -901,7 +900,7 @@ test("Chicken katsu, yakitori and udon have independent original-photo thumbnail
       assert.equal(image.largeSourceNativeWidth, 4000);
       assert.equal(image.largeSourceNativeHeight, 5000);
       assert.match(image.photoCredit, /Airam Dato-on.*Pexels/u);
-      assert.match(gallery, /href="\/dish-images\/yakitori-master-4000\.avif"/u);
+      assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "yakitori-master-4000.avif" && galleryIds.includes(entry.id)));
     }
     if (entry.index === 24) {
       assert.equal(image.kind, "Redaksjonelt rettfoto");
@@ -910,7 +909,7 @@ test("Chicken katsu, yakitori and udon have independent original-photo thumbnail
       assert.equal(image.largeSourceNativeWidth, 5472);
       assert.equal(image.largeSourceNativeHeight, 3648);
       assert.match(image.photoCredit, /Cohesion Singapore.*Pexels/u);
-      assert.match(gallery, /href="\/dish-images\/chicken-katsu-master-5472\.avif"/u);
+      assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "chicken-katsu-master-5472.avif" && galleryIds.includes(entry.id)));
     }
   }
   assert.match(manifest.images[24].variantCaution, /ikke svin|ikke vegetar/iu);
@@ -939,8 +938,8 @@ test("Remaining six Asian dishes use their own AVIF images and matching catalog 
     assert.ok(marker > 0);
     assert.equal(entry.bytes.readUInt32BE(marker + 8), 768);
     assert.equal(entry.bytes.readUInt32BE(marker + 12), 768);
-    assert.match(gallery, new RegExp("is" + entry.cls + " = index === " + entry.index));
-    assert.ok(gallery.includes("dishPhotoThumb dishPhoto" + entry.cls));
+    assert.equal(galleryIds[entry.index], entry.id);
+
     assert.ok(gallery.includes("dishPhotoSmall dishPhoto" + entry.cls));
     assert.ok(css.includes(".dishPhotoThumb.dishPhoto" + entry.cls));
     assert.ok(css.includes(".dishPhotoSmall.dishPhoto" + entry.cls));

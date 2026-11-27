@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { URL } from "node:url";
+import { translate } from "../lib/locale-messages.ts";
 
 function read(relative) {
   return readFileSync(new URL(relative, import.meta.url), "utf8");
@@ -10,7 +11,17 @@ function read(relative) {
 test("the site menu offers an About Fysen page", () => {
   const header = read("../components/global-header.tsx");
   const about = read("../app/om/page.tsx");
-  assert.match(header, /<details className="siteMenu" lang=\{locale\}>/u);
+  assert.match(header, /<details className="siteMenu" name="fysen-header-disclosure" lang=\{locale\}>/u);
+  const mainMenu = header.match(/<nav className="siteMenuPanel" aria-label=\{t\("mainMenu"\)\}>([\s\S]*?)<\/nav>/u)?.[1];
+  const cityMenu = header.match(/<nav className="siteMenuPanel cityMenuPanel" aria-label=\{t\("chooseCity"\)\}>([\s\S]*?)<\/nav>/u)?.[1];
+  assert.ok(mainMenu && cityMenu);
+  assert.equal(translate("nb", "mainMenu"), "Hovedmeny");
+  assert.equal(translate("nb", "chooseCity"), "Velg by");
+  assert.match(mainMenu, /<LanguagePreviewSelector \/>/u);
+  assert.doesNotMatch(mainMenu, /Velg by|nordicCities|citySwitchHref/u);
+  assert.match(cityMenu, /nordicCities\.map/u);
+  assert.match(cityMenu, /citySwitchHref\(name, query\)/u);
+  assert.match(mainMenu, /withPublicBasePath\("\/om"\)/u);
   assert.match(header, /withPublicBasePath\("\/om"\)/u);
   assert.match(about, /id="menydata"/u);
   assert.match(header, /#menydata/u);
