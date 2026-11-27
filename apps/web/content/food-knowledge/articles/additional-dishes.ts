@@ -5646,5 +5646,328 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://foreignfork.com/zigni/"
       }
     ]
+  },
+  {
+    "dishId": "tajine",
+    "summary": "Langsomt tilberedt marokkansk gryterett, oppkalt etter kokekaret med konisk lokk.",
+    "overview": "Kjøtt eller grønnsaker trekkes med krydder under lokk. Denne varianten bruker kylling, oliven og saltet sitron.",
+    "history": "Tajine er en sentral marokkansk mattradisjon med mange lokale varianter.",
+    "flavor": "Aromatisk, salt-syrlig og fyldig.",
+    "technique": "Bruk en gryte med tett lokk og la ingrediensene trekke rolig.",
+    "essentials": [
+      "800 g kyllinglår",
+      "2 løk",
+      "3 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 75 min",
+      "ingredients": [
+        "800 g kyllinglår",
+        "2 løk",
+        "3 hvitløksfedd",
+        "1 ts ingefær",
+        "1 ts gurkemeie",
+        "100 g oliven",
+        "½ saltet sitron",
+        "200 ml vann",
+        "olivenolje"
+      ],
+      "steps": [
+        "Fres løk og hvitløk i olje.",
+        "Tilsett krydder, kylling og vann.",
+        "La trekke under lokk til kyllingen er gjennomstekt og mør.",
+        "Tilsett oliven og saltet sitron mot slutten."
+      ]
+    },
+    "variants": [
+      "Lam med svisker og grønnsakstajine er andre varianter."
+    ],
+    "serving": [
+      "Server med brød."
+    ],
+    "commonMistakes": [
+      "Unngå hard koking og unødvendig mye væske."
+    ],
+    "relatedDishIds": [
+      "couscous",
+      "harira"
+    ],
+    "sources": [
+      {
+        "label": "Taste of Maroc – Chicken with preserved lemon and olives",
+        "href": "https://tasteofmaroc.com/moroccan-chicken-with-preserved-lemon-olives-daghmira/"
+      }
+    ]
+  },
+  {
+    "dishId": "couscous",
+    "summary": "Små gryn av durumhvete, ofte servert med grønnsaker og kjøtt eller belgfrukter.",
+    "overview": "Tradisjonelt dampes grynene over en gryte; hurtigcouscous kan trekkes i varm væske.",
+    "history": "Kunnskap og praksis knyttet til couscous ble innskrevet på UNESCOs liste over immateriell kulturarv i 2020 etter en felles nominasjon fra Algerie, Mauritania, Marokko og Tunisia.",
+    "flavor": "Lette gryn med fyldig kraft og mildt krydrede grønnsaker.",
+    "technique": "Skill grynene forsiktig med en gaffel og tilpass væsken til produktet.",
+    "essentials": [
+      "300 g hurtigcouscous",
+      "2 gulrøtter",
+      "1 squash"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "300 g hurtigcouscous",
+        "2 gulrøtter",
+        "1 squash",
+        "1 løk",
+        "400 g kokte kikerter",
+        "400 g tomater",
+        "500 ml grønnsakskraft",
+        "spisskummen",
+        "olivenolje"
+      ],
+      "steps": [
+        "Fres løk og krydder i olje.",
+        "Tilsett tomat, kraft og gulrot og la småkoke.",
+        "Tilsett squash og kikerter og kok til møre.",
+        "Tilbered couscous separat etter pakningen og server med grønnsaker og kraft."
+      ]
+    },
+    "variants": [
+      "Varianter med lam, kylling eller fisk; i Marokko er couscous med sju grønnsaker velkjent."
+    ],
+    "serving": [
+      "Server grynene på et fat med grønnsakene over."
+    ],
+    "commonMistakes": [
+      "Ikke bruk for mye væske i hurtigcouscous."
+    ],
+    "relatedDishIds": [
+      "tajine",
+      "harira"
+    ],
+    "sources": [
+      {
+        "label": "UNESCO – Couscous som immateriell kulturarv",
+        "href": "https://ich.unesco.org/en/RL/knowledge-know-how-and-practices-pertaining-to-the-production-and-consumption-of-couscous-01602"
+      }
+    ]
+  },
+  {
+    "dishId": "harira",
+    "summary": "Marokkansk suppe med tomat, linser, kikerter og urter.",
+    "overview": "Belgfrukter kokes i aromatisk tomatkraft, gjerne jevnet med mel.",
+    "history": "Harira er særlig kjent som suppe ved fastens avslutning under ramadan, men spises også ellers i året.",
+    "flavor": "Fyldig, syrlig og urtepreget.",
+    "technique": "La linsene bli møre før eventuell meljevning tilsettes.",
+    "essentials": [
+      "400 g tomater",
+      "150 g tørre linser",
+      "400 g kokte kikerter"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "400 g tomater",
+        "150 g tørre linser",
+        "400 g kokte kikerter",
+        "1 løk",
+        "2 selleristilker",
+        "1,2 l kraft",
+        "ingefær",
+        "koriander",
+        "persille",
+        "2 ss mel"
+      ],
+      "steps": [
+        "Fres hakket løk, selleri og ingefær.",
+        "Tilsett tomater, kraft og linser og kok til linsene er møre.",
+        "Tilsett kikerter og hakkede urter.",
+        "Visp mel ut i kaldt vann, tilsett gradvis og la suppen småkoke."
+      ]
+    },
+    "variants": [
+      "Noen varianter inneholder kjøtt, ris eller vermicelli."
+    ],
+    "serving": [
+      "Server med sitron og brød, gjerne dadler ved siden av."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett tørr meljevning direkte i varm suppe."
+    ],
+    "relatedDishIds": [
+      "couscous",
+      "shiro"
+    ],
+    "sources": [
+      {
+        "label": "Taste of Maroc – Harira",
+        "href": "https://tasteofmaroc.com/moroccan-harira-soup-recipe/"
+      }
+    ]
+  },
+  {
+    "dishId": "pastilla",
+    "summary": "Sprø, lagdelt marokkansk pai med krydret fyll, ofte kylling og mandler.",
+    "overview": "Tynne deigark omslutter et saftig fyll; kjøttvarianter kombinerer ofte salt og søtt.",
+    "history": "Pastilla er kjent som marokkansk festmat og finnes med blant annet due, kylling og sjømat.",
+    "flavor": "Sprø, aromatisk og søt-salt.",
+    "technique": "Kok inn fyllet og avkjøl det før deigarkene fylles.",
+    "essentials": [
+      "250 g filodeig",
+      "500 g kyllinglårfilet",
+      "2 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "250 g filodeig",
+        "500 g kyllinglårfilet",
+        "2 løk",
+        "3 egg",
+        "100 g mandler",
+        "kanel",
+        "ingefær",
+        "persille",
+        "smør",
+        "melis etter smak"
+      ],
+      "steps": [
+        "Fres løk og krydder, tilsett kylling og litt vann og trekk til gjennomstekt.",
+        "Riv kjøttet i biter og kok inn sausen; rør inn egg til de har satt seg.",
+        "Avkjøl fyllet og rist og hakk mandlene.",
+        "Legg smørpenslede filoark i en form, fyll med kjøtt, eggestand og mandler og brett sammen.",
+        "Stek ved 190 °C til gyllen og gjennomvarm."
+      ]
+    },
+    "variants": [
+      "Sjømatpastilla har gjerne et mindre søtlig fyll."
+    ],
+    "serving": [
+      "Server lun, eventuelt med litt melis og kanel."
+    ],
+    "commonMistakes": [
+      "Ikke fyll deigen med en rennende, varm saus."
+    ],
+    "relatedDishIds": [
+      "spanakopita",
+      "tajine"
+    ],
+    "sources": [
+      {
+        "label": "SBS Food – Moroccan cuisine",
+        "href": "https://www.sbs.com.au/food/article/in-the-kitchen-moroccan/80kz6dyok"
+      }
+    ]
+  },
+  {
+    "dishId": "shakshuka",
+    "summary": "Egg tilberedt i en krydret saus av tomater og ofte paprika.",
+    "overview": "En konsentrert grønnsakssaus danner grunnlaget for egg som tilberedes direkte i pannen.",
+    "history": "Retten har nordafrikanske røtter og er også utbredt i deler av Midtøsten. Det nøyaktige opphavet er omdiskutert.",
+    "flavor": "Syrlig, fruktig og krydret.",
+    "technique": "Reduser sausen før eggene knekkes i små fordypninger.",
+    "essentials": [
+      "6 egg",
+      "800 g tomater",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 35 min",
+      "ingredients": [
+        "6 egg",
+        "800 g tomater",
+        "1 løk",
+        "1 paprika",
+        "2 hvitløksfedd",
+        "spisskummen",
+        "paprikapulver",
+        "chili",
+        "olivenolje"
+      ],
+      "steps": [
+        "Fres løk, paprika og hvitløk.",
+        "Tilsett krydder og tomat og kok inn til tykk saus.",
+        "Lag fordypninger og knekk eggene i sausen.",
+        "Legg på lokk og tilbered til eggene har satt seg; gjennomstek ved behov."
+      ]
+    },
+    "variants": [
+      "Varianter med merguez, grønne grønnsaker eller andre krydder."
+    ],
+    "serving": [
+      "Server med brød."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett eggene før sausen har tyknet."
+    ],
+    "relatedDishIds": [
+      "merguez"
+    ],
+    "sources": [
+      {
+        "label": "The Irish Times – Shakshuka og nordafrikanske mattradisjoner",
+        "href": "https://www.irishtimes.com/life-and-style/food-and-drink/shakshuka-all-mixed-up-over-a-brilliant-breakfast-1.4526350"
+      }
+    ]
+  },
+  {
+    "dishId": "merguez",
+    "summary": "Krydret nordafrikansk pølse, vanligvis av lam eller storfe.",
+    "overview": "Pølsen krydres med blant annet chili, paprika og spisskummen og grilles eller stekes.",
+    "history": "Merguez inngår i nordafrikanske mattradisjoner og brukes også i shakshuka og andre retter.",
+    "flavor": "Sterk, aromatisk og ristet.",
+    "technique": "Stek ferske pølser på moderat varme til gjennomstekte.",
+    "essentials": [
+      "500 g ferske merguezpølser",
+      "1 løk",
+      "2 paprika"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min",
+      "ingredients": [
+        "500 g ferske merguezpølser",
+        "1 løk",
+        "2 paprika",
+        "1 ss olivenolje",
+        "sitron",
+        "brød"
+      ],
+      "steps": [
+        "Skjær løk og paprika i strimler.",
+        "Stek grønnsakene i olje til møre.",
+        "Grill eller pannestek pølsene til gjennomstekte, minst 71 °C for kjøttdeig av lam eller storfe.",
+        "Server med grønnsaker, sitron og brød."
+      ]
+    },
+    "variants": [
+      "Merguez kan også serveres med couscous eller brukes som ingrediens i gryter."
+    ],
+    "serving": [
+      "Server med harissa etter smak."
+    ],
+    "commonMistakes": [
+      "Ikke stek pølsene på så høy varme at de brenner før midten er ferdig."
+    ],
+    "relatedDishIds": [
+      "shakshuka",
+      "couscous"
+    ],
+    "sources": [
+      {
+        "label": "Epicurious – Shakshouka with merguez",
+        "href": "https://www.epicurious.com/recipes/food/views/shakshouka-with-merguez-373307"
+      }
+    ]
   }
 ];
