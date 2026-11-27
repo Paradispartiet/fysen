@@ -5017,5 +5017,325 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.malaysia.travel/explore/malaysian-food-52-top-picks-you-shouldn-t-miss"
       }
     ]
+  },
+  {
+    "dishId": "pork-adobo",
+    "summary": "Filippinsk kjøttrett med eddik, hvitløk, pepper og ofte soyasaus.",
+    "overview": "Svinekjøtt braiseres til mørt i en salt og syrlig saus.",
+    "history": "Adobo er en filippinsk tilberedningstradisjon som også omfatter fisk, kylling og grønnsaker.",
+    "flavor": "Syrlig, salt og fyldig.",
+    "technique": "La kjøttet trekke rolig og smak til sausen etter reduksjon.",
+    "essentials": [
+      "600 g svinenakke",
+      "60 ml eddik",
+      "50 ml soyasaus"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "600 g svinenakke",
+        "60 ml eddik",
+        "50 ml soyasaus",
+        "5 hvitløksfedd",
+        "2 laurbærblad",
+        "1 ts hel pepper",
+        "200 ml vann"
+      ],
+      "steps": [
+        "Skjær kjøttet i biter og brun det lett.",
+        "Tilsett eddik, soyasaus, hvitløk, laurbær og vann.",
+        "La trekke under lokk til kjøttet er mørt.",
+        "Ta av lokket og reduser sausen etter smak."
+      ]
+    },
+    "variants": [
+      "Adobong puti lages uten soyasaus; kyllingadobo er også vanlig."
+    ],
+    "serving": [
+      "Server med dampet ris."
+    ],
+    "commonMistakes": [
+      "Ikke salt sausen før den har kokt inn."
+    ],
+    "relatedDishIds": [
+      "rendang",
+      "char-siu"
+    ],
+    "sources": [
+      {
+        "label": "Kawaling Pinoy – Pork adobo",
+        "href": "https://www.kawalingpinoy.com/chicken-pork-adobo/"
+      }
+    ]
+  },
+  {
+    "dishId": "sinigang",
+    "summary": "Filippinsk syrlig suppe med kjøtt eller sjømat og grønnsaker.",
+    "overview": "Kraften får en karakteristisk frisk syre, ofte fra tamarind.",
+    "history": "Sinigang er en filippinsk suppetradisjon med forskjellige proteiner og syrlige råvarer.",
+    "flavor": "Syrlig, frisk og fyldig.",
+    "technique": "La kjøttet bli mørt før grønnsaker med kort koketid tilsettes.",
+    "essentials": [
+      "600 g svineribbe i biter",
+      "1,5 l vann",
+      "2 tomater"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "600 g svineribbe i biter",
+        "1,5 l vann",
+        "2 tomater",
+        "1 løk",
+        "150 g reddik",
+        "150 g grønne bønner",
+        "pak choi",
+        "tamarindpasta",
+        "fiskesaus"
+      ],
+      "steps": [
+        "Kok opp kjøtt og vann, skum av og tilsett løk og tomat.",
+        "La trekke til kjøttet er mørt.",
+        "Tilsett reddik, bønner og tamarind etter smak.",
+        "Vend inn pak choi mot slutten og smak til med fiskesaus."
+      ]
+    },
+    "variants": [
+      "Varianter med reker, fisk eller storfekjøtt."
+    ],
+    "serving": [
+      "Server med ris."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett all tamarinden uten å smake til."
+    ],
+    "relatedDishIds": [
+      "tom-yum",
+      "bun-rieu"
+    ],
+    "sources": [
+      {
+        "label": "Kawaling Pinoy – Sinigang",
+        "href": "https://www.kawalingpinoy.com/sinigang-na-baboy/"
+      }
+    ]
+  },
+  {
+    "dishId": "sisig",
+    "summary": "Finhakket, stekt eller grillet kjøtt med løk, chili og sitrus.",
+    "overview": "Tradisjonell svinesisig kan bruke deler av grisehodet og lever; her brukes svinekjøtt som lett tilgjengelig alternativ.",
+    "history": "Sisig forbindes med Kapampangan-matkulturen og finnes i mange moderne former.",
+    "flavor": "Ristet, syrlig og pikant.",
+    "technique": "Stek kjøttet sprøtt før det hakkes og blandes med friske ingredienser.",
+    "essentials": [
+      "500 g svineside",
+      "1 rødløk",
+      "chili etter smak"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "500 g svineside",
+        "1 rødløk",
+        "chili etter smak",
+        "2 ss calamansijuice eller lime",
+        "1 ss soyasaus",
+        "olje"
+      ],
+      "steps": [
+        "Stek svinesiden til gjennomstekt og gyllen.",
+        "Hakk kjøttet i små biter.",
+        "Finhakk løk og chili og bland med kjøtt og sitrus.",
+        "Varm kort i panne og smak til med soyasaus."
+      ]
+    },
+    "variants": [
+      "Varianter med kylling, fisk eller tofu."
+    ],
+    "serving": [
+      "Server med ris eller som smårett."
+    ],
+    "commonMistakes": [
+      "Ikke bruk så mye væske at kjøttet mister all sprøhet."
+    ],
+    "relatedDishIds": [
+      "lechon",
+      "pork-adobo"
+    ],
+    "sources": [
+      {
+        "label": "Kawaling Pinoy – Sisig",
+        "href": "https://www.kawalingpinoy.com/sisig/"
+      }
+    ]
+  },
+  {
+    "dishId": "lechon",
+    "summary": "Filippinsk helstekt gris med sprøtt skinn og saftig kjøtt.",
+    "overview": "Hel gris stekes tradisjonelt på spyd; denne hjemmevarianten bruker svineside i ovn.",
+    "history": "Lechon er kjent som festmat på Filippinene, blant annet i Cebu.",
+    "flavor": "Sprøtt, salt skinn og fyldig kjøtt.",
+    "technique": "Tørk skinnet godt og stek kjøttet rolig før høy varme mot slutten.",
+    "essentials": [
+      "1,2 kg svineside med svor",
+      "salt",
+      "pepper"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 3 timer",
+      "ingredients": [
+        "1,2 kg svineside med svor",
+        "salt",
+        "pepper",
+        "hvitløk",
+        "2 stilker sitrongress"
+      ],
+      "steps": [
+        "Tørk svoren og krydre kjøttsiden med salt, pepper og aromater.",
+        "Legg kjøttet med svoren opp i en form.",
+        "Stek ved 160 °C til kjøttet er mørt og gjennomstekt.",
+        "Øk varmen mot slutten og følg nøye med til svoren er sprø."
+      ]
+    },
+    "variants": [
+      "Lechon sa hurno er ovnsstekt; lechon kawali er en egen frityrstekt variant."
+    ],
+    "serving": [
+      "Server med ris og ønsket saus."
+    ],
+    "commonMistakes": [
+      "Ikke la svoren brenne under avsluttende høy varme."
+    ],
+    "relatedDishIds": [
+      "sisig",
+      "char-siu"
+    ],
+    "sources": [
+      {
+        "label": "Kawaling Pinoy – Lechon",
+        "href": "https://www.kawalingpinoy.com/lechon-sa-hurno/"
+      },
+      {
+        "label": "Travel Philippines – Cebu",
+        "href": "https://app.philippines.travel/destinations/cebu-province"
+      }
+    ]
+  },
+  {
+    "dishId": "pancit",
+    "summary": "Filippinske nudelretter med grønnsaker, kjøtt eller sjømat.",
+    "overview": "Pancit er en samlebetegnelse; denne oppskriften er en hjemmevariant av pancit bihon med risnudler.",
+    "history": "Nudelretter som pancit er vanlige både til hverdags og ved filippinske feiringer.",
+    "flavor": "Salt, aromatisk og mildt ristet.",
+    "technique": "Kok nudlene akkurat møre i smakfull kraft.",
+    "essentials": [
+      "250 g bihon-risnudler",
+      "250 g kylling",
+      "1 gulrot"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "250 g bihon-risnudler",
+        "250 g kylling",
+        "1 gulrot",
+        "200 g kål",
+        "1 løk",
+        "2 hvitløksfedd",
+        "400 ml kraft",
+        "soyasaus",
+        "lime"
+      ],
+      "steps": [
+        "Skjær kylling og grønnsaker i små biter.",
+        "Stek løk, hvitløk og kylling til gjennomstekt; vend inn grønnsakene.",
+        "Tilsett kraft og soyasaus og la risnudlene trekke etter pakningsanvisningen.",
+        "Vend alt sammen og smak til med lime."
+      ]
+    },
+    "variants": [
+      "Pancit canton bruker hvetenudler; pancit palabok har en annen saus og topping."
+    ],
+    "serving": [
+      "Server med calamansi eller lime."
+    ],
+    "commonMistakes": [
+      "Ikke la nudlene koke til de går i oppløsning."
+    ],
+    "relatedDishIds": [
+      "mie-goreng",
+      "chow-mein"
+    ],
+    "sources": [
+      {
+        "label": "Kawaling Pinoy – Pancit",
+        "href": "https://www.kawalingpinoy.com/pancit-bihon-guisado/"
+      }
+    ]
+  },
+  {
+    "dishId": "kare-kare",
+    "summary": "Filippinsk gryterett med grønnsaker og en fyldig peanøttsaus.",
+    "overview": "Mørt kjøtt og grønnsaker serveres i en nøttebasert saus, gjerne med fermentert rekepasta ved siden av.",
+    "history": "Kare-kare er en etablert filippinsk gryterett, ofte laget med oksehale.",
+    "flavor": "Mild, nøtteaktig og fyldig.",
+    "technique": "Kok kjøttet mørt separat før sausen tilberedes.",
+    "essentials": [
+      "800 g oksehale",
+      "1 aubergine",
+      "150 g lange bønner"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 3 timer",
+      "ingredients": [
+        "800 g oksehale",
+        "1 aubergine",
+        "150 g lange bønner",
+        "pak choi",
+        "100 g usøtet peanøttsmør",
+        "1 løk",
+        "2 hvitløksfedd",
+        "600 ml kraft",
+        "2 ss rismel",
+        "bagoong etter smak"
+      ],
+      "steps": [
+        "Trekk oksehalen i vann til mør og behold kraften.",
+        "Fres løk og hvitløk, tilsett kraft og peanøttsmør.",
+        "Jevn med utrørt rismel og la småkoke.",
+        "Tilsett kjøtt og grønnsaker og kok til grønnsakene er møre."
+      ]
+    },
+    "variants": [
+      "Vegetariske varianter kan bruke tofu og sopp, grønnsakskraft og plantebasert tilbehør i stedet for bagoong."
+    ],
+    "serving": [
+      "Server med ris og eventuelt bagoong."
+    ],
+    "commonMistakes": [
+      "Ikke la sausen koke så hardt at den svir seg."
+    ],
+    "relatedDishIds": [
+      "massaman-curry",
+      "satay"
+    ],
+    "sources": [
+      {
+        "label": "Kawaling Pinoy – Kare-kare",
+        "href": "https://www.kawalingpinoy.com/kare-kare/"
+      }
+    ]
   }
 ];
