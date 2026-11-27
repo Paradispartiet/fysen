@@ -58,7 +58,7 @@ const labels = {
 
 export function ArchiveResultText({ kind, count = 0, query = "" }: { kind: "count" | "empty" | "recorded" | "menu"; count?: number; query?: string }) {
   const locale = usePreviewLocale();
-  const label = labels[locale][{ count: 1, empty: 2, recorded: 3, menu: 4 }[kind]];
+  const label = labels[locale][({ count: 1, empty: 2, recorded: 3, menu: 4 } as const)[kind]];
   return <span lang={locale}>{label.replace("{count}", () => String(count)).replace("{query}", () => query)}</span>;
 }
 
