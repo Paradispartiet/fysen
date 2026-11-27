@@ -184,6 +184,12 @@ export const foodKnowledgeDishIds = [
   "kabuli-palaw",
   "ashak",
   "bolani",
+  "mac-and-cheese",
+  "buffalo-wings",
+  "pulled-pork",
+  "jambalaya",
+  "gumbo",
+  "philly-cheesesteak",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
