@@ -28,6 +28,13 @@ const storo = {
   sourceUrl: "https://egon.no/restauranter/oslo/egon-storo",
 } as const;
 
+const ulleval = {
+  logo: byporten.logo,
+  exterior: "/restaurants/egon-ullevaal/exterior.webp",
+  interior: null,
+  sourceUrl: "https://egon.no/restauranter/oslo/egon-ullevaal",
+} as const;
+
 function normalized(value: string): string {
   return value.normalize("NFKC").toLocaleLowerCase("nb-NO").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 }
@@ -35,6 +42,8 @@ function normalized(value: string): string {
 /** Match the branch and street address, independent of archive/live IDs. */
 export function restaurantVisuals(restaurant: RestaurantIdentity) {
   const address = normalized(restaurant.address);
+  if (["egon ullevål", "egon ullevaal"].includes(normalized(restaurant.name)) &&
+      /^sognsveien 77 ?c(?: |$)/u.test(address)) return ulleval;
   if (normalized(restaurant.name) === "egon storo" &&
       /^vitaminveien 9 11(?: |$)/u.test(address)) return storo;
   if (normalized(restaurant.name) === "egon nordstrand" &&
