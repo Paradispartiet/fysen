@@ -389,7 +389,7 @@ test("Gỏi cuốn uses a dedicated 768px image and only the exact shrimp varian
   assert.match(gallery, /id: "vietnamese-spring-rolls", label: "Gỏi cuốn med reker"/u);
   assert.match(gallery, /"vietnamese-spring-rolls": 37/u);
   assert.equal(galleryIds[37], manifest.images[37].id);
-  assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`), "Gallery teaser must match the image manifest");
+  assert.ok(gallery.includes('visualText(locale, "explore", { count: illustratedDishes.length })') && visualText("nb", "explore", { count: manifest.images.length }) === `Utforsk ${manifest.images.length} retter`, "Gallery teaser must match the image manifest");
 
   assert.match(gallery, /dishPhotoSmall dishPhotoGoiCuon/u);
   assert.match(css, /goi-cuon-768\.avif/u);
@@ -456,7 +456,7 @@ test("Naan has a dedicated 768px food image on black with a precise catalog ID",
   assert.match(gallery, /id: "naan", label: "Naan med smør og urter"/u);
   assert.match(gallery, /naan: 39/u);
   assert.equal(galleryIds[39], manifest.images[39].id);
-  assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`), "Gallery teaser must match the image manifest");
+  assert.ok(gallery.includes('visualText(locale, "explore", { count: illustratedDishes.length })') && visualText("nb", "explore", { count: manifest.images.length }) === `Utforsk ${manifest.images.length} retter`, "Gallery teaser must match the image manifest");
 
   assert.match(gallery, /dishPhotoSmall dishPhotoNaan/u);
   assert.match(css, /naan-768\.avif/u);
@@ -478,7 +478,7 @@ test("Dal makhani has its own 768px image with precise catalog ID and dairy caut
   assert.match(gallery, /id: "dal-makhani", label: "Dal makhani med smør og fløte"/u);
   assert.match(gallery, /"dal-makhani": 40/u);
   assert.equal(galleryIds[40], manifest.images[40].id);
-  assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`));
+  assert.ok(gallery.includes('visualText(locale, "explore", { count: illustratedDishes.length })') && visualText("nb", "explore", { count: manifest.images.length }) === `Utforsk ${manifest.images.length} retter`);
 
   assert.match(gallery, /dishPhotoSmall dishPhotoDalMakhani/u);
   assert.match(css, /dal-makhani-768\.avif/u);
@@ -523,7 +523,7 @@ test("Sambar has its own accurate 768px illustration with exact catalog ID", () 
 
   assert.match(gallery, /dishPhotoSmall dishPhotoSambar/u);
   assert.match(css, /sambar-768\.avif/u);
-  assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`));
+  assert.ok(gallery.includes('visualText(locale, "explore", { count: illustratedDishes.length })') && visualText("nb", "explore", { count: manifest.images.length }) === `Utforsk ${manifest.images.length} retter`);
   const image = manifest.images[42];
   assert.equal(image.id, "sambar");
   assert.equal(image.catalogId, "sambar");

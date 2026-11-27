@@ -98,13 +98,14 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
 });
 
 test("Matlyst gallery is closed by default and shows all approved images only on request", () => {
-  assert.match(gallery, /<details className="dishPhotos" aria-labelledby="dish-photos-title">/u);
+  assert.match(gallery, /<details className="dishPhotos" lang=\{locale\} aria-labelledby="dish-photos-title">/u);
   assert.doesNotMatch(gallery, /<details[^>]+\sopen(?:\s|>)/u);
   assert.match(gallery, /<summary className="dishPhotosPreview">/u);
   assert.match(gallery, /className="dishPhotosInside"/u);
   assert.ok(gallery.indexOf('className="dishPhotosInside"') < gallery.indexOf("illustratedDishes.map"));
   assert.ok(manifest.images.length >= 36, "Approved image count must not regress");
-  assert.match(gallery, new RegExp(`Utforsk ${manifest.images.length} retter`, "u"));
+  assert.match(gallery, /visualText\(locale, "explore", \{ count: illustratedDishes.length \}\)/u);
+  assert.equal(visualText("nb", "explore", { count: manifest.images.length }), `Utforsk ${manifest.images.length} retter`);
 });
 
 test("Matlyst, menu search and knowledge cards display approved originals inline", () => {
@@ -124,7 +125,8 @@ test("Matlyst, menu search and knowledge cards display approved originals inline
 });
 
 test("disclosure uses semantic HTML with no Javascript dependency or fake availability", () => {
-  assert.match(gallery, /Illustrasjoner og foto av rettetyper, ikke restaurantbilder/u);
+  assert.match(gallery, /visualText\(locale, "disclaimer"\)/u);
+  assert.equal(visualText("nb", "disclaimer"), "Illustrasjoner og foto av rettetyper, ikke restaurantbilder.");
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
   assert.doesNotMatch(gallery, /Tilgjengelig nå|Åpent nå/u);
 });
