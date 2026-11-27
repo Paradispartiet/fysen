@@ -448,5 +448,460 @@ export const draftFaroeseArticles = {
       "Vát kálfylla, sum spreingir deiggið undir steiking.",
       "At leypa seinastu turrsteikingina um og missa broyskna botnin."
     ]
+  },
+  "tom-yum": {
+    "overview": "Tom yum er ein angandi súpa, har soðið hevur sterkan anga av urtum og sitrusfruktum. Hon skal vera hvøss og frísk heldur enn tung, eisini tá chilimauk ella mjólk verður latið í eina kremuta útgávu.",
+    "history": "Tom yum er tætt knýtt at matgerð í Miðteilandi og finst í nógvum ymiskum sløgum. Tom yum goong við rækjum er kendast úti í heimi.",
+    "flavor": "Súrligur, sterkur og saltur smakkur við anga av sitrus; søtan kemur heldur frá rávørunum enn frá nógvum sukri.",
+    "technique": "Angandi tilfarið verður kroyst eitt sindur og fær at trekkja í soðnum, men verður vanliga ikki etið. Limesaft verður latin í móti endanum, so fríski smakkurin ikki hvørvur.",
+    "essentials": [
+      "Sitrongras, galangal og makrutlimebløð.",
+      "Chili og fiskasós.",
+      "Limesaft til fríska súrleikan.",
+      "Rækjur, soppar ella annað tilfar, sum skjótt verður liðugt."
+    ],
+    "recipe": {
+      "label": "Súpa við íblástri frá tom yum goong",
+      "yield": "4 portiónir",
+      "time": "uml. 30 min",
+      "ingredients": [
+        "1,2 l høsnarunga- ella sjógætissoð",
+        "2 stelkar av sitrongrasi",
+        "30 g galangal ella ingifer",
+        "4 makrutlimebløð",
+        "2–4 teilendsk chili",
+        "250 g soppar",
+        "300 g ráar rækjur",
+        "2 súpsk. fiskasós",
+        "3 súpsk. limesaft",
+        "koriander"
+      ],
+      "steps": [
+        "Kroyst sitrongras og galangal lætt og lat tey trekkja við limebløðum og chili í soðnum í 10 minuttir.",
+        "Lat sopparnar í og kóka, til teir eru moyrir.",
+        "Lat rækjurnar í og lat tær trekkja, bara til tær eru gjøgnumkókaðar.",
+        "Tak grýtuna av hitanum og smakka til við fiskasós og limesaft.",
+        "Borðreið beinanvegin við koriander; angandi tilfarið kann sílast frá ella verða verandi fyri angans skuld."
+      ]
+    },
+    "variants": [
+      "Tom yum goong við rækjum.",
+      "Tom yum gai við høsnarunga.",
+      "Nam khon: kremut útgáva við chilimauki.",
+      "Klár nam sai uttan kremut tilfar."
+    ],
+    "serving": [
+      "Borðreið rúkandi heitt sum súpu ella part av einari størri máltíð.",
+      "Rís afturvið milda sterka og súrliga smakkin."
+    ],
+    "commonMistakes": [
+      "At kóka limesaft leingi og missa fríska angan.",
+      "At brúka nógv sukur til at minka um súrleikan.",
+      "At kóka rækjur ella soppar ov leingi."
+    ]
+  },
+  "pho": {
+    "overview": "Phở er ein rættur, har soðið er í miðdeplinum. Klára súpan verður gjørd við ristaðum angandi tilfari og heitum kryddi, meðan rísnudlur og kjøt verða gjørd til, so súpan varðveitir fríska og reina smakkin.",
+    "history": "Phở verður serliga sett í samband við Norðurvjetnam og mentist tíðliga í 1900-talinum, áðrenn ymisk staðbundin sløg tóku skap. Norðarligu sløgini hava ofta minni omanátilfar, meðan fleiri urtir og annað hjámeti kunnu fylgja við sunnanfyri.",
+    "flavor": "Angandi, eitt sindur søtur og umamiríkur smakkur við stjørnuanis, kaneli og ristaðum leyki. Feskar urtir, lime og chili verða latin í eftir smakki.",
+    "technique": "Reint soð krevur varliga kóking og at skúmið verður tikið av. Krydd og angandi tilfar verða ristað, áðrenn tey trekkja í soðnum; nudlurnar verða hildnar fyri seg til borðreiðing.",
+    "essentials": [
+      "Klárt neyta- ella høsnarungasoð.",
+      "Ristaður leykur og ingifer.",
+      "Stjørnuanis, kanel og annað heitt krydd.",
+      "Flatar rísnudlur, urtir og feskt omanátilfar."
+    ],
+    "recipe": {
+      "label": "Einfaldað phở gà",
+      "yield": "4 portiónir",
+      "time": "uml. 75 min",
+      "ingredients": [
+        "1,5 l gott høsnarungasoð",
+        "400 g høsnarungalør",
+        "1 leykur, býttur sundur",
+        "50 g ingifer",
+        "2 stjørnuanis",
+        "1 lítil kanelstong",
+        "2 súpsk. fiskasós",
+        "300 g flatar rísnudlur",
+        "várleykur og koriander",
+        "lime og chili"
+      ],
+      "steps": [
+        "Rista leyk og ingifer á turrari pannu, til skurðflaturnar fáa myrkar blettir.",
+        "Lat soð, høsnarunga, leyk, ingifer og krydd smákóka, til høsnarungin er moyrur.",
+        "Tak høsnarungan úr, síla soðið og smakka til við fiskasós.",
+        "Ger rísnudlurnar til fyri seg og být tær í heitar skálir við høsnarunga í flísum.",
+        "Stoyt kókandi heitt soð yvir og borðreið við urtum, lime og chili."
+      ]
+    },
+    "variants": [
+      "Phở bò við neytakjøti.",
+      "Phở gà við høsnarunga.",
+      "Norðarlig útgáva við einfaldari omanátilfari og lítlari søtu.",
+      "Sunnarlig útgáva við fleiri urtum og spírum á borðinum."
+    ],
+    "serving": [
+      "Lat urtir og lime í í smáum nøgdum, meðan tú etur.",
+      "Soðið skal vera sera heitt, tá tað verður stoytt í skálina."
+    ],
+    "commonMistakes": [
+      "At kóka soðið ov hart, so tað verður óklárt.",
+      "At lata kryddið ráða so nógv, at súpan verður tung.",
+      "At lata kókaðar rísnudlur standa leingi, so tær kleistra saman."
+    ]
+  },
+  "banh-mi": {
+    "overview": "Bánh mì er bæði navnið á breyðinum og á sandwichunum, ið verða gjørdir í tí. Tað eyðkenda er mótsetningurin millum lætt, broyskið breyð og kraftiga fyllu, javnað við súrleika, feskum koriander og chili.",
+    "history": "Rætturin endurspeglar hjálandasøguna hjá Vjetnam og staðbundna tillaging av fronskum baguette og paté til vjetnamesiskan smakk og rávørur. Nógv ymisk staðbundin og persónlig sløg eru til.",
+    "flavor": "Broyskið, feskt, súrligt, salt og ofta sterkt. Majonesa ella paté gevur feitt, sum súltað grønmeti og urtir javna.",
+    "technique": "Hita breyðið stutt, so skorpan verður broyskin, uttan at tað torna innan. Súltaða grønmetið skal hava nóg mikið av súrleika til at javna ríka fyllu.",
+    "essentials": [
+      "Lætt baguette ella bánh mì-breyð.",
+      "Súltaðar gularøtur og daikon ella reddikur.",
+      "Koriander, agurka og chili.",
+      "Fylla sum svínakjøt, høsnarungi, paté, omelett ella tofu."
+    ],
+    "recipe": {
+      "label": "Bánh mì við tofu og sitrongrasi",
+      "yield": "4 sandwichir",
+      "time": "uml. 40 min",
+      "ingredients": [
+        "4 smá baguette",
+        "400 g fast tofu",
+        "1 stelkur av sitrongrasi, fínt hakkaður",
+        "2 súpsk. sojasós",
+        "1 súpsk. sukur",
+        "2 gularøtur",
+        "150 g daikon ella reddikur",
+        "4 súpsk. rísediki",
+        "agurka og koriander",
+        "majonesa og chili"
+      ],
+      "steps": [
+        "Sker gularøtur og daikon tunt og lat tey trekkja í rísediki, eitt sindur av sukri og salti.",
+        "Trýst vætuna úr tofu, sker í flísar og marinera við sitrongrasi, sojasós og eitt sindur av sukri.",
+        "Steik tofu á høgum hita, til yvirflatan er gullbrún.",
+        "Hita baguette stutt, sker upp og smyr við majonesu.",
+        "Fyll við tofu, súltaðum grønmeti, agurku, koriander og chili og borðreið beinanvegin."
+      ]
+    },
+    "variants": [
+      "Bánh mì thịt við ymsum svínakjøtsvørum.",
+      "Útgáva við sitrongrasi og høsnarunga ella grillaðum høsnarunga.",
+      "Vegetarisk útgáva við tofu, soppum ella omelett."
+    ],
+    "serving": [
+      "Et feskt, meðan breyðið enn er broyskið.",
+      "Eyka chili og feskur koriander geva smakk."
+    ],
+    "commonMistakes": [
+      "Tungt, tætt baguette, sum køvir smakkin av fylluni.",
+      "Ov søtt súltað grønmeti uttan týðiligan súrleika.",
+      "At fylla breyðið leingi áðrenn borðreiðing, so tað verður bleytt."
+    ]
+  },
+  "katsu": {
+    "overview": "Katsu er eitt einfalt hugskot við stórum týdningi í japanskum gerandismati: kjøt ella annað tilfar verður vent í mjøli, eggi og panko, áðrenn tað verður friterað ella stokt. Tonkatsu við svínakjøti og chicken katsu eru kendastu sløgini.",
+    "history": "Katsu mentist í møtinum millum japanska matgerð og vesturlendskt ávirkaða yōshoku frá endanum á 1800-talinum og byrjanini á 1900-talinum. Mannagongdin varð tillagað japanskum rávørum, borðsiðum og sósum.",
+    "flavor": "Mildur og saftigur kjarni, meðan panko gevur turra, luftiga og broyskna skorpu. Tonkatsusós gevur søtu, súrleika og krydd.",
+    "technique": "Jøvn tjúkd og rættur oljuhiti eru avgerandi. Panko skal festast uttan at verða trýst hart inn, so skorpan varðveitir luftina.",
+    "essentials": [
+      "Svínaflak, kotelett ella høsnarungi í javnari tjúkd.",
+      "Mjøl og egg til at festa skorpu.",
+      "Grovt panko til lætta og broyskna skorpu.",
+      "Tonkatsusós og fínt skorið kál sum siðbundið hjámeti."
+    ],
+    "recipe": {
+      "label": "Chicken katsu heima",
+      "yield": "4 portiónir",
+      "time": "uml. 35 min",
+      "ingredients": [
+        "4 smá høsnarungafløk",
+        "salt og pipar",
+        "60 g hveitimjøl",
+        "2 egg",
+        "120 g panko",
+        "neutral olja til steiking",
+        "fínt skorið kál",
+        "tonkatsusós ella ein søt og súrlig brún sós"
+      ],
+      "steps": [
+        "Banka høsnarungan varliga til javna tjúkd og krydda.",
+        "Vend fyrst í mjøli, síðani í eggi og at enda í panko.",
+        "Hita eitt lag av olju á miðalhøgum hita og steik fløkini gullbrún báðumegin.",
+        "Kanna, at høsnarungin er gjøgnumstoktur, og lat hann hvíla stutt á rist.",
+        "Sker í flísar og borðreið við káli og sós."
+      ]
+    },
+    "variants": [
+      "Tonkatsu: svínakotelett ella svínaflak.",
+      "Chicken katsu: høsnarungi við somu mannagongd.",
+      "Katsu curry: katsu við japanskum karri og rísi.",
+      "Katsu sando: broyskið katsu í bleytum breyði."
+    ],
+    "serving": [
+      "Verður ofta skorið í strimlar áðrenn borðreiðing.",
+      "Fínt skorið kál gevur frískleika og mótsetning til friteraðu skorpuna."
+    ],
+    "commonMistakes": [
+      "Ov lágur oljuhiti, so skorpan verður feit.",
+      "Ójøvn tjúkd, sum gevur turrar kantar og ráan kjarna.",
+      "At lata liðugt stokið katsu liggja flatt, so dampurin ger skorpuna bleyta."
+    ]
+  },
+  "bao": {
+    "overview": "Bao verður uttan fyri Kina brúkt sum felagsnavn á fleiri sløgum av dampaðum bollum. Baozi eru vanliga afturlatnir um eina fyllu, meðan opnu, samanlagdu bollarnir á nógvum matstovum ofta minna um gua bao.",
+    "history": "Dampaðir hveitibollar hava langar siðir í Kina og finnast í nógvum staðbundnum sløgum. Nútímans matstovur uttan fyri Kina brúka ofta orðið bao breiðari enn har á staðnum.",
+    "flavor": "Deiggið er milt, eitt sindur søtt og luftigt og gevur bleytan mótsetning til salta, kryddaða ella súrliga fyllu.",
+    "technique": "Deiggið skal ganga væl og dampast varliga. Vatn, ið drýpur av lokinum á bollarnar, kann geva vátar blettir; lokið kann tí pakkast í eitt reint viskustykki.",
+    "essentials": [
+      "Hveitideiggj við geri og ofta eitt sindur av sukri.",
+      "Damping heldur enn baking.",
+      "Fylla við týðiligum salti, súrleika ella kryddi.",
+      "Feskt tilfar sum agurka, urtir ella súltað grønmeti."
+    ],
+    "recipe": {
+      "label": "Einfaldir samanlagdir bao",
+      "yield": "10–12 stk.",
+      "time": "uml. 2 tímar",
+      "ingredients": [
+        "350 g hveitimjøl",
+        "7 g turrger",
+        "2 súpsk. sukur",
+        "2 dl flógvt vatn",
+        "1 súpsk. neutral olja",
+        "1/2 tesk. salt",
+        "sesamolja til at pensla við",
+        "fylla eftir ynski av tofu, svínakjøti ella soppum",
+        "agurka og várleykur",
+        "hoisin ella chilisós"
+      ],
+      "steps": [
+        "Elt mjøl, ger, sukur, vatn, olju og salt til slætt deiggj og lat ganga til næstan tvífalda stødd.",
+        "Být deiggið sundur, rulla til avlangar flatur og pensla lætt við olju, áðrenn tær verða lagdar saman.",
+        "Lat ganga aftur í 20–30 minuttir á smáum stykkjum av bakipappíri.",
+        "Dampa bollarnar í umførum, til teir eru vaksnir og gjøgnumkókaðir.",
+        "Fyll beint áðrenn borðreiðing, so deiggið verður verandi bleytt og lætt."
+      ]
+    },
+    "variants": [
+      "Baozi: afturlatin bolli við fyllu inni í.",
+      "Opnir bollar, ið minna um gua bao, við fyllu eftir damping.",
+      "Søtir bao við bønumauki ella aðrari søtari fyllu."
+    ],
+    "serving": [
+      "Borðreið heitar beint úr dampikurvini.",
+      "Súltað grønmeti og feskar urtir javna ríka fyllu."
+    ],
+    "commonMistakes": [
+      "At fylla ov nógv í dampikurvina, so bollarnir kleistra saman.",
+      "Ov stutt tíð at ganga, so deiggið verður tætt.",
+      "At lata lokið upp ferð eftir ferð undir damping og missa javnan hita."
+    ]
+  },
+  "mapo-tofu": {
+    "overview": "Mapo tofu byggir á mótsetning: bleytt tofu í einari sterkari sós við hita frá chili og tí doyvnandi, sitruslíka smakkinum av sichuanpipari. Ofta verður malið kjøt brúkt, men vegetarisk sløg kunnu gerast við soppum.",
+    "history": "Rætturin verður settur í samband við Chengdu í Sichuan og er vorðin ein av kendastu rættunum úr økinum úti í heimi. Nógvar útgávur uttan fyri Kina brúka minni av fermenteraðum bønum og sichuanpipari.",
+    "flavor": "Sterkur, saltur, fermenteraður og umamiríkur smakkur við eyðkendu ma-la-samansetingini av chili og doyvnandi sichuanpipari.",
+    "technique": "Far varliga við tofu og ger sósina, áðrenn tofu verður vent í. Sichuanpipar verður brúktur bæði í sósini og ofta nýmalaður omaná at enda.",
+    "essentials": [
+      "Fast ella silkibleytt tofu, sum tolir varliga kóking.",
+      "Doubanjiang – fermenterað chili- og bønumauk.",
+      "Sichuanpipar til ma-la-smakkin.",
+      "Soð, sojasós, angandi tilfar og eitt sindur av stívilsi til fyldina í sósini."
+    ],
+    "recipe": {
+      "label": "Mapo tofu heima",
+      "yield": "4 portiónir",
+      "time": "uml. 30 min",
+      "ingredients": [
+        "500 g tofu í terningum",
+        "200 g malið svínakjøt ella fínt hakkaðir soppar",
+        "2 súpsk. doubanjiang",
+        "1 tesk. kroystur sichuanpipar",
+        "2 hvítleyksgeirar",
+        "1 súpsk. fínt hakkað ingifer",
+        "3 dl høsnarunga- ella grønmetissoð",
+        "1 súpsk. sojasós",
+        "1 tesk. maisstívilsi, rørt út í vatn",
+        "várleykur"
+      ],
+      "steps": [
+        "Steik kjøt ella soppar væl á heitari pannu.",
+        "Lat doubanjiang, hvítleyk, ingifer og helvtina av sichuanpiparinum í og steik stutt, til tað angar.",
+        "Stoyt soð og sojasós í og legg tofu varliga í sósina.",
+        "Lat rættin smákóka nakrar minuttir og javna varliga við maisstívilsi í vatni.",
+        "Enda við várleyki og restini av sichuanpiparinum beint áðrenn borðreiðing."
+      ]
+    },
+    "variants": [
+      "Siðbundið við malnum kjøti, ofta svína- ella neytakjøti.",
+      "Vegetarisk útgáva við soppum og møguliga fermenteraðum svørtum bønum.",
+      "Mildari matstovuútgávur við minni chili og sichuanpipari."
+    ],
+    "serving": [
+      "Borðreið við dampaðum rísi, sum sýgur sterku sósina í seg.",
+      "Einfalt grønt grønmeti afturvið gevur mótsetning."
+    ],
+    "commonMistakes": [
+      "At brúka bara vanliga chilisós í staðin fyri doubanjiang.",
+      "At røra hart og knúsa tofu.",
+      "At kóka sichuanpipar leingi, so angin hvørvur."
+    ]
+  },
+  "butter-chicken": {
+    "overview": "Butter chicken sameinir grillaðan ella hart stoktan marineraðan høsnarunga við slættari sós úr tomat, smøri og ofta róma. Besta útgávan er ikki bara søt og kremut: súrleikin frá tomat, royksmakkurin frá høsnarunganum og angandi krydd skulu enn merkjast.",
+    "history": "Rætturin verður settur í samband við Delhi og matstovuumhvørvið, ið vaks fram eftir býtið av India. Hann er tætt knýttur at høsnarunga, ið er stoktur í tandoor, og hugskotinum at venda leivdir ella liðugt grillað kjøt í ríka makhani-sós.",
+    "flavor": "Fyldigur, mildliga kryddaður, við frískum tomatsmakki og smøri, ofta við bukkehornkløvara sum eyðkendum anga.",
+    "technique": "Marinadan skal bæði krydda og moyra høsnarungan, meðan høgur hiti gevur honum steikiskorpu, áðrenn hann verður lagdur í sósina. Kóka sósina inn, áðrenn smør og rómi tillaga konsistensin móti endanum.",
+    "essentials": [
+      "Høsnarungi marineraður við jogurti, ingiferi, hvítleyki og kryddi.",
+      "Tomatgrunnur, ið verður kókaður inn, til rái súrleikin er burtur.",
+      "Smør og møguliga rómi til at gera smakkin mildari, ikki til at fjala kryddið.",
+      "Kasuri methi ella annað angandi krydd at enda."
+    ],
+    "recipe": {
+      "label": "Butter chicken heima",
+      "yield": "4 portiónir",
+      "time": "uml. 75 min + marinering",
+      "ingredients": [
+        "700 g høsnarungalør í bitum",
+        "150 g jogurt",
+        "2 súpsk. rivið ingifer og hvítleykur",
+        "1 tesk. garam masala",
+        "1 tesk. malin spískumman",
+        "1 tesk. chilipulvur eftir smakki",
+        "500 g knústar tomatir",
+        "50 g smør",
+        "1 dl rómi",
+        "1 tesk. kasuri methi, um ynskt",
+        "salt og sitrón"
+      ],
+      "steps": [
+        "Marinera høsnarungan við jogurti, helvtini av ingiferinum og hvítleykinum og kryddi í minsta lagi 30 minuttir.",
+        "Steik ella grilla høsnarungan á høgum hita í umførum, til hann fær týðiligan lit.",
+        "Kóka tomatirnar við restini av angandi tilfari og kryddi, til sósin er konsentrerað og glitrandi.",
+        "Rør smør og róma í, legg høsnarungan aftur í og lat hann verða gjøgnumstoknan í sósini.",
+        "Smakka til við salti, sitrón og knústum kasuri methi beint áðrenn borðreiðing."
+      ]
+    },
+    "variants": [
+      "Matstovustílur við serliga slættari, sílaðari sós.",
+      "Lættari útgáva við minni róma og meira tomat.",
+      "Paneer ella tofu kann brúkast við sama sósugrunni í einari vegetariskari útgávu."
+    ],
+    "serving": [
+      "Borðreið við basmatirísi, naan ella roti.",
+      "Frískt salat ella súrligt súltað hjámeti javnar ríku sósina."
+    ],
+    "commonMistakes": [
+      "At kóka ráan høsnarunga beinleiðis í sósini uttan steikiskorpu.",
+      "Ov nógv sukur, so rætturin minnir um omaná.",
+      "At lata róman ráða, so tomat og krydd hvørva."
+    ]
+  },
+  "tandoori": {
+    "overview": "Tandoori lýsir fyrst og fremst eina mannagongd. Tilfarið verður ofta marinerað við jogurti, súrleika og kryddi, áðrenn tað verður stokt á sera høgum hita í einum tandoor, sum gevur skjóta steiking, ristaðar kantar og saftigan kjarna.",
+    "history": "Tandoorovnar hava langar siðir í Suður- og Miðasia. Tandoori chicken er serliga tætt knýtt at norðurindiskum og punjabiskum matstovumati og gjørdist ein sera sjónligur partur av nútímans indiskari matmentan í 1900-talinum.",
+    "flavor": "Súrligt jogurt, angandi krydd, roykur og brendir kantar geva sterkan smakk, sum tó ikki nýtist at vera sera chiliheitur. Sitrón, leykur og chutney geva frískan mótsetning.",
+    "technique": "Marinadan skal fáa tíð at virka, men yvirflatan eigur ikki at vera vát, tá tilfarið kemur á høgan hita. Heima riggar sera heitur ovnur, grill ella grillfunktión best, tá luft er kring tilfarið og tað skjótt fær lit.",
+    "essentials": [
+      "Jogurt, sum ber kryddið og hjálpir at moyra kjøtið.",
+      "Ingifer, hvítleykur og krydd sum spískumman, koriander og garam masala.",
+      "Súrleiki frá sitrón ella lime.",
+      "Høgur, beinleiðis hiti, sum gevur ristaðar kantar uttan at turka kjarnan."
+    ],
+    "recipe": {
+      "label": "Høsnarungi við íblástri frá tandoori",
+      "yield": "4 portiónir",
+      "time": "45 min + marinering",
+      "ingredients": [
+        "700 g høsnarungalør uttan bein",
+        "150 g natúrligt jogurt",
+        "2 súpsk. sitrónsaft",
+        "3 hvítleyksgeirar, rivnir",
+        "20 g ingifer, rivið",
+        "1 tesk. spískumman",
+        "1 tesk. malin koriander",
+        "1 tesk. garam masala",
+        "1 tesk. paprika ella kashmiri chili",
+        "salt",
+        "1 súpsk. neutral olja"
+      ],
+      "steps": [
+        "Blanda jogurt, sitrón, ingifer, hvítleyk, krydd og salt.",
+        "Vend høsnarungan í marinaduni og lat standa í minsta lagi 2 tímar, gjarna náttina yvir.",
+        "Hita ovnin so nógv sum gjørligt, helst við grillfunktión ella heitum bakisteini ella stálplátu.",
+        "Legg høsnarungan á rist ella plátu við rúmi ímillum og steik, til hann hevur myrkar kantar og er gjøgnumstoktur.",
+        "Lat kjøtið hvíla stutt og borðreið við sitrón, leyki, koriander og chutney."
+      ]
+    },
+    "variants": [
+      "Tandoori chicken: siðbundin matstovuútgáva við høsnarunga.",
+      "Paneer tikka: paneer og grønmeti stokt við líknandi marinadu og høgum hita.",
+      "Fish tikka: fastari fiskur, marineraður styttri og stoktur skjótt.",
+      "Tandoori-grønmeti: blómukál, soppar ella paprika hóska væl til mannagongdina."
+    ],
+    "serving": [
+      "Borðreið gjarna við naan ella rísi, ráum leyki, sitrón og grønari chutney.",
+      "Tandoori kann vera høvuðsrættur ella partur av fleiri rættum."
+    ],
+    "commonMistakes": [
+      "Ov lágur hiti, so tilfarið kókar í marinaduni í staðin fyri at verða ristað.",
+      "Ov nógv vát marinada á yvirflatuni.",
+      "At brúka soltið kjøt og steikja tað ov leingi."
+    ]
+  },
+  "chana-masala": {
+    "overview": "Chana masala vísir, hvussu djúpan smakk ein einfaldur bølgfruktarrættur kann fáa. Kikertur trekkja í einari konsentreraðari masala úr leyki, tomat og kryddi, til sósin liggur tætt um tær; rætturin verður ofta endaður við súrleika og feskum urtum.",
+    "history": "Rætturin finst í nógvum sløgum í Norðurindia og Pakistan og er skyldur við rættir sum chole. Kryddblandingin og hvussu turrur ella sósutur rætturin er, er ymiskt millum øki, heim og borðreiðingar.",
+    "flavor": "Heitt kryddaður, jarðkendur og súrligur smakkur, við søtu frá leyki og tomat, ið eru stokt leingi. Amchur ella sitrón kann geva eyðkenda fríska smakkin at enda.",
+    "technique": "Steik masala leingi nokk til at rái smakkurin av leyki og tomat hvørvur. Nakrar kikertur kunnu kroystast móti grýtukantinum til at binda sósina uttan nógv eyka feitt.",
+    "essentials": [
+      "Kókaðar kikertur við eitt sindur av kókivatninum.",
+      "Leykur, tomat, ingifer og hvítleykur sum konsentreraður masalagrunnur.",
+      "Spískumman, koriander, garam masala og chili.",
+      "Súrleiki frá amchur, sitrón ella tamarindi eftir stíli."
+    ],
+    "recipe": {
+      "label": "Chana masala",
+      "yield": "4 portiónir",
+      "time": "uml. 45 min",
+      "ingredients": [
+        "2 blikk av kikertum, skolaðar",
+        "2 leykir, fínt hakkaðir",
+        "3 tomatir ella 1 blikk av hakkaðum tomatum",
+        "3 hvítleyksgeirar",
+        "20 g ingifer",
+        "1 tesk. spískummanfræ",
+        "2 tesk. malin koriander",
+        "1 tesk. garam masala",
+        "chili og gurkumeja eftir smakki",
+        "1 tesk. amchur ella sitrónsaft",
+        "koriander"
+      ],
+      "steps": [
+        "Steik spískumman í olju, til tað angar, lat leyk í og steik djúpt gullbrúnan.",
+        "Lat ingifer, hvítleyk og turt krydd í og steik stutt.",
+        "Lat tomatir í og kóka masala inn, til hon er tjúkk og glitrandi.",
+        "Lat kikertur og eitt sindur av vatni í, lat smákóka í 15–20 minuttir og knús nakrar kikertur til at binda sósina.",
+        "Enda við garam masala, súrleika og feskum koriander."
+      ]
+    },
+    "variants": [
+      "Chole í ymsum punjabiskum sløgum.",
+      "Turrari chana borðreidd sum snarl ella fylla.",
+      "Myrkari sløg við te, amla ella øðrum tilfari, ið gevur djúpan lit og smakk."
+    ],
+    "serving": [
+      "Borðreið við rísi, roti, naan ella bhatura eftir stíli.",
+      "Ráur leykur, sitrón og urtir geva frískan mótsetning."
+    ],
+    "commonMistakes": [
+      "At steðga, áðrenn leykur og tomat eru væl kókað inn.",
+      "Ov nógv vatn, so rætturin verður tunn kikertusúpa.",
+      "At gloyma súrleikan og enda við fløtum, tungum kryddsmakki."
+    ]
   }
 } as const satisfies Record<string,ArticleBody>;
