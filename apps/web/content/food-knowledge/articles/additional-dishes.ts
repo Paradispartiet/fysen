@@ -5969,5 +5969,333 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.epicurious.com/recipes/food/views/shakshouka-with-merguez-373307"
       }
     ]
+  },
+  {
+    "dishId": "feijoada",
+    "summary": "Brasiliansk gryte med svarte bønner og ulike typer svinekjøtt.",
+    "overview": "Bønnene kokes sammen med kjøtt og aromater til en tykk, mørk kraft.",
+    "history": "Feijoada er en kjent brasiliansk fellesmåltidsrett. Fortellinger om dens nøyaktige opphav er omdiskuterte.",
+    "flavor": "Fyldig, salt og jordaktig, ofte med røykpreg.",
+    "technique": "Bløtlegg tørre bønner og kok dem godt møre; smak til med salt mot slutten.",
+    "essentials": [
+      "350 g tørre svarte bønner",
+      "400 g svinenakke",
+      "150 g røkt pølse"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2–3 timer + bløtlegging",
+      "ingredients": [
+        "350 g tørre svarte bønner",
+        "400 g svinenakke",
+        "150 g røkt pølse",
+        "100 g bacon",
+        "1 løk",
+        "3 hvitløksfedd",
+        "2 laurbærblad",
+        "vann"
+      ],
+      "steps": [
+        "Bløtlegg bønnene over natten i kjøleskap, hell av vannet og skyll.",
+        "Brun kjøtt, bacon og løk lett i en gryte.",
+        "Tilsett bønner, hvitløk, laurbær og vann til det dekker. Kok kraftig i minst 10 minutter, senk varmen og la småkoke til bønnene og kjøttet er møre.",
+        "Tilsett pølsen mot slutten, kok til gjennomvarm og smak til."
+      ]
+    },
+    "variants": [
+      "Ulike kjøttstykker og saltede kjøttprodukter brukes; dette er en forenklet hjemmevariant."
+    ],
+    "serving": [
+      "Server med ris, farofa, finsnittet grønnkål og appelsin."
+    ],
+    "commonMistakes": [
+      "Ikke salt gryten tidlig dersom kjøttet allerede er salt."
+    ],
+    "relatedDishIds": [
+      "rendang",
+      "koshari"
+    ],
+    "sources": [
+      {
+        "label": "Panelinha – Feijoada",
+        "href": "https://panelinha.com.br/receita/feijoada"
+      },
+      {
+        "label": "Good Food – Feijoada",
+        "href": "https://www.bbcgoodfood.com/recipes/feijoada"
+      }
+    ]
+  },
+  {
+    "dishId": "moqueca",
+    "summary": "Brasiliansk fiskerett med tomat, løk, koriander og regionale variasjoner.",
+    "overview": "Fisk trekkes forsiktig sammen med grønnsaker; denne oppskriften er inspirert av moqueca baiana med kokosmelk og dendê.",
+    "history": "Bahia og Espírito Santo har særegne moqueca-tradisjoner som ikke bør forveksles.",
+    "flavor": "Saftig fisk, fruktig tomat og fyldig kokos i Bahia-varianten.",
+    "technique": "Bygg grønnsaksbasen før fisken tilsettes; unngå kraftig omrøring.",
+    "essentials": [
+      "600 g fast hvit fisk",
+      "1 lime",
+      "2 tomater"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "600 g fast hvit fisk",
+        "1 lime",
+        "2 tomater",
+        "1 løk",
+        "1 paprika",
+        "200 ml kokosmelk",
+        "1–2 ss dendê (rød palmeolje)",
+        "koriander",
+        "salt"
+      ],
+      "steps": [
+        "Skjær fisken i store biter og vend med lime og litt salt.",
+        "Legg løk, paprika og tomat lagvis i en gryte.",
+        "Tilsett kokosmelk og dendê og la grønnsakene mykne.",
+        "Legg fisken i gryten og trekk under lokk til gjennomkokt. Topp med koriander."
+      ]
+    },
+    "variants": [
+      "Moqueca capixaba bruker ikke dendê eller kokosmelk; urucum og olivenolje gir en annen profil."
+    ],
+    "serving": [
+      "Server med ris og eventuelt pirão."
+    ],
+    "commonMistakes": [
+      "Ikke rør hardt i gryten slik at fiskestykkene går i oppløsning."
+    ],
+    "relatedDishIds": [
+      "bouillabaisse",
+      "lohikeitto"
+    ],
+    "sources": [
+      {
+        "label": "Panelinha – Moqueca baiana",
+        "href": "https://panelinha.com.br/receita/moqueca-de-peixe-baiana-revisitada"
+      },
+      {
+        "label": "Panelinha – Moqueca capixaba",
+        "href": "https://panelinha.com.br/receita/moqueca-capixaba"
+      }
+    ]
+  },
+  {
+    "dishId": "coxinha",
+    "summary": "Dråpeformet brasiliansk krokettsnack med revet kyllingfyll.",
+    "overview": "En kokt meldeig omslutter krydret kylling før bitene paneres og friteres.",
+    "history": "Coxinha er en utbredt brasiliansk salgadinho, kjent fra bakerier, snackbarer og selskaper.",
+    "flavor": "Sprø panering og myk deig med saftig kylling.",
+    "technique": "Avkjøl deigen og fyllet før forming og forsegl skjøten godt.",
+    "essentials": [
+      "300 g kokt revet kylling",
+      "1 løk",
+      "2 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 12 små coxinhas",
+      "time": "ca. 75 min",
+      "ingredients": [
+        "300 g kokt revet kylling",
+        "1 løk",
+        "2 hvitløksfedd",
+        "300 ml kyllingkraft",
+        "200 g hvetemel",
+        "25 g smør",
+        "1 egg",
+        "brødsmuler",
+        "frityrolje"
+      ],
+      "steps": [
+        "Fres løk og hvitløk, bland inn kyllingen og smak til. Avkjøl.",
+        "Kok opp kraft og smør, rør inn melet og arbeid deigen til den slipper kjelen. Avkjøl til håndterbar.",
+        "Form små deigskåler, fyll og lukk til dråpeform.",
+        "Vend i sammenvispet egg og brødsmuler, friter ved omtrent 170 °C til gylne og gjennomvarme."
+      ]
+    },
+    "variants": [
+      "Coxinha med kremost i fyllet er en populær variant."
+    ],
+    "serving": [
+      "Server varm som smårett."
+    ],
+    "commonMistakes": [
+      "Unngå vått fyll eller hull i deigen."
+    ],
+    "relatedDishIds": [
+      "croquetas",
+      "arancini"
+    ],
+    "sources": [
+      {
+        "label": "Good Food – Coxinhas",
+        "href": "https://www.bbcgoodfood.com/recipes/coxinhas"
+      }
+    ]
+  },
+  {
+    "dishId": "pao-de-queijo",
+    "summary": "Små brasilianske ostebrød bakt med maniokstivelse.",
+    "overview": "En deig av polvilho, melk, egg, fett og ost formes til boller og stekes.",
+    "history": "Pão de queijo forbindes særlig med Minas Gerais og spises gjerne til frokost eller kaffe.",
+    "flavor": "Osteaktig, lett sprø utenpå og seig eller myk inni.",
+    "technique": "Bruk maniokstivelse, ikke vanlig hvetemel, og juster egget etter deigens konsistens.",
+    "essentials": [
+      "250 g polvilho doce (tapiokastivelse)",
+      "125 ml melk",
+      "50 ml nøytral olje"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 16 små ostebrød",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "250 g polvilho doce (tapiokastivelse)",
+        "125 ml melk",
+        "50 ml nøytral olje",
+        "1–2 egg",
+        "120 g revet fast ost",
+        "½ ts salt"
+      ],
+      "steps": [
+        "Varm melk, olje og salt til kokepunktet.",
+        "Hell over stivelsen og bland. La avkjøle litt.",
+        "Arbeid inn ost og egg gradvis til en formbar deig.",
+        "Form små boller og stek ved 200 °C til de er hevet og gylne, omtrent 20–30 minutter."
+      ]
+    },
+    "variants": [
+      "Polvilho azedo gir en annen smak og struktur enn polvilho doce."
+    ],
+    "serving": [
+      "Server lune til kaffe eller som mellommåltid."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett all eggemassen på én gang."
+    ],
+    "relatedDishIds": [
+      "focaccia",
+      "coxinha"
+    ],
+    "sources": [
+      {
+        "label": "Panelinha – Pão de queijo",
+        "href": "https://panelinha.com.br/receita/pao-de-queijo"
+      },
+      {
+        "label": "Good Food – Brazilian cheese bread",
+        "href": "https://www.bbcgoodfood.com/recipes/brazilian-cheese-bread-pao-de-queijo"
+      }
+    ]
+  },
+  {
+    "dishId": "acaraje",
+    "summary": "Afrobrasilianske friterte bønnekaker av svartøyebønner, løk og salt.",
+    "overview": "En luftig bønnemasse friteres i dendê og serveres ofte med vatapá, tørkede reker og chili.",
+    "history": "Acarajé har vestafrikanske røtter og er nært knyttet til afrobrasiliansk kultur og religiøse tradisjoner. Håndverket til baianas do acarajé er anerkjent som brasiliansk kulturarv.",
+    "flavor": "Sprø, nøtteaktig og aromatisk.",
+    "technique": "Fjern skallene fra bønnene og pisk massen luftig før fritering.",
+    "essentials": [
+      "300 g tørre svartøyebønner",
+      "1 liten løk",
+      "salt"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 8 små kaker",
+      "time": "ca. 60 min + bløtlegging",
+      "ingredients": [
+        "300 g tørre svartøyebønner",
+        "1 liten løk",
+        "salt",
+        "dendê (rød palmeolje) til fritering",
+        "vatapá eller rekefyll etter ønske"
+      ],
+      "steps": [
+        "Bløtlegg bønnene i kjøleskap, gni av skallene og skyll.",
+        "Mal de avrente bønnene med løk og så lite vann som mulig.",
+        "Pisk massen luftig og smak til med salt.",
+        "Form med skje og friter i små omganger ved ca. 170 °C til gylne og gjennomstekte.",
+        "Del og fyll med vatapá eller ferdig tilberedt rekefyll."
+      ]
+    },
+    "variants": [
+      "Abará er en beslektet rett som dampes i blad i stedet for å friteres."
+    ],
+    "serving": [
+      "Server nystekt med fyll og chilisaus."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett så mye vann at massen blir for løs."
+    ],
+    "relatedDishIds": [
+      "vada",
+      "coxinha"
+    ],
+    "sources": [
+      {
+        "label": "IPAC Bahia – Ofício das Baianas do Acarajé",
+        "href": "https://www.ba.gov.br/ipac/oficio-das-baianas-do-acaraje"
+      },
+      {
+        "label": "Panelinha – Acarajé da Paloma",
+        "href": "https://panelinha.com.br/receita/acaraje-da-paloma"
+      }
+    ]
+  },
+  {
+    "dishId": "brigadeiro",
+    "summary": "Små brasilianske sjokoladekuler av søtet kondensert melk, kakao og smør.",
+    "overview": "Massen kokes inn, avkjøles, rulles i kuler og dekkes ofte med sjokoladestrø.",
+    "history": "Brigadeiro er en velkjent del av brasilianske bursdager og andre feiringer.",
+    "flavor": "Søt, myk, seig og sjokoladepreget.",
+    "technique": "Rør kontinuerlig over lav til middels varme til massen slipper bunnen.",
+    "essentials": [
+      "1 boks søtet kondensert melk (ca. 395 g)",
+      "2 ss usøtet kakao",
+      "1 ss smør"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 20 kuler",
+      "time": "ca. 25 min + avkjøling",
+      "ingredients": [
+        "1 boks søtet kondensert melk (ca. 395 g)",
+        "2 ss usøtet kakao",
+        "1 ss smør",
+        "sjokoladestrø"
+      ],
+      "steps": [
+        "Bland kondensert melk, kakao og smør i en tykkbunnet kjele.",
+        "Varm forsiktig under konstant omrøring til massen tykner og bunnen blir synlig når du drar sleiven gjennom.",
+        "Hell over på en smurt tallerken og avkjøl.",
+        "Rull små kuler med smurte hender og vend i sjokoladestrø."
+      ]
+    },
+    "variants": [
+      "Brigadeiro de colher serveres mykere med skje."
+    ],
+    "serving": [
+      "Server i små papirformer."
+    ],
+    "commonMistakes": [
+      "Ikke bruk usøtet evaporert melk som erstatning for søtet kondensert melk."
+    ],
+    "relatedDishIds": [
+      "tiramisu",
+      "cannoli"
+    ],
+    "sources": [
+      {
+        "label": "Good Food – Brigadeiro",
+        "href": "https://www.bbcgoodfood.com/recipes/brazilian-chocolate-truffles-brigadeiro"
+      }
+    ]
   }
 ];
