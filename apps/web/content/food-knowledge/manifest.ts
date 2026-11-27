@@ -166,6 +166,12 @@ export const foodKnowledgeDishIds = [
   "arroz-de-marisco",
   "bifana",
   "pastel-de-nata",
+  "pierogi",
+  "bigos",
+  "zurek",
+  "golabki",
+  "borsjtsj",
+  "varenyky",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
