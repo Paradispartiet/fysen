@@ -142,6 +142,12 @@ export const foodKnowledgeDishIds = [
   "lechon",
   "pancit",
   "kare-kare",
+  "injera",
+  "doro-wat",
+  "shiro",
+  "tibs",
+  "kitfo",
+  "zigni",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
