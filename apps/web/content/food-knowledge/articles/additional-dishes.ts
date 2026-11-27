@@ -6297,5 +6297,349 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.bbcgoodfood.com/recipes/brazilian-chocolate-truffles-brigadeiro"
       }
     ]
+  },
+  {
+    "dishId": "bacalhau-a-bras",
+    "summary": "Portugisisk klippfiskrett med tynne potetstrimler, løk og egg.",
+    "overview": "Utvannet klippfisk flakes og blandes med stekt løk, sprø poteter og egg.",
+    "history": "Retten forbindes særlig med Lisboa og den omfattende portugisiske klippfisktradisjonen.",
+    "flavor": "Salt, fyldig og kremet med mild løksødme.",
+    "technique": "Bruk ferdig utvannet klippfisk og la eggene sette seg forsiktig.",
+    "essentials": [
+      "400 g ferdig utvannet klippfisk",
+      "300 g poteter",
+      "1 stor løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min med utvannet fisk",
+      "ingredients": [
+        "400 g ferdig utvannet klippfisk",
+        "300 g poteter",
+        "1 stor løk",
+        "2 hvitløksfedd",
+        "5 egg",
+        "olivenolje",
+        "svarte oliven",
+        "persille"
+      ],
+      "steps": [
+        "Trekk fisken til gjennomkokt, fjern bein og skinn og del i flak.",
+        "Skjær potetene i tynne strimler og stek til sprø.",
+        "Fres løk og hvitløk i olje; vend inn fisk og poteter.",
+        "Tilsett sammenvispede egg og rør over lav varme til de har satt seg.",
+        "Topp med persille og oliven."
+      ]
+    },
+    "variants": [
+      "Ferdig batata palha kan brukes for å spare tid."
+    ],
+    "serving": [
+      "Server straks med grønn salat."
+    ],
+    "commonMistakes": [
+      "Ikke bruk klippfisk som fortsatt er for salt."
+    ],
+    "relatedDishIds": [
+      "plokkfiskur",
+      "tortilla-espanola"
+    ],
+    "sources": [
+      {
+        "label": "VisitPortugal – Portugisisk matkultur",
+        "href": "https://www.visitportugal.com/en/content/the-portuguese-menu-fish-coriander-and-fantasy"
+      },
+      {
+        "label": "Recipes.pt – Portugisiske retter",
+        "href": "https://recipes.pt/pt/receitas/"
+      }
+    ]
+  },
+  {
+    "dishId": "francesinha",
+    "summary": "Varmt portugisisk smørbrød med kjøtt, smeltet ost og fyldig saus.",
+    "overview": "Brød fylles med stekt kjøtt, skinke og pølse, dekkes med ost og serveres med varm saus.",
+    "history": "Francesinha er særlig knyttet til Porto og byens kafé- og restaurantkultur.",
+    "flavor": "Kraftig, salt, fyldig og lett pikant.",
+    "technique": "Tilbered kjøtt og saus separat før smørbrødet gratineres.",
+    "essentials": [
+      "8 tykke brødskiver",
+      "4 tynne storfebiffer",
+      "150 g kokt skinke"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 50 min",
+      "ingredients": [
+        "8 tykke brødskiver",
+        "4 tynne storfebiffer",
+        "150 g kokt skinke",
+        "200 g fersk pølse",
+        "200 g ost i skiver",
+        "300 ml kraft",
+        "200 ml øl eller alkoholfritt øl",
+        "150 g tomatpuré/passata",
+        "chili etter smak"
+      ],
+      "steps": [
+        "Kok kraft, øl og tomat til en fyldig saus; smak til med chili.",
+        "Stek biff og pølse til ferdige, pølsen helt gjennomstekt.",
+        "Legg kjøtt og skinke mellom brødskiver, dekk med ost.",
+        "Gratiner ved 220 °C til osten smelter og hell varm saus over."
+      ]
+    },
+    "variants": [
+      "Francesinha especial serveres ofte med stekt egg og pommes frites."
+    ],
+    "serving": [
+      "Server varm med kniv og gaffel."
+    ],
+    "commonMistakes": [
+      "Ikke gjør sausen så tynn at brødet blir helt oppløst."
+    ],
+    "relatedDishIds": [
+      "croque-monsieur",
+      "bifana"
+    ],
+    "sources": [
+      {
+        "label": "VisitPortugal – Time to taste Portugal",
+        "href": "https://www.visitportugal.com/en/content/time-to-taste-portugal"
+      },
+      {
+        "label": "Recipes.pt – Portugisiske retter",
+        "href": "https://recipes.pt/pt/receitas/"
+      }
+    ]
+  },
+  {
+    "dishId": "caldo-verde",
+    "summary": "Portugisisk suppe med potet, finsnittet bladkål og ofte chouriço.",
+    "overview": "Potet og løk kokes og moses til en glatt base før grønne kålstrimler tilsettes.",
+    "history": "Caldo verde har røtter i Nord-Portugal og serveres over hele landet, også ved folkefester.",
+    "flavor": "Mild, fyldig og grønn med røkt pølse som kontrast.",
+    "technique": "Skjær kålen svært fint og tilsett den etter at potetbasen er most.",
+    "essentials": [
+      "600 g poteter",
+      "1 løk",
+      "2 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "600 g poteter",
+        "1 løk",
+        "2 hvitløksfedd",
+        "1,2 l vann eller kraft",
+        "200 g bladkål",
+        "150 g chouriço",
+        "olivenolje"
+      ],
+      "steps": [
+        "Kok potet, løk og hvitløk i vann til møre.",
+        "Mos suppen glatt og tilsett olivenolje.",
+        "Tilsett finsnittet kål og la småkoke til mør.",
+        "Varm pølseskivene i suppen til gjennomvarme, eller gjennomstek fersk pølse separat."
+      ]
+    },
+    "variants": [
+      "En plantebasert variant kan lages uten pølse."
+    ],
+    "serving": [
+      "Server med brød og litt olivenolje."
+    ],
+    "commonMistakes": [
+      "Ikke mos kålen sammen med potetene."
+    ],
+    "relatedDishIds": [
+      "harira",
+      "lohikeitto"
+    ],
+    "sources": [
+      {
+        "label": "VisitPortugal – Portugisisk matkultur",
+        "href": "https://www.visitportugal.com/en/content/the-portuguese-menu-fish-coriander-and-fantasy"
+      },
+      {
+        "label": "Recipes.pt – Portugisiske retter",
+        "href": "https://recipes.pt/pt/receitas/"
+      }
+    ]
+  },
+  {
+    "dishId": "arroz-de-marisco",
+    "summary": "Saftig portugisisk risrett med skalldyr, tomat og sjømatkraft.",
+    "overview": "Risen kokes i rikelig aromatisk kraft; sjømaten tilsettes etter koketid.",
+    "history": "Arroz de marisco inngår i Portugals kystbaserte mattradisjoner.",
+    "flavor": "Fyldig, maritim og frisk med koriander.",
+    "technique": "Behold retten saftig, og tilsett reker og annen sjømat mot slutten.",
+    "essentials": [
+      "300 g rundkornet ris",
+      "250 g rå rensede reker",
+      "300 g blåskjell"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "300 g rundkornet ris",
+        "250 g rå rensede reker",
+        "300 g blåskjell",
+        "200 g blekksprut i biter",
+        "400 g tomater",
+        "1 løk",
+        "2 hvitløksfedd",
+        "1 l sjømatkraft",
+        "koriander",
+        "olivenolje"
+      ],
+      "steps": [
+        "Fres løk og hvitløk i olje og tilsett tomater.",
+        "Tilsett kraft, ris og blekksprut og la småkoke til risen nesten er mør.",
+        "Tilsett rensede blåskjell og reker; kok til sjømaten er ferdig. Kast skjell som ikke åpner seg.",
+        "Juster med varm kraft til saftig konsistens og topp med koriander."
+      ]
+    },
+    "variants": [
+      "Sammensetningen av sjømat varierer etter tilgjengelighet."
+    ],
+    "serving": [
+      "Server straks i dype tallerkener."
+    ],
+    "commonMistakes": [
+      "Ikke la risen trekke til all væsken er borte."
+    ],
+    "relatedDishIds": [
+      "paella-valenciana",
+      "bouillabaisse"
+    ],
+    "sources": [
+      {
+        "label": "Recipes.pt – Portugisiske retter",
+        "href": "https://recipes.pt/pt/receitas/"
+      },
+      {
+        "label": "Visitus – Traditional Portuguese Food",
+        "href": "https://www.visitus.pt/traditional-portuguese-food/"
+      }
+    ]
+  },
+  {
+    "dishId": "bifana",
+    "summary": "Portugisisk sandwich med tynne, krydrede skiver av svinekjøtt.",
+    "overview": "Kjøttet marineres gjerne med hvitløk og vin før det stekes eller trekkes i saus.",
+    "history": "Bifana er utbredt portugisisk kafé- og gatemat, med lokale varianter blant annet i Porto og Vendas Novas.",
+    "flavor": "Saftig, salt og aromatisk.",
+    "technique": "Skjær kjøttet tynt og unngå unødig lang steking.",
+    "essentials": [
+      "500 g svinefilet eller svinekam i tynne skiver",
+      "3 hvitløksfedd",
+      "100 ml hvitvin eller alkoholfri hvitvin"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min + marinering",
+      "ingredients": [
+        "500 g svinefilet eller svinekam i tynne skiver",
+        "3 hvitløksfedd",
+        "100 ml hvitvin eller alkoholfri hvitvin",
+        "1 ts paprikapulver",
+        "1 laurbærblad",
+        "olje",
+        "4 rundstykker",
+        "sennep etter smak"
+      ],
+      "steps": [
+        "Mariner svinekjøttet med vin, hvitløk, paprika og laurbær i kjøleskap.",
+        "Stek kjøttet i omganger; tilbered til minst 63 °C med tre minutters hvile for hele kjøttstykker.",
+        "Kok opp marinaden separat dersom den skal brukes som saus, og la den koke godt gjennom.",
+        "Fordel kjøttet i varme rundstykker og server."
+      ]
+    },
+    "variants": [
+      "Portovarianter serveres ofte med kjøtt i en krydret saus."
+    ],
+    "serving": [
+      "Server med sennep eller litt chilisaus."
+    ],
+    "commonMistakes": [
+      "Ikke server marinade som har vært i kontakt med rått kjøtt uten å koke den."
+    ],
+    "relatedDishIds": [
+      "francesinha",
+      "doner"
+    ],
+    "sources": [
+      {
+        "label": "VisitPortugal – Time to taste Portugal",
+        "href": "https://www.visitportugal.com/en/content/time-to-taste-portugal"
+      },
+      {
+        "label": "Recipes.pt – Portugisiske retter",
+        "href": "https://recipes.pt/pt/receitas/"
+      }
+    ]
+  },
+  {
+    "dishId": "pastel-de-nata",
+    "summary": "Portugisisk butterdeigsterte med eggekrem og karamelliserte flekker.",
+    "overview": "Tynn butterdeig fylles med eggekrem og stekes ved høy varme.",
+    "history": "Pastéis de nata er en del av Portugals søtbaksttradisjon, særlig kjent fra Lisboa og Belém.",
+    "flavor": "Sprø, kremet og søt med lett karamellpreg.",
+    "technique": "Bruk kald butterdeig og en godt forvarmet ovn; dette er en tilpasset hjemmevariant.",
+    "essentials": [
+      "300 g butterdeig",
+      "300 ml melk",
+      "100 g sukker"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 12 små terter",
+      "time": "ca. 50 min",
+      "ingredients": [
+        "300 g butterdeig",
+        "300 ml melk",
+        "100 g sukker",
+        "4 eggeplommer",
+        "1 ss maisstivelse",
+        "sitronskall",
+        "1 kanelstang"
+      ],
+      "steps": [
+        "Varm melk med sitronskall og kanel. Fjern aromatene.",
+        "Visp plommer, sukker og stivelse, spe gradvis med varm melk og varm under omrøring til kremen tykner. Avkjøl litt.",
+        "Rull butterdeigen sammen, skjær i skiver og trykk ut i små terteformer.",
+        "Fyll formene og stek ved 240–250 °C, innenfor ovnens og formenes temperaturgrense, til deigen er gyllen og kremen har satt seg."
+      ]
+    },
+    "variants": [
+      "Pastéis de Belém er et særskilt produkt fra Belém, ikke et generelt navn på alle pastéis de nata."
+    ],
+    "serving": [
+      "Server lune med kanel og kaffe."
+    ],
+    "commonMistakes": [
+      "Ikke fyll formene helt opp eller la butterdeigen bli varm før steking."
+    ],
+    "relatedDishIds": [
+      "brigadeiro",
+      "tiramisu"
+    ],
+    "sources": [
+      {
+        "label": "VisitPortugal – Tradisjonell oppskrift på pastéis de nata",
+        "href": "https://www.visitportugal.com/en/content/traditional-portuguese-recipes-past%C3%A9is-de-nata-custard-tarts"
+      },
+      {
+        "label": "VisitPortugal – Time to taste Portugal",
+        "href": "https://www.visitportugal.com/en/content/time-to-taste-portugal"
+      }
+    ]
   }
 ];
