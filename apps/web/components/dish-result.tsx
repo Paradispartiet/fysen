@@ -86,7 +86,7 @@ export function DishResult({ result }: { result: DishSearchResult }) {
             {formatDishPrice(result.dish, locale)}
           </p>
           {result.dish.priceMinor !== null ? (
-            <span className={styles.priceEvidence ?? ""}>{priceProvenanceLabel(result.menu.sourceUrl)}</span>
+            <span className={styles.priceEvidence ?? ""}>{priceProvenanceLabel(result.menu.sourceUrl, locale)}</span>
           ) : null}
         </div>
       </div>
