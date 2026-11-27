@@ -1,3 +1,4 @@
+import { visualText } from "../lib/visual-messages.ts";
 import assert from "node:assert/strict";
 import { translate } from "../lib/locale-messages.ts";
 import { resultText } from "../lib/result-messages.ts";
@@ -86,8 +87,10 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
   assert.doesNotMatch(explorer, /<details className="cuisineExploreRestaurantDetails" open>/u);
   assert.match(explorer, /Se mer/u);
   assert.match(explorer, /<small>\{restaurant.address\}/u);
-  assert.match(explorer, /Fasade · Illustrasjon/u);
-  assert.match(explorer, /Interiør · Illustrasjon/u);
+  assert.match(explorer, /visualText\(locale, "exterior"\)/u);
+  assert.equal(visualText("nb", "exterior"), "Fasade · Illustrasjon");
+  assert.match(explorer, /visualText\(locale, "interior"\)/u);
+  assert.equal(visualText("nb", "interior"), "Interiør · Illustrasjon");
   assert.match(styles, /\.cuisineExploreDishIdentity \.dishPhotoSmall/u);
   assert.match(styles, /width: 38px;\s*height: 38px/u);
   assert.match(styles, /width: 34px;\s*height: 34px/u);

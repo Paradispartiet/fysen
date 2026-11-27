@@ -1,3 +1,4 @@
+import { visualText } from "../lib/visual-messages.ts";
 import assert from "node:assert/strict";
 import { Buffer } from "node:buffer";
 import { createHash } from "node:crypto";
@@ -77,7 +78,8 @@ test("Matlyst has exactly forty-four distinct, curated dish illustrations", () =
 test("Dish illustrations are available and explicitly not restaurant photographs", () => {
   assert.equal(atlas.toString("ascii", 4, 12), "ftypavif");
   assert.ok(statSync(path.join(web, "public/dish-images/collection.avif")).size > 80000);
-  assert.match(gallery, /Illustrasjoner og foto av rettetyper, ikke restaurantbilder/u);
+  assert.match(gallery, /visualText\(locale, "disclaimer"\)/u);
+  assert.equal(visualText("nb", "disclaimer"), "Illustrasjoner og foto av rettetyper, ikke restaurantbilder.");
   assert.doesNotMatch(gallery, /restaurantName|restaurantId|sourceUrl/u);
   assert.match(css, /background:\s*#000 url\("\/dish-images\/collection\.avif\?v=7a428369"\)/u);
   assert.match(css, /600% 400%/u);
@@ -99,7 +101,8 @@ test("Dish illustrations are available and explicitly not restaurant photographs
 
 test("Image cards link to dish search rather than inventing restaurant availability", () => {
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
-  assert.match(gallery, /Se menytreff/u);
+  assert.match(gallery, /visualText\(locale, "matches"\)/u);
+  assert.equal(visualText("nb", "matches"), "Se menytreff");
   assert.doesNotMatch(gallery, /Åpent nå|Tilgjengelig nå/u);
 });
 
@@ -133,7 +136,8 @@ test("Only approved full-size dish masters render inline, without enlarging thum
   assert.match(editorialImage, /image\.photoCredit/u);
   assert.match(editorialImage, /image\.photoLicense/u);
   assert.doesNotMatch(gallery, /Vis stort bilde|dishPhotosLargeLinks/u);
-  assert.match(gallery, /Se menytreff/u);
+  assert.match(gallery, /visualText\(locale, "matches"\)/u);
+  assert.equal(visualText("nb", "matches"), "Se menytreff");
   assert.match(homeGalleryCss, /object-fit: contain/u);
   for (const photo of approved) {
     assert.ok(galleryIds.includes(photo.id));
@@ -955,7 +959,8 @@ test("Integrating native photos must preserve approved Tom yum, kebab and the ga
   assert.equal(tomYum.largeSource, "tom-yum-master-3334.avif");
   assert.equal(tomYum.largeSourceSha256, "724dd7286e4fb7b09f1f0e1a33fdc8ede679becd046fcdd0f6b582dbb07c30ae");
   assert.equal(tomYum.largeSourceOriginalSha256, "a5a6e255d32995dd9da84b9c7bd899d9107cfd50ddfe2a3809c009e531e686d4");
-  assert.match(gallery, /aria-label="Redaksjonelt foto av tom yum med reker og sopp, ikke restaurantfoto"/u);
+  assert.match(gallery, /aria-label=\{visualText\(locale, "cover"\)\}/u);
+  assert.equal(visualText("nb", "cover"), "Redaksjonelt foto av tom yum med reker og sopp, ikke restaurantfoto");
 
   const kebab = manifest.images.find((photo) => photo.id === "kebab-pita");
   assert.ok(kebab);

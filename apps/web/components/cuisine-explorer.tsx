@@ -5,6 +5,7 @@ import type {
   DishBrowseResponse,
   DishBrowseRestaurantExample,
 } from "@fysen/contracts/dish-browse";
+import { visualText } from "../lib/visual-messages";
 import { usePreviewLocale } from "./language-preview";
 import { resultText } from "../lib/result-messages";
 import { dishDisplayName } from "../lib/dish-display-names";
@@ -187,6 +188,7 @@ function restaurantInitials(name: string): string {
 }
 
 function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample }) {
+  const locale = usePreviewLocale();
   const visuals = restaurantVisuals(restaurant);
   const [failedLogo, setFailedLogo] = useState<string | null>(null);
   const identity = (
@@ -215,18 +217,18 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
         <div className="cuisineExploreRestaurantArtwork">
           <div className="cuisineExploreRestaurantScenes">
             <figure>
-              <img src={withPublicBasePath(visuals.exterior)} alt={`Illustrasjon av fasaden til ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
-              <figcaption>Fasade · Illustrasjon</figcaption>
+              <img src={withPublicBasePath(visuals.exterior)} alt={visualText(locale, "exteriorAlt", { name: restaurant.name })} width={1536} height={1024} loading="lazy" decoding="async" />
+              <figcaption>{visualText(locale, "exterior")}</figcaption>
             </figure>
             {visuals.interior ? (
             <figure>
-              <img src={withPublicBasePath(visuals.interior)} alt={`Illustrasjon av interiøret hos ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
-              <figcaption>Interiør · Illustrasjon</figcaption>
+              <img src={withPublicBasePath(visuals.interior)} alt={visualText(locale, "interiorAlt", { name: restaurant.name })} width={1536} height={1024} loading="lazy" decoding="async" />
+              <figcaption>{visualText(locale, "interior")}</figcaption>
             </figure>
             ) : null}
           </div>
           <a className="cuisineExploreRestaurantArtSource" href={visuals.sourceUrl} target="_blank" rel="noopener noreferrer">
-            Illustrert fra restaurantens egne bilder
+            {visualText(locale, "restaurantSource")}
           </a>
         </div>
       ) : null}
