@@ -5337,5 +5337,314 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.kawalingpinoy.com/kare-kare/"
       }
     ]
+  },
+  {
+    "dishId": "injera",
+    "summary": "Mykt, porøst og syrlig flatbrød, tradisjonelt laget av teff.",
+    "overview": "En fermentert røre stekes på én side slik at små porer dannes i overflaten.",
+    "history": "Injera er grunnleggende i etiopiske og eritreiske måltider og fungerer både som underlag og til å spise gryteretter med.",
+    "flavor": "Syrlig, lett nøtteaktig og svampaktig.",
+    "technique": "Bruk en jevn røre og stek bare på én side under lokk.",
+    "essentials": [
+      "300 g teffmel",
+      "100 g aktiv teffsurdeig",
+      "500–650 ml vann etter behov"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min + fermentering",
+      "ingredients": [
+        "300 g teffmel",
+        "100 g aktiv teffsurdeig",
+        "500–650 ml vann etter behov",
+        "salt"
+      ],
+      "steps": [
+        "Bland mel, surdeig og vann i en ren bolle.",
+        "La røren fermentere til tydelig syrlig og boblende, normalt ett til flere døgn avhengig av surdeig og temperatur.",
+        "Juster til en flytende pannekakerøre og tilsett litt salt.",
+        "Hell et tynt lag i en varm panne med slippbelegg, dekk til når porene dannes og stek til overflaten er fast.",
+        "Løft ut brødet uten å vende det og avkjøl separat."
+      ]
+    },
+    "variants": [
+      "Andre kornsorter kan blandes med teff; dette er en forenklet surdeigsvariant."
+    ],
+    "serving": [
+      "Server med wat, shiro eller zigni."
+    ],
+    "commonMistakes": [
+      "Ikke snu brødet eller stable det mens det er vått og varmt. Kast røren ved tegn på mugg."
+    ],
+    "relatedDishIds": [
+      "doro-wat",
+      "shiro",
+      "zigni"
+    ],
+    "sources": [
+      {
+        "label": "Guide.et – Ethiopian food",
+        "href": "https://guide.et/essentials/ethiopian-food"
+      }
+    ]
+  },
+  {
+    "dishId": "doro-wat",
+    "summary": "Etiopisk kyllinggryte med berbere, løk og kokte egg.",
+    "overview": "Finhakket løk kokes inn til en konsentrert base før kylling og krydder tilsettes.",
+    "history": "Doro wat forbindes med festmåltider og høytider i Etiopia.",
+    "flavor": "Fyldig, sterk og aromatisk.",
+    "technique": "La løken mykne og koke inn før krydder og kylling tilsettes.",
+    "essentials": [
+      "800 g kyllinglår",
+      "4 løk",
+      "3 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer",
+      "ingredients": [
+        "800 g kyllinglår",
+        "4 løk",
+        "3 hvitløksfedd",
+        "ingefær",
+        "2 ss berbere, eller etter smak",
+        "3 ss niter kibbeh eller smør",
+        "300 ml vann",
+        "4 hardkokte egg"
+      ],
+      "steps": [
+        "Finhakk løken og la den mykne i en gryte under omrøring.",
+        "Tilsett smør, hvitløk, ingefær og berbere.",
+        "Tilsett kylling og vann og la trekke under lokk til kyllingen er gjennomstekt og mør.",
+        "Legg i skrelte hardkokte egg og varm gjennom."
+      ]
+    },
+    "variants": [
+      "Alicha doro wat er en mildere variant med blant annet gurkemeie."
+    ],
+    "serving": [
+      "Server med injera."
+    ],
+    "commonMistakes": [
+      "Ikke svi løk eller berbere."
+    ],
+    "relatedDishIds": [
+      "injera",
+      "zigni"
+    ],
+    "sources": [
+      {
+        "label": "Ethiopian Food – Main dishes",
+        "href": "https://ethiopian-food.org/recipes/main-dishes/"
+      }
+    ]
+  },
+  {
+    "dishId": "shiro",
+    "summary": "Kremet gryte basert på kikertmel eller annet belgfruktmel.",
+    "overview": "Melet kokes med løk, hvitløk og krydder til en glatt saus.",
+    "history": "Shiro er en vanlig etiopisk hverdagsrett og kan tilberedes plantebasert til fastedager.",
+    "flavor": "Mildt nøtteaktig, kremet og krydret.",
+    "technique": "Visp melet gradvis inn i væsken for å unngå klumper.",
+    "essentials": [
+      "100 g shiro-mel eller kikertmel",
+      "1 løk",
+      "2 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 35 min",
+      "ingredients": [
+        "100 g shiro-mel eller kikertmel",
+        "1 løk",
+        "2 hvitløksfedd",
+        "1 tomat",
+        "2 ss olje",
+        "berbere etter smak",
+        "500 ml vann"
+      ],
+      "steps": [
+        "Fres finhakket løk og hvitløk i olje.",
+        "Tilsett tomat og berbere og kok inn.",
+        "Tilsett vann og visp inn melet gradvis.",
+        "La småkoke under omrøring til melet er gjennomkokt og sausen glatt."
+      ]
+    },
+    "variants": [
+      "Tegabino shiro er en tykkere variant; bozena shiro inneholder kjøtt."
+    ],
+    "serving": [
+      "Server med injera."
+    ],
+    "commonMistakes": [
+      "Ikke hell alt melet i gryten samtidig."
+    ],
+    "relatedDishIds": [
+      "injera",
+      "doro-wat"
+    ],
+    "sources": [
+      {
+        "label": "Ethiopian Food – Main dishes",
+        "href": "https://ethiopian-food.org/recipes/main-dishes/"
+      }
+    ]
+  },
+  {
+    "dishId": "tibs",
+    "summary": "Stekte kjøttbiter med løk, chili og aromatiske krydder.",
+    "overview": "Storfe eller lam stekes i små biter med grønnsaker og krydret fett.",
+    "history": "Tibs er en kjent etiopisk kjøttrett med mange tilberedningsmåter.",
+    "flavor": "Ristet, saftig og krydret.",
+    "technique": "Stek kjøttet i omganger slik at pannen holder høy varme.",
+    "essentials": [
+      "600 g storfekjøtt",
+      "2 løk",
+      "2 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min",
+      "ingredients": [
+        "600 g storfekjøtt",
+        "2 løk",
+        "2 hvitløksfedd",
+        "1 grønn chili",
+        "2 ss olje eller niter kibbeh",
+        "rosmarin",
+        "salt"
+      ],
+      "steps": [
+        "Skjær kjøttet i jevne biter og tørk overflaten.",
+        "Stek kjøttet i små omganger til ønsket trygg gjennomsteking.",
+        "Fres løk, hvitløk, chili og rosmarin.",
+        "Vend kjøttet tilbake i pannen og smak til."
+      ]
+    },
+    "variants": [
+      "Awaze tibs har en krydret chilisaus; tibs kan også lages av lam."
+    ],
+    "serving": [
+      "Server med injera og grønnsaker."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll pannen."
+    ],
+    "relatedDishIds": [
+      "kitfo",
+      "injera"
+    ],
+    "sources": [
+      {
+        "label": "Guide.et – Ethiopian food",
+        "href": "https://guide.et/essentials/ethiopian-food"
+      }
+    ]
+  },
+  {
+    "dishId": "kitfo",
+    "summary": "Finhakket storfekjøtt med krydret smør og mitmita.",
+    "overview": "Tradisjonell kitfo kan serveres rå eller lett varmebehandlet; hjemmeoppskriften bruker gjennomstekt kjøtt.",
+    "history": "Kitfo forbindes særlig med Gurage-folkets matkultur i Etiopia.",
+    "flavor": "Fyldig, smørpreget og sterk.",
+    "technique": "Bruk fersk kjøttdeig og stek til minst 71 °C i hele massen.",
+    "essentials": [
+      "500 g storfekjøttdeig",
+      "3 ss niter kibbeh eller smør",
+      "mitmita etter smak"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 20 min",
+      "ingredients": [
+        "500 g storfekjøttdeig",
+        "3 ss niter kibbeh eller smør",
+        "mitmita etter smak",
+        "salt"
+      ],
+      "steps": [
+        "Smelt smøret forsiktig.",
+        "Tilsett mitmita og kjøttdeig.",
+        "Stek under omrøring til kjøttet er gjennomstekt.",
+        "Smak til og server varmt."
+      ]
+    },
+    "variants": [
+      "Leb leb er en lett varmebehandlet variant. Rå og utilstrekkelig varmebehandlet kjøttdeig kan medføre sykdomsrisiko."
+    ],
+    "serving": [
+      "Server med injera, ayib og grønne bladgrønnsaker."
+    ],
+    "commonMistakes": [
+      "Ikke anta at krydder eller varmt smør gjør rå kjøttdeig trygg."
+    ],
+    "relatedDishIds": [
+      "tibs",
+      "injera"
+    ],
+    "sources": [
+      {
+        "label": "Guide.et – Ethiopian food",
+        "href": "https://guide.et/essentials/ethiopian-food"
+      }
+    ]
+  },
+  {
+    "dishId": "zigni",
+    "summary": "Sterk eritreisk kjøttgryte med berbere, løk og tomat.",
+    "overview": "Kjøtt trekkes lenge i en tykk og aromatisk rød saus.",
+    "history": "Zigni er en kjent eritreisk gryterett som gjerne serveres med injera.",
+    "flavor": "Dyp, sterk og fyldig.",
+    "technique": "La løken koke inn før kjøtt og væske tilsettes.",
+    "essentials": [
+      "700 g storfekjøtt til gryte",
+      "3 løk",
+      "3 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer",
+      "ingredients": [
+        "700 g storfekjøtt til gryte",
+        "3 løk",
+        "3 hvitløksfedd",
+        "2 ss berbere, eller etter smak",
+        "400 g tomater",
+        "300 ml vann",
+        "3 ss olje"
+      ],
+      "steps": [
+        "Finhakk løken og la den mykne i olje.",
+        "Tilsett hvitløk, berbere og tomat og la koke inn.",
+        "Tilsett kjøtt og vann og la trekke under lokk til kjøttet er mørt.",
+        "Reduser sausen etter behov og smak til med salt."
+      ]
+    },
+    "variants": [
+      "Varianter med andre typer kjøtt finnes."
+    ],
+    "serving": [
+      "Server med injera."
+    ],
+    "commonMistakes": [
+      "Unngå å svi krydderne før væsken tilsettes."
+    ],
+    "relatedDishIds": [
+      "doro-wat",
+      "injera"
+    ],
+    "sources": [
+      {
+        "label": "The Foreign Fork – Zigni",
+        "href": "https://foreignfork.com/zigni/"
+      }
+    ]
   }
 ];
