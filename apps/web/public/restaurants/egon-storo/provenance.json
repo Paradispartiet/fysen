@@ -1,0 +1,12 @@
+{
+  "restaurant": "Egon Storo",
+  "address": "Vitaminveien 9-11, 0485 Oslo",
+  "sourcePage": "https://egon.no/restauranter/oslo/egon-storo",
+  "referencePhotos": {
+    "exterior": "https://egon.no/media/2dxhskot/fotoknoff-sven-erik-knoff-4652.jpg",
+    "interior": "https://egon.no/media/gsoha0sg/fotoknoff-sven-erik-knoff-4648.jpg"
+  },
+  "credit": "Sven-Erik Knoff / FotoKnoff, as identified in official source URLs",
+  "illustrations": "AI-generated illustrations based on the actual branch photographs. Original PNGs preserved separately. 1536x1024 WebP derivatives; display as Illustrasjon.",
+  "logo": "Reuse official chain SVG already included for Byporten."
+}

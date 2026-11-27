@@ -37,3 +37,26 @@ test('Nordstrand matches both address spellings and never borrows another interi
   assert.equal(make('Ekebergveien 2280B'), null);
   assert.equal(make('Jernbanetorget 6'), null);
 });
+
+test('Storo scenes require the correct branch and street address', () => {
+  const make = (address) => restaurantVisuals({ name: 'Egon Storo', address });
+  const visuals = make('Vitaminveien 9-11, 0485 Oslo');
+  assert.ok(visuals);
+  assert.match(visuals.exterior, /egon-storo/u);
+  assert.match(visuals.interior, /egon-storo/u);
+  assert.deepEqual(make('Vitaminveien 9–11 0485 Oslo'), visuals);
+  assert.equal(make('Vitaminveien 9-110'), null);
+  assert.equal(make('Jernbanetorget 6'), null);
+});
+
+test('Ullevål requires its own branch address and leaves interior pending', () => {
+  const make = (address) => restaurantVisuals({ name: 'Egon Ullevål', address });
+  const visuals = make('Sognsveien 77c, 0855 Oslo');
+  assert.ok(visuals);
+  assert.match(visuals.exterior, /egon-ullevaal/u);
+  assert.equal(visuals.interior, null);
+  assert.deepEqual(make('Sognsveien 77 C, 0855 Oslo'), visuals);
+  assert.equal(make('Sognsveien 77'), null);
+  assert.equal(make('Sognsveien 77D'), null);
+  assert.equal(make('Sognsveien 770C'), null);
+});
