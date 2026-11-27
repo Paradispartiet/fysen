@@ -937,6 +937,28 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"pastilla","name":"Pastilla","query":"pastilla","aliases":["bastilla","b'stilla","bstilla"],"cuisine":"Nordafrikansk","region":"Marokko","explorerPriority":90},
   {"id":"shakshuka","name":"Shakshuka","query":"shakshuka","aliases":["shakshouka","chakchouka","shakshouka eggs"],"cuisine":"Nordafrikansk","region":"Nord-Afrika og Levanten","explorerPriority":88},
   {"id":"merguez","name":"Merguez","query":"merguez","aliases":["merguez sausage","merguez pølse"],"cuisine":"Nordafrikansk","region":"Maghreb","explorerPriority":86},
+  {
+    id: "pao-de-queijo",
+    name: "Pão de queijo",
+    query: "pao de queijo",
+    aliases: ["pão de queijo"],
+    cuisine: "Brasiliansk",
+    region: "Brasil",
+    explorerPriority: 100,
+  },
+  {
+    id: "coxinha",
+    name: "Coxinha",
+    query: "coxinha",
+    aliases: [],
+    cuisine: "Brasiliansk",
+    region: "Brasil",
+    explorerPriority: 98,
+  },
+  {"id":"feijoada","name":"Feijoada","query":"feijoada","aliases":["feijoada brasileira","brazilian black bean stew"],"cuisine":"Brasiliansk","region":"Brasil","explorerPriority":96},
+  {"id":"moqueca","name":"Moqueca","query":"moqueca","aliases":["moqueca de peixe","moqueca baiana","moqueca capixaba"],"cuisine":"Brasiliansk","region":"Bahia og Espírito Santo","explorerPriority":94},
+  {"id":"acaraje","name":"Acarajé","query":"acaraje","aliases":["acarajé","akara","acaraje baiano"],"cuisine":"Brasiliansk","region":"Bahia","explorerPriority":92},
+  {"id":"brigadeiro","name":"Brigadeiro","query":"brigadeiro","aliases":["brigadeiros","docinho de chocolate"],"cuisine":"Brasiliansk","region":"Brasil","explorerPriority":90},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
