@@ -863,6 +863,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"spanakopita","name":"Spanakopita","query":"spanakopita","aliases":["σπανακόπιτα","greek spinach pie","gresk spinatpai"],"cuisine":"Gresk","region":"Hellas","explorerPriority":90},
   {"id":"tzatziki","name":"Tzatziki","query":"tzatziki","aliases":["tzatziki sauce","τζατζίκι","gresk yoghurtdressing"],"cuisine":"Gresk","region":"Hellas","explorerPriority":88},
   {"id":"pastitsio","name":"Pastitsio","query":"pastitsio","aliases":["pastichio","παστίτσιο","greek pasta bake"],"cuisine":"Gresk","region":"Hellas","explorerPriority":86},
+  {"id":"nasi-goreng","name":"Nasi goreng","query":"nasi goreng","aliases":["indonesian fried rice","nasi goreng ayam"],"cuisine":"Asiatisk","region":"Indonesia","explorerPriority":94},
+  {"id":"mie-goreng","name":"Mie goreng","query":"mie goreng","aliases":["mi goreng","mee goreng","bami goreng","bakmi goreng"],"cuisine":"Asiatisk","region":"Indonesia og Malaysia","explorerPriority":92},
+  {"id":"rendang","name":"Rendang","query":"rendang","aliases":["beef rendang","rendang daging"],"cuisine":"Asiatisk","region":"Vest-Sumatra","explorerPriority":90},
+  {"id":"satay","name":"Satay","query":"satay","aliases":["sate","saté","sate ayam","chicken satay","kyllingsatay"],"cuisine":"Asiatisk","region":"Indonesia og Malaysia","explorerPriority":88},
+  {"id":"nasi-lemak","name":"Nasi lemak","query":"nasi lemak","aliases":["malaysian coconut rice"],"cuisine":"Asiatisk","region":"Malaysia","explorerPriority":86},
+  {"id":"laksa","name":"Laksa","query":"laksa","aliases":["curry laksa","curry mee","laksa noodle soup"],"cuisine":"Asiatisk","region":"Malaysia og Sørøst-Asia","explorerPriority":84},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
