@@ -48,7 +48,7 @@ describe("Search-to-restaurant mobile trust contract", () => {
     assert.match(page, /<SearchResults/u);
     assert.match(card, /result\.match\.type === "fuzzy"/u);
     assert.match(card, /result\.dish\.priceMinor !== null/u);
-    assert.match(card, /priceProvenanceLabel\(result\.menu\.sourceUrl\)/u);
+    assert.match(card, /priceProvenanceLabel\(result\.menu\.sourceUrl, locale\)/u);
     assert.match(actions, /min-height: 44px/u);
   });
 });
