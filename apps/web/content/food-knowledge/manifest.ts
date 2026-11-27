@@ -160,6 +160,12 @@ export const foodKnowledgeDishIds = [
   "pao-de-queijo",
   "acaraje",
   "brigadeiro",
+  "bacalhau-a-bras",
+  "francesinha",
+  "caldo-verde",
+  "arroz-de-marisco",
+  "bifana",
+  "pastel-de-nata",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
