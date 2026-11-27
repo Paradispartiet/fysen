@@ -4695,5 +4695,327 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.mygreekdish.com/recipe/pastitsio/"
       }
     ]
+  },
+  {
+    "dishId": "nasi-goreng",
+    "summary": "Indonesisk stekt ris med søt soyasaus, krydder og ofte speilegg.",
+    "overview": "Kokt ris wokstekes med aromater, kecap manis og valgfritt protein.",
+    "history": "Nasi goreng er en utbredt indonesisk hverdagsrett med mange lokale varianter.",
+    "flavor": "Søtlig, salt og ristet, med chili etter smak.",
+    "technique": "Bruk avkjølt ris som har vært oppbevart forsvarlig, og stek i små omganger.",
+    "essentials": [
+      "600 g kokt ris",
+      "2 sjalottløk",
+      "2 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25 min",
+      "ingredients": [
+        "600 g kokt ris",
+        "2 sjalottløk",
+        "2 hvitløksfedd",
+        "2 ss kecap manis",
+        "chili",
+        "4 egg",
+        "olje",
+        "agurk"
+      ],
+      "steps": [
+        "Fres hakket løk, hvitløk og chili.",
+        "Tilsett risen og stek til rykende varm.",
+        "Vend inn kecap manis og smak til.",
+        "Stek eggene separat og server med ris og agurk."
+      ]
+    },
+    "variants": [
+      "Varianter med kylling, sjømat eller geitekjøtt."
+    ],
+    "serving": [
+      "Server med speilegg, agurk og krupuk."
+    ],
+    "commonMistakes": [
+      "Ikke bruk ris som har stått lenge i romtemperatur."
+    ],
+    "relatedDishIds": [
+      "khao-pad",
+      "mie-goreng"
+    ],
+    "sources": [
+      {
+        "label": "Indonesia Travel – Indonesiske mattradisjoner",
+        "href": "https://www.indonesia.travel/id/en/travel-ideas/gastronomy/don-t-leave-indonesia-before-you-get-a-taste-of-these-12-favorite-local-foods"
+      }
+    ]
+  },
+  {
+    "dishId": "mie-goreng",
+    "summary": "Stekte hvetenudler med grønnsaker, egg og krydret saus.",
+    "overview": "Nudlene wokstekes med aromater og saus; søt soyasaus er vanlig i indonesiske varianter.",
+    "history": "Stekte nudler finnes i mange sørøstasiatiske tradisjoner, blant annet indonesisk mie goreng og malaysisk mee goreng.",
+    "flavor": "Søt-salt, aromatisk og lett sterk.",
+    "technique": "Klargjør nudlene og sausen før wokken varmes.",
+    "essentials": [
+      "350 g hvetenudler",
+      "2 egg",
+      "200 g kål"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 30 min",
+      "ingredients": [
+        "350 g hvetenudler",
+        "2 egg",
+        "200 g kål",
+        "1 gulrot",
+        "2 hvitløksfedd",
+        "2 ss kecap manis",
+        "1 ss soyasaus",
+        "chili",
+        "olje"
+      ],
+      "steps": [
+        "Kok nudlene etter anvisning og la dem renne av.",
+        "Fres hvitløk, chili og grønnsaker.",
+        "Tilsett egg og stek til de setter seg.",
+        "Vend inn nudler og saus og stek raskt på høy varme."
+      ]
+    },
+    "variants": [
+      "Malaysisk mee goreng mamak har sin egen krydder- og ingredienstradisjon."
+    ],
+    "serving": [
+      "Server med lime og vårløk."
+    ],
+    "commonMistakes": [
+      "Unngå overkokte nudler og en overfylt wok."
+    ],
+    "relatedDishIds": [
+      "nasi-goreng",
+      "chow-mein"
+    ],
+    "sources": [
+      {
+        "label": "Tourism Malaysia – Mee goreng",
+        "href": "https://www.malaysia.travel/explore/malaysian-food-52-top-picks-you-shouldn-t-miss"
+      }
+    ]
+  },
+  {
+    "dishId": "rendang",
+    "summary": "Langtidskokt kjøtt med kokosmelk og krydder til en konsentrert, mørk rett.",
+    "overview": "Kjøtt trekkes i aromatisk kokosmelk som reduseres gradvis.",
+    "history": "Rendang kommer fra Minangkabau-folkets matkultur i Vest-Sumatra og forbindes med høytider og gjestfrihet.",
+    "flavor": "Dyp, krydret, fyldig og aromatisk.",
+    "technique": "La væsken koke langsomt inn, og rør oftere mot slutten.",
+    "essentials": [
+      "700 g storfekjøtt til gryte",
+      "600 ml kokosmelk",
+      "4 sjalottløk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 3–4 timer",
+      "ingredients": [
+        "700 g storfekjøtt til gryte",
+        "600 ml kokosmelk",
+        "4 sjalottløk",
+        "3 hvitløksfedd",
+        "galangal",
+        "ingefær",
+        "sitrongress",
+        "chili",
+        "makrutlimeblader"
+      ],
+      "steps": [
+        "Mal løk, hvitløk, galangal, ingefær og chili til pasta.",
+        "Fres pastaen og tilsett kokosmelk, kjøtt, sitrongress og limeblader.",
+        "La småkoke til kjøttet er mørt og væsken redusert.",
+        "Rør jevnlig mot slutten til sausen omslutter kjøttet tett."
+      ]
+    },
+    "variants": [
+      "Kalio har mer saus enn en tørrere rendang."
+    ],
+    "serving": [
+      "Server med ris og grønnsaker."
+    ],
+    "commonMistakes": [
+      "Ikke bruk så høy varme at den konsentrerte krydderblandingen svir seg."
+    ],
+    "relatedDishIds": [
+      "massaman-curry",
+      "rogan-josh"
+    ],
+    "sources": [
+      {
+        "label": "Indonesia Travel – Rendang og Minangkabau-tradisjon",
+        "href": "https://www.indonesia.travel/gb/en/travel-ideas/gastronomy/lezatnya-rendang-minangkabau-yang-mendunia"
+      }
+    ]
+  },
+  {
+    "dishId": "satay",
+    "summary": "Små grillede kjøttspyd, ofte servert med en krydret saus.",
+    "overview": "Marinert kjøtt grilles på spyd; peanøttsaus er vanlig, men ikke universell.",
+    "history": "Sate er en omfattende indonesisk mattradisjon og satay er også populært i Malaysia og andre deler av Sørøst-Asia.",
+    "flavor": "Ristet, aromatisk og saftig.",
+    "technique": "Skjær jevne kjøttbiter og hold rå marinade atskilt fra ferdig saus.",
+    "essentials": [
+      "600 g kyllinglårfilet",
+      "2 ss kecap manis",
+      "1 ts korianderfrø"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 35 min + marinering",
+      "ingredients": [
+        "600 g kyllinglårfilet",
+        "2 ss kecap manis",
+        "1 ts korianderfrø",
+        "hvitløk",
+        "1 ss olje",
+        "100 g peanøttsmør",
+        "150 ml kokosmelk",
+        "lime",
+        "chili"
+      ],
+      "steps": [
+        "Mariner kjøttbitene i soyasaus, koriander, hvitløk og olje i kjøleskap.",
+        "Tre kjøttet på spyd og grill til gjennomstekt.",
+        "Varm peanøttsmør, kokosmelk og chili i en separat kjele.",
+        "Smak sausen til med lime og server til spydene."
+      ]
+    },
+    "variants": [
+      "Sate Padang og balinesisk sate lilit er egne regionale varianter."
+    ],
+    "serving": [
+      "Server med ris, agurk og løk."
+    ],
+    "commonMistakes": [
+      "Ikke server rå marinade som dipp."
+    ],
+    "relatedDishIds": [
+      "yakitori",
+      "souvlaki"
+    ],
+    "sources": [
+      {
+        "label": "Indonesia Travel – Sate og regionale mattradisjoner",
+        "href": "https://www.indonesia.travel/id/en/travel-ideas/gastronomy/don-t-leave-indonesia-before-you-get-a-taste-of-these-12-favorite-local-foods"
+      }
+    ]
+  },
+  {
+    "dishId": "nasi-lemak",
+    "summary": "Ris kokt med kokosmelk, servert med sambal, egg, agurk, peanøtter og ofte tørket ansjos.",
+    "overview": "Kokosrisen er måltidets base; tilbehøret gir ulike smaker og teksturer.",
+    "history": "Nasi lemak er en særlig kjent malaysisk rett og vanlig frokostmat.",
+    "flavor": "Kremet, salt, sterk og nøtteaktig.",
+    "technique": "Tilpass væskemengden til ristypen og la risen hvile under lokk.",
+    "essentials": [
+      "300 g ris",
+      "200 ml kokosmelk",
+      "vann etter behov"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "300 g ris",
+        "200 ml kokosmelk",
+        "vann etter behov",
+        "1 pandanblad, valgfritt",
+        "4 egg",
+        "1 agurk",
+        "60 g peanøtter",
+        "50 g ikan bilis",
+        "sambal"
+      ],
+      "steps": [
+        "Skyll risen og kok med kokosmelk, vann, salt og eventuelt pandan.",
+        "Kok eggene til faste.",
+        "Rist peanøtter og stek tørket ansjos til sprø.",
+        "Server kokosrisen med sambal, agurk, egg og tilbehør."
+      ]
+    },
+    "variants": [
+      "Kan også serveres med rendang eller stekt kylling."
+    ],
+    "serving": [
+      "Anrett tilbehøret rundt risen."
+    ],
+    "commonMistakes": [
+      "Ikke la sambalen overskygge kokosrisens milde smak."
+    ],
+    "relatedDishIds": [
+      "rendang",
+      "nasi-goreng"
+    ],
+    "sources": [
+      {
+        "label": "Tourism Malaysia – Nasi lemak",
+        "href": "https://www.malaysia.travel/index.php/explore/a-gastronomic-journey-through-penang-s-culinary-gems"
+      }
+    ]
+  },
+  {
+    "dishId": "laksa",
+    "summary": "Nudelsuppe med aromatisk kraft, i noen varianter med kokosmelk.",
+    "overview": "Laksa omfatter ulike suppetradisjoner; denne hjemmeoppskriften er inspirert av curry laksa.",
+    "history": "Malaysia har flere markante laksa-varianter, blant annet syrlig assam laksa og Sarawak laksa.",
+    "flavor": "Curry laksa er fyldig, aromatisk og ofte sterk; assam laksa har en annen, syrlig fiskebasert profil.",
+    "technique": "Kok kraften og tilbered nudlene separat for god tekstur.",
+    "essentials": [
+      "300 g risnudler",
+      "400 ml kokosmelk",
+      "600 ml kraft"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "300 g risnudler",
+        "400 ml kokosmelk",
+        "600 ml kraft",
+        "2 ss laksa- eller currypasta",
+        "250 g rå, rensede reker",
+        "150 g tofu",
+        "bønnespirer",
+        "lime"
+      ],
+      "steps": [
+        "Fres pastaen i litt olje.",
+        "Tilsett kraft og kokosmelk og la småkoke.",
+        "Tilsett tofu og reker og kok til rekene er gjennomstekte.",
+        "Kok nudlene separat og server med suppen, spirer og lime."
+      ]
+    },
+    "variants": [
+      "Assam laksa, curry laksa og Sarawak laksa er ulike varianter, ikke identiske oppskrifter."
+    ],
+    "serving": [
+      "Server med lime og urter."
+    ],
+    "commonMistakes": [
+      "Ikke anta at alle laksa-varianter inneholder kokosmelk."
+    ],
+    "relatedDishIds": [
+      "tom-kha-gai",
+      "bun-rieu"
+    ],
+    "sources": [
+      {
+        "label": "Tourism Malaysia – Laksa og curry mee",
+        "href": "https://www.malaysia.travel/explore/malaysian-food-52-top-picks-you-shouldn-t-miss"
+      }
+    ]
   }
 ];
