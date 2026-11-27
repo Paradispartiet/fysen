@@ -1,10 +1,14 @@
 "use client";
 
+import { usePreviewLocale } from "./language-preview";
+import { pageText } from "../lib/page-messages";
+
 import { useState } from "react";
 import { withPublicBasePath } from "../lib/public-path";
 import styles from "./save-min-mat-button.module.css";
 
 export function SaveMinMatButton({ menuItemId }: { menuItemId: string }) {
+  const locale = usePreviewLocale();
   const [state, setState] = useState<"idle" | "saving" | "saved" | "error">("idle");
 
   async function save(): Promise<void> {
@@ -30,7 +34,7 @@ export function SaveMinMatButton({ menuItemId }: { menuItemId: string }) {
 
   return (
     <button className={styles.button} type="button" onClick={save} disabled={state === "saving" || state === "saved"}>
-      {state === "saving" ? "Lagrer …" : state === "saved" ? "Lagret i Min mat" : state === "error" ? "Prøv å lagre igjen" : "Lagre i Min mat"}
+      {pageText(locale, state === "saving" ? "saving" : state === "saved" ? "savedTo" : state === "error" ? "saveRetry" : "save")}
     </button>
   );
 }

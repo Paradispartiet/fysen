@@ -23,7 +23,7 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
   const t = (key: PageKey) => pageText(locale,key);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<PageKey | null>(null);
   const [locating, setLocating] = useState(false);
 
   function navigate(update: (params: URLSearchParams) => void): void {
@@ -34,7 +34,7 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
 
   function useLocation(): void {
     if (!navigator.geolocation) {
-      setStatus(t("noLocation"));
+      setStatus("noLocation");
       return;
     }
 
@@ -53,8 +53,8 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
         setLocating(false);
         setStatus(
           error.code === error.PERMISSION_DENIED
-            ? t("denied")
-            : t("unavailable"),
+            ? "denied"
+            : "unavailable",
         );
       },
       {
@@ -118,7 +118,7 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
           </button>
         </>
       )}
-      {status ? <p className={statusClassName} role="status">{status}</p> : null}
+      {status ? <p className={statusClassName} role="status">{t(status)}</p> : null}
     </div>
   );
 }

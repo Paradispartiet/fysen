@@ -10,6 +10,7 @@ import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
 import { GlobalHeader } from "../../components/global-header";
 import { LocationControls } from "../../components/location-controls";
+import { PageText } from "../../components/page-text";
 import { SearchState } from "../../components/search-state";
 import { browseDishes, searchDishes } from "../../lib/fysen-api";
 import { withPublicBasePath } from "../../lib/public-path";
@@ -121,14 +122,12 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const primaryResults = eligibleLive.filter((result) => result.match.type !== "fuzzy");
   const nearResults = eligibleLive.filter((result) => result.match.type === "fuzzy");
   const countLabel = archive && q.length >= 2
-    ? `${archiveMatches.length + primaryResults.length} menytreff`
+    ? <PageText message="count" values={{ count: archiveMatches.length + primaryResults.length }} />
     : data
     ? primaryResults.length > 0
-      ? `${primaryResults.length} menytreff${data.complete !== true && data.results.length >= 20 ? " blant de hentede treffene" : ""}`
-      : nearResults.length > 0
-        ? "Ingen eksakte treff"
-        : "Ingen treff"
-    : "Søk på retten du har lyst på.";
+      ? <PageText message={data.complete !== true && data.results.length >= 20 ? "countLimited" : "count"} values={{ count: primaryResults.length }} />
+      : <PageText message={nearResults.length > 0 ? "noExact" : "noResults"} />
+    : <PageText message="searchPrompt" />;
 
   return (
     <div className="resultsPage">
@@ -186,21 +185,21 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
               {error && !archive ? (
                 <SearchState
-                  title={error}
-                  body={q.length === 1 ? undefined : "Prøv igjen om litt."}
+                  title={<PageText message={q.length === 1 ? "tooShort" : "searchError"} />}
+                  body={q.length === 1 ? undefined : <PageText message="retryLater" />}
                   actionHref={
                     q.length > 1
                       ? searchHref(q, city, latitude, longitude, sort)
                       : undefined
                   }
-                  actionLabel={q.length > 1 ? "Prøv igjen" : undefined}
+                  actionLabel={q.length > 1 ? <PageText message="retry" /> : undefined}
                 />
               ) : null}
 
               {!error && data && data.results.length === 0 && !archive ? (
                 <SearchState
-                  title={`Ingen treff på «${q}»`}
-                  body="Prøv et annet rettnavn eller se alle retter."
+                  title={<PageText message="noQueryMatches" values={{ query: q }} />}
+                  body={<PageText message="tryOther" />}
                 />
               ) : null}
 

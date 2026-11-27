@@ -1,13 +1,15 @@
+import type { ReactNode } from "react";
+
 export function SearchState({
   title,
   body,
   actionHref,
   actionLabel,
 }: {
-  title: string;
-  body?: string | undefined;
+  title: ReactNode;
+  body?: ReactNode;
   actionHref?: string | undefined;
-  actionLabel?: string | undefined;
+  actionLabel?: ReactNode;
 }) {
   return (
     <section className="searchState" aria-live="polite">

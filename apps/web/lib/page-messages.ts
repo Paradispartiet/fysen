@@ -62,7 +62,11 @@ export const pageMessages = {
     "searchError": "Søket virker ikke akkurat nå.",
     "retryLater": "Prøv igjen om litt.",
     "noQueryMatches": "Ingen treff på «{query}»",
-    "tryOther": "Prøv et annet rettnavn eller se alle retter."
+    "tryOther": "Prøv et annet rettnavn eller se alle retter.",
+    "saving": "Lagrer …",
+    "savedTo": "Lagret i Min mat",
+    "saveRetry": "Prøv å lagre igjen",
+    "save": "Lagre i Min mat"
   },
   "nn": {
     "myFood": "Min mat",
@@ -126,7 +130,11 @@ export const pageMessages = {
     "searchError": "Søket verkar ikkje akkurat no.",
     "retryLater": "Prøv igjen om litt.",
     "noQueryMatches": "Ingen treff på «{query}»",
-    "tryOther": "Prøv eit anna rettnamn eller sjå alle rettar."
+    "tryOther": "Prøv eit anna rettnamn eller sjå alle rettar.",
+    "saving": "Lagrar …",
+    "savedTo": "Lagra i Min mat",
+    "saveRetry": "Prøv å lagre igjen",
+    "save": "Lagre i Min mat"
   },
   "sv": {
     "myFood": "Min mat",
@@ -190,7 +198,11 @@ export const pageMessages = {
     "searchError": "Sökningen fungerar inte just nu.",
     "retryLater": "Försök igen om en stund.",
     "noQueryMatches": "Inga träffar på «{query}»",
-    "tryOther": "Prova ett annat maträttsnamn eller visa alla maträtter."
+    "tryOther": "Prova ett annat maträttsnamn eller visa alla maträtter.",
+    "saving": "Sparar …",
+    "savedTo": "Sparad i Min mat",
+    "saveRetry": "Försök spara igen",
+    "save": "Spara i Min mat"
   },
   "da": {
     "myFood": "Min mad",
@@ -254,7 +266,11 @@ export const pageMessages = {
     "searchError": "Søgningen virker ikke lige nu.",
     "retryLater": "Prøv igen om lidt.",
     "noQueryMatches": "Ingen resultater for «{query}»",
-    "tryOther": "Prøv et andet retnavn eller se alle retter."
+    "tryOther": "Prøv et andet retnavn eller se alle retter.",
+    "saving": "Gemmer …",
+    "savedTo": "Gemt i Min mad",
+    "saveRetry": "Prøv at gemme igen",
+    "save": "Gem i Min mad"
   },
   "fi": {
     "myFood": "Oma ruoka",
@@ -318,7 +334,11 @@ export const pageMessages = {
     "searchError": "Haku ei toimi juuri nyt.",
     "retryLater": "Yritä hetken kuluttua uudelleen.",
     "noQueryMatches": "Ei osumia haulle «{query}»",
-    "tryOther": "Kokeile toista ruokalajin nimeä tai katso kaikki ruokalajit."
+    "tryOther": "Kokeile toista ruokalajin nimeä tai katso kaikki ruokalajit.",
+    "saving": "Tallennetaan …",
+    "savedTo": "Tallennettu Omaan ruokaan",
+    "saveRetry": "Yritä tallentaa uudelleen",
+    "save": "Tallenna Omaan ruokaan"
   },
   "is": {
     "myFood": "Maturinn minn",
@@ -382,7 +402,11 @@ export const pageMessages = {
     "searchError": "Leitin virkar ekki núna.",
     "retryLater": "Reyndu aftur eftir smástund.",
     "noQueryMatches": "Engar niðurstöður fyrir «{query}»",
-    "tryOther": "Prófaðu annað heiti réttar eða skoðaðu alla rétti."
+    "tryOther": "Prófaðu annað heiti réttar eða skoðaðu alla rétti.",
+    "saving": "Vista …",
+    "savedTo": "Vistað í Matnum mínum",
+    "saveRetry": "Reyndu að vista aftur",
+    "save": "Vista í Matnum mínum"
   },
   "en": {
     "myFood": "My food",
@@ -446,7 +470,11 @@ export const pageMessages = {
     "searchError": "Search is not working right now.",
     "retryLater": "Try again in a moment.",
     "noQueryMatches": "No matches for «{query}»",
-    "tryOther": "Try another dish name or browse all dishes."
+    "tryOther": "Try another dish name or browse all dishes.",
+    "saving": "Saving …",
+    "savedTo": "Saved to My food",
+    "saveRetry": "Try saving again",
+    "save": "Save to My food"
   }
 } as const;
 export type PageKey = keyof typeof pageMessages.nb;
