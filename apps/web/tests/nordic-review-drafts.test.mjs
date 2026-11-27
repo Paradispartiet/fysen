@@ -51,10 +51,10 @@ test("partial Greenlandic and Northern Sami search drafts only use existing keys
 
 test("Faroese display drafts retain exact canonical category and dish IDs",()=>{
  const cuisineSource=readFileSync(new URL("../lib/cuisine-labels.ts",import.meta.url),"utf8");
- const categoryKeys=[...cuisineSource.matchAll(/^  "([^"]+)": \[/gmu)].map(x=>x[1]);
+ const categoryKeys=[...cuisineSource.matchAll(/^ {2}"([^"]+)": \[/gmu)].map(x=>x[1]);
  assert.deepEqual(Object.keys(draftFaroeseCuisines).sort(),categoryKeys.sort());
  const dishSource=readFileSync(new URL("../lib/dish-display-names.ts",import.meta.url),"utf8");
- const dishKeys=[...dishSource.matchAll(/^  "([^"]+)": \[/gmu)].map(x=>x[1]);
+ const dishKeys=[...dishSource.matchAll(/^ {2}"([^"]+)": \[/gmu)].map(x=>x[1]);
  assert.deepEqual(Object.keys(draftFaroeseDishNames).sort(),dishKeys.sort());
  assert.deepEqual(Object.keys(draftFaroeseGalleryNames).sort(),Object.keys(galleryNames).sort());
  for(const [id,row] of Object.entries(draftFaroeseGalleryNames)){
