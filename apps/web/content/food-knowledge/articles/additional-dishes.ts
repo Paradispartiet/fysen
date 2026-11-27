@@ -7287,5 +7287,329 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://armenia.travel/articles/enjoy-your-trip-through-vegan-local-food-experiences/"
       }
     ]
+  },
+  {
+    "dishId": "ghormeh-sabzi",
+    "summary": "Persisk urtegryte med kjøtt, bønner og tørket lime.",
+    "overview": "Finhakkede urter freses og trekkes med kjøtt og bønner til en fyldig gryte.",
+    "history": "Ghormeh sabzi er en klassisk iransk khoresh, vanligvis servert med ris.",
+    "flavor": "Urtepreget, syrlig og fyldig.",
+    "technique": "Fres urtene forsiktig og la gryten trekke til kjøttet er mørt.",
+    "essentials": [
+      "500 g lammekjøtt til gryte",
+      "300 g persille, koriander og vårløk",
+      "1 ts tørket bukkehornkløver"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2,5 timer",
+      "ingredients": [
+        "500 g lammekjøtt til gryte",
+        "300 g persille, koriander og vårløk",
+        "1 ts tørket bukkehornkløver",
+        "250 g kokte kidneybønner",
+        "2 tørkede lime",
+        "1 løk",
+        "gurkemeie",
+        "olje",
+        "vann"
+      ],
+      "steps": [
+        "Brun løk og kjøtt med gurkemeie.",
+        "Finhakk og fres urtene separat i olje.",
+        "Tilsett urter, gjennomhullede tørkede lime og vann til kjøttet. La småkoke til mørt.",
+        "Tilsett kokte bønner mot slutten og smak til."
+      ]
+    },
+    "variants": [
+      "Storfe kan brukes i stedet for lam; urteblandingen varierer."
+    ],
+    "serving": [
+      "Server med basmatiris."
+    ],
+    "commonMistakes": [
+      "Ikke svi urtene eller bruke for mye bukkehornkløver."
+    ],
+    "relatedDishIds": [
+      "rogan-josh",
+      "lobio"
+    ],
+    "sources": [
+      {
+        "label": "Persian Mama – Ghormeh sabzi",
+        "href": "https://persianmama.com/persian-herb-stew-ghormeh-sabzi-sabzi-ghorma/"
+      }
+    ]
+  },
+  {
+    "dishId": "fesenjan",
+    "summary": "Persisk gryterett med malte valnøtter og granateplemelasse.",
+    "overview": "Kylling trekkes i en tykk, mørk nøttesaus med fruktig syre.",
+    "history": "Fesenjan er en etablert iransk khoresh og forbindes ofte med festmåltider.",
+    "flavor": "Søt-syrlig, nøtteaktig og fyldig.",
+    "technique": "Mal valnøttene fint og la sausen småkoke under jevnlig omrøring.",
+    "essentials": [
+      "600 g kyllinglår",
+      "200 g valnøtter",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "600 g kyllinglår",
+        "200 g valnøtter",
+        "1 løk",
+        "4 ss granateplemelasse",
+        "500 ml vann",
+        "gurkemeie",
+        "salt",
+        "olje"
+      ],
+      "steps": [
+        "Mal valnøttene fint.",
+        "Brun løk og kylling i litt olje.",
+        "Tilsett nøtter, vann og granateplemelasse og la trekke forsiktig til kyllingen er gjennomstekt og sausen tykk.",
+        "Smak til med mer granateplemelasse eller litt sukker etter behov."
+      ]
+    },
+    "variants": [
+      "And eller kjøttboller brukes også; sødme og syre varierer."
+    ],
+    "serving": [
+      "Server med persisk ris."
+    ],
+    "commonMistakes": [
+      "Ikke bruk høy varme som får nøttesausen til å svi seg."
+    ],
+    "relatedDishIds": [
+      "kare-kare",
+      "ghormeh-sabzi"
+    ],
+    "sources": [
+      {
+        "label": "Persian Mama – Persiske gryteretter",
+        "href": "https://persianmama.com/khoreshs/"
+      }
+    ]
+  },
+  {
+    "dishId": "chelo-kebab",
+    "summary": "Persisk måltid med dampet ris og grillet kebab.",
+    "overview": "Chelo er ris som gjerne dampes luftig; kebaben kan være av flere typer. Denne hjemmevarianten bruker koobideh av kjøttdeig.",
+    "history": "Kebab med ris er en klassisk kombinasjon i iransk restaurant- og matkultur.",
+    "flavor": "Saftig, ristet kjøtt med mild, aromatisk ris.",
+    "technique": "Klem væsken ut av revet løk, og form kjøttet fast på brede spyd eller som avlange kaker.",
+    "essentials": [
+      "500 g kjøttdeig av lam eller storfe",
+      "1 løk",
+      "salt og pepper"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "500 g kjøttdeig av lam eller storfe",
+        "1 løk",
+        "salt og pepper",
+        "300 g basmatiris",
+        "safran etter smak",
+        "smør",
+        "4 tomater",
+        "sumak"
+      ],
+      "steps": [
+        "Skyll risen, kok nesten mør og damp ferdig under lokk.",
+        "Riv løken, press ut væsken og bland med kjøtt og krydder.",
+        "Form avlange kebaber og grill eller stek til minst 71 °C i kjernen.",
+        "Grill tomater separat og server med risen, litt smør, safran og sumak."
+      ]
+    },
+    "variants": [
+      "Chelo kabab kan serveres med blant annet koobideh eller barg av hele kjøttstykker."
+    ],
+    "serving": [
+      "Server med grillet tomat og sumak."
+    ],
+    "commonMistakes": [
+      "Ikke bruk for våt kjøttfarse."
+    ],
+    "relatedDishIds": [
+      "kofte",
+      "khorovats"
+    ],
+    "sources": [
+      {
+        "label": "Persian Mama – Oppskriftsregister: koobideh og persisk ris",
+        "href": "https://persianmama.com/recipe-index/"
+      }
+    ]
+  },
+  {
+    "dishId": "kabuli-palaw",
+    "summary": "Afghansk risrett med mørt kjøtt, gulrot og rosiner.",
+    "overview": "Langkornet ris dampes med krydret kjøttkraft og toppes med stekte gulrotstrimler og rosiner.",
+    "history": "Kabuli palaw regnes som en afghansk nasjonalrett og serveres ofte ved feiringer.",
+    "flavor": "Aromatisk, fyldig og lett søtlig.",
+    "technique": "Kok kjøttet mørt først og la risen dampe ferdig uten å bli grøtete.",
+    "essentials": [
+      "400 g basmatiris",
+      "600 g lammekjøtt",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 2 timer",
+      "ingredients": [
+        "400 g basmatiris",
+        "600 g lammekjøtt",
+        "1 løk",
+        "2 gulrøtter",
+        "75 g rosiner",
+        "kardemomme",
+        "spisskummen",
+        "olje",
+        "vann",
+        "salt"
+      ],
+      "steps": [
+        "Brun løk og kjøtt og trekk med vann og krydder til kjøttet er mørt. Ta vare på kraften.",
+        "Stek gulrotstrimler og rosiner separat i litt olje.",
+        "Skyll og forkok risen til nesten mør, hell av vannet og legg den over kjøttet med litt av kraften.",
+        "Damp ferdig under tett lokk på lav varme. Server med gulrot og rosiner på toppen."
+      ]
+    },
+    "variants": [
+      "Storfekjøtt kan erstatte lam; nøtter kan brukes som topping."
+    ],
+    "serving": [
+      "Server på et stort fat."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett mer kraft enn risen trenger for å dampe ferdig."
+    ],
+    "relatedDishIds": [
+      "biryani",
+      "chelo-kebab"
+    ],
+    "sources": [
+      {
+        "label": "Afghan Cooks – Kabuli pulao",
+        "href": "https://afghancooks.com/kabuli-pulao-recipe/"
+      }
+    ]
+  },
+  {
+    "dishId": "ashak",
+    "summary": "Afghanske kokte deigpakker fylt med purre eller gandana.",
+    "overview": "De tynne deigpakkene serveres gjerne med hvitløksyoghurt og en krydret saus av kjøtt eller linser.",
+    "history": "Ashak er en kjent afghansk rett som også serveres ved større selskaper.",
+    "flavor": "Mykt, urtepreget og syrlig fra yoghurt.",
+    "technique": "Vask purren grundig og forsegl deigpakkene godt.",
+    "essentials": [
+      "300 g hvetemel",
+      "150 ml vann",
+      "300 g purre"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "300 g hvetemel",
+        "150 ml vann",
+        "300 g purre",
+        "1 ss olje",
+        "150 g tørre røde linser",
+        "1 løk",
+        "200 g hakkede tomater",
+        "200 g yoghurt",
+        "hvitløk",
+        "spisskummen"
+      ],
+      "steps": [
+        "Elt mel og vann med litt salt til glatt deig og la hvile.",
+        "Vask og finsnitt purren, bland med litt olje og salt.",
+        "Kjevle deigen tynt, skjær ut sirkler, fyll med purre og forsegl.",
+        "Kok pakkene til deigen er mør. Kok linser med frest løk, tomat og krydder til gjennomkokt.",
+        "Server med hvitløksyoghurt og linsesaus."
+      ]
+    },
+    "variants": [
+      "Kjøttsaus er også vanlig; gandana gir en annen smak enn vanlig purre."
+    ],
+    "serving": [
+      "Server med litt tørket mynte."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll deigpakkene eller bruk sandete purre."
+    ],
+    "relatedDishIds": [
+      "manti",
+      "varenyky"
+    ],
+    "sources": [
+      {
+        "label": "Afghan Cooks – Ashak",
+        "href": "https://afghancooks.com/afghan-ashak-or-aushak-afghan-dumplings/"
+      }
+    ]
+  },
+  {
+    "dishId": "bolani",
+    "summary": "Tynt afghansk flatbrød med fyll av blant annet potet, purre eller gresskar.",
+    "overview": "Deigen brettes rundt et tynt lag fyll og stekes i panne.",
+    "history": "Bolani inngår i afghansk brød- og smårettstradisjon.",
+    "flavor": "Sprø, gyllen utside og mykt, krydret fyll.",
+    "technique": "Kjevle deigen tynt og bruk avkjølt fyll.",
+    "essentials": [
+      "350 g hvetemel",
+      "180 ml vann",
+      "1 ts salt"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "6 brød",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "350 g hvetemel",
+        "180 ml vann",
+        "1 ts salt",
+        "400 g poteter",
+        "3 vårløk",
+        "koriander",
+        "chili etter smak",
+        "olje"
+      ],
+      "steps": [
+        "Elt mel, vann og salt til smidig deig og la hvile.",
+        "Kok potetene, mos og bland med finhakket vårløk, koriander og chili. Avkjøl.",
+        "Del deigen i seks, kjevle ut og fordel fyll på én halvdel. Brett og forsegl.",
+        "Stek på begge sider i litt olje til deigen er gjennomstekt og gyllen."
+      ]
+    },
+    "variants": [
+      "Fyll med purre eller gresskar er andre vanlige varianter."
+    ],
+    "serving": [
+      "Server med hvitløksyoghurt eller grønn chutney."
+    ],
+    "commonMistakes": [
+      "Ikke legg på et tykt lag fyll som gjør brødet vanskelig å steke."
+    ],
+    "relatedDishIds": [
+      "naan",
+      "lahmacun"
+    ],
+    "sources": [
+      {
+        "label": "Afghan Cooks – Bolani",
+        "href": "https://afghancooks.com/bolani-recipe-hot-pockets/"
+      }
+    ]
   }
 ];
