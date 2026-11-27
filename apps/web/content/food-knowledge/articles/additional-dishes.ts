@@ -1952,7 +1952,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "butter-chicken",
       "tandoori"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Smithsonian Asian Pacific American Center – Om opphavet til chicken tikka masala",
+        "href": "https://apa.si.edu/picklesandtea/after-butter-chicken-chicken-tikka-masala/"
+      },
+      {
+        "label": "Swasthi’s Recipes – Chicken tikka masala",
+        "href": "https://www.indianhealthyrecipes.com/chicken-tikka-masala/"
+      }
+    ]
   },
   {
     "dishId": "palak-paneer",
@@ -2000,7 +2009,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "naan",
       "dal-makhani"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Swasthi’s Recipes – Palak paneer",
+        "href": "https://www.indianhealthyrecipes.com/palak-paneer-recipe-easy-paneer-recipes-step-by-step-pics/"
+      }
+    ]
   },
   {
     "dishId": "rogan-josh",
@@ -2048,7 +2062,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "biryani",
       "vindaloo"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Saveur – Kashmiri chile-braised lamb",
+        "href": "https://www.saveur.com/recipes/rogan-josh-recipe/"
+      },
+      {
+        "label": "Headbanger's Kitchen – Kashmiri varianter",
+        "href": "https://headbangerskitchen.com/rogan-josh/"
+      }
+    ]
   },
   {
     "dishId": "vindaloo",
@@ -2096,7 +2119,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "rogan-josh",
       "biryani"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Swasthi’s Recipes – Vindaloo og goansk matkultur",
+        "href": "https://www.indianhealthyrecipes.com/chicken-vindaloo/"
+      },
+      {
+        "label": "NDTV Food – Pork vindaloo",
+        "href": "https://food.ndtv.com/recipe-pork-vindaloo-516725"
+      }
+    ]
   },
   {
     "dishId": "malai-kofta",
@@ -2145,7 +2177,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "palak-paneer",
       "naan"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Swasthi’s Recipes – Malai kofta",
+        "href": "https://www.indianhealthyrecipes.com/malai-kofta-recipe/"
+      }
+    ]
   },
   {
     "dishId": "aloo-gobi",
@@ -2194,7 +2231,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "chana-masala",
       "palak-paneer"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Swasthi’s Recipes – Aloo gobi",
+        "href": "https://www.indianhealthyrecipes.com/aloo-gobi-recipe/"
+      }
+    ]
   },
   {
     "dishId": "lasagne-alla-bolognese",
@@ -2245,7 +2287,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "carbonara",
       "amatriciana"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "La Cucina Italiana – Lasagne alla bolognese",
+        "href": "https://www.lacucinaitaliana.it/ricetta/primi/lasagne-alla-bolognese/"
+      }
+    ]
   },
   {
     "dishId": "risotto-alla-milanese",
@@ -2293,7 +2340,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "ossobuco",
       "arancini"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "La Cucina Italiana – Ossobuco og risotto alla milanese",
+        "href": "https://www.lacucinaitaliana.it/ricetta/piatti-unici/ossobuco-e-risotto-piatto-unico-di-milano/"
+      }
+    ]
   },
   {
     "dishId": "ossobuco",
@@ -2343,7 +2395,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "risotto-alla-milanese",
       "saltimbocca"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "La Cucina Italiana – Ossobuco alla milanese",
+        "href": "https://www.lacucinaitaliana.it/ricetta/primi/ricetta-ossobuco-alla-milanese/"
+      }
+    ]
   },
   {
     "dishId": "gnocchi-al-pesto",
@@ -2391,7 +2448,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pasta-alla-norma",
       "cacio-e-pepe"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Antonio Carluccio Foundation – Gnocchi di patate al pesto",
+        "href": "https://antoniocarlucciofoundation.org/recipe/potato-and-flour-dumplings-with-pesto/"
+      },
+      {
+        "label": "Italia.it – Ligurias matkultur og pesto",
+        "href": "https://www.italia.it/en/liguria/things-to-do/11-food-of-liguria"
+      }
+    ]
   },
   {
     "dishId": "tiramisu",
@@ -2436,7 +2502,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
     "relatedDishIds": [
       "cannoli"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "La Cucina Italiana – Tiramisù, historie og opphav",
+        "href": "https://www.lacucinaitaliana.com/italian-food/italian-dishes/tiramisu-all-you-need-to-know-about-the-iconic-italian-dessert"
+      }
+    ]
   },
   {
     "dishId": "focaccia",
@@ -2483,7 +2554,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "pizza-margherita",
       "pizza-marinara"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "VisitGenoa – Focaccia genovese",
+        "href": "https://www.visitgenoa.it/en/focaccia-genovese"
+      },
+      {
+        "label": "La Mia Liguria – Genovese focaccia, historie og oppskrift",
+        "href": "https://lamialiguria.it/en/2023/12/genovese-focaccia-its-origins-and-recipe/"
+      }
+    ]
   },
   {
     "dishId": "tempura",
@@ -2529,7 +2609,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "udon",
       "katsu"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Just One Cookbook – Tempura",
+        "href": "https://www.justonecookbook.com/tempura-recipe/"
+      }
+    ]
   },
   {
     "dishId": "okonomiyaki",
@@ -2576,7 +2661,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "takoyaki",
       "yakitori"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Japans landbruksdepartement (MAFF) – Okonomiyaki",
+        "href": "https://www.maff.go.jp/e/policies/market/k_ryouri/search_menu/5798/index.html"
+      },
+      {
+        "label": "Just One Cookbook – Okonomiyaki",
+        "href": "https://www.justonecookbook.com/okonomiyaki/"
+      }
+    ]
   },
   {
     "dishId": "takoyaki",
@@ -2623,7 +2717,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "okonomiyaki",
       "gyoza"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Just One Cookbook – Takoyaki",
+        "href": "https://www.justonecookbook.com/takoyaki-recipe/"
+      }
+    ]
   },
   {
     "dishId": "sukiyaki",
@@ -2672,7 +2771,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "shabu-shabu",
       "yakitori"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Just One Cookbook – Sukiyaki",
+        "href": "https://www.justonecookbook.com/sukiyaki/"
+      },
+      {
+        "label": "JETRO Taste of Japan – Sukiyaki",
+        "href": "https://japan-food.jetro.go.jp/en/recipe/104.html"
+      }
+    ]
   },
   {
     "dishId": "shabu-shabu",
@@ -2720,7 +2828,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "sukiyaki",
       "udon"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Just One Cookbook – Shabu shabu",
+        "href": "https://www.justonecookbook.com/shabu-shabu/"
+      }
+    ]
   },
   {
     "dishId": "katsudon",
@@ -2772,7 +2885,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "katsu",
       "sukiyaki"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Just One Cookbook – Katsudon",
+        "href": "https://www.justonecookbook.com/katsudon/"
+      }
+    ]
   },
   {
     "dishId": "kung-pao-chicken",
@@ -2822,7 +2940,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "mapo-tofu",
       "dan-dan-noodles"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "The Woks of Life – Kung pao chicken",
+        "href": "https://thewoksoflife.com/kung-pao-chicken/"
+      }
+    ]
   },
   {
     "dishId": "xiaolongbao",
@@ -2869,7 +2992,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "dumplings",
       "bao"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "The Woks of Life – Xiaolongbao",
+        "href": "https://thewoksoflife.com/steamed-shanghai-soup-dumplings-xiaolongbao/"
+      },
+      {
+        "label": "The Woks of Life – Shanghai cuisine",
+        "href": "https://thewoksoflife.com/shanghai-cuisine/"
+      }
+    ]
   },
   {
     "dishId": "char-siu",
@@ -2915,7 +3047,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "bao",
       "peking-duck"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "The Woks of Life – Char siu",
+        "href": "https://thewoksoflife.com/chinese-bbq-pork-cha-siu/"
+      }
+    ]
   },
   {
     "dishId": "chow-mein",
@@ -2963,7 +3100,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "dan-dan-noodles",
       "pad-see-ew"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "The Woks of Life – Beef chow mein",
+        "href": "https://thewoksoflife.com/beef-chow-mein/"
+      },
+      {
+        "label": "The Woks of Life – Chinese noodles and wrappers",
+        "href": "https://thewoksoflife.com/chinese-ingredients-glossary/chinese-noodles-wrappers/"
+      }
+    ]
   },
   {
     "dishId": "wonton-soup",
@@ -3011,7 +3157,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "dumplings",
       "xiaolongbao"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "The Woks of Life – Wonton soup",
+        "href": "https://thewoksoflife.com/wonton-soup-recipe/"
+      },
+      {
+        "label": "The Woks of Life – Cantonese wonton noodle soup",
+        "href": "https://thewoksoflife.com/cantonese-wonton-noodle-soup/"
+      }
+    ]
   },
   {
     "dishId": "sweet-and-sour-pork",
@@ -3061,7 +3216,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "char-siu",
       "kung-pao-chicken"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "The Woks of Life – Sweet and sour pork",
+        "href": "https://thewoksoflife.com/sweet-and-sour-pork/"
+      }
+    ]
   },
   {
     "dishId": "enchiladas",
@@ -3106,7 +3266,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "quesadilla",
       "mole-poblano"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Mexico in My Kitchen – Enchiladas rojas",
+        "href": "https://www.mexicoinmykitchen.com/red-enchiladas-recipe/"
+      }
+    ]
   },
   {
     "dishId": "burrito",
@@ -3152,7 +3317,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "quesadilla",
       "tacos-al-pastor"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Saveur – Burritos Unwrapped",
+        "href": "https://www.saveur.com/article/Travels/Mexico-American-Burritos/"
+      }
+    ]
   },
   {
     "dishId": "tamales",
@@ -3199,7 +3369,16 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "enchiladas",
       "mole-poblano"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Universidad Nacional Autónoma de México – Tamales og tortillas",
+        "href": "https://www.noticonquista.unam.mx/amoxtli/444/463"
+      },
+      {
+        "label": "Mexico in My Kitchen – Tamales rojos de cerdo",
+        "href": "https://www.mexicoinmykitchen.com/pork-tamales/"
+      }
+    ]
   },
   {
     "dishId": "chilaquiles",
@@ -3245,7 +3424,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "enchiladas",
       "quesadilla"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Mexico in My Kitchen – Chilaquiles rojos",
+        "href": "https://www.mexicoinmykitchen.com/how-to-cook-mexican-chilaquiles/"
+      }
+    ]
   },
   {
     "dishId": "mole-poblano",
@@ -3296,7 +3480,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "enchiladas",
       "tamales"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "Mexico in My Kitchen – Mole poblano",
+        "href": "https://www.mexicoinmykitchen.com/how-to-make-mole-poblano/"
+      }
+    ]
   },
   {
     "dishId": "ceviche",
@@ -3343,7 +3532,12 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       "fish-taco",
       "tostada"
     ],
-    "sources": []
+    "sources": [
+      {
+        "label": "UNESCO – Peruviansk ceviche som immateriell kulturarv",
+        "href": "https://ich.unesco.org/en/RL/practices-and-meanings-associated-with-the-preparation-and-consumption-of-ceviche-an-expression-of-peruvian-traditional-cuisine-01952"
+      }
+    ]
   },
   {
     "dishId": "lahmacun",
