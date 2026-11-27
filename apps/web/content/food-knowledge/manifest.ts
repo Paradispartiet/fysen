@@ -172,6 +172,12 @@ export const foodKnowledgeDishIds = [
   "golabki",
   "borsjtsj",
   "varenyky",
+  "khachapuri",
+  "khinkali",
+  "lobio",
+  "chakhokhbili",
+  "khorovats",
+  "dolma",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
