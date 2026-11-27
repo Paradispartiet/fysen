@@ -6641,5 +6641,327 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.visitportugal.com/en/content/time-to-taste-portugal"
       }
     ]
+  },
+  {
+    "dishId": "pierogi",
+    "summary": "Polske deigpakker med salt eller søtt fyll, vanligvis kokt.",
+    "overview": "En tynn meldeig brettes rundt fyllet. Denne hjemmevarianten bruker potet og ferskost.",
+    "history": "Pierogi er sentrale i polsk matkultur, med blant annet kål- og soppfyll til jul.",
+    "flavor": "Myk deig og mildt, fyldig fyll.",
+    "technique": "Kjevle deigen jevnt og klem kantene godt sammen.",
+    "essentials": [
+      "350 g hvetemel",
+      "180 ml varmt vann",
+      "1 ss olje"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "350 g hvetemel",
+        "180 ml varmt vann",
+        "1 ss olje",
+        "400 g poteter",
+        "200 g twaróg eller avrent cottage cheese",
+        "1 løk",
+        "salt og pepper"
+      ],
+      "steps": [
+        "Elt mel, vann, olje og salt til glatt deig; la hvile.",
+        "Kok potetene og mos dem med osten og stekt løk.",
+        "Kjevle ut deigen, stikk ut sirkler, fyll og forsegl.",
+        "Kok i omganger i saltet vann til deigen er gjennomkokt."
+      ]
+    },
+    "variants": [
+      "Pierogi med kjøtt, surkål og sopp eller frukt er andre varianter."
+    ],
+    "serving": [
+      "Server med stekt løk og rømme."
+    ],
+    "commonMistakes": [
+      "Ikke få fyll i skjøten når deigen lukkes."
+    ],
+    "relatedDishIds": [
+      "varenyky",
+      "manti"
+    ],
+    "sources": [
+      {
+        "label": "Culture.pl – Polish Food 101: Pierogi",
+        "href": "https://culture.pl/en/work/polish-food-101-pierogi"
+      }
+    ]
+  },
+  {
+    "dishId": "bigos",
+    "summary": "Langtidskokt polsk gryte med surkål, fersk kål og kjøtt.",
+    "overview": "Kål og kjøtt kokes sammen med sopp og krydder til en konsentrert gryte.",
+    "history": "Bigos har en lang historie i polsk matkultur og er særlig kjent som vinter- og festmat.",
+    "flavor": "Syrlig, fyldig og ofte røykpreget.",
+    "technique": "La gryten trekke rolig over lang tid.",
+    "essentials": [
+      "500 g surkål",
+      "400 g hodekål",
+      "400 g svinenakke"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 3 timer",
+      "ingredients": [
+        "500 g surkål",
+        "400 g hodekål",
+        "400 g svinenakke",
+        "200 g røkt pølse",
+        "1 løk",
+        "20 g tørket sopp",
+        "2 laurbærblad",
+        "pepper",
+        "vann eller kraft"
+      ],
+      "steps": [
+        "Bløtlegg soppen i varmt vann.",
+        "Brun kjøtt og løk.",
+        "Tilsett hakket kål, surkål, sopp, krydder og litt kraft.",
+        "La småkoke under lokk til kjøttet og kålen er møre; tilsett pølse mot slutten og varm gjennom."
+      ]
+    },
+    "variants": [
+      "Tørkede svisker og forskjellige typer kjøtt brukes i noen varianter."
+    ],
+    "serving": [
+      "Server med grovt brød."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett for mye salt før surkål og pølse er smakt til."
+    ],
+    "relatedDishIds": [
+      "golabki",
+      "feijoada"
+    ],
+    "sources": [
+      {
+        "label": "Culture.pl – Polish Food 101: Bigos",
+        "href": "https://culture.pl/en/work/polish-food-101-bigos"
+      }
+    ]
+  },
+  {
+    "dishId": "zurek",
+    "summary": "Polsk syrlig suppe basert på fermentert mel, ofte rug.",
+    "overview": "Kraften smaksettes med zakwas og serveres ofte med pølse og egg.",
+    "history": "Żur og żurek har sterke tradisjoner i Polen, også ved påskefeiringen. Navnebruk og meltype varierer regionalt.",
+    "flavor": "Syrlig, fyldig og aromatisk med merian.",
+    "technique": "Bruk ferdig, egnet zakwas og smak til gradvis.",
+    "essentials": [
+      "1 l kraft",
+      "300 ml ferdig rugzakwas til suppe",
+      "300 g fersk hvit pølse"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "1 l kraft",
+        "300 ml ferdig rugzakwas til suppe",
+        "300 g fersk hvit pølse",
+        "300 g poteter",
+        "2 hvitløksfedd",
+        "merian",
+        "4 hardkokte egg",
+        "rømme etter smak"
+      ],
+      "steps": [
+        "Kok potetene i kraften til møre.",
+        "Trekk pølsen til gjennomstekt og skjær den i skiver.",
+        "Rør inn zakwas gradvis og la suppen småkoke.",
+        "Smak til med hvitløk, merian og eventuell rømme; server med egg og pølse."
+      ]
+    },
+    "variants": [
+      "Varianter med røkt kjøtt eller uten kjøtt finnes; hvit barszcz er en beslektet suppe."
+    ],
+    "serving": [
+      "Server med brød."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett all zakwas uten å smake til syren."
+    ],
+    "relatedDishIds": [
+      "bigos",
+      "borsjtsj"
+    ],
+    "sources": [
+      {
+        "label": "Culture.pl – Polish Food 101: Żur",
+        "href": "https://culture.pl/en/work/polish-food-101-zur"
+      }
+    ]
+  },
+  {
+    "dishId": "golabki",
+    "summary": "Polske kålruller med fyll av kjøtt og ris.",
+    "overview": "Myke kålblader brettes rundt fyllet og braiseres i kraft eller saus.",
+    "history": "Gołąbki er en utbredt polsk variant av fylte kålblader, en tradisjon som finnes i mange europeiske kjøkken.",
+    "flavor": "Mild kålsødme, fyldig kjøtt og syrlig tomatsaus.",
+    "technique": "Myk opp bladene og skjær ned den tykke midtnerven før rulling.",
+    "essentials": [
+      "1 hodekål",
+      "500 g kjøttdeig",
+      "150 g kokt ris"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "1 hodekål",
+        "500 g kjøttdeig",
+        "150 g kokt ris",
+        "1 løk",
+        "400 g passata",
+        "200 ml kraft",
+        "salt og pepper"
+      ],
+      "steps": [
+        "Forvell kålbladene til de er bøyelige.",
+        "Bland kjøttdeig, kokt ris, finhakket løk og krydder.",
+        "Fordel fyllet på bladene, brett inn sidene og rull.",
+        "Legg rullene med skjøten ned i en gryte, tilsett kraft og passata og trekk under lokk til fyllet er gjennomstekt (minst 71 °C for storfe- eller svinefarse)."
+      ]
+    },
+    "variants": [
+      "Fyll med bokhvete eller sopp er andre varianter."
+    ],
+    "serving": [
+      "Server med tomatsaus eller soppsaus."
+    ],
+    "commonMistakes": [
+      "Ikke riv bladene ved å tvinge stive kålblader rundt fyllet."
+    ],
+    "relatedDishIds": [
+      "bigos",
+      "pierogi"
+    ],
+    "sources": [
+      {
+        "label": "Polish Your Kitchen – Gołąbki",
+        "href": "https://www.polishyourkitchen.com/polish-cabbage-rolls-golabki/"
+      }
+    ]
+  },
+  {
+    "dishId": "borsjtsj",
+    "summary": "Rødbetebasert suppe med kraft, grønnsaker og ofte kjøtt.",
+    "overview": "Rødbeter gir suppen farge og karakter; denne hjemmevarianten har potet, kål og bønner.",
+    "history": "Kulturen rundt ukrainsk borsjtsj ble innskrevet på UNESCOs liste over immateriell kulturarv med behov for snarlig vern i 2022. Beslektede supper finnes i flere land.",
+    "flavor": "Søtlig, syrlig og jordaktig.",
+    "technique": "Smak til syren gradvis og la grønnsakene beholde noe struktur.",
+    "essentials": [
+      "400 g rødbeter",
+      "300 g poteter",
+      "200 g kål"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "400 g rødbeter",
+        "300 g poteter",
+        "200 g kål",
+        "1 gulrot",
+        "1 løk",
+        "200 g kokte bønner",
+        "1,2 l grønnsakskraft",
+        "2 ss tomatpuré",
+        "eddik etter smak",
+        "dill"
+      ],
+      "steps": [
+        "Fres løk, gulrot og revne rødbeter i litt olje med tomatpuré.",
+        "Tilsett kraft og poteter og kok til nesten møre.",
+        "Tilsett kål, rødbeteblanding og bønner; la småkoke til grønnsakene er møre.",
+        "Smak til med eddik, salt og dill."
+      ]
+    },
+    "variants": [
+      "Varianter med kjøttkraft, svinekjøtt eller uten animalske råvarer finnes."
+    ],
+    "serving": [
+      "Server med rømme og brød eller hvitløksboller."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett mye eddik uten å smake underveis."
+    ],
+    "relatedDishIds": [
+      "zurek",
+      "varenyky"
+    ],
+    "sources": [
+      {
+        "label": "UNESCO – Culture of Ukrainian borscht cooking",
+        "href": "https://ich.unesco.org/en/USL/culture-of-ukrainian-borscht-cooking-01852"
+      }
+    ]
+  },
+  {
+    "dishId": "varenyky",
+    "summary": "Ukrainske fylte deigpakker som vanligvis kokes.",
+    "overview": "En meldeig omslutter fyll av blant annet potet, ost, kål eller bær.",
+    "history": "Varenyky er en sentral ukrainsk mattradisjon og har likhetstrekk med polske pierogi.",
+    "flavor": "Myk deig og fyldig, mild smak i potetvarianten.",
+    "technique": "La deigen hvile og lukk pakkene godt før koking.",
+    "essentials": [
+      "350 g hvetemel",
+      "180 ml vann",
+      "1 ss olje"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 80 min",
+      "ingredients": [
+        "350 g hvetemel",
+        "180 ml vann",
+        "1 ss olje",
+        "500 g poteter",
+        "2 løk",
+        "salt",
+        "rømme til servering"
+      ],
+      "steps": [
+        "Elt mel, vann, olje og salt til glatt deig og la hvile.",
+        "Kok potetene og mos dem med halvparten av den stekte løken.",
+        "Kjevle ut deigen, stikk ut runde emner og brett rundt avkjølt fyll.",
+        "Kok i omganger i saltet vann til deigen er gjennomkokt."
+      ]
+    },
+    "variants": [
+      "Fyll med surkål, ferskost eller kirsebær gir ulike salte og søte retter."
+    ],
+    "serving": [
+      "Server potetvarenyky med stekt løk og rømme."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll pakkene."
+    ],
+    "relatedDishIds": [
+      "pierogi",
+      "borsjtsj"
+    ],
+    "sources": [
+      {
+        "label": "Yevhen Klopotenko – Varenyky med potet og brynza",
+        "href": "https://klopotenko.com/doskonalyj-reczept-varenyky-z-kartopleyu-ta-brynzoyu-vid-yevgena-klopotenka/"
+      },
+      {
+        "label": "Refugee Project Maastricht – Varenyky med potet og løk",
+        "href": "https://refugeeprojectmaastricht.nl/a-cookbook-without-borders-interview-with-vasylyna-saievych/"
+      }
+    ]
   }
 ];
