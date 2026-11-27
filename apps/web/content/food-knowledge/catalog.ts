@@ -899,6 +899,38 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"sinigang","name":"Sinigang","query":"sinigang","aliases":["sinigang na baboy","pork sinigang"],"cuisine":"Filippinsk","region":"Filippinene","explorerPriority":94},
   {"id":"lechon","name":"Lechon","query":"lechon","aliases":["lechon baboy","lechon sa hurno","filippinsk helstekt gris"],"cuisine":"Filippinsk","region":"Filippinene","explorerPriority":92},
   {"id":"pancit","name":"Pancit","query":"pancit","aliases":["pansit","pancit bihon","pancit bihon guisado"],"cuisine":"Filippinsk","region":"Filippinene","explorerPriority":90},
+  {
+    id: "doro-wat",
+    name: "Doro wat",
+    query: "doro wet",
+    aliases: ["doro wat", "doro wot"],
+    cuisine: "Etiopisk",
+    region: "Etiopia",
+    explorerPriority: 100,
+  },
+  {
+    id: "tibs",
+    name: "Tibs",
+    query: "tibis",
+    aliases: ["tibs", "tibis"],
+    cuisine: "Etiopisk",
+    region: "Etiopia",
+    explorerPriority: 94,
+  },
+  {
+    id: "shiro",
+    name: "Shiro",
+    query: "shiro w salad",
+    aliases: ["shiro meser", "shiro v"],
+    // Bare "Shiro" also names a sushi dish in the Oslo menus.
+    matchLabel: false,
+    cuisine: "Etiopisk",
+    region: "Etiopia",
+    explorerPriority: 80,
+  },
+  {"id":"injera","name":"Injera","query":"injera","aliases":["injeera","enjera","tayta"],"cuisine":"Etiopisk","region":"Etiopia og Eritrea","explorerPriority":92},
+  {"id":"kitfo","name":"Kitfo","query":"kitfo","aliases":["kitfo leb leb","ethiopian kitfo"],"cuisine":"Etiopisk","region":"Etiopia","explorerPriority":90},
+  {"id":"zigni","name":"Zigni","query":"zigni","aliases":["zigni tsebhi","zigni stew","eritrean beef stew"],"cuisine":"Eritreisk","region":"Eritrea","explorerPriority":88},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
