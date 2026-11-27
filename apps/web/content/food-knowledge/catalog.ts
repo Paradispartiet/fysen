@@ -1001,6 +1001,20 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"chakhokhbili","name":"Chakhokhbili","query":"chakhokhbili","aliases":["chahohbili","chakhokhbili chicken","ჩახოხბილი"],"cuisine":"Georgisk","region":"Georgia","explorerPriority":88},
   {"id":"khorovats","name":"Khorovats","query":"khorovats","aliases":["khorovatz","armenian barbecue","խորոված"],"cuisine":"Armensk","region":"Armenia","explorerPriority":86},
   {"id":"dolma","name":"Dolma","query":"dolma","aliases":["tolma","dolmades","stuffed vine leaves","տոլմա"],"cuisine":"Armensk","region":"Armenia og Midtøsten","explorerPriority":84},
+  {
+    id: "ghormeh-sabzi",
+    name: "Ghormeh sabzi",
+    query: "ghormeh sabzi",
+    aliases: [],
+    cuisine: "Persisk",
+    region: "Iran",
+    explorerPriority: 98,
+  },
+  {"id":"fesenjan","name":"Fesenjan","query":"fesenjan","aliases":["fesenjoon","fesenjun","khoresh fesenjan","فسنجان"],"cuisine":"Persisk","region":"Iran","explorerPriority":94},
+  {"id":"chelo-kebab","name":"Chelo kebab","query":"chelo kebab","aliases":["chelo kabab","chelow kabab","chelow kebab","چلو کباب"],"cuisine":"Persisk","region":"Iran","explorerPriority":92},
+  {"id":"kabuli-palaw","name":"Kabuli palaw","query":"kabuli palaw","aliases":["kabuli pulao","qabuli palaw","qabili palau","kabuli pilau","قابلی پلو"],"cuisine":"Afghansk","region":"Afghanistan","explorerPriority":90},
+  {"id":"ashak","name":"Ashak","query":"ashak","aliases":["aushak","ashak dumplings","آشک"],"cuisine":"Afghansk","region":"Afghanistan","explorerPriority":88},
+  {"id":"bolani","name":"Bolani","query":"bolani","aliases":["bulani","bolanee","بولانی","afghan stuffed flatbread"],"cuisine":"Afghansk","region":"Afghanistan","explorerPriority":86},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
