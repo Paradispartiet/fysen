@@ -1,3 +1,4 @@
+import { pageText } from "../lib/page-messages.ts";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
@@ -25,7 +26,8 @@ test("the site menu offers an About Fysen page", () => {
   assert.match(header, /withPublicBasePath\("\/om"\)/u);
   assert.match(about, /id="menydata"/u);
   assert.match(header, /#menydata/u);
-  assert.match(about, /ikke en sanntidsbekreftelse/u);
+  assert.match(about, /<PageText message="notRealtime" \/>/u);
+  assert.match(pageText("nb", "notRealtime"), /ikke en sanntidsbekreftelse/u);
 });
 
 test("ordinary pages keep status details exclusively behind the menu", () => {

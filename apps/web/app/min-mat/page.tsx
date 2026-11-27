@@ -1,5 +1,6 @@
 import type { MinMatList } from "@fysen/contracts/aha-min-mat";
 import { cookies } from "next/headers";
+import { PageText, PageDate, SavedPrice } from "../../components/page-text";
 import { GlobalHeader } from "../../components/global-header";
 import { MinMatLogoutButton } from "../../components/min-mat-logout-button";
 import { MinMatRemoveButton } from "../../components/min-mat-remove-button";
@@ -7,15 +8,6 @@ import { getMinMat } from "../../lib/aha-min-mat-api";
 import { ahaMinMatPilotEnabled } from "../../lib/aha-min-mat-pilot";
 import { FYSEN_AHA_SESSION_COOKIE } from "../../lib/aha-consumer-session";
 import { withPublicBasePath } from "../../lib/public-path";
-
-const priceFormat = new Intl.NumberFormat("nb-NO", { style: "currency", currency: "NOK", maximumFractionDigits: 2 });
-const dateFormat = new Intl.DateTimeFormat("nb-NO", { dateStyle: "medium", timeZone: "Europe/Oslo" });
-
-function price(value: number | null, currency: string): string {
-  if (value === null) return "Pris ikke registrert";
-  if (currency === "NOK") return priceFormat.format(value / 100);
-  return new Intl.NumberFormat("nb-NO", { style: "currency", currency }).format(value / 100);
-}
 
 async function collection(): Promise<{ signedIn: boolean; data: MinMatList }> {
   const token = (await cookies()).get(FYSEN_AHA_SESSION_COOKIE)?.value;
@@ -34,41 +26,41 @@ export default async function MinMatPage({ searchParams }: { searchParams: Promi
       <main className="minMatShell">
         <header className="minMatHero">
           <p className="minMatEyebrow">Fysen</p>
-          <h1>Min mat</h1>
-          <p>{ahaMinMatPilotEnabled ? "Samle retter du vil huske. Søkehistorikken din blir ikke lagt her og blir ikke koblet til AHA-identiteten." : "Min mat er en senere pilot og er ikke åpen for nye innlogginger nå."}</p>
+          <h1><PageText message="myFood" /></h1>
+          <p>{ahaMinMatPilotEnabled ? <PageText message="collect" /> : <PageText message="paused" />}</p>
         </header>
 
         {handoff === "failed" ? (
           <section className="minMatPanel" role="alert">
-            <h2>Handoff-lenken kunne ikke brukes</h2>
-            <p>Den kan være utløpt eller allerede brukt. Samlingen din er fortsatt trygg i Min mat; prøv igjen for å lage en ny engangslenke.</p>
+            <h2><PageText message="handoffFailed" /></h2>
+            <p><PageText message="handoffHelp" /></p>
           </section>
         ) : null}
 
         {!ahaMinMatPilotEnabled && !signedIn ? (
           <section className="minMatPanel">
-            <h2>Piloten er satt på pause</h2>
-            <p>Du kan fortsatt søke etter retter og finne restauranter i Oslo.</p>
-            <a className="minMatPrimary" href={withPublicBasePath("/search?city=Oslo")}>Finn en rett</a>
+            <h2><PageText message="pilotPaused" /></h2>
+            <p><PageText message="searchStill" /></p>
+            <a className="minMatPrimary" href={withPublicBasePath("/search?city=Oslo")}><PageText message="findDish" /></a>
           </section>
         ) : !signedIn ? (
           <section className="minMatPanel">
-            <h2>Ta samlingen med deg</h2>
-            <p>Logg inn med AHA for å lagre retter på tvers av enheter og velge når du vil analysere samlingen i AHA.</p>
-            <a className="minMatPrimary" href={connectHref}>Logg inn med AHA</a>
-            <p className="minMatPrivacy">Fysen får en pseudonym AHA-identitet for Min mat. Dette gir aldri tilgang til Restaurant Claim eller Fysen Pro.</p>
+            <h2><PageText message="takeCollection" /></h2>
+            <p><PageText message="signInHelp" /></p>
+            <a className="minMatPrimary" href={connectHref}><PageText message="signIn" /></a>
+            <p className="minMatPrivacy"><PageText message="privacy" /></p>
           </section>
         ) : (
           <>
             <div className="minMatToolbar">
-              <p>{data.items.length} {data.items.length === 1 ? "lagret rett" : "lagrede retter"}</p>
+              <p><PageText message={data.items.length === 1 ? "savedOne" : "savedMany"} values={{count:data.items.length}} /></p>
               <MinMatLogoutButton />
             </div>
             {data.items.length === 0 ? (
               <section className="minMatPanel minMatEmpty">
-                <h2>Samlingen er tom</h2>
-                <p>{ahaMinMatPilotEnabled ? "Søk etter en rett og velg «Lagre i Min mat» på et resultat du vil ta vare på." : "Du har ingen lagrede retter. Nye lagringer er satt på pause."}</p>
-                <a className="minMatPrimary" href={withPublicBasePath("/search?city=Oslo")}>Finn en rett</a>
+                <h2><PageText message="empty" /></h2>
+                <p>{ahaMinMatPilotEnabled ? <PageText message="emptyHelp" /> : <PageText message="emptyPaused" />}</p>
+                <a className="minMatPrimary" href={withPublicBasePath("/search?city=Oslo")}><PageText message="findDish" /></a>
               </section>
             ) : (
               <>
@@ -78,7 +70,7 @@ export default async function MinMatPage({ searchParams }: { searchParams: Promi
                       <div>
                         <h2>{item.dishName}</h2>
                         <p>{item.restaurantName} · {item.city}</p>
-                        <span>{price(item.priceMinor, item.currency)} · lagret {dateFormat.format(new Date(item.savedAt))}</span>
+                        <span><SavedPrice value={item.priceMinor} currency={item.currency} /> · <PageDate message="saved" date={item.savedAt} /></span>
                       </div>
                       <MinMatRemoveButton savedItemId={item.savedItemId} />
                     </li>
@@ -86,12 +78,12 @@ export default async function MinMatPage({ searchParams }: { searchParams: Promi
                 </ul>
                 {ahaMinMatPilotEnabled ? <section className="minMatAnalysis">
                   <div>
-                    <p className="minMatEyebrow">Eksplisitt handoff</p>
-                    <h2>Utforsk samlingen i AHA</h2>
-                    <p>Bare de opptil 50 rettene som er i Min mat når du trykker sendes videre. AHA viser en ny preview før du velger analyse.</p>
+                    <p className="minMatEyebrow"><PageText message="handoffLabel" /></p>
+                    <h2><PageText message="analyzeTitle" /></h2>
+                    <p><PageText message="analyzeHelp" /></p>
                   </div>
                   <form action={withPublicBasePath("/api/min-mat/handoff")} method="post">
-                    <button className="minMatPrimary" type="submit">Analyser i AHA</button>
+                    <button className="minMatPrimary" type="submit"><PageText message="analyze" /></button>
                   </form>
                 </section> : null}
               </>
