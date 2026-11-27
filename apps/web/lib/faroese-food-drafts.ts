@@ -354,3 +354,40 @@ export const draftFaroeseDishNames = {
   "fish-taco": "Fiskataco",
   "shrimp-taco": "Rækjutaco"
 } as const;
+
+// Editorial summaries only; not translated recipes or restaurant evidence.
+export const draftFaroeseSummaries = {
+  "ramen": "Japansk nudlusúpan, har soð, tare-kryddgrunnur, nudlur, aromatisk olja og omanátilfar verða løgd saman í hvør sínum lagi.",
+  "biryani": "Angandi suðurasiatiskur rísrættur, har basmatirís, kryddað fylla, urtir og ofta kjøt ella grønmeti verða løgd í løg og dampkókað.",
+  "falafel": "Friteraðar kúlur ella flatar køkur úr blotlagdum bølgfruktum, urtum og kryddi, við broysknari skorpu og luftmiklum kjarna.",
+  "carbonara": "Rómverskur pastarættur, har egg, pecorino, guanciale og svart pipar verða blandað við pastavatni til eina glansandi sós.",
+  "tacos-al-pastor": "Tacos úr Miðmeksiko við marineraðum svínakjøti, steiktum á loddrøttum spjóti, skornum í tunnar flísar og borðreiddum í maistortilla við leyki og koriander.",
+  "pad-thai": "Teilendskur wokrættur við rísnudlum, søtari, súrari og saltari sós, eggum og tilhoyri sum jarðnøtum, lime og bønasprotum.",
+  "dal-makhani": "Kremutur dal úr Punjab við heilum svørtum uradbønum og reyðum kidneybønum. Bønirnar smákóka við tomatum og kryddi, áðrenn smør og rómi verða latin í.",
+  "sushi": "Japanskur rættabólkur við rísi, ið er smakkað til við ediki, saman við fiski, sjógæti, grønmeti ella øðrum tilfari.",
+  "gyoza": "Japanskir dumplings við tunnum deiggi og saftigari fyllu, ofta steiktir broysknir undir og dampaðir lidnir á somu pannu.",
+  "tom-yum": "Teilendsk súpan við sitrónugrasi, galangal, makrut-limebløðum, chili og týðiligum súrligum smakki, ofta við rækjum ella soppi.",
+  "pho": "Vjetnamesisk nudlusúpan við klárum, angandi soði, rísnudlum, urtum og ofta neytakjøti ella høsnarunga.",
+  "banh-mi": "Vjetnamesisk baguettesandwich, har broyskið breyð verður fylt við súltaðum grønmeti, urtum, chili og ymiskum kjøti ella tofu.",
+  "katsu": "Japansk kotelett ella flak, panerað og friterað, kent fyri sera broyskna pankoskorpu og saftigan kjarna.",
+  "bao": "Bleytar, dampaðar hveitibollar úr kinesiskari matmentan, annaðhvørt fyltar og latnar aftur ella opnar við kjøti, tofu og grønmeti.",
+  "mapo-tofu": "Rættur úr Sichuan við silkibleytum tofu í sterkari, angandi sós við chili, fermenteraðum bønum og sichuanpipari.",
+  "butter-chicken": "Norðurindiskur høsnarungarættur í fyldigari tomat- og smørsós við heitum kryddi, eisini kendur sum murgh makhani.",
+  "tandoori": "Norðurindisk matgerð, har marinerað kjøt ella annað tilfar verður stokt við høgum hita í einum sylindriskum tandoor-ovni.",
+  "chana-masala": "Kryddaður rættur við kikertum úr norðurindiskari og punjabiskari matmentan, við tomatum, leyki, ingiferi og súrligum kryddsmakki.",
+  "dosa": "Suðurindisk, tunn og broyskin pannukøka úr fermenteraðum rís- og linsudeiggi, ofta borðreidd við sambar og chutney.",
+  "cacio-e-pepe": "Rómverskt pasta við pecorino romano og svørtum pipari, bundið saman til eina kremuta sós við stívilseríkum pastavatni.",
+  "pizza-margherita": "Pizza úr Napoli, har fermenterað deiggj, tomatir, mozzarella, basilikum og olivinolja verða bakað við sera høgum hita í stutta tíð.",
+  "arancini": "Sisiliskar friteraðar rískúlur ella rískeglar við broysknari panering og fyllu sum ragù, osti ella grønmeti.",
+  "pasta-alla-norma": "Sisiliskur pastarættur við tomatum, aubergine, basilikum og saltaðum ricotta, serliga knýttur at Catania.",
+  "hummus": "Kremutur rættur við kikertum og tahini úr matmentanini við eystara Miðjarðarhav, smakkaður til við sitrón, hvítleyki og olivinolju.",
+  "shawarma": "Kryddað kjøt av loddrøttum, snúnandi spjóti, skorið í tunnar flísar og borðreitt við breyði, sós, salati og súltaðum grønmeti.",
+  "manakish": "Flatt breyð úr Levantinum, bakað við za’atar, osti, kjøti ella øðrum omaná, ofta etið til morgunmat ella sum ein skjót máltíð.",
+  "koshari": "Egyptiskur gerandis- og gøtumatur við rísi, linsum, pasta og kikertum, við tomatsós, hvítleyksediki og broysknum stoktum leyki omaná.",
+  "pide": "Turkiskt ovnbakað flatbreyð, ofta skapt sum ein bátur og við kjøti, osti, grønmeti ella eggi omaná.",
+  "birria": "Rættur úr Jalisco við langtíðarkókaðum, chilimarineraðum kjøti og sterkum soði, borðreiddur sum grýturættur ella í tacos.",
+  "cochinita-pibil": "Rættur úr Yucatán við svínakjøti marineraðum í achiote og sitrusfruktum, siðbundið seint stoktum innpakkaðum, til kjøtið er sera moyrt.",
+  "pozole": "Meksikansk súpan ella grýturættur við nixtamaliseraðum maisi – hominy – kjøti ella øðrum tilfari og nógvum feskum tilhoyri.",
+  "fish-taco": "Taco við íblástri úr Baja, við fiski, ofta broyskpaneraðum ella grillaðum, í maistortilla við káli, kremutari sós, salsa og lime.",
+  "smashburger": "Burgaraslag, har ein leys kjøtkúla verður trýst fløt móti einari sera heitari steikifløtu fyri at fáa mest møguliga brúna skorpu og tunnar, saftigar burgarar."
+} as const;

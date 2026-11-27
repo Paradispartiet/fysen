@@ -1,6 +1,7 @@
+import { translatedSummaryIds } from "../lib/dish-summary-translations.ts";
 import { readFileSync } from "node:fs";
 import { URL } from "node:url";
-import { draftFaroeseCuisines,draftFaroeseGalleryNames,draftFaroeseDishNames } from "../lib/faroese-food-drafts.ts";
+import { draftFaroeseCuisines,draftFaroeseGalleryNames,draftFaroeseDishNames,draftFaroeseSummaries } from "../lib/faroese-food-drafts.ts";
 import { galleryNames } from "../lib/visual-messages.ts";
 import { visualMessages } from "../lib/visual-messages.ts";
 import { browseMessages } from "../lib/browse-messages.ts";
@@ -61,5 +62,11 @@ test("Faroese display drafts retain exact canonical category and dish IDs",()=>{
   assert.ok(row.text.trim());
  }
  assert.equal(draftFaroeseGalleryNames.pho.original,"Phở bò");
+ assert.equal(isPreviewLocale("fo"),false);
+});
+
+test("Faroese summary drafts cover all existing encyclopedia summaries",()=>{
+ assert.deepEqual(Object.keys(draftFaroeseSummaries).sort(),[...translatedSummaryIds].sort());
+ for(const summary of Object.values(draftFaroeseSummaries)) assert.ok(summary.trim());
  assert.equal(isPreviewLocale("fo"),false);
 });
