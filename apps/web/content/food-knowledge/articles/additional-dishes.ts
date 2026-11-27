@@ -8293,5 +8293,283 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://chile.travel/en/blog/typical-cuisine-a-journey-through-the-flavors-of-chile/"
       }
     ]
+  },
+  {
+    "dishId": "kibbeh",
+    "summary": "Krydret rett av bulgur og kjøtt, ofte formet som fylte, stekte kroketter.",
+    "overview": "Bulgur og finmalt kjøtt danner et skall rundt krydret kjøttfyll. Denne hjemmevarianten bakes i form.",
+    "history": "Kibbeh har sterke tradisjoner i blant annet Syria og Libanon, med mange ulike former og tilberedningsmåter.",
+    "flavor": "Nøtteaktig, aromatisk og fyldig.",
+    "technique": "Bruk fin bulgur og press lagene jevnt sammen uten å komprimere dem for hardt.",
+    "essentials": [
+      "200 g fin bulgur",
+      "500 g kjøttdeig av lam eller storfe",
+      "2 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 75 min",
+      "ingredients": [
+        "200 g fin bulgur",
+        "500 g kjøttdeig av lam eller storfe",
+        "2 løk",
+        "50 g pinjekjerner",
+        "allehånde",
+        "spisskummen",
+        "salt",
+        "olje"
+      ],
+      "steps": [
+        "Bløtlegg bulguren etter anvisning og press ut overflødig vann.",
+        "Bland halvparten av kjøttet med bulgur, finrevet løk og krydder.",
+        "Stek resten av kjøttet med hakket løk, krydder og pinjekjerner til gjennomstekt.",
+        "Fordel halvparten av bulgurmassen i en smurt form, legg på fyllet og dekk med resten. Pensle med olje.",
+        "Bak ved 190 °C til gyllen og minst 71 °C i kjøttmassen."
+      ]
+    },
+    "variants": [
+      "Fritert kibbeh og kibbeh i yoghurtsaus er andre varianter."
+    ],
+    "serving": [
+      "Server med yoghurt og fattoush."
+    ],
+    "commonMistakes": [
+      "Ikke bruk grov bulgur uten å tilpasse deigen."
+    ],
+    "relatedDishIds": [
+      "fattoush",
+      "kofte"
+    ],
+    "sources": [
+      {
+        "label": "Zaatar and Zaytoun – Kibbeh",
+        "href": "https://zaatarandzaytoun.com/lebanese-kibbe-recipe-fried-kibbeh-morsels"
+      }
+    ]
+  },
+  {
+    "dishId": "fattoush",
+    "summary": "Frisk levantinsk salat med sprøtt flatbrød, grønnsaker og sumak.",
+    "overview": "Tomat, agurk og urter blandes med syrlig dressing og ristede brødbiter.",
+    "history": "Fattoush er kjent fra levantinsk matkultur, blant annet Libanon, og er en måte å bruke brødrester på.",
+    "flavor": "Frisk, syrlig, urtepreget og sprø.",
+    "technique": "Tilsett brødet rett før servering for å bevare sprøheten.",
+    "essentials": [
+      "2 pitabrød",
+      "3 tomater",
+      "1 agurk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25 min",
+      "ingredients": [
+        "2 pitabrød",
+        "3 tomater",
+        "1 agurk",
+        "6 reddiker",
+        "1 hjertesalat",
+        "persille",
+        "mynte",
+        "2 ss sitronsaft",
+        "3 ss olivenolje",
+        "1 ts sumak"
+      ],
+      "steps": [
+        "Riv brødet i biter, vend med litt olje og rist i ovnen til sprøtt.",
+        "Vask og skjær grønnsakene, og hakk urtene.",
+        "Visp sitron, olje, sumak og salt til dressing.",
+        "Bland salaten med dressingen og vend inn brødet ved servering."
+      ]
+    },
+    "variants": [
+      "Granateplemelasse kan gi ekstra syre og sødme."
+    ],
+    "serving": [
+      "Server til grillmat eller mezze."
+    ],
+    "commonMistakes": [
+      "Ikke la brødet trekke lenge i dressingen."
+    ],
+    "relatedDishIds": [
+      "tabbouleh",
+      "kibbeh"
+    ],
+    "sources": [
+      {
+        "label": "Gurmestan – Fattoush",
+        "href": "https://gurmestan.com/en/recipes/fattoush-lubnan/"
+      }
+    ]
+  },
+  {
+    "dishId": "masgouf",
+    "summary": "Irakisk grillrett av hel, oppbrettet fisk, tradisjonelt ferskvannsfisk som karpe.",
+    "overview": "Fisken åpnes og stekes langsomt nær glør; hjemme kan den tilberedes på grill med lokk.",
+    "history": "Masgouf er særlig forbundet med Bagdad og elven Tigris, og omtales ofte som Iraks nasjonalrett.",
+    "flavor": "Saftig fisk med ristet overflate og frisk sitrus.",
+    "technique": "Bruk indirekte grillvarme og tilpass steketiden til fiskens tykkelse.",
+    "essentials": [
+      "1 hel renset karpe eller annen egnet hel fisk (ca. 1,2 kg)",
+      "2 ss olje",
+      "1 ts gurkemeie"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "1 hel renset karpe eller annen egnet hel fisk (ca. 1,2 kg)",
+        "2 ss olje",
+        "1 ts gurkemeie",
+        "salt og pepper",
+        "1 sitron",
+        "2 tomater",
+        "1 løk"
+      ],
+      "steps": [
+        "Be fiskehandleren åpne fisken slik at den kan ligge flatt.",
+        "Pensle med olje og krydre med salt, pepper og gurkemeie.",
+        "Grill over indirekte varme med lokk til fisken er gjennomkokt, omtrent 63 °C i tykkeste del.",
+        "Server med sitron, tomater og løk."
+      ]
+    },
+    "variants": [
+      "Tomatbasert topping og tamarind brukes i enkelte varianter."
+    ],
+    "serving": [
+      "Server med flatt brød, urter og grønnsaker."
+    ],
+    "commonMistakes": [
+      "Ikke plasser tykk fisk direkte over sterk varme gjennom hele stekingen."
+    ],
+    "relatedDishIds": [
+      "moqueca",
+      "arroz-de-marisco"
+    ],
+    "sources": [
+      {
+        "label": "Visit Iraq – Masgouf",
+        "href": "https://visit-iraq.com/en/faq/what-is-masgouf-and-where-to-try-it"
+      }
+    ]
+  },
+  {
+    "dishId": "kabsa",
+    "summary": "Krydret langkornet ris med kjøtt eller kylling, kjent fra Saudi-Arabia.",
+    "overview": "Ris kokes i aromatisk kraft med krydder; kylling og tomat inngår i mange varianter.",
+    "history": "Kabsa er en sentral saudisk mattradisjon med regionale variasjoner.",
+    "flavor": "Varmt krydret, fyldig og lett syrlig.",
+    "technique": "Tilpass kraftmengden til risen og la risen hvile før servering.",
+    "essentials": [
+      "350 g basmatiris",
+      "800 g kyllinglår",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 75 min",
+      "ingredients": [
+        "350 g basmatiris",
+        "800 g kyllinglår",
+        "1 løk",
+        "2 tomater",
+        "2 hvitløksfedd",
+        "kardemomme",
+        "kanel",
+        "spisskummen",
+        "1 tørket lime",
+        "600 ml kraft, omtrent",
+        "olje"
+      ],
+      "steps": [
+        "Skyll risen godt.",
+        "Fres løk, hvitløk og krydder, og brun kyllingen lett.",
+        "Tilsett tomat og kraft og trekk kyllingen til gjennomstekt (minst 74 °C).",
+        "Ta ut kyllingen, kok risen i avmålt kraft under lokk til mør, og la hvile.",
+        "Server kyllingen over risen, eventuelt etter kort gratinering."
+      ]
+    },
+    "variants": [
+      "Lam og andre typer kjøtt brukes også; krydderblandingen varierer."
+    ],
+    "serving": [
+      "Server på stort fat med salat."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett for mye kraft uten å ta hensyn til ristypen."
+    ],
+    "relatedDishIds": [
+      "mandi",
+      "kabuli-palaw"
+    ],
+    "sources": [
+      {
+        "label": "Saudipedia – Saudiske risretter",
+        "href": "https://saudipedia.com/en/list-of-five-saudi-dishes-made-with-rice"
+      }
+    ]
+  },
+  {
+    "dishId": "mandi",
+    "summary": "Risrett med langsomt tilberedt kjøtt og aromatiske krydder, med røykpreg i tradisjonell utgave.",
+    "overview": "Tradisjonell mandi tilberedes i en lukket ovn eller grop. Hjemmevarianten bruker stekeovn og gjenskaper ikke den tradisjonelle røyksmaken fullt ut.",
+    "history": "Mandi forbindes særlig med Hadramaut i Jemen og er utbredt på Den arabiske halvøy.",
+    "flavor": "Mildt krydret, saftig og aromatisk.",
+    "technique": "Stek kjøttet kontrollert over risen slik at kjøttsaften gir smak.",
+    "essentials": [
+      "350 g basmatiris",
+      "800 g kyllinglår",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 80 min",
+      "ingredients": [
+        "350 g basmatiris",
+        "800 g kyllinglår",
+        "1 løk",
+        "kardemomme",
+        "spisskummen",
+        "gurkemeie",
+        "kanel",
+        "600 ml kraft, omtrent",
+        "olje",
+        "salt"
+      ],
+      "steps": [
+        "Skyll risen og fres løk og krydder i litt olje.",
+        "Fordel ris, løk og tilpasset kraftmengde i en ildfast form.",
+        "Krydre kyllingen og legg den på rist over formen, eller direkte oppå risen.",
+        "Dekk løst med folie og stek ved 190 °C til risen er mør og kyllingen når minst 74 °C. Fjern folien mot slutten for gyllen overflate.",
+        "La retten hvile kort før servering."
+      ]
+    },
+    "variants": [
+      "Lam er også vanlig. Tradisjonell gropovn gir en annen aroma enn vanlig stekeovn."
+    ],
+    "serving": [
+      "Server med tomat- og chilisaus."
+    ],
+    "commonMistakes": [
+      "Ikke bruk glødende kull innendørs for å etterligne røykpreg."
+    ],
+    "relatedDishIds": [
+      "kabsa",
+      "chelo-kebab"
+    ],
+    "sources": [
+      {
+        "label": "Saudipedia – Mandi og andre risretter",
+        "href": "https://saudipedia.com/en/list-of-five-saudi-dishes-made-with-rice"
+      },
+      {
+        "label": "Sekai Gohan – Yemeni mandi",
+        "href": "https://sekaigohan.com/en/recipes/middle-east/yemen/mandi"
+      }
+    ]
   }
 ];
