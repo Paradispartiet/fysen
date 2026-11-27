@@ -1015,6 +1015,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"kabuli-palaw","name":"Kabuli palaw","query":"kabuli palaw","aliases":["kabuli pulao","qabuli palaw","qabili palau","kabuli pilau","قابلی پلو"],"cuisine":"Afghansk","region":"Afghanistan","explorerPriority":90},
   {"id":"ashak","name":"Ashak","query":"ashak","aliases":["aushak","ashak dumplings","آشک"],"cuisine":"Afghansk","region":"Afghanistan","explorerPriority":88},
   {"id":"bolani","name":"Bolani","query":"bolani","aliases":["bulani","bolanee","بولانی","afghan stuffed flatbread"],"cuisine":"Afghansk","region":"Afghanistan","explorerPriority":86},
+  {"id":"mac-and-cheese","name":"Mac and cheese","query":"mac and cheese","aliases":["macaroni and cheese","mac n cheese","mac & cheese","makaroni med ost"],"cuisine":"Amerikansk","region":"USA","explorerPriority":94},
+  {"id":"buffalo-wings","name":"Buffalo wings","query":"buffalo wings","aliases":["buffalo chicken wings","hot wings","buffalo kyllingvinger"],"cuisine":"Amerikansk","region":"Buffalo, New York","explorerPriority":92},
+  {"id":"pulled-pork","name":"Pulled pork","query":"pulled pork","aliases":["bbq pulled pork","pulled pork sandwich"],"cuisine":"Amerikansk","region":"Sørstatene, USA","explorerPriority":90},
+  {"id":"jambalaya","name":"Jambalaya","query":"jambalaya","aliases":["cajun jambalaya","creole jambalaya"],"cuisine":"Amerikansk","region":"Louisiana","explorerPriority":88},
+  {"id":"gumbo","name":"Gumbo","query":"gumbo","aliases":["chicken and sausage gumbo","seafood gumbo","louisiana gumbo"],"cuisine":"Amerikansk","region":"Louisiana","explorerPriority":86},
+  {"id":"philly-cheesesteak","name":"Philly cheesesteak","query":"philly cheesesteak","aliases":["cheesesteak","philly cheese steak","philadelphia cheesesteak"],"cuisine":"Amerikansk","region":"Philadelphia","explorerPriority":84},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
