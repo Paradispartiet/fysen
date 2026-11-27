@@ -1,3 +1,5 @@
+import { BrowseText, CuisineText } from "./browse-text";
+import { PageText } from "./page-text";
 import { ArchivePrice, ArchiveResultText } from "./localized-archive-result";
 import { cuisines, homeCuisines, discoveryDishesForCuisine } from "./cuisine-explorer-data";
 import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/public-path";
@@ -136,16 +138,16 @@ export function ArchivedMenuBrowse({
   return (
     <section className={styles.surface} aria-label="Matlyst og retter">
       <div className={styles.browseHeading}>
-        <h1>Alle retter i {city}</h1>
-        <p>Utforsk restauranter og retter, velg kjøkken eller søk etter akkurat det du har lyst på.</p>
+        <h1><BrowseText message="allCity" values={{city}} /></h1>
+        <p><BrowseText message="archiveIntro" /></p>
       </div>
       <nav className={styles.cuisineList} aria-label="Utforsk verdens kjøkken">
         <a href={withPublicBasePath("/search") + "?city=" + encodeURIComponent(city)}
-          aria-current={!selectedCuisine ? "page" : undefined}>Alle kjøkken</a>
+          aria-current={!selectedCuisine ? "page" : undefined}><BrowseText message="allKitchen" /></a>
         {homeCuisines.map((cuisine) => (
           <a href={cuisineHref(cuisine.name)} key={cuisine.name}
             aria-current={selectedCuisine?.name === cuisine.name ? "page" : undefined}>
-            {cuisine.name}
+            <CuisineText name={cuisine.name} />
           </a>
         ))}
       </nav>
@@ -155,27 +157,27 @@ export function ArchivedMenuBrowse({
         ).map((cuisine) => (
           <a href={cuisineHref(cuisine.name)} key={cuisine.name}
             aria-current={selectedCuisine?.name === cuisine.name ? "page" : undefined}>
-            {cuisine.name}
+            <CuisineText name={cuisine.name} />
           </a>
         ))}
       </nav>
 
       {selectedCuisine ? (
         <section aria-label={"Retter fra " + selectedCuisine.name}>
-          <h2>{selectedCuisine.name}</h2>
+          <h2><CuisineText name={selectedCuisine.name} /></h2>
           <p>{selectedCuisine.context}</p>
           {selectedAtlas ? (
             <div className={styles.italianAtlasSections}>
               <section aria-labelledby="archive-atlas-areas">
-                <h3 id="archive-atlas-areas">{selectedAtlas.areasLabel}</h3>
-                <p className={styles.meta}>Velg en nasjonal eller regional mattradisjon, eller en type hurtigmat.</p>
+                <h3 id="archive-atlas-areas"><CuisineText name={selectedAtlas.areasLabel} /></h3>
+                <p className={styles.meta}><BrowseText message="chooseRegion" /></p>
                 <nav className={styles.italianAtlasTiles} aria-label={`Underkategorier i ${selectedAtlas.name}`}>
                   <a
                     className={styles.italianAtlasTile}
                     href={cuisineHref(selectedAtlas.name)}
                     aria-current={!selectedArea && !selectedFoodType ? "page" : undefined}
                   >
-                    <span>Alle underkategorier</span>
+                    <span><BrowseText message="allSub" /></span>
                   </a>
                   {selectedAtlas.areas.map((area) => (
                     <a
@@ -200,7 +202,7 @@ export function ArchivedMenuBrowse({
                         <FoodIllustration name={area.illustration}
                           className={styles.italianTypeIllustration ?? ""} size={40} />
                       ) : null}
-                      <span>{area.name}</span>
+                      <CuisineText name={area.name} />
                     </a>
                   ))}
                 </nav>
@@ -211,14 +213,14 @@ export function ArchivedMenuBrowse({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Kilde og lisens for regionsflagget
+                    <BrowseText message="flagSource" />
                   </a>
                 ) : null}
               </section>
               {availableFoodTypes.length > 0 ? (
                 <section aria-labelledby="archive-atlas-types">
-                  <h3 id="archive-atlas-types">Eller utforsk mattyper</h3>
-                  <p className={styles.meta}>Mattyper går på tvers av land og regioner.</p>
+                  <h3 id="archive-atlas-types"><BrowseText message="exploreTypes" /></h3>
+                  <p className={styles.meta}><BrowseText message="acrossRegions" /></p>
                   <nav className={styles.italianAtlasTiles}
                     aria-label={`Mattyper i ${selectedAtlas.name}`}>
                     {availableFoodTypes.map((type) => (
@@ -230,7 +232,7 @@ export function ArchivedMenuBrowse({
                       >
                         <FoodIllustration name={type.illustration}
                           className={styles.italianTypeIllustration ?? ""} size={40} />
-                        <span>{type.name}</span>
+                        <CuisineText name={type.name} />
                       </a>
                     ))}
                   </nav>
@@ -240,18 +242,14 @@ export function ArchivedMenuBrowse({
           ) : null}
           {selectedAtlas ? (
             <p className={styles.italianAtlasStatus} role="status">
-              {selectedFoodType
-                ? `Mattype: ${selectedFoodType.name}`
-                : selectedArea
-                  ? `Underkategori: ${selectedArea.name}`
-                  : `Alle underkategorier i ${selectedAtlas.name}`}
-              {" · "}Rettene er forslag til utforskning, ikke bekreftede menytreff.
+              {selectedFoodType ? <BrowseText message="type" cuisine={selectedFoodType.name} /> : selectedArea ? <BrowseText message="sub" cuisine={selectedArea.name} /> : <BrowseText message="allSubIn" cuisine={selectedAtlas.name} />}
+              {" · "}<BrowseText message="suggestionOnly" />
             </p>
           ) : null}
           <div className={styles.dishList}>
             {visibleSuggestions.map(({ areaName, dish }) => (
               <article className={styles.suggestion} key={dish.id}>
-                <p className={styles.meta}>{areaName}</p>
+                <p className={styles.meta}><CuisineText name={areaName} /></p>
                 <div className={styles.dishNameWithArtwork}>
                   {illustrationForDishName(dish.label) ? (
                     <FoodIllustration name={illustrationForDishName(dish.label)!} className={styles.dishArtwork ?? ""} size={42} />
@@ -259,9 +257,9 @@ export function ArchivedMenuBrowse({
                   <h3>{dish.label}</h3>
                 </div>
                 <div className={styles.links}>
-                  <a href={dishSearchHref(dish.query, city)}>Finn retten</a>
+                  <a href={dishSearchHref(dish.query, city)}><PageText message="findDish" /></a>
                   {dish.hasKnowledge ? (
-                    <a href={foodKnowledgeHref(dish.id)}>Lær om retten</a>
+                    <a href={foodKnowledgeHref(dish.id)}><BrowseText message="aboutDish" values={{name:dish.label}} /></a>
                   ) : null}
                 </div>
               </article>
@@ -270,8 +268,8 @@ export function ArchivedMenuBrowse({
         </section>
       ) : (
         <section aria-label="Utvalgte retter">
-          <h2>Utforsk retter</h2>
-          <p className={styles.meta}>Se hvor du finner rettene, eller bruk søkefeltet for å finne flere.</p>
+          <h2><BrowseText message="exploreDishes" /></h2>
+          <p className={styles.meta}><BrowseText message="whereDishes" /></p>
           <div className={styles.dishList}>
             {visibleDishes.map((dish) => (
               <article className={styles.suggestion} key={dish.query}>
@@ -281,8 +279,8 @@ export function ArchivedMenuBrowse({
                   ) : null}
                   <h3>{dish.name}</h3>
                 </div>
-                <p className={styles.meta}>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}</p>
-                <a href={dishSearchHref(dish.query, city)}>Finn retten</a>
+                <p className={styles.meta}><BrowseText message={dish.restaurantCount === 1 ? "restaurantsOne" : "restaurantsMany"} values={{count:dish.restaurantCount}} /></p>
+                <a href={dishSearchHref(dish.query, city)}><PageText message="findDish" /></a>
               </article>
             ))}
           </div>

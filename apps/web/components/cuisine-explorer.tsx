@@ -5,6 +5,7 @@ import type {
   DishBrowseResponse,
   DishBrowseRestaurantExample,
 } from "@fysen/contracts/dish-browse";
+import { browseText } from "../lib/browse-messages";
 import { visualText } from "../lib/visual-messages";
 import { usePreviewLocale } from "./language-preview";
 import { resultText } from "../lib/result-messages";
@@ -251,6 +252,7 @@ function RestaurantPreview({ restaurants, dishLabel, location }: {
   readonly dishLabel: string;
   readonly location: Coordinates | null;
 }) {
+  const locale = usePreviewLocale();
   const { known, unknown } = rankRestaurantsByDistance(restaurants, location);
   const ranked = known.length > 0;
   const preview = (ranked ? known : restaurants).slice(0, restaurantPreviewLimit);
@@ -260,16 +262,16 @@ function RestaurantPreview({ restaurants, dishLabel, location }: {
       {location ? (
         <p className="cuisineExploreDistanceNote">
           {ranked
-            ? `Nærmest blant ${known.length} treff med kjent posisjon${unknown.length ? ` · ${unknown.length} uten avstandsdata` : ""}`
-            : "Ingen avstandsdata for disse treffene"}
+            ? browseText(locale,"nearestKnown",{count:known.length}) + (unknown.length ? ` · ${unknown.length} ${browseText(locale,"distanceUnknown").toLocaleLowerCase(locale)}` : "")
+            : browseText(locale,"noDistance")}
         </p>
       ) : null}
       <RestaurantNames restaurants={preview} />
       {remaining.length > 0 ? (
         <details className="cuisineExploreRestaurantDetails">
-          <summary aria-label={`Flere restauranter med ${dishLabel}`}>
-            <span className="cuisineExploreRestaurantMoreLabel">Se mer ({remaining.length})</span>
-            <span className="cuisineExploreRestaurantLessLabel">Vis mindre</span>
+          <summary aria-label={browseText(locale,"moreRestaurants",{name:dishLabel})}>
+            <span className="cuisineExploreRestaurantMoreLabel">{browseText(locale,"more",{count:remaining.length})}</span>
+            <span className="cuisineExploreRestaurantLessLabel">{browseText(locale,"less")}</span>
             <span className="cuisineExploreRestaurantChevron" aria-hidden="true">⌄</span>
           </summary>
           {ranked ? (
@@ -277,7 +279,7 @@ function RestaurantPreview({ restaurants, dishLabel, location }: {
               {known.length > restaurantPreviewLimit ? <RestaurantNames restaurants={known.slice(restaurantPreviewLimit)} /> : null}
               {unknown.length > 0 ? (
                 <>
-                  <p className="cuisineExploreDistanceNote">Uten avstandsdata</p>
+                  <p className="cuisineExploreDistanceNote">{browseText(locale,"distanceUnknown")}</p>
                   <RestaurantNames restaurants={unknown} />
                 </>
               ) : null}
@@ -504,7 +506,7 @@ export function CuisineExplorer({
                   >
                     <span className="cuisineBrowseChoiceName">{cuisineLabel(cuisine.name, locale)}</span>
                     <span className="cuisineBrowseChoiceCount">
-                      {cuisine.areas.length} {cuisine.areas.length === 1 ? "underkategori" : "underkategorier"}
+                      {browseText(locale,cuisine.areas.length === 1 ? "subOne" : "subMany",{count:cuisine.areas.length})}
                     </span>
                   </button>
                 </li>
@@ -529,7 +531,7 @@ export function CuisineExplorer({
             <button
               type="button"
               className="cuisineExploreDialogClose"
-              aria-label={`Lukk ${selectedCuisine.name}`}
+              aria-label={browseText(locale,"close",{name:cuisineLabel(selectedCuisine.name,locale)})}
               onClick={closeCuisine}
             >
               <span aria-hidden="true">×</span>
@@ -541,7 +543,7 @@ export function CuisineExplorer({
               <span>{selectedCuisine.context}</span>
             </header>
 
-            <div className="cuisineExploreFilterGroup" aria-label="Velg hvordan du vil utforske">
+            <div className="cuisineExploreFilterGroup" aria-label={browseText(locale,"exploreHow")}>
               <details className="cuisineExploreFilter cuisineExploreAreas" name="cuisine-discovery-filter">
                 <summary className="cuisineExploreFilterSummary">
                   <span lang={locale}>{cuisineLabel(selectedCuisine.areasLabel, locale)}</span>
@@ -621,14 +623,14 @@ export function CuisineExplorer({
                   <p lang={locale}>{cuisineLabel(selectedFoodType?.name ?? selectedArea?.name ?? allAreasLabel, locale)}</p>
                   <h3 lang={locale}>{resultText(locale, "dishesWhere")}</h3>
                 </div>
-                <span>{selectedDishCoverage.length} rettforslag · Oslo</span>
+                <span>{browseText(locale,"proposals",{count:selectedDishCoverage.length})}</span>
               </div>
 
               <div className="cuisineExploreLocation">
                 <button type="button" disabled={locating} onClick={location ? () => { setLocation(null); setLocationStatus(""); } : requestLocation}>
-                  {location ? "Slå av avstandssortering" : locating ? "Henter posisjon …" : "Vis nærmest meg"}
+                  {location ? browseText(locale,"disableDistance") : locating ? "Henter posisjon …" : browseText(locale,"nearestHere")}
                 </button>
-                <span role="status">{location ? "Sortert etter luftlinje der posisjon er kjent." : locationStatus || "Posisjon brukes bare i denne nettleseren."}</span>
+                <span role="status">{location ? browseText(locale,"sortedDistance") : locationStatus || browseText(locale,"localOnly")}</span>
               </div>
               <DiscoveryDishList
                 location={location}
@@ -642,13 +644,13 @@ export function CuisineExplorer({
                   aria-expanded={showAllDishes}
                   onClick={() => setShowAllDishes((value) => !value)}
                 >
-                  {showAllDishes ? "Vis færre retter" : `Vis alle ${selectedDishCoverage.length} rettforslag`}
+                  {showAllDishes ? browseText(locale,"showFewer") : browseText(locale,"showAll",{count:selectedDishCoverage.length})}
                 </button>
               ) : null}
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              <span>Restaurantnavn bygger på registrerte menyer. Avstand er bare tilgjengelig for treff med kjent posisjon. Se menytreff for mer informasjon.</span>
+              <span>{browseText(locale,"sourceNote")}</span>
               {selectedArea?.flagFile && !selectedFoodType ? (
                 <a
                   href={`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(selectedArea.flagFile)}`}

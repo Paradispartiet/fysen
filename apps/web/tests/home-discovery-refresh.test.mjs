@@ -85,7 +85,7 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
   assert.match(explorer, /href=\{restaurant.sourceUrl\}/u);
   assert.match(explorer, /<details className="cuisineExploreRestaurantDetails">/u);
   assert.doesNotMatch(explorer, /<details className="cuisineExploreRestaurantDetails" open>/u);
-  assert.match(explorer, /Se mer/u);
+  assert.match(explorer, /browseText\(locale,"more",/u);
   assert.match(explorer, /<small>\{restaurant.address\}/u);
   assert.match(explorer, /visualText\(locale, "exterior"\)/u);
   assert.equal(visualText("nb", "exterior"), "Fasade · Illustrasjon");
@@ -133,8 +133,8 @@ test("disclosure uses semantic HTML with no Javascript dependency or fake availa
 
 test("distance ranking is opt-in and unknown coordinates stay separate", () => {
   assert.match(explorer, /navigator\.geolocation\.getCurrentPosition/u);
-  assert.match(explorer, /Vis nærmest meg/u);
+  assert.match(explorer, /browseText\(locale,"nearestHere"\)/u);
   assert.match(explorer, /rankRestaurantsByDistance\(restaurants, location\)/u);
-  assert.match(explorer, /Uten avstandsdata/u);
+  assert.match(explorer, /browseText\(locale,"distanceUnknown"\)/u);
   assert.doesNotMatch(explorer, /localStorage|sessionStorage/u);
 });

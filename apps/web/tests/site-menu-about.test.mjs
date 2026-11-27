@@ -45,7 +45,7 @@ test("ordinary pages keep status details exclusively behind the menu", () => {
   }
   assert.doesNotMatch(search, /" arkivtreff \(ikke sanntid\)"|title=\{`Ingen ferske/u);
   assert.doesNotMatch(result, /<FreshnessStatus/u);
-  assert.match(archive, /Alle retter i \{city\}/u);
+  assert.match(archive, /<BrowseText message="allCity" values=\{\{city\}\} \/>/u);
 });
 
 test("global navigation stays sticky while the results search scrolls normally", () => {
