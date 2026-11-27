@@ -7950,5 +7950,348 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://www.visitphilly.com/media-center/press-releases/phillys-signature-sandwiches-cheesesteaks-hoagies-roast-pork/"
       }
     ]
+  },
+  {
+    "dishId": "lomo-saltado",
+    "summary": "Peruansk wokrett med storfekjøtt, løk, tomat og pommes frites.",
+    "overview": "Kjøtt og grønnsaker stekes raskt på høy varme med soyasaus og eddik.",
+    "history": "Lomo saltado viser kinesisk innflytelse på matkulturen i Lima.",
+    "flavor": "Ristet, salt og frisk med lett syre.",
+    "technique": "Stek kjøttet i små omganger, og vend inn tomatene mot slutten.",
+    "essentials": [
+      "500 g biffkjøtt",
+      "500 g poteter eller pommes frites",
+      "1 rødløk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "500 g biffkjøtt",
+        "500 g poteter eller pommes frites",
+        "1 rødløk",
+        "2 tomater",
+        "1 ají amarillo eller mild chili",
+        "2 ss soyasaus",
+        "1 ss eddik",
+        "olje",
+        "kokt ris"
+      ],
+      "steps": [
+        "Tilbered pommes frites separat.",
+        "Skjær kjøtt, løk og tomat i strimler eller båter.",
+        "Stek kjøttet raskt i varm panne til ferdig. Fres løk og chili.",
+        "Vend inn tomat, kjøtt, soyasaus og eddik. Server med pommes frites og ris."
+      ]
+    },
+    "variants": [
+      "Kylling eller sopp kan brukes i hjemmevarianter."
+    ],
+    "serving": [
+      "Server straks med ris og sprø poteter."
+    ],
+    "commonMistakes": [
+      "Ikke overfyll pannen slik at kjøttet koker i egen væske."
+    ],
+    "relatedDishIds": [
+      "chow-mein",
+      "philly-cheesesteak"
+    ],
+    "sources": [
+      {
+        "label": "Peru Travel – Cuisine of Lima",
+        "href": "https://www.peru.travel/gastronomy/en/peruvian-cuisine/cuisine-of-lima.html"
+      },
+      {
+        "label": "Peru Travel – Main dishes",
+        "href": "https://www.peru.travel/gastronomy/en/recipes/main-dishes.html"
+      }
+    ]
+  },
+  {
+    "dishId": "aji-de-gallina",
+    "summary": "Kremet peruansk kyllingrett med gul chili og brødjevnet saus.",
+    "overview": "Revet kylling blandes med en saus av ají amarillo, melk, brød og aromater.",
+    "history": "Retten er del av Limas kreolske kjøkken, med peruanske og spanske mattradisjoner.",
+    "flavor": "Mildt sterk, kremet og fyldig.",
+    "technique": "Bruk ají amarillo for karakteristisk smak; tilpass mengden etter styrke.",
+    "essentials": [
+      "600 g kyllingfilet",
+      "1 løk",
+      "2 hvitløksfedd"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 60 min",
+      "ingredients": [
+        "600 g kyllingfilet",
+        "1 løk",
+        "2 hvitløksfedd",
+        "2–3 ss ají amarillo-pasta",
+        "3 brødskiver",
+        "250 ml melk",
+        "200 ml kyllingkraft",
+        "4 kokte poteter",
+        "2 hardkokte egg",
+        "oliven"
+      ],
+      "steps": [
+        "Trekk kyllingen i kraft til minst 74 °C og riv den i strimler.",
+        "Bløtlegg brødet i melk og mos til jevn masse.",
+        "Fres løk, hvitløk og chilipasta; tilsett brødmassen og kraft gradvis.",
+        "Vend inn kyllingen og la småkoke til sausen er fyldig. Server med poteter, egg og oliven."
+      ]
+    },
+    "variants": [
+      "Noen varianter bruker valnøtter eller ost i sausen."
+    ],
+    "serving": [
+      "Server med hvit ris og kokte poteter."
+    ],
+    "commonMistakes": [
+      "Ikke la melkebasen svi seg eller koke tørr."
+    ],
+    "relatedDishIds": [
+      "fesenjan",
+      "kare-kare"
+    ],
+    "sources": [
+      {
+        "label": "Peru Travel – Cuisine of Lima",
+        "href": "https://www.peru.travel/gastronomy/en/peruvian-cuisine/cuisine-of-lima.html"
+      },
+      {
+        "label": "Peru Travel – Main dishes",
+        "href": "https://www.peru.travel/gastronomy/en/recipes/main-dishes.html"
+      }
+    ]
+  },
+  {
+    "dishId": "anticuchos",
+    "summary": "Peruanske grillspyd, tradisjonelt med storfehjerte marinert i ají panca.",
+    "overview": "Små kjøttstykker marineres i krydder og eddik før grilling.",
+    "history": "Anticuchos er en kjent del av Limas matkultur med afroperuansk innflytelse.",
+    "flavor": "Ristet, aromatisk og lett syrlig.",
+    "technique": "Rens kjøttet og skjær i jevne stykker; grill kontrollert.",
+    "essentials": [
+      "600 g renset storfehjerte",
+      "2 ss ají panca-pasta",
+      "2 ss eddik"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 35 min + marinering",
+      "ingredients": [
+        "600 g renset storfehjerte",
+        "2 ss ají panca-pasta",
+        "2 ss eddik",
+        "3 hvitløksfedd",
+        "1 ts spisskummen",
+        "olje",
+        "salt",
+        "poteter"
+      ],
+      "steps": [
+        "Fjern grove hinner og skjær kjøttet i jevne biter.",
+        "Bland chilipasta, eddik, hvitløk, spisskummen og olje; mariner i kjøleskap.",
+        "Tre kjøttet på spyd og grill til gjennomstekt, minst 71 °C for innmat.",
+        "Server med kokte poteter. Kast rå marinade."
+      ]
+    },
+    "variants": [
+      "Vanlig biffkjøtt kan brukes i en tilpasset variant."
+    ],
+    "serving": [
+      "Server med potet, mais og chilisaus."
+    ],
+    "commonMistakes": [
+      "Ikke bruk rå marinade som ferdig saus."
+    ],
+    "relatedDishIds": [
+      "satay",
+      "khorovats"
+    ],
+    "sources": [
+      {
+        "label": "Peru Travel – Cuisine of Lima",
+        "href": "https://www.peru.travel/gastronomy/en/peruvian-cuisine/cuisine-of-lima.html"
+      },
+      {
+        "label": "Peru Travel – Lima gastronomy",
+        "href": "https://www.peru.travel/news/peru-conquers-canada-and-awakens-the-world-a-destination-that-has-it-all"
+      }
+    ]
+  },
+  {
+    "dishId": "empanadas",
+    "summary": "Fylte deigbakverk, bakt eller fritert; her en argentinskinspirert kjøttvariant.",
+    "overview": "Deigsirkler brettes rundt avkjølt fyll og lukkes før steking.",
+    "history": "Empanadas har mange latinamerikanske tradisjoner. I Argentina varierer fyll og form mellom regionene.",
+    "flavor": "Sprø eller mør deig med saftig, krydret fyll.",
+    "technique": "Avkjøl fyllet og forsegl deigkantene godt.",
+    "essentials": [
+      "350 g hvetemel",
+      "80 g smør",
+      "150 ml vann, omtrent"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 12 empanadas",
+      "time": "ca. 75 min",
+      "ingredients": [
+        "350 g hvetemel",
+        "80 g smør",
+        "150 ml vann, omtrent",
+        "400 g kjøttdeig",
+        "2 løk",
+        "paprikapulver",
+        "spisskummen",
+        "2 hardkokte egg",
+        "1 egg til pensling"
+      ],
+      "steps": [
+        "Bland mel, smør, vann og salt til smidig deig og la hvile kjølig.",
+        "Stek løk og kjøttdeig til gjennomstekt; krydre, avkjøl og bland med hakket kokt egg.",
+        "Kjevle deigen ut og stikk ut sirkler. Fyll og brett kantene tett sammen.",
+        "Pensle med egg og stek ved 200 °C til gylne og gjennomvarme."
+      ]
+    },
+    "variants": [
+      "Varianter med ost, kylling, mais eller grønnsaker finnes."
+    ],
+    "serving": [
+      "Server lune som smårett eller måltid."
+    ],
+    "commonMistakes": [
+      "Ikke bruk for vått eller varmt fyll."
+    ],
+    "relatedDishIds": [
+      "coxinha",
+      "pastilla"
+    ],
+    "sources": [
+      {
+        "label": "Visit Argentina – Gaucho traditions",
+        "href": "https://www.argentina.travel/en/activities/tradiciones-gauchas"
+      },
+      {
+        "label": "Visit Argentina – Argentinsk matkultur",
+        "href": "https://www.argentina.travel/en/news/what-to-do-in-argentinas-most-sought-after-tourist-destinations"
+      }
+    ]
+  },
+  {
+    "dishId": "asado",
+    "summary": "Søramerikansk grilltradisjon med kjøtt tilberedt over glør.",
+    "overview": "Ulike kjøttstykker grilles over kontrollert varme; asado betegner også det sosiale måltidet.",
+    "history": "I Argentina er asado nært forbundet med gauchokultur og fellesmåltider.",
+    "flavor": "Ristet, saftig og kjøttpreget.",
+    "technique": "Bruk stabile glør og tilpass tid og varme til hvert kjøttstykke.",
+    "essentials": [
+      "800 g storfekjøtt, for eksempel entrecôte",
+      "grovt salt",
+      "persille"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 45 min",
+      "ingredients": [
+        "800 g storfekjøtt, for eksempel entrecôte",
+        "grovt salt",
+        "persille",
+        "2 hvitløksfedd",
+        "3 ss rødvinseddik",
+        "5 ss olivenolje",
+        "oregano"
+      ],
+      "steps": [
+        "Lag chimichurri av hakket persille, hvitløk, eddik, olje og oregano.",
+        "Klargjør grill med direkte og indirekte varme.",
+        "Salt kjøttet og grill til ønsket trygg kjernetemperatur; hele storfekjøttstykker minst 63 °C med tre minutters hvile.",
+        "La kjøttet hvile og server i skiver med chimichurri."
+      ]
+    },
+    "variants": [
+      "Tradisjonell asado kan omfatte ribbe, pølser og innmat; oppskriften er en enkel hjemmevariant."
+    ],
+    "serving": [
+      "Server med brød, salat og chimichurri."
+    ],
+    "commonMistakes": [
+      "Ikke la flammene svi kjøttet mens innsiden forblir uferdig."
+    ],
+    "relatedDishIds": [
+      "khorovats",
+      "pulled-pork"
+    ],
+    "sources": [
+      {
+        "label": "Visit Argentina – Gaucho traditions",
+        "href": "https://www.argentina.travel/en/activities/tradiciones-gauchas"
+      }
+    ]
+  },
+  {
+    "dishId": "pastel-de-choclo",
+    "summary": "Chilensk ovnsrett med malt mais over et krydret kjøttfyll.",
+    "overview": "Et fyll av kjøtt og løk, ofte med kylling, egg og oliven, dekkes med maispuré og stekes.",
+    "history": "Pastel de choclo er en tradisjonell chilensk rett der maisen står sentralt.",
+    "flavor": "Søtlig mais, fyldig kjøtt og mildt urtepreget topping.",
+    "technique": "Kok maisblandingen inn før den fordeles over fyllet.",
+    "essentials": [
+      "700 g maiskorn",
+      "100 ml melk",
+      "basilikum"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 75 min",
+      "ingredients": [
+        "700 g maiskorn",
+        "100 ml melk",
+        "basilikum",
+        "400 g kjøttdeig",
+        "2 løk",
+        "200 g kokt kylling",
+        "2 hardkokte egg",
+        "svarte oliven",
+        "spisskummen",
+        "olje"
+      ],
+      "steps": [
+        "Stek løk og kjøttdeig til gjennomstekt, krydre med spisskummen.",
+        "Mos mais med melk og basilikum og kok til en tykk puré.",
+        "Fordel kjøttfyll, kylling, egg og oliven i ildfast form. Dekk med maispuré.",
+        "Stek ved 200 °C til gyllen og gjennomvarm, minst 74 °C i midten."
+      ]
+    },
+    "variants": [
+      "Rosiner og litt sukker på toppen inngår i enkelte varianter."
+    ],
+    "serving": [
+      "Server varm, gjerne med tomatsalat."
+    ],
+    "commonMistakes": [
+      "Ikke bruk så tynn maispuré at den renner inn i fyllet."
+    ],
+    "relatedDishIds": [
+      "moussaka",
+      "pastitsio"
+    ],
+    "sources": [
+      {
+        "label": "Chile Travel – Día de la cocina chilena",
+        "href": "https://chile.travel/blog/dia-de-la-cocina-chilena-a-que-sabe-chile/"
+      },
+      {
+        "label": "Chile Travel – Typical cuisine",
+        "href": "https://chile.travel/en/blog/typical-cuisine-a-journey-through-the-flavors-of-chile/"
+      }
+    ]
   }
 ];
