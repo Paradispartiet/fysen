@@ -148,7 +148,7 @@ test("a successful empty live API response still exposes the historical menu rou
   const home = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
   const preview = readFileSync(new URL("../components/static-preview-search-page.tsx", import.meta.url), "utf8");
   const archivedView = readFileSync(new URL("../components/verified-menu-archive-view.tsx", import.meta.url), "utf8");
-  assert.match(search, /searchPublicMenuArchive\(archive, q, city, Infinity\)/u);
+  assert.match(search, /searchPublicMenuArchive\(archive, q, city, Infinity, expandNordicNames\)/u);
   assert.match(search, /archive=\{archive\}/u);
   assert.match(home, /browseData\.dishes\.length === 0/u);
   assert.match(home, /reconcileMenuVersions\(stored, browseData\?\.menuVersions/u);

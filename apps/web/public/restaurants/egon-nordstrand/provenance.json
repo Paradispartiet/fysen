@@ -1,0 +1,10 @@
+{
+  "restaurant": "Egon Nordstrand",
+  "address": "Ekebergveien 228 B, 1162 Oslo",
+  "sourcePage": "https://egon.no/restauranter/oslo/egon-nordstrand",
+  "exteriorReference": "https://egon.no/media/uvintx1i/fotoknoff-sven-erik-knoff-4606.jpg",
+  "referenceCredit": "Sven-Erik Knoff / FotoKnoff, as named in official source URL",
+  "illustration": "AI-generated facade illustration, 2026-11-27. Not a photograph. Original generated PNG preserved separately; WebP is 1536x1024.",
+  "logo": "Reuse official chain SVG from the Byporten implementation.",
+  "interiorStatus": "Awaiting verified recent branch reference. Official https://egon.no/nyeegon lists Nordstrand for planned 2026 facelift; older interior photographs are not treated as current. No substitute interior is displayed."
+}

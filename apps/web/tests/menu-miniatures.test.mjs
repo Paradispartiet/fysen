@@ -18,7 +18,7 @@ test("public menu archive uses only decorative local illustrations and retains s
   assert.match(source, /illustrationForDishName\(dish\.label\)/u);
   assert.match(source, /illustrationForDishName\(dish\.name\)/u);
   assert.match(source, /<FoodIllustration/u);
-  assert.match(source, /priceLabel\(result\.priceMinor, result\.priceMaxMinor, result\.priceKind, result\.currency\)/u);
+  assert.match(source, /<ArchivePrice priceMinor=\{result\.priceMinor\} priceMaxMinor=\{result\.priceMaxMinor\} kind=\{result\.priceKind\} currency=\{result\.currency\}/u);
   assert.match(source, /result\.sourceUrl/u);
   assert.match(source, /dateTime=\{result\.observedAt\}/u);
   assert.match(source, /result\.restaurantName/u);
@@ -30,7 +30,7 @@ test("live menu results show original art without altering restaurant and price 
   assert.match(source, /illustrationForDishName\(result\.dish\.name\)/u);
   assert.match(source, /className=\{styles\.dishArtwork \?\? ""\}/u);
   assert.match(source, /result\.restaurant\.name/u);
-  assert.match(source, /formatDishPrice\(result\.dish\)/u);
+  assert.match(source, /formatDishPrice\(result\.dish, locale\)/u);
   assert.match(source, /result\.menu\.sourceUrl/u);
   assert.match(source, /result\.match\.type === "fuzzy"/u);
 });

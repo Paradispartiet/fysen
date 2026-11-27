@@ -110,7 +110,7 @@ test("Matlyst only counts qualified menu names for the Ethiopian Shiro", () => {
 test("the published public menu archive powers actual homepage restaurant coverage", {
   skip: process.env.FYSEN_ARCHIVE_LIVE_PROOF !== "1",
 }, async () => {
-  const { getPublicMenuArchive } = await importTypescript("../lib/verified-menu-archive.ts");
+  const { getPublicMenuArchive } = await import("../lib/verified-menu-archive.ts");
   const archive = await getPublicMenuArchive();
   const result = summarizeArchivedMatlyst(archive, [...descriptors, shiro]);
   assert.ok(archive.items.length > 40_000);
