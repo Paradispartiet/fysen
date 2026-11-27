@@ -183,15 +183,6 @@ const productionBackedMatlystDishes: readonly FoodDishCatalogEntry[] = [
     explorerPriority: 100,
   },
   {
-    id: "ghormeh-sabzi",
-    name: "Ghormeh sabzi",
-    query: "ghormeh sabzi",
-    aliases: [],
-    cuisine: "Persisk",
-    region: "Iran",
-    explorerPriority: 98,
-  },
-  {
     id: "zereshk-polo",
     name: "Zereshk polo",
     query: "zereshk polo",
