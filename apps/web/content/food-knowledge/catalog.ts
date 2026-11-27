@@ -869,6 +869,36 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"satay","name":"Satay","query":"satay","aliases":["sate","saté","sate ayam","chicken satay","kyllingsatay"],"cuisine":"Asiatisk","region":"Indonesia og Malaysia","explorerPriority":88},
   {"id":"nasi-lemak","name":"Nasi lemak","query":"nasi lemak","aliases":["malaysian coconut rice"],"cuisine":"Asiatisk","region":"Malaysia","explorerPriority":86},
   {"id":"laksa","name":"Laksa","query":"laksa","aliases":["curry laksa","curry mee","laksa noodle soup"],"cuisine":"Asiatisk","region":"Malaysia og Sørøst-Asia","explorerPriority":84},
+  {
+    id: "sisig",
+    name: "Sisig",
+    query: "sisig",
+    aliases: [],
+    cuisine: "Filippinsk",
+    region: "Filippinene",
+    explorerPriority: 100,
+  },
+  {
+    id: "pork-adobo",
+    name: "Pork adobo",
+    query: "pork adobo",
+    aliases: ["adobo"],
+    cuisine: "Filippinsk",
+    region: "Filippinene",
+    explorerPriority: 98,
+  },
+  {
+    id: "kare-kare",
+    name: "Kare-kare",
+    query: "kare-kare",
+    aliases: ["vegan kare-kare", "kare kare"],
+    cuisine: "Filippinsk",
+    region: "Filippinene",
+    explorerPriority: 88,
+  },
+  {"id":"sinigang","name":"Sinigang","query":"sinigang","aliases":["sinigang na baboy","pork sinigang"],"cuisine":"Filippinsk","region":"Filippinene","explorerPriority":94},
+  {"id":"lechon","name":"Lechon","query":"lechon","aliases":["lechon baboy","lechon sa hurno","filippinsk helstekt gris"],"cuisine":"Filippinsk","region":"Filippinene","explorerPriority":92},
+  {"id":"pancit","name":"Pancit","query":"pancit","aliases":["pansit","pancit bihon","pancit bihon guisado"],"cuisine":"Filippinsk","region":"Filippinene","explorerPriority":90},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
