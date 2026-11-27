@@ -965,6 +965,36 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"arroz-de-marisco","name":"Arroz de marisco","query":"arroz de marisco","aliases":["portuguese seafood rice","portugisisk sjømatris"],"cuisine":"Portugisisk","region":"Portugal","explorerPriority":90},
   {"id":"bifana","name":"Bifana","query":"bifana","aliases":["bifanas","portuguese pork sandwich"],"cuisine":"Portugisisk","region":"Portugal","explorerPriority":88},
   {"id":"pastel-de-nata","name":"Pastel de nata","query":"pastel de nata","aliases":["pastéis de nata","pasteis de nata","pastel de belém","portuguese custard tart"],"cuisine":"Portugisisk","region":"Lisboa","explorerPriority":86},
+  {
+    id: "pierogi",
+    name: "Pierogi",
+    query: "pierogi",
+    aliases: ["pierogi z miesem", "pierogi z mięsem okraszone skwarkami"],
+    cuisine: "Polsk",
+    region: "Polen",
+    explorerPriority: 100,
+  },
+  {
+    id: "bigos",
+    name: "Bigos",
+    query: "bigos",
+    aliases: ["bigos pieczywo"],
+    cuisine: "Polsk",
+    region: "Polen",
+    explorerPriority: 96,
+  },
+  {
+    id: "zurek",
+    name: "Żur",
+    query: "zur",
+    aliases: ["żur", "żur z jajkiem i kiełbasą"],
+    cuisine: "Polsk",
+    region: "Polen",
+    explorerPriority: 88,
+  },
+  {"id":"golabki","name":"Gołąbki","query":"golabki","aliases":["golabki","gołąbki","golumpki","polish cabbage rolls"],"cuisine":"Polsk","region":"Polen","explorerPriority":94},
+  {"id":"borsjtsj","name":"Borsjtsj","query":"borsjtsj","aliases":["borscht","borsch","borshch","borsjt","borsj","борщ"],"cuisine":"Ukrainsk","region":"Ukraina","explorerPriority":92},
+  {"id":"varenyky","name":"Varenyky","query":"varenyky","aliases":["vareniki","wareniki","вареники","ukrainian dumplings"],"cuisine":"Ukrainsk","region":"Ukraina","explorerPriority":90},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
