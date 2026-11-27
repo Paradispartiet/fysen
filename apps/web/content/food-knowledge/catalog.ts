@@ -959,6 +959,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"moqueca","name":"Moqueca","query":"moqueca","aliases":["moqueca de peixe","moqueca baiana","moqueca capixaba"],"cuisine":"Brasiliansk","region":"Bahia og Espírito Santo","explorerPriority":94},
   {"id":"acaraje","name":"Acarajé","query":"acaraje","aliases":["acarajé","akara","acaraje baiano"],"cuisine":"Brasiliansk","region":"Bahia","explorerPriority":92},
   {"id":"brigadeiro","name":"Brigadeiro","query":"brigadeiro","aliases":["brigadeiros","docinho de chocolate"],"cuisine":"Brasiliansk","region":"Brasil","explorerPriority":90},
+  {"id":"bacalhau-a-bras","name":"Bacalhau à Brás","query":"bacalhau a bras","aliases":["bacalhau a bras","bacalhau à brás","bacalhau dourado"],"cuisine":"Portugisisk","region":"Lisboa","explorerPriority":96},
+  {"id":"francesinha","name":"Francesinha","query":"francesinha","aliases":["francesinha do porto","francesinha especial"],"cuisine":"Portugisisk","region":"Porto","explorerPriority":94},
+  {"id":"caldo-verde","name":"Caldo verde","query":"caldo verde","aliases":["portuguese green soup","portugisisk kålsuppe"],"cuisine":"Portugisisk","region":"Minho","explorerPriority":92},
+  {"id":"arroz-de-marisco","name":"Arroz de marisco","query":"arroz de marisco","aliases":["portuguese seafood rice","portugisisk sjømatris"],"cuisine":"Portugisisk","region":"Portugal","explorerPriority":90},
+  {"id":"bifana","name":"Bifana","query":"bifana","aliases":["bifanas","portuguese pork sandwich"],"cuisine":"Portugisisk","region":"Portugal","explorerPriority":88},
+  {"id":"pastel-de-nata","name":"Pastel de nata","query":"pastel de nata","aliases":["pastéis de nata","pasteis de nata","pastel de belém","portuguese custard tart"],"cuisine":"Portugisisk","region":"Lisboa","explorerPriority":86},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
