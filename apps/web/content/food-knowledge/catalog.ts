@@ -1045,7 +1045,7 @@ export function findFoodDishByQuery(value: string): FoodDishCatalogEntry | null 
   const normalized = value.trim().toLocaleLowerCase("nb-NO").replace(/\s+/g, " ");
   if (!normalized) return null;
   return foodDishCatalog.find((dish) =>
-    [dish.name, dish.query, ...dish.aliases].some(
+    [...(dish.matchLabel === false ? [] : [dish.name]), dish.query, ...dish.aliases].some(
       (candidate) => candidate.toLocaleLowerCase("nb-NO").replace(/\s+/g, " ") === normalized,
     ),
   ) ?? null;
