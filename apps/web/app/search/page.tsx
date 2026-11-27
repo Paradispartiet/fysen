@@ -3,6 +3,8 @@ import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
 import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
 import { archiveHasCity, getPublicMenuArchive, searchPublicMenuArchive, reconcileMenuVersions, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
+import { NordicSearchNotice } from "../../components/nordic-search-notice";
+import { resolveNordicDishQuery } from "../../lib/nordic-dish-search";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
@@ -81,6 +83,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const params = await searchParams;
   const q = first(params.q);
   const city = first(params.city) || "Oslo";
+  const expandNordicNames = process.env.NEXT_PUBLIC_FYSEN_LANGUAGE_PREVIEW === "true";
+  const nordicQuery = expandNordicNames ? resolveNordicDishQuery(q) : null;
   const latitude = coordinate(params.lat, -90, 90);
   const longitude = coordinate(params.lon, -180, 180);
   const hasLocation = latitude !== null && longitude !== null;
@@ -106,7 +110,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
       archive = selected.archive;
       suppressedLiveSlugs = selected.suppressedLiveSlugs;
       suppressedLiveIds = selected.suppressedLiveIds;
-      if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city, Infinity);
+      if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city, Infinity, expandNordicNames);
       }
     } catch {
       // Preserve the existing clear unavailable state, never invent menu data.
@@ -132,7 +136,6 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
         <DishSearch
           defaultValue={q}
           city={city}
-          buttonLabel="Finn retten"
           inputId="results-dish-query"
           latitude={hasLocation ? latitude : null}
           longitude={hasLocation ? longitude : null}
@@ -174,7 +177,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 {q.length >= 2 ? <LocationControls hasLocation={hasLocation} sort={sort} /> : null}
               </div>
 
-              <DishKnowledgeNote query={q} />
+              {nordicQuery ? <NordicSearchNotice canonicalQuery={nordicQuery.canonicalQuery} query={q} alternatives={nordicQuery.alternatives} href={searchHref(nordicQuery.canonicalQuery, city, latitude, longitude, sort)} hasArchive={Boolean(archive)} /> : null}
+              <DishKnowledgeNote query={nordicQuery?.canonicalQuery ?? q} />
 
               {archive && (archiveMatches.length > 0 || !eligibleLive.length) ? (
                 <ArchivedMenuResults results={archiveMatches} query={q} city={city} />
