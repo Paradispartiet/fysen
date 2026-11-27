@@ -253,5 +253,200 @@ export const draftFaroeseArticles = {
       "Ov søt marinada, sum brennur, áðrenn kjøtið er liðugt.",
       "Kaldar, turrar tortillur, sum skrædna um fylluna."
     ]
+  },
+  "pad-thai": {
+    "overview": "Pad thai eydnast, tá nudlurnar eru elastiskar og sósin situr á teimum uttan at gera rættin vátan. Tamarind gevur høvuðssýruna, meðan fiskasós og sukur geva saltan og søtan smakk.",
+    "history": "Rætturin fekk ein týðiligan tjóðskaparligan leiklut í Teilandi í 1900-talinum og er í dag millum kendastu rættir landsins uttanlands. Matstovusløg eru sera ymisk í søtleika og vali av proteini.",
+    "flavor": "Søtt, súrt, salt og umamiríkt við nøtakendum smakki og feskum lime. Chili verður ofta borðreitt sum valfrí eyka styrki.",
+    "technique": "Legg rísnudlurnar í blot heldur enn at kóka tær heilt lidnar frammanundan. Wokpannan skal vera heit, og sósin skal vera blandað, áðrenn steikingin byrjar.",
+    "essentials": [
+      "Flatar rísnudlur.",
+      "Tamarind, fiskasós og sukur sum sósgrunnur.",
+      "Egg, tofu, rækjur ella høsnarungi eftir slagnum.",
+      "Bønasprotar, jarðnøtur, lime og fegin hvítleyksgrasleykur."
+    ],
+    "recipe": {
+      "label": "Pad thai við tofu og rækjum",
+      "yield": "4 portiónir",
+      "time": "uml. 35 min",
+      "ingredients": [
+        "300 g flatar rísnudlur",
+        "3 súpsk. tamarindkonsentrat",
+        "3 súpsk. fiskasós",
+        "2–3 súpsk. pálmasukur ella brúnt sukur",
+        "2 egg",
+        "200 g fast tofu",
+        "200 g reinsaðar rækjur, um ynskt",
+        "150 g bønasprotar",
+        "60 g ristaðar jarðnøtur",
+        "lime og várleykur"
+      ],
+      "steps": [
+        "Legg nudlurnar í blot, til tær eru bendar, men framvegis fastar.",
+        "Hita tamarind, fiskasós og sukur saman til eina javna sós.",
+        "Steik tofu og møguligar rækjur skjótt í heitari wokpannu og skumpa til síðis.",
+        "Lat egg í, síðani nudlur og sós, og vend skjótt, til nudlurnar eru moyrar og glansandi.",
+        "Vend meginpartin av sprotunum í og borðreið við jarðnøtum, lime og várleyki."
+      ]
+    },
+    "variants": [
+      "Við rækjum, eitt vanligt matstovuslag.",
+      "Við høsnarunga ella tofu.",
+      "Vegetariskt við sojasós í staðin fyri fiskasós og eyka tofu."
+    ],
+    "serving": [
+      "Borðreið við lime, jarðnøtum og chili, so gesturin sjálvur kann tillaga smakkin.",
+      "Bønasprotarnir skulu framvegis vera týðiliga broysknir."
+    ],
+    "commonMistakes": [
+      "At kóka rísnudlurnar heilt lidnar áðrenn woksteiking.",
+      "Ov nógv sós, sum ger rættin søtan og klistrutan.",
+      "Ov lítil ella køld panna, sum dampar heldur enn at woksteikja."
+    ]
+  },
+  "dal-makhani": {
+    "overview": "Dal makhani er ein fyldigur grýturættur úr bølgfruktum. Heilu uradbønirnar geva myrka litin og kremuta konsistensin, tá tær eru kókaðar bleytar, meðan reyðu bønirnar geva eitt sindur av biti.",
+    "history": "Dal makhani hoyrir til punjabisku matmentanina í Norðurindia. Rætturin verður gjørdur bæði heima og á matstovum, har eitt fyldigt slag við smøri og róma er vanligt.",
+    "flavor": "Uradbønirnar hava jarðkendan smakk, tomat gevur sýru, og smør og rómi minka um styrkina frá chili og ingiferi. Summi matstovusløg hava eisini ein lættan royksmakk.",
+    "technique": "Kóka uradbønirnar, sum hava ligið í blot, heilt bleytar, áðrenn tær verða blandaðar við innkókaða tomat- og kryddgrunnin. Mosa nakrar bønir móti grýtukantinum og lat blandingina smákóka, til hon tjúknar.",
+    "essentials": [
+      "Heilar svartar uradbønir (sabut urad dal).",
+      "Reyðar kidneybønir (rajma).",
+      "Tomat, ingifer, spískumman og chili.",
+      "Smør og rómi geva rættinum ta eyðkendu fyldina."
+    ],
+    "recipe": {
+      "label": "Dal makhani við urad og rajma",
+      "yield": "4 portiónir",
+      "time": "uml. 1 t 30 min + blotlegging",
+      "ingredients": [
+        "160 g heilar svartar uradbønir, lagdar í blot um náttina",
+        "120 g kókaðar reyðar kidneybønir úr dós, avdroypaðar",
+        "1 lítil leykur, fínt hakkaður",
+        "2 hvítleyksgeirar og 2 cm ingifer, fínt rivið",
+        "250 g passeraðar tomatir",
+        "1 tesk. spískummanfræ, ½ tesk. chilipulvur og ½ tesk. garam masala",
+        "2 súpsk. smør, ½ dl rómi og salt"
+      ],
+      "steps": [
+        "Skola uradbønirnar og kóka tær í nýggjum vatni, til tær eru heilt bleytar. Goym nakað av kókivatninum.",
+        "Hita smørið í einari grýtu. Lat spískumman steikja stutt, steik leykin bleytan og lat hvítleyk og ingifer í.",
+        "Rør tomat og chili í. Lat kóka inn til ein tjúkkan grunn.",
+        "Lat uradbønir, kidneybønir og eitt sindur av kókivatni í. Mosa nakrar av bønunum og lat grýtuna smákóka í 20–30 minuttir. Rør av og á.",
+        "Rør garam masala og róma í móti endanum og smakka til við salti."
+      ]
+    },
+    "variants": [
+      "Heimasløg við minni róma.",
+      "Fyldigari matstovusløg við eyka smøri ella mildum royksmakki."
+    ],
+    "serving": [
+      "Borðreið heitt við naan, roti ella rísi.",
+      "Eitt sindur av róma ella feskur koriander kann brúkast omaná."
+    ],
+    "commonMistakes": [
+      "At lata uradbønirnar í, áðrenn tær eru gjøgnumkókaðar.",
+      "At lata ov nógv vatn í, so grýturætturin verður tunnur."
+    ]
+  },
+  "sushi": {
+    "overview": "Sushi snýr seg fyrst og fremst um rísið. Kryddað sushirís er grundarlagið undir nigiri, maki, chirashi og nógvum øðrum sløgum, meðan ráur fiskur bert er eitt av fleiri møguligum sløgum av omanátilfari og fyllu.",
+    "history": "Sushi hevur langar søguligar røtur í varðveitslu av fiski við fermenteraðum rísi, men nútímans Edomae-sushi mentist í Edo, Tokyo í dag, sum skjót borðreiðing við feskari tilfari. Sushi í dag fevnir um bæði sera siðbundin og nútímans sløg.",
+    "flavor": "Gott sushi javnar milda sýru og søtleika í rísi við salti, umami og egna smakkinum hjá tilfarinum. Hiti og konsistensur eru líka týdningarmikil sum smakkur.",
+    "technique": "Skola rísið, kóka tað neyvt og vend ediksblandingina í uttan at mosa tað. Forma nigiri lætt; tað skal hanga saman, men ikki vera ov tætt.",
+    "essentials": [
+      "Stuttkornað japanskt rís við røttum klistri.",
+      "Rísediki, sukur og salt, sum verða vend í, meðan rísið er heitt.",
+      "Fiskur, sjógæti, egg ella grønmeti eftir slagnum.",
+      "Nori, wasabi, sojasós og omanátilfar verða brúkt í hóskandi nøgdum."
+    ],
+    "recipe": {
+      "label": "Einfalt maki heima",
+      "yield": "4 rullur",
+      "time": "uml. 50 min",
+      "ingredients": [
+        "300 g sushirís",
+        "3,5 dl vatn",
+        "4 súpsk. rísediki",
+        "2 súpsk. sukur",
+        "1 tesk. salt",
+        "4 ørk nori",
+        "avokado og agurk í stavum",
+        "200 g hitaviðgjørdur laksur ella annað trygt omanátilfar",
+        "sojasós og súltað ingifer"
+      ],
+      "steps": [
+        "Skola rísið, til vatnið næstan er klárt, og lat vatnið renna frá áðrenn kóking.",
+        "Kóka rísið eftir vegleiðingini á pakkanum og lat tað hvíla undir loki.",
+        "Loys sukur og salt upp í rísedikinum og vend blandingina varliga í heitt rís.",
+        "Být eitt tunt lag av rísi á nori, legg fyllu í eina linju og rulla fast við bambusmottu ella bakipappíri.",
+        "Lat rullurnar hvíla einar tveir minuttir og sker við einum vátum, hvøssum knívi."
+      ]
+    },
+    "variants": [
+      "Nigiri: hondformað rís við omanátilfari.",
+      "Maki: rís og fylla rullað í nori.",
+      "Chirashi: sushirís í skál við omanátilfari býtt omaná.",
+      "Temaki: hondrullað nori, formað sum ein kegli."
+    ],
+    "serving": [
+      "Sushi er best, tá rísið ikki er ísskápakalt.",
+      "Sojasós verður brúkt sum krydd, ikki sum bað; viðkvæmir bitar krevja lítið."
+    ],
+    "commonMistakes": [
+      "Ov vátt rís, sum verður greytut.",
+      "Ov nógv rís í makirulluni.",
+      "At trýsta rísið ov hart saman, so konsistensurin hvørvur."
+    ]
+  },
+  "gyoza": {
+    "overview": "Gyoza verður kent aftur á mótsetninginum millum eina brúna, broyskna undirsiðu og eitt bleytt, dampað deiggj. Fyllan er ofta svínakjøt og kál, men sløg við grønmeti, høsnarunga og sjógæti eru vanlig.",
+    "history": "Japanskt gyoza er nær skylt við kinesiskt jiaozi. Rætturin gjørdist útbreiddur í Japan í 1900-talinum og fekk sítt egna slag, ofta við tunnari deiggi og meira hvítleyki.",
+    "flavor": "Saftig, sølt og angandi fylla møtir mildum deiggi og týðiligari steikiskorpu. Ein einføld dippsós við sojasós og ediki gevur sýru og javnvág.",
+    "technique": "Klassiska pannumátin sameinir steiking og damping: fyrst litur í olju, síðani eitt sindur av vatni undir loki og at enda turrsteiking, so botnurin verður broyskin aftur.",
+    "essentials": [
+      "Tunn gyoza- ella dumplingørk.",
+      "Fínt hakkað kál og angandi tilfar sum ingifer, hvítleykur og várleykur.",
+      "Fylla úr svíni, høsnarunga, soppi ella grønmeti.",
+      "Sojasós, sesamolja og rísediki til smakk og dippsós."
+    ],
+    "recipe": {
+      "label": "Pannustokt gyoza",
+      "yield": "uml. 28 stk.",
+      "time": "uml. 55 min",
+      "ingredients": [
+        "28 gyozaørk",
+        "300 g malið svínakjøt",
+        "200 g fínt skorið høvdakál",
+        "2 várleykir",
+        "1 súpsk. rivið ingifer",
+        "1 hvítleyksgeiri",
+        "1,5 súpsk. sojasós",
+        "1 tesk. sesamolja",
+        "neutral olja",
+        "1 dl vatn"
+      ],
+      "steps": [
+        "Salta kálið lætt, lat tað standa í tíggju minuttir og kroyst ov nógvan vætu úr.",
+        "Blanda kál, kjøt, várleyk, ingifer, hvítleyk, sojasós og sesamolju.",
+        "Legg eina lítla skeið av fyllu á hvørt ark, væt kantin og legg tætt saman.",
+        "Steik gyoza í olju, til undirsiðan er gullbrún, lat vatn í og legg lok á.",
+        "Dampa, til fyllan er gjøgnumstokt, tak lokið av og lat botnin verða broysknan aftur."
+      ]
+    },
+    "variants": [
+      "Yaki gyoza: pannustokt og dampað.",
+      "Sui gyoza: kókað í vatni ella soði.",
+      "Age gyoza: friterað og broyskið allan vegin."
+    ],
+    "serving": [
+      "Borðreið beint av pannuni við sojasós og rísediki.",
+      "Chiliolja kann latast í dippsósina fyri meira styrki."
+    ],
+    "commonMistakes": [
+      "Ov nógv fylla, so dumplingurin ikki kann latast tættur aftur.",
+      "Vát kálfylla, sum spreingir deiggið undir steiking.",
+      "At leypa seinastu turrsteikingina um og missa broyskna botnin."
+    ]
   }
 } as const satisfies Record<string,ArticleBody>;
