@@ -130,6 +130,12 @@ export const foodKnowledgeDishIds = [
   "spanakopita",
   "tzatziki",
   "pastitsio",
+  "nasi-goreng",
+  "mie-goreng",
+  "rendang",
+  "satay",
+  "nasi-lemak",
+  "laksa",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
