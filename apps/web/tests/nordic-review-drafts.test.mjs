@@ -1,9 +1,10 @@
+import { knowledgeMessages } from "../lib/knowledge-messages.ts";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { messages,isPreviewLocale } from "../lib/locale-messages.ts";
 import { resultMessages } from "../lib/result-messages.ts";
 import { locales,parseLocale } from "../lib/locales.ts";
-import { reviewLocales,draftCoreMessages,draftFaroeseResults,reviewState } from "../lib/nordic-review-drafts.ts";
+import { reviewLocales,draftCoreMessages,draftFaroeseResults,draftFaroeseKnowledge,reviewState } from "../lib/nordic-review-drafts.ts";
 function check(source,draft){
  assert.deepEqual(Object.keys(draft).sort(),Object.keys(source).sort());
  for(const [key,value] of Object.entries(draft)){
@@ -20,3 +21,5 @@ test("unreviewed Nordic core dictionaries are complete, not enabled",()=>{
  }
 });
 test("Faroese results draft preserves placeholders and coverage",()=>check(resultMessages.nb,draftFaroeseResults));
+
+test("Faroese food knowledge UI draft retains keys and placeholders",()=>check(knowledgeMessages.nb,draftFaroeseKnowledge));

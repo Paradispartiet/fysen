@@ -1,3 +1,4 @@
+import type { KnowledgeKey } from "./knowledge-messages.ts";
 import type { MessageKey } from "./locale-messages.ts";
 import type { ResultMessageKey } from "./result-messages.ts";
 
@@ -118,3 +119,37 @@ export const draftFaroeseResults = {
 } as const satisfies Record<ResultMessageKey,string>;
 
 export const reviewState = { fo: "needs-native-review", kl: "needs-native-review", se: "needs-native-review" } as const;
+
+export const draftFaroeseKnowledge = {
+  "lexicon": "Fysen matleksikon",
+  "aboutDish": "Um rættin",
+  "intro": "Skil rættin, smakkirnar og mannagongdina, lær at gera hann heima – og finn tey, sum hava hann á matskránni.",
+  "more": "Vís allar {count} rættir",
+  "less": "Vís færri rættir",
+  "find": "Finn {name}",
+  "close": "Lat kunning um {name} aftur",
+  "what": "Hvat er {name}?",
+  "history": "Bakgrund og matmentan",
+  "taste": "Smakkur og konsistensur",
+  "technique": "Mannagongdin",
+  "contents": "Hvat er í rættinum?",
+  "makeHome": "Ger hann heima",
+  "recipe": "Soleiðis gert tú {name}",
+  "ingredients": "Tilfar",
+  "steps": "Mannagongd",
+  "variants": "Vanlig frábrigdi",
+  "serving": "Soleiðis verður hann borðreiddur",
+  "mistakes": "Vanlig mistøk",
+  "related": "Dámar tær henda rættin, royn eisini",
+  "restaurants": "Matstovur",
+  "where": "Hvar fært tú {name} í Oslo?",
+  "allMatches": "Vís øll úrslit",
+  "loading": "Heintar matstovur …",
+  "error": "Kundi ikki heinta matstovurnar beint nú.",
+  "noMatches": "Eingi úrslit fyri henda rættin í Oslo beint nú.",
+  "general": "Almenn matvitan",
+  "picture": "Mynd av rættinum og almenn matvitan",
+  "notEvidence": "ikki prógv úr matskrá",
+  "originalText": "Restin av greinini er fyribils á norskum.",
+  "recipeInfo": "Kunning um uppskriftina"
+} as const satisfies Record<KnowledgeKey,string>;
