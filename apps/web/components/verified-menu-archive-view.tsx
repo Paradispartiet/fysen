@@ -1,3 +1,4 @@
+import { ArchivePrice, ArchiveResultText } from "./localized-archive-result";
 import { cuisines, homeCuisines, discoveryDishesForCuisine } from "./cuisine-explorer-data";
 import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/public-path";
 import { browseArchivedMenuDishes, normalizeArchiveQuery, type ArchivedMenuMatch, type PublicMenuArchive } from "../lib/verified-menu-archive";
@@ -9,20 +10,6 @@ import { illustrationForDishName } from "./food-illustration-match";
 import { regionalFlagUrl } from "./cuisine-explorer-taxonomy";
 import { foodTypesForCuisine, matchingCuisineFoodType } from "./cuisine-food-type-data";
 
-function priceLabel(priceMinor: number | null, priceMaxMinor: number | null, kind: string, currency: ArchivedMenuMatch["currency"]): string {
-  if (priceMinor === null) return "Pris ikke oppgitt";
-  const price = new Intl.NumberFormat("nb-NO", {
-    style: "currency", currency, maximumFractionDigits: 2,
-  }).format(priceMinor / 100);
-  if (kind === "multiple") {
-    const max = priceMaxMinor === null ? null : new Intl.NumberFormat("nb-NO", {
-      style: "currency", currency, maximumFractionDigits: 2,
-    }).format(priceMaxMinor / 100);
-    return max ? price + " – " + max : "Flere priser fra " + price;
-  }
-  return kind === "from" ? "Fra " + price : price;
-}
-
 export function ArchivedMenuResults({
   results, query, city,
 }: {
@@ -32,9 +19,9 @@ export function ArchivedMenuResults({
 }) {
   return (
     <section className={styles.surface} aria-label="Menytreff">
-      <h3>{results.length} treff på «{query}»</h3>
+      <h3><ArchiveResultText kind="count" count={results.length} query={query} /></h3>
       {results.length === 0 ? (
-        <p>Ingen treff på denne retten. Prøv et annet søkeord.</p>
+        <p><ArchiveResultText kind="empty" /></p>
       ) : (
         <div className={styles.results}>
           {results.map((result, index) => (
@@ -46,14 +33,14 @@ export function ArchivedMenuResults({
                   ) : null}
                   <h4>{result.name}</h4>
                 </div>
-                <strong>{priceLabel(result.priceMinor, result.priceMaxMinor, result.priceKind, result.currency)}</strong>
+                <ArchivePrice priceMinor={result.priceMinor} priceMaxMinor={result.priceMaxMinor} kind={result.priceKind} currency={result.currency} />
               </div>
               {result.priceNote ? <p>{result.priceNote}</p> : null}
               <p className={styles.restaurant}>{result.restaurantName}</p>
               <p>{result.address}, {city}</p>
-              <p>Meny sist registrert <time dateTime={result.observedAt}>{result.observedAt.slice(0, 10)}</time></p>
+              <p><ArchiveResultText kind="recorded" /> <time dateTime={result.observedAt}>{result.observedAt.slice(0, 10)}</time></p>
               <a href={result.sourceUrl} target="_blank" rel="noopener noreferrer">
-                Se meny <span aria-hidden="true">↗</span>
+                <ArchiveResultText kind="menu" /> <span aria-hidden="true">↗</span>
               </a>
             </article>
           ))}
