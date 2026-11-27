@@ -213,10 +213,12 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
               <img src={withPublicBasePath(visuals.exterior)} alt={`Illustrasjon av fasaden til ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
               <figcaption>Fasade · Illustrasjon</figcaption>
             </figure>
+            {visuals.interior ? (
             <figure>
               <img src={withPublicBasePath(visuals.interior)} alt={`Illustrasjon av interiøret hos ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
               <figcaption>Interiør · Illustrasjon</figcaption>
             </figure>
+            ) : null}
           </div>
           <a className="cuisineExploreRestaurantArtSource" href={visuals.sourceUrl} target="_blank" rel="noopener noreferrer">
             Illustrert fra restaurantens egne bilder

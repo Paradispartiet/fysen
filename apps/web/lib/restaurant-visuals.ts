@@ -14,6 +14,13 @@ const karlJohan = {
   sourceUrl: "https://egon.no/restauranter/oslo/egon-karl-johan",
 } as const;
 
+const nordstrand = {
+  logo: byporten.logo,
+  exterior: "/restaurants/egon-nordstrand/exterior.webp",
+  interior: null,
+  sourceUrl: "https://egon.no/restauranter/oslo/egon-nordstrand",
+} as const;
+
 function normalized(value: string): string {
   return value.normalize("NFKC").toLocaleLowerCase("nb-NO").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 }
@@ -21,6 +28,10 @@ function normalized(value: string): string {
 /** Match the branch and street address, independent of archive/live IDs. */
 export function restaurantVisuals(restaurant: RestaurantIdentity) {
   const address = normalized(restaurant.address);
+  if (normalized(restaurant.name) === "egon nordstrand" &&
+      /^ekebergveien 228 ?b(?: |$)/u.test(address)) {
+    return nordstrand;
+  }
   if (normalized(restaurant.name) === "egon karl johan" &&
       (address === "karl johans gate 37" || address.startsWith("karl johans gate 37 "))) {
     return karlJohan;

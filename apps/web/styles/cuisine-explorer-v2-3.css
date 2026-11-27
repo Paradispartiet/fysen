@@ -1375,3 +1375,8 @@ a.cuisineExploreRestaurantName:focus-visible {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* Use the full width while a branch has just one verified scene. */
+.cuisineExploreRestaurantScenes:has(> figure:only-child) {
+  grid-template-columns: minmax(0, 1fr);
+}

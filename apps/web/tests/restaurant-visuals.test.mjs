@@ -24,3 +24,16 @@ test('Karl Johan gets its own scenes and shares only the official chain logo', (
   assert.equal(restaurantVisuals({ ...branch, address: 'Karl Johans gate 370' }), null);
   assert.equal(restaurantVisuals({ ...branch, address: 'Jernbanetorget 6' }), null);
 });
+
+test('Nordstrand matches both address spellings and never borrows another interior', () => {
+  const make = (address) => restaurantVisuals({ name: 'Egon Nordstrand', address });
+  const visuals = make('Ekebergveien 228 B, 1162 Oslo');
+  assert.ok(visuals);
+  assert.deepEqual(make('Ekebergveien 228B, 1162 Oslo'), visuals);
+  assert.equal(visuals.interior, null);
+  assert.match(visuals.exterior, /egon-nordstrand/u);
+  assert.equal(make('Ekebergveien 228'), null);
+  assert.equal(make('Ekebergveien 228C'), null);
+  assert.equal(make('Ekebergveien 2280B'), null);
+  assert.equal(make('Jernbanetorget 6'), null);
+});
