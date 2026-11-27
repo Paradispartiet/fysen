@@ -309,3 +309,57 @@ export const draftFaroeseVisuals = {
   "photoAlt": "Ritstjórnarlig ljósmynd av {name}, ikki matstovumynd",
   "aiAlt": "Myndprýði við eftirgjørdum viti av {name}, ikki matstovumynd"
 } as const satisfies Record<VisualKey,string>;
+
+// Partial search-control drafts. Missing keys are intentional; never use as a runtime fallback.
+export const draftArcticResults = {
+  "kl": {
+    "results": "Ujarnerup inerneri",
+    "filters": "Inernerit immikkoortiterlugit",
+    "maxPrice": "Akigititaq annerpaaq",
+    "allPrices": "Akigititat tamarmik",
+    "distance": "Ungasissuseq",
+    "allDistances": "Ungasissutsit tamarmik",
+    "within": "{km} km iluanni",
+    "reset": "Immikkoortiterinerit piiakkit",
+    "count": "{visible} / {total} takutinneqartut",
+    "hideMap": "Nunap assinga toqqoruk",
+    "showMap": "Nunap assinga takutigiuk",
+    "chooseRestaurant": "Nunap assingani neriniartarfik toqqaruk",
+    "mapTitle": "Nunap assinga: {name}",
+    "largeMap": "Nunap assinga angisooq",
+    "allFetched": "Inernerit pissarsiarineqartut tamarmik",
+    "unknownOpening": "Ammasarfiit ilisimaneqanngillat",
+    "book": "Nerrivik inniminniuk",
+    "order": "Nerisassanik inniminniigit",
+    "hours": "Ammasarfiit",
+    "chooseCuisine": "Nerisassat suussusii toqqakkit",
+    "learnDish": "Nerisassaq pillugu paasisaqarnerugit",
+    "menuMatches": "Nerisassaatini ujarnerup inerneri",
+    "searchDish": "Nerisassaq ujaruk"
+  },
+  "se": {
+    "results": "Ohcanbohtosat ja silliideamit",
+    "filters": "Sille čájehuvvon bohtosiid",
+    "maxPrice": "Alimus haddi",
+    "allPrices": "Buot hadit",
+    "distance": "Gaska",
+    "allDistances": "Buot gaskkat",
+    "within": "{km} km siste",
+    "reset": "Sihko silliidemiid",
+    "count": "Čájeha {visible} / {total} gávdnon borramuša",
+    "hideMap": "Čiega kártta",
+    "showMap": "Čájet kártta",
+    "chooseRestaurant": "Vállje restauráŋŋa kárttas",
+    "mapTitle": "Kárta: {name}",
+    "largeMap": "Stuorra kárta",
+    "allFetched": "Čájet buot viežžon bohtosiid",
+    "unknownOpening": "Rabasáiggit eai leat dovddus",
+    "book": "Diŋgo beavddi",
+    "order": "Diŋgo borramuša",
+    "hours": "Rabasáiggit",
+    "chooseCuisine": "Vállje borramušárbevieru",
+    "learnDish": "Oahpa eanet borramuša birra",
+    "menuMatches": "Čájet borramušlisttuid bohtosiid",
+    "searchDish": "Oza borramuša"
+  }
+} as const satisfies Record<"kl" | "se", Partial<Record<ResultMessageKey,string>>>;

@@ -7,7 +7,7 @@ import assert from "node:assert/strict";
 import { messages,isPreviewLocale } from "../lib/locale-messages.ts";
 import { resultMessages } from "../lib/result-messages.ts";
 import { locales,parseLocale } from "../lib/locales.ts";
-import { reviewLocales,draftCoreMessages,draftFaroeseResults,draftFaroeseKnowledge,draftFaroesePages,draftFaroeseBrowse,draftFaroeseVisuals,reviewState } from "../lib/nordic-review-drafts.ts";
+import { reviewLocales,draftCoreMessages,draftFaroeseResults,draftFaroeseKnowledge,draftFaroesePages,draftFaroeseBrowse,draftFaroeseVisuals,draftArcticResults,reviewState } from "../lib/nordic-review-drafts.ts";
 function check(source,draft){
  assert.deepEqual(Object.keys(draft).sort(),Object.keys(source).sort());
  for(const [key,value] of Object.entries(draft)){
@@ -32,3 +32,14 @@ test("Faroese page UI retains keys and placeholders",()=>check(pageMessages.nb,d
 test("Faroese browse UI retains keys and placeholders",()=>check(browseMessages.nb,draftFaroeseBrowse));
 
 test("Faroese visual UI retains keys and placeholders",()=>check(visualMessages.nb,draftFaroeseVisuals));
+
+test("partial Greenlandic and Northern Sami search drafts only use existing keys",()=>{
+ for(const locale of ["kl","se"]){
+  assert.equal(isPreviewLocale(locale),false);
+  for(const [key,value] of Object.entries(draftArcticResults[locale])){
+   assert.ok(Object.hasOwn(resultMessages.nb,key));
+   assert.ok(value.trim());
+   assert.deepEqual((value.match(/\{\w+\}/gu)??[]).sort(),(resultMessages.nb[key].match(/\{\w+\}/gu)??[]).sort(),key);
+  }
+ }
+});

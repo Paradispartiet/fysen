@@ -106,3 +106,5 @@ Faroese food-knowledge UI now has all 31 message keys drafted, including recipe 
 ### Faroese account, browse and visual review drafts
 
 Added full Faroese draft dictionaries for page/account (66), browse (61) and visual UI (17) messages. Each key and placeholder was compared against Bokmål; original restaurant/menu data and the selectable language set are unchanged. These translations are unreviewed, particularly account/privacy terminology, evidence labels, grammar and accessibility wording. Main was merged using its exact seven changed blobs, including Egon Storo and Ullevaal artwork. No production changes.
+
+Added partial Kalaallisut and Northern Sami search-control drafts (23 keys each), deliberately excluding unreviewed evidence statements and privacy-sensitive explanations. Keys and placeholders were checked, not linguistic accuracy. Both languages are still disabled in the runtime. Faroese now has 239 core/page/browse/result/knowledge/visual keys drafted; cuisine names, image variant names, article summaries/bodies and additional evidence/price strings remain outstanding.
