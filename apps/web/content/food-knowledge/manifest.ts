@@ -154,6 +154,12 @@ export const foodKnowledgeDishIds = [
   "pastilla",
   "shakshuka",
   "merguez",
+  "feijoada",
+  "moqueca",
+  "coxinha",
+  "pao-de-queijo",
+  "acaraje",
+  "brigadeiro",
 ] as const satisfies readonly FoodDishId[];
 
 export const featuredFoodKnowledgeDishIds = [
