@@ -931,6 +931,12 @@ export const foodDishCatalog: readonly FoodDishCatalogEntry[] = [
   {"id":"injera","name":"Injera","query":"injera","aliases":["injeera","enjera","tayta"],"cuisine":"Etiopisk","region":"Etiopia og Eritrea","explorerPriority":92},
   {"id":"kitfo","name":"Kitfo","query":"kitfo","aliases":["kitfo leb leb","ethiopian kitfo"],"cuisine":"Etiopisk","region":"Etiopia","explorerPriority":90},
   {"id":"zigni","name":"Zigni","query":"zigni","aliases":["zigni tsebhi","zigni stew","eritrean beef stew"],"cuisine":"Eritreisk","region":"Eritrea","explorerPriority":88},
+  {"id":"tajine","name":"Tajine","query":"tajine","aliases":["tagine","tadjine","chicken tagine"],"cuisine":"Nordafrikansk","region":"Marokko","explorerPriority":96},
+  {"id":"couscous","name":"Couscous","query":"couscous","aliases":["cous cous","kuskus","couscous aux légumes"],"cuisine":"Nordafrikansk","region":"Maghreb","explorerPriority":94},
+  {"id":"harira","name":"Harira","query":"harira","aliases":["moroccan harira","harira soup"],"cuisine":"Nordafrikansk","region":"Marokko","explorerPriority":92},
+  {"id":"pastilla","name":"Pastilla","query":"pastilla","aliases":["bastilla","b'stilla","bstilla"],"cuisine":"Nordafrikansk","region":"Marokko","explorerPriority":90},
+  {"id":"shakshuka","name":"Shakshuka","query":"shakshuka","aliases":["shakshouka","chakchouka","shakshouka eggs"],"cuisine":"Nordafrikansk","region":"Nord-Afrika og Levanten","explorerPriority":88},
+  {"id":"merguez","name":"Merguez","query":"merguez","aliases":["merguez sausage","merguez pølse"],"cuisine":"Nordafrikansk","region":"Maghreb","explorerPriority":86},
 ];
 
 const catalogById = new Map(foodDishCatalog.map((dish) => [dish.id, dish]));
