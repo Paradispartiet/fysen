@@ -1,5 +1,5 @@
-import { BrowseText, CuisineText } from "./browse-text";
-import { PageText } from "./page-text";
+import { BrowseText, CuisineText, BrowseResultText } from "./browse-text";
+import { LocalizedText } from "./language-preview";
 import { ArchivePrice, ArchiveResultText } from "./localized-archive-result";
 import { cuisines, homeCuisines, discoveryDishesForCuisine } from "./cuisine-explorer-data";
 import { dishSearchHref, foodKnowledgeHref, withPublicBasePath } from "../lib/public-path";
@@ -257,9 +257,9 @@ export function ArchivedMenuBrowse({
                   <h3>{dish.label}</h3>
                 </div>
                 <div className={styles.links}>
-                  <a href={dishSearchHref(dish.query, city)}><PageText message="findDish" /></a>
+                  <a href={dishSearchHref(dish.query, city)}><LocalizedText message="searchButton" /></a>
                   {dish.hasKnowledge ? (
-                    <a href={foodKnowledgeHref(dish.id)}><BrowseText message="aboutDish" values={{name:dish.label}} /></a>
+                    <a href={foodKnowledgeHref(dish.id)}><BrowseResultText message="learnDish" /></a>
                   ) : null}
                 </div>
               </article>
@@ -280,7 +280,7 @@ export function ArchivedMenuBrowse({
                   <h3>{dish.name}</h3>
                 </div>
                 <p className={styles.meta}><BrowseText message={dish.restaurantCount === 1 ? "restaurantsOne" : "restaurantsMany"} values={{count:dish.restaurantCount}} /></p>
-                <a href={dishSearchHref(dish.query, city)}><PageText message="findDish" /></a>
+                <a href={dishSearchHref(dish.query, city)}><LocalizedText message="searchButton" /></a>
               </article>
             ))}
           </div>

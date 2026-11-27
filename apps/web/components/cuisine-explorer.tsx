@@ -315,7 +315,7 @@ function DiscoveryDishList({
               <div className="cuisineExploreDishCopy">
                 <h4 lang={locale}>{dishDisplayName(dish.id, dish.label, locale)}</h4>
                 <p className="cuisineExploreDishEvidence">
-                  {menuEvidenceLabel(evidenceKind, restaurantCount)}
+                  {menuEvidenceLabel(evidenceKind, restaurantCount, locale)}
                 </p>
               </div>
             </div>

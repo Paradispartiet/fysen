@@ -155,8 +155,8 @@ test("a successful empty live API response still exposes the historical menu rou
   assert.match(preview, /response\.browse\?\.dishes\.length === 0/u);
   assert.match(preview, /response\.search\?\.results\.length === 0/u);
   assert.match(archivedView, /browseArchivedMenuDishes\(archive, city, 48\)/u);
-  assert.match(archivedView, /Alle retter i \{city\}/u);
-  assert.match(archivedView, /Finn retten/u);
+  assert.match(archivedView, /<BrowseText message="allCity" values=\{\{city\}\} \/>/u);
+  assert.match(archivedView, /<LocalizedText message="searchButton" \/>/u);
   assert.doesNotMatch(archivedView, /arkivtreff|Meny sist kontrollert|Fersksøket har ingen treff/u);
 });
 
