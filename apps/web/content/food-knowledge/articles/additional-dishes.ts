@@ -7611,5 +7611,344 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
         "href": "https://afghancooks.com/bolani-recipe-hot-pockets/"
       }
     ]
+  },
+  {
+    "dishId": "mac-and-cheese",
+    "summary": "Makaroni med kremet ostesaus, ofte gratinert.",
+    "overview": "Kokt makaroni blandes med en saus av melk og ost. Ovnsvarianten får gyllen overflate.",
+    "history": "Retten er en etablert amerikansk hverdags- og festrett, blant annet i sørstatenes mattradisjoner.",
+    "flavor": "Kremet, salt og fyldig med mild nøttesmak fra ost.",
+    "technique": "Smelt osten i varm saus uten kraftig koking.",
+    "essentials": [
+      "300 g makaroni",
+      "40 g smør",
+      "40 g hvetemel"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 40 min",
+      "ingredients": [
+        "300 g makaroni",
+        "40 g smør",
+        "40 g hvetemel",
+        "500 ml melk",
+        "250 g cheddar",
+        "salt",
+        "pepper"
+      ],
+      "steps": [
+        "Kok makaronien litt kortere enn pakningsanvisningen.",
+        "Smelt smør, rør inn mel og spe med melk. La sausen småkoke til tykk.",
+        "Ta kjelen av varmen og rør inn det meste av osten. Bland med makaronien.",
+        "Fordel i form, topp med resten av osten og gratiner ved 200 °C til gyllen."
+      ]
+    },
+    "variants": [
+      "Kjelevarianten serveres uten gratinering; brødsmuler kan gi sprø topping."
+    ],
+    "serving": [
+      "Server som hovedrett eller til grillmat."
+    ],
+    "commonMistakes": [
+      "Ikke kok ostesausen hardt etter at osten er tilsatt."
+    ],
+    "relatedDishIds": [
+      "cacio-e-pepe",
+      "pastitsio"
+    ],
+    "sources": [
+      {
+        "label": "Serious Eats – Why mac and cheese turns grainy",
+        "href": "https://www.seriouseats.com/how-to-fix-grainy-mac-and-cheese-11893813"
+      },
+      {
+        "label": "Paula Deen – Baked Southern macaroni and cheese",
+        "href": "https://www.pauladeen.com/recipe/baked-southern-macaroni-and-cheese-recipe/"
+      }
+    ]
+  },
+  {
+    "dishId": "buffalo-wings",
+    "summary": "Sprøstekte kyllingvinger vendt i en sterk, syrlig saus.",
+    "overview": "Vingene stekes eller friteres og vendes i en saus basert på sterk chilisaus og smør.",
+    "history": "Den kjente Buffalo-stilen forbindes med Anchor Bar på 1960-tallet, men byens kyllingvingetradisjon er eldre og opphavshistorien omdiskutert.",
+    "flavor": "Sterk, syrlig og smørpreget med sprø overflate.",
+    "technique": "Tørk vingene før steking og vend dem i sausen først ved servering.",
+    "essentials": [
+      "1 kg kyllingvinger",
+      "1 ss olje",
+      "salt"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 50 min",
+      "ingredients": [
+        "1 kg kyllingvinger",
+        "1 ss olje",
+        "salt",
+        "80 ml sterk eddikbasert chilisaus",
+        "40 g smør",
+        "selleristenger",
+        "blåmuggostdipp"
+      ],
+      "steps": [
+        "Tørk vingene, vend med olje og salt og fordel på rist over stekebrett.",
+        "Stek ved 220 °C til sprø og gjennomstekte, minst 74 °C i tykkeste kjøttdel uten å berøre beinet.",
+        "Smelt smøret og bland med chilisausen.",
+        "Vend vingene i sausen og server straks."
+      ]
+    },
+    "variants": [
+      "Hjemmevarianten er ovnsstekt; klassiske Buffalo wings friteres ofte."
+    ],
+    "serving": [
+      "Server med selleri og blåmuggostdipp."
+    ],
+    "commonMistakes": [
+      "Ikke la vingene ligge lenge i sausen hvis de skal holde seg sprø."
+    ],
+    "relatedDishIds": [
+      "yakitori",
+      "satay"
+    ],
+    "sources": [
+      {
+        "label": "Buffalo History Museum – Who served Buffalo’s first wings?",
+        "href": "https://buffalohistory.org/who-served-buffalos-first-wings/"
+      },
+      {
+        "label": "Visit Buffalo – Story of Buffalo wings",
+        "href": "https://visitbuffalo.com/how-it-all-began-the-story-of-buffalo-wings/"
+      }
+    ]
+  },
+  {
+    "dishId": "pulled-pork",
+    "summary": "Langtidsstekt svinekjøtt som trekkes fra hverandre i saftige fibre.",
+    "overview": "Svinebog eller nakke tilberedes langsomt til bindevevet blir mørt.",
+    "history": "Pulled pork er en kjent del av amerikansk barbecuekultur, med ulike regionale sauser og tilberedningsmåter.",
+    "flavor": "Fyldig, mørt og krydret; røykpreg ved tradisjonell røyking.",
+    "technique": "Bruk et stykke med bindevev og fett, og la kjøttet bli mørt nok til å rives.",
+    "essentials": [
+      "1 kg svinebog eller svinenakke",
+      "2 ts paprikapulver",
+      "1 ts pepper"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 5–6 timer",
+      "ingredients": [
+        "1 kg svinebog eller svinenakke",
+        "2 ts paprikapulver",
+        "1 ts pepper",
+        "1 ts hvitløkspulver",
+        "salt",
+        "1 dl eplejuice",
+        "2 ss eplecidereddik",
+        "barbecuesaus etter smak"
+      ],
+      "steps": [
+        "Gni kjøttet med krydder.",
+        "Legg i ildfast gryte med eplejuice og eddik, dekk til og stek ved 150 °C.",
+        "Stek til kjøttet lett kan trekkes fra hverandre, ofte 4–6 timer avhengig av størrelsen.",
+        "La hvile, riv med gafler og bland med litt stekesjy og ønsket saus."
+      ]
+    },
+    "variants": [
+      "Eddikbaserte og tomatbaserte sauser gir ulike profiler. Ovnsvarianten etterligner mørheten, ikke røykingen."
+    ],
+    "serving": [
+      "Server i brød med kålsalat eller som tallerkenrett."
+    ],
+    "commonMistakes": [
+      "Ikke avslutt stekingen bare fordi kjøttet har nådd trygg minimumstemperatur; det må også bli mørt."
+    ],
+    "relatedDishIds": [
+      "bifana",
+      "char-siu"
+    ],
+    "sources": [
+      {
+        "label": "Serious Eats – Pulled pork methods",
+        "href": "https://www.seriouseats.com/pulled-pork-recipes-8637602"
+      },
+      {
+        "label": "Food Network – Simple pulled pork",
+        "href": "https://www.foodnetwork.com/recipes/food-network-kitchen/pulled-pork-7231580"
+      }
+    ]
+  },
+  {
+    "dishId": "jambalaya",
+    "summary": "Krydret risrett med kjøtt, grønnsaker og eventuelt sjømat.",
+    "overview": "Ris kokes i samme gryte som aromater, kraft og andre ingredienser.",
+    "history": "Jambalaya er en sentral Louisiana-rett med både cajun- og kreolske varianter.",
+    "flavor": "Fyldig, krydret og aromatisk.",
+    "technique": "Tilpass kraftmengden til risen og tilsett reker sent i kokingen.",
+    "essentials": [
+      "300 g langkornet ris",
+      "300 g kyllinglårfilet",
+      "150 g andouille eller annen røkt pølse"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 50 min",
+      "ingredients": [
+        "300 g langkornet ris",
+        "300 g kyllinglårfilet",
+        "150 g andouille eller annen røkt pølse",
+        "1 løk",
+        "1 paprika",
+        "2 selleristilker",
+        "2 hvitløksfedd",
+        "400 g tomater",
+        "600 ml kraft, omtrent",
+        "cajunkrydder"
+      ],
+      "steps": [
+        "Brun kylling og pølse i en stor gryte.",
+        "Fres løk, paprika, selleri og hvitløk.",
+        "Tilsett tomat, ris, kraft og krydder og la småkoke under lokk.",
+        "Kok til risen er mør og kyllingen når minst 74 °C; juster kraftmengden ved behov."
+      ]
+    },
+    "variants": [
+      "Kreolske varianter bruker ofte tomat, mens mange cajunvarianter ikke gjør det."
+    ],
+    "serving": [
+      "Server i dype tallerkener med vårløk."
+    ],
+    "commonMistakes": [
+      "Ikke tilsett så mye kraft at risen blir grøtete."
+    ],
+    "relatedDishIds": [
+      "gumbo",
+      "paella-valenciana"
+    ],
+    "sources": [
+      {
+        "label": "Explore Louisiana – Louisiana's famous dishes",
+        "href": "https://www.explorelouisiana.com/articles/louisianas-famous-dishes"
+      },
+      {
+        "label": "Southern Living – Gumbo versus jambalaya",
+        "href": "https://www.southernliving.com/food/seafood/gumbo-vs-jambalaya"
+      }
+    ]
+  },
+  {
+    "dishId": "gumbo",
+    "summary": "Fyldig Louisiana-gryte eller suppe, ofte med mørk jevning, kjøtt eller sjømat.",
+    "overview": "Kraft bygges opp med aromatiske grønnsaker og jevning; retten serveres gjerne med ris ved siden av.",
+    "history": "Gumbo gjenspeiler flere kulinariske tradisjoner i Louisiana og er delstatens offisielle rett.",
+    "flavor": "Dyp, aromatisk og fyldig med ristet preg fra jevningen.",
+    "technique": "Rør mel og olje jevnlig på kontrollert varme til ønsket farge uten å brenne blandingen.",
+    "essentials": [
+      "60 ml nøytral olje",
+      "60 g hvetemel",
+      "1 løk"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 90 min",
+      "ingredients": [
+        "60 ml nøytral olje",
+        "60 g hvetemel",
+        "1 løk",
+        "1 paprika",
+        "2 selleristilker",
+        "2 hvitløksfedd",
+        "600 g kyllinglårfilet",
+        "200 g røkt pølse",
+        "1,2 l kraft",
+        "timian",
+        "kokt ris til servering"
+      ],
+      "steps": [
+        "Varm olje og mel i tykkbunnet gryte. Rør forsiktig til jevningen er nøttebrun.",
+        "Tilsett hakket løk, paprika og selleri og fres videre.",
+        "Spe gradvis med kraft og tilsett kjøtt, pølse og krydder.",
+        "La småkoke til kyllingen er mør og gjennomstekt, minst 74 °C."
+      ]
+    },
+    "variants": [
+      "Sjømatgumbo og varianter med okra eller filépulver har andre smaksprofiler."
+    ],
+    "serving": [
+      "Server med kokt ris og vårløk."
+    ],
+    "commonMistakes": [
+      "Ikke bruk svidd jevning; start heller på nytt."
+    ],
+    "relatedDishIds": [
+      "jambalaya",
+      "harira"
+    ],
+    "sources": [
+      {
+        "label": "Explore Louisiana – Louisiana Gumbo Guide",
+        "href": "https://www.explorelouisiana.com/articles/louisiana-gumbo"
+      },
+      {
+        "label": "Southern Living – Gumbo versus jambalaya",
+        "href": "https://www.southernliving.com/food/seafood/gumbo-vs-jambalaya"
+      }
+    ]
+  },
+  {
+    "dishId": "philly-cheesesteak",
+    "summary": "Varm sandwich med tynne skiver storfekjøtt og smeltet ost.",
+    "overview": "Kjøtt stekes raskt på varm plate og legges i et avlangt brød med ost og eventuelt løk.",
+    "history": "Sandwichen forbindes med Philadelphia og Pat Olivieris kjøttsmørbrød fra rundt 1930; ost ble en del av retten senere.",
+    "flavor": "Saftig, salt og fyldig.",
+    "technique": "Skjær kjøttet svært tynt og stek det i små omganger.",
+    "essentials": [
+      "500 g entrecôte i tynne skiver",
+      "1 stor løk",
+      "150 g provolone eller annen smelteost"
+    ],
+    "recipe": {
+      "label": "Hjemmevariant",
+      "yield": "ca. 4 porsjoner",
+      "time": "ca. 25 min",
+      "ingredients": [
+        "500 g entrecôte i tynne skiver",
+        "1 stor løk",
+        "150 g provolone eller annen smelteost",
+        "4 avlange myke rundstykker",
+        "olje",
+        "salt og pepper"
+      ],
+      "steps": [
+        "Skjær løken i skiver og stek til myk.",
+        "Stek de tynne kjøttskivene raskt på varm plate eller panne til ferdige.",
+        "Fordel osten over kjøttet og la den smelte.",
+        "Fyll varme brød med kjøtt, ost og eventuell stekt løk."
+      ]
+    },
+    "variants": [
+      "Provolone, amerikansk smelteost og Cheez Whiz er vanlige valg."
+    ],
+    "serving": [
+      "Server umiddelbart i brødet."
+    ],
+    "commonMistakes": [
+      "Ikke bruk tykke biffstykker som gjør sandwichen vanskelig å spise."
+    ],
+    "relatedDishIds": [
+      "francesinha",
+      "bifana"
+    ],
+    "sources": [
+      {
+        "label": "Visit Philadelphia – Signature sandwiches",
+        "href": "https://www.visitphilly.com/media-center/press-releases/phillys-signature-sandwiches-cheesesteaks-hoagies-roast-pork/"
+      }
+    ]
   }
 ];
