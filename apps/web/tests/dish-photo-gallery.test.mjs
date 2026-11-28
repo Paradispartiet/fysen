@@ -45,7 +45,7 @@ const grilledSteak = readFileSync(path.join(web, "public/dish-images/grillet-bif
 const shrimpOpenSandwich = readFileSync(path.join(web, "public/dish-images/rekesmorbrod-thumb-512.avif"));
 const series04 = readFileSync(path.join(web, "public/dish-images/series-04.avif"));
 const tomYum = readFileSync(path.join(web, "public/dish-images/tom-yum-thumb-512.avif"));
-const sambar = readFileSync(path.join(web, "public/dish-images/sambar-768.avif"));
+const sambar = readFileSync(path.join(web, "public/dish-images/sambar-thumb-512.avif"));
 const pho = readFileSync(path.join(web, "public/dish-images/pho-bo-thumb-512.avif"));
 const manifest = JSON.parse(readFileSync(path.join(web, "public/dish-images/manifest.json"), "utf8"));
 const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
@@ -168,9 +168,9 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.slice(0, 44).map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.slice(0, 44).entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-thumb-512.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-thumb-512.avif" : index === 17 ? "gyoza-thumb-512.avif" : index === 18 ? "pho-bo-thumb-512.avif" : index === 19 ? "bibimbap-thumb-512.avif" : index === 20 ? "falafel-thumb-512.avif" : index === 21 ? "tacos-al-pastor-thumb-512.avif" : index === 22 ? "chana-masala-thumb-512.avif" : index === 23 ? "masala-dosa-thumb-512.avif" : index === 24 ? "chicken-katsu-thumb-512.avif" : index === 25 ? "yakitori-thumb-512.avif" : index === 26 ? "udon-tempura-thumb-512.avif" : index === 27 ? "bao-braised-pork-thumb-512.avif" : index === 28 ? "dumplings-thumb-512.avif" : index === 29 ? "mapo-tofu-thumb-512.avif" : index === 30 ? "peking-duck-thumb-512.avif" : index === 31 ? "dan-dan-noodles-thumb-512.avif" : index === 32 ? "green-curry-thumb-512.avif" : index === 33 ? "tom-yum-thumb-512.avif" : index === 34 ? "pad-kra-pao-thumb-512.avif" : index === 35 ? "banh-mi-thumb-512.avif" : index === 36 ? "bun-cha-thumb-512.avif" : index === 37 ? "goi-cuon-thumb-512.avif" : index === 38 ? "tandoori-chicken-thumb-512.avif" : index === 39 ? "naan-thumb-512.avif" : index === 40 ? "dal-makhani-thumb-512.avif" : index === 41 ? "idli-thumb-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-thumb-512.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-thumb-512.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-thumb-512.avif" : index === 17 ? "gyoza-thumb-512.avif" : index === 18 ? "pho-bo-thumb-512.avif" : index === 19 ? "bibimbap-thumb-512.avif" : index === 20 ? "falafel-thumb-512.avif" : index === 21 ? "tacos-al-pastor-thumb-512.avif" : index === 22 ? "chana-masala-thumb-512.avif" : index === 23 ? "masala-dosa-thumb-512.avif" : index === 24 ? "chicken-katsu-thumb-512.avif" : index === 25 ? "yakitori-thumb-512.avif" : index === 26 ? "udon-tempura-thumb-512.avif" : index === 27 ? "bao-braised-pork-thumb-512.avif" : index === 28 ? "dumplings-thumb-512.avif" : index === 29 ? "mapo-tofu-thumb-512.avif" : index === 30 ? "peking-duck-thumb-512.avif" : index === 31 ? "dan-dan-noodles-thumb-512.avif" : index === 32 ? "green-curry-thumb-512.avif" : index === 33 ? "tom-yum-thumb-512.avif" : index === 34 ? "pad-kra-pao-thumb-512.avif" : index === 35 ? "banh-mi-thumb-512.avif" : index === 36 ? "bun-cha-thumb-512.avif" : index === 37 ? "goi-cuon-thumb-512.avif" : index === 38 ? "tandoori-chicken-thumb-512.avif" : index === 39 ? "naan-thumb-512.avif" : index === 40 ? "dal-makhani-thumb-512.avif" : index === 41 ? "idli-thumb-512.avif" : index === 42 ? "sambar-thumb-512.avif" : "medu-vada-thumb-512.avif");
     assert.equal(image.surface, "Matlyst");
-    assert.equal(image.kind, index !== 42 ? "Redaksjonelt rettfoto" : "AI-illustrasjon");
+    assert.equal(image.kind, "Redaksjonelt rettfoto");
   }
   assert.match(explorer, /<DishPhotoGallery \/>/u);
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
@@ -337,26 +337,33 @@ test("Steak and shrimp sandwich use separate, sharp 512px gallery originals", ()
   assert.doesNotMatch(mapping, /^\s*"?rekesmorbrod"?:/mu);
 });
 
-test("Sambar has its own accurate 768px illustration with exact catalog ID", () => {
-  assert.equal(sambar.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(sambar.length > 25000, "Sambar needs a real food image, not a placeholder");
-  const marker = sambar.indexOf(Buffer.from("ispe"));
-  assert.ok(marker > 0);
-  assert.equal(sambar.readUInt32BE(marker + 8), 768);
-  assert.equal(sambar.readUInt32BE(marker + 12), 768);
-  assert.match(gallery, /id: "sambar", label: "Sambar med linser og grønnsaker"/u);
-  assert.match(gallery, /sambar: 42/u);
-  assert.equal(galleryIds[42], manifest.images[42].id);
-
-  assert.match(gallery, /dishPhotoSmall dishPhotoSambar/u);
-  assert.match(css, /sambar-768\.avif/u);
-  assert.match(gallery, /Utforsk \{illustratedDishes\.length\} retter/u);
+test("Sambar uses its reviewed native photo and independent 512px thumbnail", () => {
   const image = manifest.images[42];
   assert.equal(image.id, "sambar");
   assert.equal(image.catalogId, "sambar");
-  assert.equal(image.atlas, "sambar-768.avif");
-  assert.match(image.variantCaution, /linse/u);
-  assert.match(image.variantCaution, /restaurantfoto/u);
+  assert.equal(image.kind, "Redaksjonelt rettfoto");
+  assert.equal(image.atlas, "sambar-thumb-512.avif");
+  assert.equal(image.largeSource, "sambar-master-2721.avif");
+  assert.equal(image.largeViewEnabled, true);
+  assert.equal(image.photoCredit, "Raksanand / Wikimedia Commons · CC BY-SA 4.0 · manuell frilegging");
+  assert.equal(image.photoSource, "https://commons.wikimedia.org/wiki/File:Tiffin_sambar.jpg");
+  assert.equal(image.photoLicense, "https://creativecommons.org/licenses/by-sa/4.0/");
+  assert.equal(image.variantCaution, "Tiffin sambar, sørindisk linsegryte i kobberkar, med koriander. Serveringsvariant; ikke restaurantfoto fra Fysen. Ingredienser og allergener kan ikke utledes fra bildet.");
+  const master = readFileSync(path.join(web, "public/dish-images", image.largeSource));
+  for (const [bytes, width, height, sha] of [[sambar, 512, 512, "3851e78ccd54bf2c4086592dee832d3f1a0f5ceb54bddc36c311f7cf64392c63"], [master, 2721, 3162, "625135bf1e8bf6289b9fdc622d663031e895113897b4f324262f41fd31ea8b78"]]) {
+    assert.equal(bytes.toString("ascii", 4, 12), "ftypavif");
+    const marker = bytes.indexOf(Buffer.from("ispe"));
+    assert.ok(marker > 0);
+    assert.equal(bytes.readUInt32BE(marker + 8), width);
+    assert.equal(bytes.readUInt32BE(marker + 12), height);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), sha);
+  }
+  assert.match(gallery, /id: "sambar", label: "Tiffin sambar med linser"/u);
+  assert.match(gallery, /sambar: 42/u);
+  assert.equal(galleryIds[42], image.id);
+  assert.match(css, /sambar-thumb-512\.avif/u);
+  assert.match(gallery, /Utforsk \{illustratedDishes\.length\} retter/u);
+
 });
 
 test("Four standalone dish photos preserve exact variants and suitable native thumbnails", () => {
