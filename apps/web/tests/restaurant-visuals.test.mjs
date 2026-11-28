@@ -115,3 +115,12 @@ test('Schrøder interior carries separate date, source and license', () => {
  assert.notEqual(p.interiorPhoto.licenseUrl,p.licenseUrl);
  assert.equal(p.photoDate,'2007-06-09');
 });
+
+test('official chain logo is shared while branch photos remain distinct', () => {
+ const a=restaurantVisuals({name:'Peppes Pizza - Ensjø',address:'Rolf Hofmos gate 34'});
+ const b=restaurantVisuals({name:'Peppes Pizza Stortingsgata',address:'Stortingsgata 4'});
+ assert.equal(a.logo,'/restaurants/peppes/logo.svg');
+ assert.equal(a.logo,b.logo);
+ assert.notEqual(a.exterior,b.exterior);
+ assert.equal(restaurantVisuals({name:'D/S Louise',address:'Stranden 3'}).logo,'/restaurants/louise/logo.svg');
+});
