@@ -133,3 +133,15 @@ test('Lorry combines a licensed facade photo and separately sourced illustration
  assert.equal(p.photoDate,'2020-04-22');
  assert.equal(p.logo,'/restaurants/lorry/logo.png');
 });
+
+test('Kaffistova uses its official identity and verified building or entrance address', () => {
+ const make=address=>restaurantVisuals({name:'Kaffistova',address});
+ const p=make("Rosenkrantz' gate 8, 0159 Oslo");
+ assert.ok(p);
+ assert.equal(p.exterior,null);
+ assert.equal(p.logo,'/restaurants/kaffistova/logo.png');
+ assert.equal(p.interior,'/restaurants/kaffistova/interior.webp');
+ assert.deepEqual(make('Kristian IVs gate 2'),p);
+ assert.equal(make("Rosenkrantz' gate 80"),null);
+ assert.equal(make('Kristian IVs gate 20'),null);
+});
