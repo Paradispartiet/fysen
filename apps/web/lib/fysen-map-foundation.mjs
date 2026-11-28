@@ -1,14 +1,14 @@
 // Pure map data and style helpers. No provider requests at import time.
 export const FYSEN_MAP_STYLE_URL = "https://tiles.openfreemap.org/styles/positron";
 export const FYSEN_MAP_COLORS = Object.freeze({
-  background: "#F4F0E8",
-  paper: "#FCFAF5",
-  building: "#E5DDD0",
-  park: "#DCE4D2",
-  water: "#BCD5DE",
-  road: "#FCFAF5",
-  ink: "#171713",
-  restaurant: "#B45132",
+  background: "#171c19",
+  paper: "#242a26",
+  building: "#303731",
+  park: "#203426",
+  water: "#18303b",
+  road: "#57645a",
+  ink: "#e8eee6",
+  restaurant: "#b9df9a",
 });
 
 export function restaurantMapFeatures(rows) {
@@ -46,10 +46,17 @@ export function fysenBaseStyle(style) {
       if (source === "water") paint["fill-color"] = c.water;
       else if (source === "building") paint["fill-color"] = c.building;
       else if (source === "park" || /park|grass|wood|forest/.test(id)) paint["fill-color"] = c.park;
+      else if (source === "landcover" || source === "landuse") paint["fill-color"] = c.paper;
+      if ("fill-outline-color" in paint) paint["fill-outline-color"] = c.building;
     }
-    if (layer.type === "line" && source === "transportation"
-      && /road|street|highway|motorway/.test(id) && !/casing|outline|rail|tunnel/.test(id)) {
-      paint["line-color"] = c.road;
+    if (layer.type === "line") {
+      if (source === "transportation") paint["line-color"] = /casing|outline/.test(id) ? c.background : c.road;
+      else if (source === "waterway") paint["line-color"] = c.water;
+      else if (source === "boundary") paint["line-color"] = "#48524a";
+    }
+    if (layer.type === "symbol" && (layer.layout?.["text-field"] || "text-color" in paint)) {
+      paint["text-color"] = c.ink;
+      paint["text-halo-color"] = c.background;
     }
     return [{ ...layer, paint }];
   });
