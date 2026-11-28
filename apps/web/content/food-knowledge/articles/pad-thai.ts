@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Serveres med lime, peanøtter og chili slik at gjesten kan justere selv.","Bønnespirer bør beholde tydelig sprøhet."],
   commonMistakes: ["Å koke risnudlene helt ferdige før wokingen.","For mye saus som gjør retten søt og klissete.","For liten eller kald panne som damper i stedet for å woksteke."],
   relatedDishIds: ["tom-yum","green-curry","pad-kra-pao","pho"],
-  sources: []
+  sources: [{"label":"Tourism Authority of Thailand – Thai recipes","href":"https://www.tourismthailand.my/thaifood_recipes.php"}]
 };
