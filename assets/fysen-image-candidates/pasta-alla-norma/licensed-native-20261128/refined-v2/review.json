@@ -1,0 +1,35 @@
+{
+  "id": "pasta-alla-norma",
+  "filename": "Pasta_alla_Norma_-_Wiki_Loves_Sicilia.jpg",
+  "photographer": "8w9d",
+  "size": [
+    3820,
+    2747
+  ],
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "variant": "Pasta alla Norma",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Pasta_alla_Norma_-_Wiki_Loves_Sicilia.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Pasta_alla_Norma_-_Wiki_Loves_Sicilia.jpg",
+  "source_sha256": "1c0a5064fe855a9a8c8e12d24e3a3806cbb7fb325c4d9a98aa09baa3567b567b",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "native_crop": [
+    206,
+    31,
+    3527,
+    2737
+  ],
+  "native_size": [
+    3321,
+    2706
+  ],
+  "sha256": {
+    "pasta-alla-norma.png": "a68b9ad56b70fb264f6fb1d882f471720630ff60078899049efe52230f2a938f",
+    "native-mask.png": "5877dd1328973281609bf879368b6237d459a41ce492ae6a4d3f4fb84c39c002",
+    "pasta-alla-norma-master-3321.avif": "5e9dd8710ab66e3303fe47a049ad355ad1056b6c613a4dff0d75a28815341ea7",
+    "pasta-alla-norma-thumb-512.avif": "8858af91207edb9e04639c74955cb0d590b50c9023730b8e9f4076cbc0e0be63"
+  },
+  "modification": "Manual native-resolution plate contour; no upscale or generated food pixels"
+}

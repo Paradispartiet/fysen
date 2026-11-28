@@ -1,0 +1,19 @@
+{
+  "id": "hummus",
+  "filename": "Hummus_plate.jpg",
+  "photographer": "Orenrosenfeld",
+  "size": [
+    3264,
+    2448
+  ],
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "variant": "Hummus as main dish",
+  "slot": "alternative-orenrosenfeld",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Hummus_plate.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Hummus_plate.jpg",
+  "source_sha256": "dabce5b6d05257e7f4931b781a56f52d9138d66c221c89086f92e05e8d3cd420",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false
+}
