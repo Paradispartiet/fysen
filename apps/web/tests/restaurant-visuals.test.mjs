@@ -124,3 +124,12 @@ test('official chain logo is shared while branch photos remain distinct', () => 
  assert.notEqual(a.exterior,b.exterior);
  assert.equal(restaurantVisuals({name:'D/S Louise',address:'Stranden 3'}).logo,'/restaurants/louise/logo.svg');
 });
+
+test('Lorry combines a licensed facade photo and separately sourced illustration', () => {
+ const p = restaurantVisuals({name:'Lorry Restaurant',address:'Parkveien 12'});
+ assert.equal(p.interior,'/restaurants/lorry/interior.webp');
+ assert.equal(p.interiorIllustrationSource,'https://lorry.no/');
+ assert.equal('interiorPhoto' in p,false);
+ assert.equal(p.photoDate,'2020-04-22');
+ assert.equal(p.logo,'/restaurants/lorry/logo.png');
+});
