@@ -37,12 +37,6 @@ const masalaDosaImage = readFileSync(path.join(web, "public/dish-images/masala-d
 const chickenKatsuImage = readFileSync(path.join(web, "public/dish-images/chicken-katsu-thumb-512.avif"));
 const yakitoriImage = readFileSync(path.join(web, "public/dish-images/yakitori-thumb-512.avif"));
 const udonTempuraImage = readFileSync(path.join(web, "public/dish-images/udon-tempura-thumb-512.avif"));
-const baoImage = readFileSync(path.join(web, "public/dish-images/bao-768.avif"));
-const dumplingsImage = readFileSync(path.join(web, "public/dish-images/dumplings-768.avif"));
-const mapoTofuImage = readFileSync(path.join(web, "public/dish-images/mapo-tofu-768.avif"));
-const pekingDuckImage = readFileSync(path.join(web, "public/dish-images/peking-duck-768.avif"));
-const danDanNoodlesImage = readFileSync(path.join(web, "public/dish-images/dan-dan-noodles-768.avif"));
-const greenCurryImage = readFileSync(path.join(web, "public/dish-images/green-curry-768.avif"));
 const shrimpPadThaiImage = readFileSync(path.join(web, "public/dish-images/pad-thai-reker-thumb-512.avif"));
 const tiramisuImage = readFileSync(path.join(web, "public/dish-images/tiramisu-thumb-512.avif"));
 const carbonaraImage = readFileSync(path.join(web, "public/dish-images/carbonara-thumb-512.avif"));
@@ -51,16 +45,11 @@ const grilledSteak = readFileSync(path.join(web, "public/dish-images/grillet-bif
 const shrimpOpenSandwich = readFileSync(path.join(web, "public/dish-images/rekesmorbrod-thumb-512.avif"));
 const series04 = readFileSync(path.join(web, "public/dish-images/series-04.avif"));
 const tomYum = readFileSync(path.join(web, "public/dish-images/tom-yum-thumb-512.avif"));
-const padKraPao = readFileSync(path.join(web, "public/dish-images/pad-kra-pao-384.avif"));
-const banhMi = readFileSync(path.join(web, "public/dish-images/banh-mi-512.avif"));
-const bunCha = readFileSync(path.join(web, "public/dish-images/bun-cha-512.avif"));
-const goiCuon = readFileSync(path.join(web, "public/dish-images/goi-cuon-768.avif"));
-const tandoori = readFileSync(path.join(web, "public/dish-images/tandoori-chicken-768.avif"));
-const naan = readFileSync(path.join(web, "public/dish-images/naan-768.avif"));
-const dalMakhani = readFileSync(path.join(web, "public/dish-images/dal-makhani-768.avif"));
-const idli = readFileSync(path.join(web, "public/dish-images/idli-512.avif"));
+const tandoori = readFileSync(path.join(web, "public/dish-images/tandoori-chicken-thumb-512.avif"));
+const naan = readFileSync(path.join(web, "public/dish-images/naan-thumb-512.avif"));
+const idli = readFileSync(path.join(web, "public/dish-images/idli-thumb-512.avif"));
 const sambar = readFileSync(path.join(web, "public/dish-images/sambar-768.avif"));
-const vada = readFileSync(path.join(web, "public/dish-images/medu-vada-768.avif"));
+const vada = readFileSync(path.join(web, "public/dish-images/medu-vada-thumb-512.avif"));
 const pho = readFileSync(path.join(web, "public/dish-images/pho-bo-thumb-512.avif"));
 const manifest = JSON.parse(readFileSync(path.join(web, "public/dish-images/manifest.json"), "utf8"));
 const catalog = readFileSync(path.join(web, "content/food-knowledge/catalog.ts"), "utf8");
@@ -179,9 +168,9 @@ test("Every generated and approved image is represented in the published Matlyst
   assert.deepEqual(manifest.images.map((entry) => entry.id), entries.map((match) => match[1]));
   for (const [index, image] of manifest.images.entries()) {
     assert.equal(image.index, index);
-    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-thumb-512-illustration.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-thumb-512.avif" : index === 17 ? "gyoza-thumb-512.avif" : index === 18 ? "pho-bo-thumb-512.avif" : index === 19 ? "bibimbap-thumb-512.avif" : index === 20 ? "falafel-thumb-512.avif" : index === 21 ? "tacos-al-pastor-thumb-512.avif" : index === 22 ? "chana-masala-thumb-512.avif" : index === 23 ? "masala-dosa-thumb-512.avif" : index === 24 ? "chicken-katsu-thumb-512.avif" : index === 25 ? "yakitori-thumb-512.avif" : index === 26 ? "udon-tempura-thumb-512.avif" : index === 27 ? "bao-768.avif" : index === 28 ? "dumplings-768.avif" : index === 29 ? "mapo-tofu-768.avif" : index === 30 ? "peking-duck-768.avif" : index === 31 ? "dan-dan-noodles-768.avif" : index === 32 ? "green-curry-768.avif" : index === 33 ? "tom-yum-thumb-512.avif" : index === 34 ? "pad-kra-pao-384.avif" : index === 35 ? "banh-mi-512.avif" : index === 36 ? "bun-cha-512.avif" : index === 37 ? "goi-cuon-768.avif" : index === 38 ? "tandoori-chicken-768.avif" : index === 39 ? "naan-768.avif" : index === 40 ? "dal-makhani-768.avif" : index === 41 ? "idli-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-768.avif");
+    assert.equal(image.atlas, index === 0 ? "pizza-margherita-thumb-512.avif" : index === 1 ? "cheeseburger-thumb-512.avif" : index === 2 ? "grillet-laks-thumb-512.avif" : index === 3 ? "grillet-biff-thumb-512.avif" : index === 4 ? "rekesmorbrod-thumb-512.avif" : index === 5 ? "sushi-thumb-512.avif" : index === 6 ? "ramen-thumb-512.avif" : index === 7 ? "pasta-bolognese-thumb-512.avif" : index === 8 ? "pizza-prosciutto-thumb-512.avif" : index === 9 ? "kebab-pita-thumb-512-illustration.avif" : index === 10 ? "carbonara-thumb-512.avif" : index === 11 ? "butter-chicken-thumb-512.avif" : index === 12 ? "pad-thai-reker-thumb-512.avif" : index === 13 ? "stekt-hvit-fisk-thumb-512.avif" : index === 14 ? "tiramisu-thumb-512.avif" : index === 15 ? "pizza-marinara-thumb-512.avif" : index === 16 ? "cacio-e-pepe-thumb-512.avif" : index === 17 ? "gyoza-thumb-512.avif" : index === 18 ? "pho-bo-thumb-512.avif" : index === 19 ? "bibimbap-thumb-512.avif" : index === 20 ? "falafel-thumb-512.avif" : index === 21 ? "tacos-al-pastor-thumb-512.avif" : index === 22 ? "chana-masala-thumb-512.avif" : index === 23 ? "masala-dosa-thumb-512.avif" : index === 24 ? "chicken-katsu-thumb-512.avif" : index === 25 ? "yakitori-thumb-512.avif" : index === 26 ? "udon-tempura-thumb-512.avif" : index === 27 ? "bao-braised-pork-thumb-512.avif" : index === 28 ? "dumplings-thumb-512.avif" : index === 29 ? "mapo-tofu-thumb-512.avif" : index === 30 ? "peking-duck-thumb-512.avif" : index === 31 ? "dan-dan-noodles-thumb-512.avif" : index === 32 ? "green-curry-thumb-512.avif" : index === 33 ? "tom-yum-thumb-512.avif" : index === 34 ? "pad-kra-pao-thumb-512.avif" : index === 35 ? "banh-mi-thumb-512.avif" : index === 36 ? "bun-cha-thumb-512.avif" : index === 37 ? "goi-cuon-thumb-512.avif" : index === 38 ? "tandoori-chicken-thumb-512.avif" : index === 39 ? "naan-thumb-512.avif" : index === 40 ? "dal-makhani-thumb-512.avif" : index === 41 ? "idli-thumb-512.avif" : index === 42 ? "sambar-768.avif" : "medu-vada-thumb-512.avif");
     assert.equal(image.surface, "Matlyst");
-    assert.equal(image.kind, [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,33].includes(index) ? "Redaksjonelt rettfoto" : "AI-illustrasjon");
+    assert.equal(image.kind, index !== 9 && index !== 42 ? "Redaksjonelt rettfoto" : "AI-illustrasjon");
   }
   assert.match(explorer, /<DishPhotoGallery \/>/u);
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
@@ -247,38 +236,6 @@ test("Tom yum is a dedicated, sharp 512px image with precise editorial placement
 });
 
 
-test("Pad kra pao uses its own sharp 384px image and exact catalog ID", () => {
-  assert.equal(padKraPao.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(padKraPao.length > 4000);
-  const marker = padKraPao.indexOf(Buffer.from("ispe"));
-  assert.ok(marker > 0, "AVIF size box required");
-  assert.equal(padKraPao.readUInt32BE(marker + 8), 384);
-  assert.equal(padKraPao.readUInt32BE(marker + 12), 384);
-  assert.match(gallery, /id: "pad-kra-pao", label: "Pad kra pao med speilegg"/u);
-  assert.match(gallery, /"pad-kra-pao": 34/u);
-  assert.match(gallery, /index === 34/u);
-  assert.match(css, /dishPhotoThumb\.dishPhotoPadKraPao/u);
-  assert.match(css, /pad-kra-pao-384\.avif/u);
-  assert.ok(manifest.images.some(image => image.id === "pad-kra-pao" &&
-    image.catalogId === "pad-kra-pao" && image.variantCaution.includes("speilegg")));
-});
-
-test("Banh mi is a sharp 512px illustration with exact catalog ID and variant caution", () => {
-  assert.equal(banhMi.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(banhMi.length > 15000);
-  const pos = banhMi.indexOf(Buffer.from("ispe"));
-  assert.ok(pos > 0);
-  assert.equal(banhMi.readUInt32BE(pos + 8), 512);
-  assert.equal(banhMi.readUInt32BE(pos + 12), 512);
-  assert.match(gallery, /id: "banh-mi", label: "Bánh mì med kjøtt og syltede grønnsaker"/u);
-  assert.match(gallery, /"banh-mi": 35/u);
-  assert.match(gallery, /index === 35/u);
-  assert.match(gallery, /dishPhotoBanhMi/u);
-  assert.match(css, /banh-mi-512\.avif/u);
-  assert.ok(manifest.images.some((image) => image.id === "banh-mi" &&
-    image.catalogId === "banh-mi" && image.variantCaution.includes("pâté")));
-});
-
 test("Phở bò uses source-verified full master and separate 512px thumbnail", () => {
   assert.equal(pho.toString("ascii", 4, 12), "ftypavif");
   assert.ok(pho.length > 20000);
@@ -302,24 +259,6 @@ test("Phở bò uses source-verified full master and separate 512px thumbnail", 
   assert.ok(manifest.images.some((entry) => entry.largeViewEnabled === true && entry.largeSource === "pho-bo-master-5472.avif" && galleryIds.includes(entry.id)));
   assert.match(photo.variantCaution, /storfekjøtt/u);
 });
-
-test("Bún chả has its own sharp 512px image with correct editorial identity", () => {
-  assert.equal(bunCha.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(bunCha.length > 25000);
-  const marker = bunCha.indexOf(Buffer.from("ispe"));
-  assert.ok(marker > 0);
-  assert.equal(bunCha.readUInt32BE(marker + 8), 512);
-  assert.equal(bunCha.readUInt32BE(marker + 12), 512);
-  assert.match(gallery, /id: "bun-cha", label: "Bún chả med grillet svinekjøtt"/u);
-  assert.match(gallery, /"bun-cha": 36/u);
-  assert.match(gallery, /index === 36/u);
-  assert.match(css, /dishPhotoThumb\.dishPhotoBunCha/u);
-  assert.match(css, /bun-cha-512\.avif/u);
-  assert.ok(manifest.images.some((entry) =>
-    entry.id === "bun-cha" && entry.catalogId === "bun-cha"
-    && entry.variantCaution.includes("svinekjøtt")));
-});
-
 
 test("Pizza margherita uses its own sharp 512px source instead of atlas slot zero", () => {
   assert.equal(pizzaMargherita.toString("ascii", 4, 12), "ftypavif");
@@ -375,29 +314,6 @@ test("Grilled salmon has a standalone 512px image and no invented restaurant or 
   assert.doesNotMatch(mapping, /^\s*"?grillet-laks"?:/mu);
 });
 
-test("Gỏi cuốn uses a dedicated 768px image and only the exact shrimp variant", () => {
-  assert.equal(goiCuon.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(goiCuon.length > 30000, "Use the real optimized illustration, not a placeholder");
-  const marker = goiCuon.indexOf(Buffer.from("ispe"));
-  assert.ok(marker > 0, "AVIF spatial size box must exist");
-  assert.equal(goiCuon.readUInt32BE(marker + 8), 768);
-  assert.equal(goiCuon.readUInt32BE(marker + 12), 768);
-  assert.match(gallery, /id: "vietnamese-spring-rolls", label: "Gỏi cuốn med reker"/u);
-  assert.match(gallery, /"vietnamese-spring-rolls": 37/u);
-  assert.equal(galleryIds[37], manifest.images[37].id);
-  assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`), "Gallery teaser must match the image manifest");
-
-  assert.match(gallery, /dishPhotoSmall dishPhotoGoiCuon/u);
-  assert.match(css, /goi-cuon-768\.avif/u);
-  const image = manifest.images[37];
-  assert.equal(image.id, "vietnamese-spring-rolls");
-  assert.equal(image.catalogId, "vietnamese-spring-rolls");
-  assert.equal(image.atlas, "goi-cuon-768.avif");
-  assert.match(image.variantCaution, /reker/u);
-  assert.match(image.variantCaution, /peanøttsaus/u);
-  assert.match(image.variantCaution, /vegetariske/u);
-});
-
 test("Steak and shrimp sandwich use separate, sharp 512px gallery originals", () => {
   for (const [bytes, index, id, , file] of [
     [grilledSteak, 3, "grillet-biff", "dishPhotoGrilledSteak", "grillet-biff-thumb-512.avif"],
@@ -421,91 +337,6 @@ test("Steak and shrimp sandwich use separate, sharp 512px gallery originals", ()
   assert.doesNotMatch(mapping, /^\s*"?rekesmorbrod"?:/mu);
 });
 
-test("Tandoori chicken is a 768px exact-match chicken-only illustration", () => {
-  assert.equal(tandoori.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(tandoori.length > 30000, "Tandoori must use a real illustration, not an empty placeholder");
-  const marker = tandoori.indexOf(Buffer.from("ispe"));
-  assert.ok(marker > 0);
-  assert.equal(tandoori.readUInt32BE(marker + 8), 768);
-  assert.equal(tandoori.readUInt32BE(marker + 12), 768);
-  assert.match(gallery, /id: "tandoori", label: "Tandoorikylling"/u);
-  assert.match(gallery, /tandoori: 38/u);
-  assert.equal(galleryIds[38], manifest.images[38].id);
-
-  assert.match(gallery, /dishPhotoSmall dishPhotoTandoori/u);
-  assert.match(css, /tandoori-chicken-768\.avif/u);
-  const image = manifest.images[38];
-  assert.equal(image.catalogId, "tandoori");
-  assert.equal(image.atlas, "tandoori-chicken-768.avif");
-  assert.match(image.variantCaution, /kylling/u);
-  assert.match(image.variantCaution, /vegetarisk/u);
-  assert.match(image.variantCaution, /restaurant/u);
-});
-
-test("Naan has a dedicated 768px food image on black with a precise catalog ID", () => {
-  assert.equal(naan.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(naan.length > 30000, "Naan image must contain the real optimized illustration");
-  const marker = naan.indexOf(Buffer.from("ispe"));
-  assert.ok(marker > 0, "AVIF spatial image marker is required");
-  assert.equal(naan.readUInt32BE(marker + 8), 768);
-  assert.equal(naan.readUInt32BE(marker + 12), 768);
-  assert.match(gallery, /id: "naan", label: "Naan med smør og urter"/u);
-  assert.match(gallery, /naan: 39/u);
-  assert.equal(galleryIds[39], manifest.images[39].id);
-  assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`), "Gallery teaser must match the image manifest");
-
-  assert.match(gallery, /dishPhotoSmall dishPhotoNaan/u);
-  assert.match(css, /naan-768\.avif/u);
-  const image = manifest.images[39];
-  assert.equal(image.id, "naan");
-  assert.equal(image.catalogId, "naan");
-  assert.equal(image.atlas, "naan-768.avif");
-  assert.match(image.variantCaution, /smør/u);
-  assert.match(image.variantCaution, /melkeallergi/u);
-});
-
-test("Dal makhani has its own 768px image with precise catalog ID and dairy caution", () => {
-  assert.equal(dalMakhani.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(dalMakhani.length > 30000, "Dal makhani must contain a real sharp image");
-  const marker = dalMakhani.indexOf(Buffer.from("ispe"));
-  assert.ok(marker > 0);
-  assert.equal(dalMakhani.readUInt32BE(marker + 8), 768);
-  assert.equal(dalMakhani.readUInt32BE(marker + 12), 768);
-  assert.match(gallery, /id: "dal-makhani", label: "Dal makhani med smør og fløte"/u);
-  assert.match(gallery, /"dal-makhani": 40/u);
-  assert.equal(galleryIds[40], manifest.images[40].id);
-  assert.ok(gallery.includes(`Utforsk ${manifest.images.length} retter`));
-
-  assert.match(gallery, /dishPhotoSmall dishPhotoDalMakhani/u);
-  assert.match(css, /dal-makhani-768\.avif/u);
-  const image = manifest.images[40];
-  assert.equal(image.id, "dal-makhani");
-  assert.equal(image.catalogId, "dal-makhani");
-  assert.equal(image.atlas, "dal-makhani-768.avif");
-  assert.match(image.variantCaution, /smør/u);
-  assert.match(image.variantCaution, /fløte/u);
-  assert.match(image.variantCaution, /melkeallergi/u);
-});
-
-test("Idli is a high-density black-background image with correct variant ID", () => {
-  assert.equal(idli.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(idli.length > 6000, "Image must contain an actual illustration, not a placeholder");
-  const marker = idli.indexOf(Buffer.from("ispe"));
-  assert.ok(marker > 0);
-  assert.equal(idli.readUInt32BE(marker + 8), 512);
-  assert.equal(idli.readUInt32BE(marker + 12), 512);
-  assert.match(gallery, /id: "idli", label: "Idli med sambar og chutney"/u);
-  assert.match(gallery, /idli: 41/u);
-  assert.equal(galleryIds[41], manifest.images[41].id);
-  assert.match(css, /idli-512\.avif/u);
-  const image = manifest.images[41];
-  assert.equal(image.id, "idli");
-  assert.equal(image.catalogId, "idli");
-  assert.equal(image.atlas, "idli-512.avif");
-  assert.match(image.variantCaution, /sambar/u);
-  assert.match(image.variantCaution, /restaurantfoto/u);
-});
-
 test("Sambar has its own accurate 768px illustration with exact catalog ID", () => {
   assert.equal(sambar.toString("ascii", 4, 12), "ftypavif");
   assert.ok(sambar.length > 25000, "Sambar needs a real food image, not a placeholder");
@@ -527,28 +358,6 @@ test("Sambar has its own accurate 768px illustration with exact catalog ID", () 
   assert.match(image.variantCaution, /linse/u);
   assert.match(image.variantCaution, /restaurantfoto/u);
 });
-
-test("Medu vada is its own sharp 768px dish photo with exact catalog ID", () => {
-  assert.equal(vada.toString("ascii", 4, 12), "ftypavif");
-  assert.ok(vada.length > 25000, "Vada should contain a real image, not a placeholder");
-  const marker = vada.indexOf(Buffer.from("ispe"));
-  assert.ok(marker > 0);
-  assert.equal(vada.readUInt32BE(marker + 8), 768);
-  assert.equal(vada.readUInt32BE(marker + 12), 768);
-  assert.match(gallery, /id: "vada", label: "Medu vada med sambar og chutney"/u);
-  assert.match(gallery, /vada: 43/u);
-  assert.equal(galleryIds[43], manifest.images[43].id);
-
-  assert.match(gallery, /dishPhotoSmall dishPhotoVada/u);
-  assert.match(css, /medu-vada-768\.avif/u);
-  const entry = manifest.images[43];
-  assert.equal(entry.id, "vada");
-  assert.equal(entry.catalogId, "vada");
-  assert.equal(entry.atlas, "medu-vada-768.avif");
-  assert.match(entry.variantCaution, /Medu vada/u);
-  assert.match(entry.variantCaution, /restaurant/u);
-});
-
 
 test("Four standalone dish photos preserve exact variants and suitable native thumbnails", () => {
   for (const {index, id, file, bytes, cssClass, catalogId} of [
@@ -916,39 +725,6 @@ test("Chicken katsu, yakitori and udon have independent original-photo thumbnail
   assert.match(manifest.images[26].variantCaution, /ikke vegansk/u);
 });
 
-test("Remaining six Asian dishes use their own AVIF images and matching catalog IDs", () => {
-  const cases = [
-    { index: 27, id: "bao", file: "bao-768.avif", bytes: baoImage, cls: "Bao", ingredient: /svinekjøtt/iu },
-    { index: 28, id: "dumplings", file: "dumplings-768.avif", bytes: dumplingsImage, cls: "Dumplings", ingredient: /fyllet/iu },
-    { index: 29, id: "mapo-tofu", file: "mapo-tofu-768.avif", bytes: mapoTofuImage, cls: "MapoTofu", ingredient: /kjøttdeig/iu },
-    { index: 30, id: "peking-duck", file: "peking-duck-768.avif", bytes: pekingDuckImage, cls: "PekingDuck", ingredient: /andekjøtt/iu },
-    { index: 31, id: "dan-dan-noodles", file: "dan-dan-noodles-768.avif", bytes: danDanNoodlesImage, cls: "DanDanNoodles", ingredient: /peanøtter/iu },
-    { index: 32, id: "green-curry", file: "green-curry-768.avif", bytes: greenCurryImage, cls: "GreenCurry", ingredient: /kylling/iu },
-  ];
-  for (const entry of cases) {
-    const item = manifest.images[entry.index];
-    assert.equal(item.id, entry.id);
-    assert.equal(item.catalogId, entry.id);
-    assert.equal(item.atlas, entry.file);
-    assert.match(item.variantCaution, /ikke restaurantfoto/iu);
-    assert.match(item.variantCaution, entry.ingredient);
-    assert.equal(entry.bytes.toString("ascii", 4, 12), "ftypavif");
-    assert.ok(entry.bytes.length > 20000, entry.file + " is unexpectedly small");
-    const marker = entry.bytes.indexOf(Buffer.from("ispe"));
-    assert.ok(marker > 0);
-    assert.equal(entry.bytes.readUInt32BE(marker + 8), 768);
-    assert.equal(entry.bytes.readUInt32BE(marker + 12), 768);
-    assert.equal(galleryIds[entry.index], entry.id);
-
-    assert.ok(gallery.includes("dishPhotoSmall dishPhoto" + entry.cls));
-    assert.ok(css.includes(".dishPhotoThumb.dishPhoto" + entry.cls));
-    assert.ok(css.includes(".dishPhotoSmall.dishPhoto" + entry.cls));
-    assert.ok(css.includes(entry.file));
-  }
-  assert.equal(manifest.images.length, 44);
-  assert.equal(manifest.images.filter((row) => ["series-04.avif", "collection.avif"].includes(row.atlas)).length, 0);
-});
-
 test("Integrating native photos must preserve approved Tom yum, kebab and the gallery API", () => {
   const tomYum = manifest.images.find((photo) => photo.id === "tom-yum");
   assert.ok(tomYum);
@@ -964,4 +740,197 @@ test("Integrating native photos must preserve approved Tom yum, kebab and the ga
   assert.equal(kebab.largeViewEnabled, undefined);
   assert.match(css, /dishPhotoKebabPita[^\n]*kebab-pita-thumb-512-illustration\.avif/u);
   assert.match(gallery, /export function hasDishPhotoThumbnail\(dishId: string\): boolean/u);
+});
+
+test("Reused 15 dish photos retain exact identity, separate 512px thumbnails and verified native masters", () => {
+  const cases = [
+  {
+    "id": "bao",
+    "index": 27,
+    "atlas": "bao-braised-pork-thumb-512.avif",
+    "master": "bao-braised-pork-master-5160.avif",
+    "catalogId": "bao",
+    "width": 5160,
+    "height": 3400,
+    "sha": "60c0aefea89c6530c0e7d3c61fb79241eca4033546cfd60182a2e36716867519",
+    "caution": "Autentisk foto av taiwansk gua bao med rødbraisert svinekjøtt og synlige syltede sennepsblader, knuste peanøtter og koriander. Dette er ikke vegetarisk. Kilden oppgir også soya; allergener må kontrolleres hos hver enkelt restaurant. Bildet er tatt hos Tiger Bites Pig i Brighton, ikke restaurantfoto fra Fysen. Ingen påstand om agurk eller syltet rødløk."
+  },
+  {
+    "id": "dumplings",
+    "index": 28,
+    "atlas": "dumplings-thumb-512.avif",
+    "master": "dumplings-master-4100.avif",
+    "catalogId": "dumplings",
+    "width": 4100,
+    "height": 3200,
+    "sha": "9b8b25920dfe230ac55f314bd21b84f68ce95f7ee76918007f6ab00241031a4d",
+    "caution": "Lisensiert, autentisk redaksjonelt foto av tre dampede dumplings med svarte sesamfrø i hel treskål med spisepinner, mot svart bakgrunn. Fyllet er ikke dokumentert: kjøtt, vegetarstatus og allergener må sjekkes hos restauranten. Kildebildet viser ikke chili- eller soyadipp. Dette er ikke restaurantfoto fra en bestemt Fysen-restaurant."
+  },
+  {
+    "id": "mapo-tofu",
+    "index": 29,
+    "atlas": "mapo-tofu-thumb-512.avif",
+    "master": "mapo-tofu-master-3825.avif",
+    "catalogId": "mapo-tofu",
+    "width": 3825,
+    "height": 2868,
+    "sha": "cad3785b7c835ab7c0e347e6f45932bac64393c954ab7a016bf35db3416722f1",
+    "caution": "Redaksjonelt foto av mapo tofu i hel svart skål med tofu, rød saus og grønt. Fotoet er ikke restaurantfoto fra Fysen. Kjøttype og allergener må sjekkes hos restauranten."
+  },
+  {
+    "id": "peking-duck",
+    "index": 30,
+    "atlas": "peking-duck-thumb-512.avif",
+    "master": "peking-duck-master-4800.avif",
+    "catalogId": "peking-duck",
+    "width": 4800,
+    "height": 2940,
+    "sha": "ffff9d8dcfe0ce6384c989dd3a5a107ddf1c66208775863e564573b8d3857b15",
+    "caution": "Redaksjonelt foto av pekingand med tynne pannekaker, agurk og mørk saus. Fotoet viser en servering fra Duck Victoria. Innhold i sausen varierer mellom restauranter."
+  },
+  {
+    "id": "dan-dan-noodles",
+    "index": 31,
+    "atlas": "dan-dan-noodles-thumb-512.avif",
+    "master": "dan-dan-noodles-master-3600.avif",
+    "catalogId": "dan-dan-noodles",
+    "width": 3600,
+    "height": 2940,
+    "sha": "eb7068004cd3d9ec914ff8b2fc34230376686352f5643350fa88f47f71526fc1",
+    "caution": "Redaksjonelt foto av dan dan-nudler med kjøttdeig i rød saus. Fotoet er ikke restaurantfoto fra Fysen. Kjøttype, peanøtter og øvrige allergener må sjekkes hos restauranten."
+  },
+  {
+    "id": "green-curry",
+    "index": 32,
+    "atlas": "green-curry-thumb-512.avif",
+    "master": "green-curry-master-3300.avif",
+    "catalogId": "green-curry",
+    "width": 3300,
+    "height": 2750,
+    "sha": "516bf8d1ef61ea082ba4b5734530cb1bf4cfe7b231c80232f5c57ea0fda46b3e",
+    "caution": "Redaksjonelt foto av grønn curry med kylling, grønnsaker og ris. Fotoet er ikke restaurantfoto fra Fysen."
+  },
+  {
+    "id": "pad-kra-pao",
+    "index": 34,
+    "atlas": "pad-kra-pao-thumb-512.avif",
+    "master": "pad-kra-pao-master-3940.avif",
+    "catalogId": "pad-kra-pao",
+    "width": 3940,
+    "height": 2960,
+    "sha": "f8637b9ecf422943a5e25730d1651ceccb9ff8f4ece6b70c925051ef629343b3",
+    "caution": "Redaksjonelt foto av pad kra pao med svinekjøtt, hellig basilikum, ris og speilegg. Fotoet er ikke restaurantfoto fra Fysen."
+  },
+  {
+    "id": "banh-mi",
+    "index": 35,
+    "atlas": "banh-mi-thumb-512.avif",
+    "master": "banh-mi-master-5056.avif",
+    "catalogId": "banh-mi",
+    "width": 5056,
+    "height": 2816,
+    "sha": "1626701fc42f0d2aff3a3ee6d48439dbdec06104c076a672d8461388a1ec7c67",
+    "caution": "Redaksjonelt foto av bánh mì med stekt svinekjøtt og vietnamesisk karridressing. Fotoet viser én variant av retten."
+  },
+  {
+    "id": "bun-cha",
+    "index": 36,
+    "atlas": "bun-cha-thumb-512.avif",
+    "master": "bun-cha-master-3488.avif",
+    "catalogId": "bun-cha",
+    "width": 3488,
+    "height": 2640,
+    "sha": "2854f36db0ae80d8275a2eb0599e12c2556b547072892ca974200cf76df20626",
+    "caution": "Redaksjonelt foto av bún chả med grillet svinekjøtt, risnudler, urter, chili og hvitløk."
+  },
+  {
+    "id": "vietnamese-spring-rolls",
+    "index": 37,
+    "atlas": "goi-cuon-thumb-512.avif",
+    "master": "goi-cuon-master-6960.avif",
+    "catalogId": "vietnamese-spring-rolls",
+    "width": 6960,
+    "height": 3940,
+    "sha": "b8c806f0a0319dbf427bae9fbdf749e3a693d38946a4b568e5b6eb6d073fd3d3",
+    "caution": "Redaksjonelt foto av to ferske rispapirruller med reker og urter, servert med dipp."
+  },
+  {
+    "id": "tandoori",
+    "index": 38,
+    "atlas": "tandoori-chicken-thumb-512.avif",
+    "master": "tandoori-chicken-master-3815.avif",
+    "catalogId": "tandoori",
+    "width": 3815,
+    "height": 1930,
+    "sha": "2cecc6284b189d602b8b02edc0ef29af69a7f3167d973a3583d95c577df9cdf9",
+    "caution": "Redaksjonelt foto av tandoorigrillet kylling med salat og sitron i serveringspanne."
+  },
+  {
+    "id": "naan",
+    "index": 39,
+    "atlas": "naan-thumb-512.avif",
+    "master": "naan-master-3752.avif",
+    "catalogId": "naan",
+    "width": 3752,
+    "height": 2496,
+    "sha": "b48b7c966ed6c44828f40f993e807d0ec5e578960feedccbb0903cae6da91f94",
+    "caution": "Redaksjonelt foto av hvitløksnaan med urter. Inneholder vanligvis hvete og kan inneholde melk."
+  },
+  {
+    "id": "dal-makhani",
+    "index": 40,
+    "atlas": "dal-makhani-thumb-512.avif",
+    "master": "dal-makhani-master-3520.avif",
+    "catalogId": "dal-makhani",
+    "width": 3520,
+    "height": 2880,
+    "sha": "66809187972b53949e99df5c86005caf423b3ca9167f858b84a36209a80c9536",
+    "caution": "Redaksjonelt foto av dal makhani med smør og fløte. Inneholder melk og er uegnet ved melkeallergi."
+  },
+  {
+    "id": "idli",
+    "index": 41,
+    "atlas": "idli-thumb-512.avif",
+    "master": "idli-master-3072.avif",
+    "catalogId": "idli",
+    "width": 3072,
+    "height": 3072,
+    "sha": "06a57e8f3a8d5d6399899172bee0f715bee0fd76b1c7b55cab8a38edad7034b2",
+    "caution": "Redaksjonelt foto av dampede ris- og linsekaker med sambar og kokoschutney. Serveringsvariant, ikke restaurantfoto."
+  },
+  {
+    "id": "vada",
+    "index": 43,
+    "atlas": "medu-vada-thumb-512.avif",
+    "master": "medu-vada-master-8160.avif",
+    "catalogId": "vada",
+    "width": 8160,
+    "height": 6144,
+    "sha": "ad4f401725daa1d7aa5b94e0b3c480187e33d5edce862bbd079837a6b2c9320d",
+    "caution": "Medu vada med sambar og chutney. Redaksjonelt foto med AI-assistert frilegging, ikke restaurantfoto fra Fysen."
+  }
+];
+  for (const expected of cases) {
+    const image = manifest.images[expected.index];
+    assert.equal(galleryIds[expected.index], expected.id);
+    assert.equal(image.id, expected.id);
+    assert.equal(image.catalogId, expected.catalogId);
+    assert.equal(image.kind, "Redaksjonelt rettfoto");
+    assert.equal(image.atlas, expected.atlas);
+    assert.equal(image.largeSource, expected.master);
+    assert.equal(image.largeViewEnabled, true);
+    assert.equal(image.variantCaution, expected.caution);
+    const thumbnail = readFileSync(path.join(web, "public/dish-images", expected.atlas));
+    const master = readFileSync(path.join(web, "public/dish-images", expected.master));
+    for (const [bytes, width, height] of [[thumbnail, 512, 512], [master, expected.width, expected.height]]) {
+      assert.equal(bytes.toString("ascii", 4, 12), "ftypavif", expected.id);
+      const marker = bytes.indexOf(Buffer.from("ispe"));
+      assert.ok(marker > 0);
+      assert.equal(bytes.readUInt32BE(marker + 8), width);
+      assert.equal(bytes.readUInt32BE(marker + 12), height);
+    }
+    assert.equal(createHash("sha256").update(master).digest("hex"), expected.sha);
+  }
+  assert.equal(manifest.images.length, 44);
+  assert.equal(manifest.images.filter((row) => ["series-04.avif", "collection.avif"].includes(row.atlas)).length, 0);
 });
