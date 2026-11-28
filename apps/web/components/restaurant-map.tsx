@@ -44,8 +44,8 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
     setImmersive(value => !value);
   }
   useEffect(() => {
-    if (standalone && new URLSearchParams(window.location.search).get("mode") === "map") setImmersive(true);
-  }, [standalone]);
+    if ((standalone || initialMode === "map") && new URLSearchParams(window.location.search).get("mode") === "map") setImmersive(true);
+  }, [standalone, initialMode]);
   useEffect(() => {
     if (!immersive) return;
     const previous = document.body.style.overflow;
@@ -121,6 +121,8 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
   }, [status, mode, current]);
 
   function requestLocation() {
+    setExploreOpen(true);
+    setSelected(null);
     if (!navigator.geolocation) { setLocationStatus("unavailable"); return; }
     const request = ++locationRequest.current;
     setLocationStatus("loading");
@@ -157,7 +159,7 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
   }
 
   return <div className={styles.workspace} data-immersive={immersive} data-standalone={standalone}>
-    {standalone && <GlobalHeader city="Oslo" mapAction={<button className="fysenHeaderMapMode" type="button" aria-pressed={immersive} onClick={toggleImmersive}>{immersive ? "Avslutt kartmodus" : "Kartmodus"}</button>} />}
+    {(standalone || immersive) && <GlobalHeader city="Oslo" query={dishQuery} mapAction={<button className="fysenHeaderMapMode" type="button" aria-pressed={immersive} onClick={toggleImmersive}>{immersive ? "Avslutt kartmodus" : "Kartmodus"}</button>} />}
     <section className={styles.shell} aria-labelledby="restaurant-map-title" data-immersive={immersive}>
     <div className={styles.heading}>
       <div className={styles.titleRow}><h1 id="restaurant-map-title">{dishQuery ? "Menytreff på kartet" : "Kart · Oslo"}</h1><span>{filtered.features.length} spisesteder</span></div>
@@ -166,20 +168,21 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
         <input id="map-dish-query" type="search" name="q" defaultValue={dishQuery} placeholder="Ramen, pizza, biff…" minLength={2} maxLength={80} required />
         <input type="hidden" name="city" value="Oslo" />
         <input type="hidden" name="view" value="map" />
+        {immersive && <input type="hidden" name="mode" value="map" />}
         <button className={styles.more} type="submit">Finn retten på kartet</button>
-        {dishQuery && <a href={withPublicBasePath("/kart")}>Alle spisesteder</a>}
+        {dishQuery && <a href={withPublicBasePath(immersive ? "/kart?mode=map" : "/kart")}>Alle spisesteder</a>}
       </form>
     </div>
     <div className={styles.mapMenus}>
       <nav className={styles.shortcuts} aria-label="Snarveier til rettsøk">
-      {["Pizza", "Sushi", "Ramen", "Burger", "Taco", "Pasta"].map(dish => <a key={dish} href={withPublicBasePath("/search") + "?" + new URLSearchParams({ q: dish, city: "Oslo", view: "map" })} aria-current={dishQuery.toLocaleLowerCase("nb-NO") === dish.toLocaleLowerCase("nb-NO") ? "page" : undefined}>{dish}</a>)}
+      {["Pizza", "Sushi", "Ramen", "Burger", "Taco", "Pasta"].map(dish => <a key={dish} href={withPublicBasePath("/search") + "?" + new URLSearchParams({ q: dish, city: "Oslo", view: "map", ...(immersive ? { mode: "map" } : {}) })} aria-current={dishQuery.toLocaleLowerCase("nb-NO") === dish.toLocaleLowerCase("nb-NO") ? "page" : undefined}>{dish}</a>)}
     </nav>
       <div className={styles.quickActions}>
-        <button type="button" className={styles.more} onClick={() => setExploreOpen(value => !value)} aria-expanded={exploreOpen} aria-controls="fysen-map-explore">Utforsk {exploreOpen ? "▾" : "▴"}</button>
+        <button type="button" className={styles.more} onClick={() => { setSelected(null); setExploreOpen(value => !value); }} aria-expanded={exploreOpen} aria-controls="fysen-map-explore">Utforsk {exploreOpen ? "▴" : "▾"}</button>
         <button type="button" className={styles.more} onClick={requestLocation} disabled={locationStatus === "loading"}>{locationStatus === "loading" ? "Henter…" : "Nær meg"}</button>
-        <button type="button" className={styles.more} aria-pressed={favoritesOnly} onClick={() => { setFavoritesOnly(value => !value); setLimit(30); }}>♡ Favoritter</button>
+        <button type="button" className={styles.more} aria-pressed={favoritesOnly} onClick={() => { setFavoritesOnly(value => !value); setLimit(30); }}>♡ Favoritter ({favorites.length})</button>
         {!immersive && <button type="button" className={styles.more} onClick={() => { if (mode === "map") setMode("list"); else { setMapActivated(true); setMode("map"); } }}>{mode === "map" ? "Liste" : "Kart"}</button>}
-        {!standalone && <button type="button" className={styles.more} onClick={toggleImmersive} aria-pressed={immersive}>{immersive ? "Avslutt kartmodus" : "Kartmodus"}</button>}
+        {!standalone && !immersive && <button type="button" className={styles.more} onClick={toggleImmersive} aria-pressed={immersive}>{immersive ? "Avslutt kartmodus" : "Kartmodus"}</button>}
       </div>
     </div>
     <div className={styles.layout} data-mode={mode} data-explore={exploreOpen}>
