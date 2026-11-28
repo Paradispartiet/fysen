@@ -204,3 +204,7 @@ Added eight complete bodies per language: fårikål, kjøttkaker, köttbullar, s
 ### International full article review batch 11
 
 Added eight complete bodies per language: ratatouille, bouillabaisse, quiche lorraine, croque-monsieur, paella valenciana, patatas bravas, tortilla española and gazpacho. Checked source list lengths and numerical recipe tokens, including oven temperatures, tin size, and ingredient quantities. Previous bodies and original sources retained. Total 88 new bodies per language; English 121/200 including original 33, other four 88/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 12
+
+Added eight complete bodies per language: gambas al ajillo, croquetas, moussaka, souvlaki, gyros, spanakopita, tzatziki and pastitsio. Checked source list lengths and numerical recipe tokens, including cooking temperatures and marination and chilling times. Previous bodies and original sources retained. Total 96 new bodies per language; English 129/200 including original 33, other four 96/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.

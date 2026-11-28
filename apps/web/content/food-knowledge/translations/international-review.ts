@@ -17903,5 +17903,1666 @@ export const draftInternationalArticles = {
         "Keine unreifen Tomaten verwenden, wenn reifer Tomatengeschmack gewünscht ist."
       ]
     }
+  },
+  "gambas-al-ajillo": {
+    "en": {
+      "overview": "The prawns are cooked quickly in aromatic oil and served hot.",
+      "history": "Gambas al ajillo are part of the Spanish tapas tradition, including in Madrid.",
+      "flavor": "Sweetish seafood, garlic and mild chilli heat.",
+      "technique": "Gently heat the oil with garlic before adding the prawns.",
+      "essentials": [
+        "400 g raw, peeled prawns",
+        "5 garlic cloves",
+        "60 ml olive oil"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 15 min",
+        "ingredients": [
+          "400 g raw, peeled prawns",
+          "5 garlic cloves",
+          "60 ml olive oil",
+          "dried chilli",
+          "salt",
+          "parsley"
+        ],
+        "steps": [
+          "Dry the prawns and slice the garlic.",
+          "Heat the oil with garlic and chilli without burning the garlic.",
+          "Add the prawns and fry until cooked through.",
+          "Season with salt and parsley."
+        ]
+      },
+      "variants": [
+        "The heat level can be adjusted by varying the amount of chilli."
+      ],
+      "serving": [
+        "Serve with bread for dipping in the oil."
+      ],
+      "commonMistakes": [
+        "Do not cook the prawns so long that they become tough."
+      ]
+    },
+    "fr": {
+      "overview": "Les crevettes sont cuites rapidement dans une huile aromatique et servies chaudes.",
+      "history": "Les gambas al ajillo font partie de la tradition espagnole des tapas, notamment à Madrid.",
+      "flavor": "Fruits de mer légèrement sucrés, ail et piquant modéré du piment.",
+      "technique": "Chauffer doucement l’huile avec l’ail avant d’ajouter les crevettes.",
+      "essentials": [
+        "400 g de crevettes crues décortiquées",
+        "5 gousses d’ail",
+        "60 ml d’huile d’olive"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 15 min",
+        "ingredients": [
+          "400 g de crevettes crues décortiquées",
+          "5 gousses d’ail",
+          "60 ml d’huile d’olive",
+          "piment séché",
+          "sel",
+          "persil"
+        ],
+        "steps": [
+          "Sécher les crevettes et émincer l’ail.",
+          "Chauffer l’huile avec l’ail et le piment sans brûler l’ail.",
+          "Ajouter les crevettes et cuire à cœur.",
+          "Assaisonner avec du sel et du persil."
+        ]
+      },
+      "variants": [
+        "Le piquant peut être ajusté en variant la quantité de piment."
+      ],
+      "serving": [
+        "Servir avec du pain pour saucer l’huile."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire les crevettes si longtemps qu’elles deviennent caoutchouteuses."
+      ]
+    },
+    "pt": {
+      "overview": "O camarão é cozinhado rapidamente em azeite aromático e servido quente.",
+      "history": "As gambas al ajillo fazem parte da tradição espanhola de tapas, nomeadamente em Madrid.",
+      "flavor": "Marisco ligeiramente doce, alho e picante suave da malagueta.",
+      "technique": "Aqueça suavemente o azeite com o alho antes de juntar o camarão.",
+      "essentials": [
+        "400 g de camarão cru descascado",
+        "5 dentes de alho",
+        "60 ml de azeite"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 15 min",
+        "ingredients": [
+          "400 g de camarão cru descascado",
+          "5 dentes de alho",
+          "60 ml de azeite",
+          "malagueta seca",
+          "sal",
+          "salsa"
+        ],
+        "steps": [
+          "Seque o camarão e corte o alho em lâminas.",
+          "Aqueça o azeite com alho e malagueta sem deixar queimar o alho.",
+          "Junte o camarão e cozinhe completamente.",
+          "Tempere com sal e salsa."
+        ]
+      },
+      "variants": [
+        "O picante pode ser ajustado variando a quantidade de malagueta."
+      ],
+      "serving": [
+        "Sirva com pão para molhar no azeite."
+      ],
+      "commonMistakes": [
+        "Não cozinhe o camarão durante tanto tempo que fique rijo."
+      ]
+    },
+    "es": {
+      "overview": "Las gambas se cocinan rápidamente en aceite aromático y se sirven calientes.",
+      "history": "Las gambas al ajillo forman parte de la tradición española de tapas, entre otros lugares en Madrid.",
+      "flavor": "Marisco ligeramente dulce, ajo y picante suave del chile.",
+      "technique": "Calienta suavemente el aceite con el ajo antes de añadir las gambas.",
+      "essentials": [
+        "400 g de gambas crudas peladas",
+        "5 dientes de ajo",
+        "60 ml de aceite de oliva"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 15 min",
+        "ingredients": [
+          "400 g de gambas crudas peladas",
+          "5 dientes de ajo",
+          "60 ml de aceite de oliva",
+          "chile seco",
+          "sal",
+          "perejil"
+        ],
+        "steps": [
+          "Seca las gambas y lamina el ajo.",
+          "Calienta el aceite con ajo y chile sin quemar el ajo.",
+          "Añade las gambas y cocina hasta que estén hechas por dentro.",
+          "Sazona con sal y perejil."
+        ]
+      },
+      "variants": [
+        "El picante se puede ajustar variando la cantidad de chile."
+      ],
+      "serving": [
+        "Sirve con pan para mojar en el aceite."
+      ],
+      "commonMistakes": [
+        "No cocines las gambas tanto tiempo que queden correosas."
+      ]
+    },
+    "de": {
+      "overview": "Garnelen werden kurz in aromatischem Öl gegart und heiß serviert.",
+      "history": "Gambas al Ajillo gehören zur spanischen Tapas-Tradition, unter anderem in Madrid.",
+      "flavor": "Süßliche Meeresfrüchte, Knoblauch und milde Chilischärfe.",
+      "technique": "Öl mit Knoblauch sanft erhitzen, bevor die Garnelen hinzukommen.",
+      "essentials": [
+        "400 g rohe, geschälte Garnelen",
+        "5 Knoblauchzehen",
+        "60 ml Olivenöl"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 15 Min.",
+        "ingredients": [
+          "400 g rohe, geschälte Garnelen",
+          "5 Knoblauchzehen",
+          "60 ml Olivenöl",
+          "getrocknete Chili",
+          "Salz",
+          "Petersilie"
+        ],
+        "steps": [
+          "Garnelen trocknen und Knoblauch in Scheiben schneiden.",
+          "Öl mit Knoblauch und Chili erhitzen, ohne den Knoblauch zu verbrennen.",
+          "Garnelen hinzufügen und vollständig durchgaren.",
+          "Mit Salz und Petersilie abschmecken."
+        ]
+      },
+      "variants": [
+        "Die Schärfe lässt sich über die Chilimenge anpassen."
+      ],
+      "serving": [
+        "Mit Brot zum Auftunken des Öls servieren."
+      ],
+      "commonMistakes": [
+        "Garnelen nicht so lange braten, dass sie zäh werden."
+      ]
+    }
+  },
+  "croquetas": {
+    "en": {
+      "overview": "A firm, chilled béchamel mixture is shaped, breaded and deep-fried.",
+      "history": "Croquetas are a popular Spanish tapas dish; ham is a classic filling.",
+      "flavor": "Crisp outside and soft, creamy centre.",
+      "technique": "Chill the filling thoroughly before shaping and breading.",
+      "essentials": [
+        "60 g butter",
+        "75 g wheat flour",
+        "500 ml milk"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min + chilling",
+        "ingredients": [
+          "60 g butter",
+          "75 g wheat flour",
+          "500 ml milk",
+          "100 g finely chopped ham",
+          "2 eggs",
+          "breadcrumbs",
+          "oil"
+        ],
+        "steps": [
+          "Melt the butter, stir in the flour and gradually add the milk.",
+          "Cook until thick, fold in the ham and season.",
+          "Spread in a dish and cool quickly before refrigerating for several hours.",
+          "Shape croquettes and coat in flour, egg and breadcrumbs.",
+          "Deep-fry in small batches at 175 °C until golden and heated through."
+        ]
+      },
+      "variants": [
+        "Fillings with mushrooms, cheese or cod are also widespread."
+      ],
+      "serving": [
+        "Serve hot as tapas."
+      ],
+      "commonMistakes": [
+        "Do not shape the croquettes while the filling is warm and loose."
+      ]
+    },
+    "fr": {
+      "overview": "Un appareil à béchamel ferme et refroidi est façonné, pané et frit.",
+      "history": "Les croquetas sont des tapas espagnoles populaires ; le jambon est une garniture classique.",
+      "flavor": "Extérieur croustillant et cœur tendre et crémeux.",
+      "technique": "Bien refroidir la garniture avant de façonner et de paner.",
+      "essentials": [
+        "60 g de beurre",
+        "75 g de farine de blé",
+        "500 ml de lait"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min + réfrigération",
+        "ingredients": [
+          "60 g de beurre",
+          "75 g de farine de blé",
+          "500 ml de lait",
+          "100 g de jambon finement haché",
+          "2 œufs",
+          "chapelure",
+          "huile"
+        ],
+        "steps": [
+          "Faire fondre le beurre, incorporer la farine et ajouter progressivement le lait.",
+          "Cuire jusqu’à obtenir une masse épaisse, incorporer le jambon et assaisonner.",
+          "Étaler dans un plat et refroidir rapidement avant de réfrigérer plusieurs heures.",
+          "Façonner les croquettes et les passer dans la farine, l’œuf et la chapelure.",
+          "Frire par petites quantités à 175 °C jusqu’à ce qu’elles soient dorées et bien chaudes à cœur."
+        ]
+      },
+      "variants": [
+        "Les garnitures aux champignons, au fromage ou à la morue sont également courantes."
+      ],
+      "serving": [
+        "Servir chaud en tapas."
+      ],
+      "commonMistakes": [
+        "Ne pas façonner les croquettes tant que la garniture est chaude et molle."
+      ]
+    },
+    "pt": {
+      "overview": "Uma massa firme e fria de béchamel é moldada, panada e frita.",
+      "history": "As croquetas são tapas espanholas populares; o presunto é um recheio clássico.",
+      "flavor": "Exterior crocante e interior macio e cremoso.",
+      "technique": "Arrefeça bem o recheio antes de moldar e panar.",
+      "essentials": [
+        "60 g de manteiga",
+        "75 g de farinha de trigo",
+        "500 ml de leite"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min + refrigeração",
+        "ingredients": [
+          "60 g de manteiga",
+          "75 g de farinha de trigo",
+          "500 ml de leite",
+          "100 g de presunto finamente picado",
+          "2 ovos",
+          "pão ralado",
+          "óleo"
+        ],
+        "steps": [
+          "Derreta a manteiga, incorpore a farinha e junte gradualmente o leite.",
+          "Cozinhe até engrossar, envolva o presunto e tempere.",
+          "Espalhe num recipiente e arrefeça rapidamente antes de refrigerar durante várias horas.",
+          "Molde os croquetes e passe por farinha, ovo e pão ralado.",
+          "Frite em pequenas porções a 175 °C até ficarem douradas e bem quentes no interior."
+        ]
+      },
+      "variants": [
+        "Recheios de cogumelos, queijo ou bacalhau também são comuns."
+      ],
+      "serving": [
+        "Sirva quente como tapas."
+      ],
+      "commonMistakes": [
+        "Não molde os croquetes enquanto o recheio estiver quente e pouco firme."
+      ]
+    },
+    "es": {
+      "overview": "Una masa firme y fría de bechamel se moldea, se empana y se fríe.",
+      "history": "Las croquetas son una tapa española popular; el jamón es un relleno clásico.",
+      "flavor": "Exterior crujiente e interior suave y cremoso.",
+      "technique": "Enfría bien el relleno antes de moldear y empanar.",
+      "essentials": [
+        "60 g de mantequilla",
+        "75 g de harina de trigo",
+        "500 ml de leche"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min + refrigeración",
+        "ingredients": [
+          "60 g de mantequilla",
+          "75 g de harina de trigo",
+          "500 ml de leche",
+          "100 g de jamón picado fino",
+          "2 huevos",
+          "pan rallado",
+          "aceite"
+        ],
+        "steps": [
+          "Derrite la mantequilla, incorpora la harina y añade poco a poco la leche.",
+          "Cocina hasta obtener una masa espesa, incorpora el jamón y sazona.",
+          "Extiende en una fuente y enfría rápidamente antes de refrigerar durante varias horas.",
+          "Forma las croquetas y pásalas por harina, huevo y pan rallado.",
+          "Fríe en tandas pequeñas a 175 °C hasta que estén doradas y calientes por dentro."
+        ]
+      },
+      "variants": [
+        "Los rellenos de setas, queso o bacalao también son habituales."
+      ],
+      "serving": [
+        "Sirve calientes como tapa."
+      ],
+      "commonMistakes": [
+        "No formes las croquetas mientras la masa esté caliente y blanda."
+      ]
+    },
+    "de": {
+      "overview": "Eine feste, gekühlte Béchamelmasse wird geformt, paniert und frittiert.",
+      "history": "Croquetas sind beliebte spanische Tapas; Schinken ist eine klassische Füllung.",
+      "flavor": "Knusprige Außenseite und weicher, cremiger Kern.",
+      "technique": "Füllung vor dem Formen und Panieren gründlich kühlen.",
+      "essentials": [
+        "60 g Butter",
+        "75 g Weizenmehl",
+        "500 ml Milch"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min. + Kühlzeit",
+        "ingredients": [
+          "60 g Butter",
+          "75 g Weizenmehl",
+          "500 ml Milch",
+          "100 g fein gehackter Schinken",
+          "2 Eier",
+          "Semmelbrösel",
+          "Öl"
+        ],
+        "steps": [
+          "Butter schmelzen, Mehl einrühren und Milch nach und nach hinzufügen.",
+          "Zu einer dicken Masse kochen, Schinken unterheben und abschmecken.",
+          "In einer Form verteilen und rasch abkühlen, dann mehrere Stunden im Kühlschrank kühlen.",
+          "Kroketten formen und in Mehl, Ei und Semmelbröseln wenden.",
+          "Portionsweise bei 175 °C goldbraun und durchgehend heiß frittieren."
+        ]
+      },
+      "variants": [
+        "Füllungen mit Pilzen, Käse oder Kabeljau sind ebenfalls verbreitet."
+      ],
+      "serving": [
+        "Heiß als Tapas servieren."
+      ],
+      "commonMistakes": [
+        "Kroketten nicht formen, solange die Füllung warm und weich ist."
+      ]
+    }
+  },
+  "moussaka": {
+    "en": {
+      "overview": "In the Greek version, cooked vegetables and meat sauce are layered beneath a thick white sauce.",
+      "history": "Moussaka belongs to a broader family of dishes in the eastern Mediterranean; the Greek baked version is particularly known for its béchamel layer.",
+      "flavor": "Rich meat flavour, soft aubergine and mildly spiced sauce.",
+      "technique": "Precook the aubergine and reduce the meat sauce before assembling.",
+      "essentials": [
+        "2 aubergines",
+        "400 g minced meat",
+        "1 onion"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min",
+        "ingredients": [
+          "2 aubergines",
+          "400 g minced meat",
+          "1 onion",
+          "400 g chopped tomatoes",
+          "cinnamon",
+          "40 g butter",
+          "40 g flour",
+          "500 ml milk",
+          "60 g grated cheese"
+        ],
+        "steps": [
+          "Slice the aubergines, brush with oil and bake at 220 °C until tender.",
+          "Brown meat and onion, add tomato and a little cinnamon and reduce.",
+          "Make béchamel from butter, flour and milk.",
+          "Layer aubergine and meat sauce in a dish and top with béchamel and cheese.",
+          "Bake at 190 °C until golden and heated through. Let rest before portioning."
+        ]
+      },
+      "variants": [
+        "Potatoes can be included in the layers; lentils can replace meat in a vegetarian version."
+      ],
+      "serving": [
+        "Serve warm with green salad."
+      ],
+      "commonMistakes": [
+        "Avoid watery meat sauce and raw aubergine."
+      ]
+    },
+    "fr": {
+      "overview": "Dans la version grecque, des légumes poêlés et une sauce à la viande sont disposés en couches sous une sauce blanche épaisse.",
+      "history": "La moussaka appartient à une vaste famille de plats de la Méditerranée orientale ; la version grecque au four est particulièrement connue pour sa couche de béchamel.",
+      "flavor": "Saveur prononcée de viande, aubergine tendre et sauce légèrement épicée.",
+      "technique": "Précuire l’aubergine et faire réduire la sauce à la viande avant le montage.",
+      "essentials": [
+        "2 aubergines",
+        "400 g de viande hachée",
+        "1 oignon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min",
+        "ingredients": [
+          "2 aubergines",
+          "400 g de viande hachée",
+          "1 oignon",
+          "400 g de tomates concassées",
+          "cannelle",
+          "40 g de beurre",
+          "40 g de farine",
+          "500 ml de lait",
+          "60 g de fromage râpé"
+        ],
+        "steps": [
+          "Couper les aubergines en tranches, les badigeonner d’huile et les cuire à 220 °C jusqu’à tendreté.",
+          "Faire dorer la viande et l’oignon, ajouter les tomates et un peu de cannelle, puis faire réduire.",
+          "Préparer une béchamel avec le beurre, la farine et le lait.",
+          "Disposer l’aubergine et la sauce à la viande dans un plat, puis couvrir de béchamel et de fromage.",
+          "Cuire à 190 °C jusqu’à ce que le dessus soit doré et l’ensemble bien chaud. Laisser reposer avant de découper."
+        ]
+      },
+      "variants": [
+        "Des pommes de terre peuvent entrer dans les couches ; des lentilles peuvent remplacer la viande dans une version végétarienne."
+      ],
+      "serving": [
+        "Servir tiède avec une salade verte."
+      ],
+      "commonMistakes": [
+        "Éviter une sauce à la viande trop liquide et l’aubergine crue."
+      ]
+    },
+    "pt": {
+      "overview": "Na versão grega, legumes previamente cozinhados e molho de carne são dispostos em camadas sob um molho branco espesso.",
+      "history": "A moussaka pertence a uma família mais ampla de pratos do Mediterrâneo oriental; a versão grega de forno é especialmente conhecida pela camada de béchamel.",
+      "flavor": "Sabor intenso a carne, beringela macia e molho suavemente condimentado.",
+      "technique": "Pré-cozinhe a beringela e reduza o molho de carne antes de montar.",
+      "essentials": [
+        "2 beringelas",
+        "400 g de carne picada",
+        "1 cebola"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min",
+        "ingredients": [
+          "2 beringelas",
+          "400 g de carne picada",
+          "1 cebola",
+          "400 g de tomate picado",
+          "canela",
+          "40 g de manteiga",
+          "40 g de farinha",
+          "500 ml de leite",
+          "60 g de queijo ralado"
+        ],
+        "steps": [
+          "Corte as beringelas em fatias, pincele com azeite e leve ao forno a 220 °C até ficarem tenras.",
+          "Doure a carne e a cebola, junte tomate e um pouco de canela e deixe reduzir.",
+          "Prepare um béchamel com manteiga, farinha e leite.",
+          "Disponha a beringela e o molho de carne em camadas num tabuleiro e cubra com béchamel e queijo.",
+          "Leve ao forno a 190 °C até dourar e estar bem quente. Deixe repousar antes de cortar."
+        ]
+      },
+      "variants": [
+        "As batatas podem integrar as camadas; as lentilhas podem substituir a carne numa versão vegetariana."
+      ],
+      "serving": [
+        "Sirva morna com salada verde."
+      ],
+      "commonMistakes": [
+        "Evite molho de carne aguado e beringela crua."
+      ]
+    },
+    "es": {
+      "overview": "En la versión griega, las verduras cocinadas y la salsa de carne se disponen en capas bajo una salsa blanca espesa.",
+      "history": "La musaca forma parte de una familia más amplia de platos del Mediterráneo oriental; la versión griega al horno es especialmente conocida por su capa de bechamel.",
+      "flavor": "Sabor intenso a carne, berenjena tierna y salsa suavemente especiada.",
+      "technique": "Cocina previamente la berenjena y reduce la salsa de carne antes de montar.",
+      "essentials": [
+        "2 berenjenas",
+        "400 g de carne picada",
+        "1 cebolla"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min",
+        "ingredients": [
+          "2 berenjenas",
+          "400 g de carne picada",
+          "1 cebolla",
+          "400 g de tomates troceados",
+          "canela",
+          "40 g de mantequilla",
+          "40 g de harina",
+          "500 ml de leche",
+          "60 g de queso rallado"
+        ],
+        "steps": [
+          "Corta las berenjenas en rodajas, pincela con aceite y hornea a 220 °C hasta que estén tiernas.",
+          "Dora la carne y la cebolla, añade tomate y un poco de canela y deja reducir.",
+          "Prepara una bechamel con mantequilla, harina y leche.",
+          "Coloca la berenjena y la salsa de carne en una fuente y cubre con bechamel y queso.",
+          "Hornea a 190 °C hasta que esté dorada y bien caliente. Deja reposar antes de cortar en porciones."
+        ]
+      },
+      "variants": [
+        "Las patatas pueden formar parte de las capas; las lentejas pueden sustituir la carne en una versión vegetariana."
+      ],
+      "serving": [
+        "Sirve templada con ensalada verde."
+      ],
+      "commonMistakes": [
+        "Evita una salsa de carne aguada y la berenjena cruda."
+      ]
+    },
+    "de": {
+      "overview": "In der griechischen Variante werden gebratene Gemüse und Fleischsauce unter einer dicken weißen Sauce geschichtet.",
+      "history": "Moussaka gehört zu einer größeren Familie von Gerichten des östlichen Mittelmeerraums; die griechische Ofenvariante ist besonders für ihre Béchamelschicht bekannt.",
+      "flavor": "Kräftiger Fleischgeschmack, weiche Aubergine und mild gewürzte Sauce.",
+      "technique": "Auberginen vorgaren und Fleischsauce einkochen, bevor das Gericht geschichtet wird.",
+      "essentials": [
+        "2 Auberginen",
+        "400 g Hackfleisch",
+        "1 Zwiebel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min.",
+        "ingredients": [
+          "2 Auberginen",
+          "400 g Hackfleisch",
+          "1 Zwiebel",
+          "400 g gehackte Tomaten",
+          "Zimt",
+          "40 g Butter",
+          "40 g Mehl",
+          "500 ml Milch",
+          "60 g geriebener Käse"
+        ],
+        "steps": [
+          "Auberginen in Scheiben schneiden, mit Öl bestreichen und bei 220 °C weich backen.",
+          "Fleisch und Zwiebel anbräunen, Tomaten und etwas Zimt hinzufügen und einkochen.",
+          "Béchamel aus Butter, Mehl und Milch zubereiten.",
+          "Auberginen und Fleischsauce in eine Form schichten, mit Béchamel und Käse bedecken.",
+          "Bei 190 °C goldbraun und durchgehend heiß backen. Vor dem Portionieren ruhen lassen."
+        ]
+      },
+      "variants": [
+        "Kartoffeln können Teil der Schichten sein; Linsen können in einer vegetarischen Variante das Fleisch ersetzen."
+      ],
+      "serving": [
+        "Lauwarm mit grünem Salat servieren."
+      ],
+      "commonMistakes": [
+        "Wässrige Fleischsauce und rohe Auberginen vermeiden."
+      ]
+    }
+  },
+  "souvlaki": {
+    "en": {
+      "overview": "Small marinated pieces of meat are grilled on skewers and served with bread or on a plate.",
+      "history": "Souvlaki is a widespread Greek street food; kalamaki is used in Athens, among other places, to refer to the meat skewer.",
+      "flavor": "Juicy, tangy and herbal.",
+      "technique": "Cut the meat into evenly sized pieces and grill until cooked through.",
+      "essentials": [
+        "600 g boneless chicken thigh",
+        "2 tbsp olive oil",
+        "1 lemon"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30 min + marinating",
+        "ingredients": [
+          "600 g boneless chicken thigh",
+          "2 tbsp olive oil",
+          "1 lemon",
+          "2 garlic cloves",
+          "2 tsp oregano",
+          "salt",
+          "pitta bread"
+        ],
+        "steps": [
+          "Cut the meat into pieces and marinate in oil, lemon, garlic and oregano in the refrigerator.",
+          "Thread the meat onto skewers.",
+          "Grill or fry until cooked through.",
+          "Serve with warm pitta bread, vegetables and tzatziki."
+        ]
+      },
+      "variants": [
+        "Pork is also common; other versions use lamb or vegetables."
+      ],
+      "serving": [
+        "Serve with tomato, onion and tzatziki."
+      ],
+      "commonMistakes": [
+        "Do not use marinade from raw meat as a cold sauce."
+      ]
+    },
+    "fr": {
+      "overview": "De petits morceaux de viande marinée sont grillés en brochettes et servis avec du pain ou à l’assiette.",
+      "history": "Le souvlaki est un plat de rue grec répandu ; le terme kalamaki désigne la brochette de viande, notamment à Athènes.",
+      "flavor": "Juteux, acidulé et herbacé.",
+      "technique": "Couper la viande en morceaux réguliers et griller jusqu’à cuisson complète.",
+      "essentials": [
+        "600 g de hauts de cuisse de poulet désossés",
+        "2 c. à soupe d’huile d’olive",
+        "1 citron"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30 min + marinade",
+        "ingredients": [
+          "600 g de hauts de cuisse de poulet désossés",
+          "2 c. à soupe d’huile d’olive",
+          "1 citron",
+          "2 gousses d’ail",
+          "2 c. à café d’origan",
+          "sel",
+          "pain pita"
+        ],
+        "steps": [
+          "Couper la viande en morceaux et la faire mariner au réfrigérateur avec de l’huile, du citron, de l’ail et de l’origan.",
+          "Enfiler la viande sur des brochettes.",
+          "Griller ou poêler jusqu’à cuisson complète.",
+          "Servir avec du pain pita chaud, des légumes et du tzatziki."
+        ]
+      },
+      "variants": [
+        "Le porc est également courant ; d’autres variantes utilisent de l’agneau ou des légumes."
+      ],
+      "serving": [
+        "Servir avec de la tomate, de l’oignon et du tzatziki."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser comme sauce froide une marinade ayant été en contact avec de la viande crue."
+      ]
+    },
+    "pt": {
+      "overview": "Pequenos pedaços de carne marinada são grelhados em espetadas e servidos com pão ou no prato.",
+      "history": "O souvlaki é uma comida de rua grega comum; o termo kalamaki designa a espetada de carne, nomeadamente em Atenas.",
+      "flavor": "Suculento, ácido e com notas de ervas.",
+      "technique": "Corte a carne em pedaços uniformes e grelhe até estar bem cozinhada.",
+      "essentials": [
+        "600 g de coxa de frango desossada",
+        "2 c. de sopa de azeite",
+        "1 limão"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30 min + marinada",
+        "ingredients": [
+          "600 g de coxa de frango desossada",
+          "2 c. de sopa de azeite",
+          "1 limão",
+          "2 dentes de alho",
+          "2 c. de chá de orégãos",
+          "sal",
+          "pão pita"
+        ],
+        "steps": [
+          "Corte a carne em pedaços e marine no frigorífico com azeite, limão, alho e orégãos.",
+          "Coloque a carne nos espetos.",
+          "Grelhe ou frite até estar bem cozinhada.",
+          "Sirva com pão pita quente, legumes e tzatziki."
+        ]
+      },
+      "variants": [
+        "A carne de porco também é comum; outras variantes usam borrego ou legumes."
+      ],
+      "serving": [
+        "Sirva com tomate, cebola e tzatziki."
+      ],
+      "commonMistakes": [
+        "Não use a marinada da carne crua como molho frio."
+      ]
+    },
+    "es": {
+      "overview": "Pequeños trozos de carne marinada se asan en brochetas y se sirven con pan o en plato.",
+      "history": "El souvlaki es una comida callejera griega muy extendida; kalamaki designa la brocheta de carne, entre otros lugares en Atenas.",
+      "flavor": "Jugoso, ácido y con notas de hierbas.",
+      "technique": "Corta la carne en trozos iguales y asa hasta que esté hecha por dentro.",
+      "essentials": [
+        "600 g de contramuslo de pollo deshuesado",
+        "2 cucharadas de aceite de oliva",
+        "1 limón"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30 min + marinado",
+        "ingredients": [
+          "600 g de contramuslo de pollo deshuesado",
+          "2 cucharadas de aceite de oliva",
+          "1 limón",
+          "2 dientes de ajo",
+          "2 cucharaditas de orégano",
+          "sal",
+          "pan de pita"
+        ],
+        "steps": [
+          "Corta la carne en trozos y marina en el frigorífico con aceite, limón, ajo y orégano.",
+          "Ensarta la carne en brochetas.",
+          "Asa o fríe hasta que esté hecha por dentro.",
+          "Sirve con pan de pita caliente, verduras y tzatziki."
+        ]
+      },
+      "variants": [
+        "El cerdo también es habitual; otras variantes utilizan cordero o verduras."
+      ],
+      "serving": [
+        "Sirve con tomate, cebolla y tzatziki."
+      ],
+      "commonMistakes": [
+        "No uses el marinado de carne cruda como salsa fría."
+      ]
+    },
+    "de": {
+      "overview": "Kleine marinierte Fleischstücke werden auf Spießen gegrillt und mit Brot oder als Tellergericht serviert.",
+      "history": "Souvlaki ist verbreitetes griechisches Streetfood; Kalamaki bezeichnet unter anderem in Athen den Fleischspieß.",
+      "flavor": "Saftig, säuerlich und kräuterbetont.",
+      "technique": "Fleisch in gleich große Stücke schneiden und vollständig durchgrillen.",
+      "essentials": [
+        "600 g Hähnchenschenkelfilet",
+        "2 EL Olivenöl",
+        "1 Zitrone"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30 Min. + Marinierzeit",
+        "ingredients": [
+          "600 g Hähnchenschenkelfilet",
+          "2 EL Olivenöl",
+          "1 Zitrone",
+          "2 Knoblauchzehen",
+          "2 TL Oregano",
+          "Salz",
+          "Pitabrot"
+        ],
+        "steps": [
+          "Fleisch in Stücke schneiden und mit Öl, Zitrone, Knoblauch und Oregano im Kühlschrank marinieren.",
+          "Fleisch auf Spieße stecken.",
+          "Grillen oder vollständig durchbraten.",
+          "Mit warmem Pitabrot, Gemüse und Tzatziki servieren."
+        ]
+      },
+      "variants": [
+        "Schweinefleisch ist ebenfalls verbreitet; andere Varianten verwenden Lamm oder Gemüse."
+      ],
+      "serving": [
+        "Mit Tomate, Zwiebel und Tzatziki servieren."
+      ],
+      "commonMistakes": [
+        "Marinade von rohem Fleisch nicht als kalte Sauce verwenden."
+      ]
+    }
+  },
+  "gyros": {
+    "en": {
+      "overview": "The meat is often served in pitta with onion, tomato and tzatziki.",
+      "history": "Gyros is central to Greek grilling and street-food culture, with similarities to döner and shawarma.",
+      "flavor": "Roasted, juicy and spiced.",
+      "technique": "At home, thin marinated strips of meat can be fried over high heat; this imitates the flavour, not the grilling method itself.",
+      "essentials": [
+        "600 g boneless chicken thigh",
+        "2 tbsp olive oil",
+        "1 tbsp lemon juice"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 35 min + marinating",
+        "ingredients": [
+          "600 g boneless chicken thigh",
+          "2 tbsp olive oil",
+          "1 tbsp lemon juice",
+          "garlic",
+          "oregano",
+          "paprika powder",
+          "4 pitta breads",
+          "tomato",
+          "red onion",
+          "tzatziki"
+        ],
+        "steps": [
+          "Cut the meat into thin strips.",
+          "Marinate in oil, lemon and spices in the refrigerator.",
+          "Fry in small batches until cooked through and browned.",
+          "Fill warm pitta with meat, vegetables and tzatziki."
+        ]
+      },
+      "variants": [
+        "Pork or chicken gyros is widespread; chips may be included in the pitta."
+      ],
+      "serving": [
+        "Serve in pitta or as a plated dish."
+      ],
+      "commonMistakes": [
+        "Do not overcrowd the pan."
+      ]
+    },
+    "fr": {
+      "overview": "La viande est souvent servie dans un pain pita avec de l’oignon, de la tomate et du tzatziki.",
+      "history": "Le gyros occupe une place centrale dans la culture grecque des grillades et de la cuisine de rue, avec des similitudes avec le döner et le shawarma.",
+      "flavor": "Grillé, juteux et épicé.",
+      "technique": "À la maison, de fines lanières de viande marinée peuvent être saisies à feu vif ; cela imite la saveur, et non le mode de cuisson sur broche.",
+      "essentials": [
+        "600 g de hauts de cuisse de poulet désossés",
+        "2 c. à soupe d’huile d’olive",
+        "1 c. à soupe de jus de citron"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 35 min + marinade",
+        "ingredients": [
+          "600 g de hauts de cuisse de poulet désossés",
+          "2 c. à soupe d’huile d’olive",
+          "1 c. à soupe de jus de citron",
+          "ail",
+          "origan",
+          "paprika en poudre",
+          "4 pains pita",
+          "tomate",
+          "oignon rouge",
+          "tzatziki"
+        ],
+        "steps": [
+          "Couper la viande en fines lanières.",
+          "Faire mariner au réfrigérateur avec de l’huile, du citron et des épices.",
+          "Faire revenir par petites quantités jusqu’à ce que la viande soit cuite à cœur et dorée.",
+          "Garnir le pain pita chaud de viande, de légumes et de tzatziki."
+        ]
+      },
+      "variants": [
+        "Le gyros au porc ou au poulet est répandu ; des frites peuvent garnir le pain pita."
+      ],
+      "serving": [
+        "Servir dans un pain pita ou à l’assiette."
+      ],
+      "commonMistakes": [
+        "Ne pas surcharger la poêle."
+      ]
+    },
+    "pt": {
+      "overview": "A carne é frequentemente servida em pão pita com cebola, tomate e tzatziki.",
+      "history": "O gyros ocupa um lugar central na cultura grega de grelhados e comida de rua, com semelhanças ao döner e ao shawarma.",
+      "flavor": "Tostado, suculento e condimentado.",
+      "technique": "Em casa, tiras finas de carne marinada podem ser salteadas em lume forte; isto imita o sabor, não o próprio método de grelhar.",
+      "essentials": [
+        "600 g de coxa de frango desossada",
+        "2 c. de sopa de azeite",
+        "1 c. de sopa de sumo de limão"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 35 min + marinada",
+        "ingredients": [
+          "600 g de coxa de frango desossada",
+          "2 c. de sopa de azeite",
+          "1 c. de sopa de sumo de limão",
+          "alho",
+          "orégãos",
+          "pimentão em pó",
+          "4 pães pita",
+          "tomate",
+          "cebola roxa",
+          "tzatziki"
+        ],
+        "steps": [
+          "Corte a carne em tiras finas.",
+          "Marine no frigorífico com azeite, limão e especiarias.",
+          "Salteie em pequenas porções até a carne estar bem cozinhada e dourada.",
+          "Recheie o pão pita quente com carne, legumes e tzatziki."
+        ]
+      },
+      "variants": [
+        "O gyros de porco ou frango é comum; a pita pode incluir batatas fritas."
+      ],
+      "serving": [
+        "Sirva em pita ou no prato."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado a frigideira."
+      ]
+    },
+    "es": {
+      "overview": "La carne se suele servir en pita con cebolla, tomate y tzatziki.",
+      "history": "El gyros ocupa un lugar central en la cultura griega de parrilla y comida callejera, con similitudes con el döner y el shawarma.",
+      "flavor": "Tostado, jugoso y especiado.",
+      "technique": "En casa se pueden saltear tiras finas de carne marinada a fuego fuerte; esto imita el sabor, no el propio método de asado.",
+      "essentials": [
+        "600 g de contramuslo de pollo deshuesado",
+        "2 cucharadas de aceite de oliva",
+        "1 cucharada de zumo de limón"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 35 min + marinado",
+        "ingredients": [
+          "600 g de contramuslo de pollo deshuesado",
+          "2 cucharadas de aceite de oliva",
+          "1 cucharada de zumo de limón",
+          "ajo",
+          "orégano",
+          "pimentón",
+          "4 panes de pita",
+          "tomate",
+          "cebolla morada",
+          "tzatziki"
+        ],
+        "steps": [
+          "Corta la carne en tiras finas.",
+          "Marina en el frigorífico con aceite, limón y especias.",
+          "Saltea en tandas pequeñas hasta que la carne esté hecha por dentro y dorada.",
+          "Rellena la pita caliente con carne, verduras y tzatziki."
+        ]
+      },
+      "variants": [
+        "El gyros de cerdo o pollo es habitual; la pita puede llevar patatas fritas."
+      ],
+      "serving": [
+        "Sirve en pita o en plato."
+      ],
+      "commonMistakes": [
+        "No llenes demasiado la sartén."
+      ]
+    },
+    "de": {
+      "overview": "Das Fleisch wird häufig in Pita mit Zwiebeln, Tomaten und Tzatziki serviert.",
+      "history": "Gyros ist ein zentraler Bestandteil der griechischen Grill- und Streetfood-Kultur und weist Ähnlichkeiten mit Döner und Schawarma auf.",
+      "flavor": "Röstig, saftig und würzig.",
+      "technique": "Zu Hause können dünne marinierte Fleischstreifen bei hoher Hitze gebraten werden; das ahmt den Geschmack nach, nicht die eigentliche Grillmethode.",
+      "essentials": [
+        "600 g Hähnchenschenkelfilet",
+        "2 EL Olivenöl",
+        "1 EL Zitronensaft"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 35 Min. + Marinierzeit",
+        "ingredients": [
+          "600 g Hähnchenschenkelfilet",
+          "2 EL Olivenöl",
+          "1 EL Zitronensaft",
+          "Knoblauch",
+          "Oregano",
+          "Paprikapulver",
+          "4 Pitabrote",
+          "Tomate",
+          "rote Zwiebel",
+          "Tzatziki"
+        ],
+        "steps": [
+          "Fleisch in dünne Streifen schneiden.",
+          "Mit Öl, Zitrone und Gewürzen im Kühlschrank marinieren.",
+          "Portionsweise vollständig durchbraten und bräunen.",
+          "Warmes Pitabrot mit Fleisch, Gemüse und Tzatziki füllen."
+        ]
+      },
+      "variants": [
+        "Gyros aus Schweinefleisch oder Hähnchen ist verbreitet; Pommes frites können in der Pita enthalten sein."
+      ],
+      "serving": [
+        "In Pita oder als Tellergericht servieren."
+      ],
+      "commonMistakes": [
+        "Pfanne nicht überfüllen."
+      ]
+    }
+  },
+  "spanakopita": {
+    "en": {
+      "overview": "Thin pastry sheets enclose a salty, herb-flavoured filling.",
+      "history": "Spanakopita belongs to the Greek tradition of filled pies, which come in many shapes and sizes.",
+      "flavor": "Crisp layers, juicy spinach and salty feta.",
+      "technique": "Squeeze excess liquid from the spinach and lightly brush the pastry sheets with oil.",
+      "essentials": [
+        "250 g filo pastry",
+        "500 g spinach",
+        "200 g feta"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min",
+        "ingredients": [
+          "250 g filo pastry",
+          "500 g spinach",
+          "200 g feta",
+          "3 spring onions",
+          "dill",
+          "2 eggs",
+          "olive oil"
+        ],
+        "steps": [
+          "Briefly heat the spinach until wilted; cool and squeeze out the liquid.",
+          "Mix with crumbled feta, spring onions, dill and eggs.",
+          "Lay several oil-brushed filo sheets in a dish, spread the filling and cover with the remaining sheets.",
+          "Bake at 190 °C until golden and the filling has set."
+        ]
+      },
+      "variants": [
+        "It can be shaped into small triangles or a large pie."
+      ],
+      "serving": [
+        "Serve warm or at room temperature after brief cooling."
+      ],
+      "commonMistakes": [
+        "Do not let the filo pastry dry out while working."
+      ]
+    },
+    "fr": {
+      "overview": "De fines feuilles de pâte entourent une garniture salée aux herbes.",
+      "history": "La spanakopita appartient à la tradition grecque des tourtes garnies, qui existent sous de nombreuses formes et tailles.",
+      "flavor": "Feuilles croustillantes, épinards moelleux et feta salée.",
+      "technique": "Presser les épinards pour retirer l’excédent d’eau et badigeonner légèrement les feuilles de pâte d’huile.",
+      "essentials": [
+        "250 g de pâte filo",
+        "500 g d’épinards",
+        "200 g de feta"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min",
+        "ingredients": [
+          "250 g de pâte filo",
+          "500 g d’épinards",
+          "200 g de feta",
+          "3 oignons nouveaux",
+          "aneth",
+          "2 œufs",
+          "huile d’olive"
+        ],
+        "steps": [
+          "Chauffer brièvement les épinards jusqu’à ce qu’ils tombent ; refroidir et presser pour retirer le liquide.",
+          "Mélanger avec la feta émiettée, les oignons nouveaux, l’aneth et les œufs.",
+          "Disposer plusieurs feuilles de filo badigeonnées d’huile dans un plat, répartir la garniture et couvrir avec le reste.",
+          "Cuire à 190 °C jusqu’à ce que la pâte soit dorée et la garniture prise."
+        ]
+      },
+      "variants": [
+        "On peut la façonner en petits triangles ou en grande tourte."
+      ],
+      "serving": [
+        "Servir tiède ou à température ambiante après un bref refroidissement."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser sécher la pâte filo pendant la préparation."
+      ]
+    },
+    "pt": {
+      "overview": "Folhas finas de massa envolvem um recheio salgado com ervas.",
+      "history": "A spanakopita pertence à tradição grega de tartes recheadas, que existem em muitas formas e tamanhos.",
+      "flavor": "Camadas crocantes, espinafres suculentos e feta salgada.",
+      "technique": "Esprema o excesso de líquido dos espinafres e pincele ligeiramente as folhas de massa com azeite.",
+      "essentials": [
+        "250 g de massa filo",
+        "500 g de espinafres",
+        "200 g de feta"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min",
+        "ingredients": [
+          "250 g de massa filo",
+          "500 g de espinafres",
+          "200 g de feta",
+          "3 cebolinhas verdes",
+          "endro",
+          "2 ovos",
+          "azeite"
+        ],
+        "steps": [
+          "Aqueça brevemente os espinafres até murcharem; arrefeça e esprema o líquido.",
+          "Misture com feta esfarelada, cebolinha verde, endro e ovos.",
+          "Coloque várias folhas de filo pinceladas com azeite numa forma, distribua o recheio e cubra com as restantes.",
+          "Leve ao forno a 190 °C até dourar e o recheio solidificar."
+        ]
+      },
+      "variants": [
+        "Pode ser moldada em pequenos triângulos ou numa tarte grande."
+      ],
+      "serving": [
+        "Sirva morna ou à temperatura ambiente após arrefecer brevemente."
+      ],
+      "commonMistakes": [
+        "Não deixe a massa filo secar durante a preparação."
+      ]
+    },
+    "es": {
+      "overview": "Unas láminas finas de masa envuelven un relleno salado con hierbas.",
+      "history": "La spanakopita pertenece a la tradición griega de pasteles rellenos, que existen en muchas formas y tamaños.",
+      "flavor": "Capas crujientes, espinacas jugosas y feta salado.",
+      "technique": "Exprime el exceso de líquido de las espinacas y pincela ligeramente las láminas de masa con aceite.",
+      "essentials": [
+        "250 g de masa filo",
+        "500 g de espinacas",
+        "200 g de feta"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min",
+        "ingredients": [
+          "250 g de masa filo",
+          "500 g de espinacas",
+          "200 g de feta",
+          "3 cebolletas",
+          "eneldo",
+          "2 huevos",
+          "aceite de oliva"
+        ],
+        "steps": [
+          "Calienta brevemente las espinacas hasta que reduzcan su volumen; enfría y exprime el líquido.",
+          "Mezcla con feta desmenuzado, cebolletas, eneldo y huevos.",
+          "Coloca varias hojas de filo pinceladas con aceite en una fuente, reparte el relleno y cubre con las restantes.",
+          "Hornea a 190 °C hasta que esté dorada y el relleno haya cuajado."
+        ]
+      },
+      "variants": [
+        "Puede formarse en triángulos pequeños o en un pastel grande."
+      ],
+      "serving": [
+        "Sirve templada o a temperatura ambiente tras enfriar brevemente."
+      ],
+      "commonMistakes": [
+        "No dejes que la masa filo se seque durante la preparación."
+      ]
+    },
+    "de": {
+      "overview": "Dünne Teigblätter umschließen eine salzige, kräuterbetonte Füllung.",
+      "history": "Spanakopita gehört zur griechischen Tradition gefüllter Pasteten, die es in vielen Formen und Größen gibt.",
+      "flavor": "Knusprige Schichten, saftiger Spinat und salziger Feta.",
+      "technique": "Überschüssige Flüssigkeit aus dem Spinat drücken und die Teigblätter leicht mit Öl bestreichen.",
+      "essentials": [
+        "250 g Filoteig",
+        "500 g Spinat",
+        "200 g Feta"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min.",
+        "ingredients": [
+          "250 g Filoteig",
+          "500 g Spinat",
+          "200 g Feta",
+          "3 Frühlingszwiebeln",
+          "Dill",
+          "2 Eier",
+          "Olivenöl"
+        ],
+        "steps": [
+          "Spinat kurz erhitzen, bis er zusammenfällt; abkühlen lassen und Flüssigkeit ausdrücken.",
+          "Mit zerbröckeltem Feta, Frühlingszwiebeln, Dill und Eiern mischen.",
+          "Mehrere mit Öl bestrichene Filoblätter in eine Form legen, Füllung verteilen und mit den restlichen Blättern bedecken.",
+          "Bei 190 °C backen, bis der Teig goldbraun und die Füllung gestockt ist."
+        ]
+      },
+      "variants": [
+        "Kann als kleine Dreiecke oder große Pastete geformt werden."
+      ],
+      "serving": [
+        "Nach kurzem Abkühlen lauwarm oder bei Zimmertemperatur servieren."
+      ],
+      "commonMistakes": [
+        "Filoteig bei der Verarbeitung nicht austrocknen lassen."
+      ]
+    }
+  },
+  "tzatziki": {
+    "en": {
+      "overview": "Thick yoghurt is mixed with drained, grated cucumber and aromatics.",
+      "history": "Tzatziki is served as mezze and with grilled food in Greek food culture; related yoghurt sauces exist in the region.",
+      "flavor": "Fresh, creamy, tangy and garlicky.",
+      "technique": "Remove excess liquid from the cucumber before mixing it in.",
+      "essentials": [
+        "400 g Greek yoghurt",
+        "1 cucumber",
+        "1–2 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 15 min",
+        "ingredients": [
+          "400 g Greek yoghurt",
+          "1 cucumber",
+          "1–2 garlic cloves",
+          "1 tbsp olive oil",
+          "1 tbsp lemon juice",
+          "dill, optional",
+          "salt"
+        ],
+        "steps": [
+          "Grate the cucumber and squeeze out the liquid.",
+          "Mix yoghurt, cucumber and finely grated garlic.",
+          "Add oil, lemon and salt to taste.",
+          "Chill until serving."
+        ]
+      },
+      "variants": [
+        "Dill, mint or vinegar are used in different versions."
+      ],
+      "serving": [
+        "Serve with bread, vegetables, souvlaki or gyros."
+      ],
+      "commonMistakes": [
+        "Do not use cucumber without draining it."
+      ]
+    },
+    "fr": {
+      "overview": "Du yaourt épais est mélangé à du concombre râpé et égoutté ainsi qu’à des aromates.",
+      "history": "Le tzatziki est servi en mezzé et avec des grillades dans la cuisine grecque ; des sauces au yaourt apparentées existent dans la région.",
+      "flavor": "Frais, crémeux, acidulé et marqué par l’ail.",
+      "technique": "Retirer l’excédent d’eau du concombre avant de l’incorporer.",
+      "essentials": [
+        "400 g de yaourt grec",
+        "1 concombre",
+        "1–2 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 15 min",
+        "ingredients": [
+          "400 g de yaourt grec",
+          "1 concombre",
+          "1–2 gousses d’ail",
+          "1 c. à soupe d’huile d’olive",
+          "1 c. à soupe de jus de citron",
+          "aneth, facultatif",
+          "sel"
+        ],
+        "steps": [
+          "Râper le concombre et presser pour retirer le liquide.",
+          "Mélanger le yaourt, le concombre et l’ail finement râpé.",
+          "Ajouter l’huile, le citron et le sel selon le goût.",
+          "Réfrigérer jusqu’au moment de servir."
+        ]
+      },
+      "variants": [
+        "L’aneth, la menthe ou le vinaigre sont utilisés dans différentes variantes."
+      ],
+      "serving": [
+        "Servir avec du pain, des légumes, du souvlaki ou du gyros."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser le concombre sans l’égoutter."
+      ]
+    },
+    "pt": {
+      "overview": "Iogurte espesso é misturado com pepino ralado e escorrido e aromáticos.",
+      "history": "O tzatziki é servido como meze e com grelhados na cultura gastronómica grega; existem molhos de iogurte semelhantes na região.",
+      "flavor": "Fresco, cremoso, ácido e com sabor a alho.",
+      "technique": "Retire o excesso de líquido do pepino antes de o incorporar.",
+      "essentials": [
+        "400 g de iogurte grego",
+        "1 pepino",
+        "1–2 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 15 min",
+        "ingredients": [
+          "400 g de iogurte grego",
+          "1 pepino",
+          "1–2 dentes de alho",
+          "1 c. de sopa de azeite",
+          "1 c. de sopa de sumo de limão",
+          "endro, opcional",
+          "sal"
+        ],
+        "steps": [
+          "Rale o pepino e esprema o líquido.",
+          "Misture iogurte, pepino e alho finamente ralado.",
+          "Junte azeite, limão e sal a gosto.",
+          "Refrigere até servir."
+        ]
+      },
+      "variants": [
+        "Endro, hortelã ou vinagre são usados em diferentes versões."
+      ],
+      "serving": [
+        "Sirva com pão, legumes, souvlaki ou gyros."
+      ],
+      "commonMistakes": [
+        "Não use pepino sem o deixar escorrer."
+      ]
+    },
+    "es": {
+      "overview": "El yogur espeso se mezcla con pepino rallado y escurrido y aromáticos.",
+      "history": "El tzatziki se sirve como mezze y con platos a la parrilla en la cocina griega; en la región existen salsas de yogur relacionadas.",
+      "flavor": "Fresco, cremoso, ácido y con sabor a ajo.",
+      "technique": "Retira el exceso de líquido del pepino antes de incorporarlo.",
+      "essentials": [
+        "400 g de yogur griego",
+        "1 pepino",
+        "1–2 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 15 min",
+        "ingredients": [
+          "400 g de yogur griego",
+          "1 pepino",
+          "1–2 dientes de ajo",
+          "1 cucharada de aceite de oliva",
+          "1 cucharada de zumo de limón",
+          "eneldo, opcional",
+          "sal"
+        ],
+        "steps": [
+          "Ralla el pepino y exprime el líquido.",
+          "Mezcla yogur, pepino y ajo rallado fino.",
+          "Añade aceite, limón y sal al gusto.",
+          "Refrigera hasta servir."
+        ]
+      },
+      "variants": [
+        "Eneldo, menta o vinagre se utilizan en distintas variantes."
+      ],
+      "serving": [
+        "Sirve con pan, verduras, souvlaki o gyros."
+      ],
+      "commonMistakes": [
+        "No uses el pepino sin escurrirlo."
+      ]
+    },
+    "de": {
+      "overview": "Dicker Joghurt wird mit abgetropfter, geriebener Gurke und Aromaten vermischt.",
+      "history": "Tzatziki wird in der griechischen Esskultur als Mezze und zu Grillgerichten serviert; verwandte Joghurtsaucen gibt es in der Region.",
+      "flavor": "Frisch, cremig, säuerlich und knoblauchbetont.",
+      "technique": "Überschüssige Flüssigkeit aus der Gurke entfernen, bevor sie untergemischt wird.",
+      "essentials": [
+        "400 g griechischer Joghurt",
+        "1 Gurke",
+        "1–2 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 15 Min.",
+        "ingredients": [
+          "400 g griechischer Joghurt",
+          "1 Gurke",
+          "1–2 Knoblauchzehen",
+          "1 EL Olivenöl",
+          "1 EL Zitronensaft",
+          "Dill, optional",
+          "Salz"
+        ],
+        "steps": [
+          "Gurke reiben und Flüssigkeit ausdrücken.",
+          "Joghurt, Gurke und fein geriebenen Knoblauch verrühren.",
+          "Öl, Zitrone und Salz nach Geschmack hinzufügen.",
+          "Bis zum Servieren kühlen."
+        ]
+      },
+      "variants": [
+        "Dill, Minze oder Essig werden in verschiedenen Varianten verwendet."
+      ],
+      "serving": [
+        "Mit Brot, Gemüse, Souvlaki oder Gyros servieren."
+      ],
+      "commonMistakes": [
+        "Gurke nicht ohne Abtropfen verwenden."
+      ]
+    }
+  },
+  "pastitsio": {
+    "en": {
+      "overview": "Tubular pasta, meat sauce and white sauce are layered in a dish and gratinated.",
+      "history": "Pastitsio is a well-known Greek family dish with features of Mediterranean baked-pasta traditions.",
+      "flavor": "Rich, creamy and aromatic with warm spices.",
+      "technique": "Cook the pasta for slightly less time than usual and let the meat sauce thicken.",
+      "essentials": [
+        "350 g tubular pasta",
+        "400 g minced meat",
+        "1 onion"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min",
+        "ingredients": [
+          "350 g tubular pasta",
+          "400 g minced meat",
+          "1 onion",
+          "400 g tomatoes",
+          "cinnamon",
+          "40 g butter",
+          "40 g flour",
+          "500 ml milk",
+          "80 g grated cheese"
+        ],
+        "steps": [
+          "Cook the pasta until almost tender and drain.",
+          "Brown meat and onion, add tomato and cinnamon and reduce.",
+          "Make béchamel from butter, flour and milk.",
+          "Layer pasta, meat sauce and béchamel in a dish and top with cheese.",
+          "Bake at 190 °C until golden and heated through; let rest before portioning."
+        ]
+      },
+      "variants": [
+        "Long pastitsio tubes are traditional, but other tubular pasta shapes can be used at home."
+      ],
+      "serving": [
+        "Serve with salad."
+      ],
+      "commonMistakes": [
+        "Do not overcook the pasta before baking."
+      ]
+    },
+    "fr": {
+      "overview": "Des pâtes tubulaires, une sauce à la viande et une sauce blanche sont disposées en couches dans un plat et gratinées.",
+      "history": "Le pastitsio est un plat familial grec bien connu qui s’inscrit dans les traditions méditerranéennes des pâtes au four.",
+      "flavor": "Généreux, crémeux et aromatique, aux épices chaudes.",
+      "technique": "Cuire les pâtes un peu moins longtemps que d’habitude et laisser épaissir la sauce à la viande.",
+      "essentials": [
+        "350 g de pâtes tubulaires",
+        "400 g de viande hachée",
+        "1 oignon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min",
+        "ingredients": [
+          "350 g de pâtes tubulaires",
+          "400 g de viande hachée",
+          "1 oignon",
+          "400 g de tomates",
+          "cannelle",
+          "40 g de beurre",
+          "40 g de farine",
+          "500 ml de lait",
+          "80 g de fromage râpé"
+        ],
+        "steps": [
+          "Cuire les pâtes jusqu’à ce qu’elles soient presque tendres, puis les égoutter.",
+          "Faire dorer la viande et l’oignon, ajouter les tomates et la cannelle, puis faire réduire.",
+          "Préparer une béchamel avec le beurre, la farine et le lait.",
+          "Disposer les pâtes, la sauce à la viande et la béchamel en couches dans un plat, puis couvrir de fromage.",
+          "Cuire à 190 °C jusqu’à ce que le dessus soit doré et l’ensemble bien chaud ; laisser reposer avant de découper."
+        ]
+      },
+      "variants": [
+        "Les longues pâtes tubulaires à pastitsio sont traditionnelles, mais d’autres pâtes tubulaires peuvent être utilisées à la maison."
+      ],
+      "serving": [
+        "Servir avec de la salade."
+      ],
+      "commonMistakes": [
+        "Ne pas trop cuire les pâtes avant le passage au four."
+      ]
+    },
+    "pt": {
+      "overview": "Massa tubular, molho de carne e molho branco são dispostos em camadas num tabuleiro e gratinados.",
+      "history": "O pastitsio é um conhecido prato familiar grego com características das tradições mediterrânicas de massa no forno.",
+      "flavor": "Encorpado, cremoso e aromático, com especiarias quentes.",
+      "technique": "Coza a massa durante um pouco menos de tempo que o habitual e deixe engrossar o molho de carne.",
+      "essentials": [
+        "350 g de massa tubular",
+        "400 g de carne picada",
+        "1 cebola"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min",
+        "ingredients": [
+          "350 g de massa tubular",
+          "400 g de carne picada",
+          "1 cebola",
+          "400 g de tomate",
+          "canela",
+          "40 g de manteiga",
+          "40 g de farinha",
+          "500 ml de leite",
+          "80 g de queijo ralado"
+        ],
+        "steps": [
+          "Coza a massa até ficar quase tenra e escorra.",
+          "Doure a carne e a cebola, junte tomate e canela e deixe reduzir.",
+          "Prepare um béchamel com manteiga, farinha e leite.",
+          "Disponha massa, molho de carne e béchamel em camadas num tabuleiro e cubra com queijo.",
+          "Leve ao forno a 190 °C até dourar e estar bem quente; deixe repousar antes de cortar."
+        ]
+      },
+      "variants": [
+        "Os tubos longos de pastitsio são tradicionais, mas outros tipos de massa tubular podem ser usados em casa."
+      ],
+      "serving": [
+        "Sirva com salada."
+      ],
+      "commonMistakes": [
+        "Não coza demasiado a massa antes de a levar ao forno."
+      ]
+    },
+    "es": {
+      "overview": "La pasta tubular, la salsa de carne y la salsa blanca se disponen en capas en una fuente y se gratinan.",
+      "history": "El pastitsio es un conocido plato familiar griego con rasgos de las tradiciones mediterráneas de pasta al horno.",
+      "flavor": "Intenso, cremoso y aromático, con especias cálidas.",
+      "technique": "Cuece la pasta un poco menos de lo habitual y deja espesar la salsa de carne.",
+      "essentials": [
+        "350 g de pasta tubular",
+        "400 g de carne picada",
+        "1 cebolla"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min",
+        "ingredients": [
+          "350 g de pasta tubular",
+          "400 g de carne picada",
+          "1 cebolla",
+          "400 g de tomates",
+          "canela",
+          "40 g de mantequilla",
+          "40 g de harina",
+          "500 ml de leche",
+          "80 g de queso rallado"
+        ],
+        "steps": [
+          "Cuece la pasta hasta que esté casi tierna y escurre.",
+          "Dora la carne y la cebolla, añade tomate y canela y deja reducir.",
+          "Prepara una bechamel con mantequilla, harina y leche.",
+          "Coloca pasta, salsa de carne y bechamel en capas en una fuente y cubre con queso.",
+          "Hornea a 190 °C hasta que esté dorado y bien caliente; deja reposar antes de cortar en porciones."
+        ]
+      },
+      "variants": [
+        "Los tubos largos de pastitsio son tradicionales, pero en casa pueden usarse otras pastas tubulares."
+      ],
+      "serving": [
+        "Sirve con ensalada."
+      ],
+      "commonMistakes": [
+        "No cuezas demasiado la pasta antes de hornearla."
+      ]
+    },
+    "de": {
+      "overview": "Röhrennudeln, Fleischsauce und weiße Sauce werden in einer Form geschichtet und überbacken.",
+      "history": "Pastitsio ist ein bekanntes griechisches Familiengericht mit Merkmalen mediterraner Ofenpastatraditionen.",
+      "flavor": "Kräftig, cremig und aromatisch mit warmen Gewürzen.",
+      "technique": "Nudeln etwas kürzer als üblich kochen und Fleischsauce eindicken lassen.",
+      "essentials": [
+        "350 g Röhrennudeln",
+        "400 g Hackfleisch",
+        "1 Zwiebel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min.",
+        "ingredients": [
+          "350 g Röhrennudeln",
+          "400 g Hackfleisch",
+          "1 Zwiebel",
+          "400 g Tomaten",
+          "Zimt",
+          "40 g Butter",
+          "40 g Mehl",
+          "500 ml Milch",
+          "80 g geriebener Käse"
+        ],
+        "steps": [
+          "Nudeln fast weich kochen und abtropfen lassen.",
+          "Fleisch und Zwiebel anbräunen, Tomaten und Zimt hinzufügen und einkochen.",
+          "Béchamel aus Butter, Mehl und Milch zubereiten.",
+          "Nudeln, Fleischsauce und Béchamel in einer Form schichten und mit Käse bestreuen.",
+          "Bei 190 °C goldbraun und durchgehend heiß backen; vor dem Portionieren ruhen lassen."
+        ]
+      },
+      "variants": [
+        "Lange Pastitsio-Röhren sind traditionell, zu Hause können aber auch andere Röhrennudeln verwendet werden."
+      ],
+      "serving": [
+        "Mit Salat servieren."
+      ],
+      "commonMistakes": [
+        "Nudeln vor dem Überbacken nicht zu lange kochen."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

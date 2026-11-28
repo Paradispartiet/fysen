@@ -5,7 +5,7 @@ import { draftInternationalArticles } from "../content/food-knowledge/translatio
 import { internationalSummaryLocales, draftInternationalSummaries } from "../lib/international-summary-drafts.ts";
 const nums = (s) => s.match(/[0-9]+|[½¼¾]/gu) ?? [];
 test("International article bodies retain exact recipe structure and numeric tokens", () => {
-  assert.equal(Object.keys(draftInternationalArticles).length, 88);
+  assert.equal(Object.keys(draftInternationalArticles).length, 96);
   for (const [id, translations] of Object.entries(draftInternationalArticles)) {
     const original = additionalDishes.find((a) => a.dishId === id);
     assert.ok(original, id);
