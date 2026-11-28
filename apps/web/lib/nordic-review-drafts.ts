@@ -310,7 +310,7 @@ export const draftFaroeseVisuals = {
   "aiAlt": "Myndprýði við eftirgjørdum viti av {name}, ikki matstovumynd"
 } as const satisfies Record<VisualKey,string>;
 
-// Partial search-control drafts. Missing keys are intentional; never use as a runtime fallback.
+// Full unreviewed search drafts; evidence terminology requires native review.
 export const draftArcticResults = {
   "kl": {
     "results": "Ujarnerup inerneri",
@@ -335,7 +335,30 @@ export const draftArcticResults = {
     "chooseCuisine": "Nerisassat suussusii toqqakkit",
     "learnDish": "Nerisassaq pillugu paasisaqarnerugit",
     "menuMatches": "Nerisassaatini ujarnerup inerneri",
-    "searchDish": "Nerisassaq ujaruk"
+    "searchDish": "Nerisassaq ujaruk",
+    "openNow": "Igaffik maanna ammasoq",
+    "filterScope": "Immikkoortiterinerit inernernut pissarsiarineqareersimasunut taamaallaat atuupput.",
+    "limit": " (API-p paasissutissat tamakkiisuuneri uppernarsinngilai). Neriniartarfiit allat pisinnaapput.",
+    "unknownFilter": "Aki, ungasissuseq imaluunniit ammasarfik ilisimaneqanngippat, inerneq immikkoortiterinermi uppernarsarneqartutut naatsorsuunneqanngilaq.",
+    "mapRegion": "Nunap assinga: neriniartarfiit inernerni takutinneqartut",
+    "similar": "Nerisassaq assingusoq – nerisassaat takukkit",
+    "verified": "Nerisassaatini uppernarsarneqartoq",
+    "directions": "Aqqut",
+    "emptyMap": "Neriniartarfeqanngilaq immikkoortiterinernut naapertuuttoqartumik. Nunap assinga takuniarlugu immikkoortiterineq piiaruk.",
+    "mapNote": "Nunap assingani neriniartarfik toqqagaq ataaseq takutinneqartarpoq. Nunap assinganik ammaaguit aatsaat paasissutissat OpenStreetMap-imit pissarsiarineqartarput.",
+    "emptyFilter": "Inernerit pissarsiarineqartut arlaannaalluunniit immikkoortiterinernut naapertuuttutut nassaassaanngilaq.",
+    "nearTitle": "Nerisassat assingusut",
+    "nearNote": "Taaguutit assingusut kisiisa pineqarput; nerisassaq ujagaq sassaalliutigineqartoq uppernarsarneqanngilaq.",
+    "open": "Igaffik maanna ammasoq",
+    "closed": "Igaffik maanna matoqqavoq",
+    "claim": "{name} ingerlappiviuk?",
+    "checked": "Nerisassaat kingullermik misissorneqarput",
+    "go": "Tassunga ingerlaarit",
+    "away": "Ungasissuseq: {distance}",
+    "explore": "Nerisassat misissuataakkit",
+    "exploreHint": "Nerisassat ileqquilu, nunap immikkoortui suussusiilu",
+    "exploreCuisine": "Nerisassat ileqquilu misissuataakkit",
+    "dishesWhere": "Nerisassat sumi pissarsiarineqarsinnaanersut"
   },
   "se": {
     "results": "Ohcanbohtosat ja silliideamit",
@@ -360,11 +383,34 @@ export const draftArcticResults = {
     "chooseCuisine": "Vállje borramušárbevieru",
     "learnDish": "Oahpa eanet borramuša birra",
     "menuMatches": "Čájet borramušlisttuid bohtosiid",
-    "searchDish": "Oza borramuša"
+    "searchDish": "Oza borramuša",
+    "openNow": "Gievkkan lea rabas dál",
+    "filterScope": "Silliideamit gusket dušše juo viežžon bohtosiidda.",
+    "limit": " (API ii leat duođaštan ahte buot leat mielde). Sáhttet leat eanet restauráŋŋat.",
+    "unknownFilter": "Dovdameahttun haddi, gaska dahje rabasáigi ii rehkenasto duođaštuvvon silliidanbohtosin.",
+    "mapRegion": "Kárta čájehuvvon bohtosiid restauráŋŋain",
+    "similar": "Sullasaš borramuš – dárkkis borramušlisttu",
+    "verified": "Duođaštuvvon borramušlistaohcanbohtos",
+    "directions": "Mátkerávvagat",
+    "emptyMap": "Ii oktage restauráŋŋa heive silliidemiidda. Sihko ovtta silliideami vai oainnát kártta.",
+    "mapNote": "Kárta čájeha ovtta válljejuvvon restauráŋŋa hávilis. OpenStreetMap dieđut viežžojuvvojit easkka go rabat kártta.",
+    "emptyFilter": "Ii oktage viežžon bohtos heive silliidemiidda.",
+    "nearTitle": "Sullasaš borramušat",
+    "nearNote": "Dát leat dušše sullasaš namaid čállosat, eai luohtehahtti duođaštusat das ahte ohccojuvvon borramuš lea fálus.",
+    "open": "Gievkkan lea rabas dál",
+    "closed": "Gievkkan lea gitta dál",
+    "claim": "Leat go don {name} jođiheaddji?",
+    "checked": "Borramušlistu maŋemus dárkkistuvvon",
+    "go": "Mana dohko",
+    "away": "{distance} eret",
+    "explore": "Suokkardala borramušaid",
+    "exploreHint": "Borramušárbevierut, guovllut ja borramuššlájat",
+    "exploreCuisine": "Suokkardala borramušárbevieruid",
+    "dishesWhere": "Borramušat ja gos daid oaččut"
   }
-} as const satisfies Record<"kl" | "se", Partial<Record<ResultMessageKey,string>>>;
+} as const satisfies Record<"kl" | "se", Record<ResultMessageKey,string>>;
 
-// Partial food-knowledge drafts. Evidence and availability wording is deliberately pending review.
+// Full unreviewed food-knowledge drafts; evidence terminology requires native review.
 export const draftArcticKnowledge = {
   "kl": {
     "lexicon": "Fysenip nerisassanik ilisimasaqarfia",
@@ -391,7 +437,13 @@ export const draftArcticKnowledge = {
     "allMatches": "Ujarnerup inerneri tamarmik takukkit",
     "general": "Nerisassat pillugit ilisimasat",
     "originalText": "Allaaserisap sinnera suli norskisut allassimavoq.",
-    "recipeInfo": "Iganermut ilitsersuut pillugu paasissutissat"
+    "recipeInfo": "Iganermut ilitsersuut pillugu paasissutissat",
+    "intro": "Nerisassaq, mamaa igariaasialu paasikkit, angerlarsimaffimmi iganissaa ilikkaruk – neriniartarfiillu nerisassaatiminni peqartut ujakkit.",
+    "loading": "Neriniartarfiit paasissutissartaat pissarsiarineqarput …",
+    "error": "Neriniartarfiit paasissutissartaat maanna pissarsiarineqarsinnaanngillat.",
+    "noMatches": "Nerisassaq taanna Oslomi maanna ujarnerup inernerini nassaassaanngilaq.",
+    "picture": "Nerisassap assinga nerisassallu pillugit ilisimasat",
+    "notEvidence": "nerisassaatini uppernarsaataanngilaq"
   },
   "se": {
     "lexicon": "Fysen borramušleksikona",
@@ -418,9 +470,15 @@ export const draftArcticKnowledge = {
     "allMatches": "Čájet buot ohcanbohtosiid",
     "general": "Oppalaš diehtu borramušaid birra",
     "originalText": "Artihkkala loahppa lea ain dárogillii.",
-    "recipeInfo": "Dieđut reseaptta birra"
+    "recipeInfo": "Dieđut reseaptta birra",
+    "intro": "Oahpa borramuša, mákccaid ja ráhkadanvuogi birra, oahpa ráhkadit dan ruovttus – ja gávnna restauráŋŋaid main dat duođaid lea borramušlisttus.",
+    "loading": "Viežžamin restauráŋŋaid …",
+    "error": "Restauráŋŋaid ii sáhttán viežžat dál.",
+    "noMatches": "Dál eai leat bohtosat dán borramuššii Oslos.",
+    "picture": "Borramuša govva ja oppalaš diehtu borramušaid birra",
+    "notEvidence": "ii leat borramušlista duođaštus"
   }
-} as const satisfies Record<"kl" | "se", Partial<Record<KnowledgeKey,string>>>;
+} as const satisfies Record<"kl" | "se", Record<KnowledgeKey,string>>;
 
 // Unreviewed display-only copy; missing keys are intentional.
 export const draftArcticBrowse = {
@@ -458,7 +516,34 @@ export const draftArcticBrowse = {
     "close": "{name} matujuk",
     "exploreHow": "Qanoq misissuataarusunnerlutit toqqaruk",
     "showFewer": "Nerisassat ikinnerusut takukkit",
-    "showAll": "Nerisassatut siunnersuutit {count} tamarmik takukkit"
+    "showAll": "Nerisassatut siunnersuutit {count} tamarmik takukkit",
+    "liveIntro": "Illoqarfimmi neriniartarfiit nerisassaat misissuataakkit. Nerisassat suussusii malillugit immikkoortiterigit imaluunniit nerisassaq aalajangersimasoq ujaruk.",
+    "archiveIntro": "Neriniartarfiit nerisassaallu misissuataakkit, nerisassat suussusii toqqakkit imaluunniit nererusutat ujaruk.",
+    "loading": "Nerisassat pissarsiarineqarput …",
+    "loadError": "Nerisassat maanna pissarsiarineqarsinnaanngillat.",
+    "noneCity": "{city}: nerisassanik nassaartoqanngilaq.",
+    "editorialIntro": "Nerisassat suussusiannit uannga nerisassat misissuataakkit. Paasisaqarnerujumallutit «Nerisassaq pillugu paasisaqarnerugit» toqqaruk.",
+    "foundOne": "Neriniartarfimmi {count} nassaassaavoq.",
+    "foundMany": "Neriniartarfinnni {count} nassaassaavoq.",
+    "noDish": "Nerisassaq taanna pillugu inerneqanngilaq.",
+    "emptyFilter": "Nerisassat arlaannaalluunniit immikkoortiterinermut naapertuuttuunngilaq.",
+    "canonicalEmpty": "Nerisassat allattorsimaffimmiittut arlaannaalluunniit immikkoortiterinermut naapertuuttuunngilaq.",
+    "chooseRegion": "Nunap imaluunniit nunap immikkoortuata nerisassatigut ileqqua, imaluunniit nerisassat sukkasuumik piareersakkat suussusiat toqqaruk.",
+    "flagSource": "Nunap immikkoortuata erfalasuanut paasissutissarsiffik akuersissullu",
+    "acrossRegions": "Nerisassat suussusii nunani nunallu immikkoortuini assigiinngitsuni nassaassaapput.",
+    "suggestionOnly": "Nerisassat misissuataarnissamut siunnersuutaapput, nerisassaatini uppernarsarneqartutut naatsorsuunneqanngillat.",
+    "whereDishes": "Nerisassat sumi nassaassaanersut takukkit imaluunniit amerlanerusut ujarlugit.",
+    "noDistance": "Inernernut ukununnga ungasissutsimut paasissutissaqanngilaq",
+    "distanceUnknown": "Ungasissutsimut paasissutissaqanngilaq",
+    "nearestKnown": "Inernerit {count} sumiissusersineqarsimasut akornanni qaninnerpaat",
+    "moreRestaurants": "Neriniartarfiit allat {name}-mik nerisassaateqartut",
+    "proposals": "Nerisassatut siunnersuutit {count} · Oslo",
+    "disableDistance": "Ungasissuseq malillugu tulleriiaarineq unitsiguk",
+    "nearestHere": "Uannut qaninnerpaat takukkit",
+    "localOnly": "Sumiissuseq taamaallaat internetimut alakkarterummi uani atorneqartarpoq.",
+    "sortedDistance": "Sumiissuseq ilisimaneqarpat toqqaannartumik ungasissuseq malillugu tulleriiaarneqarput.",
+    "locationFail": "Sumiissuseq pissarsiarineqarsinnaanngilaq. Nerisassat tamarmik suli misissuataarsinnaavatit.",
+    "sourceNote": "Neriniartarfiit aqqi nerisassaat allattorneqarsimasut tunngavigalugit takutinneqartarput. Ungasissuseq taamaallaat inernernut sumiissusersineqarsimasunut takutinneqartarpoq. Paasisaqarnerujumallutit nerisassaatini ujarnerup inerneri takukkit."
   },
   "se": {
     "allCity": "Buot borramušat: {city}",
@@ -494,9 +579,36 @@ export const draftArcticBrowse = {
     "close": "Gidde {name}",
     "exploreHow": "Vállje mo háliidat suokkardallat",
     "showFewer": "Čájet unnit borramušaid",
-    "showAll": "Čájet buot {count} borramuševttohusa"
+    "showAll": "Čájet buot {count} borramuševttohusa",
+    "liveIntro": "Suokkardala gávpoga restauráŋŋaid borramušaid. Sille borramušárbevieru mielde dahje oza dihto borramuša.",
+    "archiveIntro": "Suokkardala restauráŋŋaid ja borramušaid, vállje borramušárbevieru dahje oza dan maid háliidat borrat.",
+    "loading": "Viežžamin borramušaid …",
+    "loadError": "Borramušaid ii sáhttán viežžat dál.",
+    "noneCity": "{city}: ii gávdnon borramušaid.",
+    "editorialIntro": "Suokkardala dán borramušárbevieru borramušaid. Vállje «Oahpa eanet borramuša birra» vai oaččut eanet dieđuid.",
+    "foundOne": "Lea {count} restauráŋŋas.",
+    "foundMany": "Lea {count} restauráŋŋas.",
+    "noDish": "Eai leat bohtosat dán borramuššii.",
+    "emptyFilter": "Ii oktage borramuš heive dán silliideapmái.",
+    "canonicalEmpty": "Ii oktage borramuš váldoregistaris heive silliideapmái.",
+    "chooseRegion": "Vállje riikkalaš dahje guovllulaš borramušárbevieru dahje jođánisborramuša šlája.",
+    "flagSource": "Guovlluleavgga gáldu ja liseansa",
+    "acrossRegions": "Borramuššlájat gávdnojit máŋgga riikkas ja guovllus.",
+    "suggestionOnly": "Borramušat leat suokkardallanevttohusat, eai duođaštuvvon borramušlistaohcanbohtosat.",
+    "whereDishes": "Geahča gos borramušaid gávnnat, dahje geavat ohcangietti gávdnat eanet.",
+    "noDistance": "Eai leat gaskadieđut dáidda bohtosiidda",
+    "distanceUnknown": "Gaskadieđuid haga",
+    "nearestKnown": "Lágamusat {count} bohtosa gaskkas main lea dovddus báiki",
+    "moreRestaurants": "Eanet restauráŋŋat main lea {name}",
+    "proposals": "{count} borramuševttohusa · Oslo",
+    "disableDistance": "Heaitte gaskka mielde sirrema",
+    "nearestHere": "Čájet mu lágamusaid",
+    "localOnly": "Báikediehtu geavahuvvo dušše dán fierbmebláđes.",
+    "sortedDistance": "Sirrejuvvon njuolggogaskka mielde gos báiki lea dovddus.",
+    "locationFail": "Báikediehtu ii sáhttán viežžat. Sáhtát ain suokkardallat buot borramušaid.",
+    "sourceNote": "Restauráŋŋaid namat vuođđuduvvojit registrerejuvvon borramušlisttuide. Gaska lea olámuttus dušše bohtosiidda main báiki lea dovddus. Geahča borramušlistaohcanbohtosiid oažžut eanet dieđuid."
   }
-} as const satisfies Record<"kl" | "se", Partial<Record<BrowseKey,string>>>;
+} as const satisfies Record<"kl" | "se", Record<BrowseKey,string>>;
 
 
 // Unreviewed display-only copy; missing keys are intentional.
@@ -566,7 +678,18 @@ export const draftArcticVisuals = {
     "explore": "Nerisassat {count} misissuataakkit",
     "gallery": "Nererusunneq · Assit",
     "find": "Mamakujuttumik ujarit",
-    "license": "Akuersissut"
+    "license": "Akuersissut",
+    "disclaimer": "Nerisassat suussusiisa assilialiai assillu, neriniartarfiit assiginngilaat.",
+    "matches": "Nerisassaatini ujarnerup inerneri takukkit",
+    "cover": "Tom yum raajalik pupittalillu aaqqissuisunit toqqarneqarsimasoq assilisaq, neriniartarfiup assiginngilaa",
+    "exterior": "Silataa · Assilialiaq",
+    "interior": "Ilua · Assilialiaq",
+    "restaurantSource": "Neriniartarfiup nammineq assii tunngavigalugit assilialiarineqartoq",
+    "exteriorAlt": "{name}: silataata assilialiarineqarnera",
+    "interiorAlt": "{name}: iluata assilialiarineqarnera",
+    "ai": "Silassorissuusiaq atorlugu assilialiaq",
+    "photoAlt": "{name}: aaqqissuisunit toqqarneqartoq assilisaq, neriniartarfiup assiginngilaa",
+    "aiAlt": "{name}: silassorissuusiaq atorlugu assilialiaq, neriniartarfiup assiginngilaa"
   },
   "se": {
     "kicker": "Borramušmiella · Inspirášuvdnii",
@@ -574,6 +697,17 @@ export const draftArcticVisuals = {
     "explore": "Suokkardala {count} borramuša",
     "gallery": "Borramušmiella · Govvagalleriija",
     "find": "Oza maidne máisttolaš",
-    "license": "Liseansa"
+    "license": "Liseansa",
+    "disclaimer": "Borramuššlájaid illustrašuvnnat ja govvat, eai restauráŋŋagovvat.",
+    "matches": "Čájet borramušlisttuid bohtosiid",
+    "cover": "Doaimmahuslaš govva tom yum rehkáin ja guoppariin, ii restauráŋŋagovva",
+    "exterior": "Olggoš · Illustrašuvdna",
+    "interior": "Siskkobealli · Illustrašuvdna",
+    "restaurantSource": "Illustrašuvdna restauráŋŋa iežas govaid vuođul",
+    "exteriorAlt": "{name} olggoža illustrašuvdna",
+    "interiorAlt": "{name} siskkobeali illustrašuvdna",
+    "ai": "Dahkojierpmmi illustrašuvdna",
+    "photoAlt": "Doaimmahuslaš govva: {name}, ii restauráŋŋagovva",
+    "aiAlt": "Dahkojierpmmi illustrašuvdna: {name}, ii restauráŋŋagovva"
   }
-} as const satisfies Record<"kl" | "se", Partial<Record<VisualKey,string>>>;
+} as const satisfies Record<"kl" | "se", Record<VisualKey,string>>;
