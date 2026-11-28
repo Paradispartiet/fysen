@@ -220,3 +220,7 @@ Added eight complete bodies per language: sisig, lechon, pancit, kare-kare, inje
 ### International full article review batch 15a
 
 Added kitfo, zigni, tajine and couscous in five languages. Checked source list lengths and numerical tokens, retaining the kitfo minimum internal temperature and warnings and the multinational UNESCO inscription. Total 116 new bodies per language; English 149/200 including original 33, other four 116/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 15b
+
+Added harira, pastilla, shakshuka and merguez in five languages. Checked source list lengths and numerical tokens, retaining cooking temperatures and the qualified origin account for shakshuka. Total 120 new bodies per language; English 153/200 including original 33, other four 120/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.

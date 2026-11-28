@@ -23674,5 +23674,853 @@ export const draftInternationalArticles = {
         "Für Instant-Couscous nicht zu viel Flüssigkeit verwenden."
       ]
     }
+  },
+  "harira": {
+    "en": {
+      "overview": "Legumes are cooked in an aromatic tomato broth, often thickened with flour.",
+      "history": "Harira is particularly well known as a soup for breaking the daily fast during Ramadan, but is also eaten throughout the year.",
+      "flavor": "Rich, tangy and herbal.",
+      "technique": "Let the lentils become tender before adding any flour thickener.",
+      "essentials": [
+        "400 g tomatoes",
+        "150 g dried lentils",
+        "400 g cooked chickpeas"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min",
+        "ingredients": [
+          "400 g tomatoes",
+          "150 g dried lentils",
+          "400 g cooked chickpeas",
+          "1 onion",
+          "2 celery stalks",
+          "1.2 l stock",
+          "ginger",
+          "coriander",
+          "parsley",
+          "2 tbsp flour"
+        ],
+        "steps": [
+          "Fry chopped onion, celery and ginger.",
+          "Add tomatoes, stock and lentils and cook until the lentils are tender.",
+          "Add chickpeas and chopped herbs.",
+          "Whisk flour into cold water, add gradually and let the soup simmer."
+        ]
+      },
+      "variants": [
+        "Some versions contain meat, rice or vermicelli."
+      ],
+      "serving": [
+        "Serve with lemon and bread, preferably with dates on the side."
+      ],
+      "commonMistakes": [
+        "Do not add dry flour directly to hot soup to thicken it."
+      ]
+    },
+    "fr": {
+      "overview": "Les légumineuses cuisent dans un bouillon de tomates aromatique, souvent lié à la farine.",
+      "history": "La harira est surtout connue comme soupe de rupture du jeûne pendant le ramadan, mais elle se consomme aussi le reste de l’année.",
+      "flavor": "Généreuse, acidulée et herbacée.",
+      "technique": "Laisser les lentilles s’attendrir avant d’ajouter éventuellement la liaison à la farine.",
+      "essentials": [
+        "400 g de tomates",
+        "150 g de lentilles sèches",
+        "400 g de pois chiches cuits"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min",
+        "ingredients": [
+          "400 g de tomates",
+          "150 g de lentilles sèches",
+          "400 g de pois chiches cuits",
+          "1 oignon",
+          "2 branches de céleri",
+          "1,2 l de bouillon",
+          "gingembre",
+          "coriandre",
+          "persil",
+          "2 c. à soupe de farine"
+        ],
+        "steps": [
+          "Faire revenir l’oignon haché, le céleri et le gingembre.",
+          "Ajouter les tomates, le bouillon et les lentilles et cuire jusqu’à ce que les lentilles soient tendres.",
+          "Ajouter les pois chiches et les herbes hachées.",
+          "Délayer la farine au fouet dans de l’eau froide, incorporer progressivement et laisser mijoter la soupe."
+        ]
+      },
+      "variants": [
+        "Certaines variantes contiennent de la viande, du riz ou des vermicelles."
+      ],
+      "serving": [
+        "Servir avec du citron et du pain, de préférence avec des dattes à part."
+      ],
+      "commonMistakes": [
+        "Ne pas verser de farine sèche directement dans la soupe chaude pour la lier."
+      ]
+    },
+    "pt": {
+      "overview": "As leguminosas são cozidas num caldo aromático de tomate, frequentemente engrossado com farinha.",
+      "history": "A harira é especialmente conhecida como sopa para quebrar o jejum diário durante o Ramadão, mas também é consumida ao longo do ano.",
+      "flavor": "Encorpada, ácida e com notas de ervas.",
+      "technique": "Deixe as lentilhas ficar tenras antes de juntar uma eventual mistura de farinha para engrossar.",
+      "essentials": [
+        "400 g de tomate",
+        "150 g de lentilhas secas",
+        "400 g de grão-de-bico cozido"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min",
+        "ingredients": [
+          "400 g de tomate",
+          "150 g de lentilhas secas",
+          "400 g de grão-de-bico cozido",
+          "1 cebola",
+          "2 talos de aipo",
+          "1,2 l de caldo",
+          "gengibre",
+          "coentros",
+          "salsa",
+          "2 c. de sopa de farinha"
+        ],
+        "steps": [
+          "Salteie a cebola picada, o aipo e o gengibre.",
+          "Junte tomate, caldo e lentilhas e cozinhe até as lentilhas ficarem tenras.",
+          "Junte o grão-de-bico e as ervas picadas.",
+          "Dissolva a farinha em água fria, batendo, junte gradualmente e deixe a sopa cozinhar em lume brando."
+        ]
+      },
+      "variants": [
+        "Algumas variantes contêm carne, arroz ou aletria."
+      ],
+      "serving": [
+        "Sirva com limão e pão, de preferência com tâmaras à parte."
+      ],
+      "commonMistakes": [
+        "Não junte farinha seca diretamente à sopa quente para a engrossar."
+      ]
+    },
+    "es": {
+      "overview": "Las legumbres se cuecen en un caldo aromático de tomate, a menudo espesado con harina.",
+      "history": "La harira es especialmente conocida como sopa para romper el ayuno diario durante el Ramadán, aunque también se consume el resto del año.",
+      "flavor": "Con cuerpo, ácida y con notas de hierbas.",
+      "technique": "Deja que las lentejas estén tiernas antes de añadir, si se utiliza, la mezcla de harina para espesar.",
+      "essentials": [
+        "400 g de tomates",
+        "150 g de lentejas secas",
+        "400 g de garbanzos cocidos"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min",
+        "ingredients": [
+          "400 g de tomates",
+          "150 g de lentejas secas",
+          "400 g de garbanzos cocidos",
+          "1 cebolla",
+          "2 tallos de apio",
+          "1,2 l de caldo",
+          "jengibre",
+          "cilantro",
+          "perejil",
+          "2 cucharadas de harina"
+        ],
+        "steps": [
+          "Sofríe la cebolla picada, el apio y el jengibre.",
+          "Añade tomate, caldo y lentejas y cuece hasta que las lentejas estén tiernas.",
+          "Añade los garbanzos y las hierbas picadas.",
+          "Disuelve la harina en agua fría con unas varillas, incorpora poco a poco y deja que la sopa cueza a fuego lento."
+        ]
+      },
+      "variants": [
+        "Algunas variantes contienen carne, arroz o fideos finos."
+      ],
+      "serving": [
+        "Sirve con limón y pan, preferiblemente con dátiles aparte."
+      ],
+      "commonMistakes": [
+        "No añadas harina seca directamente a la sopa caliente para espesarla."
+      ]
+    },
+    "de": {
+      "overview": "Hülsenfrüchte werden in einer aromatischen Tomatenbrühe gekocht, die oft mit Mehl gebunden wird.",
+      "history": "Harira ist besonders als Suppe zum Fastenbrechen im Ramadan bekannt, wird aber auch das übrige Jahr gegessen.",
+      "flavor": "Kräftig, säuerlich und kräuterbetont.",
+      "technique": "Linsen weich garen, bevor gegebenenfalls die Mehlbindung hinzukommt.",
+      "essentials": [
+        "400 g Tomaten",
+        "150 g getrocknete Linsen",
+        "400 g gekochte Kichererbsen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min.",
+        "ingredients": [
+          "400 g Tomaten",
+          "150 g getrocknete Linsen",
+          "400 g gekochte Kichererbsen",
+          "1 Zwiebel",
+          "2 Stangen Sellerie",
+          "1,2 l Brühe",
+          "Ingwer",
+          "Koriander",
+          "Petersilie",
+          "2 EL Mehl"
+        ],
+        "steps": [
+          "Gehackte Zwiebel, Sellerie und Ingwer anschwitzen.",
+          "Tomaten, Brühe und Linsen hinzufügen und kochen, bis die Linsen weich sind.",
+          "Kichererbsen und gehackte Kräuter hinzufügen.",
+          "Mehl in kaltem Wasser glatt rühren, nach und nach hinzufügen und Suppe köcheln lassen."
+        ]
+      },
+      "variants": [
+        "Einige Varianten enthalten Fleisch, Reis oder Fadennudeln."
+      ],
+      "serving": [
+        "Mit Zitrone und Brot servieren, gerne mit Datteln als Beilage."
+      ],
+      "commonMistakes": [
+        "Trockenes Mehl zum Binden nicht direkt in die heiße Suppe geben."
+      ]
+    }
+  },
+  "pastilla": {
+    "en": {
+      "overview": "Thin pastry sheets enclose a juicy filling; meat versions often combine savoury and sweet flavours.",
+      "history": "Pastilla is known as Moroccan festive food and comes in versions with pigeon, chicken and seafood, among others.",
+      "flavor": "Crisp, aromatic and sweet-salty.",
+      "technique": "Reduce the filling and cool it before filling the pastry sheets.",
+      "essentials": [
+        "250 g filo pastry",
+        "500 g boneless chicken thigh",
+        "2 onions"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min",
+        "ingredients": [
+          "250 g filo pastry",
+          "500 g boneless chicken thigh",
+          "2 onions",
+          "3 eggs",
+          "100 g almonds",
+          "cinnamon",
+          "ginger",
+          "parsley",
+          "butter",
+          "icing sugar to taste"
+        ],
+        "steps": [
+          "Fry onions and spices, add chicken and a little water and simmer until cooked through.",
+          "Shred the meat and reduce the sauce; stir in the eggs until set.",
+          "Cool the filling and toast and chop the almonds.",
+          "Lay butter-brushed filo sheets in a dish, fill with meat, egg mixture and almonds, and fold closed.",
+          "Bake at 190 °C until golden and heated through."
+        ]
+      },
+      "variants": [
+        "Seafood pastilla generally has a less sweet filling."
+      ],
+      "serving": [
+        "Serve warm, optionally with a little icing sugar and cinnamon."
+      ],
+      "commonMistakes": [
+        "Do not fill the pastry with a runny, hot sauce."
+      ]
+    },
+    "fr": {
+      "overview": "De fines feuilles de pâte entourent une garniture juteuse ; les versions à la viande associent souvent le salé et le sucré.",
+      "history": "La pastilla est connue comme plat de fête marocain et se décline notamment au pigeon, au poulet et aux fruits de mer.",
+      "flavor": "Croustillante, aromatique et sucrée-salée.",
+      "technique": "Faire réduire la garniture et la laisser refroidir avant de garnir les feuilles de pâte.",
+      "essentials": [
+        "250 g de pâte filo",
+        "500 g de hauts de cuisse de poulet désossés",
+        "2 oignons"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min",
+        "ingredients": [
+          "250 g de pâte filo",
+          "500 g de hauts de cuisse de poulet désossés",
+          "2 oignons",
+          "3 œufs",
+          "100 g d’amandes",
+          "cannelle",
+          "gingembre",
+          "persil",
+          "beurre",
+          "sucre glace selon le goût"
+        ],
+        "steps": [
+          "Faire revenir les oignons et les épices, ajouter le poulet et un peu d’eau, puis laisser mijoter jusqu’à cuisson complète.",
+          "Effilocher la viande et faire réduire la sauce ; incorporer les œufs en remuant jusqu’à ce qu’ils prennent.",
+          "Laisser refroidir la garniture, puis griller et hacher les amandes.",
+          "Disposer les feuilles de filo badigeonnées de beurre dans un moule, garnir de viande, de préparation aux œufs et d’amandes, puis refermer.",
+          "Cuire au four à 190 °C jusqu’à ce que la pâte soit dorée et l’ensemble bien chaud."
+        ]
+      },
+      "variants": [
+        "La pastilla aux fruits de mer a généralement une garniture moins sucrée."
+      ],
+      "serving": [
+        "Servir tiède, éventuellement avec un peu de sucre glace et de cannelle."
+      ],
+      "commonMistakes": [
+        "Ne pas garnir la pâte d’une sauce chaude et liquide."
+      ]
+    },
+    "pt": {
+      "overview": "Folhas finas de massa envolvem um recheio suculento; as versões de carne combinam frequentemente sabores salgados e doces.",
+      "history": "A pastilla é conhecida como prato festivo marroquino e existe em versões com pombo, frango e marisco, entre outras.",
+      "flavor": "Crocante, aromática e doce-salgada.",
+      "technique": "Reduza o recheio e deixe-o arrefecer antes de rechear as folhas de massa.",
+      "essentials": [
+        "250 g de massa filo",
+        "500 g de coxa de frango desossada",
+        "2 cebolas"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min",
+        "ingredients": [
+          "250 g de massa filo",
+          "500 g de coxa de frango desossada",
+          "2 cebolas",
+          "3 ovos",
+          "100 g de amêndoas",
+          "canela",
+          "gengibre",
+          "salsa",
+          "manteiga",
+          "açúcar em pó a gosto"
+        ],
+        "steps": [
+          "Salteie as cebolas e as especiarias, junte frango e um pouco de água e cozinhe em lume brando até estar bem cozinhado.",
+          "Desfie a carne e reduza o molho; incorpore os ovos, mexendo até solidificarem.",
+          "Deixe o recheio arrefecer e toste e pique as amêndoas.",
+          "Coloque folhas de filo pinceladas com manteiga numa forma, recheie com carne, mistura de ovos e amêndoas e feche dobrando.",
+          "Leve ao forno a 190 °C até dourar e estar bem quente."
+        ]
+      },
+      "variants": [
+        "A pastilla de marisco tem geralmente um recheio menos doce."
+      ],
+      "serving": [
+        "Sirva morna, se desejar com um pouco de açúcar em pó e canela."
+      ],
+      "commonMistakes": [
+        "Não recheie a massa com um molho quente e líquido."
+      ]
+    },
+    "es": {
+      "overview": "Unas láminas finas de masa envuelven un relleno jugoso; las versiones de carne suelen combinar sabores salados y dulces.",
+      "history": "La pastela es conocida como plato festivo marroquí y existen versiones con pichón, pollo y marisco, entre otras.",
+      "flavor": "Crujiente, aromática y dulce-salada.",
+      "technique": "Reduce el relleno y deja que se enfríe antes de rellenar las láminas de masa.",
+      "essentials": [
+        "250 g de masa filo",
+        "500 g de contramuslo de pollo deshuesado",
+        "2 cebollas"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min",
+        "ingredients": [
+          "250 g de masa filo",
+          "500 g de contramuslo de pollo deshuesado",
+          "2 cebollas",
+          "3 huevos",
+          "100 g de almendras",
+          "canela",
+          "jengibre",
+          "perejil",
+          "mantequilla",
+          "azúcar glas al gusto"
+        ],
+        "steps": [
+          "Sofríe la cebolla y las especias, añade pollo y un poco de agua y cuece a fuego lento hasta que esté hecho por dentro.",
+          "Desmenuza la carne y reduce la salsa; incorpora los huevos removiendo hasta que cuajen.",
+          "Deja enfriar el relleno y tuesta y pica las almendras.",
+          "Coloca hojas de filo pinceladas con mantequilla en un molde, rellena con carne, mezcla de huevo y almendras y cierra doblando.",
+          "Hornea a 190 °C hasta que esté dorada y bien caliente."
+        ]
+      },
+      "variants": [
+        "La pastela de marisco suele tener un relleno menos dulce."
+      ],
+      "serving": [
+        "Sirve templada, si quieres con un poco de azúcar glas y canela."
+      ],
+      "commonMistakes": [
+        "No rellenes la masa con una salsa caliente y líquida."
+      ]
+    },
+    "de": {
+      "overview": "Dünne Teigblätter umschließen eine saftige Füllung; Fleischvarianten verbinden häufig salzige und süße Aromen.",
+      "history": "Pastilla ist als marokkanisches Festessen bekannt und wird unter anderem mit Taube, Hähnchen oder Meeresfrüchten zubereitet.",
+      "flavor": "Knusprig, aromatisch und süß-salzig.",
+      "technique": "Füllung einkochen und abkühlen lassen, bevor die Teigblätter gefüllt werden.",
+      "essentials": [
+        "250 g Filoteig",
+        "500 g Hähnchenschenkelfilet",
+        "2 Zwiebeln"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min.",
+        "ingredients": [
+          "250 g Filoteig",
+          "500 g Hähnchenschenkelfilet",
+          "2 Zwiebeln",
+          "3 Eier",
+          "100 g Mandeln",
+          "Zimt",
+          "Ingwer",
+          "Petersilie",
+          "Butter",
+          "Puderzucker nach Geschmack"
+        ],
+        "steps": [
+          "Zwiebeln und Gewürze anbraten, Hähnchen und etwas Wasser hinzufügen und vollständig gar schmoren.",
+          "Fleisch zerpflücken und Sauce einkochen; Eier einrühren, bis sie stocken.",
+          "Füllung abkühlen lassen, Mandeln rösten und hacken.",
+          "Mit Butter bestrichene Filoblätter in eine Form legen, mit Fleisch, Eiermasse und Mandeln füllen und zusammenfalten.",
+          "Bei 190 °C goldbraun und durchgehend heiß backen."
+        ]
+      },
+      "variants": [
+        "Meeresfrüchtepastilla hat meist eine weniger süße Füllung."
+      ],
+      "serving": [
+        "Lauwarm servieren, nach Wunsch mit etwas Puderzucker und Zimt."
+      ],
+      "commonMistakes": [
+        "Teig nicht mit einer flüssigen, heißen Sauce füllen."
+      ]
+    }
+  },
+  "shakshuka": {
+    "en": {
+      "overview": "A concentrated vegetable sauce forms the base for eggs cooked directly in the pan.",
+      "history": "The dish has North African roots and is also widespread in parts of the Middle East. Its precise origin is disputed.",
+      "flavor": "Tangy, fruity and spiced.",
+      "technique": "Reduce the sauce before cracking the eggs into small wells.",
+      "essentials": [
+        "6 eggs",
+        "800 g tomatoes",
+        "1 onion"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 35 min",
+        "ingredients": [
+          "6 eggs",
+          "800 g tomatoes",
+          "1 onion",
+          "1 bell pepper",
+          "2 garlic cloves",
+          "cumin",
+          "paprika powder",
+          "chilli",
+          "olive oil"
+        ],
+        "steps": [
+          "Fry onion, bell pepper and garlic.",
+          "Add spices and tomatoes and reduce to a thick sauce.",
+          "Make wells and crack the eggs into the sauce.",
+          "Cover and cook until the eggs have set; cook completely through if needed."
+        ]
+      },
+      "variants": [
+        "Versions with merguez, green vegetables or other spices."
+      ],
+      "serving": [
+        "Serve with bread."
+      ],
+      "commonMistakes": [
+        "Do not add the eggs before the sauce has thickened."
+      ]
+    },
+    "fr": {
+      "overview": "Une sauce de légumes réduite sert de base à des œufs cuits directement dans la poêle.",
+      "history": "Le plat a des racines nord-africaines et est aussi répandu dans certaines régions du Moyen-Orient. Son origine exacte fait débat.",
+      "flavor": "Acidulée, fruitée et épicée.",
+      "technique": "Faire réduire la sauce avant de casser les œufs dans de petits creux.",
+      "essentials": [
+        "6 œufs",
+        "800 g de tomates",
+        "1 oignon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 35 min",
+        "ingredients": [
+          "6 œufs",
+          "800 g de tomates",
+          "1 oignon",
+          "1 poivron",
+          "2 gousses d’ail",
+          "cumin",
+          "paprika en poudre",
+          "piment",
+          "huile d’olive"
+        ],
+        "steps": [
+          "Faire revenir l’oignon, le poivron et l’ail.",
+          "Ajouter les épices et les tomates et faire réduire jusqu’à obtenir une sauce épaisse.",
+          "Former des creux et y casser les œufs.",
+          "Couvrir et cuire jusqu’à ce que les œufs aient pris ; les cuire entièrement si nécessaire."
+        ]
+      },
+      "variants": [
+        "Variantes aux merguez, aux légumes verts ou à d’autres épices."
+      ],
+      "serving": [
+        "Servir avec du pain."
+      ],
+      "commonMistakes": [
+        "Ne pas ajouter les œufs avant que la sauce ait épaissi."
+      ]
+    },
+    "pt": {
+      "overview": "Um molho concentrado de legumes serve de base para ovos cozinhados diretamente na frigideira.",
+      "history": "O prato tem raízes norte-africanas e também é comum em partes do Médio Oriente. A sua origem exata é discutida.",
+      "flavor": "Ácida, frutada e condimentada.",
+      "technique": "Reduza o molho antes de partir os ovos em pequenas cavidades.",
+      "essentials": [
+        "6 ovos",
+        "800 g de tomate",
+        "1 cebola"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 35 min",
+        "ingredients": [
+          "6 ovos",
+          "800 g de tomate",
+          "1 cebola",
+          "1 pimento",
+          "2 dentes de alho",
+          "cominhos",
+          "pimentão em pó",
+          "malagueta",
+          "azeite"
+        ],
+        "steps": [
+          "Salteie cebola, pimento e alho.",
+          "Junte especiarias e tomate e reduza até obter um molho espesso.",
+          "Faça cavidades e parta os ovos no molho.",
+          "Tape e cozinhe até os ovos solidificarem; cozinhe-os completamente se necessário."
+        ]
+      },
+      "variants": [
+        "Variantes com merguez, legumes verdes ou outras especiarias."
+      ],
+      "serving": [
+        "Sirva com pão."
+      ],
+      "commonMistakes": [
+        "Não junte os ovos antes de o molho engrossar."
+      ]
+    },
+    "es": {
+      "overview": "Una salsa de verduras reducida sirve de base para huevos cocinados directamente en la sartén.",
+      "history": "El plato tiene raíces norteafricanas y también está extendido en partes de Oriente Medio. Su origen exacto es objeto de debate.",
+      "flavor": "Ácida, afrutada y especiada.",
+      "technique": "Reduce la salsa antes de cascar los huevos en pequeños huecos.",
+      "essentials": [
+        "6 huevos",
+        "800 g de tomates",
+        "1 cebolla"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 35 min",
+        "ingredients": [
+          "6 huevos",
+          "800 g de tomates",
+          "1 cebolla",
+          "1 pimiento",
+          "2 dientes de ajo",
+          "comino",
+          "pimentón",
+          "chile",
+          "aceite de oliva"
+        ],
+        "steps": [
+          "Sofríe la cebolla, el pimiento y el ajo.",
+          "Añade especias y tomate y reduce hasta obtener una salsa espesa.",
+          "Haz huecos y casca los huevos en la salsa.",
+          "Tapa y cocina hasta que los huevos cuajen; hazlos por completo si es necesario."
+        ]
+      },
+      "variants": [
+        "Variantes con merguez, verduras verdes u otras especias."
+      ],
+      "serving": [
+        "Sirve con pan."
+      ],
+      "commonMistakes": [
+        "No añadas los huevos antes de que la salsa haya espesado."
+      ]
+    },
+    "de": {
+      "overview": "Eine eingekochte Gemüsesauce bildet die Grundlage für Eier, die direkt in der Pfanne gegart werden.",
+      "history": "Das Gericht hat nordafrikanische Wurzeln und ist auch in Teilen des Nahen Ostens verbreitet. Seine genaue Herkunft ist umstritten.",
+      "flavor": "Säuerlich, fruchtig und würzig.",
+      "technique": "Sauce einkochen, bevor die Eier in kleine Mulden geschlagen werden.",
+      "essentials": [
+        "6 Eier",
+        "800 g Tomaten",
+        "1 Zwiebel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 35 Min.",
+        "ingredients": [
+          "6 Eier",
+          "800 g Tomaten",
+          "1 Zwiebel",
+          "1 Paprikaschote",
+          "2 Knoblauchzehen",
+          "Kreuzkümmel",
+          "Paprikapulver",
+          "Chili",
+          "Olivenöl"
+        ],
+        "steps": [
+          "Zwiebel, Paprika und Knoblauch anbraten.",
+          "Gewürze und Tomaten hinzufügen und zu einer dicken Sauce einkochen.",
+          "Mulden formen und Eier in die Sauce schlagen.",
+          "Abdecken und garen, bis die Eier gestockt sind; bei Bedarf vollständig durchgaren."
+        ]
+      },
+      "variants": [
+        "Varianten mit Merguez, grünem Gemüse oder anderen Gewürzen."
+      ],
+      "serving": [
+        "Mit Brot servieren."
+      ],
+      "commonMistakes": [
+        "Eier erst hinzufügen, wenn die Sauce eingedickt ist."
+      ]
+    }
+  },
+  "merguez": {
+    "en": {
+      "overview": "The sausage is seasoned with chilli, paprika and cumin, among other spices, and grilled or fried.",
+      "history": "Merguez is part of North African food traditions and is also used in shakshuka and other dishes.",
+      "flavor": "Hot, aromatic and roasted.",
+      "technique": "Cook fresh sausages over moderate heat until cooked through.",
+      "essentials": [
+        "500 g fresh merguez sausages",
+        "1 onion",
+        "2 bell peppers"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30 min",
+        "ingredients": [
+          "500 g fresh merguez sausages",
+          "1 onion",
+          "2 bell peppers",
+          "1 tbsp olive oil",
+          "lemon",
+          "bread"
+        ],
+        "steps": [
+          "Cut the onion and peppers into strips.",
+          "Fry the vegetables in oil until tender.",
+          "Grill or pan-fry the sausages until cooked through, at least 71 °C for minced lamb or beef.",
+          "Serve with vegetables, lemon and bread."
+        ]
+      },
+      "variants": [
+        "Merguez can also be served with couscous or used as an ingredient in stews."
+      ],
+      "serving": [
+        "Serve with harissa to taste."
+      ],
+      "commonMistakes": [
+        "Do not cook the sausages over such high heat that they burn before the centre is done."
+      ]
+    },
+    "fr": {
+      "overview": "La saucisse est assaisonnée notamment de piment, de paprika et de cumin, puis grillée ou poêlée.",
+      "history": "La merguez fait partie des traditions culinaires nord-africaines et entre aussi dans la shakshuka et d’autres plats.",
+      "flavor": "Piquante, aromatique et grillée.",
+      "technique": "Cuire les saucisses fraîches à feu modéré jusqu’à cuisson complète.",
+      "essentials": [
+        "500 g de merguez fraîches",
+        "1 oignon",
+        "2 poivrons"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30 min",
+        "ingredients": [
+          "500 g de merguez fraîches",
+          "1 oignon",
+          "2 poivrons",
+          "1 c. à soupe d’huile d’olive",
+          "citron",
+          "pain"
+        ],
+        "steps": [
+          "Couper l’oignon et les poivrons en lanières.",
+          "Faire revenir les légumes dans l’huile jusqu’à tendreté.",
+          "Griller ou poêler les saucisses jusqu’à cuisson complète, à au moins 71 °C pour la viande d’agneau ou de bœuf hachée.",
+          "Servir avec les légumes, du citron et du pain."
+        ]
+      },
+      "variants": [
+        "Les merguez peuvent aussi être servies avec du couscous ou entrer dans des ragoûts."
+      ],
+      "serving": [
+        "Servir avec de la harissa selon le goût."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire les saucisses à feu si vif qu’elles brûlent avant d’être cuites à cœur."
+      ]
+    },
+    "pt": {
+      "overview": "A salsicha é temperada com malagueta, pimentão e cominhos, entre outras especiarias, e grelhada ou frita.",
+      "history": "A merguez faz parte das tradições gastronómicas norte-africanas e também é usada na shakshuka e noutros pratos.",
+      "flavor": "Picante, aromática e tostada.",
+      "technique": "Cozinhe as salsichas frescas em lume moderado até estarem bem cozinhadas.",
+      "essentials": [
+        "500 g de salsichas merguez frescas",
+        "1 cebola",
+        "2 pimentos"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30 min",
+        "ingredients": [
+          "500 g de salsichas merguez frescas",
+          "1 cebola",
+          "2 pimentos",
+          "1 c. de sopa de azeite",
+          "limão",
+          "pão"
+        ],
+        "steps": [
+          "Corte a cebola e os pimentos em tiras.",
+          "Salteie os legumes em azeite até ficarem tenros.",
+          "Grelhe ou frite as salsichas na frigideira até estarem bem cozinhadas, atingindo pelo menos 71 °C no caso de carne picada de borrego ou vaca.",
+          "Sirva com legumes, limão e pão."
+        ]
+      },
+      "variants": [
+        "A merguez também pode ser servida com cuscuz ou usada como ingrediente em guisados."
+      ],
+      "serving": [
+        "Sirva com harissa a gosto."
+      ],
+      "commonMistakes": [
+        "Não cozinhe as salsichas em lume tão forte que queimem antes de o interior estar cozinhado."
+      ]
+    },
+    "es": {
+      "overview": "La salchicha se condimenta con chile, pimentón y comino, entre otras especias, y se asa o se fríe.",
+      "history": "La merguez forma parte de las tradiciones culinarias norteafricanas y también se utiliza en la shakshuka y otros platos.",
+      "flavor": "Picante, aromática y tostada.",
+      "technique": "Cocina las salchichas frescas a fuego moderado hasta que estén hechas por dentro.",
+      "essentials": [
+        "500 g de salchichas merguez frescas",
+        "1 cebolla",
+        "2 pimientos"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30 min",
+        "ingredients": [
+          "500 g de salchichas merguez frescas",
+          "1 cebolla",
+          "2 pimientos",
+          "1 cucharada de aceite de oliva",
+          "limón",
+          "pan"
+        ],
+        "steps": [
+          "Corta la cebolla y los pimientos en tiras.",
+          "Saltea las verduras en aceite hasta que estén tiernas.",
+          "Asa o cocina las salchichas en sartén hasta que estén hechas por dentro, al menos a 71 °C si son de carne picada de cordero o vacuno.",
+          "Sirve con verduras, limón y pan."
+        ]
+      },
+      "variants": [
+        "La merguez también puede servirse con cuscús o utilizarse como ingrediente en guisos."
+      ],
+      "serving": [
+        "Sirve con harissa al gusto."
+      ],
+      "commonMistakes": [
+        "No cocines las salchichas a fuego tan fuerte que se quemen antes de que el centro esté hecho."
+      ]
+    },
+    "de": {
+      "overview": "Die Wurst wird unter anderem mit Chili, Paprika und Kreuzkümmel gewürzt und gegrillt oder gebraten.",
+      "history": "Merguez gehört zu den nordafrikanischen Esstraditionen und wird auch in Shakshuka und anderen Gerichten verwendet.",
+      "flavor": "Scharf, aromatisch und röstig.",
+      "technique": "Frische Würste bei mittlerer Hitze vollständig durchgaren.",
+      "essentials": [
+        "500 g frische Merguez-Würste",
+        "1 Zwiebel",
+        "2 Paprikaschoten"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30 Min.",
+        "ingredients": [
+          "500 g frische Merguez-Würste",
+          "1 Zwiebel",
+          "2 Paprikaschoten",
+          "1 EL Olivenöl",
+          "Zitrone",
+          "Brot"
+        ],
+        "steps": [
+          "Zwiebel und Paprika in Streifen schneiden.",
+          "Gemüse in Öl weich braten.",
+          "Würste grillen oder in der Pfanne vollständig durchbraten, bei Lamm- oder Rinderhackfleisch mindestens 71 °C erreichen.",
+          "Mit Gemüse, Zitrone und Brot servieren."
+        ]
+      },
+      "variants": [
+        "Merguez kann auch mit Couscous serviert oder als Zutat in Eintöpfen verwendet werden."
+      ],
+      "serving": [
+        "Mit Harissa nach Geschmack servieren."
+      ],
+      "commonMistakes": [
+        "Würste nicht bei so hoher Hitze braten, dass sie verbrennen, bevor sie innen gar sind."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;
