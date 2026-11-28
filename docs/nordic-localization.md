@@ -208,3 +208,7 @@ Added eight complete bodies per language: ratatouille, bouillabaisse, quiche lor
 ### International full article review batch 12
 
 Added eight complete bodies per language: gambas al ajillo, croquetas, moussaka, souvlaki, gyros, spanakopita, tzatziki and pastitsio. Checked source list lengths and numerical recipe tokens, including cooking temperatures and marination and chilling times. Previous bodies and original sources retained. Total 96 new bodies per language; English 129/200 including original 33, other four 96/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 13
+
+Added eight complete bodies per language: nasi goreng, mie goreng, rendang, satay, nasi lemak, laksa, pork adobo and sinigang. Checked source list lengths and numerical recipe tokens, including cooking and marination durations; preserved safe rice storage and raw marinade warnings and regional distinctions. Previous bodies and original sources retained. Total 104 new bodies per language; English 137/200 including original 33, other four 104/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.

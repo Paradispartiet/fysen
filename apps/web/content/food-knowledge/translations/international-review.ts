@@ -19564,5 +19564,1681 @@ export const draftInternationalArticles = {
         "Nudeln vor dem Überbacken nicht zu lange kochen."
       ]
     }
+  },
+  "nasi-goreng": {
+    "en": {
+      "overview": "Cooked rice is stir-fried with aromatics, kecap manis and a protein of choice.",
+      "history": "Nasi goreng is a widespread Indonesian everyday dish with many local variations.",
+      "flavor": "Sweetish, salty and roasted, with chilli to taste.",
+      "technique": "Use cooled rice that has been stored safely and fry in small batches.",
+      "essentials": [
+        "600 g cooked rice",
+        "2 shallots",
+        "2 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 25 min",
+        "ingredients": [
+          "600 g cooked rice",
+          "2 shallots",
+          "2 garlic cloves",
+          "2 tbsp kecap manis",
+          "chilli",
+          "4 eggs",
+          "oil",
+          "cucumber"
+        ],
+        "steps": [
+          "Fry the chopped shallots, garlic and chilli.",
+          "Add the rice and fry until piping hot.",
+          "Fold in the kecap manis and season to taste.",
+          "Fry the eggs separately and serve with rice and cucumber."
+        ]
+      },
+      "variants": [
+        "Versions with chicken, seafood or goat meat."
+      ],
+      "serving": [
+        "Serve with fried egg, cucumber and krupuk."
+      ],
+      "commonMistakes": [
+        "Do not use rice that has been left at room temperature for a long time."
+      ]
+    },
+    "fr": {
+      "overview": "Le riz cuit est sauté au wok avec des aromates, du kecap manis et une source de protéines au choix.",
+      "history": "Le nasi goreng est un plat indonésien courant du quotidien, aux nombreuses variantes locales.",
+      "flavor": "Légèrement sucré, salé et grillé, avec du piment selon le goût.",
+      "technique": "Utiliser du riz refroidi et conservé dans de bonnes conditions, puis le faire sauter par petites quantités.",
+      "essentials": [
+        "600 g de riz cuit",
+        "2 échalotes",
+        "2 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 25 min",
+        "ingredients": [
+          "600 g de riz cuit",
+          "2 échalotes",
+          "2 gousses d’ail",
+          "2 c. à soupe de kecap manis",
+          "piment",
+          "4 œufs",
+          "huile",
+          "concombre"
+        ],
+        "steps": [
+          "Faire revenir les échalotes, l’ail et le piment hachés.",
+          "Ajouter le riz et le faire sauter jusqu’à ce qu’il soit bien chaud et fumant.",
+          "Incorporer le kecap manis et rectifier l’assaisonnement.",
+          "Cuire les œufs séparément à la poêle et servir avec le riz et le concombre."
+        ]
+      },
+      "variants": [
+        "Variantes au poulet, aux fruits de mer ou à la viande de chèvre."
+      ],
+      "serving": [
+        "Servir avec un œuf au plat, du concombre et du krupuk."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser de riz resté longtemps à température ambiante."
+      ]
+    },
+    "pt": {
+      "overview": "O arroz cozido é salteado no wok com aromáticos, kecap manis e uma fonte de proteína à escolha.",
+      "history": "O nasi goreng é um prato indonésio comum do quotidiano, com muitas variantes locais.",
+      "flavor": "Ligeiramente doce, salgado e tostado, com malagueta a gosto.",
+      "technique": "Use arroz arrefecido e conservado em segurança e salteie em pequenas porções.",
+      "essentials": [
+        "600 g de arroz cozido",
+        "2 chalotas",
+        "2 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 25 min",
+        "ingredients": [
+          "600 g de arroz cozido",
+          "2 chalotas",
+          "2 dentes de alho",
+          "2 c. de sopa de kecap manis",
+          "malagueta",
+          "4 ovos",
+          "óleo",
+          "pepino"
+        ],
+        "steps": [
+          "Salteie as chalotas, o alho e a malagueta picados.",
+          "Junte o arroz e salteie até estar bem quente e a fumegar.",
+          "Envolva o kecap manis e tempere a gosto.",
+          "Estrele os ovos separadamente e sirva com arroz e pepino."
+        ]
+      },
+      "variants": [
+        "Variantes com frango, marisco ou carne de cabra."
+      ],
+      "serving": [
+        "Sirva com ovo estrelado, pepino e krupuk."
+      ],
+      "commonMistakes": [
+        "Não use arroz que tenha ficado muito tempo à temperatura ambiente."
+      ]
+    },
+    "es": {
+      "overview": "El arroz cocido se saltea en wok con aromáticos, kecap manis y una proteína a elección.",
+      "history": "El nasi goreng es un plato cotidiano indonesio muy extendido, con numerosas variantes locales.",
+      "flavor": "Ligeramente dulce, salado y tostado, con chile al gusto.",
+      "technique": "Usa arroz enfriado y conservado de forma segura y saltéalo en tandas pequeñas.",
+      "essentials": [
+        "600 g de arroz cocido",
+        "2 chalotas",
+        "2 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 25 min",
+        "ingredients": [
+          "600 g de arroz cocido",
+          "2 chalotas",
+          "2 dientes de ajo",
+          "2 cucharadas de kecap manis",
+          "chile",
+          "4 huevos",
+          "aceite",
+          "pepino"
+        ],
+        "steps": [
+          "Sofríe las chalotas, el ajo y el chile picados.",
+          "Añade el arroz y saltéalo hasta que esté bien caliente y humeante.",
+          "Incorpora el kecap manis y ajusta la sazón.",
+          "Fríe los huevos por separado y sirve con arroz y pepino."
+        ]
+      },
+      "variants": [
+        "Variantes con pollo, marisco o carne de cabra."
+      ],
+      "serving": [
+        "Sirve con huevo frito, pepino y krupuk."
+      ],
+      "commonMistakes": [
+        "No uses arroz que haya estado mucho tiempo a temperatura ambiente."
+      ]
+    },
+    "de": {
+      "overview": "Gekochter Reis wird mit Aromaten, Kecap Manis und einer Proteinquelle nach Wahl im Wok gebraten.",
+      "history": "Nasi Goreng ist ein verbreitetes indonesisches Alltagsgericht mit vielen lokalen Varianten.",
+      "flavor": "Süßlich, salzig und röstig, mit Chili nach Geschmack.",
+      "technique": "Abgekühlten, sicher gelagerten Reis verwenden und portionsweise braten.",
+      "essentials": [
+        "600 g gekochter Reis",
+        "2 Schalotten",
+        "2 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 25 Min.",
+        "ingredients": [
+          "600 g gekochter Reis",
+          "2 Schalotten",
+          "2 Knoblauchzehen",
+          "2 EL Kecap Manis",
+          "Chili",
+          "4 Eier",
+          "Öl",
+          "Gurke"
+        ],
+        "steps": [
+          "Gehackte Schalotten, Knoblauch und Chili anbraten.",
+          "Reis hinzufügen und braten, bis er dampfend heiß ist.",
+          "Kecap Manis unterheben und abschmecken.",
+          "Eier separat braten und mit Reis und Gurke servieren."
+        ]
+      },
+      "variants": [
+        "Varianten mit Hähnchen, Meeresfrüchten oder Ziegenfleisch."
+      ],
+      "serving": [
+        "Mit Spiegelei, Gurke und Krupuk servieren."
+      ],
+      "commonMistakes": [
+        "Keinen Reis verwenden, der lange bei Zimmertemperatur gestanden hat."
+      ]
+    }
+  },
+  "mie-goreng": {
+    "en": {
+      "overview": "The noodles are stir-fried with aromatics and sauce; sweet soy sauce is common in Indonesian versions.",
+      "history": "Fried noodles are found in many Southeast Asian traditions, including Indonesian mie goreng and Malaysian mee goreng.",
+      "flavor": "Sweet-salty, aromatic and slightly hot.",
+      "technique": "Prepare the noodles and sauce before heating the wok.",
+      "essentials": [
+        "350 g wheat noodles",
+        "2 eggs",
+        "200 g cabbage"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30 min",
+        "ingredients": [
+          "350 g wheat noodles",
+          "2 eggs",
+          "200 g cabbage",
+          "1 carrot",
+          "2 garlic cloves",
+          "2 tbsp kecap manis",
+          "1 tbsp soy sauce",
+          "chilli",
+          "oil"
+        ],
+        "steps": [
+          "Cook the noodles according to the instructions and drain.",
+          "Fry the garlic, chilli and vegetables.",
+          "Add the eggs and cook until set.",
+          "Fold in the noodles and sauce and fry quickly over high heat."
+        ]
+      },
+      "variants": [
+        "Malaysian mee goreng mamak has its own traditions of spices and ingredients."
+      ],
+      "serving": [
+        "Serve with lime and spring onions."
+      ],
+      "commonMistakes": [
+        "Avoid overcooked noodles and an overcrowded wok."
+      ]
+    },
+    "fr": {
+      "overview": "Les nouilles sont sautées au wok avec des aromates et de la sauce ; la sauce soja sucrée est courante dans les versions indonésiennes.",
+      "history": "Les nouilles sautées existent dans de nombreuses traditions d’Asie du Sud-Est, notamment le mie goreng indonésien et le mee goreng malaisien.",
+      "flavor": "Sucré-salé, aromatique et légèrement piquant.",
+      "technique": "Préparer les nouilles et la sauce avant de chauffer le wok.",
+      "essentials": [
+        "350 g de nouilles de blé",
+        "2 œufs",
+        "200 g de chou"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30 min",
+        "ingredients": [
+          "350 g de nouilles de blé",
+          "2 œufs",
+          "200 g de chou",
+          "1 carotte",
+          "2 gousses d’ail",
+          "2 c. à soupe de kecap manis",
+          "1 c. à soupe de sauce soja",
+          "piment",
+          "huile"
+        ],
+        "steps": [
+          "Cuire les nouilles selon les instructions et les égoutter.",
+          "Faire revenir l’ail, le piment et les légumes.",
+          "Ajouter les œufs et cuire jusqu’à ce qu’ils prennent.",
+          "Incorporer les nouilles et la sauce, puis faire sauter rapidement à feu vif."
+        ]
+      },
+      "variants": [
+        "Le mee goreng mamak malaisien possède sa propre tradition d’épices et d’ingrédients."
+      ],
+      "serving": [
+        "Servir avec du citron vert et des oignons nouveaux."
+      ],
+      "commonMistakes": [
+        "Éviter les nouilles trop cuites et un wok surchargé."
+      ]
+    },
+    "pt": {
+      "overview": "Os noodles são salteados no wok com aromáticos e molho; o molho de soja doce é comum nas versões indonésias.",
+      "history": "Os noodles salteados existem em muitas tradições do Sudeste Asiático, incluindo o mie goreng indonésio e o mee goreng malaio.",
+      "flavor": "Doce-salgado, aromático e ligeiramente picante.",
+      "technique": "Prepare os noodles e o molho antes de aquecer o wok.",
+      "essentials": [
+        "350 g de noodles de trigo",
+        "2 ovos",
+        "200 g de couve"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30 min",
+        "ingredients": [
+          "350 g de noodles de trigo",
+          "2 ovos",
+          "200 g de couve",
+          "1 cenoura",
+          "2 dentes de alho",
+          "2 c. de sopa de kecap manis",
+          "1 c. de sopa de molho de soja",
+          "malagueta",
+          "óleo"
+        ],
+        "steps": [
+          "Coza os noodles de acordo com as instruções e escorra.",
+          "Salteie o alho, a malagueta e os legumes.",
+          "Junte os ovos e cozinhe até solidificarem.",
+          "Envolva os noodles e o molho e salteie rapidamente em lume forte."
+        ]
+      },
+      "variants": [
+        "O mee goreng mamak malaio tem a sua própria tradição de especiarias e ingredientes."
+      ],
+      "serving": [
+        "Sirva com lima e cebolinha verde."
+      ],
+      "commonMistakes": [
+        "Evite noodles demasiado cozidos e um wok demasiado cheio."
+      ]
+    },
+    "es": {
+      "overview": "Los fideos se saltean en wok con aromáticos y salsa; la salsa de soja dulce es habitual en las versiones indonesias.",
+      "history": "Los fideos salteados existen en muchas tradiciones del Sudeste Asiático, entre ellas el mie goreng indonesio y el mee goreng malasio.",
+      "flavor": "Dulce-salado, aromático y ligeramente picante.",
+      "technique": "Prepara los fideos y la salsa antes de calentar el wok.",
+      "essentials": [
+        "350 g de fideos de trigo",
+        "2 huevos",
+        "200 g de col"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30 min",
+        "ingredients": [
+          "350 g de fideos de trigo",
+          "2 huevos",
+          "200 g de col",
+          "1 zanahoria",
+          "2 dientes de ajo",
+          "2 cucharadas de kecap manis",
+          "1 cucharada de salsa de soja",
+          "chile",
+          "aceite"
+        ],
+        "steps": [
+          "Cuece los fideos según las instrucciones y escúrrelos.",
+          "Saltea el ajo, el chile y las verduras.",
+          "Añade los huevos y cocina hasta que cuajen.",
+          "Incorpora los fideos y la salsa y saltea rápidamente a fuego fuerte."
+        ]
+      },
+      "variants": [
+        "El mee goreng mamak malasio tiene su propia tradición de especias e ingredientes."
+      ],
+      "serving": [
+        "Sirve con lima y cebolletas."
+      ],
+      "commonMistakes": [
+        "Evita los fideos demasiado cocidos y un wok demasiado lleno."
+      ]
+    },
+    "de": {
+      "overview": "Nudeln werden mit Aromaten und Sauce im Wok gebraten; süße Sojasauce ist in indonesischen Varianten verbreitet.",
+      "history": "Gebratene Nudeln gibt es in vielen südostasiatischen Traditionen, darunter indonesisches Mie Goreng und malaysisches Mee Goreng.",
+      "flavor": "Süß-salzig, aromatisch und leicht scharf.",
+      "technique": "Nudeln und Sauce vorbereiten, bevor der Wok erhitzt wird.",
+      "essentials": [
+        "350 g Weizennudeln",
+        "2 Eier",
+        "200 g Kohl"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30 Min.",
+        "ingredients": [
+          "350 g Weizennudeln",
+          "2 Eier",
+          "200 g Kohl",
+          "1 Karotte",
+          "2 Knoblauchzehen",
+          "2 EL Kecap Manis",
+          "1 EL Sojasauce",
+          "Chili",
+          "Öl"
+        ],
+        "steps": [
+          "Nudeln nach Anleitung kochen und abtropfen lassen.",
+          "Knoblauch, Chili und Gemüse anbraten.",
+          "Eier hinzufügen und braten, bis sie stocken.",
+          "Nudeln und Sauce unterheben und kurz bei hoher Hitze braten."
+        ]
+      },
+      "variants": [
+        "Malaysisches Mee Goreng Mamak hat eine eigene Gewürz- und Zutatentradition."
+      ],
+      "serving": [
+        "Mit Limette und Frühlingszwiebeln servieren."
+      ],
+      "commonMistakes": [
+        "Verkochte Nudeln und einen überfüllten Wok vermeiden."
+      ]
+    }
+  },
+  "rendang": {
+    "en": {
+      "overview": "Meat is simmered in aromatic coconut milk that is gradually reduced.",
+      "history": "Rendang comes from the food culture of the Minangkabau people of West Sumatra and is associated with celebrations and hospitality.",
+      "flavor": "Deep, spiced, rich and aromatic.",
+      "technique": "Let the liquid reduce slowly and stir more often towards the end.",
+      "essentials": [
+        "700 g stewing beef",
+        "600 ml coconut milk",
+        "4 shallots"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 3–4 hours",
+        "ingredients": [
+          "700 g stewing beef",
+          "600 ml coconut milk",
+          "4 shallots",
+          "3 garlic cloves",
+          "galangal",
+          "ginger",
+          "lemongrass",
+          "chilli",
+          "makrut lime leaves"
+        ],
+        "steps": [
+          "Grind the shallots, garlic, galangal, ginger and chilli into a paste.",
+          "Fry the paste and add coconut milk, meat, lemongrass and lime leaves.",
+          "Simmer until the meat is tender and the liquid has reduced.",
+          "Stir regularly towards the end until the sauce coats the meat closely."
+        ]
+      },
+      "variants": [
+        "Kalio has more sauce than a drier rendang."
+      ],
+      "serving": [
+        "Serve with rice and vegetables."
+      ],
+      "commonMistakes": [
+        "Do not use such high heat that the concentrated spice mixture burns."
+      ]
+    },
+    "fr": {
+      "overview": "La viande mijote dans un lait de coco aromatique que l’on fait progressivement réduire.",
+      "history": "Le rendang vient de la culture culinaire du peuple minangkabau de Sumatra occidental et est associé aux fêtes et à l’hospitalité.",
+      "flavor": "Profond, épicé, généreux et aromatique.",
+      "technique": "Laisser le liquide réduire lentement et remuer plus souvent en fin de cuisson.",
+      "essentials": [
+        "700 g de bœuf à mijoter",
+        "600 ml de lait de coco",
+        "4 échalotes"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 3–4 heures",
+        "ingredients": [
+          "700 g de bœuf à mijoter",
+          "600 ml de lait de coco",
+          "4 échalotes",
+          "3 gousses d’ail",
+          "galanga",
+          "gingembre",
+          "citronnelle",
+          "piment",
+          "feuilles de combava"
+        ],
+        "steps": [
+          "Broyer les échalotes, l’ail, le galanga, le gingembre et le piment pour former une pâte.",
+          "Faire revenir la pâte et ajouter le lait de coco, la viande, la citronnelle et les feuilles de combava.",
+          "Laisser mijoter jusqu’à ce que la viande soit tendre et le liquide réduit.",
+          "Remuer régulièrement en fin de cuisson jusqu’à ce que la sauce enrobe étroitement la viande."
+        ]
+      },
+      "variants": [
+        "Le kalio contient davantage de sauce qu’un rendang plus sec."
+      ],
+      "serving": [
+        "Servir avec du riz et des légumes."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser un feu si vif que le mélange d’épices concentré brûle."
+      ]
+    },
+    "pt": {
+      "overview": "A carne cozinha em lume brando em leite de coco aromático que se reduz gradualmente.",
+      "history": "O rendang provém da cultura gastronómica do povo minangkabau de Sumatra Ocidental e está associado a festividades e hospitalidade.",
+      "flavor": "Intenso, condimentado, encorpado e aromático.",
+      "technique": "Deixe o líquido reduzir lentamente e mexa mais frequentemente perto do fim.",
+      "essentials": [
+        "700 g de carne de vaca para estufar",
+        "600 ml de leite de coco",
+        "4 chalotas"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 3–4 horas",
+        "ingredients": [
+          "700 g de carne de vaca para estufar",
+          "600 ml de leite de coco",
+          "4 chalotas",
+          "3 dentes de alho",
+          "galanga",
+          "gengibre",
+          "erva-príncipe",
+          "malagueta",
+          "folhas de lima-makrut"
+        ],
+        "steps": [
+          "Triture as chalotas, o alho, a galanga, o gengibre e a malagueta até obter uma pasta.",
+          "Salteie a pasta e junte leite de coco, carne, erva-príncipe e folhas de lima.",
+          "Deixe cozinhar em lume brando até a carne ficar tenra e o líquido reduzir.",
+          "Mexa regularmente perto do fim até o molho envolver bem a carne."
+        ]
+      },
+      "variants": [
+        "O kalio tem mais molho do que um rendang mais seco."
+      ],
+      "serving": [
+        "Sirva com arroz e legumes."
+      ],
+      "commonMistakes": [
+        "Não use lume tão forte que a mistura concentrada de especiarias queime."
+      ]
+    },
+    "es": {
+      "overview": "La carne se cuece a fuego lento en leche de coco aromática que se reduce gradualmente.",
+      "history": "El rendang procede de la cultura culinaria del pueblo minangkabau de Sumatra Occidental y se asocia con festividades y hospitalidad.",
+      "flavor": "Intenso, especiado, con cuerpo y aromático.",
+      "technique": "Deja que el líquido se reduzca lentamente y remueve con más frecuencia hacia el final.",
+      "essentials": [
+        "700 g de carne de vacuno para guisar",
+        "600 ml de leche de coco",
+        "4 chalotas"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 3–4 horas",
+        "ingredients": [
+          "700 g de carne de vacuno para guisar",
+          "600 ml de leche de coco",
+          "4 chalotas",
+          "3 dientes de ajo",
+          "galanga",
+          "jengibre",
+          "hierba limón",
+          "chile",
+          "hojas de lima makrut"
+        ],
+        "steps": [
+          "Tritura las chalotas, el ajo, la galanga, el jengibre y el chile hasta obtener una pasta.",
+          "Sofríe la pasta y añade leche de coco, carne, hierba limón y hojas de lima.",
+          "Cuece a fuego lento hasta que la carne esté tierna y el líquido se haya reducido.",
+          "Remueve regularmente hacia el final hasta que la salsa recubra bien la carne."
+        ]
+      },
+      "variants": [
+        "El kalio tiene más salsa que un rendang más seco."
+      ],
+      "serving": [
+        "Sirve con arroz y verduras."
+      ],
+      "commonMistakes": [
+        "No uses un fuego tan fuerte que se queme la mezcla concentrada de especias."
+      ]
+    },
+    "de": {
+      "overview": "Fleisch wird in aromatischer Kokosmilch geschmort, die nach und nach eingekocht wird.",
+      "history": "Rendang stammt aus der Esskultur der Minangkabau in Westsumatra und wird mit Festen und Gastfreundschaft verbunden.",
+      "flavor": "Tiefgründig, würzig, kräftig und aromatisch.",
+      "technique": "Flüssigkeit langsam einkochen und gegen Ende häufiger umrühren.",
+      "essentials": [
+        "700 g Rindfleisch zum Schmoren",
+        "600 ml Kokosmilch",
+        "4 Schalotten"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 3–4 Stunden",
+        "ingredients": [
+          "700 g Rindfleisch zum Schmoren",
+          "600 ml Kokosmilch",
+          "4 Schalotten",
+          "3 Knoblauchzehen",
+          "Galgant",
+          "Ingwer",
+          "Zitronengras",
+          "Chili",
+          "Makrutlimettenblätter"
+        ],
+        "steps": [
+          "Schalotten, Knoblauch, Galgant, Ingwer und Chili zu einer Paste mahlen.",
+          "Paste anbraten und Kokosmilch, Fleisch, Zitronengras und Limettenblätter hinzufügen.",
+          "Köcheln lassen, bis das Fleisch weich und die Flüssigkeit eingekocht ist.",
+          "Gegen Ende regelmäßig rühren, bis die Sauce das Fleisch dicht umhüllt."
+        ]
+      },
+      "variants": [
+        "Kalio hat mehr Sauce als ein trockeneres Rendang."
+      ],
+      "serving": [
+        "Mit Reis und Gemüse servieren."
+      ],
+      "commonMistakes": [
+        "Hitze nicht so hoch einstellen, dass die konzentrierte Gewürzmischung anbrennt."
+      ]
+    }
+  },
+  "satay": {
+    "en": {
+      "overview": "Marinated meat is grilled on skewers; peanut sauce is common but not universal.",
+      "history": "Sate is an extensive Indonesian food tradition, and satay is also popular in Malaysia and other parts of Southeast Asia.",
+      "flavor": "Roasted, aromatic and juicy.",
+      "technique": "Cut evenly sized pieces of meat and keep raw marinade separate from the finished sauce.",
+      "essentials": [
+        "600 g boneless chicken thigh",
+        "2 tbsp kecap manis",
+        "1 tsp coriander seeds"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 35 min + marinating",
+        "ingredients": [
+          "600 g boneless chicken thigh",
+          "2 tbsp kecap manis",
+          "1 tsp coriander seeds",
+          "garlic",
+          "1 tbsp oil",
+          "100 g peanut butter",
+          "150 ml coconut milk",
+          "lime",
+          "chilli"
+        ],
+        "steps": [
+          "Marinate the pieces of meat with soy sauce, coriander, garlic and oil in the refrigerator.",
+          "Thread the meat onto skewers and grill until cooked through.",
+          "Heat peanut butter, coconut milk and chilli in a separate saucepan.",
+          "Season the sauce with lime and serve with the skewers."
+        ]
+      },
+      "variants": [
+        "Sate Padang and Balinese sate lilit are distinct regional variants."
+      ],
+      "serving": [
+        "Serve with rice, cucumber and onion."
+      ],
+      "commonMistakes": [
+        "Do not serve raw marinade as a dip."
+      ]
+    },
+    "fr": {
+      "overview": "La viande marinée est grillée en brochettes ; la sauce aux cacahuètes est courante mais pas systématique.",
+      "history": "Le sate constitue une vaste tradition culinaire indonésienne ; le satay est aussi populaire en Malaisie et dans d’autres parties de l’Asie du Sud-Est.",
+      "flavor": "Grillé, aromatique et juteux.",
+      "technique": "Couper la viande en morceaux réguliers et séparer la marinade crue de la sauce prête à servir.",
+      "essentials": [
+        "600 g de hauts de cuisse de poulet désossés",
+        "2 c. à soupe de kecap manis",
+        "1 c. à café de graines de coriandre"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 35 min + marinade",
+        "ingredients": [
+          "600 g de hauts de cuisse de poulet désossés",
+          "2 c. à soupe de kecap manis",
+          "1 c. à café de graines de coriandre",
+          "ail",
+          "1 c. à soupe d’huile",
+          "100 g de beurre de cacahuète",
+          "150 ml de lait de coco",
+          "citron vert",
+          "piment"
+        ],
+        "steps": [
+          "Faire mariner les morceaux de viande au réfrigérateur avec la sauce soja, la coriandre, l’ail et l’huile.",
+          "Enfiler la viande sur des brochettes et griller jusqu’à cuisson complète.",
+          "Chauffer le beurre de cacahuète, le lait de coco et le piment dans une casserole séparée.",
+          "Assaisonner la sauce avec du citron vert et servir avec les brochettes."
+        ]
+      },
+      "variants": [
+        "Le sate Padang et le sate lilit balinais sont des variantes régionales distinctes."
+      ],
+      "serving": [
+        "Servir avec du riz, du concombre et de l’oignon."
+      ],
+      "commonMistakes": [
+        "Ne pas servir la marinade crue comme sauce à tremper."
+      ]
+    },
+    "pt": {
+      "overview": "A carne marinada é grelhada em espetadas; o molho de amendoim é comum, mas não universal.",
+      "history": "O sate é uma vasta tradição gastronómica indonésia e o satay é também popular na Malásia e noutras partes do Sudeste Asiático.",
+      "flavor": "Tostado, aromático e suculento.",
+      "technique": "Corte a carne em pedaços uniformes e mantenha a marinada crua separada do molho pronto.",
+      "essentials": [
+        "600 g de coxa de frango desossada",
+        "2 c. de sopa de kecap manis",
+        "1 c. de chá de sementes de coentros"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 35 min + marinada",
+        "ingredients": [
+          "600 g de coxa de frango desossada",
+          "2 c. de sopa de kecap manis",
+          "1 c. de chá de sementes de coentros",
+          "alho",
+          "1 c. de sopa de óleo",
+          "100 g de manteiga de amendoim",
+          "150 ml de leite de coco",
+          "lima",
+          "malagueta"
+        ],
+        "steps": [
+          "Marine os pedaços de carne no frigorífico com molho de soja, coentros, alho e óleo.",
+          "Coloque a carne nos espetos e grelhe até estar bem cozinhada.",
+          "Aqueça manteiga de amendoim, leite de coco e malagueta num tacho separado.",
+          "Tempere o molho com lima e sirva com as espetadas."
+        ]
+      },
+      "variants": [
+        "O sate Padang e o sate lilit balinês são variantes regionais próprias."
+      ],
+      "serving": [
+        "Sirva com arroz, pepino e cebola."
+      ],
+      "commonMistakes": [
+        "Não sirva a marinada crua como molho para mergulhar."
+      ]
+    },
+    "es": {
+      "overview": "La carne marinada se asa en brochetas; la salsa de cacahuete es habitual, pero no universal.",
+      "history": "El sate es una amplia tradición culinaria indonesia y el satay también es popular en Malasia y otras partes del Sudeste Asiático.",
+      "flavor": "Tostado, aromático y jugoso.",
+      "technique": "Corta la carne en trozos iguales y mantén el marinado crudo separado de la salsa lista para servir.",
+      "essentials": [
+        "600 g de contramuslo de pollo deshuesado",
+        "2 cucharadas de kecap manis",
+        "1 cucharadita de semillas de cilantro"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 35 min + marinado",
+        "ingredients": [
+          "600 g de contramuslo de pollo deshuesado",
+          "2 cucharadas de kecap manis",
+          "1 cucharadita de semillas de cilantro",
+          "ajo",
+          "1 cucharada de aceite",
+          "100 g de crema de cacahuete",
+          "150 ml de leche de coco",
+          "lima",
+          "chile"
+        ],
+        "steps": [
+          "Marina los trozos de carne en el frigorífico con salsa de soja, cilantro, ajo y aceite.",
+          "Ensarta la carne en brochetas y asa hasta que esté hecha por dentro.",
+          "Calienta crema de cacahuete, leche de coco y chile en un cazo separado.",
+          "Sazona la salsa con lima y sirve con las brochetas."
+        ]
+      },
+      "variants": [
+        "El sate Padang y el sate lilit balinés son variantes regionales distintas."
+      ],
+      "serving": [
+        "Sirve con arroz, pepino y cebolla."
+      ],
+      "commonMistakes": [
+        "No sirvas el marinado crudo como salsa para mojar."
+      ]
+    },
+    "de": {
+      "overview": "Mariniertes Fleisch wird auf Spießen gegrillt; Erdnusssauce ist verbreitet, aber nicht überall üblich.",
+      "history": "Sate ist eine vielfältige indonesische Esstradition; Satay ist auch in Malaysia und anderen Teilen Südostasiens beliebt.",
+      "flavor": "Röstig, aromatisch und saftig.",
+      "technique": "Fleisch in gleich große Stücke schneiden und rohe Marinade von der fertigen Sauce getrennt halten.",
+      "essentials": [
+        "600 g Hähnchenschenkelfilet",
+        "2 EL Kecap Manis",
+        "1 TL Koriandersamen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 35 Min. + Marinierzeit",
+        "ingredients": [
+          "600 g Hähnchenschenkelfilet",
+          "2 EL Kecap Manis",
+          "1 TL Koriandersamen",
+          "Knoblauch",
+          "1 EL Öl",
+          "100 g Erdnussbutter",
+          "150 ml Kokosmilch",
+          "Limette",
+          "Chili"
+        ],
+        "steps": [
+          "Fleischstücke mit Sojasauce, Koriander, Knoblauch und Öl im Kühlschrank marinieren.",
+          "Fleisch auf Spieße stecken und vollständig durchgrillen.",
+          "Erdnussbutter, Kokosmilch und Chili in einem separaten Topf erhitzen.",
+          "Sauce mit Limette abschmecken und zu den Spießen servieren."
+        ]
+      },
+      "variants": [
+        "Sate Padang und balinesisches Sate Lilit sind eigenständige regionale Varianten."
+      ],
+      "serving": [
+        "Mit Reis, Gurke und Zwiebel servieren."
+      ],
+      "commonMistakes": [
+        "Rohe Marinade nicht als Dip servieren."
+      ]
+    }
+  },
+  "nasi-lemak": {
+    "en": {
+      "overview": "Coconut rice is the base of the meal; the accompaniments provide different flavours and textures.",
+      "history": "Nasi lemak is a particularly well-known Malaysian dish and a common breakfast food.",
+      "flavor": "Creamy, salty, hot and nutty.",
+      "technique": "Adjust the amount of liquid to the type of rice and let the rice rest covered.",
+      "essentials": [
+        "300 g rice",
+        "200 ml coconut milk",
+        "water as needed"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40 min",
+        "ingredients": [
+          "300 g rice",
+          "200 ml coconut milk",
+          "water as needed",
+          "1 pandan leaf, optional",
+          "4 eggs",
+          "1 cucumber",
+          "60 g peanuts",
+          "50 g ikan bilis",
+          "sambal"
+        ],
+        "steps": [
+          "Rinse the rice and cook with coconut milk, water, salt and optional pandan.",
+          "Boil the eggs until firm.",
+          "Toast the peanuts and fry the dried anchovies until crisp.",
+          "Serve the coconut rice with sambal, cucumber, eggs and accompaniments."
+        ]
+      },
+      "variants": [
+        "It can also be served with rendang or fried chicken."
+      ],
+      "serving": [
+        "Arrange the accompaniments around the rice."
+      ],
+      "commonMistakes": [
+        "Do not let the sambal overpower the mild flavour of the coconut rice."
+      ]
+    },
+    "fr": {
+      "overview": "Le riz au lait de coco constitue la base du repas ; les accompagnements apportent différentes saveurs et textures.",
+      "history": "Le nasi lemak est un plat malaisien particulièrement connu et un petit-déjeuner courant.",
+      "flavor": "Crémeux, salé, piquant et aux notes de noix.",
+      "technique": "Adapter la quantité de liquide au type de riz et laisser reposer à couvert.",
+      "essentials": [
+        "300 g de riz",
+        "200 ml de lait de coco",
+        "eau selon les besoins"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40 min",
+        "ingredients": [
+          "300 g de riz",
+          "200 ml de lait de coco",
+          "eau selon les besoins",
+          "1 feuille de pandan, facultative",
+          "4 œufs",
+          "1 concombre",
+          "60 g de cacahuètes",
+          "50 g d’ikan bilis",
+          "sambal"
+        ],
+        "steps": [
+          "Rincer le riz et le cuire avec le lait de coco, l’eau, le sel et éventuellement le pandan.",
+          "Cuire les œufs jusqu’à ce qu’ils soient durs.",
+          "Griller les cacahuètes et faire frire les anchois séchés jusqu’à ce qu’ils soient croustillants.",
+          "Servir le riz au lait de coco avec le sambal, le concombre, les œufs et les accompagnements."
+        ]
+      },
+      "variants": [
+        "On peut également le servir avec du rendang ou du poulet frit."
+      ],
+      "serving": [
+        "Disposer les accompagnements autour du riz."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser le sambal masquer la saveur douce du riz au lait de coco."
+      ]
+    },
+    "pt": {
+      "overview": "O arroz de coco é a base da refeição; os acompanhamentos dão diferentes sabores e texturas.",
+      "history": "O nasi lemak é um prato malaio especialmente conhecido e habitual ao pequeno-almoço.",
+      "flavor": "Cremoso, salgado, picante e com notas de frutos secos.",
+      "technique": "Ajuste a quantidade de líquido ao tipo de arroz e deixe repousar com tampa.",
+      "essentials": [
+        "300 g de arroz",
+        "200 ml de leite de coco",
+        "água conforme necessário"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40 min",
+        "ingredients": [
+          "300 g de arroz",
+          "200 ml de leite de coco",
+          "água conforme necessário",
+          "1 folha de pandan, opcional",
+          "4 ovos",
+          "1 pepino",
+          "60 g de amendoins",
+          "50 g de ikan bilis",
+          "sambal"
+        ],
+        "steps": [
+          "Lave o arroz e coza com leite de coco, água, sal e, se desejar, pandan.",
+          "Coza os ovos até ficarem firmes.",
+          "Toste os amendoins e frite as anchovas secas até ficarem crocantes.",
+          "Sirva o arroz de coco com sambal, pepino, ovos e acompanhamentos."
+        ]
+      },
+      "variants": [
+        "Também pode ser servido com rendang ou frango frito."
+      ],
+      "serving": [
+        "Disponha os acompanhamentos à volta do arroz."
+      ],
+      "commonMistakes": [
+        "Não deixe o sambal sobrepor-se ao sabor suave do arroz de coco."
+      ]
+    },
+    "es": {
+      "overview": "El arroz con coco es la base de la comida; los acompañamientos aportan distintos sabores y texturas.",
+      "history": "El nasi lemak es un plato malasio especialmente conocido y habitual en el desayuno.",
+      "flavor": "Cremoso, salado, picante y con notas de frutos secos.",
+      "technique": "Ajusta la cantidad de líquido al tipo de arroz y deja reposar tapado.",
+      "essentials": [
+        "300 g de arroz",
+        "200 ml de leche de coco",
+        "agua según sea necesario"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40 min",
+        "ingredients": [
+          "300 g de arroz",
+          "200 ml de leche de coco",
+          "agua según sea necesario",
+          "1 hoja de pandan, opcional",
+          "4 huevos",
+          "1 pepino",
+          "60 g de cacahuetes",
+          "50 g de ikan bilis",
+          "sambal"
+        ],
+        "steps": [
+          "Lava el arroz y cuécelo con leche de coco, agua, sal y, si quieres, pandan.",
+          "Cuece los huevos hasta que estén firmes.",
+          "Tuesta los cacahuetes y fríe las anchoas secas hasta que estén crujientes.",
+          "Sirve el arroz con coco con sambal, pepino, huevos y acompañamientos."
+        ]
+      },
+      "variants": [
+        "También se puede servir con rendang o pollo frito."
+      ],
+      "serving": [
+        "Coloca los acompañamientos alrededor del arroz."
+      ],
+      "commonMistakes": [
+        "No dejes que el sambal enmascare el sabor suave del arroz con coco."
+      ]
+    },
+    "de": {
+      "overview": "Kokosreis bildet die Grundlage der Mahlzeit; die Beilagen sorgen für unterschiedliche Geschmäcker und Konsistenzen.",
+      "history": "Nasi Lemak ist ein besonders bekanntes malaysisches Gericht und ein verbreitetes Frühstück.",
+      "flavor": "Cremig, salzig, scharf und nussig.",
+      "technique": "Flüssigkeitsmenge an die Reissorte anpassen und Reis zugedeckt ruhen lassen.",
+      "essentials": [
+        "300 g Reis",
+        "200 ml Kokosmilch",
+        "Wasser nach Bedarf"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40 Min.",
+        "ingredients": [
+          "300 g Reis",
+          "200 ml Kokosmilch",
+          "Wasser nach Bedarf",
+          "1 Pandanblatt, optional",
+          "4 Eier",
+          "1 Gurke",
+          "60 g Erdnüsse",
+          "50 g Ikan Bilis",
+          "Sambal"
+        ],
+        "steps": [
+          "Reis waschen und mit Kokosmilch, Wasser, Salz und nach Wunsch Pandan kochen.",
+          "Eier hart kochen.",
+          "Erdnüsse rösten und getrocknete Sardellen knusprig braten.",
+          "Kokosreis mit Sambal, Gurke, Eiern und Beilagen servieren."
+        ]
+      },
+      "variants": [
+        "Kann auch mit Rendang oder gebratenem Hähnchen serviert werden."
+      ],
+      "serving": [
+        "Beilagen um den Reis anrichten."
+      ],
+      "commonMistakes": [
+        "Sambal den milden Geschmack des Kokosreises nicht überdecken lassen."
+      ]
+    }
+  },
+  "laksa": {
+    "en": {
+      "overview": "Laksa encompasses different soup traditions; this home recipe is inspired by curry laksa.",
+      "history": "Malaysia has several distinctive laksa variants, including tangy assam laksa and Sarawak laksa.",
+      "flavor": "Curry laksa is rich, aromatic and often hot; assam laksa has a different, tangy fish-based profile.",
+      "technique": "Cook the broth and prepare the noodles separately for a good texture.",
+      "essentials": [
+        "300 g rice noodles",
+        "400 ml coconut milk",
+        "600 ml stock"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40 min",
+        "ingredients": [
+          "300 g rice noodles",
+          "400 ml coconut milk",
+          "600 ml stock",
+          "2 tbsp laksa or curry paste",
+          "250 g raw, peeled prawns",
+          "150 g tofu",
+          "bean sprouts",
+          "lime"
+        ],
+        "steps": [
+          "Fry the paste in a little oil.",
+          "Add stock and coconut milk and simmer.",
+          "Add tofu and prawns and cook until the prawns are cooked through.",
+          "Cook the noodles separately and serve with the soup, sprouts and lime."
+        ]
+      },
+      "variants": [
+        "Assam laksa, curry laksa and Sarawak laksa are distinct variants, not identical recipes."
+      ],
+      "serving": [
+        "Serve with lime and herbs."
+      ],
+      "commonMistakes": [
+        "Do not assume that all laksa variants contain coconut milk."
+      ]
+    },
+    "fr": {
+      "overview": "Le laksa englobe différentes traditions de soupes ; cette recette maison s’inspire du curry laksa.",
+      "history": "La Malaisie possède plusieurs variantes marquantes de laksa, notamment l’assam laksa acidulé et le laksa de Sarawak.",
+      "flavor": "Le curry laksa est généreux, aromatique et souvent piquant ; l’assam laksa présente un profil différent, acidulé et à base de poisson.",
+      "technique": "Cuire le bouillon et préparer les nouilles séparément pour obtenir une bonne texture.",
+      "essentials": [
+        "300 g de nouilles de riz",
+        "400 ml de lait de coco",
+        "600 ml de bouillon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40 min",
+        "ingredients": [
+          "300 g de nouilles de riz",
+          "400 ml de lait de coco",
+          "600 ml de bouillon",
+          "2 c. à soupe de pâte de laksa ou de curry",
+          "250 g de crevettes crues décortiquées",
+          "150 g de tofu",
+          "pousses de haricot",
+          "citron vert"
+        ],
+        "steps": [
+          "Faire revenir la pâte dans un peu d’huile.",
+          "Ajouter le bouillon et le lait de coco, puis laisser mijoter.",
+          "Ajouter le tofu et les crevettes et cuire jusqu’à cuisson complète des crevettes.",
+          "Cuire les nouilles séparément et servir avec la soupe, les pousses et le citron vert."
+        ]
+      },
+      "variants": [
+        "L’assam laksa, le curry laksa et le laksa de Sarawak sont des variantes distinctes, et non des recettes identiques."
+      ],
+      "serving": [
+        "Servir avec du citron vert et des herbes."
+      ],
+      "commonMistakes": [
+        "Ne pas supposer que toutes les variantes de laksa contiennent du lait de coco."
+      ]
+    },
+    "pt": {
+      "overview": "O laksa abrange diferentes tradições de sopa; esta receita caseira inspira-se no curry laksa.",
+      "history": "A Malásia tem várias variantes marcantes de laksa, incluindo o assam laksa ácido e o laksa de Sarawak.",
+      "flavor": "O curry laksa é encorpado, aromático e frequentemente picante; o assam laksa tem um perfil diferente, ácido e à base de peixe.",
+      "technique": "Coza o caldo e prepare os noodles separadamente para obter uma boa textura.",
+      "essentials": [
+        "300 g de noodles de arroz",
+        "400 ml de leite de coco",
+        "600 ml de caldo"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40 min",
+        "ingredients": [
+          "300 g de noodles de arroz",
+          "400 ml de leite de coco",
+          "600 ml de caldo",
+          "2 c. de sopa de pasta de laksa ou caril",
+          "250 g de camarão cru descascado",
+          "150 g de tofu",
+          "rebentos de feijão",
+          "lima"
+        ],
+        "steps": [
+          "Salteie a pasta num pouco de óleo.",
+          "Junte o caldo e o leite de coco e deixe cozinhar em lume brando.",
+          "Junte tofu e camarão e cozinhe até o camarão estar bem cozinhado.",
+          "Coza os noodles separadamente e sirva com a sopa, os rebentos e a lima."
+        ]
+      },
+      "variants": [
+        "O assam laksa, o curry laksa e o laksa de Sarawak são variantes distintas, não receitas idênticas."
+      ],
+      "serving": [
+        "Sirva com lima e ervas."
+      ],
+      "commonMistakes": [
+        "Não suponha que todas as variantes de laksa contêm leite de coco."
+      ]
+    },
+    "es": {
+      "overview": "El laksa abarca distintas tradiciones de sopas; esta receta casera se inspira en el curry laksa.",
+      "history": "Malasia tiene varias variantes destacadas de laksa, entre ellas el assam laksa ácido y el laksa de Sarawak.",
+      "flavor": "El curry laksa tiene cuerpo, es aromático y suele ser picante; el assam laksa tiene un perfil distinto, ácido y a base de pescado.",
+      "technique": "Cuece el caldo y prepara los fideos por separado para lograr una buena textura.",
+      "essentials": [
+        "300 g de fideos de arroz",
+        "400 ml de leche de coco",
+        "600 ml de caldo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40 min",
+        "ingredients": [
+          "300 g de fideos de arroz",
+          "400 ml de leche de coco",
+          "600 ml de caldo",
+          "2 cucharadas de pasta de laksa o curri",
+          "250 g de gambas crudas peladas",
+          "150 g de tofu",
+          "brotes de judía",
+          "lima"
+        ],
+        "steps": [
+          "Sofríe la pasta en un poco de aceite.",
+          "Añade el caldo y la leche de coco y cuece a fuego lento.",
+          "Añade tofu y gambas y cocina hasta que las gambas estén hechas por dentro.",
+          "Cuece los fideos por separado y sirve con la sopa, los brotes y la lima."
+        ]
+      },
+      "variants": [
+        "El assam laksa, el curry laksa y el laksa de Sarawak son variantes distintas, no recetas idénticas."
+      ],
+      "serving": [
+        "Sirve con lima y hierbas."
+      ],
+      "commonMistakes": [
+        "No supongas que todas las variantes de laksa contienen leche de coco."
+      ]
+    },
+    "de": {
+      "overview": "Laksa umfasst unterschiedliche Suppentraditionen; dieses Hausrezept ist von Curry Laksa inspiriert.",
+      "history": "Malaysia hat mehrere markante Laksa-Varianten, darunter säuerliches Assam Laksa und Sarawak Laksa.",
+      "flavor": "Curry Laksa ist kräftig, aromatisch und oft scharf; Assam Laksa hat ein anderes, säuerliches, fischbasiertes Geschmacksprofil.",
+      "technique": "Brühe kochen und Nudeln separat zubereiten, damit die Konsistenz stimmt.",
+      "essentials": [
+        "300 g Reisnudeln",
+        "400 ml Kokosmilch",
+        "600 ml Brühe"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40 Min.",
+        "ingredients": [
+          "300 g Reisnudeln",
+          "400 ml Kokosmilch",
+          "600 ml Brühe",
+          "2 EL Laksa- oder Currypaste",
+          "250 g rohe, geschälte Garnelen",
+          "150 g Tofu",
+          "Bohnensprossen",
+          "Limette"
+        ],
+        "steps": [
+          "Paste in etwas Öl anbraten.",
+          "Brühe und Kokosmilch hinzufügen und köcheln lassen.",
+          "Tofu und Garnelen hinzufügen und die Garnelen vollständig durchgaren.",
+          "Nudeln separat kochen und mit Suppe, Sprossen und Limette servieren."
+        ]
+      },
+      "variants": [
+        "Assam Laksa, Curry Laksa und Sarawak Laksa sind unterschiedliche Varianten, keine identischen Rezepte."
+      ],
+      "serving": [
+        "Mit Limette und Kräutern servieren."
+      ],
+      "commonMistakes": [
+        "Nicht davon ausgehen, dass alle Laksa-Varianten Kokosmilch enthalten."
+      ]
+    }
+  },
+  "pork-adobo": {
+    "en": {
+      "overview": "Pork is braised until tender in a salty, tangy sauce.",
+      "history": "Adobo is a Filipino cooking tradition that also encompasses fish, chicken and vegetables.",
+      "flavor": "Tangy, salty and rich.",
+      "technique": "Simmer the meat gently and season the sauce after reduction.",
+      "essentials": [
+        "600 g pork neck",
+        "60 ml vinegar",
+        "50 ml soy sauce"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min",
+        "ingredients": [
+          "600 g pork neck",
+          "60 ml vinegar",
+          "50 ml soy sauce",
+          "5 garlic cloves",
+          "2 bay leaves",
+          "1 tsp whole peppercorns",
+          "200 ml water"
+        ],
+        "steps": [
+          "Cut the meat into pieces and brown lightly.",
+          "Add vinegar, soy sauce, garlic, bay leaves and water.",
+          "Simmer covered until the meat is tender.",
+          "Remove the lid and reduce the sauce to taste."
+        ]
+      },
+      "variants": [
+        "Adobong puti is made without soy sauce; chicken adobo is also common."
+      ],
+      "serving": [
+        "Serve with steamed rice."
+      ],
+      "commonMistakes": [
+        "Do not salt the sauce before it has reduced."
+      ]
+    },
+    "fr": {
+      "overview": "Le porc est braisé jusqu’à tendreté dans une sauce salée et acidulée.",
+      "history": "L’adobo est une tradition culinaire philippine qui concerne aussi le poisson, le poulet et les légumes.",
+      "flavor": "Acidulé, salé et généreux.",
+      "technique": "Laisser mijoter doucement la viande et rectifier l’assaisonnement de la sauce après réduction.",
+      "essentials": [
+        "600 g d’échine de porc",
+        "60 ml de vinaigre",
+        "50 ml de sauce soja"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min",
+        "ingredients": [
+          "600 g d’échine de porc",
+          "60 ml de vinaigre",
+          "50 ml de sauce soja",
+          "5 gousses d’ail",
+          "2 feuilles de laurier",
+          "1 c. à café de grains de poivre",
+          "200 ml d’eau"
+        ],
+        "steps": [
+          "Couper la viande en morceaux et la faire légèrement dorer.",
+          "Ajouter le vinaigre, la sauce soja, l’ail, le laurier et l’eau.",
+          "Laisser mijoter à couvert jusqu’à tendreté de la viande.",
+          "Retirer le couvercle et faire réduire la sauce selon le goût."
+        ]
+      },
+      "variants": [
+        "L’adobong puti se prépare sans sauce soja ; l’adobo au poulet est également courant."
+      ],
+      "serving": [
+        "Servir avec du riz cuit à la vapeur."
+      ],
+      "commonMistakes": [
+        "Ne pas saler la sauce avant qu’elle ait réduit."
+      ]
+    },
+    "pt": {
+      "overview": "A carne de porco é estufada até ficar tenra num molho salgado e ácido.",
+      "history": "O adobo é uma tradição culinária filipina que também abrange peixe, frango e legumes.",
+      "flavor": "Ácido, salgado e encorpado.",
+      "technique": "Deixe a carne cozinhar em lume brando e tempere o molho depois de reduzir.",
+      "essentials": [
+        "600 g de cachaço de porco",
+        "60 ml de vinagre",
+        "50 ml de molho de soja"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min",
+        "ingredients": [
+          "600 g de cachaço de porco",
+          "60 ml de vinagre",
+          "50 ml de molho de soja",
+          "5 dentes de alho",
+          "2 folhas de louro",
+          "1 c. de chá de pimenta em grão",
+          "200 ml de água"
+        ],
+        "steps": [
+          "Corte a carne em pedaços e doure ligeiramente.",
+          "Junte vinagre, molho de soja, alho, louro e água.",
+          "Deixe cozinhar em lume brando com tampa até a carne ficar tenra.",
+          "Retire a tampa e reduza o molho a gosto."
+        ]
+      },
+      "variants": [
+        "O adobong puti é feito sem molho de soja; o adobo de frango também é comum."
+      ],
+      "serving": [
+        "Sirva com arroz cozido a vapor."
+      ],
+      "commonMistakes": [
+        "Não tempere o molho com sal antes de reduzir."
+      ]
+    },
+    "es": {
+      "overview": "El cerdo se brasea hasta quedar tierno en una salsa salada y ácida.",
+      "history": "El adobo es una tradición culinaria filipina que también incluye pescado, pollo y verduras.",
+      "flavor": "Ácido, salado y con cuerpo.",
+      "technique": "Cuece la carne suavemente a fuego lento y ajusta la sazón de la salsa después de reducirla.",
+      "essentials": [
+        "600 g de cabecero de lomo de cerdo",
+        "60 ml de vinagre",
+        "50 ml de salsa de soja"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min",
+        "ingredients": [
+          "600 g de cabecero de lomo de cerdo",
+          "60 ml de vinagre",
+          "50 ml de salsa de soja",
+          "5 dientes de ajo",
+          "2 hojas de laurel",
+          "1 cucharadita de pimienta en grano",
+          "200 ml de agua"
+        ],
+        "steps": [
+          "Corta la carne en trozos y dórala ligeramente.",
+          "Añade vinagre, salsa de soja, ajo, laurel y agua.",
+          "Cuece a fuego lento con tapa hasta que la carne esté tierna.",
+          "Retira la tapa y reduce la salsa al gusto."
+        ]
+      },
+      "variants": [
+        "El adobong puti se prepara sin salsa de soja; el adobo de pollo también es habitual."
+      ],
+      "serving": [
+        "Sirve con arroz al vapor."
+      ],
+      "commonMistakes": [
+        "No sales la salsa antes de que se haya reducido."
+      ]
+    },
+    "de": {
+      "overview": "Schweinefleisch wird in einer salzig-säuerlichen Sauce weich geschmort.",
+      "history": "Adobo ist eine philippinische Zubereitungstradition, die auch Fisch, Hähnchen und Gemüse umfasst.",
+      "flavor": "Säuerlich, salzig und kräftig.",
+      "technique": "Fleisch sanft schmoren und Sauce nach dem Einkochen abschmecken.",
+      "essentials": [
+        "600 g Schweinenacken",
+        "60 ml Essig",
+        "50 ml Sojasauce"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min.",
+        "ingredients": [
+          "600 g Schweinenacken",
+          "60 ml Essig",
+          "50 ml Sojasauce",
+          "5 Knoblauchzehen",
+          "2 Lorbeerblätter",
+          "1 TL ganze Pfefferkörner",
+          "200 ml Wasser"
+        ],
+        "steps": [
+          "Fleisch in Stücke schneiden und leicht anbräunen.",
+          "Essig, Sojasauce, Knoblauch, Lorbeer und Wasser hinzufügen.",
+          "Zugedeckt schmoren, bis das Fleisch weich ist.",
+          "Deckel abnehmen und Sauce nach Geschmack einkochen."
+        ]
+      },
+      "variants": [
+        "Adobong Puti wird ohne Sojasauce zubereitet; Hähnchen-Adobo ist ebenfalls verbreitet."
+      ],
+      "serving": [
+        "Mit gedämpftem Reis servieren."
+      ],
+      "commonMistakes": [
+        "Sauce erst nach dem Einkochen salzen."
+      ]
+    }
+  },
+  "sinigang": {
+    "en": {
+      "overview": "The broth acquires its characteristic fresh acidity, often from tamarind.",
+      "history": "Sinigang is a Filipino soup tradition with different proteins and sour ingredients.",
+      "flavor": "Tangy, fresh and rich.",
+      "technique": "Let the meat become tender before adding vegetables that cook quickly.",
+      "essentials": [
+        "600 g pork ribs, cut into pieces",
+        "1.5 l water",
+        "2 tomatoes"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min",
+        "ingredients": [
+          "600 g pork ribs, cut into pieces",
+          "1.5 l water",
+          "2 tomatoes",
+          "1 onion",
+          "150 g radish",
+          "150 g green beans",
+          "pak choi",
+          "tamarind paste",
+          "fish sauce"
+        ],
+        "steps": [
+          "Bring the meat and water to a boil, skim off the foam and add onion and tomato.",
+          "Simmer until the meat is tender.",
+          "Add radish, beans and tamarind to taste.",
+          "Fold in the pak choi towards the end and season with fish sauce."
+        ]
+      },
+      "variants": [
+        "Versions with prawns, fish or beef."
+      ],
+      "serving": [
+        "Serve with rice."
+      ],
+      "commonMistakes": [
+        "Do not add all the tamarind without tasting as you go."
+      ]
+    },
+    "fr": {
+      "overview": "Le bouillon acquiert son acidité fraîche caractéristique, souvent grâce au tamarin.",
+      "history": "Le sinigang est une tradition de soupe philippine qui utilise différentes sources de protéines et des ingrédients acidulés.",
+      "flavor": "Acidulé, frais et généreux.",
+      "technique": "Laisser la viande s’attendrir avant d’ajouter les légumes à cuisson rapide.",
+      "essentials": [
+        "600 g de travers de porc en morceaux",
+        "1,5 l d’eau",
+        "2 tomates"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min",
+        "ingredients": [
+          "600 g de travers de porc en morceaux",
+          "1,5 l d’eau",
+          "2 tomates",
+          "1 oignon",
+          "150 g de radis",
+          "150 g de haricots verts",
+          "pak choï",
+          "pâte de tamarin",
+          "sauce de poisson"
+        ],
+        "steps": [
+          "Porter la viande et l’eau à ébullition, écumer et ajouter l’oignon et les tomates.",
+          "Laisser mijoter jusqu’à tendreté de la viande.",
+          "Ajouter le radis, les haricots verts et du tamarin selon le goût.",
+          "Incorporer le pak choï en fin de cuisson et assaisonner avec la sauce de poisson."
+        ]
+      },
+      "variants": [
+        "Variantes aux crevettes, au poisson ou au bœuf."
+      ],
+      "serving": [
+        "Servir avec du riz."
+      ],
+      "commonMistakes": [
+        "Ne pas ajouter tout le tamarin sans goûter au fur et à mesure."
+      ]
+    },
+    "pt": {
+      "overview": "O caldo ganha a sua acidez fresca característica, frequentemente do tamarindo.",
+      "history": "O sinigang é uma tradição filipina de sopa com diferentes proteínas e ingredientes ácidos.",
+      "flavor": "Ácido, fresco e encorpado.",
+      "technique": "Deixe a carne ficar tenra antes de juntar os legumes de cozedura rápida.",
+      "essentials": [
+        "600 g de entrecosto de porco em pedaços",
+        "1,5 l de água",
+        "2 tomates"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min",
+        "ingredients": [
+          "600 g de entrecosto de porco em pedaços",
+          "1,5 l de água",
+          "2 tomates",
+          "1 cebola",
+          "150 g de rabanete",
+          "150 g de feijão-verde",
+          "pak choi",
+          "pasta de tamarindo",
+          "molho de peixe"
+        ],
+        "steps": [
+          "Leve a carne e a água a ferver, retire a espuma e junte cebola e tomate.",
+          "Deixe cozinhar em lume brando até a carne ficar tenra.",
+          "Junte rabanete, feijão-verde e tamarindo a gosto.",
+          "Envolva o pak choi perto do fim e tempere com molho de peixe."
+        ]
+      },
+      "variants": [
+        "Variantes com camarão, peixe ou carne de vaca."
+      ],
+      "serving": [
+        "Sirva com arroz."
+      ],
+      "commonMistakes": [
+        "Não junte todo o tamarindo sem ir provando."
+      ]
+    },
+    "es": {
+      "overview": "El caldo adquiere su característica acidez fresca, a menudo del tamarindo.",
+      "history": "El sinigang es una tradición filipina de sopas con diferentes proteínas e ingredientes ácidos.",
+      "flavor": "Ácido, fresco y con cuerpo.",
+      "technique": "Deja que la carne quede tierna antes de añadir las verduras de cocción rápida.",
+      "essentials": [
+        "600 g de costillas de cerdo en trozos",
+        "1,5 l de agua",
+        "2 tomates"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min",
+        "ingredients": [
+          "600 g de costillas de cerdo en trozos",
+          "1,5 l de agua",
+          "2 tomates",
+          "1 cebolla",
+          "150 g de rábano",
+          "150 g de judías verdes",
+          "pak choi",
+          "pasta de tamarindo",
+          "salsa de pescado"
+        ],
+        "steps": [
+          "Lleva la carne y el agua a ebullición, retira la espuma y añade cebolla y tomate.",
+          "Cuece a fuego lento hasta que la carne esté tierna.",
+          "Añade rábano, judías verdes y tamarindo al gusto.",
+          "Incorpora el pak choi hacia el final y sazona con salsa de pescado."
+        ]
+      },
+      "variants": [
+        "Variantes con gambas, pescado o carne de vacuno."
+      ],
+      "serving": [
+        "Sirve con arroz."
+      ],
+      "commonMistakes": [
+        "No añadas todo el tamarindo sin ir probando."
+      ]
+    },
+    "de": {
+      "overview": "Die Brühe erhält ihre charakteristische frische Säure, häufig durch Tamarinde.",
+      "history": "Sinigang ist eine philippinische Suppentradition mit unterschiedlichen Proteinquellen und säuerlichen Zutaten.",
+      "flavor": "Säuerlich, frisch und kräftig.",
+      "technique": "Fleisch weich garen, bevor Gemüse mit kurzer Garzeit hinzukommt.",
+      "essentials": [
+        "600 g Schweinerippchen in Stücken",
+        "1,5 l Wasser",
+        "2 Tomaten"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min.",
+        "ingredients": [
+          "600 g Schweinerippchen in Stücken",
+          "1,5 l Wasser",
+          "2 Tomaten",
+          "1 Zwiebel",
+          "150 g Rettich",
+          "150 g grüne Bohnen",
+          "Pak Choi",
+          "Tamarindenpaste",
+          "Fischsauce"
+        ],
+        "steps": [
+          "Fleisch und Wasser aufkochen, Schaum abschöpfen und Zwiebel und Tomaten hinzufügen.",
+          "Köcheln lassen, bis das Fleisch weich ist.",
+          "Rettich, Bohnen und Tamarinde nach Geschmack hinzufügen.",
+          "Pak Choi gegen Ende unterheben und mit Fischsauce abschmecken."
+        ]
+      },
+      "variants": [
+        "Varianten mit Garnelen, Fisch oder Rindfleisch."
+      ],
+      "serving": [
+        "Mit Reis servieren."
+      ],
+      "commonMistakes": [
+        "Nicht die gesamte Tamarinde hinzufügen, ohne zwischendurch abzuschmecken."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;
