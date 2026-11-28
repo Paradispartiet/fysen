@@ -48,6 +48,7 @@ export function GlobalHeader({
                 <nav className="siteMenuPanel" aria-label="Hovedmeny">
                   <a href={withPublicBasePath("/")}>Forsiden</a>
                   <a href={dishBrowseHref(city)}>Finn retter</a>
+                  <a href={withPublicBasePath("/kart")}>Kart · Oslo</a>
                   {ahaMinMatPilotEnabled ? <a href={withPublicBasePath("/min-mat")}>Min mat</a> : null}
                   <a href={withPublicBasePath("/om")}>Om Fysen</a>
                   <a href={withPublicBasePath("/om") + "#menydata"}>Om menydata</a>
