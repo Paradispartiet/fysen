@@ -1,6 +1,6 @@
 /* global process, console */
 import { existsSync, writeFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { URL, pathToFileURL } from "node:url";
 import { restaurantVisuals } from "../lib/restaurant-visuals.ts";
 import { collectCoordinateRows } from "./generate-restaurant-coordinates.mjs";
 
