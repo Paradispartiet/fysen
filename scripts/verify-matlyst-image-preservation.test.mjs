@@ -88,3 +88,19 @@ test("new approvals must carry real resolution, provenance, separate thumb and h
   after.images[1].largeSourceNativeWidth = 900;
   assert.throws(() => verifyPreservedMatlystApprovals(before, after), /resolution/u);
 });
+
+test("append a verified new dish without altering the original 44 slots", () => {
+  const before = baseManifest();
+  before.images[0] = verifiedImage("dish-0", 0);
+  const after = clone(before);
+  const extra = { ...verifiedImage("new-dish", 44), catalogId: "new-dish", label: "New dish", query: "new dish", surface: "Matlyst" };
+  after.images.push(extra);
+  assert.deepEqual(verifyPreservedMatlystApprovals(before, after), { dishes: 45, preserved: 1, added: 1, totalApproved: 2 });
+  assert.throws(() => verifyPreservedMatlystApprovals(after, before), /remove existing/u);
+  const invalid = clone(after);
+  invalid.images[44].catalogId = "other";
+  assert.throws(() => verifyPreservedMatlystApprovals(before, invalid), /exact catalog ID/u);
+  const incomplete = clone(after);
+  incomplete.images[44].largeViewEnabled = false;
+  assert.throws(() => verifyPreservedMatlystApprovals(before, incomplete), /approved master/u);
+});

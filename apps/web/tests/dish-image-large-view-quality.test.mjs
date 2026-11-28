@@ -368,6 +368,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice = readFileSync(path.join(imageRoot, path.basename(noticePath)), "utf8");
       assert.ok(notice.includes(source), photo.id + " source notice");
       assert.ok(notice.includes(license), photo.id + " license notice");
+    } else if (photo.index >= 44) {
+      // New photos may use a documented licensed source other than Pexels.
+      assert.match(photo.photoSource, /^https:\/\//u);
+      assert.match(photo.photoLicense, /^https:\/\//u);
+      assert.ok(photo.photoCredit?.trim());
+      assert.match(photo.photoLicenseNotice, /^\/dish-images\/[a-z0-9-]+-LICENSE\.txt$/u);
+      const notice = readFileSync(path.join(imageRoot, path.basename(photo.photoLicenseNotice)), "utf8");
+      assert.ok(notice.includes(photo.photoSource), photo.id + ": exact source notice");
+      assert.ok(notice.includes(photo.photoLicense), photo.id + ": exact license notice");
     } else {
       assert.match(photo.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
       assert.match(photo.photoCredit, /Pexels/u);

@@ -283,3 +283,11 @@
 .dishPhotoThumb.dishPhotoGreenCurry,
 .dishPhotoSmall.dishPhotoGreenCurry { background: #000 url("/dish-images/green-curry-768.avif") center / cover no-repeat; }
 
+
+/* New canonical images use the shared registry, never a legacy atlas slot. */
+.dishPhotoSmall.dishPhotoRegistered {
+  background-color: #000;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}

@@ -1,7 +1,8 @@
-import { dishSearchHref } from "../lib/public-path";
+import { dishSearchHref, withPublicBasePath } from "../lib/public-path";
+import manifest from "../public/dish-images/manifest.json";
 import { DishEditorialImage } from "./dish-editorial-image";
 
-const illustratedDishes = [
+const originalIllustratedDishes = [
   { id: "pizza-margherita", label: "Pizza margherita", query: "pizza margherita" },
   { id: "cheeseburger", label: "Cheeseburger med bacon", query: "bacon cheeseburger" },
   { id: "grillet-laks", label: "Grillet laks", query: "grillet laks" },
@@ -48,6 +49,14 @@ const illustratedDishes = [
   { id: "vada", label: "Medu vada med sambar og chutney", query: "vada" },
 ] as const;
 
+// Existing gallery slots retain their original labels and search links.
+// Additional reviewed images are appended directly from the shared register.
+const additionalIllustratedDishes = manifest.images.slice(originalIllustratedDishes.length);
+const illustratedDishes = [...originalIllustratedDishes, ...additionalIllustratedDishes];
+function findAdditionalThumbnail(dishId: string) {
+  return additionalIllustratedDishes.find(image => image.catalogId === dishId && image.id === dishId);
+}
+
 // The first atlas holds 24 illustrations in 6 columns × 4 rows.
 // The second atlas (series 04) holds nine in 3 × 3, at indices 24–32.
 // Pizza margherita (0), Cheeseburger (1), Sushi (5), Ramen (6), Carbonara (10), Butter chicken (11), Pad thai med reker (12), Tiramisu (14), Gyoza (17), Tom yum (33), Pad kra pao (34), Bánh mì (35), Bún chả (36), Gỏi cuốn (37), Tandoorikylling (38), Naan (39), Dal makhani (40), Idli (41), Sambar (42), and Medu vada (43) use separate sharp AVIF files.
@@ -61,7 +70,7 @@ export function DishPhotoGallery() {
           <span className="dishPhotosKicker">Matlyst · Til inspirasjon</span>
           <span className="dishPhotosTitle" id="dish-photos-title">Hva frister?</span>
           <span className="dishPhotosOpen">
-            Utforsk 44 retter <span aria-hidden="true">↗</span>
+            Utforsk {illustratedDishes.length} retter <span aria-hidden="true">↗</span>
           </span>
         </span>
         <span
@@ -175,10 +184,16 @@ const illustratedVariants: Readonly<Record<string, string>> = {
 };
 
 export function hasDishPhotoThumbnail(dishId: string): boolean {
-  return Object.hasOwn(editorialPhotoIndex, dishId);
+  return Object.hasOwn(editorialPhotoIndex, dishId) || Boolean(findAdditionalThumbnail(dishId));
 }
 
 export function DishPhotoThumbnail({ dishId, label }: { dishId: string; label: string }) {
+  const additional = findAdditionalThumbnail(dishId);
+  if (additional) return (
+    <span role="img" aria-label={`${additional.kind} av ${additional.label}, ikke restaurantfoto`}
+      className="dishPhotoSmall dishPhotoRegistered"
+      style={{ backgroundImage: `url("${withPublicBasePath(`/dish-images/${additional.atlas}`)}")` }} />
+  );
   const index = editorialPhotoIndex[dishId];
   if (index === undefined) return null;
   const isPizzaMargherita = index === 0;
