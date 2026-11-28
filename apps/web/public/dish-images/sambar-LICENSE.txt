@@ -1,0 +1,5 @@
+Tiffin sambar — Raksanand / Wikimedia Commons
+Original: https://commons.wikimedia.org/wiki/File:Tiffin_sambar.jpg
+License: Creative Commons Attribution-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-sa/4.0/
+Changes: manual background isolation, cropping, AVIF encoding and thumbnail resize. No food pixels generated; no enlargement. Source and adapted image files are distributed under CC BY-SA 4.0. Editorial food-type image, not a Fysen restaurant serving.
