@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Serveres med ris, roti, naan eller bhatura etter stil.","Rå løk, sitron og urter gir frisk kontrast."],
   commonMistakes: ["Å stoppe masalaen før løk og tomat er ordentlig kokt inn.","For mye vann som gjør retten til tynn kikertsuppe.","Å glemme syre og ende med en flat, tung krydderprofil."],
   relatedDishIds: ["butter-chicken","naan","biryani","dosa"],
-  sources: []
+  sources: [{"label":"Dassana’s Veg Recipes – Chana masala","href":"https://www.vegrecipesofindia.com/chana-masala-recipe/"}]
 };

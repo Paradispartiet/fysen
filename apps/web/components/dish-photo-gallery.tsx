@@ -58,11 +58,8 @@ export function DishPhotoGallery() {
     <details className="dishPhotos" aria-labelledby="dish-photos-title">
       <summary className="dishPhotosPreview">
         <span className="dishPhotosIntro">
-          <span className="dishPhotosKicker">Matlyst · Litt inspirasjon</span>
+          <span className="dishPhotosKicker">Matlyst · Til inspirasjon</span>
           <span className="dishPhotosTitle" id="dish-photos-title">Hva frister?</span>
-          <span className="dishPhotosDescription">
-            Oppdag retter i ditt eget tempo. Hele bildegalleriet er her når du vil se mer.
-          </span>
           <span className="dishPhotosOpen">
             Utforsk 44 retter <span aria-hidden="true">↗</span>
           </span>

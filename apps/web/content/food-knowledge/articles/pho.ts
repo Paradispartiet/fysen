@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Urter og lime tilsettes i små mengder underveis.","Kraften må være svært varm når den helles over bollen."],
   commonMistakes: ["Å fosskoke kraften og gjøre den uklar.","Å la krydder dominere slik at suppen blir tung.","Å la ferdigkokte risnudler stå lenge og klebe sammen."],
   relatedDishIds: ["banh-mi","bun-cha","vietnamese-spring-rolls","ramen"],
-  sources: []
+  sources: [{"label":"Vietnam Tourism – Vietnamesiske retter","href":"https://vietnam.travel/things-to-do/21-must-try-vietnamese-dishes/"}]
 };

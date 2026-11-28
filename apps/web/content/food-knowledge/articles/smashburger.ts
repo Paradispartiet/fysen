@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Serveres straks fra stekeflaten; de tynne burgerne kjøler raskt.","Pickles og rå eller stekt løk gir syre og tekstur mot kjøtt og ost."],
   commonMistakes: ["Å bruke en non-stick-panne som ikke tåler eller holder nok varme.","Å forme pattien på forhånd og miste smash-effekten.","Å presse burgeren flere ganger under steking og drive ut saft etter at skorpen er dannet."],
   relatedDishIds: ["cheeseburger","fried-chicken","hot-dog","katsu"],
-  sources: []
+  sources: [{"label":"Serious Eats – Smashed burgers and other hamburger recipes","href":"https://www.seriouseats.com/hamburger-recipes-7814305"}]
 };

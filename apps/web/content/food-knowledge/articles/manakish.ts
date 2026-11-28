@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Serveres varmt, gjerne brettet rundt tomat, agurk og urter.","Labneh og oliven er klassiske frokostfølger."],
   commonMistakes: ["For mye topping som gjør midten tung og oljete.","For tykk deig som blir brødaktig og tørr før bunnen brunes.","For lav ovnstemperatur som gir lang steketid og tørr skorpe."],
   relatedDishIds: ["falafel","hummus","shawarma","pide"],
-  sources: []
+  sources: [{"label":"UNESCO – Al-Man’ouché, libanesisk matkultur","href":"https://ich.unesco.org/en/RL/al-man-ouche-an-emblematic-culinary-practice-in-lebanon-02000"}]
 };

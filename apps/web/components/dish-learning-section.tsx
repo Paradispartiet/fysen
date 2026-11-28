@@ -94,7 +94,7 @@ export function DishLearningSection() {
               </button>
             </h3>
             <p>{dish.summary}</p>
-            <a href={dishSearchHref(dish.query)}>Finn {dish.name.toLocaleLowerCase("nb-NO")} <span aria-hidden="true">→</span></a>
+            <a href={dishSearchHref(dish.query)} aria-label={`Se menytreff for ${dish.name}`}>Se menytreff <span aria-hidden="true">→</span></a>
           </article>
         ))}
       </div>
