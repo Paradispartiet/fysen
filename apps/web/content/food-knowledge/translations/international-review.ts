@@ -7992,5 +7992,1681 @@ export const draftInternationalArticles = {
         "Das Gericht nicht auf eine scharfe Chilisauce reduzieren; die Säure ist wichtig."
       ]
     }
+  },
+  "malai-kofta": {
+    "en": {
+      "overview": "Potato and paneer balls are fried or deep-fried and served with a creamy sauce.",
+      "history": "The dish is known from North Indian restaurant and festive cuisine.",
+      "flavor": "Mildly spiced, creamy and soft.",
+      "technique": "Keep the kofta balls relatively dry before frying.",
+      "essentials": [
+        "300 g cooked potatoes",
+        "200 g paneer",
+        "2 tbsp cornflour"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40–60 min",
+        "ingredients": [
+          "300 g cooked potatoes",
+          "200 g paneer",
+          "2 tbsp cornflour",
+          "1 onion",
+          "300 g tomatoes",
+          "50 g cashews",
+          "100 ml cream",
+          "garam masala",
+          "oil"
+        ],
+        "steps": [
+          "Mash the potatoes and paneer, mix with the starch and form balls.",
+          "Fry or deep-fry the balls until golden.",
+          "Cook the onion, tomatoes and cashews and blend until smooth.",
+          "Season the sauce with spices and cream; add the balls just before serving."
+        ]
+      },
+      "variants": [
+        "Kofta can also be made with other vegetables."
+      ],
+      "serving": [
+        "Serve with naan or rice."
+      ],
+      "commonMistakes": [
+        "Do not leave the balls in the sauce for a long time before serving."
+      ]
+    },
+    "fr": {
+      "overview": "Des boulettes de pommes de terre et de paneer sont poêlées ou frites et servies avec une sauce crémeuse.",
+      "history": "Le plat est connu dans la cuisine festive et les restaurants du nord de l’Inde.",
+      "flavor": "Légèrement épicé, crémeux et tendre.",
+      "technique": "Veiller à ce que les boulettes de kofta soient relativement sèches avant la cuisson.",
+      "essentials": [
+        "300 g de pommes de terre cuites",
+        "200 g de paneer",
+        "2 c. à soupe de fécule de maïs"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40–60 min",
+        "ingredients": [
+          "300 g de pommes de terre cuites",
+          "200 g de paneer",
+          "2 c. à soupe de fécule de maïs",
+          "1 oignon",
+          "300 g de tomates",
+          "50 g de noix de cajou",
+          "100 ml de crème",
+          "garam masala",
+          "huile"
+        ],
+        "steps": [
+          "Écraser les pommes de terre et le paneer, mélanger avec la fécule et former des boulettes.",
+          "Faire dorer les boulettes à la poêle ou en friture.",
+          "Cuire l’oignon, les tomates et les noix de cajou, puis mixer jusqu’à obtenir une sauce lisse.",
+          "Assaisonner la sauce avec les épices et la crème ; ajouter les boulettes juste avant de servir."
+        ]
+      },
+      "variants": [
+        "Les kofta peuvent aussi être préparées avec d’autres légumes."
+      ],
+      "serving": [
+        "Servir avec du naan ou du riz."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser les boulettes longtemps dans la sauce avant de servir."
+      ]
+    },
+    "pt": {
+      "overview": "Bolinhas de batata e paneer são salteadas ou fritas e servidas com um molho cremoso.",
+      "history": "O prato é conhecido na cozinha festiva e de restaurante do norte da Índia.",
+      "flavor": "Ligeiramente condimentado, cremoso e macio.",
+      "technique": "Mantenha as bolinhas de kofta relativamente secas antes de fritar.",
+      "essentials": [
+        "300 g de batatas cozidas",
+        "200 g de paneer",
+        "2 c. de sopa de amido de milho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40–60 min",
+        "ingredients": [
+          "300 g de batatas cozidas",
+          "200 g de paneer",
+          "2 c. de sopa de amido de milho",
+          "1 cebola",
+          "300 g de tomate",
+          "50 g de cajus",
+          "100 ml de natas",
+          "garam masala",
+          "óleo"
+        ],
+        "steps": [
+          "Esmague as batatas e o paneer, misture com o amido e forme bolinhas.",
+          "Salteie ou frite as bolinhas até dourarem.",
+          "Coza a cebola, o tomate e os cajus e triture até obter um creme liso.",
+          "Tempere o molho com especiarias e natas; junte as bolinhas imediatamente antes de servir."
+        ]
+      },
+      "variants": [
+        "As kofta também podem ser feitas com outros legumes."
+      ],
+      "serving": [
+        "Sirva com naan ou arroz."
+      ],
+      "commonMistakes": [
+        "Não deixe as bolinhas muito tempo no molho antes de servir."
+      ]
+    },
+    "es": {
+      "overview": "Las bolas de patata y paneer se doran o fríen y se sirven con una salsa cremosa.",
+      "history": "El plato es conocido en la cocina festiva y de restaurante del norte de la India.",
+      "flavor": "Suavemente especiado, cremoso y tierno.",
+      "technique": "Mantén las bolas de kofta relativamente secas antes de freírlas.",
+      "essentials": [
+        "300 g de patatas cocidas",
+        "200 g de paneer",
+        "2 cucharadas de almidón de maíz"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40–60 min",
+        "ingredients": [
+          "300 g de patatas cocidas",
+          "200 g de paneer",
+          "2 cucharadas de almidón de maíz",
+          "1 cebolla",
+          "300 g de tomates",
+          "50 g de anacardos",
+          "100 ml de nata",
+          "garam masala",
+          "aceite"
+        ],
+        "steps": [
+          "Tritura las patatas y el paneer, mezcla con el almidón y forma bolas.",
+          "Dora o fríe las bolas hasta que estén doradas.",
+          "Cuece la cebolla, los tomates y los anacardos y tritura hasta obtener una crema lisa.",
+          "Sazona la salsa con especias y nata; añade las bolas justo antes de servir."
+        ]
+      },
+      "variants": [
+        "Las kofta también pueden prepararse con otras verduras."
+      ],
+      "serving": [
+        "Sirve con naan o arroz."
+      ],
+      "commonMistakes": [
+        "No dejes las bolas mucho tiempo en la salsa antes de servir."
+      ]
+    },
+    "de": {
+      "overview": "Kartoffel-Paneer-Bällchen werden gebraten oder frittiert und mit einer cremigen Sauce serviert.",
+      "history": "Das Gericht ist aus der nordindischen Restaurant- und Festküche bekannt.",
+      "flavor": "Mild gewürzt, cremig und weich.",
+      "technique": "Kofta-Bällchen vor dem Braten möglichst trocken halten.",
+      "essentials": [
+        "300 g gekochte Kartoffeln",
+        "200 g Paneer",
+        "2 EL Maisstärke"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40–60 Min.",
+        "ingredients": [
+          "300 g gekochte Kartoffeln",
+          "200 g Paneer",
+          "2 EL Maisstärke",
+          "1 Zwiebel",
+          "300 g Tomaten",
+          "50 g Cashewkerne",
+          "100 ml Sahne",
+          "Garam Masala",
+          "Öl"
+        ],
+        "steps": [
+          "Kartoffeln und Paneer zerdrücken, mit Stärke mischen und Bällchen formen.",
+          "Bällchen goldbraun braten oder frittieren.",
+          "Zwiebel, Tomaten und Cashewkerne kochen und glatt pürieren.",
+          "Sauce mit Gewürzen und Sahne abschmecken; Bällchen erst kurz vor dem Servieren hineingeben."
+        ]
+      },
+      "variants": [
+        "Kofta können auch aus anderem Gemüse zubereitet werden."
+      ],
+      "serving": [
+        "Mit Naan oder Reis servieren."
+      ],
+      "commonMistakes": [
+        "Bällchen vor dem Servieren nicht lange in der Sauce liegen lassen."
+      ]
+    }
+  },
+  "aloo-gobi": {
+    "en": {
+      "overview": "Potatoes and cauliflower are fried or simmered together with aromatics.",
+      "history": "Aloo gobi is common in North Indian and Pakistani home cooking.",
+      "flavor": "Earthy, mildly hot and aromatic.",
+      "technique": "Adjust the cooking time so the cauliflower retains its shape.",
+      "essentials": [
+        "400 g potatoes",
+        "1 small cauliflower",
+        "1 onion"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40–60 min",
+        "ingredients": [
+          "400 g potatoes",
+          "1 small cauliflower",
+          "1 onion",
+          "2 tomatoes",
+          "ginger",
+          "cumin",
+          "turmeric",
+          "coriander",
+          "oil"
+        ],
+        "steps": [
+          "Fry the cumin, onion and ginger.",
+          "Add the tomatoes and spices.",
+          "Fold in the potato pieces and a little water; simmer covered.",
+          "Add the cauliflower and cook until the vegetables are tender."
+        ]
+      },
+      "variants": [
+        "Dry and saucier versions exist."
+      ],
+      "serving": [
+        "Serve with roti and dal."
+      ],
+      "commonMistakes": [
+        "Do not add too much water or cook the cauliflower until mushy."
+      ]
+    },
+    "fr": {
+      "overview": "Les pommes de terre et le chou-fleur sont sautés ou mijotés avec des aromates.",
+      "history": "L’aloo gobi est courant dans la cuisine familiale du nord de l’Inde et du Pakistan.",
+      "flavor": "Terreux, légèrement piquant et aromatique.",
+      "technique": "Adapter le temps de cuisson pour que le chou-fleur conserve sa forme.",
+      "essentials": [
+        "400 g de pommes de terre",
+        "1 petit chou-fleur",
+        "1 oignon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40–60 min",
+        "ingredients": [
+          "400 g de pommes de terre",
+          "1 petit chou-fleur",
+          "1 oignon",
+          "2 tomates",
+          "gingembre",
+          "cumin",
+          "curcuma",
+          "coriandre",
+          "huile"
+        ],
+        "steps": [
+          "Faire revenir le cumin, l’oignon et le gingembre.",
+          "Ajouter les tomates et les épices.",
+          "Incorporer les morceaux de pommes de terre et un peu d’eau ; laisser mijoter à couvert.",
+          "Ajouter le chou-fleur et cuire jusqu’à ce que les légumes soient tendres."
+        ]
+      },
+      "variants": [
+        "Il existe des variantes sèches et d’autres plus riches en sauce."
+      ],
+      "serving": [
+        "Servir avec du roti et du dal."
+      ],
+      "commonMistakes": [
+        "Ne pas ajouter trop d’eau ni cuire le chou-fleur jusqu’à ce qu’il se défasse."
+      ]
+    },
+    "pt": {
+      "overview": "As batatas e a couve-flor são salteadas ou cozinhadas em lume brando com aromáticos.",
+      "history": "O aloo gobi é comum na cozinha caseira do norte da Índia e do Paquistão.",
+      "flavor": "Terroso, ligeiramente picante e aromático.",
+      "technique": "Ajuste o tempo de cozedura para que a couve-flor mantenha a forma.",
+      "essentials": [
+        "400 g de batatas",
+        "1 couve-flor pequena",
+        "1 cebola"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40–60 min",
+        "ingredients": [
+          "400 g de batatas",
+          "1 couve-flor pequena",
+          "1 cebola",
+          "2 tomates",
+          "gengibre",
+          "cominhos",
+          "curcuma",
+          "coentros",
+          "óleo"
+        ],
+        "steps": [
+          "Salteie os cominhos, a cebola e o gengibre.",
+          "Junte o tomate e as especiarias.",
+          "Envolva os pedaços de batata e um pouco de água; deixe cozinhar em lume brando com tampa.",
+          "Junte a couve-flor e coza até os legumes ficarem tenros."
+        ]
+      },
+      "variants": [
+        "Existem versões secas e outras com mais molho."
+      ],
+      "serving": [
+        "Sirva com roti e dal."
+      ],
+      "commonMistakes": [
+        "Não junte demasiada água nem deixe a couve-flor desfazer-se."
+      ]
+    },
+    "es": {
+      "overview": "Las patatas y la coliflor se saltean o cuecen a fuego lento con aromáticos.",
+      "history": "El aloo gobi es habitual en la cocina casera del norte de la India y de Pakistán.",
+      "flavor": "Terroso, ligeramente picante y aromático.",
+      "technique": "Ajusta el tiempo de cocción para que la coliflor conserve su forma.",
+      "essentials": [
+        "400 g de patatas",
+        "1 coliflor pequeña",
+        "1 cebolla"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40–60 min",
+        "ingredients": [
+          "400 g de patatas",
+          "1 coliflor pequeña",
+          "1 cebolla",
+          "2 tomates",
+          "jengibre",
+          "comino",
+          "cúrcuma",
+          "cilantro",
+          "aceite"
+        ],
+        "steps": [
+          "Sofríe el comino, la cebolla y el jengibre.",
+          "Añade los tomates y las especias.",
+          "Incorpora los trozos de patata y un poco de agua; cuece a fuego lento con tapa.",
+          "Añade la coliflor y cuece hasta que las verduras estén tiernas."
+        ]
+      },
+      "variants": [
+        "Existen versiones secas y otras con más salsa."
+      ],
+      "serving": [
+        "Sirve con roti y dal."
+      ],
+      "commonMistakes": [
+        "No añadas demasiada agua ni cuezas la coliflor hasta que se deshaga."
+      ]
+    },
+    "de": {
+      "overview": "Kartoffeln und Blumenkohl werden mit Aromaten gebraten oder sanft gegart.",
+      "history": "Aloo Gobi ist in der nordindischen und pakistanischen Hausmannskost verbreitet.",
+      "flavor": "Erdig, mild scharf und aromatisch.",
+      "technique": "Garzeit so anpassen, dass der Blumenkohl seine Form behält.",
+      "essentials": [
+        "400 g Kartoffeln",
+        "1 kleiner Blumenkohl",
+        "1 Zwiebel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40–60 Min.",
+        "ingredients": [
+          "400 g Kartoffeln",
+          "1 kleiner Blumenkohl",
+          "1 Zwiebel",
+          "2 Tomaten",
+          "Ingwer",
+          "Kreuzkümmel",
+          "Kurkuma",
+          "Koriander",
+          "Öl"
+        ],
+        "steps": [
+          "Kreuzkümmel, Zwiebel und Ingwer anbraten.",
+          "Tomaten und Gewürze hinzufügen.",
+          "Kartoffelstücke und etwas Wasser unterheben; zugedeckt ziehen lassen.",
+          "Blumenkohl hinzufügen und das Gemüse weich garen."
+        ]
+      },
+      "variants": [
+        "Es gibt trockene Varianten und solche mit mehr Sauce."
+      ],
+      "serving": [
+        "Mit Roti und Dal servieren."
+      ],
+      "commonMistakes": [
+        "Nicht zu viel Wasser zugeben und Blumenkohl nicht zu Brei kochen."
+      ]
+    }
+  },
+  "lasagne-alla-bolognese": {
+    "en": {
+      "overview": "Pasta sheets are layered with meat sauce and white sauce.",
+      "history": "The dish is associated with Bologna and the fresh pasta tradition of Emilia-Romagna.",
+      "flavor": "Rich and creamy, with a gratinated surface.",
+      "technique": "Cook the ragù slowly and distribute the sauces evenly.",
+      "essentials": [
+        "250 g lasagne sheets",
+        "400 g minced meat",
+        "1 onion"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2 hours",
+        "ingredients": [
+          "250 g lasagne sheets",
+          "400 g minced meat",
+          "1 onion",
+          "1 carrot",
+          "1 celery stalk",
+          "400 g tomatoes",
+          "500 ml milk",
+          "40 g butter",
+          "40 g flour",
+          "80 g Parmesan"
+        ],
+        "steps": [
+          "Fry the finely chopped vegetables and brown the meat.",
+          "Add the tomatoes and simmer the sauce for at least an hour.",
+          "Make béchamel from butter, flour and milk.",
+          "Layer the sauces and pasta sheets in a baking dish and top with Parmesan.",
+          "Bake at 190 °C until the pasta is tender and the top is golden."
+        ]
+      },
+      "variants": [
+        "Green spinach pasta sheets are traditionally used in Bologna."
+      ],
+      "serving": [
+        "Let the lasagne rest before slicing."
+      ],
+      "commonMistakes": [
+        "Do not leave dry pasta sheets without sufficient sauce."
+      ]
+    },
+    "fr": {
+      "overview": "Les feuilles de pâte sont disposées en couches avec de la sauce à la viande et de la sauce blanche.",
+      "history": "Le plat est associé à Bologne et à la tradition des pâtes fraîches d’Émilie-Romagne.",
+      "flavor": "Généreux et crémeux, avec une surface gratinée.",
+      "technique": "Faire mijoter lentement le ragù et répartir les sauces uniformément.",
+      "essentials": [
+        "250 g de feuilles de lasagne",
+        "400 g de viande hachée",
+        "1 oignon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2 heures",
+        "ingredients": [
+          "250 g de feuilles de lasagne",
+          "400 g de viande hachée",
+          "1 oignon",
+          "1 carotte",
+          "1 branche de céleri",
+          "400 g de tomates",
+          "500 ml de lait",
+          "40 g de beurre",
+          "40 g de farine",
+          "80 g de parmesan"
+        ],
+        "steps": [
+          "Faire revenir les légumes finement hachés et dorer la viande.",
+          "Ajouter les tomates et laisser mijoter la sauce pendant au moins une heure.",
+          "Préparer une béchamel avec le beurre, la farine et le lait.",
+          "Disposer les sauces et les feuilles de pâte en couches dans un plat, puis couvrir de parmesan.",
+          "Cuire au four à 190 °C jusqu’à ce que les pâtes soient tendres et le dessus doré."
+        ]
+      },
+      "variants": [
+        "Les feuilles de pâte verte aux épinards sont traditionnellement utilisées à Bologne."
+      ],
+      "serving": [
+        "Laisser reposer les lasagnes avant de les découper."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser les feuilles de pâte sèches sans suffisamment de sauce."
+      ]
+    },
+    "pt": {
+      "overview": "As folhas de massa são dispostas em camadas com molho de carne e molho branco.",
+      "history": "O prato está associado a Bolonha e à tradição de massa fresca da Emília-Romanha.",
+      "flavor": "Encorpado e cremoso, com superfície gratinada.",
+      "technique": "Cozinhe o ragù lentamente e distribua os molhos uniformemente.",
+      "essentials": [
+        "250 g de folhas de lasanha",
+        "400 g de carne picada",
+        "1 cebola"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2 horas",
+        "ingredients": [
+          "250 g de folhas de lasanha",
+          "400 g de carne picada",
+          "1 cebola",
+          "1 cenoura",
+          "1 talo de aipo",
+          "400 g de tomate",
+          "500 ml de leite",
+          "40 g de manteiga",
+          "40 g de farinha",
+          "80 g de parmesão"
+        ],
+        "steps": [
+          "Salteie os legumes finamente picados e doure a carne.",
+          "Junte o tomate e deixe o molho cozinhar em lume brando durante pelo menos uma hora.",
+          "Prepare um molho béchamel com manteiga, farinha e leite.",
+          "Disponha os molhos e as folhas de massa em camadas num tabuleiro e cubra com parmesão.",
+          "Leve ao forno a 190 °C até a massa estar tenra e a superfície dourada."
+        ]
+      },
+      "variants": [
+        "Em Bolonha usam-se tradicionalmente folhas de massa verde com espinafres."
+      ],
+      "serving": [
+        "Deixe a lasanha repousar antes de a cortar."
+      ],
+      "commonMistakes": [
+        "Não deixe folhas de massa secas sem molho suficiente."
+      ]
+    },
+    "es": {
+      "overview": "Las láminas de pasta se colocan en capas con salsa de carne y salsa blanca.",
+      "history": "El plato se asocia con Bolonia y la tradición de pasta fresca de Emilia-Romaña.",
+      "flavor": "Intenso y cremoso, con una superficie gratinada.",
+      "technique": "Cuece el ragú lentamente y reparte las salsas de manera uniforme.",
+      "essentials": [
+        "250 g de láminas de lasaña",
+        "400 g de carne picada",
+        "1 cebolla"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2 horas",
+        "ingredients": [
+          "250 g de láminas de lasaña",
+          "400 g de carne picada",
+          "1 cebolla",
+          "1 zanahoria",
+          "1 tallo de apio",
+          "400 g de tomates",
+          "500 ml de leche",
+          "40 g de mantequilla",
+          "40 g de harina",
+          "80 g de parmesano"
+        ],
+        "steps": [
+          "Sofríe las verduras finamente picadas y dora la carne.",
+          "Añade los tomates y cuece la salsa a fuego lento durante al menos una hora.",
+          "Prepara una bechamel con mantequilla, harina y leche.",
+          "Coloca las salsas y las láminas de pasta en capas en una fuente y cubre con parmesano.",
+          "Hornea a 190 °C hasta que la pasta esté tierna y la superficie dorada."
+        ]
+      },
+      "variants": [
+        "En Bolonia se utilizan tradicionalmente láminas de pasta verde de espinacas."
+      ],
+      "serving": [
+        "Deja reposar la lasaña antes de cortarla."
+      ],
+      "commonMistakes": [
+        "No dejes láminas de pasta secas sin suficiente salsa."
+      ]
+    },
+    "de": {
+      "overview": "Nudelplatten werden mit Fleischsauce und weißer Sauce geschichtet.",
+      "history": "Das Gericht ist mit Bologna und der Frischpastatradition der Emilia-Romagna verbunden.",
+      "flavor": "Kräftig und cremig mit überbackener Oberfläche.",
+      "technique": "Ragù langsam kochen und die Saucen gleichmäßig verteilen.",
+      "essentials": [
+        "250 g Lasagneplatten",
+        "400 g Hackfleisch",
+        "1 Zwiebel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2 Stunden",
+        "ingredients": [
+          "250 g Lasagneplatten",
+          "400 g Hackfleisch",
+          "1 Zwiebel",
+          "1 Karotte",
+          "1 Stange Sellerie",
+          "400 g Tomaten",
+          "500 ml Milch",
+          "40 g Butter",
+          "40 g Mehl",
+          "80 g Parmesan"
+        ],
+        "steps": [
+          "Fein gehacktes Gemüse anbraten und Fleisch bräunen.",
+          "Tomaten hinzufügen und die Sauce mindestens eine Stunde köcheln lassen.",
+          "Béchamel aus Butter, Mehl und Milch zubereiten.",
+          "Saucen und Nudelplatten in einer Auflaufform schichten und mit Parmesan bestreuen.",
+          "Bei 190 °C backen, bis die Nudeln weich und die Oberfläche goldbraun sind."
+        ]
+      },
+      "variants": [
+        "In Bologna werden traditionell grüne Spinat-Nudelplatten verwendet."
+      ],
+      "serving": [
+        "Lasagne vor dem Anschneiden ruhen lassen."
+      ],
+      "commonMistakes": [
+        "Trockene Nudelplatten nicht ohne ausreichend Sauce lassen."
+      ]
+    }
+  },
+  "risotto-alla-milanese": {
+    "en": {
+      "overview": "Rice is cooked gradually with stock and finished with butter and cheese.",
+      "history": "Saffron risotto is a classic Milanese dish, often served with ossobuco.",
+      "flavor": "Mildly nutty, aromatic and rich.",
+      "technique": "Use hot stock and finish with butter and cheese off the heat.",
+      "essentials": [
+        "320 g Carnaroli rice",
+        "1 small onion",
+        "1 l hot stock"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 35 min",
+        "ingredients": [
+          "320 g Carnaroli rice",
+          "1 small onion",
+          "1 l hot stock",
+          "1 dl white wine or extra stock",
+          "saffron",
+          "50 g butter",
+          "60 g Parmesan"
+        ],
+        "steps": [
+          "Fry the onion in a little butter and add the rice.",
+          "Add wine or stock and let the liquid absorb.",
+          "Gradually add hot stock while stirring.",
+          "Stir in the saffron towards the end and cook until the rice is al dente.",
+          "Remove from the heat and stir in butter and Parmesan."
+        ]
+      },
+      "variants": [
+        "Traditional versions may contain beef marrow."
+      ],
+      "serving": [
+        "Serve immediately, on its own or with ossobuco."
+      ],
+      "commonMistakes": [
+        "Do not cook the rice into mush or let the risotto become dry."
+      ]
+    },
+    "fr": {
+      "overview": "Le riz cuit progressivement avec le bouillon, puis est lié au beurre et au fromage.",
+      "history": "Le risotto au safran est un classique de Milan, souvent servi avec de l’ossobuco.",
+      "flavor": "Légèrement noisetté, aromatique et généreux.",
+      "technique": "Utiliser du bouillon chaud et incorporer le beurre et le fromage hors du feu.",
+      "essentials": [
+        "320 g de riz carnaroli",
+        "1 petit oignon",
+        "1 l de bouillon chaud"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 35 min",
+        "ingredients": [
+          "320 g de riz carnaroli",
+          "1 petit oignon",
+          "1 l de bouillon chaud",
+          "1 dl de vin blanc ou de bouillon supplémentaire",
+          "safran",
+          "50 g de beurre",
+          "60 g de parmesan"
+        ],
+        "steps": [
+          "Faire revenir l’oignon dans un peu de beurre et ajouter le riz.",
+          "Ajouter le vin ou le bouillon et laisser le riz absorber le liquide.",
+          "Ajouter progressivement le bouillon chaud en remuant.",
+          "Incorporer le safran en fin de cuisson et cuire jusqu’à ce que le riz soit al dente.",
+          "Retirer du feu et incorporer le beurre et le parmesan."
+        ]
+      },
+      "variants": [
+        "Les versions traditionnelles peuvent contenir de la moelle de bœuf."
+      ],
+      "serving": [
+        "Servir immédiatement, seul ou avec de l’ossobuco."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire le riz jusqu’à ce qu’il devienne pâteux ni laisser le risotto se dessécher."
+      ]
+    },
+    "pt": {
+      "overview": "O arroz é cozinhado gradualmente com caldo e finalizado com manteiga e queijo.",
+      "history": "O risoto de açafrão é um clássico de Milão, muitas vezes servido com ossobuco.",
+      "flavor": "Com ligeiras notas de frutos secos, aromático e encorpado.",
+      "technique": "Use caldo quente e finalize com manteiga e queijo fora do lume.",
+      "essentials": [
+        "320 g de arroz carnaroli",
+        "1 cebola pequena",
+        "1 l de caldo quente"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 35 min",
+        "ingredients": [
+          "320 g de arroz carnaroli",
+          "1 cebola pequena",
+          "1 l de caldo quente",
+          "1 dl de vinho branco ou caldo adicional",
+          "açafrão",
+          "50 g de manteiga",
+          "60 g de parmesão"
+        ],
+        "steps": [
+          "Salteie a cebola num pouco de manteiga e junte o arroz.",
+          "Junte o vinho ou o caldo e deixe o líquido ser absorvido.",
+          "Junte gradualmente o caldo quente, mexendo.",
+          "Junte o açafrão perto do fim e cozinhe até o arroz estar al dente.",
+          "Retire do lume e incorpore a manteiga e o parmesão."
+        ]
+      },
+      "variants": [
+        "As versões tradicionais podem conter tutano de vaca."
+      ],
+      "serving": [
+        "Sirva imediatamente, simples ou com ossobuco."
+      ],
+      "commonMistakes": [
+        "Não deixe o arroz desfazer-se nem deixe o risoto ficar seco."
+      ]
+    },
+    "es": {
+      "overview": "El arroz se cuece gradualmente con caldo y se termina con mantequilla y queso.",
+      "history": "El risotto de azafrán es un clásico de Milán, a menudo servido con ossobuco.",
+      "flavor": "Con ligeras notas de frutos secos, aromático y con cuerpo.",
+      "technique": "Usa caldo caliente y termina con mantequilla y queso fuera del fuego.",
+      "essentials": [
+        "320 g de arroz carnaroli",
+        "1 cebolla pequeña",
+        "1 l de caldo caliente"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 35 min",
+        "ingredients": [
+          "320 g de arroz carnaroli",
+          "1 cebolla pequeña",
+          "1 l de caldo caliente",
+          "1 dl de vino blanco o caldo adicional",
+          "azafrán",
+          "50 g de mantequilla",
+          "60 g de parmesano"
+        ],
+        "steps": [
+          "Sofríe la cebolla en un poco de mantequilla y añade el arroz.",
+          "Añade el vino o el caldo y deja que se absorba el líquido.",
+          "Añade gradualmente el caldo caliente sin dejar de remover.",
+          "Incorpora el azafrán hacia el final y cuece hasta que el arroz esté al dente.",
+          "Retira del fuego e incorpora la mantequilla y el parmesano."
+        ]
+      },
+      "variants": [
+        "Las versiones tradicionales pueden contener tuétano de vacuno."
+      ],
+      "serving": [
+        "Sirve inmediatamente, solo o con ossobuco."
+      ],
+      "commonMistakes": [
+        "No cuezas el arroz hasta que se deshaga ni dejes que el risotto se seque."
+      ]
+    },
+    "de": {
+      "overview": "Reis wird nach und nach mit Brühe gegart und mit Butter und Käse vollendet.",
+      "history": "Safranrisotto ist ein Mailänder Klassiker, oft zusammen mit Ossobuco serviert.",
+      "flavor": "Mild nussig, aromatisch und vollmundig.",
+      "technique": "Heiße Brühe verwenden und Butter und Käse abseits der Hitze einrühren.",
+      "essentials": [
+        "320 g Carnaroli-Reis",
+        "1 kleine Zwiebel",
+        "1 l heiße Brühe"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 35 Min.",
+        "ingredients": [
+          "320 g Carnaroli-Reis",
+          "1 kleine Zwiebel",
+          "1 l heiße Brühe",
+          "1 dl Weißwein oder zusätzliche Brühe",
+          "Safran",
+          "50 g Butter",
+          "60 g Parmesan"
+        ],
+        "steps": [
+          "Zwiebel in etwas Butter anschwitzen und Reis hinzufügen.",
+          "Wein oder Brühe hinzufügen und die Flüssigkeit aufnehmen lassen.",
+          "Heiße Brühe nach und nach unter Rühren hinzufügen.",
+          "Safran gegen Ende einrühren und Reis al dente garen.",
+          "Vom Herd nehmen und Butter und Parmesan einrühren."
+        ]
+      },
+      "variants": [
+        "Traditionelle Varianten können Rindermark enthalten."
+      ],
+      "serving": [
+        "Sofort servieren, allein oder mit Ossobuco."
+      ],
+      "commonMistakes": [
+        "Reis nicht zu Brei kochen und Risotto nicht trocken werden lassen."
+      ]
+    }
+  },
+  "ossobuco": {
+    "en": {
+      "overview": "The shank is braised with vegetables and stock until the meat becomes tender.",
+      "history": "Ossobuco alla milanese belongs to Milan’s classic cuisine.",
+      "flavor": "Rich meat flavour with fresh lemon and parsley.",
+      "technique": "Braise over low heat with a lid.",
+      "essentials": [
+        "4 slices of veal shank",
+        "1 onion",
+        "1 carrot"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2.5 hours",
+        "ingredients": [
+          "4 slices of veal shank",
+          "1 onion",
+          "1 carrot",
+          "1 celery stalk",
+          "500 ml stock",
+          "flour",
+          "oil",
+          "parsley",
+          "lemon",
+          "garlic"
+        ],
+        "steps": [
+          "Lightly coat the shanks in flour and brown them.",
+          "Fry the chopped vegetables and add the stock.",
+          "Return the meat and braise covered until tender, around two hours.",
+          "Mix chopped parsley, lemon zest and garlic and sprinkle over the dish."
+        ]
+      },
+      "variants": [
+        "Versions with tomato exist, while light sauces are also traditional."
+      ],
+      "serving": [
+        "Serve with risotto alla milanese or polenta."
+      ],
+      "commonMistakes": [
+        "Avoid vigorous boiling, which can dry out the meat."
+      ]
+    },
+    "fr": {
+      "overview": "Le jarret est braisé avec des légumes et du bouillon jusqu’à ce que la viande soit tendre.",
+      "history": "L’ossobuco alla milanese fait partie de la cuisine classique de Milan.",
+      "flavor": "Saveur riche de viande, relevée de citron frais et de persil.",
+      "technique": "Braiser à feu doux et à couvert.",
+      "essentials": [
+        "4 tranches de jarret de veau",
+        "1 oignon",
+        "1 carotte"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2,5 heures",
+        "ingredients": [
+          "4 tranches de jarret de veau",
+          "1 oignon",
+          "1 carotte",
+          "1 branche de céleri",
+          "500 ml de bouillon",
+          "farine",
+          "huile",
+          "persil",
+          "citron",
+          "ail"
+        ],
+        "steps": [
+          "Fariner légèrement les tranches de jarret et les faire dorer.",
+          "Faire revenir les légumes hachés et ajouter le bouillon.",
+          "Remettre la viande et braiser à couvert jusqu’à tendreté, environ deux heures.",
+          "Mélanger le persil haché, le zeste de citron et l’ail, puis parsemer le plat."
+        ]
+      },
+      "variants": [
+        "Il existe des variantes à la tomate, mais les sauces claires sont également traditionnelles."
+      ],
+      "serving": [
+        "Servir avec du risotto alla milanese ou de la polenta."
+      ],
+      "commonMistakes": [
+        "Éviter une forte ébullition, qui risque de dessécher la viande."
+      ]
+    },
+    "pt": {
+      "overview": "O chambão é estufado com legumes e caldo até a carne ficar tenra.",
+      "history": "O ossobuco alla milanese pertence à cozinha clássica de Milão.",
+      "flavor": "Sabor intenso a carne com a frescura do limão e da salsa.",
+      "technique": "Estufe em lume brando com tampa.",
+      "essentials": [
+        "4 rodelas de chambão de vitela",
+        "1 cebola",
+        "1 cenoura"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2,5 horas",
+        "ingredients": [
+          "4 rodelas de chambão de vitela",
+          "1 cebola",
+          "1 cenoura",
+          "1 talo de aipo",
+          "500 ml de caldo",
+          "farinha",
+          "óleo",
+          "salsa",
+          "limão",
+          "alho"
+        ],
+        "steps": [
+          "Passe ligeiramente as rodelas de chambão por farinha e doure-as.",
+          "Salteie os legumes picados e junte o caldo.",
+          "Volte a colocar a carne e estufe com tampa até ficar tenra, cerca de duas horas.",
+          "Misture salsa picada, raspa de limão e alho e espalhe por cima."
+        ]
+      },
+      "variants": [
+        "Existem variantes com tomate, mas os molhos claros também são tradicionais."
+      ],
+      "serving": [
+        "Sirva com risoto alla milanese ou polenta."
+      ],
+      "commonMistakes": [
+        "Evite uma fervura intensa, que pode secar a carne."
+      ]
+    },
+    "es": {
+      "overview": "El jarrete se brasea con verduras y caldo hasta que la carne esté tierna.",
+      "history": "El ossobuco alla milanese pertenece a la cocina clásica de Milán.",
+      "flavor": "Sabor intenso a carne con el frescor del limón y el perejil.",
+      "technique": "Brasea a fuego lento con tapa.",
+      "essentials": [
+        "4 rodajas de jarrete de ternera",
+        "1 cebolla",
+        "1 zanahoria"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2,5 horas",
+        "ingredients": [
+          "4 rodajas de jarrete de ternera",
+          "1 cebolla",
+          "1 zanahoria",
+          "1 tallo de apio",
+          "500 ml de caldo",
+          "harina",
+          "aceite",
+          "perejil",
+          "limón",
+          "ajo"
+        ],
+        "steps": [
+          "Enharina ligeramente las rodajas de jarrete y dóralas.",
+          "Sofríe las verduras picadas y añade el caldo.",
+          "Vuelve a incorporar la carne y brasea con tapa hasta que esté tierna, unas dos horas.",
+          "Mezcla perejil picado, ralladura de limón y ajo y espolvorea por encima."
+        ]
+      },
+      "variants": [
+        "Existen variantes con tomate, aunque las salsas claras también son tradicionales."
+      ],
+      "serving": [
+        "Sirve con risotto alla milanese o polenta."
+      ],
+      "commonMistakes": [
+        "Evita una ebullición fuerte, que puede resecar la carne."
+      ]
+    },
+    "de": {
+      "overview": "Die Haxe wird mit Gemüse und Brühe geschmort, bis das Fleisch zart ist.",
+      "history": "Ossobuco alla milanese gehört zur klassischen Mailänder Küche.",
+      "flavor": "Kräftiger Fleischgeschmack mit frischer Zitrone und Petersilie.",
+      "technique": "Bei niedriger Hitze zugedeckt schmoren.",
+      "essentials": [
+        "4 Scheiben Kalbshaxe",
+        "1 Zwiebel",
+        "1 Karotte"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2,5 Stunden",
+        "ingredients": [
+          "4 Scheiben Kalbshaxe",
+          "1 Zwiebel",
+          "1 Karotte",
+          "1 Stange Sellerie",
+          "500 ml Brühe",
+          "Mehl",
+          "Öl",
+          "Petersilie",
+          "Zitrone",
+          "Knoblauch"
+        ],
+        "steps": [
+          "Haxenscheiben leicht in Mehl wenden und anbräunen.",
+          "Gehacktes Gemüse anbraten und Brühe hinzufügen.",
+          "Fleisch zurückgeben und zugedeckt etwa zwei Stunden weich schmoren.",
+          "Gehackte Petersilie, Zitronenschale und Knoblauch mischen und darüberstreuen."
+        ]
+      },
+      "variants": [
+        "Es gibt Varianten mit Tomate; helle Saucen sind ebenfalls traditionell."
+      ],
+      "serving": [
+        "Mit Risotto alla milanese oder Polenta servieren."
+      ],
+      "commonMistakes": [
+        "Starkes Kochen vermeiden, da das Fleisch trocken werden kann."
+      ]
+    }
+  },
+  "gnocchi-al-pesto": {
+    "en": {
+      "overview": "Potato-based dough pillows are combined with a pesto of basil, pine nuts, cheese and olive oil.",
+      "history": "Pesto alla genovese has roots in Liguria, while gnocchi are found in many Italian regions.",
+      "flavor": "Fresh with herbs, nutty and soft.",
+      "technique": "Use little flour in the potato dough and fold in the pesto without high heat.",
+      "essentials": [
+        "600 g floury potatoes",
+        "150 g wheat flour, approximately",
+        "1 egg"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min",
+        "ingredients": [
+          "600 g floury potatoes",
+          "150 g wheat flour, approximately",
+          "1 egg",
+          "40 g basil",
+          "25 g pine nuts",
+          "50 g Parmesan",
+          "1 garlic clove",
+          "olive oil"
+        ],
+        "steps": [
+          "Boil the potatoes until tender, peel and mash them.",
+          "Mix gently with the egg and just enough flour to form a workable dough.",
+          "Roll out, cut into pieces and boil until they float to the surface.",
+          "Pound or blend the pesto ingredients and fold in with a little cooking water."
+        ]
+      },
+      "variants": [
+        "Pesto can also contain pecorino in addition to Parmesan."
+      ],
+      "serving": [
+        "Serve with grated cheese."
+      ],
+      "commonMistakes": [
+        "Do not knead in so much flour that the gnocchi become heavy."
+      ]
+    },
+    "fr": {
+      "overview": "De petits coussins de pâte à base de pommes de terre sont associés à un pesto de basilic, pignons, fromage et huile d’olive.",
+      "history": "Le pesto alla genovese a ses racines en Ligurie, tandis que les gnocchis se retrouvent dans de nombreuses régions italiennes.",
+      "flavor": "Frais et herbacé, aux notes de noix et tendre.",
+      "technique": "Utiliser peu de farine dans la pâte de pommes de terre et incorporer le pesto sans chaleur forte.",
+      "essentials": [
+        "600 g de pommes de terre farineuses",
+        "150 g de farine de blé, environ",
+        "1 œuf"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min",
+        "ingredients": [
+          "600 g de pommes de terre farineuses",
+          "150 g de farine de blé, environ",
+          "1 œuf",
+          "40 g de basilic",
+          "25 g de pignons",
+          "50 g de parmesan",
+          "1 gousse d’ail",
+          "huile d’olive"
+        ],
+        "steps": [
+          "Cuire les pommes de terre jusqu’à tendreté, les peler et les écraser.",
+          "Mélanger délicatement avec l’œuf et juste assez de farine pour obtenir une pâte façonnable.",
+          "Rouler la pâte, couper en morceaux et cuire à l’eau jusqu’à ce qu’ils remontent à la surface.",
+          "Piler ou mixer les ingrédients du pesto et incorporer avec un peu d’eau de cuisson."
+        ]
+      },
+      "variants": [
+        "Le pesto peut aussi contenir du pecorino en plus du parmesan."
+      ],
+      "serving": [
+        "Servir avec du fromage râpé."
+      ],
+      "commonMistakes": [
+        "Ne pas incorporer tant de farine que les gnocchis deviennent lourds."
+      ]
+    },
+    "pt": {
+      "overview": "Pequenas almofadas de massa de batata são combinadas com pesto de manjericão, pinhões, queijo e azeite.",
+      "history": "O pesto alla genovese tem raízes na Ligúria, enquanto os gnocchi existem em muitas regiões italianas.",
+      "flavor": "Fresco com ervas, com notas de frutos secos e macio.",
+      "technique": "Use pouca farinha na massa de batata e envolva o pesto sem calor intenso.",
+      "essentials": [
+        "600 g de batatas farinhentas",
+        "150 g de farinha de trigo, aproximadamente",
+        "1 ovo"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min",
+        "ingredients": [
+          "600 g de batatas farinhentas",
+          "150 g de farinha de trigo, aproximadamente",
+          "1 ovo",
+          "40 g de manjericão",
+          "25 g de pinhões",
+          "50 g de parmesão",
+          "1 dente de alho",
+          "azeite"
+        ],
+        "steps": [
+          "Coza as batatas até ficarem tenras, descasque-as e esmague-as.",
+          "Misture cuidadosamente com o ovo e apenas a farinha necessária para obter uma massa moldável.",
+          "Enrole a massa, corte em pedaços e coza até subirem à superfície.",
+          "Pise ou triture os ingredientes do pesto e envolva com um pouco da água da cozedura."
+        ]
+      },
+      "variants": [
+        "O pesto também pode incluir pecorino além do parmesão."
+      ],
+      "serving": [
+        "Sirva com queijo ralado."
+      ],
+      "commonMistakes": [
+        "Não amasse com tanta farinha que os gnocchi fiquem pesados."
+      ]
+    },
+    "es": {
+      "overview": "Pequeñas piezas de masa de patata se combinan con pesto de albahaca, piñones, queso y aceite de oliva.",
+      "history": "El pesto alla genovese tiene sus raíces en Liguria, mientras que los ñoquis se encuentran en muchas regiones italianas.",
+      "flavor": "Fresco por las hierbas, con notas de frutos secos y tierno.",
+      "technique": "Usa poca harina en la masa de patata e incorpora el pesto sin calor intenso.",
+      "essentials": [
+        "600 g de patatas harinosas",
+        "150 g de harina de trigo, aproximadamente",
+        "1 huevo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min",
+        "ingredients": [
+          "600 g de patatas harinosas",
+          "150 g de harina de trigo, aproximadamente",
+          "1 huevo",
+          "40 g de albahaca",
+          "25 g de piñones",
+          "50 g de parmesano",
+          "1 diente de ajo",
+          "aceite de oliva"
+        ],
+        "steps": [
+          "Cuece las patatas hasta que estén tiernas, pélalas y tritúralas.",
+          "Mezcla suavemente con el huevo y solo la harina necesaria para obtener una masa moldeable.",
+          "Forma rollos, corta en trozos y cuece hasta que suban a la superficie.",
+          "Maja o tritura los ingredientes del pesto e incorpora con un poco de agua de cocción."
+        ]
+      },
+      "variants": [
+        "El pesto también puede contener pecorino además de parmesano."
+      ],
+      "serving": [
+        "Sirve con queso rallado."
+      ],
+      "commonMistakes": [
+        "No amases con tanta harina que los ñoquis queden pesados."
+      ]
+    },
+    "de": {
+      "overview": "Kleine Kartoffelteigkissen werden mit Pesto aus Basilikum, Pinienkernen, Käse und Olivenöl kombiniert.",
+      "history": "Pesto alla genovese hat seine Wurzeln in Ligurien, während Gnocchi in vielen italienischen Regionen verbreitet sind.",
+      "flavor": "Kräuterfrisch, nussig und weich.",
+      "technique": "Wenig Mehl im Kartoffelteig verwenden und Pesto ohne starke Hitze unterheben.",
+      "essentials": [
+        "600 g mehligkochende Kartoffeln",
+        "150 g Weizenmehl, ungefähr",
+        "1 Ei"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min.",
+        "ingredients": [
+          "600 g mehligkochende Kartoffeln",
+          "150 g Weizenmehl, ungefähr",
+          "1 Ei",
+          "40 g Basilikum",
+          "25 g Pinienkerne",
+          "50 g Parmesan",
+          "1 Knoblauchzehe",
+          "Olivenöl"
+        ],
+        "steps": [
+          "Kartoffeln weich kochen, schälen und zerdrücken.",
+          "Vorsichtig mit dem Ei und gerade so viel Mehl mischen, dass ein formbarer Teig entsteht.",
+          "Teig ausrollen, in Stücke schneiden und kochen, bis sie aufsteigen.",
+          "Pestozutaten zerstoßen oder mixen und mit etwas Kochwasser unterheben."
+        ]
+      },
+      "variants": [
+        "Pesto kann neben Parmesan auch Pecorino enthalten."
+      ],
+      "serving": [
+        "Mit geriebenem Käse servieren."
+      ],
+      "commonMistakes": [
+        "Nicht so viel Mehl einkneten, dass die Gnocchi schwer werden."
+      ]
+    }
+  },
+  "tiramisu": {
+    "en": {
+      "overview": "Biscuits are briefly dipped in coffee and layered with mascarpone cream.",
+      "history": "Tiramisu is particularly associated with northeastern Italy; its origin is disputed.",
+      "flavor": "Creamy, slightly sweet and bittersweet from coffee and cocoa.",
+      "technique": "Use cooled coffee and let the dessert set in the refrigerator.",
+      "essentials": [
+        "250 g savoiardi",
+        "500 g mascarpone",
+        "250 ml whipping cream"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 25 min + 4 hours chilling",
+        "ingredients": [
+          "250 g savoiardi",
+          "500 g mascarpone",
+          "250 ml whipping cream",
+          "70 g sugar",
+          "250 ml strong coffee",
+          "cocoa"
+        ],
+        "steps": [
+          "Whip the cream and sugar and gently fold in the mascarpone.",
+          "Quickly dip the biscuits in cold coffee.",
+          "Layer the biscuits and cream in a dish.",
+          "Chill for at least four hours and sift cocoa over the top before serving."
+        ]
+      },
+      "variants": [
+        "This home version contains no raw eggs; classic versions often use eggs."
+      ],
+      "serving": [
+        "Serve cold in portions."
+      ],
+      "commonMistakes": [
+        "Do not soak the biscuits so long that they fall apart."
+      ]
+    },
+    "fr": {
+      "overview": "Les biscuits sont brièvement trempés dans le café et disposés en couches avec la crème au mascarpone.",
+      "history": "Le tiramisu est particulièrement associé au nord-est de l’Italie ; son origine fait débat.",
+      "flavor": "Crémeux, légèrement sucré et doux-amer grâce au café et au cacao.",
+      "technique": "Utiliser du café refroidi et laisser prendre le dessert au réfrigérateur.",
+      "essentials": [
+        "250 g de biscuits savoiardi",
+        "500 g de mascarpone",
+        "250 ml de crème à fouetter"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 25 min + 4 heures au frais",
+        "ingredients": [
+          "250 g de biscuits savoiardi",
+          "500 g de mascarpone",
+          "250 ml de crème à fouetter",
+          "70 g de sucre",
+          "250 ml de café fort",
+          "cacao"
+        ],
+        "steps": [
+          "Fouetter la crème avec le sucre et incorporer délicatement le mascarpone.",
+          "Tremper rapidement les biscuits dans le café froid.",
+          "Disposer les biscuits et la crème en couches dans un plat.",
+          "Réfrigérer au moins quatre heures et tamiser du cacao sur le dessus avant de servir."
+        ]
+      },
+      "variants": [
+        "Cette version maison ne contient pas d’œufs crus ; les versions classiques utilisent souvent des œufs."
+      ],
+      "serving": [
+        "Servir froid en portions."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser tremper les biscuits si longtemps qu’ils se désagrègent."
+      ]
+    },
+    "pt": {
+      "overview": "Os biscoitos são mergulhados brevemente em café e dispostos em camadas com creme de mascarpone.",
+      "history": "O tiramisu está especialmente associado ao nordeste de Itália; a sua origem é controversa.",
+      "flavor": "Cremoso, ligeiramente doce e agridoce pelo café e cacau.",
+      "technique": "Use café arrefecido e deixe a sobremesa firmar no frigorífico.",
+      "essentials": [
+        "250 g de palitos la reine",
+        "500 g de mascarpone",
+        "250 ml de natas para bater"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 25 min + 4 horas de refrigeração",
+        "ingredients": [
+          "250 g de palitos la reine",
+          "500 g de mascarpone",
+          "250 ml de natas para bater",
+          "70 g de açúcar",
+          "250 ml de café forte",
+          "cacau"
+        ],
+        "steps": [
+          "Bata as natas com o açúcar e envolva cuidadosamente o mascarpone.",
+          "Mergulhe rapidamente os biscoitos no café frio.",
+          "Disponha os biscoitos e o creme em camadas numa forma.",
+          "Leve ao frigorífico durante pelo menos quatro horas e peneire cacau por cima antes de servir."
+        ]
+      },
+      "variants": [
+        "Esta versão caseira não contém ovos crus; as versões clássicas usam frequentemente ovos."
+      ],
+      "serving": [
+        "Sirva frio em porções."
+      ],
+      "commonMistakes": [
+        "Não demolhe os biscoitos durante tanto tempo que se desfaçam."
+      ]
+    },
+    "es": {
+      "overview": "Los bizcochos se mojan brevemente en café y se colocan en capas con crema de mascarpone.",
+      "history": "El tiramisú se asocia especialmente con el noreste de Italia; su origen es objeto de debate.",
+      "flavor": "Cremoso, ligeramente dulce y agridulce por el café y el cacao.",
+      "technique": "Usa café frío y deja que el postre se asiente en el frigorífico.",
+      "essentials": [
+        "250 g de bizcochos de soletilla",
+        "500 g de mascarpone",
+        "250 ml de nata para montar"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 25 min + 4 horas de refrigeración",
+        "ingredients": [
+          "250 g de bizcochos de soletilla",
+          "500 g de mascarpone",
+          "250 ml de nata para montar",
+          "70 g de azúcar",
+          "250 ml de café fuerte",
+          "cacao"
+        ],
+        "steps": [
+          "Monta la nata con el azúcar e incorpora suavemente el mascarpone.",
+          "Moja rápidamente los bizcochos en café frío.",
+          "Coloca los bizcochos y la crema en capas en una fuente.",
+          "Refrigera durante al menos cuatro horas y tamiza cacao por encima antes de servir."
+        ]
+      },
+      "variants": [
+        "Esta versión casera no contiene huevos crudos; las versiones clásicas suelen usar huevos."
+      ],
+      "serving": [
+        "Sirve frío en porciones."
+      ],
+      "commonMistakes": [
+        "No remojes los bizcochos tanto tiempo que se deshagan."
+      ]
+    },
+    "de": {
+      "overview": "Biskuits werden kurz in Kaffee getaucht und mit Mascarponecreme geschichtet.",
+      "history": "Tiramisu ist besonders mit Nordostitalien verbunden; seine Herkunft ist umstritten.",
+      "flavor": "Cremig, süßlich und durch Kaffee und Kakao bittersüß.",
+      "technique": "Abgekühlten Kaffee verwenden und das Dessert im Kühlschrank fest werden lassen.",
+      "essentials": [
+        "250 g Löffelbiskuits",
+        "500 g Mascarpone",
+        "250 ml Schlagsahne"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 25 Min. + 4 Stunden Kühlzeit",
+        "ingredients": [
+          "250 g Löffelbiskuits",
+          "500 g Mascarpone",
+          "250 ml Schlagsahne",
+          "70 g Zucker",
+          "250 ml starker Kaffee",
+          "Kakao"
+        ],
+        "steps": [
+          "Sahne und Zucker aufschlagen und Mascarpone vorsichtig unterheben.",
+          "Biskuits kurz in kalten Kaffee tauchen.",
+          "Biskuits und Creme in einer Form schichten.",
+          "Mindestens vier Stunden kühlen und vor dem Servieren Kakao darübersieben."
+        ]
+      },
+      "variants": [
+        "Diese Hausvariante enthält keine rohen Eier; klassische Varianten verwenden häufig Eier."
+      ],
+      "serving": [
+        "Kalt in Portionen servieren."
+      ],
+      "commonMistakes": [
+        "Biskuits nicht so lange einweichen, dass sie zerfallen."
+      ]
+    }
+  },
+  "focaccia": {
+    "en": {
+      "overview": "A risen dough is pressed into an oiled baking tin and given its characteristic dimples.",
+      "history": "Focaccia is found in many Italian regions; the Genoese version is particularly well known.",
+      "flavor": "Soft, airy and salty, with a golden crust.",
+      "technique": "Let the dough rise well and use olive oil in the tin.",
+      "essentials": [
+        "500 g wheat flour",
+        "380 ml water",
+        "5 g dried yeast"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40 min + rising",
+        "ingredients": [
+          "500 g wheat flour",
+          "380 ml water",
+          "5 g dried yeast",
+          "10 g salt",
+          "olive oil",
+          "flaky salt"
+        ],
+        "steps": [
+          "Mix flour, water, yeast and salt into a sticky dough.",
+          "Let rise until airy, preferably folding the dough a few times along the way.",
+          "Spread in an oiled tin and allow to rise again.",
+          "Make dimples with oiled fingers, drizzle with oil and sprinkle with salt.",
+          "Bake at 220 °C until golden."
+        ]
+      },
+      "variants": [
+        "Focaccia barese is often topped with tomatoes and olives."
+      ],
+      "serving": [
+        "Serve as bread with a meal or as a snack."
+      ],
+      "commonMistakes": [
+        "Do not press out all the air while shaping."
+      ]
+    },
+    "fr": {
+      "overview": "Une pâte levée est étalée dans un moule huilé et marquée de ses creux caractéristiques.",
+      "history": "La focaccia est présente dans de nombreuses régions italiennes ; la version génoise est particulièrement connue.",
+      "flavor": "Moelleuse, aérée et salée, avec une croûte dorée.",
+      "technique": "Laisser bien lever la pâte et utiliser de l’huile d’olive dans le moule.",
+      "essentials": [
+        "500 g de farine de blé",
+        "380 ml d’eau",
+        "5 g de levure sèche"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40 min + levée",
+        "ingredients": [
+          "500 g de farine de blé",
+          "380 ml d’eau",
+          "5 g de levure sèche",
+          "10 g de sel",
+          "huile d’olive",
+          "sel en flocons"
+        ],
+        "steps": [
+          "Mélanger la farine, l’eau, la levure et le sel pour obtenir une pâte collante.",
+          "Laisser lever jusqu’à ce que la pâte soit aérée, de préférence en effectuant quelques rabats en cours de route.",
+          "Étaler dans un moule huilé et laisser lever de nouveau.",
+          "Former des creux avec les doigts huilés, arroser d’huile et parsemer de sel.",
+          "Cuire au four à 220 °C jusqu’à ce que la focaccia soit dorée."
+        ]
+      },
+      "variants": [
+        "La focaccia barese est souvent garnie de tomates et d’olives."
+      ],
+      "serving": [
+        "Servir comme pain d’accompagnement ou comme en-cas."
+      ],
+      "commonMistakes": [
+        "Ne pas chasser tout l’air lors du façonnage."
+      ]
+    },
+    "pt": {
+      "overview": "Uma massa levedada é espalhada numa forma untada com azeite e marcada com as suas cavidades características.",
+      "history": "A focaccia existe em muitas regiões italianas; a versão genovesa é especialmente conhecida.",
+      "flavor": "Macia, leve e salgada, com crosta dourada.",
+      "technique": "Deixe a massa levedar bem e use azeite na forma.",
+      "essentials": [
+        "500 g de farinha de trigo",
+        "380 ml de água",
+        "5 g de fermento de padeiro seco"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40 min + levedação",
+        "ingredients": [
+          "500 g de farinha de trigo",
+          "380 ml de água",
+          "5 g de fermento de padeiro seco",
+          "10 g de sal",
+          "azeite",
+          "sal em flocos"
+        ],
+        "steps": [
+          "Misture farinha, água, fermento e sal até obter uma massa pegajosa.",
+          "Deixe levedar até ficar leve, de preferência fazendo algumas dobras durante o processo.",
+          "Espalhe numa forma untada com azeite e deixe levedar novamente.",
+          "Faça cavidades com os dedos untados, regue com azeite e polvilhe com sal.",
+          "Leve ao forno a 220 °C até dourar."
+        ]
+      },
+      "variants": [
+        "A focaccia barese é frequentemente coberta com tomate e azeitonas."
+      ],
+      "serving": [
+        "Sirva como pão a acompanhar a refeição ou como lanche."
+      ],
+      "commonMistakes": [
+        "Não retire todo o ar ao moldar a massa."
+      ]
+    },
+    "es": {
+      "overview": "Una masa fermentada se extiende en un molde aceitado y se le hacen sus hendiduras características.",
+      "history": "La focaccia se encuentra en muchas regiones italianas; la versión genovesa es especialmente conocida.",
+      "flavor": "Suave, esponjosa y salada, con una corteza dorada.",
+      "technique": "Deja que la masa leve bien y usa aceite de oliva en el molde.",
+      "essentials": [
+        "500 g de harina de trigo",
+        "380 ml de agua",
+        "5 g de levadura seca"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40 min + levado",
+        "ingredients": [
+          "500 g de harina de trigo",
+          "380 ml de agua",
+          "5 g de levadura seca",
+          "10 g de sal",
+          "aceite de oliva",
+          "sal en escamas"
+        ],
+        "steps": [
+          "Mezcla harina, agua, levadura y sal hasta obtener una masa pegajosa.",
+          "Deja levar hasta que esté esponjosa, preferiblemente haciendo algunos pliegues durante el proceso.",
+          "Extiende en un molde aceitado y deja levar de nuevo.",
+          "Haz hendiduras con los dedos aceitados, rocía con aceite y espolvorea sal.",
+          "Hornea a 220 °C hasta que esté dorada."
+        ]
+      },
+      "variants": [
+        "La focaccia barese suele cubrirse con tomates y aceitunas."
+      ],
+      "serving": [
+        "Sirve como pan para acompañar la comida o como tentempié."
+      ],
+      "commonMistakes": [
+        "No expulse todo el aire al dar forma a la masa."
+      ]
+    },
+    "de": {
+      "overview": "Ein aufgegangener Teig wird in eine geölte Form gedrückt und mit den charakteristischen Vertiefungen versehen.",
+      "history": "Focaccia gibt es in vielen italienischen Regionen; die genuesische Variante ist besonders bekannt.",
+      "flavor": "Weich, luftig und salzig mit goldbrauner Kruste.",
+      "technique": "Teig gut aufgehen lassen und Olivenöl in der Form verwenden.",
+      "essentials": [
+        "500 g Weizenmehl",
+        "380 ml Wasser",
+        "5 g Trockenhefe"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40 Min. + Gehzeit",
+        "ingredients": [
+          "500 g Weizenmehl",
+          "380 ml Wasser",
+          "5 g Trockenhefe",
+          "10 g Salz",
+          "Olivenöl",
+          "Salzflocken"
+        ],
+        "steps": [
+          "Mehl, Wasser, Hefe und Salz zu einem klebrigen Teig mischen.",
+          "Aufgehen lassen, bis der Teig luftig ist, dabei möglichst einige Male falten.",
+          "In einer geölten Form verteilen und nochmals gehen lassen.",
+          "Mit geölten Fingern Vertiefungen eindrücken, mit Öl beträufeln und Salz darüberstreuen.",
+          "Bei 220 °C goldbraun backen."
+        ]
+      },
+      "variants": [
+        "Focaccia barese wird oft mit Tomaten und Oliven belegt."
+      ],
+      "serving": [
+        "Als Brot zur Mahlzeit oder als Zwischenmahlzeit servieren."
+      ],
+      "commonMistakes": [
+        "Beim Formen nicht die gesamte Luft herausdrücken."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

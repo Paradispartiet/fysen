@@ -180,3 +180,7 @@ Added eight complete bodies per language: bánh xèo, bún bò Huế, cao lầu,
 ### International full article review batch 5
 
 Added eight complete bodies per language: som tam, tom kha gai, pad see ew, khao pad, chicken tikka masala, palak paneer, rogan josh and vindaloo. Source list lengths and numerical recipe tokens checked; preserved the disputed origin wording for chicken tikka masala and original food safety instructions. Previous bodies and original sources retained. Total 40 new bodies per language; English 73/200 including original 33, other four 40/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 6
+
+Added eight complete bodies per language: malai kofta, aloo gobi, lasagne alla bolognese, risotto alla milanese, ossobuco, gnocchi al pesto, tiramisu and focaccia. Checked source list lengths and numerical recipe tokens, including oven temperatures, chilling and rising times. Original bodies and sources retained. Total 48 new bodies per language; English 81/200 including original 33, other four 48/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
