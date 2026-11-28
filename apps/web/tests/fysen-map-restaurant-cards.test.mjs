@@ -24,3 +24,10 @@ test("map restaurant cards use shared identity checks and show credits", () => {
   assert.match(artwork, /Illustrasjon/);
   assert.match(artwork, /href=\{imageUrl\}/);
 });
+
+test("public restaurant links select only a known catalog restaurant", () => {
+  const view = readFileSync(new URL("../components/restaurant-map.tsx", import.meta.url), "utf8");
+  assert.match(view, /new URLSearchParams\(window\.location\.search\)\.get\("restaurant"\)/);
+  assert.match(view, /all\.features\.some\(feature => feature\.id === slug\)/);
+  assert.match(view, /setSelected\(slug\)/);
+});
