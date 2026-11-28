@@ -49,8 +49,8 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
     ],
     "sources": [
       {
-        "label": "Swasthi’s Recipes – Idli sambar",
-        "href": "https://www.indianhealthyrecipes.com/idli-sambar-recipe-tiffin-sambar/"
+        "label": "Dassana’s Veg Recipes – Sambar",
+        "href": "https://www.vegrecipesofindia.com/sambhar-recipe-a-method-made-easy/"
       }
     ]
   },
@@ -99,8 +99,8 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
     ],
     "sources": [
       {
-        "label": "Swasthi’s Recipes – Idli og fermentering",
-        "href": "https://www.indianhealthyrecipes.com/soft-idli-recipe-using-idli-rava/"
+        "label": "Dassana’s Veg Recipes – Idli og fermentering",
+        "href": "https://www.vegrecipesofindia.com/idli-recipe-how-to-make-soft-idlis/"
       }
     ]
   },
@@ -202,8 +202,8 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
     ],
     "sources": [
       {
-        "label": "Swasthi’s Recipes – Naan",
-        "href": "https://www.indianhealthyrecipes.com/naan/"
+        "label": "Dassana’s Veg Recipes – Naan",
+        "href": "https://www.vegrecipesofindia.com/naan-recipe-without-yeast/"
       }
     ]
   },
@@ -514,8 +514,8 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
     ],
     "sources": [
       {
-        "label": "Vietnam National Authority of Tourism – Hanoi-matkultur",
-        "href": "https://vietnamtourism.gov.vn/en/post/18886"
+        "label": "Vietnam Tourism – Five classic Vietnamese recipes",
+        "href": "https://vietnam.travel/things-to-do/recipes-from-vietnam/"
       }
     ]
   },
@@ -782,6 +782,10 @@ export const additionalDishes: readonly FoodKnowledgeArticle[] = [
       {
         "label": "La Cucina Italiana – Amatriciana",
         "href": "https://www.lacucinaitaliana.com/italian-food/italian-dishes/how-to-make-the-original-bucatini-allamatriciana"
+      },
+      {
+        "label": "EUR-Lex – Registrering av Amatriciana Tradizionale (2020/395)",
+        "href": "https://eur-lex.europa.eu/eli/reg_impl/2020/395/oj"
       }
     ]
   },
