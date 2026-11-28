@@ -40,7 +40,7 @@ export function GlobalHeader({
                 </nav>
               </details>
               ) : null}
-              {mapAction ?? (city === "Oslo" && !citySelectionPending ? <a className="fysenHeaderMapMode" href={withPublicBasePath("/kart?mode=map")}>Kartmodus</a> : null)}
+              {mapAction ?? (city === "Oslo" && !citySelectionPending ? <a className="fysenHeaderMapMode" href={query.trim().length >= 2 ? withPublicBasePath("/search") + "?" + new URLSearchParams({ q: query, city: "Oslo", view: "map", mode: "map" }) : withPublicBasePath("/kart?mode=map")}>Kartmodus</a> : null)}
               <details className="siteMenu" name="fysen-header-disclosure">
                 <summary className="siteMenuButton">
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
