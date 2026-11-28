@@ -6,7 +6,8 @@ import { draftInternationalSummaries, internationalSummaryLocales } from "../lib
 
 test("review summaries cover valid canonical IDs in all five languages", () => {
   const ids = Object.keys(draftInternationalSummaries);
-  assert.equal(ids.length, 138);
+  assert.equal(ids.length, 200);
+  assert.deepEqual(ids.slice().sort(), [...foodKnowledgeDishIds].sort());
   const canonical = new Set(foodKnowledgeDishIds);
   for (const [id, row] of Object.entries(draftInternationalSummaries)) {
     assert.ok(canonical.has(id), id);

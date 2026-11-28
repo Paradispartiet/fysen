@@ -968,5 +968,439 @@ export const draftInternationalSummaries = {
     "pt": "Carne finamente picada, frita ou grelhada, com cebola, malagueta e citrinos.",
     "es": "Carne finamente picada, frita o a la parrilla, con cebolla, chile y cítricos.",
     "de": "Fein gehacktes, gebratenes oder gegrilltes Fleisch mit Zwiebeln, Chili und Zitrusfrüchten."
+  },
+  "lechon": {
+    "en": "Filipino whole roast pig with crisp skin and juicy meat.",
+    "fr": "Cochon entier rôti philippin à la peau croustillante et à la chair juteuse.",
+    "pt": "Porco inteiro assado filipino, com pele crocante e carne suculenta.",
+    "es": "Cerdo entero asado filipino con piel crujiente y carne jugosa.",
+    "de": "Philippinisches ganzes Spanferkel mit knuspriger Haut und saftigem Fleisch."
+  },
+  "pancit": {
+    "en": "Filipino noodle dishes with vegetables, meat or seafood.",
+    "fr": "Plats de nouilles philippins aux légumes, à la viande ou aux fruits de mer.",
+    "pt": "Pratos filipinos de noodles com legumes, carne ou marisco.",
+    "es": "Platos filipinos de fideos con verduras, carne o marisco.",
+    "de": "Philippinische Nudelgerichte mit Gemüse, Fleisch oder Meeresfrüchten."
+  },
+  "kare-kare": {
+    "en": "Filipino stew with vegetables and a rich peanut sauce.",
+    "fr": "Ragoût philippin aux légumes et à la sauce onctueuse aux cacahuètes.",
+    "pt": "Guisado filipino com legumes e molho rico de amendoim.",
+    "es": "Guiso filipino con verduras y salsa espesa de cacahuete.",
+    "de": "Philippinischer Eintopf mit Gemüse und reichhaltiger Erdnusssauce."
+  },
+  "injera": {
+    "en": "Soft, porous, tangy flatbread traditionally made with teff.",
+    "fr": "Pain plat moelleux, poreux et acidulé, traditionnellement préparé avec du teff.",
+    "pt": "Pão achatado macio, poroso e ácido, tradicionalmente feito de teff.",
+    "es": "Pan plano suave, poroso y ácido, tradicionalmente elaborado con teff.",
+    "de": "Weiches, poröses, säuerliches Fladenbrot, traditionell aus Teff hergestellt."
+  },
+  "doro-wat": {
+    "en": "Ethiopian chicken stew with berbere, onions and boiled eggs.",
+    "fr": "Ragoût éthiopien de poulet au berbéré, aux oignons et aux œufs durs.",
+    "pt": "Guisado etíope de frango com berbere, cebola e ovos cozidos.",
+    "es": "Guiso etíope de pollo con berbere, cebolla y huevos cocidos.",
+    "de": "Äthiopischer Hähncheneintopf mit Berbere, Zwiebeln und gekochten Eiern."
+  },
+  "shiro": {
+    "en": "Creamy stew based on chickpea flour or other legume flour.",
+    "fr": "Ragoût crémeux à base de farine de pois chiches ou d’autres légumineuses.",
+    "pt": "Guisado cremoso à base de farinha de grão-de-bico ou de outras leguminosas.",
+    "es": "Guiso cremoso a base de harina de garbanzo u otras legumbres.",
+    "de": "Cremiger Eintopf auf Basis von Kichererbsenmehl oder anderem Hülsenfruchtmehl."
+  },
+  "tibs": {
+    "en": "Fried pieces of meat with onions, chilli and aromatic spices.",
+    "fr": "Morceaux de viande sautés aux oignons, au piment et aux épices aromatiques.",
+    "pt": "Pedaços de carne salteados com cebola, malagueta e especiarias aromáticas.",
+    "es": "Trozos de carne salteados con cebolla, chile y especias aromáticas.",
+    "de": "Gebratene Fleischstücke mit Zwiebeln, Chili und aromatischen Gewürzen."
+  },
+  "kitfo": {
+    "en": "Finely minced beef with spiced butter and mitmita.",
+    "fr": "Bœuf finement haché au beurre épicé et au mitmita.",
+    "pt": "Carne de vaca finamente picada com manteiga condimentada e mitmita.",
+    "es": "Carne de vacuno finamente picada con mantequilla especiada y mitmita.",
+    "de": "Fein gehacktes Rindfleisch mit Gewürzbutter und Mitmita."
+  },
+  "zigni": {
+    "en": "Hot Eritrean meat stew with berbere, onions and tomatoes.",
+    "fr": "Ragoût érythréen de viande piquant au berbéré, aux oignons et aux tomates.",
+    "pt": "Guisado eritreu picante de carne com berbere, cebola e tomate.",
+    "es": "Guiso eritreo picante de carne con berbere, cebolla y tomate.",
+    "de": "Scharfer eritreischer Fleischeintopf mit Berbere, Zwiebeln und Tomaten."
+  },
+  "tajine": {
+    "en": "Slow-cooked Moroccan stew named after its cooking vessel with a conical lid.",
+    "fr": "Ragoût marocain mijoté lentement, nommé d’après son récipient de cuisson à couvercle conique.",
+    "pt": "Guisado marroquino de cozedura lenta, cujo nome deriva do recipiente com tampa cónica.",
+    "es": "Guiso marroquí cocinado lentamente, llamado así por el recipiente con tapa cónica.",
+    "de": "Langsam gegartes marokkanisches Schmorgericht, benannt nach dem Gefäß mit kegelförmigem Deckel."
+  },
+  "couscous": {
+    "en": "Small grains of durum wheat, often served with vegetables and meat or legumes.",
+    "fr": "Petits grains de blé dur, souvent servis avec des légumes et de la viande ou des légumineuses.",
+    "pt": "Pequenos grãos de trigo duro, muitas vezes servidos com legumes e carne ou leguminosas.",
+    "es": "Pequeños granos de trigo duro, a menudo servidos con verduras y carne o legumbres.",
+    "de": "Kleine Hartweizengrießkörnchen, oft mit Gemüse und Fleisch oder Hülsenfrüchten serviert."
+  },
+  "harira": {
+    "en": "Moroccan soup with tomatoes, lentils, chickpeas and herbs.",
+    "fr": "Soupe marocaine aux tomates, aux lentilles, aux pois chiches et aux herbes.",
+    "pt": "Sopa marroquina com tomate, lentilhas, grão-de-bico e ervas.",
+    "es": "Sopa marroquí con tomate, lentejas, garbanzos y hierbas.",
+    "de": "Marokkanische Suppe mit Tomaten, Linsen, Kichererbsen und Kräutern."
+  },
+  "pastilla": {
+    "en": "Crisp layered Moroccan pie with a spiced filling, often chicken and almonds.",
+    "fr": "Tourte marocaine croustillante à plusieurs couches, garnie d’une farce épicée, souvent au poulet et aux amandes.",
+    "pt": "Tarte marroquina crocante em camadas, com recheio condimentado, muitas vezes de frango e amêndoas.",
+    "es": "Pastel marroquí crujiente de varias capas con relleno especiado, a menudo de pollo y almendras.",
+    "de": "Knusprige marokkanische Schichtpastete mit würziger Füllung, oft aus Hähnchen und Mandeln."
+  },
+  "shakshuka": {
+    "en": "Eggs cooked in a spiced tomato sauce, often with peppers.",
+    "fr": "Œufs cuits dans une sauce tomate épicée, souvent avec des poivrons.",
+    "pt": "Ovos cozinhados num molho de tomate condimentado, muitas vezes com pimentos.",
+    "es": "Huevos cocinados en salsa de tomate especiada, a menudo con pimientos.",
+    "de": "Eier in würziger Tomatensauce, oft mit Paprika."
+  },
+  "merguez": {
+    "en": "Spiced North African sausage, usually made with lamb or beef.",
+    "fr": "Saucisse épicée nord-africaine, généralement à base d’agneau ou de bœuf.",
+    "pt": "Salsicha condimentada do Norte de África, geralmente de borrego ou vaca.",
+    "es": "Salchicha especiada norteafricana, normalmente de cordero o vacuno.",
+    "de": "Würzige nordafrikanische Wurst, meist aus Lamm- oder Rindfleisch."
+  },
+  "feijoada": {
+    "en": "Brazilian stew of black beans and various cuts of pork.",
+    "fr": "Ragoût brésilien de haricots noirs et de différents morceaux de porc.",
+    "pt": "Guisado brasileiro de feijão-preto e vários tipos de carne de porco.",
+    "es": "Guiso brasileño de frijoles negros y distintos cortes de cerdo.",
+    "de": "Brasilianischer Eintopf aus schwarzen Bohnen und verschiedenen Schweinefleischstücken."
+  },
+  "moqueca": {
+    "en": "Brazilian fish dish with tomatoes, onions, coriander and regional variations.",
+    "fr": "Plat brésilien de poisson aux tomates, aux oignons et à la coriandre, avec des variantes régionales.",
+    "pt": "Prato brasileiro de peixe com tomate, cebola, coentros e variações regionais.",
+    "es": "Plato brasileño de pescado con tomate, cebolla, cilantro y variantes regionales.",
+    "de": "Brasilianisches Fischgericht mit Tomaten, Zwiebeln, Koriander und regionalen Varianten."
+  },
+  "coxinha": {
+    "en": "Teardrop-shaped Brazilian croquette snack filled with shredded chicken.",
+    "fr": "Croquette brésilienne en forme de goutte, garnie de poulet effiloché.",
+    "pt": "Croquete brasileiro em forma de gota, recheado com frango desfiado.",
+    "es": "Croqueta brasileña en forma de gota, rellena de pollo desmenuzado.",
+    "de": "Tropfenförmiger brasilianischer Kroketten-Snack mit gezupfter Hähnchenfüllung."
+  },
+  "pao-de-queijo": {
+    "en": "Small Brazilian cheese breads baked with cassava starch.",
+    "fr": "Petits pains brésiliens au fromage, cuits au four et préparés avec de la fécule de manioc.",
+    "pt": "Pequenos pães de queijo brasileiros, feitos com polvilho de mandioca.",
+    "es": "Panecillos brasileños de queso horneados con almidón de mandioca.",
+    "de": "Kleine brasilianische Käsebrötchen aus Maniokstärke."
+  },
+  "acaraje": {
+    "en": "Afro-Brazilian fried bean cakes made from black-eyed peas, onion and salt.",
+    "fr": "Beignets afro-brésiliens de haricots à œil noir, d’oignon et de sel.",
+    "pt": "Bolinhos afro-brasileiros fritos de feijão-frade, cebola e sal.",
+    "es": "Buñuelos afrobrasileños de frijol de ojo negro, cebolla y sal.",
+    "de": "Frittierte afrobrasilianische Bohnenküchlein aus Schwarzaugenbohnen, Zwiebeln und Salz."
+  },
+  "brigadeiro": {
+    "en": "Small Brazilian chocolate balls made with sweetened condensed milk, cocoa and butter.",
+    "fr": "Petites boules chocolatées brésiliennes au lait concentré sucré, au cacao et au beurre.",
+    "pt": "Pequenos doces brasileiros de chocolate feitos com leite condensado açucarado, cacau e manteiga.",
+    "es": "Pequeñas bolas brasileñas de chocolate hechas con leche condensada azucarada, cacao y mantequilla.",
+    "de": "Kleine brasilianische Schokoladenkugeln aus gezuckerter Kondensmilch, Kakao und Butter."
+  },
+  "bacalhau-a-bras": {
+    "en": "Portuguese salt cod dish with thin potato strips, onions and eggs.",
+    "fr": "Plat portugais de morue salée aux fines lamelles de pommes de terre, aux oignons et aux œufs.",
+    "pt": "Prato português de bacalhau com batata-palha, cebola e ovos.",
+    "es": "Plato portugués de bacalao salado con patatas paja, cebolla y huevos.",
+    "de": "Portugiesisches Stockfischgericht mit feinen Kartoffelstreifen, Zwiebeln und Eiern."
+  },
+  "francesinha": {
+    "en": "Hot Portuguese sandwich with meat, melted cheese and a rich sauce.",
+    "fr": "Sandwich chaud portugais à la viande, au fromage fondu et à la sauce généreuse.",
+    "pt": "Sanduíche quente portuguesa com carne, queijo derretido e molho rico.",
+    "es": "Sándwich caliente portugués con carne, queso fundido y salsa intensa.",
+    "de": "Warmes portugiesisches Sandwich mit Fleisch, geschmolzenem Käse und reichhaltiger Sauce."
+  },
+  "caldo-verde": {
+    "en": "Portuguese soup with potatoes, finely shredded leafy cabbage and often chouriço.",
+    "fr": "Soupe portugaise aux pommes de terre, au chou vert finement émincé et souvent au chouriço.",
+    "pt": "Sopa portuguesa com batata, couve-galega cortada em juliana fina e frequentemente chouriço.",
+    "es": "Sopa portuguesa con patata, berza cortada en tiras finas y a menudo chouriço.",
+    "de": "Portugiesische Suppe mit Kartoffeln, fein geschnittenem Blattkohl und oft Chouriço."
+  },
+  "arroz-de-marisco": {
+    "en": "Moist Portuguese rice dish with shellfish, tomato and seafood stock.",
+    "fr": "Plat portugais de riz généreusement mouillé, aux crustacés ou coquillages, à la tomate et au fumet de fruits de mer.",
+    "pt": "Arroz português malandrinho com marisco, tomate e caldo de marisco.",
+    "es": "Arroz caldoso portugués con marisco, tomate y caldo de marisco.",
+    "de": "Saftiges portugiesisches Reisgericht mit Schalen- oder Krustentieren, Tomaten und Meeresfrüchtefond."
+  },
+  "bifana": {
+    "en": "Portuguese sandwich with thin slices of seasoned pork.",
+    "fr": "Sandwich portugais aux fines tranches de porc assaisonné.",
+    "pt": "Sanduíche portuguesa com bifes finos de porco temperados.",
+    "es": "Bocadillo portugués con filetes finos de cerdo condimentado.",
+    "de": "Portugiesisches Sandwich mit dünnen Scheiben gewürzten Schweinefleischs."
+  },
+  "pastel-de-nata": {
+    "en": "Portuguese puff pastry tart with egg custard and caramelised spots.",
+    "fr": "Tartelette portugaise en pâte feuilletée, à la crème aux œufs et aux taches caramélisées.",
+    "pt": "Pastel português de massa folhada com creme de ovos e manchas caramelizadas.",
+    "es": "Tartaleta portuguesa de hojaldre con crema de huevo y zonas caramelizadas.",
+    "de": "Portugiesisches Blätterteigtörtchen mit Eiercreme und karamellisierten Stellen."
+  },
+  "pierogi": {
+    "en": "Polish dumplings with savoury or sweet fillings, usually boiled.",
+    "fr": "Raviolis polonais à garniture salée ou sucrée, généralement bouillis.",
+    "pt": "Dumplings polacos com recheios salgados ou doces, geralmente cozidos em água.",
+    "es": "Empanadillas polacas con relleno salado o dulce, normalmente hervidas.",
+    "de": "Polnische Teigtaschen mit herzhafter oder süßer Füllung, meist gekocht."
+  },
+  "bigos": {
+    "en": "Slow-cooked Polish stew with sauerkraut, fresh cabbage and meat.",
+    "fr": "Ragoût polonais longuement mijoté à la choucroute, au chou frais et à la viande.",
+    "pt": "Guisado polaco de cozedura lenta com chucrute, couve fresca e carne.",
+    "es": "Guiso polaco cocinado lentamente con chucrut, col fresca y carne.",
+    "de": "Langsam gegarter polnischer Eintopf mit Sauerkraut, frischem Kohl und Fleisch."
+  },
+  "zurek": {
+    "en": "Sour Polish soup based on fermented flour, often rye.",
+    "fr": "Soupe polonaise acidulée à base de farine fermentée, souvent de seigle.",
+    "pt": "Sopa polaca ácida à base de farinha fermentada, frequentemente de centeio.",
+    "es": "Sopa polaca ácida a base de harina fermentada, a menudo de centeno.",
+    "de": "Säuerliche polnische Suppe auf Basis von fermentiertem Mehl, oft Roggen."
+  },
+  "golabki": {
+    "en": "Polish cabbage rolls filled with meat and rice.",
+    "fr": "Rouleaux de chou polonais farcis de viande et de riz.",
+    "pt": "Rolos de couve polacos recheados com carne e arroz.",
+    "es": "Rollos de col polacos rellenos de carne y arroz.",
+    "de": "Polnische Kohlrouladen mit Fleisch- und Reisfüllung."
+  },
+  "borsjtsj": {
+    "en": "Beetroot-based soup with stock, vegetables and often meat.",
+    "fr": "Soupe à base de betteraves, de bouillon, de légumes et souvent de viande.",
+    "pt": "Sopa à base de beterraba, caldo, legumes e frequentemente carne.",
+    "es": "Sopa a base de remolacha, caldo, verduras y a menudo carne.",
+    "de": "Rote-Bete-Suppe mit Brühe, Gemüse und oft Fleisch."
+  },
+  "varenyky": {
+    "en": "Ukrainian filled dumplings that are usually boiled.",
+    "fr": "Raviolis ukrainiens farcis, généralement bouillis.",
+    "pt": "Dumplings ucranianos recheados, geralmente cozidos em água.",
+    "es": "Empanadillas ucranianas rellenas que suelen hervirse.",
+    "de": "Gefüllte ukrainische Teigtaschen, die meist gekocht werden."
+  },
+  "khachapuri": {
+    "en": "Georgian bread filled with cheese.",
+    "fr": "Pain géorgien fourré au fromage.",
+    "pt": "Pão georgiano recheado com queijo.",
+    "es": "Pan georgiano relleno de queso.",
+    "de": "Georgisches Brot mit Käsefüllung."
+  },
+  "khinkali": {
+    "en": "Large boiled Georgian dumplings with a juicy filling and broth inside.",
+    "fr": "Grands raviolis géorgiens bouillis, à la farce juteuse et au bouillon intérieur.",
+    "pt": "Grandes dumplings georgianos cozidos em água, com recheio suculento e caldo no interior.",
+    "es": "Grandes empanadillas georgianas hervidas, con relleno jugoso y caldo en su interior.",
+    "de": "Große gekochte georgische Teigtaschen mit saftiger Füllung und Brühe im Inneren."
+  },
+  "lobio": {
+    "en": "Georgian bean dish, often with onions, coriander and spices.",
+    "fr": "Plat géorgien de haricots, souvent aux oignons, à la coriandre et aux épices.",
+    "pt": "Prato georgiano de feijão, muitas vezes com cebola, coentros e especiarias.",
+    "es": "Plato georgiano de alubias, a menudo con cebolla, cilantro y especias.",
+    "de": "Georgisches Bohnengericht, oft mit Zwiebeln, Koriander und Gewürzen."
+  },
+  "chakhokhbili": {
+    "en": "Georgian chicken stew with tomatoes, onions and fresh herbs.",
+    "fr": "Ragoût géorgien de poulet aux tomates, aux oignons et aux herbes fraîches.",
+    "pt": "Guisado georgiano de frango com tomate, cebola e ervas frescas.",
+    "es": "Guiso georgiano de pollo con tomate, cebolla y hierbas frescas.",
+    "de": "Georgischer Hähncheneintopf mit Tomaten, Zwiebeln und frischen Kräutern."
+  },
+  "khorovats": {
+    "en": "Armenian barbecue, often meat skewers with grilled vegetables.",
+    "fr": "Barbecue arménien, souvent composé de brochettes de viande et de légumes grillés.",
+    "pt": "Churrasco arménio, muitas vezes com espetadas de carne e legumes grelhados.",
+    "es": "Parrillada armenia, a menudo de brochetas de carne con verduras asadas.",
+    "de": "Armenische Grillgerichte, oft Fleischspieße mit gegrilltem Gemüse."
+  },
+  "dolma": {
+    "en": "Stuffed vine leaves or vegetables; here, an Armenian-inspired version with meat and rice.",
+    "fr": "Feuilles de vigne ou légumes farcis ; ici, une version d’inspiration arménienne à la viande et au riz.",
+    "pt": "Folhas de videira ou legumes recheados; aqui, uma versão de inspiração arménia com carne e arroz.",
+    "es": "Hojas de parra o verduras rellenas; aquí, una versión de inspiración armenia con carne y arroz.",
+    "de": "Gefüllte Weinblätter oder Gemüse; hier eine armenisch inspirierte Variante mit Fleisch und Reis."
+  },
+  "ghormeh-sabzi": {
+    "en": "Persian herb stew with meat, beans and dried limes.",
+    "fr": "Ragoût persan aux herbes, à la viande, aux haricots et aux citrons verts séchés.",
+    "pt": "Guisado persa de ervas com carne, feijão e limas secas.",
+    "es": "Guiso persa de hierbas con carne, alubias y limas secas.",
+    "de": "Persischer Kräutereintopf mit Fleisch, Bohnen und getrockneten Limetten."
+  },
+  "fesenjan": {
+    "en": "Persian stew with ground walnuts and pomegranate molasses.",
+    "fr": "Ragoût persan aux noix moulues et à la mélasse de grenade.",
+    "pt": "Guisado persa com nozes moídas e melaço de romã.",
+    "es": "Guiso persa con nueces molidas y melaza de granada.",
+    "de": "Persisches Schmorgericht mit gemahlenen Walnüssen und Granatapfelmelasse."
+  },
+  "chelo-kebab": {
+    "en": "Persian meal of steamed rice and grilled kebab.",
+    "fr": "Repas persan composé de riz cuit à la vapeur et de kebab grillé.",
+    "pt": "Refeição persa de arroz cozido a vapor e kebab grelhado.",
+    "es": "Comida persa de arroz al vapor y kebab a la parrilla.",
+    "de": "Persisches Gericht aus gedämpftem Reis und gegrilltem Kebab."
+  },
+  "kabuli-palaw": {
+    "en": "Afghan rice dish with tender meat, carrots and raisins.",
+    "fr": "Plat afghan de riz à la viande tendre, aux carottes et aux raisins secs.",
+    "pt": "Prato afegão de arroz com carne tenra, cenoura e passas.",
+    "es": "Plato afgano de arroz con carne tierna, zanahoria y pasas.",
+    "de": "Afghanisches Reisgericht mit zartem Fleisch, Karotten und Rosinen."
+  },
+  "ashak": {
+    "en": "Boiled Afghan dumplings filled with leeks or gandana.",
+    "fr": "Raviolis afghans bouillis, farcis de poireaux ou de gandana.",
+    "pt": "Dumplings afegãos cozidos em água, recheados com alho-francês ou gandana.",
+    "es": "Empanadillas afganas hervidas, rellenas de puerro o gandana.",
+    "de": "Gekochte afghanische Teigtaschen mit Lauch- oder Gandana-Füllung."
+  },
+  "bolani": {
+    "en": "Thin Afghan flatbread filled with ingredients such as potato, leek or pumpkin.",
+    "fr": "Pain plat afghan fin, farci notamment de pommes de terre, de poireaux ou de courge.",
+    "pt": "Pão achatado afegão fino, recheado, por exemplo, com batata, alho-francês ou abóbora.",
+    "es": "Pan plano afgano fino, relleno, entre otros ingredientes, de patata, puerro o calabaza.",
+    "de": "Dünnes afghanisches Fladenbrot mit Füllungen etwa aus Kartoffeln, Lauch oder Kürbis."
+  },
+  "mac-and-cheese": {
+    "en": "Macaroni with a creamy cheese sauce, often baked until golden.",
+    "fr": "Macaronis à la sauce crémeuse au fromage, souvent gratinés.",
+    "pt": "Macarrão com molho cremoso de queijo, muitas vezes gratinado.",
+    "es": "Macarrones con salsa cremosa de queso, a menudo gratinados.",
+    "de": "Makkaroni mit cremiger Käsesauce, oft überbacken."
+  },
+  "buffalo-wings": {
+    "en": "Crisp fried chicken wings tossed in a hot, tangy sauce.",
+    "fr": "Ailes de poulet frites croustillantes, enrobées d’une sauce piquante et acidulée.",
+    "pt": "Asas de frango fritas e crocantes, envolvidas num molho picante e ácido.",
+    "es": "Alitas de pollo fritas y crujientes, bañadas en una salsa picante y ácida.",
+    "de": "Knusprig frittierte Hähnchenflügel in scharfer, säuerlicher Sauce."
+  },
+  "pulled-pork": {
+    "en": "Slow-roasted pork pulled apart into juicy strands.",
+    "fr": "Porc rôti lentement, effiloché en fibres juteuses.",
+    "pt": "Carne de porco assada lentamente e desfiada em fibras suculentas.",
+    "es": "Cerdo asado lentamente y desmenuzado en fibras jugosas.",
+    "de": "Langsam gegartes Schweinefleisch, das in saftige Fasern gezupft wird."
+  },
+  "jambalaya": {
+    "en": "Spiced rice dish with meat, vegetables and optional seafood.",
+    "fr": "Plat de riz épicé avec viande, légumes et éventuellement fruits de mer.",
+    "pt": "Prato de arroz condimentado com carne, legumes e, eventualmente, marisco.",
+    "es": "Plato de arroz especiado con carne, verduras y, opcionalmente, marisco.",
+    "de": "Würziges Reisgericht mit Fleisch, Gemüse und gegebenenfalls Meeresfrüchten."
+  },
+  "gumbo": {
+    "en": "Rich Louisiana stew or soup, often with dark roux, meat or seafood.",
+    "fr": "Ragoût ou soupe généreuse de Louisiane, souvent avec un roux brun, de la viande ou des fruits de mer.",
+    "pt": "Guisado ou sopa rica da Luisiana, muitas vezes com roux escuro, carne ou marisco.",
+    "es": "Guiso o sopa consistente de Luisiana, a menudo con roux oscuro, carne o marisco.",
+    "de": "Reichhaltiger Eintopf oder Suppe aus Louisiana, oft mit dunkler Mehlschwitze, Fleisch oder Meeresfrüchten."
+  },
+  "philly-cheesesteak": {
+    "en": "Hot sandwich with thinly sliced beef and melted cheese.",
+    "fr": "Sandwich chaud aux fines tranches de bœuf et au fromage fondu.",
+    "pt": "Sanduíche quente com fatias finas de carne de vaca e queijo derretido.",
+    "es": "Bocadillo caliente con láminas finas de carne de vacuno y queso fundido.",
+    "de": "Warmes Sandwich mit dünn geschnittenem Rindfleisch und geschmolzenem Käse."
+  },
+  "lomo-saltado": {
+    "en": "Peruvian stir-fry with beef, onions, tomatoes and chips.",
+    "fr": "Sauté péruvien de bœuf aux oignons, aux tomates et aux frites.",
+    "pt": "Salteado peruano de carne de vaca com cebola, tomate e batatas fritas.",
+    "es": "Salteado peruano de carne de vacuno con cebolla, tomate y patatas fritas.",
+    "de": "Peruanisches Wokgericht mit Rindfleisch, Zwiebeln, Tomaten und Pommes frites."
+  },
+  "aji-de-gallina": {
+    "en": "Creamy Peruvian chicken dish with yellow chilli and a bread-thickened sauce.",
+    "fr": "Plat péruvien crémeux de poulet au piment jaune et à la sauce épaissie au pain.",
+    "pt": "Prato peruano cremoso de frango com malagueta amarela e molho engrossado com pão.",
+    "es": "Plato peruano cremoso de pollo con ají amarillo y salsa espesada con pan.",
+    "de": "Cremiges peruanisches Hähnchengericht mit gelber Chili und einer mit Brot gebundenen Sauce."
+  },
+  "anticuchos": {
+    "en": "Peruvian grilled skewers, traditionally made with beef heart marinated in ají panca.",
+    "fr": "Brochettes péruviennes grillées, traditionnellement au cœur de bœuf mariné à l’ají panca.",
+    "pt": "Espetadas peruanas grelhadas, tradicionalmente de coração de vaca marinado em ají panca.",
+    "es": "Brochetas peruanas a la parrilla, tradicionalmente de corazón de res marinado en ají panca.",
+    "de": "Peruanische Grillspieße, traditionell mit in Ají Panca mariniertem Rinderherz."
+  },
+  "empanadas": {
+    "en": "Filled pastries, baked or fried; here, an Argentine-inspired meat version.",
+    "fr": "Chaussons farcis, cuits au four ou frits ; ici, une version à la viande d’inspiration argentine.",
+    "pt": "Pastéis de massa recheada, assados ou fritos; aqui, uma versão de carne de inspiração argentina.",
+    "es": "Empanadas rellenas, horneadas o fritas; aquí, una versión de carne de inspiración argentina.",
+    "de": "Gefüllte Teiggebäcke, gebacken oder frittiert; hier eine argentinisch inspirierte Fleischvariante."
+  },
+  "asado": {
+    "en": "South American barbecue tradition of cooking meat over embers.",
+    "fr": "Tradition sud-américaine de grillade de viande sur les braises.",
+    "pt": "Tradição sul-americana de churrasco com carne cozinhada sobre brasas.",
+    "es": "Tradición sudamericana de asar carne sobre brasas.",
+    "de": "Südamerikanische Grilltradition, bei der Fleisch über Glut gegart wird."
+  },
+  "pastel-de-choclo": {
+    "en": "Chilean baked dish with ground maize over a spiced meat filling.",
+    "fr": "Plat chilien cuit au four, composé de maïs moulu sur une farce de viande épicée.",
+    "pt": "Prato chileno de forno com milho moído sobre um recheio de carne condimentada.",
+    "es": "Plato chileno al horno con maíz molido sobre un relleno de carne especiada.",
+    "de": "Chilenischer Auflauf mit gemahlenem Mais über einer gewürzten Fleischfüllung."
+  },
+  "kibbeh": {
+    "en": "Spiced dish of bulgur and meat, often shaped into filled fried croquettes.",
+    "fr": "Plat épicé de boulgour et de viande, souvent façonné en croquettes farcies et frites.",
+    "pt": "Prato condimentado de bulgur e carne, muitas vezes moldado em croquetes recheados e fritos.",
+    "es": "Plato especiado de bulgur y carne, a menudo en forma de croquetas rellenas y fritas.",
+    "de": "Würziges Gericht aus Bulgur und Fleisch, oft als gefüllte, frittierte Kroketten geformt."
+  },
+  "fattoush": {
+    "en": "Fresh Levantine salad with crisp flatbread, vegetables and sumac.",
+    "fr": "Salade levantine fraîche au pain plat croustillant, aux légumes et au sumac.",
+    "pt": "Salada levantina fresca com pão achatado crocante, legumes e sumagre.",
+    "es": "Ensalada levantina fresca con pan plano crujiente, verduras y sumac.",
+    "de": "Frischer levantinischer Salat mit knusprigem Fladenbrot, Gemüse und Sumach."
+  },
+  "masgouf": {
+    "en": "Iraqi barbecue dish of a whole butterflied fish, traditionally freshwater fish such as carp.",
+    "fr": "Poisson entier ouvert en portefeuille et grillé à l’irakienne, traditionnellement un poisson d’eau douce comme la carpe.",
+    "pt": "Prato iraquiano de peixe inteiro aberto e grelhado, tradicionalmente de água doce, como a carpa.",
+    "es": "Plato iraquí de pescado entero abierto y asado, tradicionalmente de agua dulce, como la carpa.",
+    "de": "Irakisches Grillgericht aus einem ganzen, aufgeklappten Fisch, traditionell einem Süßwasserfisch wie Karpfen."
+  },
+  "kabsa": {
+    "en": "Spiced long-grain rice with meat or chicken, associated with Saudi Arabia.",
+    "fr": "Riz à grains longs épicé, accompagné de viande ou de poulet, associé à l’Arabie saoudite.",
+    "pt": "Arroz de grão longo condimentado com carne ou frango, associado à Arábia Saudita.",
+    "es": "Arroz de grano largo especiado con carne o pollo, asociado a Arabia Saudí.",
+    "de": "Gewürzter Langkornreis mit Fleisch oder Hähnchen, bekannt aus Saudi-Arabien."
+  },
+  "mandi": {
+    "en": "Rice dish with slow-cooked meat and aromatic spices, traditionally with a smoky flavour.",
+    "fr": "Plat de riz à la viande cuite lentement et aux épices aromatiques, traditionnellement au goût fumé.",
+    "pt": "Prato de arroz com carne cozinhada lentamente e especiarias aromáticas, tradicionalmente com sabor fumado.",
+    "es": "Plato de arroz con carne cocinada lentamente y especias aromáticas, tradicionalmente con sabor ahumado.",
+    "de": "Reisgericht mit langsam gegartem Fleisch und aromatischen Gewürzen, traditionell mit rauchigem Aroma."
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, string>>>;

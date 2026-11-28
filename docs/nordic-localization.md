@@ -156,3 +156,7 @@ Added four review-language summaries for all 33 original articles and five-langu
 ### International summary review batch 2
 
 Added 55 canonical article summaries in each of five languages, reaching 138/200 per language. The 275 new working translations preserve existing entries, and original source IDs were checked against the remaining ordered list. The registry is still review-only; 62 articles remain per language. Updated coverage assertion; no CI execution or production activation.
+
+### International summary review batch 3 – complete original 200-entry catalog
+
+Added the final 62 canonical summaries in each of five languages (310 new working translations). The review registry now contains exactly 200 canonical IDs and all five languages per row, 1,000 summary texts in total, including the original 33 English summaries preserved verbatim. Regression tests assert exact canonical ID equality, language keys, nonempty entries and English preservation. All remain review-only; no change to runtime selection, original articles, menu evidence or query aliases. Full article bodies, linguistic review, CI and main reconciliation remain pending.
