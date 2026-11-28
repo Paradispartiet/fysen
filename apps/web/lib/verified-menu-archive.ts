@@ -446,3 +446,31 @@ export function reconcileMenuVersions(archive: PublicMenuArchive, live: readonly
     suppressedLiveSlugs,
   };
 }
+
+
+/** All recorded menu rows from the newest eligible archive version for one exact catalog slug.
+ * This is historical source evidence, not a complete live restaurant menu.
+ */
+export function archivedRestaurantMenu(archive: PublicMenuArchive, slug: string): ArchivedMenuMatch[] {
+  if (archive.quarantinedSlugs.has(slug)) return [];
+  const selected = reconcileMenuVersions(archive, []).archive;
+  const items: ArchivedMenuMatch[] = [];
+  const seen = new Set<string>();
+  for (const row of selected.items) {
+    if (selected.quarantinedSourceIndices.has(row[0])) continue;
+    const source = selected.sources[row[0]];
+    const restaurant = source && selected.restaurants[source[0]];
+    if (!restaurant || restaurant[1] !== slug || archiveCity(restaurant[3]) !== "oslo") continue;
+    const currency = itemCurrency(selected.version ?? 1, restaurant[3], row);
+    if (!currency) continue;
+    const key = JSON.stringify([row[1], row[3], row[4], row[5], source[1]]);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    items.push({
+      name: row[1], restaurantName: restaurant[0], restaurantSlug: slug, address: restaurant[2],
+      priceMinor: row[3], priceMaxMinor: row[5], priceKind: row[4], currency,
+      sourceUrl: source[1], observedAt: source[2],
+    });
+  }
+  return items;
+}

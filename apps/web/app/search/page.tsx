@@ -7,6 +7,7 @@ import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { RestaurantMap } from "../../components/restaurant-map";
 import { restaurantCoordinateRows } from "../../lib/restaurant-coordinate-data";
 import { formatDishPrice } from "../../lib/dish-price";
+import { archivedMenuPriceLabel } from "../../lib/archived-menu-price";
 import { safeMapMenuUrl, type MapEvidenceBySlug } from "../../lib/map-menu-evidence";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
@@ -142,13 +143,13 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
       if (!safeMapMenuUrl(result.menu.sourceUrl)) continue;
       addEvidence(result.restaurant.slug, {
         name: result.dish.name, sourceUrl: result.menu.sourceUrl,
-        date: result.menu.lastCheckedAt, origin: "live", price: formatDishPrice(result.dish),
+        date: result.menu.lastCheckedAt, origin: "live", price: formatDishPrice(result.dish), menuItemId: result.menuItemId,
       });
     }
     for (const result of archiveMatches) {
       if (!safeMapMenuUrl(result.sourceUrl)) continue;
       addEvidence(result.restaurantSlug, {
-        name: result.name, sourceUrl: result.sourceUrl, date: result.observedAt, origin: "archive",
+        name: result.name, sourceUrl: result.sourceUrl, date: result.observedAt, origin: "archive", price: archivedMenuPriceLabel(result.priceMinor, result.priceMaxMinor, result.priceKind, result.currency),
       });
     }
   }
