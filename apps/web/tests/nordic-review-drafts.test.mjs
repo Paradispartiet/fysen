@@ -12,7 +12,7 @@ import assert from "node:assert/strict";
 import { messages,isPreviewLocale } from "../lib/locale-messages.ts";
 import { resultMessages } from "../lib/result-messages.ts";
 import { locales,parseLocale } from "../lib/locales.ts";
-import { reviewLocales,draftCoreMessages,draftFaroeseResults,draftFaroeseKnowledge,draftFaroesePages,draftFaroeseBrowse,draftFaroeseVisuals,draftArcticResults,reviewState } from "../lib/nordic-review-drafts.ts";
+import { reviewLocales,draftCoreMessages,draftFaroeseResults,draftFaroeseKnowledge,draftFaroesePages,draftFaroeseBrowse,draftFaroeseVisuals,draftArcticResults,draftArcticKnowledge,reviewState } from "../lib/nordic-review-drafts.ts";
 function check(source,draft){
  assert.deepEqual(Object.keys(draft).sort(),Object.keys(source).sort());
  for(const [key,value] of Object.entries(draft)){
@@ -69,4 +69,18 @@ test("Faroese summary drafts cover all existing encyclopedia summaries",()=>{
  assert.deepEqual(Object.keys(draftFaroeseSummaries).sort(),[...translatedSummaryIds].sort());
  for(const summary of Object.values(draftFaroeseSummaries)) assert.ok(summary.trim());
  assert.equal(isPreviewLocale("fo"),false);
+});
+
+
+test("partial Greenlandic and Northern Sami food knowledge drafts retain keys and placeholders",()=>{
+ for(const locale of ["kl","se"]){
+  assert.equal(isPreviewLocale(locale),false);
+  assert.equal(Object.keys(draftArcticKnowledge[locale]).length,25);
+  for(const [key,value] of Object.entries(draftArcticKnowledge[locale])){
+   assert.ok(Object.hasOwn(knowledgeMessages.nb,key));
+   assert.ok(value.trim());
+   assert.deepEqual((value.match(/\{\w+\}/gu)??[]).sort(),(knowledgeMessages.nb[key].match(/\{\w+\}/gu)??[]).sort(),key);
+  }
+  for(const key of ["intro","loading","error","noMatches","picture","notEvidence"]) assert.equal(Object.hasOwn(draftArcticKnowledge[locale],key),false);
+ }
 });
