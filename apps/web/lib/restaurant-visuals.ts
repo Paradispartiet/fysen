@@ -36,7 +36,7 @@ const ulleval = {
 } as const;
 
 const peppesEnsjo = {
-  logo: null,
+  logo: "/restaurants/peppes/logo.svg",
   exterior: "/restaurants/peppes-ensjo/exterior.jpg",
   interior: null,
   sourceUrl: "https://commons.wikimedia.org/wiki/File:Peppes_Pizza_p%C3%A5_Ensj%C3%B8_(oktober_2017).jpg",
@@ -46,7 +46,7 @@ const peppesEnsjo = {
 } as const;
 
 const peppesStortingsgata = {
-  logo: null,
+  logo: "/restaurants/peppes/logo.svg",
   exterior: "/restaurants/peppes-stortingsgata/exterior.jpg",
   interior: null,
   sourceUrl: "https://commons.wikimedia.org/wiki/File:Peppes_Pizza_Stortingsgata_(2017-01-08).jpg",
@@ -92,7 +92,7 @@ const palmyra = {
 } as const;
 
 const louise = {
- logo: null,
+ logo: "/restaurants/louise/logo.svg",
  exterior: "/restaurants/louise/exterior.jpg",
  interior: null,
  sourceUrl: "https://commons.wikimedia.org/wiki/File:DS_Louise_Restaurant%2C_Aker_Brygge_(2327057427).jpg",
