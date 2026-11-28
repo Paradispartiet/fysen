@@ -143,7 +143,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
       if (!safeMapMenuUrl(result.menu.sourceUrl)) continue;
       addEvidence(result.restaurant.slug, {
         name: result.dish.name, sourceUrl: result.menu.sourceUrl,
-        date: result.menu.lastCheckedAt, origin: "live", price: formatDishPrice(result.dish),
+        date: result.menu.lastCheckedAt, origin: "live", price: formatDishPrice(result.dish), menuItemId: result.menuItemId,
       });
     }
     for (const result of archiveMatches) {
