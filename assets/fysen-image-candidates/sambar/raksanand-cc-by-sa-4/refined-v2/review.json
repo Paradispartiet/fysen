@@ -1,0 +1,31 @@
+{
+  "dish_id": "sambar",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Tiffin_sambar.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Tiffin_sambar.jpg",
+  "photographer": "Raksanand",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source_size": [
+    3264,
+    4084
+  ],
+  "source_sha256": "1b0f2bb11a461e3839b465f34101dcdb06d1d48f0a527a031f52c1e88c34b405",
+  "mask_candidate_size": [
+    2669,
+    3129
+  ],
+  "mask_candidate_sha256": "f4e382beb1c6b4ab659a649ff900644c7fa70a219339bf028bb1145eb7c7aad6",
+  "variant": "Tiffin sambar, breakfast accompaniment",
+  "modification": "Second-pass manual native-resolution mask and crop; no upscale or generated food pixels",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "native_mask_sha256": "e5bf01eb96d4c1fdb440250fbf4fbb28aacb6a6a6d36cb8d5a371d3b3232d628",
+  "source_pixels_unchanged": true,
+  "crop": [
+    116,
+    0,
+    2785,
+    3129
+  ]
+}
