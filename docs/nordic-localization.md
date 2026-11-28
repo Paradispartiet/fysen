@@ -152,3 +152,7 @@ French, European Portuguese, Spanish and German now have 162/162 cuisine/categor
 ### International summary review batch 1
 
 Added four review-language summaries for all 33 original articles and five-language summaries for 50 expanded articles. Existing 33 English summaries copied verbatim, not replaced. Total 83/200 per language in a separate review-only registry, with exact canonical IDs verified and regression coverage for nonempty values, language keys and existing English text preservation. No runtime activation or changes to originals, search aliases or menu evidence. Remaining 117 summaries per language; linguistic review, CI and main reconciliation pending.
+
+### International summary review batch 2
+
+Added 55 canonical article summaries in each of five languages, reaching 138/200 per language. The 275 new working translations preserve existing entries, and original source IDs were checked against the remaining ordered list. The registry is still review-only; 62 articles remain per language. Updated coverage assertion; no CI execution or production activation.

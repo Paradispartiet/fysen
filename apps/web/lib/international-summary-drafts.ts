@@ -583,5 +583,390 @@ export const draftInternationalSummaries = {
     "pt": "Panqueca salgada japonesa com couve, ovo e recheios variados.",
     "es": "Tortita salada japonesa con col, huevo y diversos rellenos.",
     "de": "Herzhafter japanischer Pfannkuchen mit Kohl, Ei und verschiedenen Füllungen."
+  },
+  "takoyaki": {
+    "en": "Round Japanese octopus cakes cooked in a special pan.",
+    "fr": "Boulettes japonaises au poulpe cuites dans une poêle spéciale.",
+    "pt": "Bolinhos japoneses redondos de polvo, cozinhados numa frigideira especial.",
+    "es": "Bolas japonesas de pulpo cocinadas en una sartén especial.",
+    "de": "Runde japanische Oktopusbällchen, in einer Spezialpfanne gebacken."
+  },
+  "sukiyaki": {
+    "en": "Japanese hot pot of thinly sliced beef, tofu and vegetables in a sweetish soy sauce.",
+    "fr": "Marmite japonaise de fines tranches de bœuf, de tofu et de légumes dans une sauce soja légèrement sucrée.",
+    "pt": "Guisado japonês de carne de vaca em fatias finas, tofu e legumes num molho de soja ligeiramente doce.",
+    "es": "Guiso japonés de ternera en láminas finas, tofu y verduras en salsa de soja ligeramente dulce.",
+    "de": "Japanisches Topfgericht mit dünnem Rindfleisch, Tofu und Gemüse in süßlicher Sojasauce."
+  },
+  "shabu-shabu": {
+    "en": "Japanese hot pot in which thin slices of meat and vegetables are cooked in hot broth.",
+    "fr": "Fondue japonaise où de fines tranches de viande et des légumes cuisent dans un bouillon chaud.",
+    "pt": "Refeição japonesa de tacho em que fatias finas de carne e legumes são cozinhados em caldo quente.",
+    "es": "Olla japonesa en la que se cuecen láminas finas de carne y verduras en caldo caliente.",
+    "de": "Japanisches Topfgericht, bei dem dünne Fleischscheiben und Gemüse in heißer Brühe gar ziehen."
+  },
+  "katsudon": {
+    "en": "Japanese rice bowl topped with breaded pork cutlet, onion and egg.",
+    "fr": "Bol de riz japonais garni d’une côtelette de porc panée, d’oignon et d’œuf.",
+    "pt": "Tigela japonesa de arroz com costeleta de porco panada, cebola e ovo.",
+    "es": "Bol japonés de arroz con chuleta de cerdo empanada, cebolla y huevo.",
+    "de": "Japanische Reisschale mit paniertem Schweinekotelett, Zwiebeln und Ei."
+  },
+  "kung-pao-chicken": {
+    "en": "Sichuan stir-fried chicken with dried chillies and peanuts.",
+    "fr": "Poulet sauté du Sichuan aux piments séchés et aux cacahuètes.",
+    "pt": "Frango salteado de Sichuan com malaguetas secas e amendoins.",
+    "es": "Pollo salteado de Sichuan con chiles secos y cacahuetes.",
+    "de": "Sichuan-Wokgericht mit Hähnchen, getrockneten Chilis und Erdnüssen."
+  },
+  "xiaolongbao": {
+    "en": "Steamed Chinese dumplings filled with meat and hot broth.",
+    "fr": "Raviolis chinois cuits à la vapeur, garnis de viande et de bouillon chaud.",
+    "pt": "Dumplings chineses cozidos a vapor, recheados com carne e caldo quente.",
+    "es": "Dumplings chinos al vapor rellenos de carne y caldo caliente.",
+    "de": "Gedämpfte chinesische Teigtaschen mit Fleischfüllung und heißer Brühe."
+  },
+  "char-siu": {
+    "en": "Cantonese oven-roasted pork with a sweetish, glossy glaze.",
+    "fr": "Porc rôti cantonais au glaçage brillant et légèrement sucré.",
+    "pt": "Carne de porco cantonesa assada no forno com cobertura brilhante e ligeiramente doce.",
+    "es": "Cerdo cantonés asado al horno con glaseado brillante y ligeramente dulce.",
+    "de": "Kantonesischer Schweinebraten mit süßlicher, glänzender Glasur."
+  },
+  "chow-mein": {
+    "en": "Chinese stir-fried wheat noodles with vegetables and optional meat.",
+    "fr": "Nouilles chinoises de blé sautées avec légumes et éventuellement viande.",
+    "pt": "Noodles chineses de trigo salteados com legumes e, eventualmente, carne.",
+    "es": "Fideos chinos de trigo salteados con verduras y, opcionalmente, carne.",
+    "de": "Chinesische gebratene Weizennudeln mit Gemüse und gegebenenfalls Fleisch."
+  },
+  "wonton-soup": {
+    "en": "Chinese soup of small filled dumplings in clear broth.",
+    "fr": "Soupe chinoise de petits raviolis farcis dans un bouillon clair.",
+    "pt": "Sopa chinesa de pequenos dumplings recheados em caldo límpido.",
+    "es": "Sopa china de pequeños dumplings rellenos en caldo claro.",
+    "de": "Chinesische Suppe mit kleinen gefüllten Teigtaschen in klarer Brühe."
+  },
+  "sweet-and-sour-pork": {
+    "en": "Chinese dish of crisp fried pork in sweet and sour sauce.",
+    "fr": "Plat chinois de porc frit croustillant en sauce aigre-douce.",
+    "pt": "Prato chinês de porco frito crocante em molho agridoce.",
+    "es": "Plato chino de cerdo frito crujiente en salsa agridulce.",
+    "de": "Chinesisches Gericht aus knusprig gebratenem Schweinefleisch in süßsaurer Sauce."
+  },
+  "enchiladas": {
+    "en": "Corn tortillas with filling and chilli sauce.",
+    "fr": "Tortillas de maïs garnies, nappées de sauce pimentée.",
+    "pt": "Tortilhas de milho com recheio e molho de malagueta.",
+    "es": "Tortillas de maíz con relleno y salsa de chile.",
+    "de": "Maistortillas mit Füllung und Chilisauce."
+  },
+  "burrito": {
+    "en": "Wheat tortilla wrapped around meat, beans or other fillings.",
+    "fr": "Tortilla de blé roulée autour de viande, de haricots ou d’autres garnitures.",
+    "pt": "Tortilha de trigo enrolada com carne, feijão ou outros recheios.",
+    "es": "Tortilla de trigo enrollada con carne, frijoles u otros rellenos.",
+    "de": "Weizentortilla, um Fleisch, Bohnen oder andere Füllungen gewickelt."
+  },
+  "tamales": {
+    "en": "Steamed parcels of maize dough with savoury or sweet fillings.",
+    "fr": "Papillotes de pâte de maïs cuites à la vapeur, à garniture salée ou sucrée.",
+    "pt": "Trouxas de massa de milho cozidas a vapor, com recheios salgados ou doces.",
+    "es": "Paquetes de masa de maíz al vapor con rellenos salados o dulces.",
+    "de": "Gedämpfte Maisteigpäckchen mit herzhafter oder süßer Füllung."
+  },
+  "chilaquiles": {
+    "en": "Corn tortilla chips tossed in red or green sauce.",
+    "fr": "Chips de tortillas de maïs mélangées à une sauce rouge ou verte.",
+    "pt": "Chips de tortilha de milho envolvidas em molho vermelho ou verde.",
+    "es": "Totopos de tortilla de maíz mezclados con salsa roja o verde.",
+    "de": "Maistortillachips in roter oder grüner Sauce."
+  },
+  "mole-poblano": {
+    "en": "Mexican sauce made with dried chillies, seeds, spices and often chocolate.",
+    "fr": "Sauce mexicaine aux piments séchés, graines, épices et souvent chocolat.",
+    "pt": "Molho mexicano de malaguetas secas, sementes, especiarias e frequentemente chocolate.",
+    "es": "Salsa mexicana de chiles secos, semillas, especias y a menudo chocolate.",
+    "de": "Mexikanische Sauce aus getrockneten Chilis, Samen, Gewürzen und oft Schokolade."
+  },
+  "ceviche": {
+    "en": "Fish or seafood with citrus, onion and chilli.",
+    "fr": "Poisson ou fruits de mer aux agrumes, à l’oignon et au piment.",
+    "pt": "Peixe ou marisco com citrinos, cebola e malagueta.",
+    "es": "Pescado o marisco con cítricos, cebolla y chile.",
+    "de": "Fisch oder Meeresfrüchte mit Zitrusfrüchten, Zwiebeln und Chili."
+  },
+  "lahmacun": {
+    "en": "Thin flatbread topped with spiced minced meat, tomato and herbs.",
+    "fr": "Pain plat fin garni de viande hachée épicée, de tomate et d’herbes.",
+    "pt": "Pão achatado fino com carne picada condimentada, tomate e ervas.",
+    "es": "Pan plano fino con carne picada especiada, tomate y hierbas.",
+    "de": "Dünnes Fladenbrot mit gewürztem Hackfleisch, Tomate und Kräutern."
+  },
+  "manti": {
+    "en": "Small Turkish dumplings filled with meat, often served with garlic yoghurt.",
+    "fr": "Petits raviolis turcs à la viande, souvent servis avec du yaourt à l’ail.",
+    "pt": "Pequenos dumplings turcos recheados com carne, muitas vezes servidos com iogurte de alho.",
+    "es": "Pequeñas empanadillas turcas rellenas de carne, a menudo con yogur de ajo.",
+    "de": "Kleine türkische Teigtaschen mit Fleischfüllung, oft mit Knoblauchjoghurt."
+  },
+  "doner": {
+    "en": "Turkish kebab made from meat cooked on a rotating vertical spit.",
+    "fr": "Kebab turc de viande cuite sur une broche verticale rotative.",
+    "pt": "Kebab turco de carne assada num espeto vertical rotativo.",
+    "es": "Kebab turco de carne asada en un espetón vertical giratorio.",
+    "de": "Türkischer Kebab aus Fleisch vom rotierenden Vertikalspieß."
+  },
+  "kofte": {
+    "en": "Turkish meatballs or patties, often grilled.",
+    "fr": "Boulettes ou galettes de viande turques, souvent grillées.",
+    "pt": "Almôndegas ou hambúrgueres turcos de carne, muitas vezes grelhados.",
+    "es": "Albóndigas o tortitas turcas de carne, a menudo a la parrilla.",
+    "de": "Türkische Fleischbällchen oder Hackfleischbratlinge, oft gegrillt."
+  },
+  "baba-ganoush": {
+    "en": "Smoky aubergine dip with lemon and often tahini.",
+    "fr": "Purée d’aubergine au goût fumé, au citron et souvent au tahini.",
+    "pt": "Pasta de beringela com sabor fumado, limão e frequentemente tahini.",
+    "es": "Crema de berenjena de sabor ahumado, con limón y a menudo tahini.",
+    "de": "Rauchiger Auberginendip mit Zitrone und oft Tahini."
+  },
+  "tabbouleh": {
+    "en": "Levantine herb salad with parsley, tomato, bulgur and lemon.",
+    "fr": "Salade d’herbes levantine au persil, à la tomate, au boulgour et au citron.",
+    "pt": "Salada levantina de ervas com salsa, tomate, bulgur e limão.",
+    "es": "Ensalada levantina de hierbas con perejil, tomate, bulgur y limón.",
+    "de": "Levantinischer Kräutersalat mit Petersilie, Tomate, Bulgur und Zitrone."
+  },
+  "farikal": {
+    "en": "Lamb or mutton simmered until tender with cabbage and whole peppercorns.",
+    "fr": "Agneau ou mouton mijoté jusqu’à tendreté avec du chou et des grains de poivre.",
+    "pt": "Borrego ou carneiro cozido até ficar tenro com couve e grãos de pimenta.",
+    "es": "Cordero o carne de oveja cocidos hasta quedar tiernos con col y pimienta en grano.",
+    "de": "Lamm- oder Hammelfleisch, mit Kohl und ganzen Pfefferkörnern weich gekocht."
+  },
+  "kjottkaker": {
+    "en": "Norwegian meat patties with brown gravy, potatoes and traditional accompaniments.",
+    "fr": "Galettes de viande norvégiennes avec sauce brune, pommes de terre et garnitures traditionnelles.",
+    "pt": "Bolinhos de carne noruegueses com molho escuro, batatas e acompanhamentos tradicionais.",
+    "es": "Tortitas de carne noruegas con salsa oscura, patatas y acompañamientos tradicionales.",
+    "de": "Norwegische Frikadellen mit brauner Sauce, Kartoffeln und traditionellen Beilagen."
+  },
+  "kottbullar": {
+    "en": "Small Swedish meatballs, often with cream sauce, mashed potatoes and lingonberries.",
+    "fr": "Petites boulettes de viande suédoises, souvent avec sauce à la crème, purée de pommes de terre et airelles rouges.",
+    "pt": "Pequenas almôndegas suecas, muitas vezes com molho de natas, puré de batata e arandos vermelhos.",
+    "es": "Pequeñas albóndigas suecas, a menudo con salsa de nata, puré de patata y arándanos rojos.",
+    "de": "Kleine schwedische Fleischbällchen, oft mit Sahnesauce, Kartoffelpüree und Preiselbeeren."
+  },
+  "smorrebrod": {
+    "en": "Danish open sandwich, often on rye bread with toppings and garnish.",
+    "fr": "Tartine danoise, souvent sur pain de seigle avec garniture et décoration.",
+    "pt": "Sanduíche aberta dinamarquesa, muitas vezes em pão de centeio com recheios e guarnições.",
+    "es": "Bocadillo abierto danés, a menudo sobre pan de centeno con ingredientes y guarniciones.",
+    "de": "Offenes dänisches belegtes Brot, oft auf Roggenbrot mit Belag und Garnitur."
+  },
+  "lohikeitto": {
+    "en": "Finnish salmon soup with potatoes, dill and often cream.",
+    "fr": "Soupe finlandaise au saumon, aux pommes de terre, à l’aneth et souvent à la crème.",
+    "pt": "Sopa finlandesa de salmão com batatas, endro e frequentemente natas.",
+    "es": "Sopa finlandesa de salmón con patatas, eneldo y a menudo nata.",
+    "de": "Finnische Lachssuppe mit Kartoffeln, Dill und oft Sahne."
+  },
+  "plokkfiskur": {
+    "en": "Icelandic dish of boiled white fish, potatoes and a light-coloured sauce.",
+    "fr": "Plat islandais de poisson blanc cuit à l’eau, de pommes de terre et de sauce blanche.",
+    "pt": "Prato islandês de peixe branco cozido, batatas e molho claro.",
+    "es": "Plato islandés de pescado blanco cocido, patatas y salsa clara.",
+    "de": "Isländisches Gericht aus gekochtem Weißfisch, Kartoffeln und heller Sauce."
+  },
+  "boeuf-bourguignon": {
+    "en": "French beef stew with red wine, mushrooms and onions.",
+    "fr": "Ragoût français de bœuf au vin rouge, aux champignons et aux oignons.",
+    "pt": "Guisado francês de carne de vaca com vinho tinto, cogumelos e cebolas.",
+    "es": "Guiso francés de carne de vacuno con vino tinto, setas y cebollas.",
+    "de": "Französischer Rindfleischeintopf mit Rotwein, Pilzen und Zwiebeln."
+  },
+  "coq-au-vin": {
+    "en": "Chicken braised in wine with bacon, onions and mushrooms.",
+    "fr": "Poulet braisé au vin avec lardons, oignons et champignons.",
+    "pt": "Frango estufado em vinho com bacon, cebolas e cogumelos.",
+    "es": "Pollo braseado en vino con beicon, cebollas y setas.",
+    "de": "In Wein geschmortes Hähnchen mit Speck, Zwiebeln und Pilzen."
+  },
+  "ratatouille": {
+    "en": "French vegetable stew with aubergine, courgette, peppers and tomato.",
+    "fr": "Ragoût de légumes français aux aubergines, courgettes, poivrons et tomates.",
+    "pt": "Guisado francês de legumes com beringela, curgete, pimento e tomate.",
+    "es": "Guiso francés de verduras con berenjena, calabacín, pimiento y tomate.",
+    "de": "Französisches Gemüsegericht mit Aubergine, Zucchini, Paprika und Tomate."
+  },
+  "bouillabaisse": {
+    "en": "Provençal fish soup with aromatic broth, saffron and various kinds of fish.",
+    "fr": "Soupe de poisson provençale au bouillon aromatique, au safran et à diverses espèces de poisson.",
+    "pt": "Sopa de peixe provençal com caldo aromático, açafrão e vários tipos de peixe.",
+    "es": "Sopa de pescado provenzal con caldo aromático, azafrán y distintos pescados.",
+    "de": "Provenzalische Fischsuppe mit aromatischer Brühe, Safran und verschiedenen Fischarten."
+  },
+  "quiche-lorraine": {
+    "en": "French savoury tart with bacon and an egg-and-cream filling.",
+    "fr": "Tarte salée française aux lardons, garnie d’un appareil aux œufs et à la crème.",
+    "pt": "Tarte salgada francesa com bacon e recheio de ovos e natas.",
+    "es": "Tarta salada francesa con beicon y relleno de huevo y nata.",
+    "de": "Französische herzhafte Tarte mit Speck und Eier-Sahne-Füllung."
+  },
+  "croque-monsieur": {
+    "en": "French hot cheese and ham sandwich, often gratinated with béchamel.",
+    "fr": "Sandwich chaud français au fromage et au jambon, souvent gratiné à la béchamel.",
+    "pt": "Sanduíche quente francesa de queijo e fiambre, muitas vezes gratinada com béchamel.",
+    "es": "Sándwich caliente francés de queso y jamón, a menudo gratinado con bechamel.",
+    "de": "Französisches warmes Käse-Schinken-Sandwich, oft mit Béchamel überbacken."
+  },
+  "paella-valenciana": {
+    "en": "Rice dish with chicken, rabbit, beans and saffron.",
+    "fr": "Plat de riz au poulet, au lapin, aux haricots et au safran.",
+    "pt": "Prato de arroz com frango, coelho, feijão e açafrão.",
+    "es": "Plato de arroz con pollo, conejo, judías y azafrán.",
+    "de": "Reisgericht mit Hähnchen, Kaninchen, Bohnen und Safran."
+  },
+  "patatas-bravas": {
+    "en": "Crisp potato pieces with spiced bravas sauce.",
+    "fr": "Morceaux de pommes de terre croustillants avec sauce brava épicée.",
+    "pt": "Pedaços crocantes de batata com molho bravas condimentado.",
+    "es": "Trozos de patata crujientes con salsa brava especiada.",
+    "de": "Knusprige Kartoffelstücke mit würziger Bravas-Sauce."
+  },
+  "tortilla-espanola": {
+    "en": "Thick Spanish omelette with potatoes and optional onion.",
+    "fr": "Omelette espagnole épaisse aux pommes de terre, avec ou sans oignon.",
+    "pt": "Omeleta espanhola espessa com batatas e, opcionalmente, cebola.",
+    "es": "Tortilla española gruesa con patatas y, opcionalmente, cebolla.",
+    "de": "Dickes spanisches Omelett mit Kartoffeln und gegebenenfalls Zwiebeln."
+  },
+  "gazpacho": {
+    "en": "Cold Spanish vegetable soup with tomato, cucumber and peppers.",
+    "fr": "Soupe froide espagnole de légumes à la tomate, au concombre et au poivron.",
+    "pt": "Sopa fria espanhola de legumes com tomate, pepino e pimento.",
+    "es": "Sopa fría española de verduras con tomate, pepino y pimiento.",
+    "de": "Kalte spanische Gemüsesuppe mit Tomate, Gurke und Paprika."
+  },
+  "gambas-al-ajillo": {
+    "en": "Prawns fried in olive oil with garlic and chilli.",
+    "fr": "Crevettes poêlées à l’huile d’olive, à l’ail et au piment.",
+    "pt": "Camarões salteados em azeite com alho e malagueta.",
+    "es": "Gambas salteadas en aceite de oliva con ajo y chile.",
+    "de": "In Olivenöl gebratene Garnelen mit Knoblauch und Chili."
+  },
+  "croquetas": {
+    "en": "Breaded croquettes with a creamy béchamel filling, often with ham.",
+    "fr": "Croquettes panées à la béchamel crémeuse, souvent au jambon.",
+    "pt": "Croquetes panados com recheio cremoso de béchamel, muitas vezes com fiambre.",
+    "es": "Croquetas empanadas con relleno cremoso de bechamel, a menudo con jamón.",
+    "de": "Panierte Kroketten mit cremiger Béchamelfüllung, oft mit Schinken."
+  },
+  "moussaka": {
+    "en": "Oven-baked dish of aubergine, spiced meat sauce and béchamel.",
+    "fr": "Plat au four d’aubergines, de sauce à la viande épicée et de béchamel.",
+    "pt": "Prato de forno com beringela, molho de carne condimentado e béchamel.",
+    "es": "Plato al horno con berenjena, salsa de carne especiada y bechamel.",
+    "de": "Ofengericht mit Aubergine, gewürzter Fleischsauce und Béchamel."
+  },
+  "souvlaki": {
+    "en": "Greek grilled meat skewers with lemon and oregano.",
+    "fr": "Brochettes grecques de viande grillée au citron et à l’origan.",
+    "pt": "Espetadas gregas de carne grelhada com limão e orégãos.",
+    "es": "Brochetas griegas de carne a la parrilla con limón y orégano.",
+    "de": "Griechische Fleischspieße vom Grill mit Zitrone und Oregano."
+  },
+  "gyros": {
+    "en": "Greek meat dish of thin slices from a rotating vertical spit.",
+    "fr": "Plat grec de fines tranches de viande découpées sur une broche verticale rotative.",
+    "pt": "Prato grego de fatias finas de carne de um espeto vertical rotativo.",
+    "es": "Plato griego de láminas finas de carne de un asador vertical giratorio.",
+    "de": "Griechisches Fleischgericht mit dünnen Scheiben vom rotierenden Vertikalspieß."
+  },
+  "spanakopita": {
+    "en": "Greek filo pastry pie with spinach, feta and herbs.",
+    "fr": "Tourte grecque en pâte filo aux épinards, à la feta et aux herbes.",
+    "pt": "Tarte grega de massa filo com espinafres, feta e ervas.",
+    "es": "Pastel griego de masa filo con espinacas, feta y hierbas.",
+    "de": "Griechische Filoteigpastete mit Spinat, Feta und Kräutern."
+  },
+  "tzatziki": {
+    "en": "Cold Greek yoghurt dip with cucumber and garlic.",
+    "fr": "Sauce grecque froide au yaourt, au concombre et à l’ail.",
+    "pt": "Molho frio grego de iogurte com pepino e alho.",
+    "es": "Salsa fría griega de yogur con pepino y ajo.",
+    "de": "Kalter griechischer Joghurtdip mit Gurke und Knoblauch."
+  },
+  "pastitsio": {
+    "en": "Greek baked pasta with spiced meat sauce and béchamel.",
+    "fr": "Gratin grec de pâtes à la sauce de viande épicée et à la béchamel.",
+    "pt": "Massa grega de forno com molho de carne condimentado e béchamel.",
+    "es": "Pasta griega al horno con salsa de carne especiada y bechamel.",
+    "de": "Griechischer Nudelauflauf mit gewürzter Fleischsauce und Béchamel."
+  },
+  "nasi-goreng": {
+    "en": "Indonesian fried rice with sweet soy sauce, spices and often a fried egg.",
+    "fr": "Riz sauté indonésien à la sauce soja sucrée, aux épices et souvent à l’œuf au plat.",
+    "pt": "Arroz frito indonésio com molho de soja doce, especiarias e muitas vezes ovo estrelado.",
+    "es": "Arroz frito indonesio con salsa de soja dulce, especias y a menudo huevo frito.",
+    "de": "Indonesischer gebratener Reis mit süßer Sojasauce, Gewürzen und oft Spiegelei."
+  },
+  "mie-goreng": {
+    "en": "Fried wheat noodles with vegetables, egg and spiced sauce.",
+    "fr": "Nouilles de blé sautées aux légumes, à l’œuf et à la sauce épicée.",
+    "pt": "Noodles de trigo salteados com legumes, ovo e molho condimentado.",
+    "es": "Fideos de trigo salteados con verduras, huevo y salsa especiada.",
+    "de": "Gebratene Weizennudeln mit Gemüse, Ei und würziger Sauce."
+  },
+  "rendang": {
+    "en": "Meat slow-cooked with coconut milk and spices into a concentrated, dark dish.",
+    "fr": "Viande longuement mijotée au lait de coco et aux épices jusqu’à obtenir un plat foncé et concentré.",
+    "pt": "Carne cozinhada lentamente com leite de coco e especiarias até obter um prato escuro e concentrado.",
+    "es": "Carne cocinada lentamente con leche de coco y especias hasta obtener un plato oscuro y concentrado.",
+    "de": "Mit Kokosmilch und Gewürzen langsam gegartes Fleisch, bis ein dunkles, konzentriertes Gericht entsteht."
+  },
+  "satay": {
+    "en": "Small grilled meat skewers, often served with a spiced sauce.",
+    "fr": "Petites brochettes de viande grillées, souvent accompagnées d’une sauce épicée.",
+    "pt": "Pequenas espetadas de carne grelhada, muitas vezes servidas com molho condimentado.",
+    "es": "Pequeñas brochetas de carne a la parrilla, a menudo servidas con salsa especiada.",
+    "de": "Kleine gegrillte Fleischspieße, oft mit würziger Sauce serviert."
+  },
+  "nasi-lemak": {
+    "en": "Rice cooked in coconut milk, served with sambal, egg, cucumber, peanuts and often dried anchovies.",
+    "fr": "Riz cuit au lait de coco, servi avec sambal, œuf, concombre, cacahuètes et souvent anchois séchés.",
+    "pt": "Arroz cozido em leite de coco, servido com sambal, ovo, pepino, amendoins e frequentemente anchovas secas.",
+    "es": "Arroz cocido en leche de coco, servido con sambal, huevo, pepino, cacahuetes y a menudo anchoas secas.",
+    "de": "In Kokosmilch gekochter Reis, serviert mit Sambal, Ei, Gurke, Erdnüssen und oft getrockneten Sardellen."
+  },
+  "laksa": {
+    "en": "Noodle soup with aromatic broth, in some versions made with coconut milk.",
+    "fr": "Soupe de nouilles au bouillon aromatique, au lait de coco dans certaines variantes.",
+    "pt": "Sopa de noodles com caldo aromático, em algumas variantes com leite de coco.",
+    "es": "Sopa de fideos con caldo aromático, en algunas variantes con leche de coco.",
+    "de": "Nudelsuppe mit aromatischer Brühe, in manchen Varianten mit Kokosmilch."
+  },
+  "pork-adobo": {
+    "en": "Filipino meat dish with vinegar, garlic, pepper and often soy sauce.",
+    "fr": "Plat de viande philippin au vinaigre, à l’ail, au poivre et souvent à la sauce soja.",
+    "pt": "Prato filipino de carne com vinagre, alho, pimenta e frequentemente molho de soja.",
+    "es": "Plato filipino de carne con vinagre, ajo, pimienta y a menudo salsa de soja.",
+    "de": "Philippinisches Fleischgericht mit Essig, Knoblauch, Pfeffer und oft Sojasauce."
+  },
+  "sinigang": {
+    "en": "Sour Filipino soup with meat or seafood and vegetables.",
+    "fr": "Soupe philippine acidulée à la viande ou aux fruits de mer et aux légumes.",
+    "pt": "Sopa filipina ácida com carne ou marisco e legumes.",
+    "es": "Sopa filipina ácida con carne o marisco y verduras.",
+    "de": "Säuerliche philippinische Suppe mit Fleisch oder Meeresfrüchten und Gemüse."
+  },
+  "sisig": {
+    "en": "Finely chopped fried or grilled meat with onion, chilli and citrus.",
+    "fr": "Viande finement hachée, poêlée ou grillée, à l’oignon, au piment et aux agrumes.",
+    "pt": "Carne finamente picada, frita ou grelhada, com cebola, malagueta e citrinos.",
+    "es": "Carne finamente picada, frita o a la parrilla, con cebolla, chile y cítricos.",
+    "de": "Fein gehacktes, gebratenes oder gegrilltes Fleisch mit Zwiebeln, Chili und Zitrusfrüchten."
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, string>>>;
