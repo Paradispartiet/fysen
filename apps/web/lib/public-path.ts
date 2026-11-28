@@ -64,6 +64,12 @@ export const nordicCities = [
   { name: "Reykjavík", country: "IS", currency: "ISK" },
 ] as const;
 
+export function canonicalCity(value: string | null | undefined): string {
+  return nordicCities.find(({ name }) => name.toLocaleLowerCase("nb-NO") === value?.trim().toLocaleLowerCase("nb-NO"))?.name ?? "Oslo";
+}
+
 export function citySwitchHref(city: string, query = ""): string {
-  return query.trim().length >= 2 ? dishSearchHref(query, city) : dishBrowseHref(city);
+  const params = new URLSearchParams({ city: canonicalCity(city) });
+  if (query.trim().length >= 2) params.set("q", query.trim().slice(0, 80));
+  return `${withPublicBasePath("/")}?\${params.toString()}`;
 }

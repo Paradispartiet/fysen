@@ -7,7 +7,7 @@ import { fileURLToPath, URL } from "node:url";
 const web = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = (file) => readFileSync(path.join(web, file), "utf8");
 
-const home = read("app/page.tsx");
+const home = read("components/home-city-content.tsx");
 const explorer = read("components/cuisine-explorer.tsx");
 const gallery = read("components/dish-photo-gallery.tsx");
 const editorialImage = read("components/dish-editorial-image.tsx");
@@ -18,7 +18,7 @@ const layout = read("app/layout.tsx");
 const manifest = JSON.parse(read("public/dish-images/manifest.json"));
 
 test("home page keeps dish search as the primary action", () => {
-  assert.ok(home.indexOf("<DishSearch />") < home.indexOf("<CuisineExplorer"));
+  assert.ok(home.indexOf("<DishSearch ") < home.indexOf("<CuisineExplorer"));
   assert.ok(home.includes("Hva har du lyst på?"));
   assert.match(css, /\.homePage \.homeHero/u);
 });
@@ -28,7 +28,7 @@ test("Utforsk matretter is a closed-by-default accordion before the optional pho
   assert.match(explorer, /<summary className="cuisineBrowsePreview">/u);
   assert.match(explorer, /Utforsk matretter/u);
   assert.doesNotMatch(explorer, /<details className="cuisineBrowseDisclosure"[^>]*\sopen(?:\s|>)/u);
-  assert.ok(explorer.indexOf('className="cuisineBrowseList"') < explorer.indexOf("<DishPhotoGallery />"));
+  assert.ok(explorer.indexOf('className="cuisineBrowseList"') < explorer.indexOf("<DishPhotoGallery "));
   assert.match(explorer, /<details className="cuisineBrowseDisclosure"/u);
   assert.match(explorer, /<summary className="cuisineBrowsePreview"/u);
   assert.match(explorer, /homeCuisines\.map/u);
@@ -112,12 +112,12 @@ test("Matlyst, menu search and knowledge cards display approved originals inline
   assert.match(css, /object-fit: contain/u);
   assert.ok(layout.indexOf("home-discovery-refresh.css") > layout.indexOf("dish-photos.css"));
   assert.match(css, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/u);
-  assert.match(gallery, /<a href=\{dishSearchHref\(dish\.query\)\} className="dishPhotoSearch">/u);
+  assert.match(gallery, /<a href=\{dishSearchHref\(dish\.query, city\)\} className="dishPhotoSearch">/u);
 });
 
 test("disclosure uses semantic HTML with no Javascript dependency or fake availability", () => {
   assert.match(gallery, /Illustrasjoner og foto av rettetyper, ikke restaurantbilder/u);
-  assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
+  assert.match(gallery, /dishSearchHref\(dish\.query, city\)/u);
   assert.doesNotMatch(gallery, /Tilgjengelig nå|Åpent nå/u);
 });
 

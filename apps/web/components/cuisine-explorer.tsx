@@ -293,10 +293,12 @@ function RestaurantPreview({ restaurants, dishLabel, location }: {
 
 function DiscoveryDishList({
   coverage,
+  city,
   onOpenKnowledge,
   location,
 }: {
   readonly coverage: readonly DishCoverage[];
+  readonly city: string;
   readonly location: Coordinates | null;
   readonly onOpenKnowledge: (dishId: string) => void;
 }) {
@@ -324,7 +326,7 @@ function DiscoveryDishList({
                   Lær om retten <span aria-hidden="true">↗</span>
                 </button>
               ) : null}
-              <a href={dishSearchHref(dish.query)}>
+              <a href={dishSearchHref(dish.query, city)}>
                 {restaurantCount > 0 ? "Se menytreff" : "Søk etter retten"} <span aria-hidden="true">→</span>
               </a>
             </div>
@@ -341,9 +343,11 @@ function DiscoveryDishList({
 export function CuisineExplorer({
   browseData,
   archiveCoverage,
+  city = "Oslo",
 }: {
   readonly browseData: DishBrowseResponse | null;
   readonly archiveCoverage: ArchivedMatlystCoverage | null;
+  readonly city?: string;
 }) {
   const [previewBrowseData, setPreviewBrowseData] = useState<DishBrowseResponse | null>(null);
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
@@ -359,10 +363,10 @@ export function CuisineExplorer({
   const liveDishes = effectiveBrowseData?.dishes ?? [];
 
   useEffect(() => {
-    if (browseData || archiveCoverage) return;
+    if (browseData || (city === "Oslo" && archiveCoverage)) return;
 
     const controller = new AbortController();
-    void browseDishesClient("Oslo", { signal: controller.signal })
+    void browseDishesClient(city, { signal: controller.signal })
       .then((data) => {
         setPreviewBrowseData(data);
       })
@@ -373,7 +377,7 @@ export function CuisineExplorer({
       });
 
     return () => controller.abort();
-  }, [browseData, archiveCoverage]);
+  }, [browseData, archiveCoverage, city]);
 
   const selectedArea = useMemo<CuisineArea | null>(() => {
     if (!selectedCuisine) return null;
@@ -480,8 +484,8 @@ export function CuisineExplorer({
 
   return (
     <section className="cuisineExplorer" aria-label="Matlyst">
-      <RecentDishes dishes={effectiveBrowseData?.recentDishes ?? []} />
-      <PopularDishes dishes={effectiveBrowseData?.popularDishes ?? []} />
+      <RecentDishes city={city} dishes={effectiveBrowseData?.recentDishes ?? []} />
+      <PopularDishes city={city} dishes={effectiveBrowseData?.popularDishes ?? []} />
 
       <details className="cuisineBrowseDisclosure" aria-labelledby="cuisine-browse-title">
         <summary className="cuisineBrowsePreview">
@@ -513,7 +517,7 @@ export function CuisineExplorer({
         </div>
       </details>
 
-      <DishPhotoGallery />
+      <DishPhotoGallery city={city} />
 
       <dialog
         ref={dialogRef}
@@ -621,7 +625,7 @@ export function CuisineExplorer({
                   <p>{selectedFoodType?.name ?? selectedArea?.name ?? allAreasLabel}</p>
                   <h3>Retter og hvor du kan få dem</h3>
                 </div>
-                <span>{selectedDishCoverage.length} rettforslag · Oslo</span>
+                <span>{selectedDishCoverage.length} rettforslag · {city}</span>
               </div>
 
               <div className="cuisineExploreLocation">
@@ -631,6 +635,7 @@ export function CuisineExplorer({
                 <span role="status">{location ? "Sortert etter luftlinje der posisjon er kjent." : locationStatus || "Posisjon brukes bare i denne nettleseren."}</span>
               </div>
               <DiscoveryDishList
+                city={city}
                 location={location}
                 coverage={showAllDishes ? selectedDishCoverage : selectedDishCoverage.slice(0, 12)}
                 onOpenKnowledge={openFoodKnowledge}

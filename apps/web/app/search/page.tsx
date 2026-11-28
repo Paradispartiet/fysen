@@ -218,7 +218,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 </>
               ) : null}
 
-              <DishKnowledgeNote query={q} />
+              <DishKnowledgeNote city={city} query={q} />
 
               {archive && (archiveMatches.length > 0 || !eligibleLive.length) ? (
                 <ArchivedMenuResults results={archiveMatches} query={q} city={city} />

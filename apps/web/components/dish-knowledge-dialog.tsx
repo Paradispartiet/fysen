@@ -28,10 +28,12 @@ function primaryRestaurantResults(results: readonly DishSearchResult[], limit: n
 
 export function DishKnowledgeDialog({
   dish,
+  city = "Oslo",
   onClosed,
   onOpenDish,
 }: {
   dish: FoodKnowledgeDish | null;
+  city?: string;
   onClosed: () => void;
   onOpenDish: (dish: FoodKnowledgeDish) => void;
 }) {
@@ -58,7 +60,7 @@ export function DishKnowledgeDialog({
 
     const controller = new AbortController();
     setRestaurantLoading(true);
-    void searchDishesClient(dish.query, { limit: 10, signal: controller.signal })
+    void searchDishesClient(dish.query, { city, limit: 10, signal: controller.signal })
       .then((response) => {
         if (!controller.signal.aborted) {
           setRestaurantResults(primaryRestaurantResults(response.results, 4));
@@ -72,7 +74,7 @@ export function DishKnowledgeDialog({
       });
 
     return () => controller.abort();
-  }, [dish]);
+  }, [dish, city]);
 
   function close(): void {
     const dialog = dialogRef.current;
@@ -227,7 +229,7 @@ export function DishKnowledgeDialog({
                       {relatedDish.name}
                     </button>
                   ) : (
-                    <a href={dishSearchHref(relatedDish.query)} key={relatedDish.id}>{relatedDish.name}</a>
+                    <a href={dishSearchHref(relatedDish.query, city)} key={relatedDish.id}>{relatedDish.name}</a>
                   );
                 })}
               </div>
@@ -238,20 +240,20 @@ export function DishKnowledgeDialog({
             <div className="dishKnowledgeRestaurantsHeading">
               <div>
                 <p className="dishKnowledgeMiniEyebrow">Restauranter</p>
-                <h3 id="dish-knowledge-restaurants-title">Hvor får du {dish.name.toLocaleLowerCase("nb-NO")} i Oslo?</h3>
+                <h3 id="dish-knowledge-restaurants-title">Hvor får du {dish.name.toLocaleLowerCase("nb-NO")} i {city}?</h3>
               </div>
-              <a href={dishSearchHref(dish.query)}>Se alle treff <span aria-hidden="true">→</span></a>
+              <a href={dishSearchHref(dish.query, city)}>Se alle treff <span aria-hidden="true">→</span></a>
             </div>
 
             {restaurantLoading ? <p className="dishKnowledgeRestaurantStatus">Henter restauranter …</p> : null}
             {!restaurantLoading && restaurantError ? <p className="dishKnowledgeRestaurantStatus">{restaurantError}</p> : null}
             {!restaurantLoading && !restaurantError && restaurantResults.length === 0 ? (
-              <p className="dishKnowledgeRestaurantStatus">Ingen treff på denne retten i Oslo akkurat nå.</p>
+              <p className="dishKnowledgeRestaurantStatus">Ingen treff på denne retten i {city} akkurat nå.</p>
             ) : null}
             {!restaurantLoading && !restaurantError && restaurantResults.length > 0 ? (
               <div className="dishKnowledgeRestaurantGrid">
                 {restaurantResults.map((result) => (
-                  <a href={dishSearchHref(dish.query)} key={result.restaurant.id}>
+                  <a href={dishSearchHref(dish.query, city)} key={result.restaurant.id}>
                     <strong>{result.restaurant.name}</strong>
                     <span>{result.dish.name}</span>
                     <small>
@@ -284,7 +286,7 @@ export function DishKnowledgeDialog({
             <small>
               Generell matkunnskap og hjemmeoppskrift · ikke en påstand om ingrediensene hos en bestemt restaurant.
             </small>
-            <a href={dishSearchHref(dish.query)}>Finn {dish.name.toLocaleLowerCase("nb-NO")} i Oslo <span aria-hidden="true">→</span></a>
+            <a href={dishSearchHref(dish.query, city)}>Finn {dish.name.toLocaleLowerCase("nb-NO")} i {city} <span aria-hidden="true">→</span></a>
           </footer>
         </div>
       ) : null}

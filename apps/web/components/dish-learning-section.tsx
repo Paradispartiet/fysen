@@ -17,7 +17,7 @@ function learningHash(dishId: string): string {
   return `${learnHashPrefix}${encodeURIComponent(dishId)}`;
 }
 
-export function DishLearningSection() {
+export function DishLearningSection({ city = "Oslo" }: { city?: string } = {}) {
   const [selectedDish, setSelectedDish] = useState<DishLearningDetail | null>(null);
   const [showAll, setShowAll] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -98,7 +98,7 @@ export function DishLearningSection() {
               <DishEditorialImage dishId={dish.id} query={dish.query} showCredit={false} />
             </div>
             <p>{dish.summary}</p>
-            <a href={dishSearchHref(dish.query)} aria-label={`Se menytreff for ${dish.name}`}>Se menytreff <span aria-hidden="true">→</span></a>
+            <a href={dishSearchHref(dish.query, city)} aria-label={`Se menytreff for ${dish.name}`}>Se menytreff <span aria-hidden="true">→</span></a>
           </article>
         ))}
       </div>
@@ -113,6 +113,7 @@ export function DishLearningSection() {
       ) : null}
 
       <DishKnowledgeDialog
+        city={city}
         dish={selectedDish}
         onClosed={restoreTriggerFocus}
         onOpenDish={openRelatedDish}

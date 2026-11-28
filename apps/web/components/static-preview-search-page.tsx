@@ -190,7 +190,7 @@ export function StaticPreviewSearchPage() {
                 <p className="resultsCount">{loading ? "Søker etter retter …" : countLabel}</p>
               </div>
 
-              <DishKnowledgeNote query={q} />
+              <DishKnowledgeNote city={city} query={q} />
 
               {loading ? (
                 <div className="loadingResults" aria-label="Søker etter menytreff">

@@ -4,7 +4,7 @@ import { dishSearchHref } from "../lib/public-path";
 import { FoodIllustration } from "./food-illustration";
 import { illustrationForDishName } from "./food-illustration-match";
 
-export function PopularDishes({ dishes }: { readonly dishes: readonly PopularDishItem[] }) {
+export function PopularDishes({ dishes, city = "Oslo" }: { readonly dishes: readonly PopularDishItem[]; readonly city?: string }) {
   if (dishes.length === 0) return null;
 
   return (
@@ -12,12 +12,12 @@ export function PopularDishes({ dishes }: { readonly dishes: readonly PopularDis
       <div className="matlystFeaturedHeading">
         <div>
           <h3 id="matlyst-popular-title">Mest søkt</h3>
-          <p>Rettene folk har søkt mest etter i Oslo de siste 30 dagene.</p>
+          <p>Rettene folk har søkt mest etter i {city} de siste 30 dagene.</p>
         </div>
       </div>
       <div className="matlystPopularGrid">
         {dishes.map((dish, index) => (
-          <a className="matlystPopularCard" href={dishSearchHref(dish.query)} key={dish.id}>
+          <a className="matlystPopularCard" href={dishSearchHref(dish.query, city)} key={dish.id}>
             <span className="matlystPopularRank">{index + 1}</span>
             {illustrationForDishName(dish.name) ? (
               <FoodIllustration
