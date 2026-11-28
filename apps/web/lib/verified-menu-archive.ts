@@ -474,3 +474,31 @@ export function archivedRestaurantMenu(archive: PublicMenuArchive, slug: string)
   }
   return items;
 }
+
+/** Build-time static map index from the same integrity-checked, quarantined archive.
+ * No location, account data, or inferred menu entries are included.
+ */
+export function archivedOsloMapIndex(archive: PublicMenuArchive, catalogSlugs: ReadonlySet<string>) {
+  const selected = reconcileMenuVersions(archive, []).archive;
+  const bySource = new Map<number, { slug: string; source: string; date: string; items: [string, string, number | null, string, number | null][] }>();
+  const seen = new Set<string>();
+  for (const row of selected.items) {
+    const source = selected.sources[row[0]];
+    const restaurant = source && selected.restaurants[source[0]];
+    if (!restaurant || !source || selected.quarantinedSourceIndices.has(row[0]) ||
+        selected.quarantinedSlugs.has(restaurant[1]) || archiveCity(restaurant[3]) !== "oslo" ||
+        !catalogSlugs.has(restaurant[1]) || itemCurrency(selected.version ?? 1, restaurant[3], row) !== "NOK") continue;
+    const url = new URL(source[1]);
+    if (!["https:", "http:"].includes(url.protocol) || url.username || url.password) continue;
+    const key = JSON.stringify([row[0], row[1], row[3], row[4], row[5]]);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    let group = bySource.get(row[0]);
+    if (!group) {
+      group = { slug: restaurant[1], source: source[1], date: source[2], items: [] };
+      bySource.set(row[0], group);
+    }
+    group.items.push([row[1], normalizeArchiveQuery(row[2]), row[3], row[4], row[5]]);
+  }
+  return { version: 1, source: "verified-menu-archive", realtime: false, archiveDate: selected.archiveDate, groups: [...bySource.values()] };
+}
