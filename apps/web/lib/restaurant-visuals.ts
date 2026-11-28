@@ -45,6 +45,16 @@ const peppesEnsjo = {
   licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
 } as const;
 
+const peppesStortingsgata = {
+  logo: null,
+  exterior: "/restaurants/peppes-stortingsgata/exterior.jpg",
+  interior: null,
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Peppes_Pizza_Stortingsgata_(2017-01-08).jpg",
+  photoCredit: "Kjetil Ree",
+  photoDate: "2017-01-08",
+  licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+} as const;
+
 function normalized(value: string): string {
   return value.normalize("NFKC").toLocaleLowerCase("nb-NO").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 }
@@ -52,6 +62,8 @@ function normalized(value: string): string {
 /** Match the branch and street address, independent of archive/live IDs. */
 export function restaurantVisuals(restaurant: RestaurantIdentity) {
   const address = normalized(restaurant.address);
+  if (normalized(restaurant.name) === "peppes pizza stortingsgata" &&
+      /^stortingsgata 4(?: |$)/u.test(address)) return peppesStortingsgata;
   if (normalized(restaurant.name) === "peppes pizza ensjø" &&
       /^rolf hofmos gate 34(?: |$)/u.test(address)) return peppesEnsjo;
   if (["egon ullevål", "egon ullevaal"].includes(normalized(restaurant.name)) &&
