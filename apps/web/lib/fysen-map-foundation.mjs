@@ -55,3 +55,21 @@ export function fysenBaseStyle(style) {
   });
   return { ...style, name: "Fysen Oslo", layers };
 }
+
+export function distanceMeters(a, b) {
+  const valid = p => Array.isArray(p) && p.length === 2
+    && Number.isFinite(p[0]) && Math.abs(p[0]) <= 180
+    && Number.isFinite(p[1]) && Math.abs(p[1]) <= 90;
+  if (!valid(a) || !valid(b)) return Infinity;
+  const rad = n => n * Math.PI / 180;
+  const dLat = rad(b[1] - a[1]), dLon = rad(b[0] - a[0]);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a[1])) * Math.cos(rad(b[1])) * Math.sin(dLon / 2) ** 2;
+  return 6371000 * 2 * Math.asin(Math.sqrt(Math.min(1, Math.max(0, h))));
+}
+
+export function nearestMapFeatures(features, location, limit = 4) {
+  return features.map(feature => ({ feature, distance: distanceMeters(location, feature.geometry.coordinates) }))
+    .filter(row => Number.isFinite(row.distance))
+    .sort((a, b) => a.distance - b.distance || a.feature.id.localeCompare(b.feature.id))
+    .slice(0, Math.max(0, limit));
+}
