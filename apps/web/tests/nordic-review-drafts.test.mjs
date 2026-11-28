@@ -39,14 +39,10 @@ test("Faroese browse UI retains keys and placeholders",()=>check(browseMessages.
 
 test("Faroese visual UI retains keys and placeholders",()=>check(visualMessages.nb,draftFaroeseVisuals));
 
-test("partial Greenlandic and Northern Sami search drafts only use existing keys",()=>{
+test("Arctic results drafts cover all source keys and placeholders",()=>{
  for(const locale of ["kl","se"]){
   assert.equal(isPreviewLocale(locale),false);
-  for(const [key,value] of Object.entries(draftArcticResults[locale])){
-   assert.ok(Object.hasOwn(resultMessages.nb,key));
-   assert.ok(value.trim());
-   assert.deepEqual((value.match(/\{\w+\}/gu)??[]).sort(),(resultMessages.nb[key].match(/\{\w+\}/gu)??[]).sort(),key);
-  }
+  check(resultMessages.nb,draftArcticResults[locale]);
  }
 });
 
@@ -73,29 +69,18 @@ test("Faroese summary drafts cover all existing encyclopedia summaries",()=>{
 });
 
 
-test("partial Greenlandic and Northern Sami food knowledge drafts retain keys and placeholders",()=>{
+test("Arctic knowledge drafts cover all source keys and placeholders",()=>{
  for(const locale of ["kl","se"]){
   assert.equal(isPreviewLocale(locale),false);
-  assert.equal(Object.keys(draftArcticKnowledge[locale]).length,25);
-  for(const [key,value] of Object.entries(draftArcticKnowledge[locale])){
-   assert.ok(Object.hasOwn(knowledgeMessages.nb,key));
-   assert.ok(value.trim());
-   assert.deepEqual((value.match(/\{\w+\}/gu)??[]).sort(),(knowledgeMessages.nb[key].match(/\{\w+\}/gu)??[]).sort(),key);
-  }
-  for(const key of ["intro","loading","error","noMatches","picture","notEvidence"]) assert.equal(Object.hasOwn(draftArcticKnowledge[locale],key),false);
+  check(knowledgeMessages.nb,draftArcticKnowledge[locale]);
  }
 });
 
 
-test("draftArcticBrowse preserves source keys and placeholders",()=>{
+test("Arctic browse drafts cover all source keys and placeholders",()=>{
  for(const locale of ["kl","se"]){
   assert.equal(isPreviewLocale(locale),false);
-  assert.equal(Object.keys(draftArcticBrowse[locale]).length,34);
-  for(const [key,value] of Object.entries(draftArcticBrowse[locale])){
-   assert.ok(Object.hasOwn(browseMessages.nb,key));
-   assert.ok(value.trim());
-   assert.deepEqual((value.match(/\{\w+\}/gu)??[]).sort(),(browseMessages.nb[key].match(/\{\w+\}/gu)??[]).sort(),key);
-  }
+  check(browseMessages.nb,draftArcticBrowse[locale]);
  }
 });
 
@@ -113,15 +98,10 @@ test("draftArcticPages preserves source keys and placeholders",()=>{
 });
 
 
-test("draftArcticVisuals preserves source keys and placeholders",()=>{
+test("Arctic visuals drafts cover all source keys and placeholders",()=>{
  for(const locale of ["kl","se"]){
   assert.equal(isPreviewLocale(locale),false);
-  assert.equal(Object.keys(draftArcticVisuals[locale]).length,6);
-  for(const [key,value] of Object.entries(draftArcticVisuals[locale])){
-   assert.ok(Object.hasOwn(visualMessages.nb,key));
-   assert.ok(value.trim());
-   assert.deepEqual((value.match(/\{\w+\}/gu)??[]).sort(),(visualMessages.nb[key].match(/\{\w+\}/gu)??[]).sort(),key);
-  }
+  check(visualMessages.nb,draftArcticVisuals[locale]);
  }
 });
 
