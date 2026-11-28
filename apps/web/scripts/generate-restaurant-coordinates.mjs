@@ -29,7 +29,7 @@ export function registeredMenuSource(manifest) {
   } catch { return null; }
 }
 
-export function collectCoordinateRows(directory = catalogDir) {
+export function collectCoordinateRows(directory = catalogDir, includeMenuSources = false) {
   const files = readdirSync(directory).filter(name => name.endsWith(".json")).sort();
   if (!files.length) throw new Error("Fysen restaurant catalog is empty");
   const rows = [];
@@ -43,11 +43,13 @@ export function collectCoordinateRows(directory = catalogDir) {
     if (seen.has(row[0])) throw new Error("Duplicate restaurant coordinate identity: " + row[0]);
     seen.add(row[0]);
     rows.push(row);
-    const menuSource = registeredMenuSource(manifest);
-    if (menuSource) menuSources.push(menuSource);
+    if (includeMenuSources) {
+      const menuSource = registeredMenuSource(manifest);
+      if (menuSource) menuSources.push(menuSource);
+    }
   }
   rows.sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
-  return { rows, catalogCount: files.length, menuSources };
+  return includeMenuSources ? { rows, catalogCount: files.length, menuSources } : { rows, catalogCount: files.length };
 }
 
 export function renderCoordinateModule(rows) {
@@ -59,7 +61,7 @@ export function renderCoordinateModule(rows) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const { rows, catalogCount, menuSources } = collectCoordinateRows();
+  const { rows, catalogCount, menuSources } = collectCoordinateRows(catalogDir, true);
   if (!rows.length) throw new Error("No eligible Oslo restaurant coordinates");
   const source = renderCoordinateModule(rows);
   const temporary = output + "." + process.pid + ".tmp";
