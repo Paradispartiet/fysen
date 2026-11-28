@@ -148,3 +148,7 @@ French, European Portuguese, Spanish and German now each have all 239 original U
 ### International editorial food display labels
 
 French, European Portuguese, Spanish and German now have 162/162 cuisine/category labels, 44/44 exact gallery-variant captions and 11/11 localized dish display names per language, in a separate review-only module. All keys were compared against source registries, and gallery rows retain the exact Norwegian original label. International culinary names and canonical identifiers remain intact. Added regression assertions for exact key coverage, nonempty labels and original gallery variants; no changes to menu matching, query aliases, article translations or production locale selection. Native review, CI and main reconciliation remain pending.
+
+### International summary review batch 1
+
+Added four review-language summaries for all 33 original articles and five-language summaries for 50 expanded articles. Existing 33 English summaries copied verbatim, not replaced. Total 83/200 per language in a separate review-only registry, with exact canonical IDs verified and regression coverage for nonempty values, language keys and existing English text preservation. No runtime activation or changes to originals, search aliases or menu evidence. Remaining 117 summaries per language; linguistic review, CI and main reconciliation pending.
