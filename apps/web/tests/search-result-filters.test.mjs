@@ -36,14 +36,18 @@ describe("Search filters use only provable values from returned results", () => 
 });
 
 describe("Client map and list contract", () => {
-  it("loads OpenStreetMap only on demand and keeps fuzzy results separate", async () => {
+  it("loads the shared Fysen map only on demand and keeps fuzzy results separate", async () => {
     const { readFileSync } = await import("node:fs");
     const { fileURLToPath, URL } = await import("node:url");
     const read = (relative) => readFileSync(fileURLToPath(new URL(relative, import.meta.url)), "utf8");
     const code = read("../components/search-results.tsx");
     const page = read("../app/search/page.tsx");
-    assert.match(code, /showMap \? \(/u);
-    assert.match(code, /openstreetmap\.org\/export\/embed\.html/u);
+    const map = read("../components/restaurant-map.tsx");
+    assert.match(code, /showMap && showOsloMap \? \(/u);
+    assert.match(code, /<RestaurantMap rows=\{mappedRows\}/u);
+    assert.doesNotMatch(code, /openstreetmap\.org\/export\/embed\.html/u);
+    assert.match(code, /for \(const result of filteredPrimary\)/u);
+    assert.match(map, /if \(!mapActivated\) return;/u);
     assert.match(code, /filteredNear\.map/u);
     assert.match(code, /filteredPrimary\.map/u);
     assert.doesNotMatch(code, /maksimalt 20/u);

@@ -168,6 +168,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
           latitude={hasLocation ? latitude : null}
           longitude={hasLocation ? longitude : null}
           sort={sort}
+          view={mapView ? "map" : undefined}
         />
       </GlobalHeader>
 
@@ -247,6 +248,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 <SearchResults
                   primaryResults={primaryResults}
                   nearResults={nearResults}
+                  city={city}
+                  query={q}
+                  mapAlreadyVisible={mapView}
                   hasLocation={hasLocation}
                   searchLimitReached={data.complete !== true && data.results.length >= 20}
                 />

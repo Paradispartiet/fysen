@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { safeMapMenuUrl } from "../lib/map-menu-evidence";
 import { withPublicBasePath } from "../lib/public-path";
 import styles from "./restaurant-map.module.css";
+import { loadStaticMapIndex, staticRestaurantMenu } from "../lib/static-map-menu";
 
 type Item = { name: string; price: string; sourceUrl: string; date: string };
 function isItem(value: unknown): value is Item {
@@ -18,11 +19,16 @@ export function MapRestaurantMenu({ slug }: { slug: string }) {
   const [failed, setFailed] = useState(false);
   const [query, setQuery] = useState("");
   const [attempt, setAttempt] = useState(0);
-  // Pages is static; never request a missing API route there.
+  // Pages uses the build-time verified public index rather than a missing server route.
   const staticPreview = withPublicBasePath("/") !== "/";
   useEffect(() => {
-    if (!open || staticPreview) return;
+    if (!open) return;
     const controller = new AbortController();
+    if (staticPreview) {
+      loadStaticMapIndex().then(index => { if (!controller.signal.aborted) setItems(staticRestaurantMenu(index, slug)); })
+        .catch(() => { if (!controller.signal.aborted) setFailed(true); });
+      return () => controller.abort();
+    }
     fetch(withPublicBasePath("/api/restaurants/menu") + "?" + new URLSearchParams({ restaurant: slug }), {
       signal: controller.signal, headers: { accept: "application/json" },
     }).then(async response => {
@@ -35,7 +41,6 @@ export function MapRestaurantMenu({ slug }: { slug: string }) {
     }).catch(() => { if (!controller.signal.aborted) setFailed(true); });
     return () => controller.abort();
   }, [open, slug, staticPreview, attempt]);
-  if (staticPreview) return null;
   const filtered = items?.filter(item => item.name.toLocaleLowerCase("nb-NO").includes(query.trim().toLocaleLowerCase("nb-NO")));
   return <section className={styles.fullMenu} aria-label="Registrerte retter">
     <button className={styles.more} type="button" aria-expanded={open} onClick={() => setOpen(value => !value)}>{open ? "Skjul registrert meny" : "Vis registrert meny"}</button>

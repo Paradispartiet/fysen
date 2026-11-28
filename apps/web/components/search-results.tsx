@@ -2,52 +2,29 @@
 
 import type { DishSearchResult } from "@fysen/contracts";
 import { useState } from "react";
-import { filterSearchResults, oneResultPerRestaurant } from "../lib/search-result-filters";
+import { filterSearchResults } from "../lib/search-result-filters";
 import { DishResult } from "./dish-result";
-import { TrackedExternalLink } from "./tracked-external-link";
+import { RestaurantMap } from "./restaurant-map";
+import { restaurantCoordinateRows } from "../lib/restaurant-coordinate-data";
+import { formatDishPrice } from "../lib/dish-price";
+import { safeMapMenuUrl, type MapEvidenceBySlug } from "../lib/map-menu-evidence";
 import styles from "./search-results.module.css";
-
-function osmEmbedUrl(latitude: number, longitude: number): string {
-  const deltaLatitude = 0.006;
-  const deltaLongitude = 0.012;
-  const bounds = [
-    longitude - deltaLongitude,
-    latitude - deltaLatitude,
-    longitude + deltaLongitude,
-    latitude + deltaLatitude,
-  ].join(",");
-  const params = new URLSearchParams({
-    bbox: bounds,
-    layer: "mapnik",
-    marker: [latitude, longitude].join(","),
-  });
-  return "https://www.openstreetmap.org/export/embed.html?" + params.toString();
-}
-
-function osmPageUrl(latitude: number, longitude: number): string {
-  const params = new URLSearchParams({ mlat: String(latitude), mlon: String(longitude) });
-  return "https://www.openstreetmap.org/?" + params.toString() +
-    "#map=16/" + latitude + "/" + longitude;
-}
-
-function directionsUrl(latitude: number, longitude: number): string {
-  return "https://www.google.com/maps/dir/?api=1&destination=" +
-    encodeURIComponent(latitude + "," + longitude);
-}
 
 interface SearchResultsProps {
   readonly primaryResults: DishSearchResult[];
   readonly nearResults: DishSearchResult[];
   readonly hasLocation: boolean;
   readonly searchLimitReached: boolean;
+  readonly city?: string;
+  readonly query?: string;
+  readonly mapAlreadyVisible?: boolean;
 }
 
-export function SearchResults({ primaryResults, nearResults, hasLocation, searchLimitReached }: SearchResultsProps) {
+export function SearchResults({ primaryResults, nearResults, hasLocation, searchLimitReached, city = "Oslo", query = "", mapAlreadyVisible = false }: SearchResultsProps) {
   const [openNow, setOpenNow] = useState(false);
   const [priceCap, setPriceCap] = useState("");
   const [distanceCap, setDistanceCap] = useState("");
   const [showMap, setShowMap] = useState(false);
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
 
   const filters = {
     openNow,
@@ -57,8 +34,17 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
   const filteredPrimary = filterSearchResults(primaryResults, filters);
   const filteredNear = filterSearchResults(nearResults, filters);
   const visibleResults = [...filteredPrimary, ...filteredNear];
-  const restaurants = oneResultPerRestaurant(visibleResults);
-  const selected = restaurants.find((result) => result.restaurant.slug === selectedSlug) ?? restaurants[0] ?? null;
+  const showOsloMap = city.toLocaleLowerCase("nb-NO") === "oslo" && !mapAlreadyVisible;
+  const menuEvidence = new Map<string, MapEvidenceBySlug[string]>();
+  for (const result of filteredPrimary) {
+    if (!safeMapMenuUrl(result.menu.sourceUrl)) continue;
+    const entries = menuEvidence.get(result.restaurant.slug) ?? [];
+    entries.push({ name: result.dish.name, sourceUrl: result.menu.sourceUrl, date: result.menu.lastCheckedAt,
+      price: formatDishPrice(result.dish), origin: "live", menuItemId: result.menuItemId });
+    menuEvidence.set(result.restaurant.slug, entries);
+  }
+  const evidence = Object.fromEntries(menuEvidence);
+  const mappedRows = restaurantCoordinateRows.filter(row => menuEvidence.has(row[0]));
   const filterActive = openNow || priceCap !== "" || (hasLocation && distanceCap !== "");
   const total = primaryResults.length + nearResults.length;
 
@@ -104,7 +90,7 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
           <p className={styles.count} role="status" aria-live="polite">
             Viser {visibleResults.length} av {total} hentede rettetreff
           </p>
-          <button
+          {showOsloMap ? <button
             className={styles.mapToggle}
             type="button"
             aria-expanded={showMap}
@@ -112,7 +98,7 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
             onClick={() => setShowMap((value) => !value)}
           >
             {showMap ? "Skjul kart" : "Vis kart"}
-          </button>
+          </button> : null}
         </div>
         <p className={styles.limitNote}>
           Filtrene gjelder kun treffene som allerede er hentet
@@ -121,56 +107,11 @@ export function SearchResults({ primaryResults, nearResults, hasLocation, search
         </p>
       </div>
 
-      {showMap ? (
+      {showMap && showOsloMap ? (
         <section className={styles.mapPanel} id="fysen-search-map" aria-label="Kart over restauranter i de viste treffene">
-          {selected ? (
-            <>
-              <div className={styles.mapChoices} role="group" aria-label="Velg restaurant på kartet">
-                {restaurants.map((result) => (
-                  <button
-                    type="button"
-                    key={result.restaurant.slug}
-                    className={selected.restaurant.slug === result.restaurant.slug ? styles.selectedRestaurant : styles.restaurantChoice}
-                    aria-pressed={selected.restaurant.slug === result.restaurant.slug}
-                    onClick={() => setSelectedSlug(result.restaurant.slug)}
-                  >
-                    <strong>{result.restaurant.name}</strong>
-                    <span>{result.match.type === "fuzzy" ? "Lignende rett – kontroller menyen" : "Sikkert menytreff"}</span>
-                  </button>
-                ))}
-              </div>
-              <div className={styles.mapArea}>
-                <iframe
-                  key={selected.restaurant.slug}
-                  title={"Kart: " + selected.restaurant.name}
-                  src={osmEmbedUrl(selected.restaurant.latitude, selected.restaurant.longitude)}
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                />
-                <div className={styles.mapFooter}>
-                  <strong>{selected.restaurant.name}</strong>
-                  <span>{selected.restaurant.address}, {selected.restaurant.city}</span>
-                  <div className={styles.mapLinks}>
-                    <a href={osmPageUrl(selected.restaurant.latitude, selected.restaurant.longitude)} target="_blank" rel="noreferrer">
-                      Stort kart ↗
-                    </a>
-                    <TrackedExternalLink
-                      href={directionsUrl(selected.restaurant.latitude, selected.restaurant.longitude)}
-                      impressionId={selected.impressionId}
-                      eventType="directions_clicked"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Veibeskrivelse ↗
-                    </TrackedExternalLink>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : <p className={styles.empty}>Ingen restauranter matcher filtrene. Nullstill et filter for å se kartet.</p>}
-          <p className={styles.mapNote}>
-            Kartet viser én valgt restaurant om gangen. Kartdata lastes fra OpenStreetMap først når du åpner kartet.
-          </p>
+          {mappedRows.length ? <RestaurantMap rows={mappedRows} dishQuery={query} evidence={evidence} /> :
+            <p className={styles.empty}>Ingen sikre menytreff med katalogposisjon matcher filtrene.</p>}
+          <p className={styles.mapNote}>Kartet viser sikre menytreff som passer filtrene. Lignende retter vises ikke på kartet.</p>
         </section>
       ) : null}
 

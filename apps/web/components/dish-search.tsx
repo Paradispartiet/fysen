@@ -10,6 +10,7 @@ export function DishSearch({
   latitude = null,
   longitude = null,
   sort = "relevance",
+  view,
 }: {
   defaultValue?: string;
   city?: string;
@@ -19,6 +20,7 @@ export function DishSearch({
   latitude?: number | null;
   longitude?: number | null;
   sort?: DishSearchSort;
+  view?: "map" | undefined;
 }) {
   return (
     <form
@@ -47,6 +49,7 @@ export function DishSearch({
         />
       </div>
       <input type="hidden" name="city" value={city} />
+      {view === "map" ? <input type="hidden" name="view" value="map" /> : null}
       {latitude !== null && longitude !== null ? (
         <>
           <input type="hidden" name="lat" value={latitude} />

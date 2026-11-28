@@ -13,6 +13,7 @@ import { DishResult } from "./dish-result";
 import { DishSearch } from "./dish-search";
 import { GlobalHeader } from "./global-header";
 import { SearchState } from "./search-state";
+import { StaticMapDishSearch } from "./static-map-dish-search";
 
 type QueryState = {
   q: string;
@@ -20,6 +21,7 @@ type QueryState = {
   cuisine: string;
   region: string;
   mat: string;
+  view: string;
 };
 
 function queryFromLocation(): QueryState {
@@ -30,6 +32,7 @@ function queryFromLocation(): QueryState {
     cuisine: (params.get("cuisine") ?? "").trim(),
     region: (params.get("region") ?? "").trim(),
     mat: (params.get("mat") ?? "").trim(),
+    view: params.get("view") ?? "",
   };
 }
 
@@ -46,6 +49,7 @@ function previewSearchUrl(query: QueryState): string {
 function productionSearchUrl(query: QueryState): string {
   const params = new URLSearchParams({ city: query.city });
   if (query.q) params.set("q", query.q);
+  if (query.view === "map") params.set("view", "map");
   if (query.cuisine) params.set("cuisine", query.cuisine);
   if (query.mat) params.set("mat", query.mat);
   else if (query.region) params.set("region", query.region);
@@ -75,6 +79,8 @@ export function StaticPreviewSearchPage() {
       setError("Skriv minst to tegn for å søke.");
       return;
     }
+
+    if (query.city.toLocaleLowerCase("nb-NO") === "oslo" && query.q.length >= 2) { setLoading(false); return; }
 
     if (query.city.toLocaleLowerCase("nb-NO") === "oslo" || !clientPreviewApiBaseUrl) {
       window.location.replace(productionSearchUrl(query));
@@ -157,12 +163,15 @@ export function StaticPreviewSearchPage() {
           city={city}
           buttonLabel="Finn retten"
           inputId="results-dish-query"
+          view={query?.view === "map" ? "map" : undefined}
         />
       </GlobalHeader>
 
       <main className="resultsMain">
         <section className="resultsContent" aria-live="polite">
-          {q.length === 0 ? (
+          {city.toLocaleLowerCase("nb-NO") === "oslo" && q.length >= 2 ? (
+            <StaticMapDishSearch key={q} query={q} view={query?.view === "map" ? "map" : "list"} />
+          ) : q.length === 0 ? (
             <DishBrowse
               key={`${query?.city}-${query?.cuisine}-${query?.region}-${query?.mat}`}
               city={city}
