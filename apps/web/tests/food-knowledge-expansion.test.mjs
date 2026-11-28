@@ -132,3 +132,16 @@ test("Homepage exposes all articles, explicit menu links and updated copy", () =
   assert.ok(!gallerySource.includes("Litt inspirasjon"));
   assert.ok(!gallerySource.includes("Oppdag retter i ditt eget tempo"));
 });
+
+test("Matleksikon uses compact side-by-side pictures and keeps image credits in the detail view", async () => {
+  const editorial = await readFile(path.join(webRoot, "components/dish-editorial-image.tsx"), "utf8");
+  const dialog = await readFile(path.join(webRoot, "components/dish-knowledge-dialog.tsx"), "utf8");
+  const css = await readFile(path.join(webRoot, "styles/home-discovery-refresh.css"), "utf8");
+  assert.match(learningSource, /className="dishLearningCardHeader"[\s\S]*?className="dishLearningCardHeading"[\s\S]*?<h3>[\s\S]*?<\/h3>[\s\S]*?<DishEditorialImage dishId=\{dish.id\} query=\{dish.query\} showCredit=\{false\} \/>/u);
+  assert.match(editorial, /showCredit = true/u);
+  assert.match(editorial, /showCredit && hasImageCredit\(image\)/u);
+  assert.match(dialog, /<DishEditorialAttribution dishId=\{dish.id\} query=\{dish.query\} \/>/u);
+  assert.match(css, /\.dishLearningCardHeader \{ display: flex;/u);
+  assert.match(css, /\.dishLearningCardHeader \.dishEditorialFigure \{[^}]*max-width: 100px;[^}]*margin: 0;/u);
+  assert.match(css, /\.dishLearningCardHeader \.dishEditorialImage \{[^}]*object-fit: contain;/u);
+});

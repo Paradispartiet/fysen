@@ -30,8 +30,33 @@ export function findDishImage(dishId?: string | null, query?: string) {
     ?? (query ? entries.find((image) => normalize(image.query) === normalize(query)) : undefined);
 }
 
-export function DishEditorialImage({ dishId, query, className = "", priority = false }: {
-  dishId?: string | null; query?: string; className?: string; priority?: boolean;
+function hasImageCredit(image: DishImageEntry): boolean {
+  return Boolean(image.photoCredit || image.kind.toLowerCase().includes("illustrasjon"));
+}
+
+function ImageCredit({ image }: { image: DishImageEntry }) {
+  if (!image.photoCredit) return <>KI-illustrasjon</>;
+  return (
+    <>
+      {image.photoSource ? <a href={image.photoSource} target="_blank" rel="noopener noreferrer">{image.photoCredit}</a> : image.photoCredit}
+      {image.photoLicense ? <> · <a href={image.photoLicense} target="_blank" rel="noopener noreferrer">Lisens</a></> : null}
+    </>
+  );
+}
+
+export function DishEditorialAttribution({ dishId, query }: { dishId?: string | null; query?: string }) {
+  const image = findDishImage(dishId, query);
+  if (!image || !hasImageCredit(image)) return null;
+  return (
+    <section className="dishKnowledgeSources" aria-label="Bildekreditering">
+      <h3>Bildekreditering</h3>
+      <p className="dishEditorialCredit"><ImageCredit image={image} /></p>
+    </section>
+  );
+}
+
+export function DishEditorialImage({ dishId, query, className = "", priority = false, showCredit = true }: {
+  dishId?: string | null; query?: string; className?: string; priority?: boolean; showCredit?: boolean;
 }) {
   const image = findDishImage(dishId, query);
   if (!image) return null;
@@ -49,12 +74,9 @@ export function DishEditorialImage({ dishId, query, className = "", priority = f
         width={master ? image.largeSourceNativeWidth : undefined}
         height={master ? image.largeSourceNativeHeight : undefined}
       />
-      {image.photoCredit ? (
-        <figcaption className="dishEditorialCredit">
-          {image.photoSource ? <a href={image.photoSource} target="_blank" rel="noopener noreferrer">{image.photoCredit}</a> : image.photoCredit}
-          {image.photoLicense ? <> · <a href={image.photoLicense} target="_blank" rel="noopener noreferrer">Lisens</a></> : null}
-        </figcaption>
-      ) : image.kind.toLowerCase().includes("illustrasjon") ? <figcaption className="dishEditorialCredit">KI-illustrasjon</figcaption> : null}
+      {showCredit && hasImageCredit(image) ? (
+        <figcaption className="dishEditorialCredit"><ImageCredit image={image} /></figcaption>
+      ) : null}
     </figure>
   );
 }

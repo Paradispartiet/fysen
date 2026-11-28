@@ -80,19 +80,23 @@ export function DishLearningSection() {
       <div className={`dishLearningGrid${showAll ? " dishLearningGridExpanded" : ""}`}>
         {visibleDishes.map((dish) => (
           <article className="dishLearningCard" id={`learn-card-${dish.id}`} key={dish.id}>
-            <DishEditorialImage dishId={dish.id} query={dish.query} />
-            <span className="dishLearningRegion">{dish.region}</span>
-            <h3>
-              <button
-                type="button"
-                className="dishLearningTitleButton"
-                aria-haspopup="dialog"
-                onClick={(event) => openDish(dish, event.currentTarget)}
-              >
-                <span>{dish.name}</span>
-                <span className="dishLearningOpenHint">Lær om retten <span aria-hidden="true">↗</span></span>
-              </button>
-            </h3>
+            <div className="dishLearningCardHeader">
+              <div className="dishLearningCardHeading">
+                <span className="dishLearningRegion">{dish.region}</span>
+                <h3>
+                  <button
+                    type="button"
+                    className="dishLearningTitleButton"
+                    aria-haspopup="dialog"
+                    onClick={(event) => openDish(dish, event.currentTarget)}
+                  >
+                    <span>{dish.name}</span>
+                    <span className="dishLearningOpenHint">Lær om retten <span aria-hidden="true">↗</span></span>
+                  </button>
+                </h3>
+              </div>
+              <DishEditorialImage dishId={dish.id} query={dish.query} showCredit={false} />
+            </div>
             <p>{dish.summary}</p>
             <a href={dishSearchHref(dish.query)} aria-label={`Se menytreff for ${dish.name}`}>Se menytreff <span aria-hidden="true">→</span></a>
           </article>
