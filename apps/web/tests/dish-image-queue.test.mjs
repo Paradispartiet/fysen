@@ -51,5 +51,4 @@ test("Current real catalog and Matleksikon have complete, nonduplicated image qu
   assert.ok(report.articles.total >= 200);
   assert.equal(report.rows.find(row => row.id === "carbonara").imageId, "pasta-carbonara");
   assert.equal(report.rows.find(row => row.id === "pad-thai").imageId, "pad-thai-reker");
-  console.log("Image queue:", JSON.stringify({ catalog: report.catalog, articles: report.articles }));
 });
