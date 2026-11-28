@@ -254,6 +254,29 @@ try {
       await ramen.locator(".dishLearningTitleButton").click();
       const ramenDialog = page.getByRole("dialog", { name: "Ramen", exact: true });
       await ramenDialog.waitFor({ state: "visible" });
+      async function checkKnowledgePhoto(dialog, entry) {
+        assert.ok(entry?.largeViewEnabled && entry.largeSource, "Expected an approved master image");
+        const photo = dialog.locator(".dishKnowledgeHeroPhoto img.dishEditorialImage");
+        await photo.waitFor({ state: "visible" });
+        assert.ok((await photo.getAttribute("src")).endsWith(`/dish-images/${entry.largeSource}`));
+        const actual = await photo.evaluate(async (node) => {
+          await node.decode();
+          const image = node.getBoundingClientRect();
+          const title = node.closest(".dishKnowledgeDialogHeader").querySelector("h2").getBoundingClientRect();
+          const shell = node.closest(".dishKnowledgeDialogShell");
+          return { width: node.naturalWidth, height: node.naturalHeight,
+            imageLeft: image.left, imageRight: image.right, imageWidth: image.width, titleRight: title.right,
+            clientWidth: shell.clientWidth, scrollWidth: shell.scrollWidth };
+        });
+        assert.deepEqual([actual.width, actual.height], [entry.largeSourceNativeWidth, entry.largeSourceNativeHeight]);
+        assert.ok(actual.imageWidth > 0 && actual.imageLeft >= actual.titleRight - 2,
+          "Detail image must be visible beside the heading");
+        assert.ok(actual.imageRight <= viewport.width + 2 && actual.scrollWidth <= actual.clientWidth + 2,
+          "Detail image must not cause horizontal overflow");
+        assert.equal(await dialog.locator(".dishKnowledgeHeroPhoto figcaption").count(), 0);
+      }
+      await checkKnowledgePhoto(ramenDialog, manifest.images.find((entry) => entry.id === "ramen"));
+      if (output) await ramenDialog.screenshot({ path: path.join(output, `${viewport.name}-matleksikon-detail.png`), animations: "disabled" });
       const credit = ramenDialog.getByRole("region", { name: "Bildekreditering" });
       assert.match(await credit.innerText(), /Pexels/u);
       assert.ok(await credit.getByRole("link", { name: "Lisens" }).count());
@@ -284,6 +307,7 @@ try {
       await note.getByRole("button", { name: "Lær om retten" }).click();
       const knowledge = page.getByRole("dialog", { name: "Dal makhani" });
       await knowledge.getByRole("heading", { name: "Slik lager du dal makhani" }).waitFor({ state: "visible" });
+      await checkKnowledgePhoto(knowledge, dal);
       await knowledge.getByRole("button", { name: "Lukk kunnskap om Dal makhani" }).click();
       await knowledge.waitFor({ state: "hidden" });
       process.stdout.write(`PASS ${viewport.name} ${viewport.width}x${viewport.height}: gallery, Dal makhani image and Matleksikon, no overflow\n`);
