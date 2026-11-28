@@ -26,15 +26,16 @@ export const fysenMapFrame = `<!doctype html>
     if(map) { update(); return; }
     if(!window.maplibregl || !message.style) { fail(); return; }
     try {
+      const font = message.style.layers.map(layer => layer.layout && layer.layout["text-font"]).find(stack => Array.isArray(stack) && stack.length > 0 && stack.every(name => typeof name === "string") && stack.some(name => /Regular/.test(name))) || ["Noto Sans Regular"];
       map = new maplibregl.Map({container:"map",style:message.style,center:[10.752,59.921],zoom:11.5,minZoom:9,maxZoom:19,renderWorldCopies:false,dragRotate:false,pitchWithRotate:false,attributionControl:{compact:true}});
       map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
       map.on("load", () => {
         try {
           map.addSource("fysen",{type:"geojson",data,cluster:true,clusterMaxZoom:14,clusterRadius:42});
           map.addLayer({id:"fysen-clusters",type:"circle",source:"fysen",filter:["has","point_count"],paint:{"circle-color":"#B45132","circle-radius":["step",["get","point_count"],16,20,21,100,27],"circle-stroke-width":2,"circle-stroke-color":"#FCFAF5"}});
-          map.addLayer({id:"fysen-count",type:"symbol",source:"fysen",filter:["has","point_count"],layout:{"text-field":["get","point_count_abbreviated"],"text-size":12,"text-font":["Open Sans Regular"]},paint:{"text-color":"#ffffff"}});
+          map.addLayer({id:"fysen-count",type:"symbol",source:"fysen",filter:["has","point_count"],layout:{"text-field":["get","point_count_abbreviated"],"text-size":12,"text-font":font},paint:{"text-color":"#ffffff"}});
           map.addLayer({id:"fysen-points",type:"circle",source:"fysen",filter:["!",["has","point_count"]],paint:{"circle-color":"#B45132","circle-radius":["interpolate",["linear"],["zoom"],12,5,17,8],"circle-stroke-width":1.5,"circle-stroke-color":"#FCFAF5"}});
-          map.addLayer({id:"fysen-names",type:"symbol",source:"fysen",minzoom:15.5,filter:["!",["has","point_count"]],layout:{"text-field":["get","name"],"text-size":12,"text-font":["Open Sans Regular"],"text-anchor":"top","text-offset":[0,0.9],"text-max-width":11,"text-optional":true,"text-allow-overlap":false},paint:{"text-color":"#171713","text-halo-color":"#FCFAF5","text-halo-width":1.5}});
+          map.addLayer({id:"fysen-names",type:"symbol",source:"fysen",minzoom:15.5,filter:["!",["has","point_count"]],layout:{"text-field":["get","name"],"text-size":12,"text-font":font,"text-anchor":"top","text-offset":[0,0.9],"text-max-width":11,"text-optional":true,"text-allow-overlap":false},paint:{"text-color":"#171713","text-halo-color":"#FCFAF5","text-halo-width":1.5}});
           for(const id of ["fysen-points","fysen-names"]) map.on("click",id,e=>{const f=e.features&&e.features[0];if(f&&f.properties)send("fysen-map-select",{slug:f.properties.slug});});
           map.on("click","fysen-clusters",async e=>{const f=e.features&&e.features[0];if(!f)return;try{const zoom=await map.getSource("fysen").getClusterExpansionZoom(f.properties.cluster_id);map.easeTo({center:f.geometry.coordinates,zoom});}catch{map.zoomIn();}});
           for(const id of ["fysen-points","fysen-clusters","fysen-names"]){map.on("mouseenter",id,()=>map.getCanvas().style.cursor="pointer");map.on("mouseleave",id,()=>map.getCanvas().style.cursor="");}
