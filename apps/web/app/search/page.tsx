@@ -168,6 +168,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
           latitude={hasLocation ? latitude : null}
           longitude={hasLocation ? longitude : null}
           sort={sort}
+          view={mapView ? "map" : undefined}
         />
       </GlobalHeader>
 
