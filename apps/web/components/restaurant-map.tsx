@@ -64,6 +64,13 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [baseStyle, setBaseStyle] = useState<unknown>(null);
   const all = useMemo(() => restaurantMapFeatures(rows), [rows]);
+  useEffect(() => {
+    if (!standalone) return;
+    const slug = new URLSearchParams(window.location.search).get("restaurant");
+    if (slug && all.features.some(feature => feature.id === slug)) {
+      setSelected(slug);
+    }
+  }, [standalone, all]);
   const filtered = useMemo(() => {
     const term = query.trim().toLocaleLowerCase("nb-NO");
     return { ...all, features: all.features.filter(f => (!favoritesOnly || favorites.includes(f.id)) && (!term || (f.properties.name + " " + f.properties.address).toLocaleLowerCase("nb-NO").includes(term))) };
