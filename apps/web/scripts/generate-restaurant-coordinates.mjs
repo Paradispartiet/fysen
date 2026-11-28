@@ -5,6 +5,7 @@ import { fileURLToPath, pathToFileURL, URL } from "node:url";
 
 export const catalogDir = fileURLToPath(new URL("../../menu-worker/catalog/", import.meta.url));
 const output = fileURLToPath(new URL("../lib/restaurant-coordinate-data.ts", import.meta.url));
+const menuOutput = fileURLToPath(new URL("../lib/restaurant-menu-source-data.ts", import.meta.url));
 
 export function coordinateRow(restaurant) {
   if (!restaurant || typeof restaurant.slug !== "string" || !restaurant.slug.trim()
@@ -18,21 +19,37 @@ export function coordinateRow(restaurant) {
   return [restaurant.slug, restaurant.name, restaurant.address, restaurant.latitude, restaurant.longitude];
 }
 
-export function collectCoordinateRows(directory = catalogDir) {
+export function registeredMenuSource(manifest) {
+  const row = coordinateRow(manifest?.restaurant);
+  if (!row || typeof manifest?.menuSource?.url !== "string") return null;
+  try {
+    const url = new URL(manifest.menuSource.url);
+    if (!["https:", "http:"].includes(url.protocol) || url.username || url.password) return null;
+    return [row[0], url.href];
+  } catch { return null; }
+}
+
+export function collectCoordinateRows(directory = catalogDir, includeMenuSources = false) {
   const files = readdirSync(directory).filter(name => name.endsWith(".json")).sort();
   if (!files.length) throw new Error("Fysen restaurant catalog is empty");
   const rows = [];
+  const menuSources = [];
   const seen = new Set();
   for (const file of files) {
-    const { restaurant } = JSON.parse(readFileSync(join(directory, file), "utf8"));
+    const manifest = JSON.parse(readFileSync(join(directory, file), "utf8"));
+    const { restaurant } = manifest;
     const row = coordinateRow(restaurant);
     if (!row) continue;
     if (seen.has(row[0])) throw new Error("Duplicate restaurant coordinate identity: " + row[0]);
     seen.add(row[0]);
     rows.push(row);
+    if (includeMenuSources) {
+      const menuSource = registeredMenuSource(manifest);
+      if (menuSource) menuSources.push(menuSource);
+    }
   }
   rows.sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
-  return { rows, catalogCount: files.length };
+  return includeMenuSources ? { rows, catalogCount: files.length, menuSources } : { rows, catalogCount: files.length };
 }
 
 export function renderCoordinateModule(rows) {
@@ -44,11 +61,14 @@ export function renderCoordinateModule(rows) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const { rows, catalogCount } = collectCoordinateRows();
+  const { rows, catalogCount, menuSources } = collectCoordinateRows(catalogDir, true);
   if (!rows.length) throw new Error("No eligible Oslo restaurant coordinates");
   const source = renderCoordinateModule(rows);
   const temporary = output + "." + process.pid + ".tmp";
   writeFileSync(temporary, source, "utf8");
   renameSync(temporary, output);
+  const menuTemporary = menuOutput + "." + process.pid + ".tmp";
+  writeFileSync(menuTemporary, "// Generated registered source links; not proof of current menu availability.\nexport const restaurantMenuSources: readonly (readonly [string, string])[] = " + JSON.stringify(menuSources.sort((a, b) => a[0].localeCompare(b[0]))) + ";\n", "utf8");
+  renameSync(menuTemporary, menuOutput);
   console.log("Fysen restaurant coordinates: " + rows.length + "/" + catalogCount + " catalog entries");
 }
