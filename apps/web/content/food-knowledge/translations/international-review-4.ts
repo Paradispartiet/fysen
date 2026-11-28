@@ -3289,5 +3289,1656 @@ export const draftInternationalArticles4 = {
         "Blätter nicht durch gewaltsames Wickeln steifer Kohlblätter um die Füllung zerreißen."
       ]
     }
+  },
+  "borsjtsj": {
+    "en": {
+      "overview": "Beetroot gives the soup its colour and character; this home version contains potatoes, cabbage and beans.",
+      "history": "The culture of Ukrainian borscht cooking was inscribed on UNESCO’s List of Intangible Cultural Heritage in Need of Urgent Safeguarding in 2022. Related soups exist in several countries.",
+      "flavor": "Sweetish, tangy and earthy.",
+      "technique": "Adjust the acidity gradually and let the vegetables retain some texture.",
+      "essentials": [
+        "400 g beetroot",
+        "300 g potatoes",
+        "200 g cabbage"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min",
+        "ingredients": [
+          "400 g beetroot",
+          "300 g potatoes",
+          "200 g cabbage",
+          "1 carrot",
+          "1 onion",
+          "200 g cooked beans",
+          "1.2 l vegetable stock",
+          "2 tbsp tomato paste",
+          "vinegar to taste",
+          "dill"
+        ],
+        "steps": [
+          "Fry onion, carrot and grated beetroot in a little oil with tomato paste.",
+          "Add stock and potatoes and cook until almost tender.",
+          "Add cabbage, beetroot mixture and beans; simmer until the vegetables are tender.",
+          "Season with vinegar, salt and dill."
+        ]
+      },
+      "variants": [
+        "Versions with meat stock, pork or no animal ingredients exist."
+      ],
+      "serving": [
+        "Serve with sour cream and bread or garlic rolls."
+      ],
+      "commonMistakes": [
+        "Do not add a lot of vinegar without tasting as you go."
+      ]
+    },
+    "fr": {
+      "overview": "La betterave donne à la soupe sa couleur et son caractère ; cette version maison contient des pommes de terre, du chou et des haricots.",
+      "history": "La culture de la préparation du bortsch ukrainien a été inscrite en 2022 sur la Liste du patrimoine culturel immatériel nécessitant une sauvegarde urgente de l’UNESCO. Des soupes apparentées existent dans plusieurs pays.",
+      "flavor": "Légèrement sucré, acidulé et terreux.",
+      "technique": "Ajuster progressivement l’acidité et conserver un peu de texture aux légumes.",
+      "essentials": [
+        "400 g de betteraves",
+        "300 g de pommes de terre",
+        "200 g de chou"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min",
+        "ingredients": [
+          "400 g de betteraves",
+          "300 g de pommes de terre",
+          "200 g de chou",
+          "1 carotte",
+          "1 oignon",
+          "200 g de haricots cuits",
+          "1,2 l de bouillon de légumes",
+          "2 c. à soupe de concentré de tomate",
+          "vinaigre selon le goût",
+          "aneth"
+        ],
+        "steps": [
+          "Faire revenir l’oignon, la carotte et les betteraves râpées dans un peu d’huile avec le concentré de tomate.",
+          "Ajouter le bouillon et les pommes de terre et cuire jusqu’à ce qu’elles soient presque tendres.",
+          "Ajouter le chou, la préparation de betteraves et les haricots ; laisser mijoter jusqu’à tendreté des légumes.",
+          "Assaisonner avec du vinaigre, du sel et de l’aneth."
+        ]
+      },
+      "variants": [
+        "Il existe des variantes au bouillon de viande, au porc ou sans ingrédients d’origine animale."
+      ],
+      "serving": [
+        "Servir avec de la crème aigre et du pain ou des petits pains à l’ail."
+      ],
+      "commonMistakes": [
+        "Ne pas ajouter beaucoup de vinaigre sans goûter au fur et à mesure."
+      ]
+    },
+    "pt": {
+      "overview": "A beterraba dá cor e carácter à sopa; esta versão caseira inclui batata, couve e feijão.",
+      "history": "A cultura da preparação do borsch ucraniano foi inscrita em 2022 na lista do património cultural imaterial da UNESCO que necessita de salvaguarda urgente. Existem sopas semelhantes em vários países.",
+      "flavor": "Ligeiramente doce, ácido e terroso.",
+      "technique": "Ajuste gradualmente a acidez e deixe os legumes conservar alguma textura.",
+      "essentials": [
+        "400 g de beterraba",
+        "300 g de batatas",
+        "200 g de couve"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min",
+        "ingredients": [
+          "400 g de beterraba",
+          "300 g de batatas",
+          "200 g de couve",
+          "1 cenoura",
+          "1 cebola",
+          "200 g de feijão cozido",
+          "1,2 l de caldo de legumes",
+          "2 c. de sopa de concentrado de tomate",
+          "vinagre a gosto",
+          "endro"
+        ],
+        "steps": [
+          "Salteie cebola, cenoura e beterraba ralada num pouco de óleo com concentrado de tomate.",
+          "Junte caldo e batatas e coza até ficarem quase tenras.",
+          "Junte couve, mistura de beterraba e feijão; deixe cozinhar em lume brando até os legumes ficarem tenros.",
+          "Tempere com vinagre, sal e endro."
+        ]
+      },
+      "variants": [
+        "Existem variantes com caldo de carne, carne de porco ou sem ingredientes de origem animal."
+      ],
+      "serving": [
+        "Sirva com natas ácidas e pão ou pãezinhos de alho."
+      ],
+      "commonMistakes": [
+        "Não junte muito vinagre sem ir provando."
+      ]
+    },
+    "es": {
+      "overview": "La remolacha da color y carácter a la sopa; esta versión casera contiene patata, col y frijoles.",
+      "history": "La cultura de la preparación del borsch ucraniano fue inscrita en 2022 en la lista del patrimonio cultural inmaterial que requiere medidas urgentes de salvaguardia de la UNESCO. Existen sopas relacionadas en varios países.",
+      "flavor": "Ligeramente dulce, ácido y terroso.",
+      "technique": "Ajusta la acidez poco a poco y deja que las verduras conserven algo de textura.",
+      "essentials": [
+        "400 g de remolacha",
+        "300 g de patatas",
+        "200 g de col"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min",
+        "ingredients": [
+          "400 g de remolacha",
+          "300 g de patatas",
+          "200 g de col",
+          "1 zanahoria",
+          "1 cebolla",
+          "200 g de frijoles cocidos",
+          "1,2 l de caldo de verduras",
+          "2 cucharadas de concentrado de tomate",
+          "vinagre al gusto",
+          "eneldo"
+        ],
+        "steps": [
+          "Sofríe cebolla, zanahoria y remolacha rallada en un poco de aceite con concentrado de tomate.",
+          "Añade caldo y patatas y cuece hasta que estén casi tiernas.",
+          "Añade col, mezcla de remolacha y frijoles; cuece a fuego lento hasta que las verduras estén tiernas.",
+          "Sazona con vinagre, sal y eneldo."
+        ]
+      },
+      "variants": [
+        "Existen variantes con caldo de carne, cerdo o sin ingredientes de origen animal."
+      ],
+      "serving": [
+        "Sirve con crema agria y pan o panecillos de ajo."
+      ],
+      "commonMistakes": [
+        "No añadas mucho vinagre sin ir probando."
+      ]
+    },
+    "de": {
+      "overview": "Rote Bete verleiht der Suppe Farbe und Charakter; diese Hausvariante enthält Kartoffeln, Kohl und Bohnen.",
+      "history": "Die Kultur der ukrainischen Borschtsch-Zubereitung wurde 2022 in die UNESCO-Liste des dringend erhaltungsbedürftigen immateriellen Kulturerbes aufgenommen. Verwandte Suppen gibt es in mehreren Ländern.",
+      "flavor": "Süßlich, säuerlich und erdig.",
+      "technique": "Säure nach und nach abschmecken und Gemüse etwas Biss behalten lassen.",
+      "essentials": [
+        "400 g Rote Bete",
+        "300 g Kartoffeln",
+        "200 g Kohl"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min.",
+        "ingredients": [
+          "400 g Rote Bete",
+          "300 g Kartoffeln",
+          "200 g Kohl",
+          "1 Karotte",
+          "1 Zwiebel",
+          "200 g gekochte Bohnen",
+          "1,2 l Gemüsebrühe",
+          "2 EL Tomatenmark",
+          "Essig nach Geschmack",
+          "Dill"
+        ],
+        "steps": [
+          "Zwiebel, Karotte und geriebene Rote Bete in etwas Öl mit Tomatenmark anbraten.",
+          "Brühe und Kartoffeln hinzufügen und fast weich kochen.",
+          "Kohl, Rote-Bete-Mischung und Bohnen hinzufügen; köcheln lassen, bis das Gemüse weich ist.",
+          "Mit Essig, Salz und Dill abschmecken."
+        ]
+      },
+      "variants": [
+        "Es gibt Varianten mit Fleischbrühe, Schweinefleisch oder ohne tierische Zutaten."
+      ],
+      "serving": [
+        "Mit saurer Sahne und Brot oder Knoblauchbrötchen servieren."
+      ],
+      "commonMistakes": [
+        "Nicht viel Essig hinzufügen, ohne zwischendurch abzuschmecken."
+      ]
+    }
+  },
+  "varenyky": {
+    "en": {
+      "overview": "A flour dough encloses fillings such as potato, cheese, cabbage or berries.",
+      "history": "Varenyky are a central Ukrainian culinary tradition and share similarities with Polish pierogi.",
+      "flavor": "Soft dough and a rich, mild flavour in the potato version.",
+      "technique": "Let the dough rest and seal the parcels well before boiling.",
+      "essentials": [
+        "350 g wheat flour",
+        "180 ml water",
+        "1 tbsp oil"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 80 min",
+        "ingredients": [
+          "350 g wheat flour",
+          "180 ml water",
+          "1 tbsp oil",
+          "500 g potatoes",
+          "2 onions",
+          "salt",
+          "sour cream to serve"
+        ],
+        "steps": [
+          "Knead flour, water, oil and salt into a smooth dough and let rest.",
+          "Boil the potatoes and mash with half the fried onion.",
+          "Roll out the dough, cut out rounds and fold around the cooled filling.",
+          "Boil in batches in salted water until the dough is cooked through."
+        ]
+      },
+      "variants": [
+        "Fillings of sauerkraut, fresh cheese or cherries produce different savoury and sweet dishes."
+      ],
+      "serving": [
+        "Serve potato varenyky with fried onion and sour cream."
+      ],
+      "commonMistakes": [
+        "Do not overfill the parcels."
+      ]
+    },
+    "fr": {
+      "overview": "Une pâte de farine enveloppe une farce de pommes de terre, de fromage, de chou ou de fruits rouges, entre autres.",
+      "history": "Les varenyky occupent une place centrale dans la cuisine ukrainienne et présentent des similitudes avec les pierogi polonais.",
+      "flavor": "Pâte tendre et saveur douce et généreuse dans la version aux pommes de terre.",
+      "technique": "Laisser reposer la pâte et bien fermer les raviolis avant cuisson.",
+      "essentials": [
+        "350 g de farine de blé",
+        "180 ml d’eau",
+        "1 c. à soupe d’huile"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 80 min",
+        "ingredients": [
+          "350 g de farine de blé",
+          "180 ml d’eau",
+          "1 c. à soupe d’huile",
+          "500 g de pommes de terre",
+          "2 oignons",
+          "sel",
+          "crème aigre pour servir"
+        ],
+        "steps": [
+          "Pétrir farine, eau, huile et sel pour obtenir une pâte lisse et laisser reposer.",
+          "Cuire les pommes de terre et les écraser avec la moitié des oignons revenus.",
+          "Étaler la pâte, découper des disques et les replier autour de la farce refroidie.",
+          "Cuire par fournées dans de l’eau salée jusqu’à cuisson complète de la pâte."
+        ]
+      },
+      "variants": [
+        "Les farces à la choucroute, au fromage frais ou aux cerises donnent différents plats salés et sucrés."
+      ],
+      "serving": [
+        "Servir les varenyky aux pommes de terre avec des oignons revenus et de la crème aigre."
+      ],
+      "commonMistakes": [
+        "Ne pas trop garnir les raviolis."
+      ]
+    },
+    "pt": {
+      "overview": "Uma massa de farinha envolve recheios de batata, queijo, couve ou frutos silvestres, entre outros.",
+      "history": "Os varenyky são uma tradição culinária central na Ucrânia e têm semelhanças com os pierogi polacos.",
+      "flavor": "Massa macia e sabor encorpado e suave na versão de batata.",
+      "technique": "Deixe a massa repousar e feche bem os embrulhos antes de cozer.",
+      "essentials": [
+        "350 g de farinha de trigo",
+        "180 ml de água",
+        "1 c. de sopa de óleo"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 80 min",
+        "ingredients": [
+          "350 g de farinha de trigo",
+          "180 ml de água",
+          "1 c. de sopa de óleo",
+          "500 g de batatas",
+          "2 cebolas",
+          "sal",
+          "natas ácidas para servir"
+        ],
+        "steps": [
+          "Amasse farinha, água, óleo e sal até obter uma massa lisa e deixe repousar.",
+          "Coza as batatas e esmague-as com metade da cebola refogada.",
+          "Estenda a massa, recorte círculos e dobre em torno do recheio arrefecido.",
+          "Coza em porções em água salgada até a massa estar bem cozida."
+        ]
+      },
+      "variants": [
+        "Recheios de chucrute, queijo fresco ou cerejas dão diferentes pratos salgados e doces."
+      ],
+      "serving": [
+        "Sirva os varenyky de batata com cebola refogada e natas ácidas."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado os embrulhos."
+      ]
+    },
+    "es": {
+      "overview": "Una masa de harina envuelve rellenos de patata, queso, col o frutos del bosque, entre otros.",
+      "history": "Los varenyky son una tradición culinaria central de Ucrania y tienen similitudes con los pierogi polacos.",
+      "flavor": "Masa suave y sabor intenso y suave en la versión de patata.",
+      "technique": "Deja reposar la masa y sella bien las piezas antes de cocerlas.",
+      "essentials": [
+        "350 g de harina de trigo",
+        "180 ml de agua",
+        "1 cucharada de aceite"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 80 min",
+        "ingredients": [
+          "350 g de harina de trigo",
+          "180 ml de agua",
+          "1 cucharada de aceite",
+          "500 g de patatas",
+          "2 cebollas",
+          "sal",
+          "crema agria para servir"
+        ],
+        "steps": [
+          "Amasa harina, agua, aceite y sal hasta obtener una masa lisa y deja reposar.",
+          "Cuece las patatas y aplástalas con la mitad de la cebolla sofrita.",
+          "Estira la masa, corta círculos y dóblalos alrededor del relleno enfriado.",
+          "Cuece en tandas en agua salada hasta que la masa esté bien cocida."
+        ]
+      },
+      "variants": [
+        "Los rellenos de chucrut, queso fresco o cerezas dan lugar a distintos platos salados y dulces."
+      ],
+      "serving": [
+        "Sirve los varenyky de patata con cebolla sofrita y crema agria."
+      ],
+      "commonMistakes": [
+        "No rellenes demasiado las piezas."
+      ]
+    },
+    "de": {
+      "overview": "Ein Mehlteig umschließt Füllungen unter anderem aus Kartoffeln, Käse, Kohl oder Beeren.",
+      "history": "Varenyky sind eine zentrale ukrainische Esstradition und ähneln polnischen Pierogi.",
+      "flavor": "Weicher Teig und kräftiger, milder Geschmack in der Kartoffelvariante.",
+      "technique": "Teig ruhen lassen und die Taschen vor dem Kochen gut verschließen.",
+      "essentials": [
+        "350 g Weizenmehl",
+        "180 ml Wasser",
+        "1 EL Öl"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 80 Min.",
+        "ingredients": [
+          "350 g Weizenmehl",
+          "180 ml Wasser",
+          "1 EL Öl",
+          "500 g Kartoffeln",
+          "2 Zwiebeln",
+          "Salz",
+          "saure Sahne zum Servieren"
+        ],
+        "steps": [
+          "Mehl, Wasser, Öl und Salz zu einem glatten Teig kneten und ruhen lassen.",
+          "Kartoffeln kochen und mit der Hälfte der gebratenen Zwiebeln zerdrücken.",
+          "Teig ausrollen, Kreise ausstechen und um die abgekühlte Füllung falten.",
+          "Portionsweise in Salzwasser kochen, bis der Teig vollständig gar ist."
+        ]
+      },
+      "variants": [
+        "Füllungen aus Sauerkraut, Frischkäse oder Kirschen ergeben verschiedene herzhafte und süße Gerichte."
+      ],
+      "serving": [
+        "Kartoffel-Varenyky mit gebratenen Zwiebeln und saurer Sahne servieren."
+      ],
+      "commonMistakes": [
+        "Teigtaschen nicht überfüllen."
+      ]
+    }
+  },
+  "khachapuri": {
+    "en": {
+      "overview": "There are several regional forms, including round cheese-filled breads and boat-shaped breads from Adjara.",
+      "history": "Khachapuri is central to Georgian food culture, with distinct regional characteristics.",
+      "flavor": "Rich, salty and soft, with a golden bread crust.",
+      "technique": "Use an elastic yeast dough and cheese that melts well.",
+      "essentials": [
+        "400 g wheat flour",
+        "250 ml water",
+        "5 g dry yeast"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "2 breads",
+        "time": "approx. 45 min + rising",
+        "ingredients": [
+          "400 g wheat flour",
+          "250 ml water",
+          "5 g dry yeast",
+          "1 tsp salt",
+          "250 g mozzarella",
+          "150 g feta",
+          "2 eggs",
+          "butter"
+        ],
+        "steps": [
+          "Knead flour, water, yeast and salt and let the dough rise to approximately double its size.",
+          "Divide in two, roll out and shape boat-shaped breads with folded-up edges.",
+          "Distribute the grated cheese and bake at 220 °C until golden.",
+          "Crack an egg into each boat towards the end and continue baking until the egg has set. Top with a little butter."
+        ]
+      },
+      "variants": [
+        "Imeruli is round and filled with cheese; adjaruli has an open boat shape. Mozzarella and feta are a home adaptation of Georgian cheeses."
+      ],
+      "serving": [
+        "Serve hot, preferably shared among several people."
+      ],
+      "commonMistakes": [
+        "Do not fill the breads so much that the cheese runs out."
+      ]
+    },
+    "fr": {
+      "overview": "Il existe plusieurs formes régionales, notamment des pains ronds farcis de fromage et des pains en forme de barque d’Adjarie.",
+      "history": "Le khachapuri occupe une place centrale dans la cuisine géorgienne, avec des particularités régionales marquées.",
+      "flavor": "Généreux, salé et moelleux, avec une croûte de pain dorée.",
+      "technique": "Utiliser une pâte levée élastique et un fromage qui fond bien.",
+      "essentials": [
+        "400 g de farine de blé",
+        "250 ml d’eau",
+        "5 g de levure sèche de boulanger"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "2 pains",
+        "time": "env. 45 min + levée",
+        "ingredients": [
+          "400 g de farine de blé",
+          "250 ml d’eau",
+          "5 g de levure sèche de boulanger",
+          "1 c. à café de sel",
+          "250 g de mozzarella",
+          "150 g de feta",
+          "2 œufs",
+          "beurre"
+        ],
+        "steps": [
+          "Pétrir farine, eau, levure et sel et laisser la pâte lever jusqu’à environ doubler de volume.",
+          "Diviser en deux, étaler et façonner des pains en forme de barque aux bords relevés.",
+          "Répartir le fromage râpé et cuire à 220 °C jusqu’à ce que les pains soient dorés.",
+          "Casser un œuf dans chaque barque en fin de cuisson et poursuivre jusqu’à ce que l’œuf soit pris. Ajouter un peu de beurre."
+        ]
+      },
+      "variants": [
+        "L’imeruli est rond et farci de fromage ; l’adjaruli a une forme de barque ouverte. La mozzarella et la feta remplacent ici les fromages géorgiens."
+      ],
+      "serving": [
+        "Servir chaud, de préférence à partager."
+      ],
+      "commonMistakes": [
+        "Ne pas trop garnir les pains pour éviter que le fromage ne déborde."
+      ]
+    },
+    "pt": {
+      "overview": "Existem várias formas regionais, incluindo pães redondos recheados com queijo e pães em forma de barco da Adjária.",
+      "history": "O khachapuri é central na cultura gastronómica georgiana, com características regionais distintas.",
+      "flavor": "Encorpado, salgado e macio, com crosta dourada.",
+      "technique": "Use uma massa levedada elástica e queijo que derreta bem.",
+      "essentials": [
+        "400 g de farinha de trigo",
+        "250 ml de água",
+        "5 g de fermento de padeiro seco"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "2 pães",
+        "time": "cerca de 45 min + levedação",
+        "ingredients": [
+          "400 g de farinha de trigo",
+          "250 ml de água",
+          "5 g de fermento de padeiro seco",
+          "1 c. de chá de sal",
+          "250 g de mozzarella",
+          "150 g de feta",
+          "2 ovos",
+          "manteiga"
+        ],
+        "steps": [
+          "Amasse farinha, água, fermento e sal e deixe a massa levedar até aproximadamente duplicar de volume.",
+          "Divida em dois, estenda e forme pães em forma de barco com bordas levantadas.",
+          "Distribua o queijo ralado e asse a 220 °C até dourarem.",
+          "Parta um ovo para cada barco perto do fim e continue a cozer até o ovo solidificar. Termine com um pouco de manteiga."
+        ]
+      },
+      "variants": [
+        "O imeruli é redondo e recheado com queijo; o adjaruli tem forma de barco aberto. A mozzarella e a feta são uma adaptação caseira dos queijos georgianos."
+      ],
+      "serving": [
+        "Sirva quente, de preferência para partilhar."
+      ],
+      "commonMistakes": [
+        "Não recheie demasiado os pães para evitar que o queijo transborde."
+      ]
+    },
+    "es": {
+      "overview": "Existen varias formas regionales, entre ellas panes redondos rellenos de queso y panes en forma de barca de Ayaria.",
+      "history": "El khachapuri ocupa un lugar central en la cultura culinaria georgiana, con características regionales marcadas.",
+      "flavor": "Contundente, salado y suave, con corteza dorada.",
+      "technique": "Usa una masa de levadura elástica y queso que funda bien.",
+      "essentials": [
+        "400 g de harina de trigo",
+        "250 ml de agua",
+        "5 g de levadura seca de panadería"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "2 panes",
+        "time": "aprox. 45 min + levado",
+        "ingredients": [
+          "400 g de harina de trigo",
+          "250 ml de agua",
+          "5 g de levadura seca de panadería",
+          "1 cucharadita de sal",
+          "250 g de mozzarella",
+          "150 g de feta",
+          "2 huevos",
+          "mantequilla"
+        ],
+        "steps": [
+          "Amasa harina, agua, levadura y sal y deja levar hasta aproximadamente doblar el volumen.",
+          "Divide en dos, estira y forma panes en forma de barca con bordes elevados.",
+          "Reparte el queso rallado y hornea a 220 °C hasta que estén dorados.",
+          "Casca un huevo en cada barca hacia el final y sigue horneando hasta que cuaje. Añade un poco de mantequilla."
+        ]
+      },
+      "variants": [
+        "El imeruli es redondo y está relleno de queso; el adjaruli tiene forma de barca abierta. La mozzarella y el feta son una adaptación casera de los quesos georgianos."
+      ],
+      "serving": [
+        "Sirve caliente, preferiblemente para compartir."
+      ],
+      "commonMistakes": [
+        "No rellenes tanto los panes que se salga el queso."
+      ]
+    },
+    "de": {
+      "overview": "Es gibt mehrere regionale Formen, darunter runde käsegefüllte Brote und bootförmige Brote aus Adscharien.",
+      "history": "Chatschapuri ist ein zentraler Bestandteil georgischer Esskultur mit deutlichen regionalen Eigenheiten.",
+      "flavor": "Gehaltvoll, salzig und weich mit goldbrauner Brotkruste.",
+      "technique": "Elastischen Hefeteig und gut schmelzenden Käse verwenden.",
+      "essentials": [
+        "400 g Weizenmehl",
+        "250 ml Wasser",
+        "5 g Trockenhefe"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "2 Brote",
+        "time": "ca. 45 Min. + Gehzeit",
+        "ingredients": [
+          "400 g Weizenmehl",
+          "250 ml Wasser",
+          "5 g Trockenhefe",
+          "1 TL Salz",
+          "250 g Mozzarella",
+          "150 g Feta",
+          "2 Eier",
+          "Butter"
+        ],
+        "steps": [
+          "Mehl, Wasser, Hefe und Salz kneten und den Teig etwa auf das doppelte Volumen gehen lassen.",
+          "In zwei Teile teilen, ausrollen und zu bootförmigen Broten mit hochgefalteten Rändern formen.",
+          "Geriebene Käsemasse verteilen und bei 220 °C goldbraun backen.",
+          "Gegen Ende in jedes Boot ein Ei schlagen und weiterbacken, bis das Ei gestockt ist. Etwas Butter daraufgeben."
+        ]
+      },
+      "variants": [
+        "Imeruli ist rund und mit Käse gefüllt; Adjaruli hat eine offene Bootsform. Mozzarella und Feta sind ein Ersatz für georgische Käse in der Hausvariante."
+      ],
+      "serving": [
+        "Heiß servieren, gerne zum Teilen."
+      ],
+      "commonMistakes": [
+        "Brote nicht so stark füllen, dass der Käse herausläuft."
+      ]
+    }
+  },
+  "khinkali": {
+    "en": {
+      "overview": "A firm flour dough is folded into pleats around a meat filling with added liquid.",
+      "history": "Khinkali have strong traditions in Georgian mountain regions and exist in several regional versions.",
+      "flavor": "Juicy, peppery and rich.",
+      "technique": "Seal the dough well and keep the meat filling chilled while shaping.",
+      "essentials": [
+        "400 g wheat flour",
+        "200 ml water",
+        "1 tsp salt"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min",
+        "ingredients": [
+          "400 g wheat flour",
+          "200 ml water",
+          "1 tsp salt",
+          "400 g minced meat",
+          "1 onion",
+          "100 ml cold stock",
+          "pepper",
+          "coriander to taste"
+        ],
+        "steps": [
+          "Knead flour, water and salt into a firm dough and let rest.",
+          "Mix minced meat, finely chopped onion and spices, gradually adding cold stock.",
+          "Roll out the dough, cut out large circles, fill and gather the edges into pleats.",
+          "Boil in batches in salted water until the dough and meat filling are cooked through (at least 71 °C for minced beef or pork)."
+        ]
+      },
+      "variants": [
+        "Mountain and urban versions may use different herbs and meats; mushroom fillings also exist."
+      ],
+      "serving": [
+        "Serve with black pepper. Let the broth cool a little before the first bite."
+      ],
+      "commonMistakes": [
+        "Avoid holes in the dough and too much liquid in the filling."
+      ]
+    },
+    "fr": {
+      "overview": "Une pâte ferme à base de farine est plissée autour d’une farce de viande additionnée de liquide.",
+      "history": "Les khinkali sont bien ancrés dans les traditions des régions montagneuses de Géorgie et existent en plusieurs versions régionales.",
+      "flavor": "Juteux, poivrés et généreux.",
+      "technique": "Bien fermer la pâte et garder la farce de viande au frais pendant le façonnage.",
+      "essentials": [
+        "400 g de farine de blé",
+        "200 ml d’eau",
+        "1 c. à café de sel"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min",
+        "ingredients": [
+          "400 g de farine de blé",
+          "200 ml d’eau",
+          "1 c. à café de sel",
+          "400 g de viande hachée",
+          "1 oignon",
+          "100 ml de bouillon froid",
+          "poivre",
+          "coriandre selon le goût"
+        ],
+        "steps": [
+          "Pétrir farine, eau et sel pour obtenir une pâte ferme et laisser reposer.",
+          "Mélanger la viande hachée, l’oignon finement haché et les épices en incorporant progressivement le bouillon froid.",
+          "Étaler la pâte, découper de grands disques, garnir et réunir les bords en plis.",
+          "Cuire par fournées dans de l’eau salée jusqu’à cuisson complète de la pâte et de la farce (au moins 71 °C pour le bœuf ou le porc haché)."
+        ]
+      },
+      "variants": [
+        "Les versions montagnardes et urbaines peuvent utiliser différentes herbes et viandes ; il existe aussi des farces aux champignons."
+      ],
+      "serving": [
+        "Servir avec du poivre noir. Laisser le bouillon refroidir un peu avant la première bouchée."
+      ],
+      "commonMistakes": [
+        "Éviter les trous dans la pâte et l’excès de liquide dans la farce."
+      ]
+    },
+    "pt": {
+      "overview": "Uma massa firme de farinha é dobrada em pregas em torno de um recheio de carne com líquido adicionado.",
+      "history": "Os khinkali têm fortes tradições nas regiões montanhosas da Geórgia e existem em várias versões regionais.",
+      "flavor": "Suculentos, com sabor a pimenta e encorpados.",
+      "technique": "Feche bem a massa e mantenha o recheio de carne refrigerado durante a moldagem.",
+      "essentials": [
+        "400 g de farinha de trigo",
+        "200 ml de água",
+        "1 c. de chá de sal"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min",
+        "ingredients": [
+          "400 g de farinha de trigo",
+          "200 ml de água",
+          "1 c. de chá de sal",
+          "400 g de carne picada",
+          "1 cebola",
+          "100 ml de caldo frio",
+          "pimenta",
+          "coentros a gosto"
+        ],
+        "steps": [
+          "Amasse farinha, água e sal até obter uma massa firme e deixe repousar.",
+          "Misture carne picada, cebola finamente picada e especiarias, juntando gradualmente o caldo frio.",
+          "Estenda a massa, recorte círculos grandes, recheie e junte as bordas em pregas.",
+          "Coza em porções em água salgada até a massa e o recheio estarem bem cozinhados (pelo menos 71 °C para carne picada de vaca ou porco)."
+        ]
+      },
+      "variants": [
+        "As versões das montanhas e das cidades podem usar diferentes ervas e carnes; também existem recheios de cogumelos."
+      ],
+      "serving": [
+        "Sirva com pimenta-preta. Deixe o caldo arrefecer um pouco antes da primeira dentada."
+      ],
+      "commonMistakes": [
+        "Evite buracos na massa e excesso de líquido no recheio."
+      ]
+    },
+    "es": {
+      "overview": "Una masa firme de harina se pliega alrededor de un relleno de carne con líquido añadido.",
+      "history": "Los khinkali tienen una fuerte tradición en las regiones montañosas de Georgia y existen en varias versiones regionales.",
+      "flavor": "Jugosos, con sabor a pimienta y contundentes.",
+      "technique": "Sella bien la masa y mantén el relleno de carne frío durante el formado.",
+      "essentials": [
+        "400 g de harina de trigo",
+        "200 ml de agua",
+        "1 cucharadita de sal"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min",
+        "ingredients": [
+          "400 g de harina de trigo",
+          "200 ml de agua",
+          "1 cucharadita de sal",
+          "400 g de carne picada",
+          "1 cebolla",
+          "100 ml de caldo frío",
+          "pimienta",
+          "cilantro al gusto"
+        ],
+        "steps": [
+          "Amasa harina, agua y sal hasta obtener una masa firme y deja reposar.",
+          "Mezcla carne picada, cebolla picada fina y especias, añadiendo poco a poco el caldo frío.",
+          "Estira la masa, corta círculos grandes, rellena y reúne los bordes formando pliegues.",
+          "Cuece en tandas en agua salada hasta que la masa y el relleno estén bien cocidos (al menos 71 °C para carne picada de vacuno o cerdo)."
+        ]
+      },
+      "variants": [
+        "Las versiones de montaña y urbanas pueden utilizar distintas hierbas y carnes; también existen rellenos de setas."
+      ],
+      "serving": [
+        "Sirve con pimienta negra. Deja enfriar un poco el caldo antes del primer bocado."
+      ],
+      "commonMistakes": [
+        "Evita agujeros en la masa y demasiado líquido en el relleno."
+      ]
+    },
+    "de": {
+      "overview": "Ein fester Mehlteig wird in Falten um eine Fleischfüllung mit zugesetzter Flüssigkeit gelegt.",
+      "history": "Chinkali haben in georgischen Bergregionen eine starke Tradition und kommen in mehreren regionalen Varianten vor.",
+      "flavor": "Saftig, pfeffrig und gehaltvoll.",
+      "technique": "Teig gut verschließen und Fleischfüllung beim Formen kühl halten.",
+      "essentials": [
+        "400 g Weizenmehl",
+        "200 ml Wasser",
+        "1 TL Salz"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min.",
+        "ingredients": [
+          "400 g Weizenmehl",
+          "200 ml Wasser",
+          "1 TL Salz",
+          "400 g Hackfleisch",
+          "1 Zwiebel",
+          "100 ml kalte Brühe",
+          "Pfeffer",
+          "Koriander nach Geschmack"
+        ],
+        "steps": [
+          "Mehl, Wasser und Salz zu einem festen Teig kneten und ruhen lassen.",
+          "Hackfleisch, fein gehackte Zwiebel und Gewürze mischen, kalte Brühe nach und nach einarbeiten.",
+          "Teig ausrollen, große Kreise ausstechen, füllen und die Ränder in Falten zusammenführen.",
+          "Portionsweise in Salzwasser kochen, bis Teig und Fleischfüllung durchgegart sind (mindestens 71 °C bei Rinder- oder Schweinehackfleisch)."
+        ]
+      },
+      "variants": [
+        "Berg- und Stadtvarianten können unterschiedliche Kräuter und Fleischsorten verwenden; auch Pilzfüllungen gibt es."
+      ],
+      "serving": [
+        "Mit schwarzem Pfeffer servieren. Brühe vor dem ersten Bissen etwas abkühlen lassen."
+      ],
+      "commonMistakes": [
+        "Löcher im Teig und zu viel Flüssigkeit in der Füllung vermeiden."
+      ]
+    }
+  },
+  "lobio": {
+    "en": {
+      "overview": "Cooked beans are partially mashed into a thick stew with aromatics.",
+      "history": "Beans have an established place in Georgian food culture, and lobio exists in both hot and cold forms.",
+      "flavor": "Earthy, herbal and rich.",
+      "technique": "Use fully cooked beans and retain some liquid to adjust the consistency.",
+      "essentials": [
+        "800 g cooked kidney beans, drained",
+        "1 onion",
+        "3 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 35 min",
+        "ingredients": [
+          "800 g cooked kidney beans, drained",
+          "1 onion",
+          "3 garlic cloves",
+          "1 tsp ground coriander",
+          "fresh coriander",
+          "2 tbsp oil",
+          "150 ml water",
+          "wine vinegar to taste"
+        ],
+        "steps": [
+          "Fry finely chopped onion and garlic in oil.",
+          "Add beans, water and ground coriander.",
+          "Simmer and mash some of the beans against the side of the pot.",
+          "Season with salt, vinegar and fresh coriander."
+        ]
+      },
+      "variants": [
+        "Some versions contain walnuts or other spices; cold bean salads also exist."
+      ],
+      "serving": [
+        "Serve with cornbread or bread and pickled vegetables."
+      ],
+      "commonMistakes": [
+        "Do not put uncooked kidney beans directly into the stew."
+      ]
+    },
+    "fr": {
+      "overview": "Les haricots cuits sont partiellement écrasés pour former un ragoût épais aux aromates.",
+      "history": "Les haricots occupent une place bien établie dans la cuisine géorgienne et le lobio existe sous des formes chaudes et froides.",
+      "flavor": "Terreux, herbacé et généreux.",
+      "technique": "Utiliser des haricots déjà cuits et conserver un peu de liquide pour ajuster la consistance.",
+      "essentials": [
+        "800 g de haricots rouges cuits, égouttés",
+        "1 oignon",
+        "3 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 35 min",
+        "ingredients": [
+          "800 g de haricots rouges cuits, égouttés",
+          "1 oignon",
+          "3 gousses d’ail",
+          "1 c. à café de coriandre moulue",
+          "coriandre fraîche",
+          "2 c. à soupe d’huile",
+          "150 ml d’eau",
+          "vinaigre de vin selon le goût"
+        ],
+        "steps": [
+          "Faire revenir l’oignon et l’ail finement hachés dans l’huile.",
+          "Ajouter les haricots, l’eau et la coriandre moulue.",
+          "Laisser mijoter et écraser une partie des haricots contre la paroi de la casserole.",
+          "Assaisonner avec du sel, du vinaigre et de la coriandre fraîche."
+        ]
+      },
+      "variants": [
+        "Certaines variantes contiennent des noix ou d’autres épices ; il existe aussi des salades de haricots froides."
+      ],
+      "serving": [
+        "Servir avec du pain de maïs ou du pain et des légumes au vinaigre."
+      ],
+      "commonMistakes": [
+        "Ne pas mettre de haricots rouges crus directement dans le ragoût."
+      ]
+    },
+    "pt": {
+      "overview": "O feijão cozido é parcialmente esmagado até formar um guisado espesso com aromáticos.",
+      "history": "O feijão tem um lugar consolidado na cultura gastronómica georgiana e o lobio existe em versões quentes e frias.",
+      "flavor": "Terroso, com notas de ervas e encorpado.",
+      "technique": "Use feijão já cozido e reserve um pouco de líquido para ajustar a consistência.",
+      "essentials": [
+        "800 g de feijão-vermelho cozido, escorrido",
+        "1 cebola",
+        "3 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 35 min",
+        "ingredients": [
+          "800 g de feijão-vermelho cozido, escorrido",
+          "1 cebola",
+          "3 dentes de alho",
+          "1 c. de chá de coentros moídos",
+          "coentros frescos",
+          "2 c. de sopa de óleo",
+          "150 ml de água",
+          "vinagre de vinho a gosto"
+        ],
+        "steps": [
+          "Salteie a cebola e o alho finamente picados em óleo.",
+          "Junte feijão, água e coentros moídos.",
+          "Deixe cozinhar em lume brando e esmague parte do feijão contra a parede do tacho.",
+          "Tempere com sal, vinagre e coentros frescos."
+        ]
+      },
+      "variants": [
+        "Algumas variantes contêm nozes ou outras especiarias; também existem saladas frias de feijão."
+      ],
+      "serving": [
+        "Sirva com pão de milho ou pão e legumes em conserva."
+      ],
+      "commonMistakes": [
+        "Não coloque feijão-vermelho cru diretamente no guisado."
+      ]
+    },
+    "es": {
+      "overview": "Los frijoles cocidos se aplastan parcialmente para formar un guiso espeso con aromáticos.",
+      "history": "Los frijoles tienen un lugar consolidado en la cocina georgiana y el lobio existe en versiones calientes y frías.",
+      "flavor": "Terroso, con notas de hierbas y con cuerpo.",
+      "technique": "Usa frijoles ya cocidos y reserva algo de líquido para ajustar la consistencia.",
+      "essentials": [
+        "800 g de alubias rojas cocidas, escurridas",
+        "1 cebolla",
+        "3 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 35 min",
+        "ingredients": [
+          "800 g de alubias rojas cocidas, escurridas",
+          "1 cebolla",
+          "3 dientes de ajo",
+          "1 cucharadita de cilantro molido",
+          "cilantro fresco",
+          "2 cucharadas de aceite",
+          "150 ml de agua",
+          "vinagre de vino al gusto"
+        ],
+        "steps": [
+          "Sofríe cebolla y ajo picados finamente en aceite.",
+          "Añade frijoles, agua y cilantro molido.",
+          "Cuece a fuego lento y aplasta algunos frijoles contra la pared de la olla.",
+          "Sazona con sal, vinagre y cilantro fresco."
+        ]
+      },
+      "variants": [
+        "Algunas variantes contienen nueces u otras especias; también existen ensaladas frías de frijoles."
+      ],
+      "serving": [
+        "Sirve con pan de maíz o pan y verduras encurtidas."
+      ],
+      "commonMistakes": [
+        "No pongas alubias rojas crudas directamente en el guiso."
+      ]
+    },
+    "de": {
+      "overview": "Gekochte Bohnen werden teilweise zerdrückt und mit Aromaten zu einem dicken Eintopf verarbeitet.",
+      "history": "Bohnen haben einen festen Platz in der georgischen Esskultur; Lobio gibt es in warmen und kalten Varianten.",
+      "flavor": "Erdig, kräuterbetont und kräftig.",
+      "technique": "Bereits gegarte Bohnen verwenden und etwas Flüssigkeit für die Konsistenz aufbewahren.",
+      "essentials": [
+        "800 g gekochte Kidneybohnen, abgetropft",
+        "1 Zwiebel",
+        "3 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 35 Min.",
+        "ingredients": [
+          "800 g gekochte Kidneybohnen, abgetropft",
+          "1 Zwiebel",
+          "3 Knoblauchzehen",
+          "1 TL gemahlener Koriander",
+          "frischer Koriander",
+          "2 EL Öl",
+          "150 ml Wasser",
+          "Weinessig nach Geschmack"
+        ],
+        "steps": [
+          "Fein gehackte Zwiebel und Knoblauch in Öl anschwitzen.",
+          "Bohnen, Wasser und gemahlenen Koriander hinzufügen.",
+          "Köcheln lassen und einige Bohnen an der Topfwand zerdrücken.",
+          "Mit Salz, Essig und frischem Koriander abschmecken."
+        ]
+      },
+      "variants": [
+        "Einige Varianten enthalten Walnüsse oder andere Gewürze; es gibt auch kalte Bohnensalate."
+      ],
+      "serving": [
+        "Mit Maisbrot oder Brot und eingelegtem Gemüse servieren."
+      ],
+      "commonMistakes": [
+        "Ungekochte Kidneybohnen nicht direkt in den Eintopf geben."
+      ]
+    }
+  },
+  "chakhokhbili": {
+    "en": {
+      "overview": "Chicken is browned and simmered in a tomato-based sauce finished with herbs.",
+      "history": "Chakhokhbili belongs to the Georgian tradition of stews.",
+      "flavor": "Fruity tomato flavour, juicy chicken and fresh herbs.",
+      "technique": "Brown the chicken before finishing it in the sauce.",
+      "essentials": [
+        "800 g chicken thighs",
+        "3 onions",
+        "600 g tomatoes"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min",
+        "ingredients": [
+          "800 g chicken thighs",
+          "3 onions",
+          "600 g tomatoes",
+          "3 garlic cloves",
+          "fresh coriander",
+          "basil",
+          "chilli to taste",
+          "oil"
+        ],
+        "steps": [
+          "Brown the chicken in a pot.",
+          "Fry the onions until soft and add chopped tomato, garlic and chilli.",
+          "Return the chicken and simmer covered until cooked through and tender.",
+          "Remove the lid if necessary to reduce the sauce and add the herbs towards the end."
+        ]
+      },
+      "variants": [
+        "The amount of chilli and the herbs used vary."
+      ],
+      "serving": [
+        "Serve with bread or rice."
+      ],
+      "commonMistakes": [
+        "Do not cook the fresh herbs longer than necessary."
+      ]
+    },
+    "fr": {
+      "overview": "Le poulet est doré puis mijoté dans une sauce à base de tomates, agrémentée d’herbes en fin de cuisson.",
+      "history": "Le chakhokhbili fait partie de la tradition géorgienne des plats mijotés.",
+      "flavor": "Saveur fruitée de tomate, poulet juteux et herbes fraîches.",
+      "technique": "Faire dorer le poulet avant de terminer sa cuisson dans la sauce.",
+      "essentials": [
+        "800 g de cuisses de poulet",
+        "3 oignons",
+        "600 g de tomates"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min",
+        "ingredients": [
+          "800 g de cuisses de poulet",
+          "3 oignons",
+          "600 g de tomates",
+          "3 gousses d’ail",
+          "coriandre fraîche",
+          "basilic",
+          "piment selon le goût",
+          "huile"
+        ],
+        "steps": [
+          "Faire dorer le poulet dans une cocotte.",
+          "Faire revenir les oignons jusqu’à ce qu’ils soient tendres et ajouter les tomates hachées, l’ail et le piment.",
+          "Remettre le poulet et laisser mijoter à couvert jusqu’à ce qu’il soit cuit à cœur et tendre.",
+          "Retirer le couvercle si nécessaire pour faire réduire la sauce et ajouter les herbes en fin de cuisson."
+        ]
+      },
+      "variants": [
+        "La quantité de piment et les herbes utilisées varient."
+      ],
+      "serving": [
+        "Servir avec du pain ou du riz."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire les herbes fraîches plus longtemps que nécessaire."
+      ]
+    },
+    "pt": {
+      "overview": "O frango é dourado e cozinhado em lume brando num molho de tomate, finalizado com ervas.",
+      "history": "O chakhokhbili faz parte da tradição georgiana de guisados.",
+      "flavor": "Sabor frutado a tomate, frango suculento e ervas frescas.",
+      "technique": "Doure o frango antes de acabar de o cozinhar no molho.",
+      "essentials": [
+        "800 g de coxas de frango",
+        "3 cebolas",
+        "600 g de tomate"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min",
+        "ingredients": [
+          "800 g de coxas de frango",
+          "3 cebolas",
+          "600 g de tomate",
+          "3 dentes de alho",
+          "coentros frescos",
+          "manjericão",
+          "malagueta a gosto",
+          "óleo"
+        ],
+        "steps": [
+          "Doure o frango num tacho.",
+          "Salteie as cebolas até amolecerem e junte tomate picado, alho e malagueta.",
+          "Volte a colocar o frango e deixe cozinhar em lume brando com tampa até estar bem cozinhado e tenro.",
+          "Retire a tampa se necessário para reduzir o molho e junte as ervas perto do fim."
+        ]
+      },
+      "variants": [
+        "A quantidade de malagueta e as ervas utilizadas variam."
+      ],
+      "serving": [
+        "Sirva com pão ou arroz."
+      ],
+      "commonMistakes": [
+        "Não cozinhe as ervas frescas mais tempo do que o necessário."
+      ]
+    },
+    "es": {
+      "overview": "El pollo se dora y se cuece a fuego lento en una salsa de tomate que se termina con hierbas.",
+      "history": "El chakhokhbili forma parte de la tradición georgiana de guisos.",
+      "flavor": "Sabor afrutado a tomate, pollo jugoso y hierbas frescas.",
+      "technique": "Dora el pollo antes de terminar de cocinarlo en la salsa.",
+      "essentials": [
+        "800 g de muslos de pollo",
+        "3 cebollas",
+        "600 g de tomates"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min",
+        "ingredients": [
+          "800 g de muslos de pollo",
+          "3 cebollas",
+          "600 g de tomates",
+          "3 dientes de ajo",
+          "cilantro fresco",
+          "albahaca",
+          "chile al gusto",
+          "aceite"
+        ],
+        "steps": [
+          "Dora el pollo en una olla.",
+          "Sofríe la cebolla hasta que esté blanda y añade tomate picado, ajo y chile.",
+          "Devuelve el pollo a la olla y cuece a fuego lento con tapa hasta que esté hecho por dentro y tierno.",
+          "Retira la tapa si es necesario para reducir la salsa y añade las hierbas hacia el final."
+        ]
+      },
+      "variants": [
+        "La cantidad de chile y las hierbas utilizadas varían."
+      ],
+      "serving": [
+        "Sirve con pan o arroz."
+      ],
+      "commonMistakes": [
+        "No cuezas las hierbas frescas más tiempo del necesario."
+      ]
+    },
+    "de": {
+      "overview": "Hähnchen wird angebraten und in einer Tomatensauce geschmort, die zum Schluss mit Kräutern verfeinert wird.",
+      "history": "Chachochbili gehört zur georgischen Eintopftradition.",
+      "flavor": "Fruchtiger Tomatengeschmack, saftiges Hähnchen und frische Kräuter.",
+      "technique": "Hähnchen anbräunen, bevor es in der Sauce fertig gegart wird.",
+      "essentials": [
+        "800 g Hähnchenschenkel",
+        "3 Zwiebeln",
+        "600 g Tomaten"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min.",
+        "ingredients": [
+          "800 g Hähnchenschenkel",
+          "3 Zwiebeln",
+          "600 g Tomaten",
+          "3 Knoblauchzehen",
+          "frischer Koriander",
+          "Basilikum",
+          "Chili nach Geschmack",
+          "Öl"
+        ],
+        "steps": [
+          "Hähnchen in einem Topf anbräunen.",
+          "Zwiebeln weich anschwitzen und gehackte Tomaten, Knoblauch und Chili hinzufügen.",
+          "Hähnchen zurückgeben und zugedeckt schmoren, bis es durchgegart und zart ist.",
+          "Deckel bei Bedarf abnehmen, um die Sauce einzukochen, und gegen Ende die Kräuter hinzufügen."
+        ]
+      },
+      "variants": [
+        "Chilimenge und verwendete Kräuter variieren."
+      ],
+      "serving": [
+        "Mit Brot oder Reis servieren."
+      ],
+      "commonMistakes": [
+        "Frische Kräuter nicht länger als nötig kochen."
+      ]
+    }
+  },
+  "khorovats": {
+    "en": {
+      "overview": "Meat is grilled over high heat and often served with bread, onions and herbs.",
+      "history": "Khorovats is an important Armenian grilling tradition with its own food festivals.",
+      "flavor": "Roasted, juicy and aromatic.",
+      "technique": "Cut evenly sized pieces and grill with controlled heat until done.",
+      "essentials": [
+        "700 g pork neck in pieces",
+        "2 onions",
+        "salt and pepper"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40 min + marinating",
+        "ingredients": [
+          "700 g pork neck in pieces",
+          "2 onions",
+          "salt and pepper",
+          "2 bell peppers",
+          "1 aubergine",
+          "lavash"
+        ],
+        "steps": [
+          "Mix the meat with sliced onion and spices and marinate in the refrigerator.",
+          "Thread the meat onto skewers and grill over medium to high heat.",
+          "Check that whole cuts of pork reach at least 63 °C and rest for at least three minutes.",
+          "Grill the vegetables separately and serve with lavash."
+        ]
+      },
+      "variants": [
+        "Beef, lamb and grilled vegetables are also used."
+      ],
+      "serving": [
+        "Serve with lavash, onion and fresh herbs."
+      ],
+      "commonMistakes": [
+        "Do not use raw marinade on cooked grilled meat."
+      ]
+    },
+    "fr": {
+      "overview": "La viande est grillée à feu vif et souvent servie avec du pain, des oignons et des herbes.",
+      "history": "Le khorovats est une importante tradition arménienne de grillades qui possède ses propres festivals gastronomiques.",
+      "flavor": "Grillé, juteux et aromatique.",
+      "technique": "Couper des morceaux réguliers et griller en maîtrisant la chaleur jusqu’à cuisson complète.",
+      "essentials": [
+        "700 g d’échine de porc en morceaux",
+        "2 oignons",
+        "sel et poivre"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40 min + marinade",
+        "ingredients": [
+          "700 g d’échine de porc en morceaux",
+          "2 oignons",
+          "sel et poivre",
+          "2 poivrons",
+          "1 aubergine",
+          "lavash"
+        ],
+        "steps": [
+          "Mélanger la viande avec les oignons émincés et les épices et laisser mariner au frais.",
+          "Enfiler la viande sur des brochettes et griller à feu moyen à vif.",
+          "Vérifier que les morceaux entiers de porc atteignent au moins 63 °C et reposent au moins trois minutes.",
+          "Griller les légumes séparément et servir avec du lavash."
+        ]
+      },
+      "variants": [
+        "On utilise aussi du bœuf, de l’agneau et des légumes grillés."
+      ],
+      "serving": [
+        "Servir avec du lavash, des oignons et des herbes fraîches."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser de marinade crue sur la viande déjà grillée."
+      ]
+    },
+    "pt": {
+      "overview": "A carne é grelhada em lume forte e servida frequentemente com pão, cebola e ervas.",
+      "history": "O khorovats é uma importante tradição arménia de grelhados com os seus próprios festivais gastronómicos.",
+      "flavor": "Tostado, suculento e aromático.",
+      "technique": "Corte pedaços uniformes e grelhe com calor controlado até estarem prontos.",
+      "essentials": [
+        "700 g de cachaço de porco em pedaços",
+        "2 cebolas",
+        "sal e pimenta"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40 min + marinada",
+        "ingredients": [
+          "700 g de cachaço de porco em pedaços",
+          "2 cebolas",
+          "sal e pimenta",
+          "2 pimentos",
+          "1 beringela",
+          "lavash"
+        ],
+        "steps": [
+          "Misture a carne com cebola em rodelas e especiarias e deixe marinar no frigorífico.",
+          "Coloque a carne em espetos e grelhe em lume médio a forte.",
+          "Verifique se os pedaços inteiros de porco atingem pelo menos 63 °C e repousam pelo menos três minutos.",
+          "Grelhe os legumes separadamente e sirva com lavash."
+        ]
+      },
+      "variants": [
+        "Também se usam carne de vaca, borrego e legumes grelhados."
+      ],
+      "serving": [
+        "Sirva com lavash, cebola e ervas frescas."
+      ],
+      "commonMistakes": [
+        "Não use marinada crua sobre carne já grelhada."
+      ]
+    },
+    "es": {
+      "overview": "La carne se asa a fuego fuerte y suele servirse con pan, cebolla y hierbas.",
+      "history": "El khorovats es una importante tradición armenia de asados con sus propios festivales gastronómicos.",
+      "flavor": "Tostado, jugoso y aromático.",
+      "technique": "Corta trozos iguales y asa controlando el calor hasta que estén hechos.",
+      "essentials": [
+        "700 g de cabecero de lomo de cerdo en trozos",
+        "2 cebollas",
+        "sal y pimienta"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40 min + marinado",
+        "ingredients": [
+          "700 g de cabecero de lomo de cerdo en trozos",
+          "2 cebollas",
+          "sal y pimienta",
+          "2 pimientos",
+          "1 berenjena",
+          "lavash"
+        ],
+        "steps": [
+          "Mezcla la carne con cebolla en rodajas y especias y deja marinar en el frigorífico.",
+          "Ensarta la carne en brochetas y asa a fuego medio a fuerte.",
+          "Comprueba que los cortes enteros de cerdo alcancen al menos 63 °C y reposen al menos tres minutos.",
+          "Asa las verduras por separado y sirve con lavash."
+        ]
+      },
+      "variants": [
+        "También se utilizan carne de vacuno, cordero y verduras asadas."
+      ],
+      "serving": [
+        "Sirve con lavash, cebolla y hierbas frescas."
+      ],
+      "commonMistakes": [
+        "No uses marinado crudo sobre carne ya asada."
+      ]
+    },
+    "de": {
+      "overview": "Fleisch wird bei hoher Hitze gegrillt und oft mit Brot, Zwiebeln und Kräutern serviert.",
+      "history": "Khorovats ist eine bedeutende armenische Grilltradition mit eigenen Essensfestivals.",
+      "flavor": "Röstig, saftig und aromatisch.",
+      "technique": "Gleich große Stücke schneiden und kontrolliert fertig grillen.",
+      "essentials": [
+        "700 g Schweinenacken in Stücken",
+        "2 Zwiebeln",
+        "Salz und Pfeffer"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40 Min. + Marinierzeit",
+        "ingredients": [
+          "700 g Schweinenacken in Stücken",
+          "2 Zwiebeln",
+          "Salz und Pfeffer",
+          "2 Paprikaschoten",
+          "1 Aubergine",
+          "Lavash"
+        ],
+        "steps": [
+          "Fleisch mit geschnittenen Zwiebeln und Gewürzen mischen und kühl marinieren.",
+          "Fleisch auf Spieße stecken und bei mittlerer bis hoher Hitze grillen.",
+          "Sicherstellen, dass ganze Schweinefleischstücke mindestens 63 °C erreichen und mindestens drei Minuten ruhen.",
+          "Gemüse separat grillen und mit Lavash servieren."
+        ]
+      },
+      "variants": [
+        "Rindfleisch, Lamm und Grillgemüse werden ebenfalls verwendet."
+      ],
+      "serving": [
+        "Mit Lavash, Zwiebeln und frischen Kräutern servieren."
+      ],
+      "commonMistakes": [
+        "Rohe Marinade nicht auf fertig gegrilltem Fleisch verwenden."
+      ]
+    }
+  },
+  "dolma": {
+    "en": {
+      "overview": "Vine leaves are folded around a seasoned filling and gently simmered in a pot.",
+      "history": "Tolma is an established Armenian culinary tradition. Related dolma dishes exist in the Caucasus, the Middle East and Mediterranean countries.",
+      "flavor": "Herbal, rich and slightly tangy.",
+      "technique": "Rinse salted vine leaves well and roll them leaving room for the rice to expand.",
+      "essentials": [
+        "30 jarred vine leaves",
+        "400 g minced meat",
+        "80 g rice"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min",
+        "ingredients": [
+          "30 jarred vine leaves",
+          "400 g minced meat",
+          "80 g rice",
+          "1 onion",
+          "parsley",
+          "mint",
+          "400 ml stock",
+          "lemon"
+        ],
+        "steps": [
+          "Rinse the vine leaves and cut away tough stems.",
+          "Mix minced meat with rinsed rice, finely chopped onion and herbs.",
+          "Place a little filling on each leaf and fold into small rolls.",
+          "Pack the rolls tightly in the pot, add stock and simmer covered until the rice is tender and the meat filling cooked through (at least 71 °C for minced beef or pork)."
+        ]
+      },
+      "variants": [
+        "Vegetarian versions with rice, beans or lentils exist, including Armenian pasuts tolma."
+      ],
+      "serving": [
+        "Serve with yoghurt and lemon."
+      ],
+      "commonMistakes": [
+        "Do not roll so tightly that the leaves split when the rice expands."
+      ]
+    },
+    "fr": {
+      "overview": "Les feuilles de vigne sont repliées autour d’une farce assaisonnée et mijotées doucement dans une casserole.",
+      "history": "Le tolma est une tradition culinaire arménienne bien établie. Des plats de dolma apparentés existent dans le Caucase, au Moyen-Orient et dans les pays méditerranéens.",
+      "flavor": "Herbacé, généreux et légèrement acidulé.",
+      "technique": "Bien rincer les feuilles de vigne salées et les rouler en laissant de la place pour que le riz gonfle.",
+      "essentials": [
+        "30 feuilles de vigne en bocal",
+        "400 g de viande hachée",
+        "80 g de riz"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min",
+        "ingredients": [
+          "30 feuilles de vigne en bocal",
+          "400 g de viande hachée",
+          "80 g de riz",
+          "1 oignon",
+          "persil",
+          "menthe",
+          "400 ml de bouillon",
+          "citron"
+        ],
+        "steps": [
+          "Rincer les feuilles de vigne et retirer les tiges dures.",
+          "Mélanger la viande hachée avec le riz rincé, l’oignon finement haché et les herbes.",
+          "Répartir un peu de farce sur chaque feuille et former de petits rouleaux.",
+          "Serrer les rouleaux dans la casserole, ajouter le bouillon et laisser mijoter à couvert jusqu’à ce que le riz soit tendre et la farce cuite à cœur (au moins 71 °C pour le bœuf ou le porc haché)."
+        ]
+      },
+      "variants": [
+        "Il existe des variantes végétariennes au riz, aux haricots ou aux lentilles, notamment le pasuts tolma arménien."
+      ],
+      "serving": [
+        "Servir avec du yaourt et du citron."
+      ],
+      "commonMistakes": [
+        "Ne pas rouler si serré que les feuilles éclatent lorsque le riz gonfle."
+      ]
+    },
+    "pt": {
+      "overview": "Folhas de videira são dobradas em torno de um recheio temperado e cozinhadas suavemente num tacho.",
+      "history": "O tolma é uma tradição culinária arménia consolidada. Existem pratos de dolma semelhantes no Cáucaso, no Médio Oriente e nos países mediterrânicos.",
+      "flavor": "Com notas de ervas, encorpado e ligeiramente ácido.",
+      "technique": "Passe bem as folhas de videira salgadas por água e enrole deixando espaço para o arroz aumentar de volume.",
+      "essentials": [
+        "30 folhas de videira em frasco",
+        "400 g de carne picada",
+        "80 g de arroz"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min",
+        "ingredients": [
+          "30 folhas de videira em frasco",
+          "400 g de carne picada",
+          "80 g de arroz",
+          "1 cebola",
+          "salsa",
+          "hortelã",
+          "400 ml de caldo",
+          "limão"
+        ],
+        "steps": [
+          "Passe as folhas de videira por água e retire os talos duros.",
+          "Misture carne picada com arroz lavado, cebola finamente picada e ervas.",
+          "Distribua um pouco de recheio por cada folha e dobre em pequenos rolos.",
+          "Disponha os rolos juntos no tacho, junte caldo e cozinhe em lume brando com tampa até o arroz estar tenro e a carne bem cozinhada (pelo menos 71 °C para carne picada de vaca ou porco)."
+        ]
+      },
+      "variants": [
+        "Existem versões vegetarianas com arroz, feijão ou lentilhas, incluindo o pasuts tolma arménio."
+      ],
+      "serving": [
+        "Sirva com iogurte e limão."
+      ],
+      "commonMistakes": [
+        "Não enrole tão apertado que as folhas rebentem quando o arroz aumenta de volume."
+      ]
+    },
+    "es": {
+      "overview": "Las hojas de vid se doblan alrededor de un relleno condimentado y se cuecen suavemente en una olla.",
+      "history": "El tolma es una tradición culinaria armenia consolidada. Existen platos de dolma relacionados en el Cáucaso, Oriente Medio y los países mediterráneos.",
+      "flavor": "Con notas de hierbas, contundente y ligeramente ácido.",
+      "technique": "Enjuaga bien las hojas de vid saladas y enrolla dejando espacio para que el arroz se hinche.",
+      "essentials": [
+        "30 hojas de vid en conserva",
+        "400 g de carne picada",
+        "80 g de arroz"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min",
+        "ingredients": [
+          "30 hojas de vid en conserva",
+          "400 g de carne picada",
+          "80 g de arroz",
+          "1 cebolla",
+          "perejil",
+          "menta",
+          "400 ml de caldo",
+          "limón"
+        ],
+        "steps": [
+          "Enjuaga las hojas de vid y corta los tallos duros.",
+          "Mezcla carne picada con arroz lavado, cebolla picada fina y hierbas.",
+          "Coloca un poco de relleno en cada hoja y forma pequeños rollos.",
+          "Coloca los rollos juntos en la olla, añade caldo y cuece a fuego lento con tapa hasta que el arroz esté tierno y el relleno bien cocido (al menos 71 °C para carne picada de vacuno o cerdo)."
+        ]
+      },
+      "variants": [
+        "Existen versiones vegetarianas con arroz, frijoles o lentejas, incluido el pasuts tolma armenio."
+      ],
+      "serving": [
+        "Sirve con yogur y limón."
+      ],
+      "commonMistakes": [
+        "No enrolles tan apretado que las hojas se rompan cuando el arroz se hinche."
+      ]
+    },
+    "de": {
+      "overview": "Weinblätter werden um eine gewürzte Füllung gefaltet und sanft in einem Topf gegart.",
+      "history": "Tolma ist eine etablierte armenische Esstradition. Verwandte Dolma-Gerichte gibt es im Kaukasus, im Nahen Osten und in den Mittelmeerländern.",
+      "flavor": "Kräuterbetont, gehaltvoll und leicht säuerlich.",
+      "technique": "Gesalzene Weinblätter gut abspülen und mit Platz zum Quellen des Reises aufrollen.",
+      "essentials": [
+        "30 Weinblätter aus dem Glas",
+        "400 g Hackfleisch",
+        "80 g Reis"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min.",
+        "ingredients": [
+          "30 Weinblätter aus dem Glas",
+          "400 g Hackfleisch",
+          "80 g Reis",
+          "1 Zwiebel",
+          "Petersilie",
+          "Minze",
+          "400 ml Brühe",
+          "Zitrone"
+        ],
+        "steps": [
+          "Weinblätter abspülen und harte Stiele abschneiden.",
+          "Hackfleisch mit gewaschenem Reis, fein gehackter Zwiebel und Kräutern mischen.",
+          "Etwas Füllung auf jedes Blatt geben und zu kleinen Röllchen falten.",
+          "Röllchen dicht in den Topf legen, Brühe hinzufügen und zugedeckt gar ziehen lassen, bis der Reis weich und die Fleischfüllung durchgegart ist (mindestens 71 °C bei Rinder- oder Schweinehackfleisch)."
+        ]
+      },
+      "variants": [
+        "Es gibt vegetarische Varianten mit Reis, Bohnen oder Linsen, darunter armenisches Pasuts Tolma."
+      ],
+      "serving": [
+        "Mit Joghurt und Zitrone servieren."
+      ],
+      "commonMistakes": [
+        "Nicht so fest aufrollen, dass die Blätter beim Quellen des Reises aufreißen."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

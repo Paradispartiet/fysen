@@ -232,3 +232,7 @@ Added eight complete bodies per language: feijoada, moqueca, coxinha, pão de qu
 ### International full article review batch 17
 
 Added eight complete bodies per language: caldo verde, arroz de marisco, bifana, pastel de nata, pierogi, bigos, żurek and gołąbki. Checked source list lengths and numerical recipe tokens, including recipe-specific tart yield, pork and minced meat temperatures, and oven limitations. Previous bodies and original sources retained. Total 136 new bodies per language; English 169/200 including original 33, other four 136/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 18
+
+Split the original review dictionary into four modules, preserving all 136 prior sets verbatim and retaining the same aggregate export. Added eight complete bodies per language: borscht, varenyky, khachapuri, khinkali, lobio, chakhokhbili, khorovats and dolma. Checked source list lengths and numerical tokens, including UNESCO year, yields and cooking temperatures. Total 144 new bodies per language; English 177/200 including original 33, other four 144/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
