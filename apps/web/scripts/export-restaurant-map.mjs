@@ -1,6 +1,7 @@
 /* global process, console */
-import { writeFileSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
+import { restaurantVisuals } from "../lib/restaurant-visuals.ts";
 import { collectCoordinateRows } from "./generate-restaurant-coordinates.mjs";
 
 export function buildRestaurantMap(sourceCommit, catalog = collectCoordinateRows()) {
@@ -12,9 +13,14 @@ export function buildRestaurantMap(sourceCommit, catalog = collectCoordinateRows
     sourceCommit,
     city: "Oslo",
     catalogCount: catalog.catalogCount,
-    restaurants: catalog.rows.map(([slug, name, address, latitude, longitude]) => ({
-      slug, name, address, latitude, longitude
-    })),
+    restaurants: catalog.rows.map(([slug, name, address, latitude, longitude]) => {
+      const logoPath = restaurantVisuals({ name, address })?.logo;
+      if (logoPath && (!/^\/restaurants\/[a-z0-9-]+\/logo\.(svg|png|webp)$/u.test(logoPath) ||
+          !existsSync(new URL("../public" + logoPath, import.meta.url)))) {
+        throw new Error("Missing or invalid public restaurant logo: " + slug);
+      }
+      return { slug, name, address, latitude, longitude, ...(logoPath ? { logoPath } : {}) };
+    }),
   };
 }
 
