@@ -20,7 +20,7 @@ export function DishSearch({
   latitude?: number | null;
   longitude?: number | null;
   sort?: DishSearchSort;
-  view?: "map";
+  view?: "map" | undefined;
 }) {
   return (
     <form
