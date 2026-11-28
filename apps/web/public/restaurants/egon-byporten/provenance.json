@@ -19,5 +19,16 @@
     "exterior.webp": "6f75076cbfd9907b9ec42b99dc30ae7267c4c3d7860d1bb8bba651d151d912f1",
     "interior.webp": "0977f240d70a62f7388197757342110b30726859894f4eacb46e64c636500e2d",
     "logo.svg": "0129f4c8dad2688ae6a9a1e9abc549e8bb501c63ef97685172aeef04764b4146"
+  },
+  "accuracyReview": {
+    "date": "2026-11-28",
+    "status": "withheld",
+    "method": "Side-by-side visual comparison of repository WebP assets against their recorded official source photographs.",
+    "scenes": {
+      "exterior": "Terrace furniture, planting and awning details reconstructed rather than preserved.",
+      "interior": "Exit signage, floor pattern and booth details differ from the reference."
+    },
+    "assetsPreserved": true,
+    "logo": "Official chain logo retained."
   }
 }

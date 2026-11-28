@@ -12,5 +12,16 @@
   "sha256": {
     "interior.webp": "5a84d365985cb65e6cb5f3a57be03b72ea09edf5560f8ccafe34b7b90229aae6",
     "exterior.webp": "b54a9af78badcdf46077cf2b3ac1f7dcec0650b7c711d1ff696efdb13470f8f2"
+  },
+  "accuracyReview": {
+    "date": "2026-11-28",
+    "status": "withheld",
+    "method": "Side-by-side visual comparison of repository WebP assets against their recorded official source photographs.",
+    "scenes": {
+      "exterior": "Terrace furniture arrangement and added rope barrier differ from the reference.",
+      "interior": "Shelf contents, hanging light details and wall artwork are reconstructed."
+    },
+    "assetsPreserved": true,
+    "logo": "Official chain logo retained."
   }
 }

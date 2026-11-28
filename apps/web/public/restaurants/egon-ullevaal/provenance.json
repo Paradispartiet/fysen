@@ -6,5 +6,15 @@
   "credit": "Sven-Erik Knoff / FotoKnoff, as identified by official source URL",
   "illustration": "AI-generated facade illustration based on actual branch photograph. Original PNG preserved separately. 1536x1024 WebP; display as Illustrasjon.",
   "logo": "Reuse official Egon chain SVG.",
-  "interiorStatus": "Pending verified branch-specific interior reference. No substitute image displayed."
+  "interiorStatus": "Pending verified branch-specific interior reference. No substitute image displayed.",
+  "accuracyReview": {
+    "date": "2026-11-28",
+    "status": "withheld",
+    "method": "Side-by-side visual comparison of repository WebP assets against their recorded official source photographs.",
+    "scenes": {
+      "exterior": "Terrace furniture, parasols, signage and window details differ from the reference."
+    },
+    "assetsPreserved": true,
+    "logo": "Official chain logo retained."
+  }
 }

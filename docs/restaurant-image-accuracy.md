@@ -9,6 +9,6 @@ Før aktivering skal hvert motiv sammenlignes visuelt med bilder av den riktige 
 - Kaffistova interiør: holdt tilbake. Bord- og stolplassering, lampenes geometri og dekorative detaljer er endret i forhold til kildefotoet.
 - Lorry interiør: holdt tilbake. Illustrasjonen legger til lys/dekorelementer og endrer inventardetaljer i forhold til kildefotoet.
 - Begge bildefiler og kildehenvisninger er bevart; logoer og Lorrys fasadefoto beholdes.
-- Egon Byporten (fasade/interiør), Karl Johan (fasade/interiør), Storo (fasade/interiør), Nordstrand (fasade) og Ullevål (fasade) gjenstår å kontrollere mot dette strengere kravet. De er ikke bekreftet korrekte av denne kontrollen.
+- Egon: alle åtte eksisterende illustrasjoner er nå sammenlignet med de registrerte kildefotoene og holdt tilbake på grunn av avvik. Detaljer per motiv står i hver provenance.json. Offisielle logoer beholdes.
 
 Ikke produser flere restaurantillustrasjoner før kontrollen av eksisterende illustrasjoner er fullført.
