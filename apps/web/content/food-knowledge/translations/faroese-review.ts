@@ -1194,5 +1194,458 @@ export const draftFaroeseArticles = {
       "Ov lítið tahini ella súrleiki, sum gevur flatan smakk.",
       "At borðreiða hummus ísakaldan beint úr køliskápinum, tá angin er veikari."
     ]
+  },
+  "shawarma": {
+    "overview": "Shawarma snýr seg bæði um marinering og steikiflatu. Á einum loddrøttum, snúningsspjóti verður ytsta lagið brúnað so við og við, meðan kjøtið innan fyri verður verandi saftigt. Kokkurin sker tunnar flísar av, so hvørt tær eru stoknar.",
+    "history": "Mannagongdin at steikja kjøt á loddrøttum, snúningsspjóti mentist í osmanska økinum og fekk ymisk staðbundin snið, millum annað shawarma, döner og seinni gyro. Shawarma er serliga útbreitt í levantinskari og arabiskari matmentan.",
+    "flavor": "Heitt kryddaður, stoktur og saftigur smakkur, ofta javnaður við hvítleykssós, tahini, súltaðum grønmeti og feskum grønmeti.",
+    "technique": "Heima fæst besta úrslitið við at marinera tunt kjøt, steikja á høgum hita í umførum og síðani savna kjøtið skjótt í ovni ella á pannu uttan at kóka tað í egnari vætu.",
+    "essentials": [
+      "Høsnarungi, lambskjøt ella neytakjøt, skorið ella lagt saman til stóra steikiflatu.",
+      "Marinada við heitum kryddi, súrleika og angandi tilfari.",
+      "Flatt breyð ella pita.",
+      "Sós og súrligt omanátilfar sum toum, tahini og súltað grønmeti."
+    ],
+    "recipe": {
+      "label": "Høsnarungashawarma á pannu",
+      "yield": "4 portiónir",
+      "time": "uml. 45 min + marinering",
+      "ingredients": [
+        "700 g høsnarungalør í tunnum strimlum",
+        "2 súpsk. jogurt",
+        "2 súpsk. sitrónsaft",
+        "2 súpsk. olivenolja",
+        "3 hvítleyksgeirar",
+        "1 tesk. spískumman",
+        "1 tesk. paprika",
+        "1/2 tesk. gurkumeja",
+        "1/2 tesk. kanel ella allehånde",
+        "pita, salat og súltað grønmeti",
+        "toum ella tahinisós"
+      ],
+      "steps": [
+        "Blanda høsnarungan við jogurti, sitrón, olju, hvítleyki og kryddi og marinera í minsta lagi ein tíma.",
+        "Turka ov nógva marinadu lætt av, so kjøtið kann brúnast.",
+        "Steik á sera heitari pannu í smáum umførum, til kjøtið hevur myrkar kantar og er gjøgnumstokið.",
+        "Lat kjøtið hvíla stutt og sker tað møguliga í enn tunnari flísar, áðrenn tað fer eina stutta ferð á pannuna aftur.",
+        "Borðreið í heitum breyði við sós, salati og súrligum súltaðum grønmeti."
+      ]
+    },
+    "variants": [
+      "Høsnarungashawarma við toum, ið hevur nógvan hvítleyk.",
+      "Lamba- ella neytashawarma við tahinisós.",
+      "Borðreitt á tallerki við rísi, salati og breyði afturvið."
+    ],
+    "serving": [
+      "Breyð og kjøt eiga at vera heit, meðan súltað grønmeti og salat eru feskt og kalt.",
+      "Súrleiki og hvítleykssós eru týdningarmikil mótsetningur til ríka kjøtið."
+    ],
+    "commonMistakes": [
+      "Ov nógv kjøt á pannuni, so tað kókar heldur enn brúnast.",
+      "Ov tjúkk sós og ov lítið súrligt omanátilfar.",
+      "At brúka soltið kjøt og steikja tað ov leingi."
+    ]
+  },
+  "manakish": {
+    "overview": "Manakish er bæði breyð og liðugur rættur: bleytt, eitt sindur seigt deiggj verður flatt og fær omanátilfar áðrenn baking. Za'atar við urtum, sesami og sumaki er eitt av eyðkendastu sløgunum.",
+    "history": "Flatt breyð við omanátilfari hevur langar siðir í Levantinum, og manakish ella manoushe er tætt knýtt at bakaríum og gerandismorgunmati í millum annað Libanon og grannalondunum. Omanátilfar og deiggj eru ymisk eftir staði.",
+    "flavor": "Ristað breyð, urtakendur za'atar, nøtakendur sesam og frískur súrleiki frá sumaki. Ostasløgini eru saltari og fyldigari.",
+    "technique": "Deiggið skal ganga nóg leingi til at verða smidligt og luftugt, men skal formast tunnari enn ein tjúkk pizza. Blanda za'atar við olivenolju til eitt smyrjandi mauk, ið ikki ger deiggið ov vátt.",
+    "essentials": [
+      "Bleytt hveitideiggj við geri.",
+      "Za'atar og olivenolja sum siðbundið omanátilfar.",
+      "Høgur bakihiti, so breyðið skjótt gongur upp og botnurin brúnast.",
+      "Feskt grønmeti, labneh ella súltað grønmeti sum hjámeti."
+    ],
+    "recipe": {
+      "label": "Manakish við za'atar",
+      "yield": "6 smá breyð",
+      "time": "uml. 90 min",
+      "ingredients": [
+        "500 g hveitimjøl",
+        "7 g turrger",
+        "3 dl flógvt vatn",
+        "1 tesk. sukur",
+        "1,5 tesk. salt",
+        "2 súpsk. olivenolja",
+        "5 súpsk. za'atar",
+        "5 súpsk. olivenolja til omanátilfar"
+      ],
+      "steps": [
+        "Elt mjøl, ger, vatn, sukur, salt og olju til bleytt deiggj og lat ganga til næstan tvífalda stødd.",
+        "Blanda za'atar og olivenolju til tjúkt, smyrjandi omanátilfar.",
+        "Být deiggið í seks partar og rulla ella trýst teir til fløt breyð.",
+        "Smyr za'atarblandingina í tunnum lagi og lat ein lítlan kant vera frían.",
+        "Baka á væl forhitaðari flatu á høgum hita, til botnurin er gullbrúnur og kanturin luftugur."
+      ]
+    },
+    "variants": [
+      "Za'atar manakish.",
+      "Ostamanakish við søltum ostum, ið bráðna væl.",
+      "Sløg við kjøti omaná, skyld við onnur fløt breyð úr Levantinum.",
+      "Samansetingar av osti og za'atar."
+    ],
+    "serving": [
+      "Borðreið heitt, gjarna lagt saman um tomat, agurku og urtir.",
+      "Labneh og oliven eru siðbundið morgunmatshjámeti."
+    ],
+    "commonMistakes": [
+      "Ov nógv omanátilfar, so miðjan verður tung og oljut.",
+      "Ov tjúkt deiggj, sum tornar, áðrenn botnurin brúnast.",
+      "Ov lágur ovnhiti, sum gevur langa bakitíð og turra skorpu."
+    ]
+  },
+  "koshari": {
+    "overview": "Koshari er ein máltíð í løgum, har bíligar grundvørur fáa mótsetning frá sós og omanátilfari. Rís, linsur og pasta eru mild og mettandi, meðan kryddað tomatsós, súrligt hvítleyksediki og myrkur, broyskin leykur geva rættinum dám.",
+    "history": "Koshari verður víða mett sum ein av kendastu tjóðarrættunum í Egyptalandi og er tætt knýtt at bíligum gøtumati og serligum koshari-matstovum. Rætturin vísir eisini, hvussu rís, linsur og pasta eru sameind í nútímans egyptiskum býarmati.",
+    "flavor": "Mettandi, jarðkendur grunnur við frískum tomatsúrleika, hvítleyki, chili og søtligum, næstan nøtakendum broysknum leyki.",
+    "technique": "Kóka lutirnar hvør sær, so rís, linsur og pasta varðveita rætta konsistens. Leykurin skal steikjast leingi nokk til at verða broyskin, og sósin skal vera nóg konsentrerað til at krydda alla skálina.",
+    "essentials": [
+      "Rís, brúnar linsur og smá pastasløg.",
+      "Kikertur til eyka konsistens og protein.",
+      "Kryddað tomatsós.",
+      "Hvítleyksediki og broyskið stoktur leykur sum týdningarmikið omanátilfar."
+    ],
+    "recipe": {
+      "label": "Koshari heima",
+      "yield": "6 portiónir",
+      "time": "uml. 70 min",
+      "ingredients": [
+        "250 g rís",
+        "200 g brúnar linsur",
+        "200 g smá pasta ella makaroni",
+        "1 blikk av kikertum",
+        "4 stórir leykir í tunnum flísum",
+        "1 blikk av hakkaðum tomatum",
+        "4 hvítleyksgeirar",
+        "2 súpsk. ediki",
+        "spískumman og chili",
+        "neutral olja"
+      ],
+      "steps": [
+        "Kóka linsurnar, til tær eru næstan moyrar, og kóka rísið fyri seg ella saman eftir ynsktari mannagongd.",
+        "Kóka pasta al dente og hita kikerturnar.",
+        "Steik leykin í umførum, til hann er djúpt gullbrúnur og broyskin, og lat oljuna renna av á rist.",
+        "Kóka tomat við hvítleyki, spískumman og chili til konsentreraða sós; blanda eitt sindur av hvítleyki og ediki sum súrliga dressing.",
+        "Bygg skálir við rísi, linsum, pasta og kikertum, síðani tomatsós, ediki og nógvum broysknum leyki."
+      ]
+    },
+    "variants": [
+      "Lutfallið millum rís, linsur og pasta er ymiskt eftir staði.",
+      "Chilisós kann borðreiðast fyri seg, so styrkin kann tillagast.",
+      "Summar útgávur brúka vermicelli saman við rísinum."
+    ],
+    "serving": [
+      "Borðreið heitt í løgum, so broyskni leykurin varðveitir konsistensin.",
+      "Eyka edikisós og chilisós standa ofta á borðinum."
+    ],
+    "commonMistakes": [
+      "At kóka alt stívilseríkt tilfar saman og fáa ójavna konsistens.",
+      "Leykur, ið bert er bleytur og brúnur, ikki veruliga broyskin.",
+      "Ov mild tomatsós, ið hvørvur í stóru nøgdini av rísi og pasta."
+    ]
+  },
+  "pide": {
+    "overview": "Pide sameinir bleytt, seigt gerdeiggj við omanátilfari, sum verður bakað samstundis. Eyðkenda bátaskapið verður gjørt við at leggja kantarnar inn yvir fylluna, so væta og bræddur ostur verða hildin á plássi uttan at gera rættin til eina afturlatna tertu.",
+    "history": "Pide finst í nógvum staðbundnum turkiskum sløgum og er ein týðandi partur av bakarí- og matstovumati. Navnið kann eisini brúkast breiðari um breyð, men uttan fyri Turkaland verður tað ofta sett í samband við avlongu sløgini við omanátilfari.",
+    "flavor": "Ristað deiggj og brúnir kantar møta søltum osti, kryddaðum kjøti ella grønmeti. Smør og egg verða brúkt í summum sløgum fyri meira fyldu.",
+    "technique": "Deiggið skal vera nóg elastiskt til at verða strekt tunt í miðjuni, meðan kanturin verður verandi tjúkkari. Sera heit bakiflata gevur skjótt lit á botnin, áðrenn omanátilfarið tornar.",
+    "essentials": [
+      "Gerdeiggj, ið lætt kann strekkjast.",
+      "Avlangt skap ella bátaskap.",
+      "Omanátilfar av osti, kjøti, grønmeti ella blandaðum tilfari.",
+      "Høgur ovnhiti og heit bakiflata."
+    ],
+    "recipe": {
+      "label": "Pide við osti og urtum",
+      "yield": "4 pide",
+      "time": "uml. 90 min",
+      "ingredients": [
+        "500 g hveitimjøl",
+        "7 g turrger",
+        "3 dl flógvt vatn",
+        "1 tesk. sukur",
+        "1,5 tesk. salt",
+        "2 súpsk. olivenolja",
+        "300 g rivin mozzarella ella mildur hvítur ostur",
+        "150 g feta",
+        "persilla",
+        "1 egg til at pensla við, um ynskt"
+      ],
+      "steps": [
+        "Elt deiggið, til tað er slætt og smidligt, og lat ganga til næstan tvífalda stødd.",
+        "Být í fýra partar og strekk hvønn part til avlangt ovalskap.",
+        "Legg ost og urtir á miðjuna og lat 2–3 cm av kantinum vera fríar.",
+        "Legg kantarnar inn og klemma endarnar saman, so pide fær bátaskap.",
+        "Baka á sera heitum steini ella plátu, til botnurin er brúnur og osturin bløðrar; pensla møguliga kantin lætt eftir baking."
+      ]
+    },
+    "variants": [
+      "Kaşarlı pide við osti.",
+      "Kıymalı pide við kryddaðum malnum kjøti.",
+      "Kuşbaşılı pide við smáum kjøtbitum.",
+      "Egg kann knúvast omaná summi sløg móti endanum á bakingini."
+    ],
+    "serving": [
+      "Verður ofta skorið tvørtur um í bitar og borðreitt heitt.",
+      "Feskt salat, sitrón ella ayran hóska til rík kjøt- og ostasløg."
+    ],
+    "commonMistakes": [
+      "Ov nógv omanátilfar, sum ger botnin vátan.",
+      "Ov lágur bakihiti, so deiggið tornar, áðrenn tað fær lit.",
+      "At gera kantin so tjúkkan, at hann verður tungur og breyðkendur."
+    ]
+  },
+  "birria": {
+    "overview": "Birria snýr seg um spakuliga matgerð og sós ella soð úr turrum chili, kryddi og gelatin úr kjøtinum. Nútímans quesabirria, ið er væl umtókt úti í heimi, er ein borðreiðingarháttur, ikki øll lýsingin av rættinum.",
+    "history": "Birria verður serliga sett í samband við Jalisco og er siðbundið ofta gjørt úr geitakjøti, men neytakjøt og onnur kjøtsløg eru eisini vanlig. Rætturin verður borðreiddur bæði til hátíðarhald og sum serligur matstovu- og gøtumatur.",
+    "flavor": "Djúpur, heitur chilismakkur við súrleika, smakki av turrari frukt frá chilinum og ríkum umami frá langtíðarkókaðum kjøti og soði.",
+    "technique": "Turt chili verður ristað og lagt í blot, áðrenn tað verður malið til marinadu. Kjøtið skal kóka spakuliga, til tað kann dragast sundur. Tak feitt av soðnum og tillaga tað fyri seg, so tað fær sterkan smakk uttan at verða tungt.",
+    "essentials": [
+      "Kjøt, ið tolir langa kóking, sum neytabógvur, ryggstykki ella geitakjøt.",
+      "Turt meksikanskt chili sum guajillo og ancho.",
+      "Krydd, ediki og angandi tilfar í marinaduni.",
+      "Consomé ella kókisoð, ið verður borðreitt saman við kjøtinum."
+    ],
+    "recipe": {
+      "label": "Neytagrýta við íblástri frá birria",
+      "yield": "6 portiónir",
+      "time": "uml. 4 tímar",
+      "ingredients": [
+        "1,5 kg neytaryggur ella bógvur",
+        "4 guajillo-chili",
+        "2 ancho-chili",
+        "3 hvítleyksgeirar",
+        "1 leykur",
+        "2 súpsk. ediki",
+        "1 tesk. spískumman",
+        "1/2 tesk. kanel",
+        "1 tesk. oregano",
+        "1 l neytasoð",
+        "lime, leykur og koriander"
+      ],
+      "steps": [
+        "Rista turru chilini stutt, tak fræini úr og legg tey í blot í heitum vatni.",
+        "Mala chili við hvítleyki, leyki, ediki og kryddi til slætta marinadu.",
+        "Brúna kjøtið, dekka við marinadu og soði og lat smákóka sera spakuliga, til tað dettur sundur.",
+        "Tak kjøtið úr, síla ella tillaga soðið og tak ov nógv feitt av eftir smakki.",
+        "Drag kjøtið sundur og borðreið í soðnum ella í heitum tortillum við leyki, koriander og lime."
+      ]
+    },
+    "variants": [
+      "Siðbundin sløg við geitakjøti.",
+      "Neytabirria, ið er sera vanlig í nútímans borðreiðing.",
+      "Quesabirria-tacos við osti, stoknar í feitti frá soðnum.",
+      "Birria borðreitt sum súpa ella grýturættur við consomé."
+    ],
+    "serving": [
+      "Lime, hakkaður leykur og koriander geva frískleika.",
+      "Consomé kann borðreiðast í egnum koppi at dyppa tacos í."
+    ],
+    "commonMistakes": [
+      "Ov stutt kókitíð, sum gevur seigt kjøt.",
+      "Beisk chilisós, tí turra chilið er brent ov hart.",
+      "Ov nógv feitt í consomé uttan nóg mikið av súrleika og kryddjavnvág."
+    ]
+  },
+  "cochinita-pibil": {
+    "overview": "Cochinita pibil fær eyðkenda reyða litin frá annatto í achiote og fríska smakkin frá súrligum sitrusfruktum. Kjøtið verður gjørt til leingi og við vætu, til tað kann dragast sundur, meðan súltaður reyðleykur og sterkt chili geva mótsetning við borðreiðing.",
+    "history": "Rætturin er tætt knýttur at Yucatán og pibil-mannagongdum, har matur verður gjørdur til innpakkaður í einum jarðovni. Nútímans heim og matstovur brúka ofta vanligan ovn, men varðveita achiote, sitrus og spakuliga matgerð sum grundarlag.",
+    "flavor": "Jarðkendur og piparkendur achiote, sitrus, hvítleykur og heitt krydd rundan um ríkt svínakjøt, javnað við sera súrligum reyðleyki.",
+    "technique": "Marinadan skal fáa tíð at treingja inn, og kjøtið verður gjørt til tætt innpakkað ella undir loki, so tað smákókar í egnari vætu. Høgur hiti móti endanum kann brúkast stutt til at brúna kantarnar.",
+    "essentials": [
+      "Svínbógvur ella nakki við nógvum feitti og bindivevnaði.",
+      "Achiotemauk ella recado rojo við annatto.",
+      "Súrlig sitrusfrukt og hvítleykur.",
+      "Súltaður reyðleykur og sterkt chili sum feskt omanátilfar."
+    ],
+    "recipe": {
+      "label": "Cochinita pibil í ovni",
+      "yield": "6 portiónir",
+      "time": "uml. 4 tímar + marinering",
+      "ingredients": [
+        "1,5 kg svínabógvur",
+        "100 g achiotemauk",
+        "1,5 dl appelsinsaft",
+        "0,75 dl limesaft",
+        "4 hvítleyksgeirar",
+        "1 tesk. oregano",
+        "1/2 tesk. spískumman",
+        "2 reyðleykir",
+        "1 dl ediki",
+        "maistortillur",
+        "habanero eftir smakki"
+      ],
+      "steps": [
+        "Blanda achiote, sitrus, hvítleyk og krydd og gníggja marinaduna væl inn í svínakjøtið.",
+        "Marinera í minsta lagi fýra tímar, gjarna náttina yvir.",
+        "Legg kjøtið í grýtu við tøttum loki ella pakka tað í bakipappír og folie og steik spakuliga, til tað lætt kann dragast sundur.",
+        "Sker reyðleykin tunt og súlta hann skjótt í ediki, lime, salti og møguliga eitt sindur av habanero.",
+        "Drag kjøtið sundur í steikisoðnum og borðreið í heitum maistortillum við súltaðum leyki."
+      ]
+    },
+    "variants": [
+      "Siðbundin pibil-mannagongd í jarðovni.",
+      "Heimaútgáva í grýtu við tøttum loki ella ovni.",
+      "Tacos, tortas og borðreiðing á tallerki við sama kjøti."
+    ],
+    "serving": [
+      "Súltaður reyðleykur er meira enn prýði – súrleikin javnar ríka kjøtið.",
+      "Maistortillur og sterk salsa hóska væl afturvið."
+    ],
+    "commonMistakes": [
+      "Ov soltið kjøt, sum tornar undir langari matgerð.",
+      "Ov lítil súrleiki í marinaduni og tungur, jarðkendur smakkur.",
+      "At stoyta steikisoðið burtur í staðin fyri at blanda tað aftur í kjøtið."
+    ]
+  },
+  "pozole": {
+    "overview": "Pozole snýr seg líka nógv um maisið sum um soðið. Stór hominy-korn fáa ein týðiligan, næstan blómukendan maisanga og fasta konsistens, meðan heiti grýturætturin verður javnaður við káli, reddiki, leyki, lime, chili og oregano við borðið.",
+    "history": "Pozole hevur djúpar røtur í maissiðum frá tíðini fyri Kolumbus og finst í nógvum staðbundnum sløgum í Meksiko. Reyð, grøn og hvít pozole vísa, hvussu sama grundhugskot broytist við staðbundnum chili, urtum og mannagongdum.",
+    "flavor": "Djúpt, heitt soð við týðiligum maissmakki, lyft av frískum súrleika og broysknum ráum grønmeti við borðreiðing.",
+    "technique": "Hominy skal vera heilt moyrt uttan at detta sundur, og kjøtið skal smákóka varliga, so soðið verður verandi reint. Omanátilfarið verður latið í við borðið, ikki kókað saman við grýtuni.",
+    "essentials": [
+      "Hominy ella pozolemais.",
+      "Soð og ofta svínakjøt ella høsnarungi.",
+      "Chili- ella urtagrunnur eftir staðbundnum stíli.",
+      "Nógv feskt omanátilfar: kál, reddikur, leykur, lime og oregano."
+    ],
+    "recipe": {
+      "label": "Grýturættur við íblástri frá pozole rojo",
+      "yield": "6 portiónir",
+      "time": "uml. 2,5 tímar",
+      "ingredients": [
+        "1,2 kg svínabógvur í stórum bitum",
+        "2 stór blikk av hominy, skolað",
+        "4 guajillo-chili",
+        "2 ancho-chili",
+        "1 leykur",
+        "4 hvítleyksgeirar",
+        "2 l vatn ella soð",
+        "oregano",
+        "kál og reddikur",
+        "lime og tostadas til borðreiðing"
+      ],
+      "steps": [
+        "Lat svínakjøt, hálvan leyk og hvítleyk smákóka í soði, til kjøtið er moyrt.",
+        "Rista chilini, legg tey í blot og mala við eitt sindur av soði til slætta sós.",
+        "Síla chilisósina í grýtuna og lat hominy í.",
+        "Lat alt smákóka, til maisið er moyrt og soðið væl samankókað, og drag ella sker kjøtið sundur.",
+        "Borðreið við skálum av fínt skornum káli, reddiki, leyki, oregano, lime og broysknum tostadas."
+      ]
+    },
+    "variants": [
+      "Pozole blanco uttan ráðandi lit frá chili ella urtum.",
+      "Pozole rojo við reyðum, turrum chili.",
+      "Pozole verde við grønum chili, urtum og staðbundnum tilfari."
+    ],
+    "serving": [
+      "Hvør gestur finnur sína egnu javnvág millum styrki, súrleika og broyskni við borðið.",
+      "Tostadas ella aðrar broysknar maisvørur geva eyka konsistens."
+    ],
+    "commonMistakes": [
+      "At brúka vanligt mais í staðin fyri hominy og missa grundarlagið í rættinum.",
+      "At kóka omanátilfarið í grýtuni, so frískleikin hvørvur.",
+      "Ov hørð kóking, ið ger kjøtið turt og soðið óklárt."
+    ]
+  },
+  "fish-taco": {
+    "overview": "Fish taco byggir á mótsetningar: heitur fiskur, bleyt tortilla, broyskið kál, súrlig lime og ein sós, sum bindur alt saman. Friteraður fiskur er sera kendur í Baja-stíli, men grillað sjógæti er eisini vanligt.",
+    "history": "Fiskataco verður serliga sett í samband við Baja California og atgongdina hjá strandarbýunum til feskt sjógæti. Seinni er rætturin vorðin eitt av kendastu sløgunum av norðvesturmeksikanskum gøtumati úti í heimi.",
+    "flavor": "Frískur, saltur og súrligur smakkur við ristaðum ella friteraðum fiski, broysknum káli, chili og kremutari sós. Maisið í tortilluni skal enn merkjast.",
+    "technique": "Fiskur skal gerast til stutta tíð. Við fritering skal deiggjblandingin vera køld og oljan nóg heit til tunna, broyskna skorpu; við grilling skal fiskurin turkast væl og steikjast skjótt.",
+    "essentials": [
+      "Fastur hvítur fiskur ella annað sjógæti.",
+      "Smáar maistortillur.",
+      "Fínt skorið kál og fesk salsa.",
+      "Lime og kremut, súrlig sós."
+    ],
+    "recipe": {
+      "label": "Fish tacos við íblástri frá Baja",
+      "yield": "12 tacos",
+      "time": "uml. 40 min",
+      "ingredients": [
+        "700 g toskur, upsi ella annar fastur hvítur fiskur",
+        "150 g hveitimjøl",
+        "1 tesk. bakipulvur",
+        "2 dl ísakalt vatn við kolsýru ella øl",
+        "salt og chili",
+        "neutral olja til fritering",
+        "12 maistortillur",
+        "300 g fínt skorið kál",
+        "1 dl jogurt ella majonesa",
+        "lime, koriander og salsa"
+      ],
+      "steps": [
+        "Sker fiskin í avlangar bitar og turka hann væl.",
+        "Blanda mjøl, bakipulvur, krydd og ísakalda vætu skjótt til lætta deiggjblanding.",
+        "Dyppa fiskin í blandingina og fritera í heitari olju, til skorpan er gullbrún og fiskurin júst gjøgnumkókaður.",
+        "Blanda einfalda sós úr jogurti ella majonesu, lime og salti og hita tortillurnar.",
+        "Bygg tacos við fiski, káli, sós, salsa, koriander og nógvari lime."
+      ]
+    },
+    "variants": [
+      "Broyskin, friteraður Baja-stílur.",
+      "Grillaður fiskur við lættari salsa og káli.",
+      "Shrimp tacos nýta sama bygnað við rækjum.",
+      "Tostada við sjógæti og líknandi omanátilfari."
+    ],
+    "serving": [
+      "Borðreið fiskin beinanvegin, so skorpan ikki verður bleyt.",
+      "Kál og lime eiga at vera køld og fesk mótvegis heita fiskinum."
+    ],
+    "commonMistakes": [
+      "Vátur fiskur, ið ger frityrblandingina leysa og fær oljuna at sproyta.",
+      "Ov lágur oljuhiti og feit skorpa.",
+      "Ov nógv sós, ið køvir fiskasmakkin og ger tortilluna bleyta."
+    ]
+  },
+  "smashburger": {
+    "overview": "Smashburger er fyrst og fremst ein steikimannagongd. Heldur enn at forma tjúkkan burgara frammanundan verður kjøtið trýst hart eina ferð móti heitari plátu, so ein stór flata fær beinleiðis samband við hitan og kraftiga Maillard-brúning.",
+    "history": "Tunnir diner- og griddle-burgarar hava langar amerikanskar siðir, meðan orðið smashburger er vorðið sera sjónligt gjøgnum nútímans burgaraketur og sjálvstøðugar matstovur. Mannagongdin byggir á sama grundhugskot: høgur hiti, skjót steiking og nógv skorpa.",
+    "flavor": "Sterkur smakkur av stoknum kjøti, salti, bræddum osti og bleytum breyði, ofta javnaður við súltaðari agurku, leyki og súrligari burgarasós.",
+    "technique": "Brúka kalt kjøt við nógvum feitti, forma leysar kúlur og trýst tær beinanvegin móti næstan rúkandi heitari stál- ella stoypijarnsflatu. Trýst ikki aftur, tá skorpan er sett – tá trýstir tú bara saftina út.",
+    "essentials": [
+      "Malið kjøt við nógvum feitti til saftigleika.",
+      "Sera heit, tung steikiflata.",
+      "Eitt hart trýst beint í byrjanini av steikingini.",
+      "Bleytt burgarabreyð, ostur og fá, greið sløg av omanátilfari."
+    ],
+    "recipe": {
+      "label": "Dupultur smashburger",
+      "yield": "4 burgarar",
+      "time": "uml. 25 min",
+      "ingredients": [
+        "600 g malið kjøt við uml. 20 % feitti",
+        "8 flísar av burgaraosti",
+        "4 bleyt burgarabreyð",
+        "salt og pipar",
+        "1 leykur í sera tunnum flísum",
+        "súltað agurka",
+        "majonesa, sinnop og ketchup eftir smakki",
+        "eitt sindur av smøri til breyðini"
+      ],
+      "steps": [
+        "Být kjøtið leyst í átta kúlur uttan at trýsta tær saman.",
+        "Rista skurðflaturnar á burgarabreyðunum í eitt sindur av smøri og legg tey til viks.",
+        "Legg kjøtkúlurnar á sera heita stál- ella stoypijarnsflatu og trýst tær flatar hart fyrstu sekundini.",
+        "Salta, lat myrka skorpu verða gjørda, skava burgaran leysan, vend eina ferð og legg ost á.",
+        "Legg tvær kjøtflísar í hvønn burgara og borðreið beinanvegin við leyki, súltaðari agurku og sós."
+      ]
+    },
+    "variants": [
+      "Dupultur smash við tveimum sera tunnum kjøtflísum.",
+      "Oklahoma onion burger, har sera tunnur leykur verður trýstur inn í kjøtið.",
+      "Single smash til ein lættari burgara."
+    ],
+    "serving": [
+      "Borðreið beint av steikiflatuni; tunnu burgararnir kólna skjótt.",
+      "Súltað agurka og ráur ella stoktur leykur geva súrleika og konsistens móti kjøti og osti."
+    ],
+    "commonMistakes": [
+      "At brúka non-stick-pannu, ið ikki tolir ella heldur nóg nógvan hita.",
+      "At forma kjøtflísina frammanundan og missa smash-árinið.",
+      "At trýsta burgaran fleiri ferðir undir steiking og trýsta saftina út, eftir at skorpan er sett."
+    ]
   }
 } as const satisfies Record<string,ArticleBody>;
