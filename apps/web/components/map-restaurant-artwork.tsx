@@ -20,7 +20,6 @@ export function MapRestaurantArtwork({ restaurant }: { restaurant: { name: strin
 
   return <section className={styles.artwork} aria-label="Restaurantens visuelle identitet">
     {logo && !failed.includes(logo) ? (
-      // eslint-disable-next-line @next/next/no-img-element
       <img className={styles.restaurantLogo} src={withPublicBasePath(logo)} alt={restaurant.name + " – logo"} width={100} height={48} onError={() => setFailed(previous => [...previous, logo])} />
     ) : <span className={styles.monogram} aria-hidden="true">{initials}</span>}
     {scenes.length > 0 && <div className={styles.scenes}>
