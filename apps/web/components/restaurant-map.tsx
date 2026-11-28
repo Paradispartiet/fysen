@@ -7,6 +7,7 @@ import { withPublicBasePath } from "../lib/public-path";
 import type { MapEvidenceBySlug } from "../lib/map-menu-evidence";
 import styles from "./restaurant-map.module.css";
 import { MapRestaurantArtwork } from "./map-restaurant-artwork";
+import { MapRestaurantMenu } from "./map-restaurant-menu";
 
 export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: readonly CoordinateRow[]; dishQuery?: string; evidence?: MapEvidenceBySlug }) {
   const frame = useRef<HTMLIFrameElement>(null);
@@ -137,6 +138,7 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: r
           <div><h2>{current.properties.name}</h2><p>{current.properties.address}</p></div>
           <button type="button" onClick={() => setSelected(null)} aria-label="Lukk restaurantkort">Lukk</button>
           <MapRestaurantArtwork key={current.id} restaurant={current.properties} />
+          <MapRestaurantMenu key={current.id + "-menu"} slug={current.id} />
           {currentEvidence.length > 0 && <ul className={styles.evidence}>
             {currentEvidence.map((entry, index) => <li key={entry.sourceUrl + entry.name + index}>
               {entry.origin !== "catalog" && <strong>{entry.name}{entry.price ? " · " + entry.price : ""}</strong>}
