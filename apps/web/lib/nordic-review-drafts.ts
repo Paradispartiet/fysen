@@ -363,3 +363,61 @@ export const draftArcticResults = {
     "searchDish": "Oza borramuša"
   }
 } as const satisfies Record<"kl" | "se", Partial<Record<ResultMessageKey,string>>>;
+
+// Partial food-knowledge drafts. Evidence and availability wording is deliberately pending review.
+export const draftArcticKnowledge = {
+  "kl": {
+    "lexicon": "Fysenip nerisassanik ilisimasaqarfia",
+    "aboutDish": "Nerisassaq pillugu",
+    "more": "Nerisassat {count} tamarmik takukkit",
+    "less": "Nerisassat ikinnerusut takukkit",
+    "find": "{name} ujaruk",
+    "close": "{name} pillugu paasissutissat matukkit",
+    "what": "{name} suua?",
+    "history": "Tunuliaqutaq nerisassanillu ileqqutoqqat",
+    "taste": "Mamaq qanormullu ittuunera",
+    "technique": "Nerisassioriaaseq",
+    "contents": "Nerisassap akui suuppat?",
+    "makeHome": "Angerlarsimaffinni igajuk",
+    "recipe": "{name} ima igajuk",
+    "ingredients": "Akussat",
+    "steps": "Iganermut ilitsersuut",
+    "variants": "Assigiinngitsut nalinginnaasut",
+    "serving": "Sassaalliineq",
+    "mistakes": "Kukkussutaasartut",
+    "related": "Una nuannaraajukku aamma uku misilikkit",
+    "restaurants": "Neriniartarfiit",
+    "where": "Oslomi {name} sumi pissarsiarineqarsinnaava?",
+    "allMatches": "Ujarnerup inerneri tamarmik takukkit",
+    "general": "Nerisassat pillugit ilisimasat",
+    "originalText": "Allaaserisap sinnera suli norskisut allassimavoq.",
+    "recipeInfo": "Iganermut ilitsersuut pillugu paasissutissat"
+  },
+  "se": {
+    "lexicon": "Fysen borramušleksikona",
+    "aboutDish": "Borramuša birra",
+    "more": "Čájet buot {count} borramuša",
+    "less": "Čájet unnit borramušaid",
+    "find": "Oza {name}",
+    "close": "Gidde dieđuid {name} birra",
+    "what": "Mii lea {name}?",
+    "history": "Duogáš ja borramuškultuvra",
+    "taste": "Mákca ja konsisteansa",
+    "technique": "Ráhkadanvuohki",
+    "contents": "Mainna borramuš ráhkaduvvo?",
+    "makeHome": "Ráhkat dan ruovttus",
+    "recipe": "Dáinna lágiin ráhkadat {name}",
+    "ingredients": "Ávdnasat",
+    "steps": "Ráhkadanrávvagat",
+    "variants": "Dábálaš variánttat",
+    "serving": "Dáinna lágiin borramuš biddjo beavdái",
+    "mistakes": "Dábálaš boasttuvuođat",
+    "related": "Jus liikot dása, geahččal maid",
+    "restaurants": "Restauráŋŋat",
+    "where": "Gos Oslos oaččut {name}?",
+    "allMatches": "Čájet buot ohcanbohtosiid",
+    "general": "Oppalaš diehtu borramušaid birra",
+    "originalText": "Artihkkala loahppa lea ain dárogillii.",
+    "recipeInfo": "Dieđut reseaptta birra"
+  }
+} as const satisfies Record<"kl" | "se", Partial<Record<KnowledgeKey,string>>>;
