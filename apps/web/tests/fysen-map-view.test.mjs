@@ -19,10 +19,15 @@ test("map runtime script parses and is isolated from the account origin", () => 
   assert.match(frame, /event\.source !== parent/);
 });
 
-test("Oslo map uses existing catalog rows, clusters and a menu entry", () => {
+test("Oslo map uses existing catalog rows, individual markers and a menu entry", () => {
   assert.match(page, /rows=\{restaurantCoordinateRows\}/);
   assert.match(view, /restaurantMapFeatures\(rows\)/);
-  assert.match(frame, /cluster:true/);
+  assert.match(frame, /cluster:false/);
+  assert.doesNotMatch(frame, /point_count|fysen-clusters/);
+  assert.match(frame, /"text-field":\["get","name"\]/);
+  assert.match(view, /restaurantVisuals\(feature\.properties\)/);
+  assert.match(frame, /image\.onerror/);
+  assert.match(frame, /map\.getZoom\(\) >= 15\.5/);
   assert.match(frame, /fysen-map-select/);
   assert.match(header, /withPublicBasePath\("\/kart"\)/);
   assert.match(view, /Restaurantlisten fungerer fortsatt/);
