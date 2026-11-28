@@ -67,11 +67,50 @@ def stage_biryani():
     (out/"review.json").write_text(json.dumps({**meta,"native_crop":list(crop),"native_size":list(clean.size),"sha256":{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in files},"modification":"Native manual plate contour; no upscale or generated food pixels","visual_review_completed":False,"approved_for_fysen":False,"published":False},indent=2)+"\n")
     print("STAGED BIRYANI MASK",clean.size)
 
+def stage_reviewed_plate(dish, relative, digest, preview_size, points):
+    base=ROOT/"assets/fysen-image-candidates"/dish/"licensed-native-20261128"
+    if relative: base=base/relative
+    out=base/"refined-v1"
+    if out.exists(): return
+    data=(base/"source.jpg").read_bytes()
+    meta=json.loads((base/"review.json").read_text())
+    assert hashlib.sha256(data).hexdigest()==meta["source_sha256"]==digest
+    im=Image.open(io.BytesIO(data)).convert("RGB")
+    assert list(im.size)==meta["size"]
+    w,h=im.size
+    pw,ph=preview_size
+    mask=Image.new("L",im.size)
+    ImageDraw.Draw(mask).polygon([(round(x*w/pw),round(y*h/ph)) for x,y in points],fill=255)
+    a,b,c,d=mask.getbbox()
+    pad=round(min(w,h)*.025)
+    crop=(max(0,a-pad),max(0,b-pad),min(w,c+pad),min(h,d+pad))
+    clean=Image.composite(im,Image.new("RGB",im.size),mask).crop(crop)
+    assert min(clean.size)>=1600
+    out.mkdir()
+    clean.save(out/f"{dish}.png")
+    mask.save(out/"native-mask.png")
+    preview=clean.copy();preview.thumbnail((1000,1000),Image.Resampling.LANCZOS);preview.save(out/"preview.jpg",quality=95)
+    thumb=clean.copy();thumb.thumbnail((512,512),Image.Resampling.LANCZOS)
+    tile=Image.new("RGB",(512,512));tile.paste(thumb,((512-thumb.width)//2,(512-thumb.height)//2))
+    master=out/f"{dish}-master-{clean.width}.avif"
+    clean.save(master,format="AVIF",quality=88)
+    thumbpath=out/f"{dish}-thumb-512.avif"
+    tile.save(thumbpath,format="AVIF",quality=85);tile.save(out/"thumb-preview.png")
+    assert Image.open(master).size==clean.size and Image.open(thumbpath).size==(512,512)
+    files=[out/f"{dish}.png",out/"native-mask.png",master,thumbpath]
+    (out/"review.json").write_text(json.dumps({**meta,"native_crop":list(crop),"native_size":list(clean.size),"sha256":{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in files},"modification":"Manual native-resolution plate contour; no upscale or generated food pixels","visual_review_completed":False,"approved_for_fysen":False,"published":False},indent=2)+"\n")
+    print("STAGED PLATE",dish,clean.size)
+
+# Trace the entire plate and the protruding original salad leaves.
+SHAWARMA=[(104,396),(106,371),(111,346),(120,320),(131,294),(146,269),(163,245),(185,222),(210,200),(237,180),(265,161),(295,145),(328,130),(361,118),(394,109),(428,101),(463,95),(495,92),(500,85),(498,69),(507,63),(525,61),(540,67),(558,78),(575,87),(591,99),(618,107),(651,117),(683,129),(713,143),(745,158),(773,178),(800,198),(824,220),(845,244),(863,270),(877,295),(887,322),(893,349),(897,378),(897,406),(893,436),(886,464),(875,492),(861,519),(844,545),(823,570),(799,593),(771,614),(742,633),(710,650),(676,664),(641,676),(604,686),(567,693),(529,698),(490,700),(451,699),(412,695),(374,688),(337,678),(302,666),(269,651),(238,634),(209,615),(183,593),(160,569),(141,544),(126,517),(115,489),(108,460),(104,431)]
+# Trace bowl plus basil and pasta protruding above its rim.
+PASTA=[(72,383),(72,354),(76,324),(84,296),(95,270),(110,245),(129,223),(152,201),(179,182),(209,165),(240,150),(273,136),(309,124),(346,114),(386,107),(426,102),(470,99),(485,93),(497,69),(512,53),(530,41),(552,33),(575,26),(585,27),(592,36),(598,51),(600,68),(596,87),(591,101),(600,107),(618,105),(629,109),(636,121),(650,127),(682,140),(716,155),(749,173),(781,192),(810,214),(834,237),(855,263),(873,290),(887,318),(897,348),(903,377),(905,407),(901,437),(894,466),(883,494),(868,522),(850,548),(828,573),(802,595),(773,616),(741,634),(706,651),(670,664),(632,676),(591,686),(550,693),(508,698),(466,698),(424,695),(382,688),(341,678),(303,665),(267,650),(233,631),(201,609),(172,585),(146,559),(124,532),(106,503),(92,473),(82,443),(75,413)]
 if __name__=="__main__":
-    completed=0
-    try: stage_biryani();completed+=1
-    except Exception as exc:print("BLOCKED biryani mask",str(exc))
-    for row in SOURCES:
-        try: stage(row);completed+=1
-        except Exception as exc:print("BLOCKED",row["id"],str(exc))
-    if not completed:raise SystemExit("No eligible originals acquired")
+    done=0
+    for args in [
+        ("shawarma","alternative-andy-li","cd9385263df218171e023358f1f467037125e169138fff1476af1133a16aec13",(1000,750),SHAWARMA),
+        ("pasta-alla-norma","","1c0a5064fe855a9a8c8e12d24e3a3806cbb7fb325c4d9a98aa09baa3567b567b",(1000,719),PASTA)
+    ]:
+        try:stage_reviewed_plate(*args);done+=1
+        except Exception as exc:print("BLOCKED",args[0],str(exc))
+    if not done:raise SystemExit("No eligible plate candidates")
