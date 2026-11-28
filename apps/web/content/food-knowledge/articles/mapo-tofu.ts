@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Serveres med dampet ris som absorberer den intense sausen.","En enkel grønn grønnsak ved siden av gir kontrast."],
   commonMistakes: ["Å erstatte doubanjiang med bare vanlig chilisaus.","Å røre hardt og knuse tofuen.","Å koke sichuanpepper lenge til aromaen blir flat."],
   relatedDishIds: ["bao","dumplings","dan-dan-noodles","peking-duck"],
-  sources: []
+  sources: [{"label":"The Woks of Life – Mapo tofu","href":"https://thewoksoflife.com/ma-po-tofu-real-deal/"}]
 };
