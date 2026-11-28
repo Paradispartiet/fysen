@@ -80,7 +80,7 @@ export function StaticPreviewSearchPage() {
       return;
     }
 
-    if (query.view === "map" && query.city.toLocaleLowerCase("nb-NO") === "oslo" && query.q.length >= 2) { setLoading(false); return; }
+    if (query.city.toLocaleLowerCase("nb-NO") === "oslo" && query.q.length >= 2) { setLoading(false); return; }
 
     if (query.city.toLocaleLowerCase("nb-NO") === "oslo" || !clientPreviewApiBaseUrl) {
       window.location.replace(productionSearchUrl(query));
@@ -163,13 +163,14 @@ export function StaticPreviewSearchPage() {
           city={city}
           buttonLabel="Finn retten"
           inputId="results-dish-query"
+          view={query?.view === "map" ? "map" : undefined}
         />
       </GlobalHeader>
 
       <main className="resultsMain">
         <section className="resultsContent" aria-live="polite">
-          {query?.view === "map" && city.toLocaleLowerCase("nb-NO") === "oslo" && q.length >= 2 ? (
-            <StaticMapDishSearch key={q} query={q} />
+          {city.toLocaleLowerCase("nb-NO") === "oslo" && q.length >= 2 ? (
+            <StaticMapDishSearch key={q} query={q} view={query?.view === "map" ? "map" : "list"} />
           ) : q.length === 0 ? (
             <DishBrowse
               key={`${query?.city}-${query?.cuisine}-${query?.region}-${query?.mat}`}
