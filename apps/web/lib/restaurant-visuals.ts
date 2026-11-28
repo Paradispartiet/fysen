@@ -56,7 +56,7 @@ const peppesStortingsgata = {
 } as const;
 
 const lorry = {
- logo: null,
+ logo: "/restaurants/lorry/logo.png",
  exterior: "/restaurants/lorry/exterior.jpg",
  interior: null,
  sourceUrl: "https://commons.wikimedia.org/wiki/File:Parkveien_12_med_restaurant_Lorry.jpg",
