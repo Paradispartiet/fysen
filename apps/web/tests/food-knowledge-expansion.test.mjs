@@ -126,7 +126,7 @@ test("Homepage exposes all articles, explicit menu links and updated copy", () =
   assert.equal(learning.learningDishes.length, knowledge.foodKnowledgeDishes.length);
   assert.equal(learning.featuredLearningDishCount, 18);
   assert.ok(learningSource.includes("Vis alle ${learningDishes.length} retter"));
-  assert.ok(learningSource.includes("dishSearchHref(dish.query)"));
+  assert.ok(learningSource.includes("dishSearchHref(dish.query, city)"));
   assert.ok(learningSource.includes("Se menytreff"));
   assert.ok(gallerySource.includes("Til inspirasjon"));
   assert.ok(!gallerySource.includes("Litt inspirasjon"));
