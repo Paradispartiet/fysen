@@ -1,0 +1,19 @@
+{
+  "id": "hummus",
+  "filename": "\u0635\u062d\u0646_\u062d\u0645\u0635.JPG",
+  "photographer": "Sheam k",
+  "size": [
+    3072,
+    2304
+  ],
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+  "variant": "Hummus with olive oil and chickpeas",
+  "slot": "alternative-sheam-k",
+  "source_page": "https://commons.wikimedia.org/wiki/File:%D8%B5%D8%AD%D9%86_%D8%AD%D9%85%D8%B5.JPG",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/1/14/%D8%B5%D8%AD%D9%86_%D8%AD%D9%85%D8%B5.JPG",
+  "source_sha256": "9333e00fc29ca8e0a581cbe3328ebe080f691a3efb3e9d06d0e6136edb66036c",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false
+}

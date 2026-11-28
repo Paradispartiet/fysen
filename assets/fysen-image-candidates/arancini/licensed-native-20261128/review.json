@@ -1,0 +1,18 @@
+{
+  "id": "arancini",
+  "filename": "The_famous_arancine.jpg",
+  "photographer": "Madmartigand",
+  "size": [
+    3647,
+    2665
+  ],
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+  "variant": "Sicilian arancine",
+  "source_page": "https://commons.wikimedia.org/wiki/File:The_famous_arancine.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/8/8d/The_famous_arancine.jpg",
+  "source_sha256": "18a6012f1d12ed663e0803704f1267b567a43f87fcc30555a692ece62a4b6993",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false
+}
