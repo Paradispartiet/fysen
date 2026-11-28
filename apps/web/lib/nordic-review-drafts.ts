@@ -421,3 +421,159 @@ export const draftArcticKnowledge = {
     "recipeInfo": "Dieđut reseaptta birra"
   }
 } as const satisfies Record<"kl" | "se", Partial<Record<KnowledgeKey,string>>>;
+
+// Unreviewed display-only copy; missing keys are intentional.
+export const draftArcticBrowse = {
+  "kl": {
+    "allCity": "{city}: nerisassat tamarmik",
+    "tryOther": "Nerisassat suussusii allat misilikkit imaluunniit nerisassaq ujaruk.",
+    "kitchen": "Nerisassat suussusii",
+    "filterKitchen": "Nerisassat suussusii malillugit immikkoortiterigit",
+    "allKitchen": "Nerisassat suussusii tamarmik",
+    "findDish": "Nerisassaq ujaruk",
+    "regionFilter": "{name}: ileqqut malillugit immikkoortiterigit",
+    "allOf": "{name} tamakkerlugu",
+    "chooseType": "{name}: nerisassat suussusiat toqqaruk",
+    "typeFilter": "{name}: nerisassat suussusii malillugit immikkoortiterigit",
+    "count": "{visible} / {total} nerisassat",
+    "restaurantsOne": "Neriniartarfik {count}",
+    "restaurantsMany": "Neriniartarfiit {count}",
+    "dishes": "Nerisassat",
+    "aboutDish": "{name} pillugu",
+    "world": "Nunarsuarmi nerisassat assigiinngitsut misissuataakkit",
+    "moreCuisines": "Nunat allat nerisassaat ileqquilu",
+    "fromCuisine": "{name}: nerisassat",
+    "subcategories": "{name}: immikkoortut",
+    "allSub": "Immikkoortut tamarmik",
+    "exploreTypes": "Nerisassat suussusii misissuataakkit",
+    "type": "Nerisassat suussusiat: {name}",
+    "sub": "Immikkoortoq: {name}",
+    "allSubIn": "{name}: immikkoortut tamarmik",
+    "featured": "Nerisassat toqqakkat",
+    "exploreDishes": "Nerisassat misissuataakkit",
+    "more": "Suli amerlanerusut takukkit ({count})",
+    "less": "Ikinnerusut takukkit",
+    "subOne": "Immikkoortoq {count}",
+    "subMany": "Immikkoortut {count}",
+    "close": "{name} matujuk",
+    "exploreHow": "Qanoq misissuataarusunnerlutit toqqaruk",
+    "showFewer": "Nerisassat ikinnerusut takukkit",
+    "showAll": "Nerisassatut siunnersuutit {count} tamarmik takukkit"
+  },
+  "se": {
+    "allCity": "Buot borramušat: {city}",
+    "tryOther": "Geahččal eará borramušárbevieru dahje oza borramuša.",
+    "kitchen": "Borramušárbevierru",
+    "filterKitchen": "Sille borramušárbevieru mielde",
+    "allKitchen": "Buot borramušárbevierut",
+    "findDish": "Oza borramuša",
+    "regionFilter": "Sille {name} árbevieru mielde",
+    "allOf": "Buot: {name}",
+    "chooseType": "Vállje borramuššlája: {name}",
+    "typeFilter": "Sille {name} borramuššlája mielde",
+    "count": "{visible} / {total} borramušat",
+    "restaurantsOne": "{count} restauráŋŋa",
+    "restaurantsMany": "{count} restauráŋŋa",
+    "dishes": "Borramušat",
+    "aboutDish": "{name} birra",
+    "world": "Suokkardala máilmmi borramušárbevieruid",
+    "moreCuisines": "Eanet riikkalaš borramušárbevierut",
+    "fromCuisine": "Borramušat: {name}",
+    "subcategories": "Vuollekategoriijat: {name}",
+    "allSub": "Buot vuollekategoriijat",
+    "exploreTypes": "Suokkardala borramuššlájaid",
+    "type": "Borramuššládja: {name}",
+    "sub": "Vuollekategoriija: {name}",
+    "allSubIn": "Buot {name} vuollekategoriijat",
+    "featured": "Válljejuvvon borramušat",
+    "exploreDishes": "Suokkardala borramušaid",
+    "more": "Čájet eanet ({count})",
+    "less": "Čájet unnit",
+    "subOne": "{count} vuollekategoriija",
+    "subMany": "{count} vuollekategoriija",
+    "close": "Gidde {name}",
+    "exploreHow": "Vállje mo háliidat suokkardallat",
+    "showFewer": "Čájet unnit borramušaid",
+    "showAll": "Čájet buot {count} borramuševttohusa"
+  }
+} as const satisfies Record<"kl" | "se", Partial<Record<BrowseKey,string>>>;
+
+
+// Unreviewed display-only copy; missing keys are intentional.
+export const draftArcticPages = {
+  "kl": {
+    "myFood": "Nerisassakka",
+    "findDish": "Nerisassaq ujaruk",
+    "savedOne": "Nerisassaq toqqorsimasoq {count}",
+    "savedMany": "Nerisassat toqqorsimasut {count}",
+    "empty": "Toqqorsimasat soqanngillat",
+    "removeBusy": "Piiarneqarpoq …",
+    "retry": "Misileqqiguk",
+    "remove": "Piiaruk",
+    "priceMissing": "Akia allassimanngilaq",
+    "saved": "Toqqorneqarpoq {date}",
+    "about": "Fysen pillugu",
+    "aboutTitle": "Nerisassaq nererusutat ujaruk.",
+    "home": "Saqqaanut uterit",
+    "distanceSort": "Ungasissuseq tulleriiaarinerlu",
+    "sort": "Ujarnerup inerneri tulleriiaakkit",
+    "best": "Inernerit pitsaanerpaat",
+    "nearest": "Qaninnerpaat",
+    "searchPrompt": "Nerisassaq nererusutat ujaruk.",
+    "tooShort": "Ujarniaruit minnerpaamik nalunaaquttat marluk allakkit.",
+    "retryLater": "Kingusinnerusukkut misileqqiguk.",
+    "tryOther": "Nerisassap aqqa alla misiliguuk imaluunniit nerisassat tamarmik takukkit.",
+    "saving": "Toqqorneqarpoq …",
+    "savedTo": "Nerisassakka-ni toqqorneqarpoq",
+    "saveRetry": "Toqqoqqinniarlugu misiliguuk",
+    "save": "Nerisassakka-ni toqqoruk"
+  },
+  "se": {
+    "myFood": "Mu borramušat",
+    "findDish": "Oza borramuša",
+    "savedOne": "{count} vurkejuvvon borramuš",
+    "savedMany": "{count} vurkejuvvon borramuša",
+    "empty": "Čoakkáldat lea guorus",
+    "removeBusy": "Sihkkojuvvo …",
+    "retry": "Geahččal ođđasit",
+    "remove": "Sihko",
+    "priceMissing": "Haddi ii leat registrerejuvvon",
+    "saved": "Vurkejuvvon {date}",
+    "about": "Fysen birra",
+    "aboutTitle": "Oza borramuša maid háliidat borrat.",
+    "home": "Máhca ruovttusiidui",
+    "distanceSort": "Gaska ja ortnet",
+    "sort": "Sirre ohcanbohtosiid",
+    "best": "Buoremus bohtosat",
+    "nearest": "Lágamusat",
+    "searchPrompt": "Oza borramuša maid háliidat borrat.",
+    "tooShort": "Čále unnimusat guokte mearkka ohcat.",
+    "retryLater": "Geahččal fas veahá maŋŋil.",
+    "tryOther": "Geahččal eará borramušnama dahje čájet buot borramušaid.",
+    "saving": "Vurkejuvvo …",
+    "savedTo": "Vurkejuvvon Mu borramušat -čoakkáldahkii",
+    "saveRetry": "Geahččal vurket fas",
+    "save": "Vurke Mu borramušat -čoakkáldahkii"
+  }
+} as const satisfies Record<"kl" | "se", Partial<Record<PageKey,string>>>;
+
+
+// Unreviewed display-only copy; missing keys are intentional.
+export const draftArcticVisuals = {
+  "kl": {
+    "kicker": "Nererusunneq · Isumassarsiorneq",
+    "title": "Suna nererusuppiuk?",
+    "explore": "Nerisassat {count} misissuataakkit",
+    "gallery": "Nererusunneq · Assit",
+    "find": "Mamakujuttumik ujarit",
+    "license": "Akuersissut"
+  },
+  "se": {
+    "kicker": "Borramušmiella · Inspirášuvdnii",
+    "title": "Maid háliidat borrat?",
+    "explore": "Suokkardala {count} borramuša",
+    "gallery": "Borramušmiella · Govvagalleriija",
+    "find": "Oza maidne máisttolaš",
+    "license": "Liseansa"
+  }
+} as const satisfies Record<"kl" | "se", Partial<Record<VisualKey,string>>>;
