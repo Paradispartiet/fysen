@@ -6,6 +6,8 @@ on:
       - "apps/menu-worker/catalog/**"
       - "apps/web/scripts/generate-restaurant-coordinates.mjs"
       - "apps/web/scripts/export-restaurant-map.mjs"
+      - "apps/web/lib/restaurant-visuals.ts"
+      - "apps/web/public/restaurants/**"
       - "apps/web/tests/restaurant-map-export.test.mjs"
       - ".github/workflows/publish-fysen-restaurant-map.yml"
   workflow_dispatch:
