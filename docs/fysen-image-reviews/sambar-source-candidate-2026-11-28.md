@@ -1,0 +1,5 @@
+# Sambar: native photo candidate (review only)
+
+- Candidate: [Tiffin sambar](https://commons.wikimedia.org/wiki/File:Tiffin_sambar.jpg), Raksanand, 3264 × 4084 px, CC BY-SA 4.0. The preview shows the complete copper vessel; this is a breakfast accompaniment variant, not necessarily the full mixed-vegetable dish. Mask quality, visible ingredients, native bytes and thumbnail need review before activation. Source and adapted images must retain attribution and CC BY-SA 4.0.
+- Rejected alternatives: Sambar 3 and 4 (KARANK21, 8000 × 6000) have a truncated spoon crossing the vessel; Sambhar (Amanrvet, 4000 × 3000) has strong glare, cropped handles and packaging. Do not count these as approved.
+- Direct original retrieval failed due to DNS in the local environment. Isolated branch source-acquisition job attempts retrieval and creates a first-pass mask only. No existing workflows or production assets changed. Do not merge this acquisition workflow or activate an unreviewed candidate. Existing Sambar illustration remains active until the replacement passes visual/native-source/three-surface checks.
