@@ -53,6 +53,7 @@ try {
       assert.equal(await cityPicker.getByRole("link", { name: "Oslo", exact: true }).getAttribute("aria-current"), "true");
       const cityHref = await cityPicker.getByRole("link", { name: "København", exact: true }).getAttribute("href");
       assert.equal(new URL(cityHref, base).searchParams.get("city"), "København");
+      assert.ok(new URL(cityHref, base).pathname.endsWith("/"), "City selection opens the homepage");
       const cityPanelBox = await cityPicker.locator(".cityMenuPanel").boundingBox();
       assert.ok(cityPanelBox && cityPanelBox.x >= 0 && cityPanelBox.x + cityPanelBox.width <= viewport.width + 2);
       await menu.locator("summary").tap();
@@ -292,6 +293,7 @@ try {
       const resultsCityHref = await resultsCityPicker.getByRole("link", { name: "Stockholm", exact: true }).getAttribute("href");
       const resultsCityUrl = new URL(resultsCityHref, base);
       assert.equal(resultsCityUrl.searchParams.get("city"), "Stockholm");
+      assert.ok(resultsCityUrl.pathname.endsWith("/"), "City selection from search returns home");
       assert.equal(resultsCityUrl.searchParams.get("q"), "dal makhani", "City switching must preserve the active search");
       await resultsCityPicker.locator("summary").tap();
       assert.match(await note.innerText(), /Fysen matleksikon[\s\S]*uradbønner/iu);
