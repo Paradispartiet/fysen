@@ -35,6 +35,16 @@ const ulleval = {
   sourceUrl: "https://egon.no/restauranter/oslo/egon-ullevaal",
 } as const;
 
+const peppesEnsjo = {
+  logo: null,
+  exterior: "/restaurants/peppes-ensjo/exterior.jpg",
+  interior: null,
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Peppes_Pizza_p%C3%A5_Ensj%C3%B8_(oktober_2017).jpg",
+  photoCredit: "Kjetil Ree",
+  photoDate: "2017-10-08",
+  licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+} as const;
+
 function normalized(value: string): string {
   return value.normalize("NFKC").toLocaleLowerCase("nb-NO").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 }
@@ -42,6 +52,8 @@ function normalized(value: string): string {
 /** Match the branch and street address, independent of archive/live IDs. */
 export function restaurantVisuals(restaurant: RestaurantIdentity) {
   const address = normalized(restaurant.address);
+  if (normalized(restaurant.name) === "peppes pizza ensjø" &&
+      /^rolf hofmos gate 34(?: |$)/u.test(address)) return peppesEnsjo;
   if (["egon ullevål", "egon ullevaal"].includes(normalized(restaurant.name)) &&
       /^sognsveien 77 ?c(?: |$)/u.test(address)) return ulleval;
   if (normalized(restaurant.name) === "egon storo" &&
