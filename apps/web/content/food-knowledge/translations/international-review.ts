@@ -16252,5 +16252,1656 @@ export const draftInternationalArticles = {
         "Hähnchen nicht so stark kochen, dass das Fleisch trocken wird."
       ]
     }
+  },
+  "ratatouille": {
+    "en": {
+      "overview": "The vegetables are fried and combined in an aromatic tomato base.",
+      "history": "Ratatouille is associated with southern French cuisine, especially Nice and Provence.",
+      "flavor": "Fruity, mild and fresh with herbs.",
+      "technique": "Fry the vegetables in batches to preserve their texture.",
+      "essentials": [
+        "1 aubergine",
+        "2 courgettes",
+        "2 bell peppers"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 50 min",
+        "ingredients": [
+          "1 aubergine",
+          "2 courgettes",
+          "2 bell peppers",
+          "400 g tomatoes",
+          "1 onion",
+          "3 garlic cloves",
+          "olive oil",
+          "basil"
+        ],
+        "steps": [
+          "Cut the vegetables into pieces.",
+          "Brown the aubergine, courgettes and peppers separately.",
+          "Fry the onion and garlic and add the tomatoes.",
+          "Combine the vegetables and simmer until tender; season with basil."
+        ]
+      },
+      "variants": [
+        "It can be served in rustic pieces or in oven-baked versions."
+      ],
+      "serving": [
+        "Serve as a main course with bread or as a side dish."
+      ],
+      "commonMistakes": [
+        "Do not cook all the vegetables to a mush."
+      ]
+    },
+    "fr": {
+      "overview": "Les légumes sont revenus puis réunis dans une base de tomates aromatique.",
+      "history": "La ratatouille est associée à la cuisine du sud de la France, notamment de Nice et de Provence.",
+      "flavor": "Fruité, doux et frais grâce aux herbes.",
+      "technique": "Faire revenir les légumes par petites quantités pour préserver leur texture.",
+      "essentials": [
+        "1 aubergine",
+        "2 courgettes",
+        "2 poivrons"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 50 min",
+        "ingredients": [
+          "1 aubergine",
+          "2 courgettes",
+          "2 poivrons",
+          "400 g de tomates",
+          "1 oignon",
+          "3 gousses d’ail",
+          "huile d’olive",
+          "basilic"
+        ],
+        "steps": [
+          "Couper les légumes en morceaux.",
+          "Faire dorer séparément l’aubergine, les courgettes et les poivrons.",
+          "Faire revenir l’oignon et l’ail, puis ajouter les tomates.",
+          "Réunir les légumes et laisser mijoter jusqu’à tendreté ; assaisonner avec le basilic."
+        ]
+      },
+      "variants": [
+        "On peut la servir en morceaux rustiques ou dans des variantes cuites au four."
+      ],
+      "serving": [
+        "Servir en plat principal avec du pain ou en accompagnement."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire tous les légumes jusqu’à ce qu’ils se défassent."
+      ]
+    },
+    "pt": {
+      "overview": "Os legumes são salteados e misturados numa base aromática de tomate.",
+      "history": "A ratatouille está associada à cozinha do sul de França, em especial de Nice e da Provença.",
+      "flavor": "Frutado, suave e fresco com ervas.",
+      "technique": "Salteie os legumes em porções para preservar a textura.",
+      "essentials": [
+        "1 beringela",
+        "2 curgetes",
+        "2 pimentos"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 50 min",
+        "ingredients": [
+          "1 beringela",
+          "2 curgetes",
+          "2 pimentos",
+          "400 g de tomate",
+          "1 cebola",
+          "3 dentes de alho",
+          "azeite",
+          "manjericão"
+        ],
+        "steps": [
+          "Corte os legumes em pedaços.",
+          "Doure separadamente a beringela, as curgetes e os pimentos.",
+          "Salteie a cebola e o alho e junte o tomate.",
+          "Junte os legumes e deixe cozinhar em lume brando até ficarem tenros; tempere com manjericão."
+        ]
+      },
+      "variants": [
+        "Pode ser servida em pedaços rústicos ou em versões assadas no forno."
+      ],
+      "serving": [
+        "Sirva como prato principal com pão ou como acompanhamento."
+      ],
+      "commonMistakes": [
+        "Não deixe todos os legumes desfazerem-se."
+      ]
+    },
+    "es": {
+      "overview": "Las verduras se saltean y se combinan en una base aromática de tomate.",
+      "history": "El ratatouille se asocia con la cocina del sur de Francia, especialmente de Niza y Provenza.",
+      "flavor": "Afrutado, suave y fresco por las hierbas.",
+      "technique": "Saltea las verduras en tandas para conservar su textura.",
+      "essentials": [
+        "1 berenjena",
+        "2 calabacines",
+        "2 pimientos"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 50 min",
+        "ingredients": [
+          "1 berenjena",
+          "2 calabacines",
+          "2 pimientos",
+          "400 g de tomates",
+          "1 cebolla",
+          "3 dientes de ajo",
+          "aceite de oliva",
+          "albahaca"
+        ],
+        "steps": [
+          "Corta las verduras en trozos.",
+          "Dora por separado la berenjena, los calabacines y los pimientos.",
+          "Sofríe la cebolla y el ajo y añade los tomates.",
+          "Junta las verduras y cuece a fuego lento hasta que estén tiernas; sazona con albahaca."
+        ]
+      },
+      "variants": [
+        "Puede servirse en trozos rústicos o en versiones al horno."
+      ],
+      "serving": [
+        "Sirve como plato principal con pan o como guarnición."
+      ],
+      "commonMistakes": [
+        "No cuezas todas las verduras hasta que se deshagan."
+      ]
+    },
+    "de": {
+      "overview": "Das Gemüse wird angebraten und in einer aromatischen Tomatenbasis vermischt.",
+      "history": "Ratatouille ist mit der südfranzösischen Küche, besonders Nizza und der Provence, verbunden.",
+      "flavor": "Fruchtig, mild und kräuterfrisch.",
+      "technique": "Gemüse portionsweise braten, um die Konsistenz zu erhalten.",
+      "essentials": [
+        "1 Aubergine",
+        "2 Zucchini",
+        "2 Paprikaschoten"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 50 Min.",
+        "ingredients": [
+          "1 Aubergine",
+          "2 Zucchini",
+          "2 Paprikaschoten",
+          "400 g Tomaten",
+          "1 Zwiebel",
+          "3 Knoblauchzehen",
+          "Olivenöl",
+          "Basilikum"
+        ],
+        "steps": [
+          "Gemüse in Stücke schneiden.",
+          "Aubergine, Zucchini und Paprika separat anbraten.",
+          "Zwiebel und Knoblauch anschwitzen und Tomaten hinzufügen.",
+          "Gemüse zusammengeben und weich köcheln lassen; mit Basilikum abschmecken."
+        ]
+      },
+      "variants": [
+        "Kann rustikal in Stücken oder in ofengebackenen Varianten serviert werden."
+      ],
+      "serving": [
+        "Als Hauptgericht mit Brot oder als Beilage servieren."
+      ],
+      "commonMistakes": [
+        "Nicht das gesamte Gemüse zu Brei kochen."
+      ]
+    }
+  },
+  "bouillabaisse": {
+    "en": {
+      "overview": "Fish is gently cooked in a broth with fennel, tomato and spices.",
+      "history": "Bouillabaisse is particularly linked to Marseille’s fishing tradition.",
+      "flavor": "Briny, rich and aromatic.",
+      "technique": "Develop the broth before adding the fish so that the pieces do not overcook.",
+      "essentials": [
+        "700 g white fish",
+        "1 l fish stock",
+        "1 fennel bulb"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min",
+        "ingredients": [
+          "700 g white fish",
+          "1 l fish stock",
+          "1 fennel bulb",
+          "1 onion",
+          "400 g tomatoes",
+          "garlic",
+          "saffron",
+          "olive oil"
+        ],
+        "steps": [
+          "Fry fennel, onion and garlic in oil.",
+          "Add tomatoes, saffron and stock and simmer.",
+          "Cut the fish into large pieces and poach gently in the broth until cooked through.",
+          "Season and serve with bread."
+        ]
+      },
+      "variants": [
+        "Traditional Marseille versions use several local fish species; this is a simplified home version."
+      ],
+      "serving": [
+        "Serve with toasted bread and rouille."
+      ],
+      "commonMistakes": [
+        "Do not let the fish boil for a long time in the finished broth."
+      ]
+    },
+    "fr": {
+      "overview": "Le poisson est poché dans un bouillon au fenouil, à la tomate et aux épices.",
+      "history": "La bouillabaisse est particulièrement liée à la tradition de pêche marseillaise.",
+      "flavor": "Marin, généreux et aromatique.",
+      "technique": "Préparer le bouillon avant d’ajouter le poisson pour éviter de trop cuire les morceaux.",
+      "essentials": [
+        "700 g de poisson blanc",
+        "1 l de fumet de poisson",
+        "1 bulbe de fenouil"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min",
+        "ingredients": [
+          "700 g de poisson blanc",
+          "1 l de fumet de poisson",
+          "1 bulbe de fenouil",
+          "1 oignon",
+          "400 g de tomates",
+          "ail",
+          "safran",
+          "huile d’olive"
+        ],
+        "steps": [
+          "Faire revenir le fenouil, l’oignon et l’ail dans l’huile.",
+          "Ajouter les tomates, le safran et le fumet, puis laisser mijoter.",
+          "Couper le poisson en gros morceaux et le pocher délicatement dans le bouillon jusqu’à cuisson complète.",
+          "Rectifier l’assaisonnement et servir avec du pain."
+        ]
+      },
+      "variants": [
+        "Les versions marseillaises traditionnelles utilisent plusieurs espèces locales de poissons ; il s’agit ici d’une version maison simplifiée."
+      ],
+      "serving": [
+        "Servir avec du pain grillé et de la rouille."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser bouillir longtemps le poisson dans le bouillon préparé."
+      ]
+    },
+    "pt": {
+      "overview": "O peixe é cozinhado suavemente num caldo com funcho, tomate e especiarias.",
+      "history": "A bouillabaisse está especialmente ligada à tradição piscatória de Marselha.",
+      "flavor": "Marítimo, encorpado e aromático.",
+      "technique": "Prepare o caldo antes de juntar o peixe para evitar cozer demasiado os pedaços.",
+      "essentials": [
+        "700 g de peixe branco",
+        "1 l de caldo de peixe",
+        "1 bolbo de funcho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min",
+        "ingredients": [
+          "700 g de peixe branco",
+          "1 l de caldo de peixe",
+          "1 bolbo de funcho",
+          "1 cebola",
+          "400 g de tomate",
+          "alho",
+          "açafrão",
+          "azeite"
+        ],
+        "steps": [
+          "Salteie o funcho, a cebola e o alho em azeite.",
+          "Junte tomate, açafrão e caldo e deixe cozinhar em lume brando.",
+          "Corte o peixe em pedaços grandes e coza-o suavemente no caldo até estar bem cozinhado.",
+          "Retifique os temperos e sirva com pão."
+        ]
+      },
+      "variants": [
+        "As versões tradicionais de Marselha usam várias espécies locais de peixe; esta é uma versão caseira simplificada."
+      ],
+      "serving": [
+        "Sirva com pão torrado e rouille."
+      ],
+      "commonMistakes": [
+        "Não deixe o peixe ferver durante muito tempo no caldo pronto."
+      ]
+    },
+    "es": {
+      "overview": "El pescado se cuece suavemente en un caldo con hinojo, tomate y especias.",
+      "history": "La bullabesa está especialmente vinculada a la tradición pesquera de Marsella.",
+      "flavor": "Marino, con cuerpo y aromático.",
+      "technique": "Prepara el caldo antes de añadir el pescado para evitar que se cuezan demasiado los trozos.",
+      "essentials": [
+        "700 g de pescado blanco",
+        "1 l de caldo de pescado",
+        "1 bulbo de hinojo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min",
+        "ingredients": [
+          "700 g de pescado blanco",
+          "1 l de caldo de pescado",
+          "1 bulbo de hinojo",
+          "1 cebolla",
+          "400 g de tomates",
+          "ajo",
+          "azafrán",
+          "aceite de oliva"
+        ],
+        "steps": [
+          "Sofríe el hinojo, la cebolla y el ajo en aceite.",
+          "Añade tomate, azafrán y caldo y cuece a fuego lento.",
+          "Corta el pescado en trozos grandes y cuécelo suavemente en el caldo hasta que esté hecho por dentro.",
+          "Ajusta la sazón y sirve con pan."
+        ]
+      },
+      "variants": [
+        "Las versiones tradicionales de Marsella utilizan varias especies locales de pescado; esta es una versión casera simplificada."
+      ],
+      "serving": [
+        "Sirve con pan tostado y rouille."
+      ],
+      "commonMistakes": [
+        "No dejes que el pescado hierva mucho tiempo en el caldo preparado."
+      ]
+    },
+    "de": {
+      "overview": "Fisch wird in einer Brühe mit Fenchel, Tomaten und Gewürzen gar gezogen.",
+      "history": "Bouillabaisse ist besonders mit der Fischereitradition von Marseille verbunden.",
+      "flavor": "Maritim, vollmundig und aromatisch.",
+      "technique": "Brühe vor Zugabe des Fisches zubereiten, damit die Fischstücke nicht verkochen.",
+      "essentials": [
+        "700 g weißfleischiger Fisch",
+        "1 l Fischfond",
+        "1 Fenchelknolle"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min.",
+        "ingredients": [
+          "700 g weißfleischiger Fisch",
+          "1 l Fischfond",
+          "1 Fenchelknolle",
+          "1 Zwiebel",
+          "400 g Tomaten",
+          "Knoblauch",
+          "Safran",
+          "Olivenöl"
+        ],
+        "steps": [
+          "Fenchel, Zwiebel und Knoblauch in Öl anschwitzen.",
+          "Tomaten, Safran und Fond hinzufügen und köcheln lassen.",
+          "Fisch in große Stücke schneiden und in der Brühe sanft vollständig gar ziehen lassen.",
+          "Abschmecken und mit Brot servieren."
+        ]
+      },
+      "variants": [
+        "Traditionelle Marseiller Varianten verwenden mehrere lokale Fischarten; dies ist eine vereinfachte Hausvariante."
+      ],
+      "serving": [
+        "Mit geröstetem Brot und Rouille servieren."
+      ],
+      "commonMistakes": [
+        "Fisch nicht lange in der fertigen Brühe kochen lassen."
+      ]
+    }
+  },
+  "quiche-lorraine": {
+    "en": {
+      "overview": "A shortcrust pastry case is filled with an egg custard and baked until set.",
+      "history": "Quiche lorraine has roots in Lorraine in northeastern France.",
+      "flavor": "Crisp base, creamy filling and salty bacon.",
+      "technique": "Blind-bake the base before pouring in the filling.",
+      "essentials": [
+        "1 pastry sheet for a 24 cm tin",
+        "150 g bacon",
+        "4 eggs"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min",
+        "ingredients": [
+          "1 pastry sheet for a 24 cm tin",
+          "150 g bacon",
+          "4 eggs",
+          "250 ml cream",
+          "100 ml milk",
+          "nutmeg"
+        ],
+        "steps": [
+          "Line the tin with pastry, prick the base and blind-bake at 190 °C.",
+          "Fry the bacon and let it drain.",
+          "Whisk together eggs, cream, milk and nutmeg.",
+          "Distribute the bacon over the base, pour over the egg mixture and bake at 175 °C until set."
+        ]
+      },
+      "variants": [
+        "Many newer versions add cheese; the classic Lorraine version does not require cheese."
+      ],
+      "serving": [
+        "Serve warm with green salad."
+      ],
+      "commonMistakes": [
+        "Do not pour the filling into an unbaked case if you want a crisp base."
+      ]
+    },
+    "fr": {
+      "overview": "Un fond de pâte brisée est garni d’un appareil aux œufs et cuit jusqu’à ce que celui-ci prenne.",
+      "history": "La quiche lorraine trouve ses racines en Lorraine, dans le nord-est de la France.",
+      "flavor": "Fond croustillant, garniture crémeuse et lardons salés.",
+      "technique": "Précuire le fond à blanc avant d’y verser la garniture.",
+      "essentials": [
+        "1 pâte brisée pour un moule de 24 cm",
+        "150 g de lardons",
+        "4 œufs"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min",
+        "ingredients": [
+          "1 pâte brisée pour un moule de 24 cm",
+          "150 g de lardons",
+          "4 œufs",
+          "250 ml de crème",
+          "100 ml de lait",
+          "noix de muscade"
+        ],
+        "steps": [
+          "Foncer le moule avec la pâte, piquer le fond et précuire à blanc à 190 °C.",
+          "Faire revenir les lardons et les égoutter.",
+          "Fouetter ensemble les œufs, la crème, le lait et la muscade.",
+          "Répartir les lardons sur le fond, verser l’appareil aux œufs et cuire à 175 °C jusqu’à ce qu’il prenne."
+        ]
+      },
+      "variants": [
+        "De nombreuses variantes récentes ajoutent du fromage ; la version lorraine classique n’en nécessite pas."
+      ],
+      "serving": [
+        "Servir tiède avec une salade verte."
+      ],
+      "commonMistakes": [
+        "Ne pas verser la garniture sur un fond non précuit si l’on souhaite une base croustillante."
+      ]
+    },
+    "pt": {
+      "overview": "Uma base de massa quebrada é recheada com uma mistura de ovos e levada ao forno até solidificar.",
+      "history": "A quiche lorraine tem raízes na Lorena, no nordeste de França.",
+      "flavor": "Base crocante, recheio cremoso e bacon salgado.",
+      "technique": "Pré-coza a base antes de verter o recheio.",
+      "essentials": [
+        "1 massa quebrada para forma de 24 cm",
+        "150 g de bacon",
+        "4 ovos"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min",
+        "ingredients": [
+          "1 massa quebrada para forma de 24 cm",
+          "150 g de bacon",
+          "4 ovos",
+          "250 ml de natas",
+          "100 ml de leite",
+          "noz-moscada"
+        ],
+        "steps": [
+          "Forre a forma com a massa, pique a base e pré-coza a 190 °C.",
+          "Frite o bacon e deixe escorrer.",
+          "Bata os ovos, as natas, o leite e a noz-moscada.",
+          "Distribua o bacon pela base, verta a mistura de ovos e leve ao forno a 175 °C até o recheio solidificar."
+        ]
+      },
+      "variants": [
+        "Muitas versões mais recentes incluem queijo; a versão clássica da Lorena não precisa de queijo."
+      ],
+      "serving": [
+        "Sirva morna com salada verde."
+      ],
+      "commonMistakes": [
+        "Não verta o recheio numa base crua se pretende uma base crocante."
+      ]
+    },
+    "es": {
+      "overview": "Una base de masa quebrada se rellena con una mezcla de huevo y se hornea hasta que cuaje.",
+      "history": "La quiche lorraine tiene sus raíces en Lorena, en el noreste de Francia.",
+      "flavor": "Base crujiente, relleno cremoso y beicon salado.",
+      "technique": "Prehornea la base antes de verter el relleno.",
+      "essentials": [
+        "1 masa quebrada para molde de 24 cm",
+        "150 g de beicon",
+        "4 huevos"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min",
+        "ingredients": [
+          "1 masa quebrada para molde de 24 cm",
+          "150 g de beicon",
+          "4 huevos",
+          "250 ml de nata",
+          "100 ml de leche",
+          "nuez moscada"
+        ],
+        "steps": [
+          "Forra el molde con la masa, pincha la base y prehornea a 190 °C.",
+          "Fríe el beicon y déjalo escurrir.",
+          "Bate los huevos, la nata, la leche y la nuez moscada.",
+          "Reparte el beicon sobre la base, vierte la mezcla de huevo y hornea a 175 °C hasta que cuaje."
+        ]
+      },
+      "variants": [
+        "Muchas versiones recientes añaden queso; la versión clásica de Lorena no lo necesita."
+      ],
+      "serving": [
+        "Sirve templada con ensalada verde."
+      ],
+      "commonMistakes": [
+        "No viertas el relleno sobre una base sin prehornear si quieres que quede crujiente."
+      ]
+    },
+    "de": {
+      "overview": "Ein Mürbeteigboden wird mit einer Eiermasse gefüllt und gebacken, bis sie stockt.",
+      "history": "Quiche Lorraine hat ihre Wurzeln in Lothringen im Nordosten Frankreichs.",
+      "flavor": "Knuspriger Boden, cremige Füllung und salziger Speck.",
+      "technique": "Boden blindbacken, bevor die Füllung hineingegossen wird.",
+      "essentials": [
+        "1 Mürbeteig für eine Form von 24 cm",
+        "150 g Speck",
+        "4 Eier"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min.",
+        "ingredients": [
+          "1 Mürbeteig für eine Form von 24 cm",
+          "150 g Speck",
+          "4 Eier",
+          "250 ml Sahne",
+          "100 ml Milch",
+          "Muskat"
+        ],
+        "steps": [
+          "Form mit Teig auslegen, Boden einstechen und bei 190 °C blindbacken.",
+          "Speck braten und abtropfen lassen.",
+          "Eier, Sahne, Milch und Muskat verquirlen.",
+          "Speck auf dem Boden verteilen, Eiermasse darübergeben und bei 175 °C backen, bis sie stockt."
+        ]
+      },
+      "variants": [
+        "Viele neuere Varianten enthalten Käse; die klassische lothringische Variante braucht keinen Käse."
+      ],
+      "serving": [
+        "Lauwarm mit grünem Salat servieren."
+      ],
+      "commonMistakes": [
+        "Füllung nicht in einen ungebackenen Boden gießen, wenn er knusprig werden soll."
+      ]
+    }
+  },
+  "croque-monsieur": {
+    "en": {
+      "overview": "Bread slices are filled with ham and cheese, topped with sauce and gratinated.",
+      "history": "Croque monsieur is a familiar part of French café and bistro cuisine.",
+      "flavor": "Crisp bread, salty ham and melted cheese.",
+      "technique": "Use a thick béchamel that will not soak the bread.",
+      "essentials": [
+        "8 slices of bread",
+        "150 g cooked ham",
+        "160 g Gruyère"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30 min",
+        "ingredients": [
+          "8 slices of bread",
+          "150 g cooked ham",
+          "160 g Gruyère",
+          "25 g butter",
+          "25 g flour",
+          "250 ml milk",
+          "Dijon mustard"
+        ],
+        "steps": [
+          "Make a thick béchamel from butter, flour and milk.",
+          "Spread a little mustard on the bread and place ham and cheese between the slices.",
+          "Top with béchamel and the remaining cheese.",
+          "Gratinate at 220 °C until golden and heated through."
+        ]
+      },
+      "variants": [
+        "Croque madame is topped with a fried egg."
+      ],
+      "serving": [
+        "Serve with salad."
+      ],
+      "commonMistakes": [
+        "Avoid using too much thin sauce."
+      ]
+    },
+    "fr": {
+      "overview": "Des tranches de pain sont garnies de jambon et de fromage, nappées de sauce et gratinées.",
+      "history": "Le croque-monsieur est un classique des cafés et bistrots français.",
+      "flavor": "Pain croustillant, jambon salé et fromage fondu.",
+      "technique": "Utiliser une béchamel épaisse qui ne détrempe pas le pain.",
+      "essentials": [
+        "8 tranches de pain",
+        "150 g de jambon cuit",
+        "160 g de gruyère"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30 min",
+        "ingredients": [
+          "8 tranches de pain",
+          "150 g de jambon cuit",
+          "160 g de gruyère",
+          "25 g de beurre",
+          "25 g de farine",
+          "250 ml de lait",
+          "moutarde de Dijon"
+        ],
+        "steps": [
+          "Préparer une béchamel épaisse avec le beurre, la farine et le lait.",
+          "Tartiner le pain d’un peu de moutarde et placer le jambon et le fromage entre les tranches.",
+          "Napper de béchamel et du reste de fromage.",
+          "Faire gratiner à 220 °C jusqu’à ce que le dessus soit doré et l’ensemble bien chaud."
+        ]
+      },
+      "variants": [
+        "Le croque-madame est surmonté d’un œuf au plat."
+      ],
+      "serving": [
+        "Servir avec de la salade."
+      ],
+      "commonMistakes": [
+        "Éviter un excès de sauce liquide."
+      ]
+    },
+    "pt": {
+      "overview": "Fatias de pão são recheadas com fiambre e queijo, cobertas com molho e gratinadas.",
+      "history": "O croque-monsieur é um prato conhecido dos cafés e bistrôs franceses.",
+      "flavor": "Pão crocante, fiambre salgado e queijo derretido.",
+      "technique": "Use um béchamel espesso que não encharque o pão.",
+      "essentials": [
+        "8 fatias de pão",
+        "150 g de fiambre",
+        "160 g de gruyère"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30 min",
+        "ingredients": [
+          "8 fatias de pão",
+          "150 g de fiambre",
+          "160 g de gruyère",
+          "25 g de manteiga",
+          "25 g de farinha",
+          "250 ml de leite",
+          "mostarda de Dijon"
+        ],
+        "steps": [
+          "Prepare um béchamel espesso com manteiga, farinha e leite.",
+          "Barre o pão com um pouco de mostarda e coloque fiambre e queijo entre as fatias.",
+          "Cubra com béchamel e o restante queijo.",
+          "Gratine a 220 °C até dourar e estar bem quente."
+        ]
+      },
+      "variants": [
+        "O croque-madame leva um ovo estrelado por cima."
+      ],
+      "serving": [
+        "Sirva com salada."
+      ],
+      "commonMistakes": [
+        "Evite demasiado molho líquido."
+      ]
+    },
+    "es": {
+      "overview": "Las rebanadas de pan se rellenan de jamón y queso, se cubren con salsa y se gratinan.",
+      "history": "El croque-monsieur es un clásico de los cafés y bistrós franceses.",
+      "flavor": "Pan crujiente, jamón salado y queso fundido.",
+      "technique": "Usa una bechamel espesa que no empape el pan.",
+      "essentials": [
+        "8 rebanadas de pan",
+        "150 g de jamón cocido",
+        "160 g de gruyère"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30 min",
+        "ingredients": [
+          "8 rebanadas de pan",
+          "150 g de jamón cocido",
+          "160 g de gruyère",
+          "25 g de mantequilla",
+          "25 g de harina",
+          "250 ml de leche",
+          "mostaza de Dijon"
+        ],
+        "steps": [
+          "Prepara una bechamel espesa con mantequilla, harina y leche.",
+          "Unta el pan con un poco de mostaza y coloca jamón y queso entre las rebanadas.",
+          "Cubre con bechamel y el resto del queso.",
+          "Gratina a 220 °C hasta que esté dorado y bien caliente."
+        ]
+      },
+      "variants": [
+        "El croque-madame lleva un huevo frito encima."
+      ],
+      "serving": [
+        "Sirve con ensalada."
+      ],
+      "commonMistakes": [
+        "Evita demasiada salsa líquida."
+      ]
+    },
+    "de": {
+      "overview": "Brotscheiben werden mit Schinken und Käse gefüllt, mit Sauce bedeckt und überbacken.",
+      "history": "Croque Monsieur ist ein bekannter Bestandteil der französischen Café- und Bistroküche.",
+      "flavor": "Knuspriges Brot, salziger Schinken und geschmolzener Käse.",
+      "technique": "Eine dicke Béchamel verwenden, die das Brot nicht durchweicht.",
+      "essentials": [
+        "8 Scheiben Brot",
+        "150 g Kochschinken",
+        "160 g Gruyère"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30 Min.",
+        "ingredients": [
+          "8 Scheiben Brot",
+          "150 g Kochschinken",
+          "160 g Gruyère",
+          "25 g Butter",
+          "25 g Mehl",
+          "250 ml Milch",
+          "Dijon-Senf"
+        ],
+        "steps": [
+          "Dicke Béchamel aus Butter, Mehl und Milch zubereiten.",
+          "Brot mit etwas Senf bestreichen und Schinken und Käse zwischen die Scheiben legen.",
+          "Béchamel und restlichen Käse daraufgeben.",
+          "Bei 220 °C goldbraun überbacken, bis alles durchgehend heiß ist."
+        ]
+      },
+      "variants": [
+        "Croque Madame wird mit einem Spiegelei belegt."
+      ],
+      "serving": [
+        "Mit Salat servieren."
+      ],
+      "commonMistakes": [
+        "Zu viel dünne Sauce vermeiden."
+      ]
+    }
+  },
+  "paella-valenciana": {
+    "en": {
+      "overview": "Rice is cooked in a wide, shallow pan with meat, vegetables and stock.",
+      "history": "Paella has roots in the Valencia region, where local ingredients and rice cultivation shape the dish.",
+      "flavor": "Rich and aromatic, with a possible crisp rice crust, socarrat.",
+      "technique": "Distribute the rice evenly and avoid stirring after adding it.",
+      "essentials": [
+        "320 g round-grain paella rice",
+        "400 g chicken",
+        "300 g rabbit"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 75 min",
+        "ingredients": [
+          "320 g round-grain paella rice",
+          "400 g chicken",
+          "300 g rabbit",
+          "200 g green beans",
+          "150 g cooked large white beans",
+          "150 g tomato",
+          "1 l water or stock, approximately",
+          "saffron",
+          "paprika powder",
+          "olive oil"
+        ],
+        "steps": [
+          "Brown the meat pieces in a wide pan.",
+          "Fry green beans and grated tomato, add paprika and water or stock.",
+          "Simmer the meat, then add saffron, white beans and rice.",
+          "Cook the rice without stirring until tender and the meat is cooked through; adjust the liquid as needed.",
+          "Let rest for a few minutes before serving."
+        ]
+      },
+      "variants": [
+        "Seafood paella is another type of paella, not the classic Valencian version."
+      ],
+      "serving": [
+        "Serve directly from the pan."
+      ],
+      "commonMistakes": [
+        "Do not stir as you would a risotto."
+      ]
+    },
+    "fr": {
+      "overview": "Le riz cuit dans une poêle large et peu profonde avec de la viande, des légumes et du bouillon.",
+      "history": "La paella trouve ses racines dans la région de Valence, où les ingrédients locaux et la riziculture façonnent le plat.",
+      "flavor": "Généreuse et aromatique, avec éventuellement une croûte de riz croustillante, le socarrat.",
+      "technique": "Répartir le riz uniformément et éviter de remuer après l’avoir ajouté.",
+      "essentials": [
+        "320 g de riz rond pour paella",
+        "400 g de poulet",
+        "300 g de lapin"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 75 min",
+        "ingredients": [
+          "320 g de riz rond pour paella",
+          "400 g de poulet",
+          "300 g de lapin",
+          "200 g de haricots verts",
+          "150 g de gros haricots blancs cuits",
+          "150 g de tomate",
+          "1 l d’eau ou de bouillon, environ",
+          "safran",
+          "paprika en poudre",
+          "huile d’olive"
+        ],
+        "steps": [
+          "Faire dorer les morceaux de viande dans une poêle large.",
+          "Faire revenir les haricots verts et la tomate râpée, puis ajouter le paprika et l’eau ou le bouillon.",
+          "Laisser mijoter la viande, puis ajouter le safran, les haricots blancs et le riz.",
+          "Cuire le riz sans remuer jusqu’à ce qu’il soit tendre et la viande cuite à cœur ; ajuster la quantité de liquide si nécessaire.",
+          "Laisser reposer quelques minutes avant de servir."
+        ]
+      },
+      "variants": [
+        "La paella aux fruits de mer est un autre type de paella, et non la version valencienne classique."
+      ],
+      "serving": [
+        "Servir directement dans la poêle."
+      ],
+      "commonMistakes": [
+        "Ne pas remuer comme pour un risotto."
+      ]
+    },
+    "pt": {
+      "overview": "O arroz é cozinhado numa frigideira larga e baixa com carne, legumes e caldo.",
+      "history": "A paella tem raízes na região de Valência, onde os ingredientes locais e o cultivo do arroz marcam o prato.",
+      "flavor": "Encorpada e aromática, com possível crosta crocante de arroz, o socarrat.",
+      "technique": "Distribua o arroz uniformemente e evite mexer depois de o juntar.",
+      "essentials": [
+        "320 g de arroz de grão redondo para paella",
+        "400 g de frango",
+        "300 g de coelho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 75 min",
+        "ingredients": [
+          "320 g de arroz de grão redondo para paella",
+          "400 g de frango",
+          "300 g de coelho",
+          "200 g de feijão-verde",
+          "150 g de feijão branco grande cozido",
+          "150 g de tomate",
+          "1 l de água ou caldo, aproximadamente",
+          "açafrão",
+          "pimentão em pó",
+          "azeite"
+        ],
+        "steps": [
+          "Doure os pedaços de carne numa frigideira larga.",
+          "Salteie o feijão-verde e o tomate ralado, junte pimentão e água ou caldo.",
+          "Deixe a carne cozinhar em lume brando, junte açafrão, feijão branco e arroz.",
+          "Coza o arroz sem mexer até ficar tenro e a carne estar bem cozinhada; ajuste o líquido se necessário.",
+          "Deixe repousar alguns minutos antes de servir."
+        ]
+      },
+      "variants": [
+        "A paella de marisco é outro tipo de paella, não a versão valenciana clássica."
+      ],
+      "serving": [
+        "Sirva diretamente da frigideira."
+      ],
+      "commonMistakes": [
+        "Não mexa como num risotto."
+      ]
+    },
+    "es": {
+      "overview": "El arroz se cocina en una sartén ancha y poco profunda con carne, verduras y caldo.",
+      "history": "La paella tiene sus raíces en la región valenciana, donde los ingredientes locales y el cultivo del arroz caracterizan el plato.",
+      "flavor": "Intensa y aromática, con una posible costra crujiente de arroz, el socarrat.",
+      "technique": "Reparte el arroz uniformemente y evita removerlo una vez añadido.",
+      "essentials": [
+        "320 g de arroz redondo para paella",
+        "400 g de pollo",
+        "300 g de conejo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 75 min",
+        "ingredients": [
+          "320 g de arroz redondo para paella",
+          "400 g de pollo",
+          "300 g de conejo",
+          "200 g de judías verdes",
+          "150 g de alubias blancas grandes cocidas",
+          "150 g de tomate",
+          "1 l de agua o caldo, aproximadamente",
+          "azafrán",
+          "pimentón",
+          "aceite de oliva"
+        ],
+        "steps": [
+          "Dora los trozos de carne en una sartén ancha.",
+          "Sofríe las judías verdes y el tomate rallado, añade pimentón y agua o caldo.",
+          "Cuece la carne a fuego lento, añade azafrán, alubias blancas y arroz.",
+          "Cuece el arroz sin remover hasta que esté tierno y la carne hecha por dentro; ajusta el líquido si es necesario.",
+          "Deja reposar unos minutos antes de servir."
+        ]
+      },
+      "variants": [
+        "La paella de marisco es otro tipo de paella, no la variante valenciana clásica."
+      ],
+      "serving": [
+        "Sirve directamente de la paellera."
+      ],
+      "commonMistakes": [
+        "No remuevas como si fuera un risotto."
+      ]
+    },
+    "de": {
+      "overview": "Reis wird in einer breiten, flachen Pfanne mit Fleisch, Gemüse und Brühe gegart.",
+      "history": "Paella hat ihre Wurzeln in der Region Valencia, wo lokale Zutaten und Reisanbau das Gericht prägen.",
+      "flavor": "Kräftig und aromatisch, mit einer möglichen knusprigen Reiskruste, Socarrat.",
+      "technique": "Reis gleichmäßig verteilen und nach der Zugabe nicht mehr umrühren.",
+      "essentials": [
+        "320 g Rundkorn-Paellareis",
+        "400 g Hähnchen",
+        "300 g Kaninchen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 75 Min.",
+        "ingredients": [
+          "320 g Rundkorn-Paellareis",
+          "400 g Hähnchen",
+          "300 g Kaninchen",
+          "200 g grüne Bohnen",
+          "150 g gekochte große weiße Bohnen",
+          "150 g Tomate",
+          "1 l Wasser oder Brühe, ungefähr",
+          "Safran",
+          "Paprikapulver",
+          "Olivenöl"
+        ],
+        "steps": [
+          "Fleischstücke in einer breiten Pfanne anbräunen.",
+          "Grüne Bohnen und geriebene Tomate anbraten, Paprikapulver und Wasser oder Brühe hinzufügen.",
+          "Fleisch ziehen lassen, Safran, weiße Bohnen und Reis hinzufügen.",
+          "Reis ohne Rühren weich garen, bis auch das Fleisch durchgegart ist; Flüssigkeitsmenge bei Bedarf anpassen.",
+          "Vor dem Servieren einige Minuten ruhen lassen."
+        ]
+      },
+      "variants": [
+        "Meeresfrüchtepaella ist eine andere Paella-Art, nicht die klassische valencianische Variante."
+      ],
+      "serving": [
+        "Direkt aus der Pfanne servieren."
+      ],
+      "commonMistakes": [
+        "Nicht wie bei Risotto umrühren."
+      ]
+    }
+  },
+  "patatas-bravas": {
+    "en": {
+      "overview": "Potatoes are fried or deep-fried and topped with a sauce containing paprika and chilli.",
+      "history": "Patatas bravas are a popular tapas dish in Spanish bars.",
+      "flavor": "Crisp, slightly sweet and hot from the sauce.",
+      "technique": "Dry the potatoes before cooking and add the sauce just before serving.",
+      "essentials": [
+        "700 g potatoes",
+        "oil",
+        "1 tbsp olive oil"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min",
+        "ingredients": [
+          "700 g potatoes",
+          "oil",
+          "1 tbsp olive oil",
+          "1 tbsp wheat flour",
+          "1 tsp sweet paprika",
+          "hot paprika to taste",
+          "200 ml stock",
+          "salt"
+        ],
+        "steps": [
+          "Cut the potatoes into pieces and dry them.",
+          "Toss in a little oil and bake at 220 °C until golden and tender.",
+          "Heat the olive oil, stir in flour and paprika without burning the spices.",
+          "Gradually add stock and simmer until the sauce reaches the desired thickness.",
+          "Top the potatoes with the sauce."
+        ]
+      },
+      "variants": [
+        "Some serve a tomato-based sauce, aioli or both."
+      ],
+      "serving": [
+        "Serve hot as tapas."
+      ],
+      "commonMistakes": [
+        "Do not pour on the sauce long before serving."
+      ]
+    },
+    "fr": {
+      "overview": "Les pommes de terre sont poêlées ou frites, puis nappées d’une sauce au paprika et au piment.",
+      "history": "Les patatas bravas sont des tapas populaires dans les bars espagnols.",
+      "flavor": "Croustillantes, légèrement sucrées et piquantes grâce à la sauce.",
+      "technique": "Sécher les pommes de terre avant la cuisson et ajouter la sauce juste avant de servir.",
+      "essentials": [
+        "700 g de pommes de terre",
+        "huile",
+        "1 c. à soupe d’huile d’olive"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min",
+        "ingredients": [
+          "700 g de pommes de terre",
+          "huile",
+          "1 c. à soupe d’huile d’olive",
+          "1 c. à soupe de farine de blé",
+          "1 c. à café de paprika doux",
+          "paprika fort selon le goût",
+          "200 ml de bouillon",
+          "sel"
+        ],
+        "steps": [
+          "Couper les pommes de terre en morceaux et les sécher.",
+          "Enrober d’un peu d’huile et cuire au four à 220 °C jusqu’à ce qu’elles soient dorées et tendres.",
+          "Chauffer l’huile d’olive, incorporer la farine et le paprika sans brûler les épices.",
+          "Incorporer progressivement le bouillon et laisser mijoter jusqu’à la consistance souhaitée.",
+          "Napper les pommes de terre de sauce."
+        ]
+      },
+      "variants": [
+        "Certains servent une sauce à base de tomate, de l’aïoli ou les deux."
+      ],
+      "serving": [
+        "Servir chaud en tapas."
+      ],
+      "commonMistakes": [
+        "Ne pas verser la sauce longtemps avant de servir."
+      ]
+    },
+    "pt": {
+      "overview": "As batatas são salteadas ou fritas e cobertas com um molho de pimentão e malagueta.",
+      "history": "As patatas bravas são tapas populares nos bares espanhóis.",
+      "flavor": "Crocantes, ligeiramente doces e picantes devido ao molho.",
+      "technique": "Seque as batatas antes de cozinhar e junte o molho imediatamente antes de servir.",
+      "essentials": [
+        "700 g de batatas",
+        "óleo",
+        "1 c. de sopa de azeite"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min",
+        "ingredients": [
+          "700 g de batatas",
+          "óleo",
+          "1 c. de sopa de azeite",
+          "1 c. de sopa de farinha de trigo",
+          "1 c. de chá de pimentão doce",
+          "pimentão picante a gosto",
+          "200 ml de caldo",
+          "sal"
+        ],
+        "steps": [
+          "Corte as batatas em pedaços e seque-as.",
+          "Envolva num pouco de óleo e leve ao forno a 220 °C até ficarem douradas e tenras.",
+          "Aqueça o azeite, incorpore farinha e pimentão sem queimar as especiarias.",
+          "Incorpore gradualmente o caldo e deixe o molho engrossar até à consistência desejada.",
+          "Cubra as batatas com o molho."
+        ]
+      },
+      "variants": [
+        "Alguns servem molho de tomate, aioli ou ambos."
+      ],
+      "serving": [
+        "Sirva quente como tapas."
+      ],
+      "commonMistakes": [
+        "Não verta o molho muito antes de servir."
+      ]
+    },
+    "es": {
+      "overview": "Las patatas se doran o fríen y se cubren con una salsa de pimentón y chile.",
+      "history": "Las patatas bravas son una tapa popular en los bares españoles.",
+      "flavor": "Crujientes, ligeramente dulces y picantes por la salsa.",
+      "technique": "Seca las patatas antes de cocinarlas y añade la salsa justo antes de servir.",
+      "essentials": [
+        "700 g de patatas",
+        "aceite",
+        "1 cucharada de aceite de oliva"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min",
+        "ingredients": [
+          "700 g de patatas",
+          "aceite",
+          "1 cucharada de aceite de oliva",
+          "1 cucharada de harina de trigo",
+          "1 cucharadita de pimentón dulce",
+          "pimentón picante al gusto",
+          "200 ml de caldo",
+          "sal"
+        ],
+        "steps": [
+          "Corta las patatas en trozos y sécalas.",
+          "Mezcla con un poco de aceite y hornea a 220 °C hasta que estén doradas y tiernas.",
+          "Calienta el aceite de oliva, incorpora la harina y el pimentón sin quemar las especias.",
+          "Incorpora poco a poco el caldo y cuece a fuego lento hasta obtener el espesor deseado.",
+          "Cubre las patatas con la salsa."
+        ]
+      },
+      "variants": [
+        "Algunos sirven salsa de tomate, alioli o ambos."
+      ],
+      "serving": [
+        "Sirve calientes como tapa."
+      ],
+      "commonMistakes": [
+        "No añadas la salsa mucho antes de servir."
+      ]
+    },
+    "de": {
+      "overview": "Kartoffeln werden gebraten oder frittiert und mit einer Sauce aus Paprikapulver und Chili serviert.",
+      "history": "Patatas Bravas sind beliebte Tapas in spanischen Bars.",
+      "flavor": "Knusprig, leicht süß und durch die Sauce scharf.",
+      "technique": "Kartoffeln vor dem Braten trocknen und Sauce erst kurz vor dem Servieren hinzufügen.",
+      "essentials": [
+        "700 g Kartoffeln",
+        "Öl",
+        "1 EL Olivenöl"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min.",
+        "ingredients": [
+          "700 g Kartoffeln",
+          "Öl",
+          "1 EL Olivenöl",
+          "1 EL Weizenmehl",
+          "1 TL edelsüßes Paprikapulver",
+          "scharfes Paprikapulver nach Geschmack",
+          "200 ml Brühe",
+          "Salz"
+        ],
+        "steps": [
+          "Kartoffeln in Stücke schneiden und trocknen.",
+          "In etwas Öl wenden und bei 220 °C goldbraun und weich backen.",
+          "Olivenöl erhitzen, Mehl und Paprikapulver einrühren, ohne die Gewürze zu verbrennen.",
+          "Brühe nach und nach einrühren und Sauce bis zur gewünschten Dicke köcheln lassen.",
+          "Sauce über die Kartoffeln geben."
+        ]
+      },
+      "variants": [
+        "Manche servieren eine Tomatensauce, Aioli oder beides."
+      ],
+      "serving": [
+        "Heiß als Tapas servieren."
+      ],
+      "commonMistakes": [
+        "Sauce nicht lange vor dem Servieren darübergeben."
+      ]
+    }
+  },
+  "tortilla-espanola": {
+    "en": {
+      "overview": "Potato slices are softened in oil and mixed with eggs before the omelette is cooked.",
+      "history": "The potato omelette is a Spanish everyday classic; whether to use onion is a well-known debate.",
+      "flavor": "Mild, juicy and rich.",
+      "technique": "Cook the potatoes gently before mixing them with the eggs.",
+      "essentials": [
+        "600 g potatoes",
+        "6 eggs",
+        "1 onion, optional"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min",
+        "ingredients": [
+          "600 g potatoes",
+          "6 eggs",
+          "1 onion, optional",
+          "olive oil",
+          "salt"
+        ],
+        "steps": [
+          "Peel the potatoes and cut into thin slices.",
+          "Gently cook the potatoes and optional onion in oil until tender; drain.",
+          "Mix with beaten eggs and salt.",
+          "Cook in a pan over medium-low heat, turn using a plate and cook until the egg has set."
+        ]
+      },
+      "variants": [
+        "With or without onion, and in different thicknesses."
+      ],
+      "serving": [
+        "Serve warm in pieces or as tapas."
+      ],
+      "commonMistakes": [
+        "Avoid high heat that burns the outside before the centre is done."
+      ]
+    },
+    "fr": {
+      "overview": "Des rondelles de pommes de terre sont attendries dans l’huile et mélangées aux œufs avant la cuisson de l’omelette.",
+      "history": "L’omelette aux pommes de terre est un classique espagnol du quotidien ; l’ajout d’oignon fait l’objet d’un débat bien connu.",
+      "flavor": "Douce, moelleuse et généreuse.",
+      "technique": "Cuire doucement les pommes de terre avant de les mélanger aux œufs.",
+      "essentials": [
+        "600 g de pommes de terre",
+        "6 œufs",
+        "1 oignon, facultatif"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min",
+        "ingredients": [
+          "600 g de pommes de terre",
+          "6 œufs",
+          "1 oignon, facultatif",
+          "huile d’olive",
+          "sel"
+        ],
+        "steps": [
+          "Peler les pommes de terre et les couper en fines rondelles.",
+          "Cuire doucement les pommes de terre et éventuellement l’oignon dans l’huile jusqu’à tendreté ; égoutter.",
+          "Mélanger avec les œufs battus et le sel.",
+          "Cuire à feu moyen-doux dans une poêle, retourner à l’aide d’une assiette et poursuivre jusqu’à ce que les œufs soient pris."
+        ]
+      },
+      "variants": [
+        "Avec ou sans oignon, et de différentes épaisseurs."
+      ],
+      "serving": [
+        "Servir tiède en morceaux ou en tapas."
+      ],
+      "commonMistakes": [
+        "Éviter un feu vif qui brûle l’extérieur avant que le centre soit cuit."
+      ]
+    },
+    "pt": {
+      "overview": "Rodelas de batata são amolecidas em azeite e misturadas com ovos antes de cozinhar a tortilha.",
+      "history": "A tortilha de batata é um clássico espanhol do quotidiano; o uso de cebola é uma questão muito debatida.",
+      "flavor": "Suave, suculenta e encorpada.",
+      "technique": "Cozinhe as batatas suavemente antes de as misturar com os ovos.",
+      "essentials": [
+        "600 g de batatas",
+        "6 ovos",
+        "1 cebola, opcional"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min",
+        "ingredients": [
+          "600 g de batatas",
+          "6 ovos",
+          "1 cebola, opcional",
+          "azeite",
+          "sal"
+        ],
+        "steps": [
+          "Descasque as batatas e corte em rodelas finas.",
+          "Cozinhe suavemente as batatas e a cebola, se usada, em azeite até ficarem tenras; escorra.",
+          "Misture com os ovos batidos e sal.",
+          "Cozinhe numa frigideira em lume médio-baixo, vire com a ajuda de um prato e cozinhe até o ovo solidificar."
+        ]
+      },
+      "variants": [
+        "Com ou sem cebola, e com diferentes espessuras."
+      ],
+      "serving": [
+        "Sirva morna em pedaços ou como tapas."
+      ],
+      "commonMistakes": [
+        "Evite lume forte que queime o exterior antes de o centro estar cozinhado."
+      ]
+    },
+    "es": {
+      "overview": "Las rodajas de patata se ablandan en aceite y se mezclan con huevo antes de cuajar la tortilla.",
+      "history": "La tortilla de patatas es un clásico cotidiano español; el uso de cebolla es un conocido tema de debate.",
+      "flavor": "Suave, jugosa y contundente.",
+      "technique": "Cocina las patatas suavemente antes de mezclarlas con el huevo.",
+      "essentials": [
+        "600 g de patatas",
+        "6 huevos",
+        "1 cebolla, opcional"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min",
+        "ingredients": [
+          "600 g de patatas",
+          "6 huevos",
+          "1 cebolla, opcional",
+          "aceite de oliva",
+          "sal"
+        ],
+        "steps": [
+          "Pela las patatas y córtalas en rodajas finas.",
+          "Cocina suavemente las patatas y la cebolla opcional en aceite hasta que estén tiernas; escurre.",
+          "Mezcla con los huevos batidos y sal.",
+          "Cocina en sartén a fuego medio-bajo, da la vuelta con ayuda de un plato y cocina hasta que cuaje el huevo."
+        ]
+      },
+      "variants": [
+        "Con o sin cebolla, y de diferentes grosores."
+      ],
+      "serving": [
+        "Sirve templada en porciones o como tapa."
+      ],
+      "commonMistakes": [
+        "Evita el fuego fuerte que quema el exterior antes de que el centro esté hecho."
+      ]
+    },
+    "de": {
+      "overview": "Kartoffelscheiben werden in Öl weich gegart und vor dem Braten des Omeletts mit Eiern vermischt.",
+      "history": "Das Kartoffelomelett ist ein spanischer Alltagsklassiker; die Verwendung von Zwiebeln ist ein bekannter Streitpunkt.",
+      "flavor": "Mild, saftig und gehaltvoll.",
+      "technique": "Kartoffeln sanft garen, bevor sie mit Eiern vermischt werden.",
+      "essentials": [
+        "600 g Kartoffeln",
+        "6 Eier",
+        "1 Zwiebel, optional"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min.",
+        "ingredients": [
+          "600 g Kartoffeln",
+          "6 Eier",
+          "1 Zwiebel, optional",
+          "Olivenöl",
+          "Salz"
+        ],
+        "steps": [
+          "Kartoffeln schälen und in dünne Scheiben schneiden.",
+          "Kartoffeln und gegebenenfalls Zwiebel in Öl sanft weich garen; abtropfen lassen.",
+          "Mit verquirlten Eiern und Salz mischen.",
+          "Bei mittlerer bis niedriger Hitze in der Pfanne braten, mithilfe eines Tellers wenden und garen, bis das Ei gestockt ist."
+        ]
+      },
+      "variants": [
+        "Mit oder ohne Zwiebel und in unterschiedlicher Dicke."
+      ],
+      "serving": [
+        "Lauwarm in Stücken oder als Tapas servieren."
+      ],
+      "commonMistakes": [
+        "Hohe Hitze vermeiden, damit die Außenseite nicht verbrennt, bevor die Mitte gar ist."
+      ]
+    }
+  },
+  "gazpacho": {
+    "en": {
+      "overview": "Raw vegetables are blended with oil, vinegar and optionally bread.",
+      "history": "Gazpacho is particularly associated with Andalusian cuisine and is often served in hot weather.",
+      "flavor": "Fresh, tangy and fruity.",
+      "technique": "Use ripe tomatoes and chill the soup before serving.",
+      "essentials": [
+        "800 g ripe tomatoes",
+        "1 cucumber",
+        "1 green bell pepper"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 20 min + chilling",
+        "ingredients": [
+          "800 g ripe tomatoes",
+          "1 cucumber",
+          "1 green bell pepper",
+          "1 garlic clove",
+          "40 g bread, optional",
+          "3 tbsp olive oil",
+          "1–2 tbsp wine vinegar",
+          "salt",
+          "cold water as needed"
+        ],
+        "steps": [
+          "Wash and cut the vegetables.",
+          "Soak the bread if using it.",
+          "Blend vegetables, bread, oil and vinegar until smooth.",
+          "Season, adjust the consistency with water and chill."
+        ]
+      },
+      "variants": [
+        "Salmorejo is a related, thicker tomato soup."
+      ],
+      "serving": [
+        "Serve cold with finely chopped vegetables."
+      ],
+      "commonMistakes": [
+        "Do not use unripe tomatoes if a ripe tomato flavour is desired."
+      ]
+    },
+    "fr": {
+      "overview": "Les légumes crus sont mixés avec de l’huile, du vinaigre et éventuellement du pain.",
+      "history": "Le gaspacho est particulièrement associé à la cuisine andalouse et se sert volontiers par temps chaud.",
+      "flavor": "Frais, acidulé et fruité.",
+      "technique": "Utiliser des tomates mûres et réfrigérer la soupe avant de servir.",
+      "essentials": [
+        "800 g de tomates mûres",
+        "1 concombre",
+        "1 poivron vert"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 20 min + réfrigération",
+        "ingredients": [
+          "800 g de tomates mûres",
+          "1 concombre",
+          "1 poivron vert",
+          "1 gousse d’ail",
+          "40 g de pain, facultatif",
+          "3 c. à soupe d’huile d’olive",
+          "1–2 c. à soupe de vinaigre de vin",
+          "sel",
+          "eau froide selon les besoins"
+        ],
+        "steps": [
+          "Laver et couper les légumes.",
+          "Faire tremper le pain si on l’utilise.",
+          "Mixer les légumes, le pain, l’huile et le vinaigre jusqu’à obtenir une soupe lisse.",
+          "Rectifier l’assaisonnement, ajuster la consistance avec de l’eau et réfrigérer."
+        ]
+      },
+      "variants": [
+        "Le salmorejo est une soupe de tomates apparentée, plus épaisse."
+      ],
+      "serving": [
+        "Servir froid avec des légumes finement hachés."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser de tomates non mûres si l’on recherche la saveur de tomates mûres."
+      ]
+    },
+    "pt": {
+      "overview": "Os legumes crus são triturados com azeite, vinagre e, opcionalmente, pão.",
+      "history": "O gaspacho está especialmente associado à cozinha andaluza e é frequentemente servido com tempo quente.",
+      "flavor": "Fresco, ácido e frutado.",
+      "technique": "Use tomates maduros e arrefeça a sopa antes de servir.",
+      "essentials": [
+        "800 g de tomates maduros",
+        "1 pepino",
+        "1 pimento verde"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 20 min + refrigeração",
+        "ingredients": [
+          "800 g de tomates maduros",
+          "1 pepino",
+          "1 pimento verde",
+          "1 dente de alho",
+          "40 g de pão, opcional",
+          "3 c. de sopa de azeite",
+          "1–2 c. de sopa de vinagre de vinho",
+          "sal",
+          "água fria conforme necessário"
+        ],
+        "steps": [
+          "Lave e corte os legumes.",
+          "Demolhe o pão se o utilizar.",
+          "Triture os legumes, o pão, o azeite e o vinagre até obter uma sopa lisa.",
+          "Retifique os temperos, ajuste a consistência com água e leve ao frigorífico."
+        ]
+      },
+      "variants": [
+        "O salmorejo é uma sopa de tomate semelhante, mais espessa."
+      ],
+      "serving": [
+        "Sirva fria com legumes finamente picados."
+      ],
+      "commonMistakes": [
+        "Não use tomates verdes se pretende o sabor de tomates maduros."
+      ]
+    },
+    "es": {
+      "overview": "Las verduras crudas se trituran con aceite, vinagre y, opcionalmente, pan.",
+      "history": "El gazpacho se asocia especialmente con la cocina andaluza y se suele servir cuando hace calor.",
+      "flavor": "Fresco, ácido y afrutado.",
+      "technique": "Usa tomates maduros y enfría la sopa antes de servir.",
+      "essentials": [
+        "800 g de tomates maduros",
+        "1 pepino",
+        "1 pimiento verde"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 20 min + refrigeración",
+        "ingredients": [
+          "800 g de tomates maduros",
+          "1 pepino",
+          "1 pimiento verde",
+          "1 diente de ajo",
+          "40 g de pan, opcional",
+          "3 cucharadas de aceite de oliva",
+          "1–2 cucharadas de vinagre de vino",
+          "sal",
+          "agua fría según sea necesario"
+        ],
+        "steps": [
+          "Lava y corta las verduras.",
+          "Remoja el pan si lo utilizas.",
+          "Tritura las verduras, el pan, el aceite y el vinagre hasta obtener una sopa lisa.",
+          "Ajusta la sazón, la consistencia con agua y enfría."
+        ]
+      },
+      "variants": [
+        "El salmorejo es una sopa de tomate emparentada y más espesa."
+      ],
+      "serving": [
+        "Sirve frío con verduras picadas finamente."
+      ],
+      "commonMistakes": [
+        "No uses tomates inmaduros si buscas el sabor del tomate maduro."
+      ]
+    },
+    "de": {
+      "overview": "Rohes Gemüse wird mit Öl, Essig und gegebenenfalls Brot püriert.",
+      "history": "Gazpacho ist besonders mit der andalusischen Küche verbunden und wird gern bei heißem Wetter serviert.",
+      "flavor": "Frisch, säuerlich und fruchtig.",
+      "technique": "Reife Tomaten verwenden und Suppe vor dem Servieren kühlen.",
+      "essentials": [
+        "800 g reife Tomaten",
+        "1 Gurke",
+        "1 grüne Paprikaschote"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 20 Min. + Kühlzeit",
+        "ingredients": [
+          "800 g reife Tomaten",
+          "1 Gurke",
+          "1 grüne Paprikaschote",
+          "1 Knoblauchzehe",
+          "40 g Brot, optional",
+          "3 EL Olivenöl",
+          "1–2 EL Weinessig",
+          "Salz",
+          "kaltes Wasser nach Bedarf"
+        ],
+        "steps": [
+          "Gemüse waschen und schneiden.",
+          "Brot einweichen, falls verwendet.",
+          "Gemüse, Brot, Öl und Essig zu einer glatten Suppe pürieren.",
+          "Abschmecken, Konsistenz mit Wasser anpassen und kühlen."
+        ]
+      },
+      "variants": [
+        "Salmorejo ist eine verwandte, dickere Tomatensuppe."
+      ],
+      "serving": [
+        "Kalt mit fein gehacktem Gemüse servieren."
+      ],
+      "commonMistakes": [
+        "Keine unreifen Tomaten verwenden, wenn reifer Tomatengeschmack gewünscht ist."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

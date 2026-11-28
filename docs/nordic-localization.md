@@ -200,3 +200,7 @@ Added eight complete bodies per language: mole poblano, ceviche, lahmacun, mant�
 ### International full article review batch 10
 
 Added eight complete bodies per language: fårikål, kjøttkaker, köttbullar, smørrebrød, lohikeitto, plokkfiskur, bœuf bourguignon and coq au vin. Checked source list lengths and numerical recipe tokens, including cooking times and ingredient quantities. Previous bodies and original source links retained. Total 80 new bodies per language; English 113/200 including original 33, other four 80/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 11
+
+Added eight complete bodies per language: ratatouille, bouillabaisse, quiche lorraine, croque-monsieur, paella valenciana, patatas bravas, tortilla española and gazpacho. Checked source list lengths and numerical recipe tokens, including oven temperatures, tin size, and ingredient quantities. Previous bodies and original sources retained. Total 88 new bodies per language; English 121/200 including original 33, other four 88/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
