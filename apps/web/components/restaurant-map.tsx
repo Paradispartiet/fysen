@@ -8,6 +8,8 @@ import type { MapEvidenceBySlug } from "../lib/map-menu-evidence";
 import styles from "./restaurant-map.module.css";
 import { MapRestaurantArtwork } from "./map-restaurant-artwork";
 import { MapRestaurantMenu } from "./map-restaurant-menu";
+import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
+import { SaveMinMatButton } from "./save-min-mat-button";
 
 export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: readonly CoordinateRow[]; dishQuery?: string; evidence?: MapEvidenceBySlug }) {
   const frame = useRef<HTMLIFrameElement>(null);
@@ -143,7 +145,8 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: r
             {currentEvidence.map((entry, index) => <li key={entry.sourceUrl + entry.name + index}>
               {entry.origin !== "catalog" && <strong>{entry.name}{entry.price ? " · " + entry.price : ""}</strong>}
               {entry.date && <span>{entry.origin === "archive" ? "Meny sist registrert" : "Meny sist kontrollert"} <time dateTime={entry.date}>{entry.date.slice(0, 10)}</time></span>}
-              <a href={entry.sourceUrl} target="_blank" rel="noreferrer">{"Se meny"} ↗</a>
+              <a href={entry.sourceUrl} target="_blank" rel="noreferrer">Se meny ↗</a>
+              {ahaMinMatPilotEnabled && withPublicBasePath("/") === "/" && entry.origin === "live" && entry.menuItemId ? <SaveMinMatButton key={entry.menuItemId} menuItemId={entry.menuItemId} /> : null}
             </li>)}
           </ul>}
           <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(current.geometry.coordinates.slice().reverse().join(","))}`} target="_blank" rel="noreferrer">Veibeskrivelse ↗</a>
