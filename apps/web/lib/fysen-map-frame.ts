@@ -3,7 +3,7 @@
 export const fysenMapFrame = `<!doctype html>
 <html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.css">
-<style>html,body,#map{height:100%;width:100%;margin:0;background:#171c19}#status{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;font:16px system-ui;color:#e8eee6;pointer-events:none}#status[hidden]{display:none}.fysen-logo-pin{display:block;width:38px;height:25px;padding:2px;border:1px solid #38513a;border-radius:5px;background:#f5f4ed;cursor:pointer}.fysen-logo-pin img{width:100%;height:100%;object-fit:contain}.fysen-logo-pin[hidden]{display:none}</style>
+<style>html,body,#map{height:100%;width:100%;margin:0;background:#353b37}#status{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;font:16px system-ui;color:#e8eee6;pointer-events:none}#status[hidden]{display:none}.fysen-logo-pin{display:block;width:38px;height:25px;padding:2px;border:1px solid #38513a;border-radius:5px;background:#f5f4ed;cursor:pointer}.fysen-logo-pin img{width:100%;height:100%;object-fit:contain}.fysen-logo-pin[hidden]{display:none}</style>
 </head><body><div id="map" aria-label="Restaurantkart over Oslo"></div><div id="status" role="status">Laster kart…</div>
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.js"></script>
 <script>
@@ -63,13 +63,13 @@ export const fysenMapFrame = `<!doctype html>
     if(!window.maplibregl || !message.style) { fail(); return; }
     try {
       const font = message.style.layers.map(layer => layer.layout && layer.layout["text-font"]).find(stack => Array.isArray(stack) && stack.length > 0 && stack.every(name => typeof name === "string") && stack.some(name => /Regular/.test(name))) || ["Noto Sans Regular"];
-      map = new maplibregl.Map({container:"map",style:message.style,center:[10.752,59.921],zoom:11.5,minZoom:9,maxZoom:19,renderWorldCopies:false,dragRotate:false,pitchWithRotate:false,attributionControl:{compact:true}});
+      map = new maplibregl.Map({container:"map",style:message.style,center:[10.752,59.921],zoom:13.1,minZoom:9,maxZoom:19,renderWorldCopies:false,dragRotate:false,pitchWithRotate:false,attributionControl:{compact:true}});
       map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
       map.on("load", () => {
         try {
           map.addSource("fysen",{type:"geojson",data,cluster:false});
           map.addLayer({id:"fysen-points",type:"circle",source:"fysen",paint:{"circle-color":"#b9df9a","circle-radius":["interpolate",["linear"],["zoom"],9,2,12,3.5,17,6],"circle-stroke-width":1,"circle-stroke-color":"#1c3021"}});
-          map.addLayer({id:"fysen-names",type:"symbol",source:"fysen",minzoom:15.5,layout:{"text-field":["get","name"],"text-size":12,"text-font":font,"text-anchor":"top","text-offset":[0,0.9],"text-max-width":11,"text-optional":true,"text-allow-overlap":false},paint:{"text-color":"#e8eee6","text-halo-color":"#171c19","text-halo-width":1.5}});
+          map.addLayer({id:"fysen-names",type:"symbol",source:"fysen",minzoom:15.5,layout:{"text-field":["get","name"],"text-size":12,"text-font":font,"text-anchor":"top","text-offset":[0,0.9],"text-max-width":11,"text-optional":true,"text-allow-overlap":false},paint:{"text-color":"#f2f0e7","text-halo-color":"#353b37","text-halo-width":1.5}});
           for(const id of ["fysen-points","fysen-names"]) {
             map.on("click",id,e=>{const f=e.features&&e.features[0];if(f&&f.properties)send("fysen-map-select",{slug:f.properties.slug});});
             map.on("mouseenter",id,()=>map.getCanvas().style.cursor="pointer");
