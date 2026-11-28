@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { URL } from "node:url";
 import { registeredMenuSource } from "../scripts/generate-restaurant-coordinates.mjs";
 
 test("registered menu links require a real Oslo catalog identity and web URL", () => {
