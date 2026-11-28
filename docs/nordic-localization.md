@@ -184,3 +184,7 @@ Added eight complete bodies per language: som tam, tom kha gai, pad see ew, khao
 ### International full article review batch 6
 
 Added eight complete bodies per language: malai kofta, aloo gobi, lasagne alla bolognese, risotto alla milanese, ossobuco, gnocchi al pesto, tiramisu and focaccia. Checked source list lengths and numerical recipe tokens, including oven temperatures, chilling and rising times. Original bodies and sources retained. Total 48 new bodies per language; English 81/200 including original 33, other four 48/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 7
+
+Added eight complete bodies per language: tempura, okonomiyaki, takoyaki, sukiyaki, shabu-shabu, katsudon, kung pao chicken and xiaolongbao. Checked source list lengths and numerical recipe tokens, including frying temperatures and chilling times. Preserved raw-egg, cross-contamination and hot-broth safety instructions. Original bodies and sources retained. Total 56 new bodies per language; English 89/200 including original 33, other four 56/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.

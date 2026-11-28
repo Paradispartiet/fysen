@@ -9668,5 +9668,1671 @@ export const draftInternationalArticles = {
         "Beim Formen nicht die gesamte Luft herausdrücken."
       ]
     }
+  },
+  "tempura": {
+    "en": {
+      "overview": "Ingredients are dipped in cold flour batter and quickly deep-fried.",
+      "history": "Tempura developed in Japan with historical links to Portuguese cooking traditions.",
+      "flavor": "Light, crisp and mild.",
+      "technique": "Mix the batter briefly and keep it cold.",
+      "essentials": [
+        "200 g prawns",
+        "200 g vegetables",
+        "100 g wheat flour"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–50 min",
+        "ingredients": [
+          "200 g prawns",
+          "200 g vegetables",
+          "100 g wheat flour",
+          "150 ml ice-cold water",
+          "1 egg",
+          "frying oil"
+        ],
+        "steps": [
+          "Dry the ingredients thoroughly.",
+          "Briefly mix the egg, water and flour.",
+          "Dip the ingredients in the batter.",
+          "Deep-fry in small batches at 170–180 °C until cooked through and crisp."
+        ]
+      },
+      "variants": [
+        "Ebi tempura with prawns and yasai tempura with vegetables."
+      ],
+      "serving": [
+        "Serve with tentsuyu or salt."
+      ],
+      "commonMistakes": [
+        "Do not overmix the batter."
+      ]
+    },
+    "fr": {
+      "overview": "Les ingrédients sont plongés dans une pâte froide à base de farine et frits rapidement.",
+      "history": "La tempura s’est développée au Japon avec des liens historiques avec la cuisine portugaise.",
+      "flavor": "Légère, croustillante et douce.",
+      "technique": "Mélanger brièvement la pâte et la garder froide.",
+      "essentials": [
+        "200 g de crevettes",
+        "200 g de légumes",
+        "100 g de farine de blé"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–50 min",
+        "ingredients": [
+          "200 g de crevettes",
+          "200 g de légumes",
+          "100 g de farine de blé",
+          "150 ml d’eau glacée",
+          "1 œuf",
+          "huile de friture"
+        ],
+        "steps": [
+          "Bien sécher les ingrédients.",
+          "Mélanger brièvement l’œuf, l’eau et la farine.",
+          "Plonger les ingrédients dans la pâte.",
+          "Frire par petites quantités à 170–180 °C jusqu’à cuisson complète et jusqu’à ce que les ingrédients soient croustillants."
+        ]
+      },
+      "variants": [
+        "Ebi tempura aux crevettes et yasai tempura aux légumes."
+      ],
+      "serving": [
+        "Servir avec du tentsuyu ou du sel."
+      ],
+      "commonMistakes": [
+        "Ne pas trop travailler la pâte."
+      ]
+    },
+    "pt": {
+      "overview": "Os ingredientes são mergulhados num polme frio de farinha e fritos rapidamente.",
+      "history": "A tempura desenvolveu-se no Japão com ligações históricas à tradição culinária portuguesa.",
+      "flavor": "Leve, crocante e suave.",
+      "technique": "Misture brevemente o polme e mantenha-o frio.",
+      "essentials": [
+        "200 g de camarão",
+        "200 g de legumes",
+        "100 g de farinha de trigo"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–50 min",
+        "ingredients": [
+          "200 g de camarão",
+          "200 g de legumes",
+          "100 g de farinha de trigo",
+          "150 ml de água gelada",
+          "1 ovo",
+          "óleo para fritar"
+        ],
+        "steps": [
+          "Seque bem os ingredientes.",
+          "Misture brevemente o ovo, a água e a farinha.",
+          "Mergulhe os ingredientes no polme.",
+          "Frite em pequenas porções a 170–180 °C até estarem bem cozinhadas e crocantes."
+        ]
+      },
+      "variants": [
+        "Ebi tempura com camarão e yasai tempura com legumes."
+      ],
+      "serving": [
+        "Sirva com tentsuyu ou sal."
+      ],
+      "commonMistakes": [
+        "Não mexa demasiado o polme."
+      ]
+    },
+    "es": {
+      "overview": "Los ingredientes se sumergen en una masa fría de harina y se fríen rápidamente.",
+      "history": "La tempura se desarrolló en Japón con vínculos históricos con la tradición culinaria portuguesa.",
+      "flavor": "Ligera, crujiente y suave.",
+      "technique": "Mezcla brevemente la masa y mantenla fría.",
+      "essentials": [
+        "200 g de gambas",
+        "200 g de verduras",
+        "100 g de harina de trigo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–50 min",
+        "ingredients": [
+          "200 g de gambas",
+          "200 g de verduras",
+          "100 g de harina de trigo",
+          "150 ml de agua helada",
+          "1 huevo",
+          "aceite para freír"
+        ],
+        "steps": [
+          "Seca bien los ingredientes.",
+          "Mezcla brevemente el huevo, el agua y la harina.",
+          "Sumerge los ingredientes en la masa.",
+          "Fríe en tandas pequeñas a 170–180 °C hasta que estén hechas por dentro y crujientes."
+        ]
+      },
+      "variants": [
+        "Ebi tempura con gambas y yasai tempura con verduras."
+      ],
+      "serving": [
+        "Sirve con tentsuyu o sal."
+      ],
+      "commonMistakes": [
+        "No trabajes demasiado la masa."
+      ]
+    },
+    "de": {
+      "overview": "Die Zutaten werden in kalten Mehlteig getaucht und kurz frittiert.",
+      "history": "Tempura entwickelte sich in Japan mit historischen Verbindungen zur portugiesischen Küche.",
+      "flavor": "Leicht, knusprig und mild.",
+      "technique": "Teig kurz verrühren und kalt halten.",
+      "essentials": [
+        "200 g Garnelen",
+        "200 g Gemüse",
+        "100 g Weizenmehl"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–50 Min.",
+        "ingredients": [
+          "200 g Garnelen",
+          "200 g Gemüse",
+          "100 g Weizenmehl",
+          "150 ml eiskaltes Wasser",
+          "1 Ei",
+          "Frittieröl"
+        ],
+        "steps": [
+          "Zutaten gründlich trocknen.",
+          "Ei, Wasser und Mehl kurz verrühren.",
+          "Zutaten in den Teig tauchen.",
+          "In kleinen Portionen bei 170–180 °C vollständig gar und knusprig frittieren."
+        ]
+      },
+      "variants": [
+        "Ebi Tempura mit Garnelen und Yasai Tempura mit Gemüse."
+      ],
+      "serving": [
+        "Mit Tentsuyu oder Salz servieren."
+      ],
+      "commonMistakes": [
+        "Teig nicht zu lange rühren."
+      ]
+    }
+  },
+  "okonomiyaki": {
+    "en": {
+      "overview": "The Osaka version mixes cabbage into the batter, while the Hiroshima version is often assembled in layers.",
+      "history": "The dish is particularly associated with Osaka and Hiroshima.",
+      "flavor": "Juicy, roasted and sweet-salty from the sauce.",
+      "technique": "Cook over medium heat until the centre is done.",
+      "essentials": [
+        "250 g cabbage",
+        "150 g wheat flour",
+        "150 ml dashi"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–50 min",
+        "ingredients": [
+          "250 g cabbage",
+          "150 g wheat flour",
+          "150 ml dashi",
+          "2 eggs",
+          "150 g thin slices of pork",
+          "okonomiyaki sauce",
+          "mayonnaise"
+        ],
+        "steps": [
+          "Mix flour, dashi and eggs.",
+          "Fold in the finely sliced cabbage.",
+          "Shape pancakes in an oiled pan and place the meat on top.",
+          "Turn and cook until the meat and batter are cooked through."
+        ]
+      },
+      "variants": [
+        "Hiroshima style with layers and noodles."
+      ],
+      "serving": [
+        "Top with sauce, mayonnaise and, if desired, bonito flakes and aonori."
+      ],
+      "commonMistakes": [
+        "Do not press the pancake flat while cooking."
+      ]
+    },
+    "fr": {
+      "overview": "Dans la version d’Osaka, le chou est mélangé à la pâte, tandis que celle d’Hiroshima est souvent montée en couches.",
+      "history": "Le plat est particulièrement associé à Osaka et à Hiroshima.",
+      "flavor": "Juteux, grillé et sucré-salé grâce à la sauce.",
+      "technique": "Cuire à feu moyen jusqu’à cuisson complète au centre.",
+      "essentials": [
+        "250 g de chou",
+        "150 g de farine de blé",
+        "150 ml de dashi"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–50 min",
+        "ingredients": [
+          "250 g de chou",
+          "150 g de farine de blé",
+          "150 ml de dashi",
+          "2 œufs",
+          "150 g de fines tranches de porc",
+          "sauce okonomiyaki",
+          "mayonnaise"
+        ],
+        "steps": [
+          "Mélanger la farine, le dashi et les œufs.",
+          "Incorporer le chou finement émincé.",
+          "Former des crêpes dans une poêle huilée et déposer la viande dessus.",
+          "Retourner et cuire jusqu’à cuisson complète de la viande et de la pâte."
+        ]
+      },
+      "variants": [
+        "Style d’Hiroshima, avec des couches et des nouilles."
+      ],
+      "serving": [
+        "Garnir de sauce, de mayonnaise et, si souhaité, de flocons de bonite et d’aonori."
+      ],
+      "commonMistakes": [
+        "Ne pas aplatir la crêpe pendant la cuisson."
+      ]
+    },
+    "pt": {
+      "overview": "A versão de Osaka mistura a couve na massa, enquanto a de Hiroshima é frequentemente montada em camadas.",
+      "history": "O prato está especialmente associado a Osaka e Hiroshima.",
+      "flavor": "Suculento, tostado e doce-salgado devido ao molho.",
+      "technique": "Cozinhe em lume médio até o centro estar bem cozinhado.",
+      "essentials": [
+        "250 g de couve",
+        "150 g de farinha de trigo",
+        "150 ml de dashi"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–50 min",
+        "ingredients": [
+          "250 g de couve",
+          "150 g de farinha de trigo",
+          "150 ml de dashi",
+          "2 ovos",
+          "150 g de fatias finas de carne de porco",
+          "molho okonomiyaki",
+          "maionese"
+        ],
+        "steps": [
+          "Misture farinha, dashi e ovos.",
+          "Envolva a couve cortada em tiras finas.",
+          "Forme panquecas numa frigideira untada com óleo e coloque a carne por cima.",
+          "Vire e cozinhe até a carne e a massa estarem bem cozinhadas."
+        ]
+      },
+      "variants": [
+        "Estilo de Hiroshima, com camadas e noodles."
+      ],
+      "serving": [
+        "Cubra com molho, maionese e, se desejar, flocos de bonito e aonori."
+      ],
+      "commonMistakes": [
+        "Não achate a panqueca durante a cozedura."
+      ]
+    },
+    "es": {
+      "overview": "La versión de Osaka mezcla la col con la masa, mientras que la de Hiroshima suele montarse en capas.",
+      "history": "El plato se asocia especialmente con Osaka e Hiroshima.",
+      "flavor": "Jugoso, tostado y dulce-salado por la salsa.",
+      "technique": "Cocina a fuego medio hasta que el centro esté hecho.",
+      "essentials": [
+        "250 g de col",
+        "150 g de harina de trigo",
+        "150 ml de dashi"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–50 min",
+        "ingredients": [
+          "250 g de col",
+          "150 g de harina de trigo",
+          "150 ml de dashi",
+          "2 huevos",
+          "150 g de lonchas finas de cerdo",
+          "salsa okonomiyaki",
+          "mayonesa"
+        ],
+        "steps": [
+          "Mezcla la harina, el dashi y los huevos.",
+          "Incorpora la col cortada fina.",
+          "Forma tortitas en una sartén aceitada y coloca la carne encima.",
+          "Da la vuelta y cocina hasta que la carne y la masa estén hechas por dentro."
+        ]
+      },
+      "variants": [
+        "Estilo de Hiroshima, con capas y fideos."
+      ],
+      "serving": [
+        "Cubre con salsa, mayonesa y, si quieres, copos de bonito y aonori."
+      ],
+      "commonMistakes": [
+        "No aplastes la tortita durante la cocción."
+      ]
+    },
+    "de": {
+      "overview": "Bei der Osaka-Variante wird Kohl unter den Teig gemischt, während die Hiroshima-Variante oft geschichtet wird.",
+      "history": "Das Gericht ist besonders mit Osaka und Hiroshima verbunden.",
+      "flavor": "Saftig, röstig und durch die Sauce süß-salzig.",
+      "technique": "Bei mittlerer Hitze braten, bis die Mitte gar ist.",
+      "essentials": [
+        "250 g Kohl",
+        "150 g Weizenmehl",
+        "150 ml Dashi"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–50 Min.",
+        "ingredients": [
+          "250 g Kohl",
+          "150 g Weizenmehl",
+          "150 ml Dashi",
+          "2 Eier",
+          "150 g dünne Schweinefleischscheiben",
+          "Okonomiyaki-Sauce",
+          "Mayonnaise"
+        ],
+        "steps": [
+          "Mehl, Dashi und Eier mischen.",
+          "Fein geschnittenen Kohl unterheben.",
+          "Pfannkuchen in einer geölten Pfanne formen und Fleisch darauflegen.",
+          "Wenden und braten, bis Fleisch und Teig vollständig gar sind."
+        ]
+      },
+      "variants": [
+        "Hiroshima-Stil mit Schichten und Nudeln."
+      ],
+      "serving": [
+        "Mit Sauce, Mayonnaise und nach Wunsch Bonitoflocken und Aonori garnieren."
+      ],
+      "commonMistakes": [
+        "Pfannkuchen beim Braten nicht flach drücken."
+      ]
+    }
+  },
+  "takoyaki": {
+    "en": {
+      "overview": "Runny dashi batter is filled with cooked octopus and turned in hemispherical moulds.",
+      "history": "Takoyaki is particularly associated with Osaka’s street food.",
+      "flavor": "Toasted outside and soft, hot centre.",
+      "technique": "Use a takoyaki pan and gradually turn the balls.",
+      "essentials": [
+        "150 g wheat flour",
+        "450 ml dashi",
+        "2 eggs"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–50 min",
+        "ingredients": [
+          "150 g wheat flour",
+          "450 ml dashi",
+          "2 eggs",
+          "150 g cooked octopus",
+          "spring onions",
+          "pickled ginger",
+          "oil"
+        ],
+        "steps": [
+          "Mix flour, dashi and eggs.",
+          "Grease and heat the takoyaki pan.",
+          "Pour in the batter and add octopus and spring onions.",
+          "Gradually turn with a skewer until the balls are round and cooked through."
+        ]
+      },
+      "variants": [
+        "Home versions can use prawns instead of octopus."
+      ],
+      "serving": [
+        "Serve with takoyaki sauce, mayonnaise and bonito flakes."
+      ],
+      "commonMistakes": [
+        "Be aware that the centre is very hot when served."
+      ]
+    },
+    "fr": {
+      "overview": "Une pâte liquide au dashi est garnie de poulpe cuit et retournée dans des alvéoles hémisphériques.",
+      "history": "Les takoyaki sont particulièrement associés à la cuisine de rue d’Osaka.",
+      "flavor": "Extérieur doré et cœur tendre et chaud.",
+      "technique": "Utiliser une poêle à takoyaki et retourner progressivement les boulettes.",
+      "essentials": [
+        "150 g de farine de blé",
+        "450 ml de dashi",
+        "2 œufs"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–50 min",
+        "ingredients": [
+          "150 g de farine de blé",
+          "450 ml de dashi",
+          "2 œufs",
+          "150 g de poulpe cuit",
+          "oignons nouveaux",
+          "gingembre mariné",
+          "huile"
+        ],
+        "steps": [
+          "Mélanger la farine, le dashi et les œufs.",
+          "Huiler et chauffer la poêle à takoyaki.",
+          "Verser la pâte et ajouter le poulpe et les oignons nouveaux.",
+          "Retourner progressivement à l’aide d’une pique jusqu’à ce que les boulettes soient rondes et cuites à cœur."
+        ]
+      },
+      "variants": [
+        "Les versions maison peuvent remplacer le poulpe par des crevettes."
+      ],
+      "serving": [
+        "Servir avec de la sauce takoyaki, de la mayonnaise et des flocons de bonite."
+      ],
+      "commonMistakes": [
+        "Attention, le cœur est très chaud au moment de servir."
+      ]
+    },
+    "pt": {
+      "overview": "Uma massa líquida de dashi é recheada com polvo cozido e virada em cavidades hemisféricas.",
+      "history": "O takoyaki está especialmente associado à comida de rua de Osaka.",
+      "flavor": "Exterior tostado e interior macio e quente.",
+      "technique": "Use uma frigideira de takoyaki e vire as bolinhas gradualmente.",
+      "essentials": [
+        "150 g de farinha de trigo",
+        "450 ml de dashi",
+        "2 ovos"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–50 min",
+        "ingredients": [
+          "150 g de farinha de trigo",
+          "450 ml de dashi",
+          "2 ovos",
+          "150 g de polvo cozido",
+          "cebolinha verde",
+          "gengibre em conserva",
+          "óleo"
+        ],
+        "steps": [
+          "Misture farinha, dashi e ovos.",
+          "Unte e aqueça a frigideira de takoyaki.",
+          "Verta a massa e junte polvo e cebolinha verde.",
+          "Vire gradualmente com um palito até as bolinhas estarem redondas e bem cozinhadas."
+        ]
+      },
+      "variants": [
+        "As versões caseiras podem usar camarão em vez de polvo."
+      ],
+      "serving": [
+        "Sirva com molho takoyaki, maionese e flocos de bonito."
+      ],
+      "commonMistakes": [
+        "Tenha cuidado, pois o interior está muito quente ao servir."
+      ]
+    },
+    "es": {
+      "overview": "Una masa líquida de dashi se rellena de pulpo cocido y se gira en cavidades semiesféricas.",
+      "history": "El takoyaki se asocia especialmente con la comida callejera de Osaka.",
+      "flavor": "Exterior tostado e interior suave y caliente.",
+      "technique": "Usa una sartén de takoyaki y gira las bolas gradualmente.",
+      "essentials": [
+        "150 g de harina de trigo",
+        "450 ml de dashi",
+        "2 huevos"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–50 min",
+        "ingredients": [
+          "150 g de harina de trigo",
+          "450 ml de dashi",
+          "2 huevos",
+          "150 g de pulpo cocido",
+          "cebolletas",
+          "jengibre encurtido",
+          "aceite"
+        ],
+        "steps": [
+          "Mezcla la harina, el dashi y los huevos.",
+          "Engrasa y calienta la sartén de takoyaki.",
+          "Vierte la masa y añade pulpo y cebolletas.",
+          "Gira gradualmente con un palillo hasta que las bolas estén redondas y hechas por dentro."
+        ]
+      },
+      "variants": [
+        "Las versiones caseras pueden usar gambas en lugar de pulpo."
+      ],
+      "serving": [
+        "Sirve con salsa takoyaki, mayonesa y copos de bonito."
+      ],
+      "commonMistakes": [
+        "Ten cuidado: el interior está muy caliente al servir."
+      ]
+    },
+    "de": {
+      "overview": "Flüssiger Dashi-Teig wird mit gegartem Oktopus gefüllt und in halbkugelförmigen Vertiefungen gewendet.",
+      "history": "Takoyaki ist besonders mit Osakas Streetfood verbunden.",
+      "flavor": "Geröstete Außenseite und weicher, heißer Kern.",
+      "technique": "Takoyaki-Pfanne verwenden und die Kugeln nach und nach wenden.",
+      "essentials": [
+        "150 g Weizenmehl",
+        "450 ml Dashi",
+        "2 Eier"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–50 Min.",
+        "ingredients": [
+          "150 g Weizenmehl",
+          "450 ml Dashi",
+          "2 Eier",
+          "150 g gegarter Oktopus",
+          "Frühlingszwiebeln",
+          "eingelegter Ingwer",
+          "Öl"
+        ],
+        "steps": [
+          "Mehl, Dashi und Eier mischen.",
+          "Takoyaki-Pfanne einfetten und erhitzen.",
+          "Teig eingießen und Oktopus und Frühlingszwiebeln hinzufügen.",
+          "Mit einem Stäbchen nach und nach wenden, bis die Kugeln rund und vollständig gar sind."
+        ]
+      },
+      "variants": [
+        "Hausvarianten können Garnelen statt Oktopus verwenden."
+      ],
+      "serving": [
+        "Mit Takoyaki-Sauce, Mayonnaise und Bonitoflocken servieren."
+      ],
+      "commonMistakes": [
+        "Vorsicht: Der Kern ist beim Servieren sehr heiß."
+      ]
+    }
+  },
+  "sukiyaki": {
+    "en": {
+      "overview": "The ingredients are cooked in a shallow pot with soy sauce, sugar and mirin.",
+      "history": "Sukiyaki is an established Japanese hot-pot dish with regional cooking methods.",
+      "flavor": "Sweet, salty and rich.",
+      "technique": "Cook the meat quickly in the concentrated sauce.",
+      "essentials": [
+        "400 g thinly sliced beef",
+        "200 g tofu",
+        "200 g Chinese cabbage"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–50 min",
+        "ingredients": [
+          "400 g thinly sliced beef",
+          "200 g tofu",
+          "200 g Chinese cabbage",
+          "100 g mushrooms",
+          "shirataki noodles",
+          "100 ml dashi",
+          "4 tbsp soy sauce",
+          "3 tbsp mirin",
+          "1 tbsp sugar"
+        ],
+        "steps": [
+          "Mix dashi, soy sauce, mirin and sugar.",
+          "Briefly brown the meat in the pot.",
+          "Add sauce, tofu, mushrooms, noodles and cabbage.",
+          "Simmer until the vegetables are tender and the meat is done."
+        ]
+      },
+      "variants": [
+        "Kantō and Kansai styles use different methods."
+      ],
+      "serving": [
+        "Serve with rice; use pasteurised egg if it is to be served raw as a dip."
+      ],
+      "commonMistakes": [
+        "Do not cook the thin slices of meat longer than necessary."
+      ]
+    },
+    "fr": {
+      "overview": "Les ingrédients cuisent dans une marmite peu profonde avec de la sauce soja, du sucre et du mirin.",
+      "history": "Le sukiyaki est un plat japonais en marmite bien établi, avec des méthodes de préparation régionales.",
+      "flavor": "Sucré, salé et généreux.",
+      "technique": "Cuire rapidement la viande dans la sauce concentrée.",
+      "essentials": [
+        "400 g de bœuf en fines tranches",
+        "200 g de tofu",
+        "200 g de chou chinois"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–50 min",
+        "ingredients": [
+          "400 g de bœuf en fines tranches",
+          "200 g de tofu",
+          "200 g de chou chinois",
+          "100 g de champignons",
+          "nouilles shirataki",
+          "100 ml de dashi",
+          "4 c. à soupe de sauce soja",
+          "3 c. à soupe de mirin",
+          "1 c. à soupe de sucre"
+        ],
+        "steps": [
+          "Mélanger le dashi, la sauce soja, le mirin et le sucre.",
+          "Faire brièvement dorer la viande dans la marmite.",
+          "Ajouter la sauce, le tofu, les champignons, les nouilles et le chou.",
+          "Laisser mijoter jusqu’à ce que les légumes soient tendres et la viande cuite."
+        ]
+      },
+      "variants": [
+        "Les styles du Kantō et du Kansai suivent des méthodes différentes."
+      ],
+      "serving": [
+        "Servir avec du riz ; utiliser un œuf pasteurisé s’il doit être servi cru comme sauce à tremper."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire les fines tranches de viande plus longtemps que nécessaire."
+      ]
+    },
+    "pt": {
+      "overview": "Os ingredientes são cozinhados num tacho baixo com molho de soja, açúcar e mirin.",
+      "history": "O sukiyaki é um prato japonês de tacho tradicional, com métodos regionais de preparação.",
+      "flavor": "Doce, salgado e encorpado.",
+      "technique": "Cozinhe rapidamente a carne no molho concentrado.",
+      "essentials": [
+        "400 g de carne de vaca em fatias finas",
+        "200 g de tofu",
+        "200 g de couve-chinesa"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–50 min",
+        "ingredients": [
+          "400 g de carne de vaca em fatias finas",
+          "200 g de tofu",
+          "200 g de couve-chinesa",
+          "100 g de cogumelos",
+          "noodles shirataki",
+          "100 ml de dashi",
+          "4 c. de sopa de molho de soja",
+          "3 c. de sopa de mirin",
+          "1 c. de sopa de açúcar"
+        ],
+        "steps": [
+          "Misture dashi, molho de soja, mirin e açúcar.",
+          "Doure brevemente a carne no tacho.",
+          "Junte molho, tofu, cogumelos, noodles e couve.",
+          "Deixe cozinhar em lume brando até os legumes ficarem tenros e a carne estar cozinhada."
+        ]
+      },
+      "variants": [
+        "Os estilos de Kantō e Kansai têm métodos diferentes."
+      ],
+      "serving": [
+        "Sirva com arroz; use ovo pasteurizado se for servido cru como molho para mergulhar."
+      ],
+      "commonMistakes": [
+        "Não coza as fatias finas de carne durante mais tempo do que o necessário."
+      ]
+    },
+    "es": {
+      "overview": "Los ingredientes se cocinan en una olla poco profunda con salsa de soja, azúcar y mirin.",
+      "history": "El sukiyaki es un plato japonés de olla consolidado, con métodos regionales de preparación.",
+      "flavor": "Dulce, salado e intenso.",
+      "technique": "Cocina rápidamente la carne en la salsa concentrada.",
+      "essentials": [
+        "400 g de carne de vacuno en láminas finas",
+        "200 g de tofu",
+        "200 g de col china"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–50 min",
+        "ingredients": [
+          "400 g de carne de vacuno en láminas finas",
+          "200 g de tofu",
+          "200 g de col china",
+          "100 g de setas",
+          "fideos shirataki",
+          "100 ml de dashi",
+          "4 cucharadas de salsa de soja",
+          "3 cucharadas de mirin",
+          "1 cucharada de azúcar"
+        ],
+        "steps": [
+          "Mezcla dashi, salsa de soja, mirin y azúcar.",
+          "Dora brevemente la carne en la olla.",
+          "Añade salsa, tofu, setas, fideos y col.",
+          "Cuece a fuego lento hasta que las verduras estén tiernas y la carne hecha."
+        ]
+      },
+      "variants": [
+        "Los estilos de Kantō y Kansai emplean métodos distintos."
+      ],
+      "serving": [
+        "Sirve con arroz; usa huevo pasteurizado si se va a servir crudo para mojar."
+      ],
+      "commonMistakes": [
+        "No cuezas las láminas finas de carne más tiempo del necesario."
+      ]
+    },
+    "de": {
+      "overview": "Die Zutaten werden in einem flachen Topf mit Sojasauce, Zucker und Mirin gegart.",
+      "history": "Sukiyaki ist ein etabliertes japanisches Topfgericht mit regionalen Zubereitungsweisen.",
+      "flavor": "Süß, salzig und vollmundig.",
+      "technique": "Fleisch kurz in der konzentrierten Sauce garen.",
+      "essentials": [
+        "400 g Rindfleisch in dünnen Scheiben",
+        "200 g Tofu",
+        "200 g Chinakohl"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–50 Min.",
+        "ingredients": [
+          "400 g Rindfleisch in dünnen Scheiben",
+          "200 g Tofu",
+          "200 g Chinakohl",
+          "100 g Pilze",
+          "Shirataki-Nudeln",
+          "100 ml Dashi",
+          "4 EL Sojasauce",
+          "3 EL Mirin",
+          "1 EL Zucker"
+        ],
+        "steps": [
+          "Dashi, Sojasauce, Mirin und Zucker mischen.",
+          "Fleisch kurz im Topf anbräunen.",
+          "Sauce, Tofu, Pilze, Nudeln und Kohl hinzufügen.",
+          "Ziehen lassen, bis das Gemüse weich und das Fleisch gar ist."
+        ]
+      },
+      "variants": [
+        "Kantō- und Kansai-Stil haben unterschiedliche Zubereitungsweisen."
+      ],
+      "serving": [
+        "Mit Reis servieren; pasteurisiertes Ei verwenden, wenn es roh als Dip gereicht wird."
+      ],
+      "commonMistakes": [
+        "Dünne Fleischscheiben nicht länger als nötig kochen."
+      ]
+    }
+  },
+  "shabu-shabu": {
+    "en": {
+      "overview": "The ingredients are cooked at the table and dipped in sauce.",
+      "history": "Shabu-shabu is a well-known Japanese nabemono or hot-pot dish.",
+      "flavor": "Mild broth with a fresh or nutty dipping sauce.",
+      "technique": "Cook small portions of meat in hot broth until done.",
+      "essentials": [
+        "400 g thinly sliced beef",
+        "1.5 l water",
+        "kombu"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–50 min",
+        "ingredients": [
+          "400 g thinly sliced beef",
+          "1.5 l water",
+          "kombu",
+          "200 g tofu",
+          "Chinese cabbage",
+          "mushrooms",
+          "ponzu",
+          "sesame sauce"
+        ],
+        "steps": [
+          "Infuse the kombu in water and remove it before the broth boils.",
+          "Add tofu, mushrooms and vegetables.",
+          "Cook the meat slices in small batches until done.",
+          "Serve with ponzu and sesame sauce."
+        ]
+      },
+      "variants": [
+        "Versions with pork or seafood."
+      ],
+      "serving": [
+        "Finish the meal with noodles in the broth if desired."
+      ],
+      "commonMistakes": [
+        "Use separate utensils for raw and cooked meat."
+      ]
+    },
+    "fr": {
+      "overview": "Les ingrédients sont cuits à table et trempés dans une sauce.",
+      "history": "Le shabu-shabu est un nabemono japonais bien connu, un plat cuit en marmite.",
+      "flavor": "Bouillon doux avec une sauce à tremper fraîche ou aux notes de noix.",
+      "technique": "Cuire de petites portions de viande dans le bouillon chaud jusqu’à cuisson complète.",
+      "essentials": [
+        "400 g de bœuf en fines tranches",
+        "1,5 l d’eau",
+        "kombu"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–50 min",
+        "ingredients": [
+          "400 g de bœuf en fines tranches",
+          "1,5 l d’eau",
+          "kombu",
+          "200 g de tofu",
+          "chou chinois",
+          "champignons",
+          "ponzu",
+          "sauce au sésame"
+        ],
+        "steps": [
+          "Faire infuser le kombu dans l’eau et le retirer avant ébullition du bouillon.",
+          "Ajouter le tofu, les champignons et les légumes.",
+          "Cuire les tranches de viande par petites quantités jusqu’à cuisson complète.",
+          "Servir avec du ponzu et une sauce au sésame."
+        ]
+      },
+      "variants": [
+        "Variantes au porc ou aux fruits de mer."
+      ],
+      "serving": [
+        "Terminer éventuellement le repas avec des nouilles dans le bouillon."
+      ],
+      "commonMistakes": [
+        "Utiliser des ustensiles distincts pour la viande crue et la viande cuite."
+      ]
+    },
+    "pt": {
+      "overview": "Os ingredientes são cozinhados à mesa e mergulhados em molho.",
+      "history": "O shabu-shabu é um conhecido nabemono japonês, ou prato de tacho.",
+      "flavor": "Caldo suave com molho fresco ou com notas de frutos secos.",
+      "technique": "Coza pequenas porções de carne em caldo quente até estarem prontas.",
+      "essentials": [
+        "400 g de carne de vaca em fatias finas",
+        "1,5 l de água",
+        "kombu"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–50 min",
+        "ingredients": [
+          "400 g de carne de vaca em fatias finas",
+          "1,5 l de água",
+          "kombu",
+          "200 g de tofu",
+          "couve-chinesa",
+          "cogumelos",
+          "ponzu",
+          "molho de sésamo"
+        ],
+        "steps": [
+          "Deixe o kombu em infusão na água e retire-o antes de o caldo ferver.",
+          "Junte tofu, cogumelos e legumes.",
+          "Coza as fatias de carne em pequenas porções até estarem prontas.",
+          "Sirva com ponzu e molho de sésamo."
+        ]
+      },
+      "variants": [
+        "Variantes com carne de porco ou marisco."
+      ],
+      "serving": [
+        "Se desejar, termine a refeição com noodles no caldo."
+      ],
+      "commonMistakes": [
+        "Use utensílios separados para carne crua e cozinhada."
+      ]
+    },
+    "es": {
+      "overview": "Los ingredientes se cocinan en la mesa y se mojan en salsa.",
+      "history": "El shabu-shabu es un conocido nabemono japonés, o plato de olla.",
+      "flavor": "Caldo suave con salsa para mojar fresca o con notas de frutos secos.",
+      "technique": "Cuece pequeñas porciones de carne en caldo caliente hasta que estén hechas.",
+      "essentials": [
+        "400 g de carne de vacuno en láminas finas",
+        "1,5 l de agua",
+        "kombu"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–50 min",
+        "ingredients": [
+          "400 g de carne de vacuno en láminas finas",
+          "1,5 l de agua",
+          "kombu",
+          "200 g de tofu",
+          "col china",
+          "setas",
+          "ponzu",
+          "salsa de sésamo"
+        ],
+        "steps": [
+          "Deja infusionar el kombu en agua y retíralo antes de que hierva el caldo.",
+          "Añade tofu, setas y verduras.",
+          "Cuece las láminas de carne en tandas pequeñas hasta que estén hechas.",
+          "Sirve con ponzu y salsa de sésamo."
+        ]
+      },
+      "variants": [
+        "Variantes con cerdo o marisco."
+      ],
+      "serving": [
+        "Si quieres, termina la comida con fideos en el caldo."
+      ],
+      "commonMistakes": [
+        "Usa utensilios distintos para carne cruda y cocinada."
+      ]
+    },
+    "de": {
+      "overview": "Die Zutaten werden am Tisch gegart und in Sauce getaucht.",
+      "history": "Shabu-Shabu ist ein bekanntes japanisches Nabemono- oder Topfgericht.",
+      "flavor": "Milde Brühe mit frischem oder nussigem Dip.",
+      "technique": "Kleine Fleischportionen in heißer Brühe fertig garen.",
+      "essentials": [
+        "400 g Rindfleisch in dünnen Scheiben",
+        "1,5 l Wasser",
+        "Kombu"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–50 Min.",
+        "ingredients": [
+          "400 g Rindfleisch in dünnen Scheiben",
+          "1,5 l Wasser",
+          "Kombu",
+          "200 g Tofu",
+          "Chinakohl",
+          "Pilze",
+          "Ponzu",
+          "Sesamsauce"
+        ],
+        "steps": [
+          "Kombu in Wasser ziehen lassen und vor dem Aufkochen der Brühe herausnehmen.",
+          "Tofu, Pilze und Gemüse hinzufügen.",
+          "Fleischscheiben in kleinen Portionen fertig garen.",
+          "Mit Ponzu und Sesamsauce servieren."
+        ]
+      },
+      "variants": [
+        "Varianten mit Schweinefleisch oder Meeresfrüchten."
+      ],
+      "serving": [
+        "Die Mahlzeit nach Wunsch mit Nudeln in der Brühe abschließen."
+      ],
+      "commonMistakes": [
+        "Getrennte Utensilien für rohes und gegartes Fleisch verwenden."
+      ]
+    }
+  },
+  "katsudon": {
+    "en": {
+      "overview": "Tonkatsu is briefly simmered in a sweet-salty dashi and soy mixture with egg.",
+      "history": "Katsudon belongs to the Japanese donburi tradition of toppings over rice.",
+      "flavor": "Rich, sweet-salty and juicy.",
+      "technique": "Let the breaded meat simmer briefly in the sauce before the egg sets.",
+      "essentials": [
+        "4 boneless pork chops",
+        "flour",
+        "2 eggs for breading"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–50 min",
+        "ingredients": [
+          "4 boneless pork chops",
+          "flour",
+          "2 eggs for breading",
+          "panko",
+          "oil",
+          "600 g cooked rice",
+          "1 onion",
+          "200 ml dashi",
+          "3 tbsp soy sauce",
+          "2 tbsp mirin",
+          "4 eggs"
+        ],
+        "steps": [
+          "Coat the chops in flour, egg and panko.",
+          "Fry in oil until cooked through and cut into strips.",
+          "Cook the onion in dashi, soy sauce and mirin.",
+          "Place the meat in the sauce, pour over beaten egg and let it set.",
+          "Serve over hot rice."
+        ]
+      },
+      "variants": [
+        "Sauce katsudon is served with sauce without the egg mixture."
+      ],
+      "serving": [
+        "Top with spring onions if desired."
+      ],
+      "commonMistakes": [
+        "Do not let the breading soak so long that it disintegrates."
+      ]
+    },
+    "fr": {
+      "overview": "Le tonkatsu mijote brièvement dans un mélange sucré-salé de dashi et de sauce soja avec de l’œuf.",
+      "history": "Le katsudon appartient à la tradition japonaise du donburi, où des garnitures recouvrent le riz.",
+      "flavor": "Généreux, sucré-salé et juteux.",
+      "technique": "Laisser la viande panée mijoter brièvement dans la sauce avant que l’œuf ne prenne.",
+      "essentials": [
+        "4 côtelettes de porc désossées",
+        "farine",
+        "2 œufs pour la panure"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–50 min",
+        "ingredients": [
+          "4 côtelettes de porc désossées",
+          "farine",
+          "2 œufs pour la panure",
+          "panko",
+          "huile",
+          "600 g de riz cuit",
+          "1 oignon",
+          "200 ml de dashi",
+          "3 c. à soupe de sauce soja",
+          "2 c. à soupe de mirin",
+          "4 œufs"
+        ],
+        "steps": [
+          "Passer les côtelettes dans la farine, l’œuf et le panko.",
+          "Frire dans l’huile jusqu’à cuisson complète et couper en lanières.",
+          "Cuire l’oignon dans le dashi, la sauce soja et le mirin.",
+          "Déposer la viande dans la sauce, verser les œufs battus et laisser prendre.",
+          "Servir sur du riz chaud."
+        ]
+      },
+      "variants": [
+        "Le sauce katsudon est servi avec une sauce sans le mélange aux œufs."
+      ],
+      "serving": [
+        "Garnir éventuellement d’oignons nouveaux."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser tremper la panure si longtemps qu’elle se désagrège."
+      ]
+    },
+    "pt": {
+      "overview": "O tonkatsu é cozinhado brevemente numa mistura doce-salgada de dashi e soja com ovo.",
+      "history": "O katsudon pertence à tradição japonesa do donburi, com coberturas sobre arroz.",
+      "flavor": "Encorpado, doce-salgado e suculento.",
+      "technique": "Deixe a carne panada cozinhar brevemente no molho antes de o ovo solidificar.",
+      "essentials": [
+        "4 costeletas de porco sem osso",
+        "farinha",
+        "2 ovos para panar"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–50 min",
+        "ingredients": [
+          "4 costeletas de porco sem osso",
+          "farinha",
+          "2 ovos para panar",
+          "panko",
+          "óleo",
+          "600 g de arroz cozido",
+          "1 cebola",
+          "200 ml de dashi",
+          "3 c. de sopa de molho de soja",
+          "2 c. de sopa de mirin",
+          "4 ovos"
+        ],
+        "steps": [
+          "Passe as costeletas por farinha, ovo e panko.",
+          "Frite em óleo até estarem bem cozinhadas e corte em tiras.",
+          "Coza a cebola em dashi, molho de soja e mirin.",
+          "Coloque a carne no molho, verta o ovo batido por cima e deixe solidificar.",
+          "Sirva sobre arroz quente."
+        ]
+      },
+      "variants": [
+        "O sauce katsudon é servido com molho sem a mistura de ovos."
+      ],
+      "serving": [
+        "Se desejar, cubra com cebolinha verde."
+      ],
+      "commonMistakes": [
+        "Não deixe o panado absorver molho durante tanto tempo que se desfaça."
+      ]
+    },
+    "es": {
+      "overview": "El tonkatsu se cuece brevemente en una mezcla dulce-salada de dashi y soja con huevo.",
+      "history": "El katsudon pertenece a la tradición japonesa del donburi, con ingredientes sobre arroz.",
+      "flavor": "Intenso, dulce-salado y jugoso.",
+      "technique": "Deja que la carne empanada cueza brevemente en la salsa antes de que cuaje el huevo.",
+      "essentials": [
+        "4 chuletas de cerdo deshuesadas",
+        "harina",
+        "2 huevos para empanar"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–50 min",
+        "ingredients": [
+          "4 chuletas de cerdo deshuesadas",
+          "harina",
+          "2 huevos para empanar",
+          "panko",
+          "aceite",
+          "600 g de arroz cocido",
+          "1 cebolla",
+          "200 ml de dashi",
+          "3 cucharadas de salsa de soja",
+          "2 cucharadas de mirin",
+          "4 huevos"
+        ],
+        "steps": [
+          "Pasa las chuletas por harina, huevo y panko.",
+          "Fríe en aceite hasta que estén hechas por dentro y corta en tiras.",
+          "Cuece la cebolla en dashi, salsa de soja y mirin.",
+          "Coloca la carne en la salsa, vierte el huevo batido y deja cuajar.",
+          "Sirve sobre arroz caliente."
+        ]
+      },
+      "variants": [
+        "El sauce katsudon se sirve con salsa sin la mezcla de huevo."
+      ],
+      "serving": [
+        "Si quieres, añade cebolletas por encima."
+      ],
+      "commonMistakes": [
+        "No dejes que el empanado se empape tanto que se deshaga."
+      ]
+    },
+    "de": {
+      "overview": "Tonkatsu zieht kurz in einer süß-salzigen Dashi-Soja-Mischung mit Ei.",
+      "history": "Katsudon gehört zur japanischen Donburi-Tradition mit Belägen auf Reis.",
+      "flavor": "Kräftig, süß-salzig und saftig.",
+      "technique": "Paniertes Fleisch kurz in der Sauce ziehen lassen, bevor das Ei stockt.",
+      "essentials": [
+        "4 Schweinekoteletts ohne Knochen",
+        "Mehl",
+        "2 Eier zum Panieren"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–50 Min.",
+        "ingredients": [
+          "4 Schweinekoteletts ohne Knochen",
+          "Mehl",
+          "2 Eier zum Panieren",
+          "Panko",
+          "Öl",
+          "600 g gekochter Reis",
+          "1 Zwiebel",
+          "200 ml Dashi",
+          "3 EL Sojasauce",
+          "2 EL Mirin",
+          "4 Eier"
+        ],
+        "steps": [
+          "Koteletts in Mehl, Ei und Panko wenden.",
+          "In Öl vollständig durchbraten und in Streifen schneiden.",
+          "Zwiebel in Dashi, Sojasauce und Mirin kochen.",
+          "Fleisch in die Sauce legen, verquirltes Ei darübergeben und stocken lassen.",
+          "Auf heißem Reis servieren."
+        ]
+      },
+      "variants": [
+        "Sauce Katsudon wird mit Sauce ohne Eimischung serviert."
+      ],
+      "serving": [
+        "Nach Wunsch mit Frühlingszwiebeln garnieren."
+      ],
+      "commonMistakes": [
+        "Panade nicht so lange einweichen lassen, dass sie zerfällt."
+      ]
+    }
+  },
+  "kung-pao-chicken": {
+    "en": {
+      "overview": "Small pieces of chicken are quickly fried with aromatics and a concentrated sweet-and-sour sauce.",
+      "history": "Gong bao ji ding is a classic of Sichuan cuisine, with many international restaurant versions.",
+      "flavor": "Hot, nutty, tangy and slightly numbing from Sichuan pepper.",
+      "technique": "Prepare all ingredients before heating the wok.",
+      "essentials": [
+        "500 g boneless chicken thigh",
+        "60 g peanuts",
+        "dried chilli"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30 min",
+        "ingredients": [
+          "500 g boneless chicken thigh",
+          "60 g peanuts",
+          "dried chilli",
+          "1 tsp Sichuan pepper",
+          "2 tbsp soy sauce",
+          "1 tbsp black rice vinegar",
+          "1 tsp sugar",
+          "cornflour",
+          "spring onions",
+          "oil"
+        ],
+        "steps": [
+          "Cut the chicken into small cubes and mix with a little soy sauce and starch.",
+          "Mix vinegar, sugar and the remaining soy sauce.",
+          "Briefly fry chilli and Sichuan pepper, add chicken and cook through.",
+          "Fold in the sauce, spring onions and peanuts."
+        ]
+      },
+      "variants": [
+        "Restaurant versions may contain peppers or other vegetables."
+      ],
+      "serving": [
+        "Serve with steamed rice."
+      ],
+      "commonMistakes": [
+        "Do not let the dried chilli burn."
+      ]
+    },
+    "fr": {
+      "overview": "De petits morceaux de poulet sont rapidement sautés avec des aromates et une sauce aigre-douce concentrée.",
+      "history": "Le gong bao ji ding est un classique de la cuisine du Sichuan, avec de nombreuses variantes internationales de restaurant.",
+      "flavor": "Piquant, aux notes de noix, acidulé et légèrement anesthésiant grâce au poivre du Sichuan.",
+      "technique": "Préparer tous les ingrédients avant de chauffer le wok.",
+      "essentials": [
+        "500 g de hauts de cuisse de poulet désossés",
+        "60 g de cacahuètes",
+        "piment séché"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30 min",
+        "ingredients": [
+          "500 g de hauts de cuisse de poulet désossés",
+          "60 g de cacahuètes",
+          "piment séché",
+          "1 c. à café de poivre du Sichuan",
+          "2 c. à soupe de sauce soja",
+          "1 c. à soupe de vinaigre de riz noir",
+          "1 c. à café de sucre",
+          "fécule de maïs",
+          "oignons nouveaux",
+          "huile"
+        ],
+        "steps": [
+          "Couper le poulet en petits dés et mélanger avec un peu de sauce soja et de fécule.",
+          "Mélanger le vinaigre, le sucre et le reste de la sauce soja.",
+          "Faire revenir brièvement le piment et le poivre du Sichuan, ajouter le poulet et cuire à cœur.",
+          "Incorporer la sauce, les oignons nouveaux et les cacahuètes."
+        ]
+      },
+      "variants": [
+        "Les versions de restaurant peuvent contenir des poivrons ou d’autres légumes."
+      ],
+      "serving": [
+        "Servir avec du riz cuit à la vapeur."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser brûler le piment séché."
+      ]
+    },
+    "pt": {
+      "overview": "Pequenos pedaços de frango são rapidamente salteados com aromáticos e um molho agridoce concentrado.",
+      "history": "O gong bao ji ding é um clássico da cozinha de Sichuan, com muitas versões internacionais de restaurante.",
+      "flavor": "Picante, com notas de frutos secos, ácido e ligeiramente anestesiante devido à pimenta de Sichuan.",
+      "technique": "Prepare todos os ingredientes antes de aquecer o wok.",
+      "essentials": [
+        "500 g de coxa de frango desossada",
+        "60 g de amendoins",
+        "malagueta seca"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30 min",
+        "ingredients": [
+          "500 g de coxa de frango desossada",
+          "60 g de amendoins",
+          "malagueta seca",
+          "1 c. de chá de pimenta de Sichuan",
+          "2 c. de sopa de molho de soja",
+          "1 c. de sopa de vinagre de arroz preto",
+          "1 c. de chá de açúcar",
+          "amido de milho",
+          "cebolinha verde",
+          "óleo"
+        ],
+        "steps": [
+          "Corte o frango em pequenos cubos e misture com um pouco de molho de soja e amido.",
+          "Misture o vinagre, o açúcar e o restante molho de soja.",
+          "Salteie brevemente a malagueta e a pimenta de Sichuan, junte o frango e cozinhe completamente.",
+          "Envolva o molho, a cebolinha verde e os amendoins."
+        ]
+      },
+      "variants": [
+        "As versões de restaurante podem conter pimentos ou outros legumes."
+      ],
+      "serving": [
+        "Sirva com arroz cozido a vapor."
+      ],
+      "commonMistakes": [
+        "Não deixe a malagueta seca queimar."
+      ]
+    },
+    "es": {
+      "overview": "Pequeños trozos de pollo se saltean rápidamente con aromáticos y una salsa agridulce concentrada.",
+      "history": "El gong bao ji ding es un clásico de la cocina de Sichuan, con muchas versiones internacionales de restaurante.",
+      "flavor": "Picante, con notas de frutos secos, ácido y ligeramente adormecedor por la pimienta de Sichuan.",
+      "technique": "Prepara todos los ingredientes antes de calentar el wok.",
+      "essentials": [
+        "500 g de contramuslo de pollo deshuesado",
+        "60 g de cacahuetes",
+        "chile seco"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30 min",
+        "ingredients": [
+          "500 g de contramuslo de pollo deshuesado",
+          "60 g de cacahuetes",
+          "chile seco",
+          "1 cucharadita de pimienta de Sichuan",
+          "2 cucharadas de salsa de soja",
+          "1 cucharada de vinagre de arroz negro",
+          "1 cucharadita de azúcar",
+          "almidón de maíz",
+          "cebolletas",
+          "aceite"
+        ],
+        "steps": [
+          "Corta el pollo en dados pequeños y mezcla con un poco de salsa de soja y almidón.",
+          "Mezcla el vinagre, el azúcar y el resto de la salsa de soja.",
+          "Sofríe brevemente el chile y la pimienta de Sichuan, añade el pollo y cocina por completo.",
+          "Incorpora la salsa, las cebolletas y los cacahuetes."
+        ]
+      },
+      "variants": [
+        "Las versiones de restaurante pueden contener pimientos u otras verduras."
+      ],
+      "serving": [
+        "Sirve con arroz al vapor."
+      ],
+      "commonMistakes": [
+        "No dejes que el chile seco se queme."
+      ]
+    },
+    "de": {
+      "overview": "Kleine Hähnchenstücke werden mit Aromaten und einer konzentrierten süßsauren Sauce kurz gebraten.",
+      "history": "Gong Bao Ji Ding ist ein Klassiker der Sichuan-Küche mit vielen internationalen Restaurantvarianten.",
+      "flavor": "Scharf, nussig, säuerlich und durch Sichuanpfeffer leicht betäubend.",
+      "technique": "Alle Zutaten vorbereiten, bevor der Wok erhitzt wird.",
+      "essentials": [
+        "500 g Hähnchenschenkelfilet",
+        "60 g Erdnüsse",
+        "getrocknete Chili"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30 Min.",
+        "ingredients": [
+          "500 g Hähnchenschenkelfilet",
+          "60 g Erdnüsse",
+          "getrocknete Chili",
+          "1 TL Sichuanpfeffer",
+          "2 EL Sojasauce",
+          "1 EL schwarzer Reisessig",
+          "1 TL Zucker",
+          "Maisstärke",
+          "Frühlingszwiebeln",
+          "Öl"
+        ],
+        "steps": [
+          "Hähnchen klein würfeln und mit etwas Sojasauce und Stärke mischen.",
+          "Essig, Zucker und übrige Sojasauce mischen.",
+          "Chili und Sichuanpfeffer kurz anrösten, Hähnchen hinzufügen und vollständig durchgaren.",
+          "Sauce, Frühlingszwiebeln und Erdnüsse unterheben."
+        ]
+      },
+      "variants": [
+        "Restaurantvarianten können Paprika oder anderes Gemüse enthalten."
+      ],
+      "serving": [
+        "Mit gedämpftem Reis servieren."
+      ],
+      "commonMistakes": [
+        "Getrocknete Chili nicht verbrennen lassen."
+      ]
+    }
+  },
+  "xiaolongbao": {
+    "en": {
+      "overview": "Set stock is mixed into the filling and melts during steaming.",
+      "history": "Xiaolongbao are particularly associated with the Jiangnan region and the Shanghai area.",
+      "flavor": "Juicy, mildly spiced and rich in umami.",
+      "technique": "Chill the stock jelly thoroughly and seal the dough carefully.",
+      "essentials": [
+        "300 g wheat flour",
+        "150 ml water, approximately",
+        "300 g minced pork"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min + stock chilling",
+        "ingredients": [
+          "300 g wheat flour",
+          "150 ml water, approximately",
+          "300 g minced pork",
+          "200 g firm stock jelly",
+          "ginger",
+          "soy sauce",
+          "spring onions"
+        ],
+        "steps": [
+          "Knead flour and water into a smooth dough and let it rest.",
+          "Mix the meat with aromatics and cubes of cold stock jelly.",
+          "Roll out small, thin dough discs, fill and seal with pleats.",
+          "Steam in a basket until the meat filling is cooked through."
+        ]
+      },
+      "variants": [
+        "Versions with crab and pork exist."
+      ],
+      "serving": [
+        "Serve with black vinegar and ginger; let the hot broth cool slightly before eating."
+      ],
+      "commonMistakes": [
+        "Do not use liquid stock in the filling or make holes in the dough."
+      ]
+    },
+    "fr": {
+      "overview": "Du bouillon gélifié est incorporé à la farce et fond pendant la cuisson à la vapeur.",
+      "history": "Les xiaolongbao sont particulièrement associés à la région du Jiangnan et aux environs de Shanghai.",
+      "flavor": "Juteux, légèrement épicés et riches en umami.",
+      "technique": "Bien refroidir la gelée de bouillon et fermer soigneusement la pâte.",
+      "essentials": [
+        "300 g de farine de blé",
+        "150 ml d’eau, environ",
+        "300 g de porc haché"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min + refroidissement du bouillon",
+        "ingredients": [
+          "300 g de farine de blé",
+          "150 ml d’eau, environ",
+          "300 g de porc haché",
+          "200 g de gelée de bouillon ferme",
+          "gingembre",
+          "sauce soja",
+          "oignons nouveaux"
+        ],
+        "steps": [
+          "Pétrir la farine et l’eau pour obtenir une pâte lisse, puis laisser reposer.",
+          "Mélanger la viande avec les aromates et des dés de gelée de bouillon froide.",
+          "Étaler de petits disques de pâte fins, les garnir et les fermer en formant des plis.",
+          "Cuire dans un panier vapeur jusqu’à cuisson complète de la farce à la viande."
+        ]
+      },
+      "variants": [
+        "Il existe des variantes au crabe et au porc."
+      ],
+      "serving": [
+        "Servir avec du vinaigre noir et du gingembre ; laisser le bouillon chaud refroidir légèrement avant de manger."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser de bouillon liquide dans la farce ni percer la pâte."
+      ]
+    },
+    "pt": {
+      "overview": "O caldo gelificado é misturado no recheio e derrete durante a cozedura a vapor.",
+      "history": "Os xiaolongbao estão especialmente associados à região de Jiangnan e à zona de Xangai.",
+      "flavor": "Suculentos, ligeiramente condimentados e ricos em umami.",
+      "technique": "Arrefeça bem a gelatina de caldo e sele cuidadosamente a massa.",
+      "essentials": [
+        "300 g de farinha de trigo",
+        "150 ml de água, aproximadamente",
+        "300 g de carne de porco picada"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min + refrigeração do caldo",
+        "ingredients": [
+          "300 g de farinha de trigo",
+          "150 ml de água, aproximadamente",
+          "300 g de carne de porco picada",
+          "200 g de caldo gelificado firme",
+          "gengibre",
+          "molho de soja",
+          "cebolinha verde"
+        ],
+        "steps": [
+          "Amasse a farinha e a água até obter uma massa lisa e deixe repousar.",
+          "Misture a carne com aromáticos e cubos de caldo gelificado frio.",
+          "Estenda pequenos discos finos de massa, recheie e feche com pregas.",
+          "Coza a vapor num cesto até o recheio de carne estar bem cozinhado."
+        ]
+      },
+      "variants": [
+        "Existem variantes com caranguejo e carne de porco."
+      ],
+      "serving": [
+        "Sirva com vinagre preto e gengibre; deixe o caldo quente arrefecer um pouco antes de comer."
+      ],
+      "commonMistakes": [
+        "Não use caldo líquido no recheio nem faça furos na massa."
+      ]
+    },
+    "es": {
+      "overview": "El caldo gelificado se mezcla con el relleno y se derrite durante la cocción al vapor.",
+      "history": "Los xiaolongbao se asocian especialmente con la región de Jiangnan y la zona de Shanghái.",
+      "flavor": "Jugosos, ligeramente especiados y ricos en umami.",
+      "technique": "Enfría bien la gelatina de caldo y sella cuidadosamente la masa.",
+      "essentials": [
+        "300 g de harina de trigo",
+        "150 ml de agua, aproximadamente",
+        "300 g de carne de cerdo picada"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min + refrigeración del caldo",
+        "ingredients": [
+          "300 g de harina de trigo",
+          "150 ml de agua, aproximadamente",
+          "300 g de carne de cerdo picada",
+          "200 g de gelatina de caldo firme",
+          "jengibre",
+          "salsa de soja",
+          "cebolletas"
+        ],
+        "steps": [
+          "Amasa la harina y el agua hasta obtener una masa lisa y deja reposar.",
+          "Mezcla la carne con aromáticos y dados de gelatina de caldo fría.",
+          "Estira discos pequeños y finos de masa, rellena y cierra formando pliegues.",
+          "Cuece al vapor en una cesta hasta que el relleno de carne esté hecho por dentro."
+        ]
+      },
+      "variants": [
+        "Existen variantes con cangrejo y cerdo."
+      ],
+      "serving": [
+        "Sirve con vinagre negro y jengibre; deja que el caldo caliente se enfríe un poco antes de comer."
+      ],
+      "commonMistakes": [
+        "No uses caldo líquido en el relleno ni hagas agujeros en la masa."
+      ]
+    },
+    "de": {
+      "overview": "Gelierter Fond wird unter die Füllung gemischt und schmilzt beim Dämpfen.",
+      "history": "Xiaolongbao sind besonders mit der Jiangnan-Region und dem Raum Shanghai verbunden.",
+      "flavor": "Saftig, mild gewürzt und reich an Umami.",
+      "technique": "Fondgelée gut kühlen und den Teig sorgfältig verschließen.",
+      "essentials": [
+        "300 g Weizenmehl",
+        "150 ml Wasser, ungefähr",
+        "300 g Schweinehackfleisch"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min. + Kühlzeit für die Brühe",
+        "ingredients": [
+          "300 g Weizenmehl",
+          "150 ml Wasser, ungefähr",
+          "300 g Schweinehackfleisch",
+          "200 g feste Fondgelée",
+          "Ingwer",
+          "Sojasauce",
+          "Frühlingszwiebeln"
+        ],
+        "steps": [
+          "Mehl und Wasser zu einem glatten Teig kneten und ruhen lassen.",
+          "Fleisch mit Aromaten und Würfeln kalter Fondgelée mischen.",
+          "Kleine dünne Teigscheiben ausrollen, füllen und mit Falten verschließen.",
+          "Im Dämpfkorb garen, bis die Fleischfüllung vollständig durchgegart ist."
+        ]
+      },
+      "variants": [
+        "Es gibt Varianten mit Krabbenfleisch und Schweinefleisch."
+      ],
+      "serving": [
+        "Mit schwarzem Essig und Ingwer servieren; die heiße Brühe vor dem Essen etwas abkühlen lassen."
+      ],
+      "commonMistakes": [
+        "Keine flüssige Brühe in der Füllung verwenden und keine Löcher in den Teig machen."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;
