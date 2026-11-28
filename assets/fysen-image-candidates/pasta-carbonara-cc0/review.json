@@ -1,0 +1,28 @@
+{
+  "dish_id": "pasta-carbonara",
+  "source_page": "https://wordpress.org/photos/photo/480677d127/",
+  "original_url": "https://pd.w.org/2025/01/480677d1272174f53.55239039-scaled.jpg",
+  "photographer": "Nilo Velez",
+  "license": "CC0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "actual_native_size": [
+    3200,
+    2133
+  ],
+  "candidate_size": [
+    2393,
+    1631
+  ],
+  "source_sha256": "faa681bcb10cf7cb5e2b41661c98b4ad989c8f80fefcabadae99559b2f71ce40",
+  "crop": [
+    442,
+    269,
+    2835,
+    1900
+  ],
+  "processing": "Hand-guided GrabCut segmentation, black background, native pixel crop",
+  "source_verified": true,
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false
+}
