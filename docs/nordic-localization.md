@@ -160,3 +160,7 @@ Added 55 canonical article summaries in each of five languages, reaching 138/200
 ### International summary review batch 3 – complete original 200-entry catalog
 
 Added the final 62 canonical summaries in each of five languages (310 new working translations). The review registry now contains exactly 200 canonical IDs and all five languages per row, 1,000 summary texts in total, including the original 33 English summaries preserved verbatim. Regression tests assert exact canonical ID equality, language keys, nonempty entries and English preservation. All remain review-only; no change to runtime selection, original articles, menu evidence or query aliases. Full article bodies, linguistic review, CI and main reconciliation remain pending.
+
+### International full article review batch 1
+
+Added complete review-only article bodies for sambar, idli, vada, naan, yakitori, green curry, udon and dumplings in English, French, European Portuguese, Spanish and German (40 bodies). Includes all original editorial sections, recipe labels, yields, times, ingredients, ordered steps, variants, serving and mistakes. All original numeric tokens and list lengths were compared before committing. Summaries already exist; related IDs and original source links remain in the original articles and must be composed unchanged on activation. Existing 33 English article bodies remain untouched. Review counts: English 41/200, other four 8/200. No runtime activation, CI or native review. Main reconciliation remains pending.
