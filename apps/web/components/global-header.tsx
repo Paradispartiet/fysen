@@ -23,7 +23,7 @@ export function GlobalHeader({
       <header className={results ? "globalHeader globalHeaderResults" : "globalHeader"}>
         <div className="globalHeaderInner">
           <div className="globalHeaderTopline">
-            <FysenLogo />
+            <FysenLogo city={city} />
             <div className="globalHeaderActions">
               {!citySelectionPending ? (
               <details className="cityMenu" name="fysen-header-disclosure">
@@ -49,7 +49,7 @@ export function GlobalHeader({
                   <span>Meny</span>
                 </summary>
                 <nav className="siteMenuPanel" aria-label="Hovedmeny">
-                  <a href={withPublicBasePath("/")}>Forsiden</a>
+                  <a href={citySwitchHref(city)}>Forsiden</a>
                   <a href={dishBrowseHref(city)}>Finn retter</a>
                   <a href={withPublicBasePath("/kart")}>Kart · Oslo</a>
                   {ahaMinMatPilotEnabled ? <a href={withPublicBasePath("/min-mat")}>Min mat</a> : null}

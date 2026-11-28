@@ -53,12 +53,29 @@ try {
       assert.equal(await cityPicker.getByRole("link", { name: "Oslo", exact: true }).getAttribute("aria-current"), "true");
       const cityHref = await cityPicker.getByRole("link", { name: "København", exact: true }).getAttribute("href");
       assert.equal(new URL(cityHref, base).searchParams.get("city"), "København");
+      assert.ok(new URL(cityHref, base).pathname.endsWith("/"), "City selection opens the homepage");
       const cityPanelBox = await cityPicker.locator(".cityMenuPanel").boundingBox();
       assert.ok(cityPanelBox && cityPanelBox.x >= 0 && cityPanelBox.x + cityPanelBox.width <= viewport.width + 2);
       await menu.locator("summary").tap();
       assert.equal(await cityPicker.locator(".cityMenuPanel").isVisible(), false, "Main menu closes the city picker");
       await menu.locator("summary").tap();
       await page.evaluate(() => window.scrollTo(0, 0));
+
+      await cityPicker.locator("summary").tap();
+      await cityPicker.getByRole("link", { name: "København", exact: true }).tap();
+      await page.waitForURL(url => url.searchParams.get("city") === "København" && url.pathname.endsWith("/"));
+      await page.getByRole("heading", { name: "Hva har du lyst på?" }).waitFor({ state: "visible" });
+      await page.getByLabel("By: København. Bytt by").waitFor({ state: "visible" });
+      assert.equal(await page.locator('form[role="search"] input[name="city"]').inputValue(), "København");
+      assert.equal(await page.locator("a.homeDishBrowseLink").filter({ hasText: "Se alle retter" }).count(), 1);
+      assert.equal(await page.getByRole("link", { name: /Se alle retter i København/ }).count(), 1);
+      assert.equal(await page.getByRole("link", { name: /Se alle retter i Oslo/ }).count(), 0);
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.getByLabel("By: København. Bytt by").waitFor({ state: "visible" });
+      await cityPicker.locator("summary").tap();
+      await cityPicker.getByRole("link", { name: "Oslo", exact: true }).tap();
+      await page.waitForURL(url => url.searchParams.get("city") === "Oslo" && url.pathname.endsWith("/"));
+      await page.getByLabel("By: Oslo. Bytt by").waitFor({ state: "visible" });
 
       const kitchenMenu = page.locator("details.cuisineBrowseDisclosure");
       await kitchenMenu.waitFor({ state: "visible" });
@@ -292,6 +309,7 @@ try {
       const resultsCityHref = await resultsCityPicker.getByRole("link", { name: "Stockholm", exact: true }).getAttribute("href");
       const resultsCityUrl = new URL(resultsCityHref, base);
       assert.equal(resultsCityUrl.searchParams.get("city"), "Stockholm");
+      assert.ok(resultsCityUrl.pathname.endsWith("/"), "City selection from search returns home");
       assert.equal(resultsCityUrl.searchParams.get("q"), "dal makhani", "City switching must preserve the active search");
       await resultsCityPicker.locator("summary").tap();
       assert.match(await note.innerText(), /Fysen matleksikon[\s\S]*uradbønner/iu);

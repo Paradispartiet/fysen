@@ -56,6 +56,7 @@ function containsPhrase(value: string, phrase: string): boolean {
 export function summarizeArchivedMatlyst(
   archive: PublicMenuArchive,
   descriptors: readonly ArchivedMatlystDishDescriptor[],
+  city = "Oslo",
 ): ArchivedMatlystCoverage {
   const unique = new Map<string, { terms: readonly string[] }>();
   for (const dish of descriptors) {
@@ -73,7 +74,7 @@ export function summarizeArchivedMatlyst(
     if (!source) continue;
     const restaurant = archive.restaurants[source[0]];
     if (!restaurant || archive.quarantinedSlugs.has(restaurant[1]) ||
-        normalizedWords(restaurant[3]) !== "oslo") continue;
+        normalizedWords(restaurant[3]) !== normalizedWords(city)) continue;
 
     const name = normalizedWords(row[2]);
     if (!name) continue;

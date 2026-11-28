@@ -83,11 +83,11 @@ test("Dish illustrations are available and explicitly not restaurant photographs
   assert.match(css, /dishPhotoThumb\.dishPhotoSeries04/u);
   assert.match(css, /300% 300%/u);
   assert.match(layout, /dish-photos\.css/u);
-  assert.match(explorer, /<DishPhotoGallery \/>/u);
+  assert.match(explorer, /<DishPhotoGallery city=\{city\} \/>/u);
 });
 
 test("Image cards link to dish search rather than inventing restaurant availability", () => {
-  assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
+  assert.match(gallery, /dishSearchHref\(dish\.query, city\)/u);
   assert.match(gallery, /Se menytreff/u);
   assert.doesNotMatch(gallery, /Åpent nå|Tilgjengelig nå/u);
 });
@@ -172,8 +172,8 @@ test("Every generated and approved image is represented in the published Matlyst
     assert.equal(image.surface, "Matlyst");
     assert.equal(image.kind, "Redaksjonelt rettfoto");
   }
-  assert.match(explorer, /<DishPhotoGallery \/>/u);
-  assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
+  assert.match(explorer, /<DishPhotoGallery city=\{city\} \/>/u);
+  assert.match(gallery, /dishSearchHref\(dish\.query, city\)/u);
   assert.match(gallery, /dishPhotoSeries04/u);
 });
 

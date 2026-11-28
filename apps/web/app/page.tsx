@@ -1,13 +1,10 @@
 import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
-import { CuisineExplorer } from "../components/cuisine-explorer";
-import { DishLearningSection } from "../components/dish-learning-section";
-import { DishSearch } from "../components/dish-search";
-import { GlobalHeader } from "../components/global-header";
 import { browseDishes } from "../lib/fysen-api";
-import { getPublicMenuArchive, reconcileMenuVersions } from "../lib/verified-menu-archive";
+import { archiveHasCity, getPublicMenuArchive, reconcileMenuVersions } from "../lib/verified-menu-archive";
 import { summarizeArchivedMatlyst, type ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
 import { homeCuisines } from "../components/cuisine-explorer-data";
-import { dishBrowseHref, nordicCities, withPublicBasePath } from "../lib/public-path";
+import { nordicCities } from "../lib/public-path";
+import { HomeCityContent } from "../components/home-city-content";
 
 export default async function HomePage() {
   let browseData: DishBrowseResponse | null = null;
@@ -19,7 +16,7 @@ export default async function HomePage() {
     browseData = null;
   }
 
-  let archiveCoverage: ArchivedMatlystCoverage | null = null;
+  const archiveCoverage: Record<string, ArchivedMatlystCoverage> = {};
   {
     try {
       const stored = await getPublicMenuArchive();
@@ -32,41 +29,15 @@ export default async function HomePage() {
         browseData = { ...browseData, dishes: filtered, count: filtered.length };
       }
       const dishes = homeCuisines.flatMap((cuisine) => cuisine.areas.flatMap((area) => area.dishes));
-      archiveCoverage = summarizeArchivedMatlyst(archive, dishes);
+      for (const { name } of nordicCities) {
+        if (name === "Oslo" || archiveHasCity(archive, name)) {
+          archiveCoverage[name] = summarizeArchivedMatlyst(archive, dishes, name);
+        }
+      }
     } catch {
       // Show normal unavailable state when even the verified archive is down.
     }
   }
 
-  return (
-    <div className="homePage">
-      <GlobalHeader />
-      <main className="homeMain">
-        <section className="homeHero" aria-labelledby="fysen-title">
-          <div className="homeHeroTopline">
-            <div className="homeHeroContent">
-              <h1 id="fysen-title">Hva har du lyst på?</h1>
-            </div>
-          </div>
-          <div className="homeSearchWrap">
-            <p className="searchProof">
-              Søk etter en rett og finn restauranter som har den på menyen.
-            </p>
-            <DishSearch />
-            <nav aria-label="Finn retter i en by">
-              <a className="homeDishBrowseLink" href={withPublicBasePath("/kart")}>Utforsk Oslo på kartet <span aria-hidden="true">→</span></a>
-              {nordicCities.map(({ name }) => (
-                <a key={name} className="homeDishBrowseLink" href={dishBrowseHref(name)}>
-                  Se alle retter i {name}
-                  <span aria-hidden="true">→</span>
-                </a>
-              ))}
-            </nav>
-          </div>
-        </section>
-        <CuisineExplorer browseData={browseData} archiveCoverage={archiveCoverage} />
-        <DishLearningSection />
-      </main>
-    </div>
-  );
+  return <HomeCityContent osloBrowseData={browseData} archiveCoverage={archiveCoverage} />;
 }

@@ -10,14 +10,16 @@ test("Nordic cities have distinct canonical city names and local currencies", ()
   ]);
 });
 
-test("switching city keeps the dish query and drops old geographic coordinates", () => {
+test("switching city returns to the homepage, preserves a draft dish query and drops old coordinates", () => {
   for (const { name } of nordicCities) {
     const url = new URL(citySwitchHref(name, "dal makhani"), "https://example.com");
+    assert.ok(url.pathname.endsWith("/"));
     assert.equal(url.searchParams.get("city"), name);
     assert.equal(url.searchParams.get("q"), "dal makhani");
     assert.equal(url.searchParams.has("lat"), false);
     assert.equal(url.searchParams.has("lon"), false);
     const browse = new URL(citySwitchHref(name), "https://example.com");
+    assert.ok(browse.pathname.endsWith("/"));
     assert.equal(browse.searchParams.get("city"), name);
     assert.equal(browse.searchParams.has("q"), false);
   }

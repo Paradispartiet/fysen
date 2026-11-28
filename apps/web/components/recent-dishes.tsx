@@ -6,7 +6,7 @@ import { dishSearchHref } from "../lib/public-path";
 import { FoodIllustration } from "./food-illustration";
 import { illustrationForDishName } from "./food-illustration-match";
 
-export function RecentDishes({ dishes }: { readonly dishes: readonly RecentlyAddedDishItem[] }) {
+export function RecentDishes({ dishes, city = "Oslo" }: { readonly dishes: readonly RecentlyAddedDishItem[]; readonly city?: string }) {
   if (dishes.length === 0) return null;
 
   return (
@@ -14,7 +14,7 @@ export function RecentDishes({ dishes }: { readonly dishes: readonly RecentlyAdd
       <div className="matlystFeaturedHeading">
         <div>
           <h3 id="matlyst-recent-title">Nye retter i Fysen</h3>
-          <p>Nye retter å oppdage hos restauranter i Oslo.</p>
+          <p>Nye retter å oppdage hos restauranter i {city}.</p>
         </div>
       </div>
       <div className="matlystFeaturedGrid">
@@ -43,7 +43,7 @@ export function RecentDishes({ dishes }: { readonly dishes: readonly RecentlyAdd
               <p className="matlystFeaturedMuted">{priceProvenanceLabel(dish.sourceUrl)}</p>
             ) : null}
             <div className="matlystFeaturedLinks">
-              <a href={dishSearchHref(dish.query)}>Finn retten <span aria-hidden="true">→</span></a>
+              <a href={dishSearchHref(dish.query, city)}>Finn retten <span aria-hidden="true">→</span></a>
               <a href={dish.sourceUrl} target="_blank" rel="noopener noreferrer">Se meny <span aria-hidden="true">↗</span></a>
             </div>
           </article>

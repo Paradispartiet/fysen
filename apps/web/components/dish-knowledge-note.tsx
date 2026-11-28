@@ -62,7 +62,7 @@ function findKnowledge(query: string): DishKnowledge | null {
   return legacy ? { ...legacy, dish: null, imageDishId: null } : null;
 }
 
-export function DishKnowledgeNote({ query }: { query: string }) {
+export function DishKnowledgeNote({ query, city = "Oslo" }: { query: string; city?: string }) {
   const knowledge = useMemo(() => findKnowledge(query), [query]);
   const [selectedDish, setSelectedDish] = useState<FoodKnowledgeDish | null>(null);
 
@@ -94,6 +94,7 @@ export function DishKnowledgeNote({ query }: { query: string }) {
       </aside>
 
       <DishKnowledgeDialog
+        city={city}
         dish={selectedDish}
         onClosed={() => setSelectedDish(null)}
         onOpenDish={setSelectedDish}

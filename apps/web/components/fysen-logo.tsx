@@ -1,6 +1,6 @@
-import { withPublicBasePath } from "../lib/public-path";
+import { citySwitchHref, withPublicBasePath } from "../lib/public-path";
 
-export function FysenLogo({ linked = true }: { linked?: boolean }) {
+export function FysenLogo({ linked = true, city = "Oslo" }: { linked?: boolean; city?: string }) {
   const mark = (
     <span className="fysenBrandLockup">
       <img
@@ -16,7 +16,7 @@ export function FysenLogo({ linked = true }: { linked?: boolean }) {
   if (!linked) return mark;
 
   return (
-    <a className="fysenLogoLink" href={withPublicBasePath("/")} aria-label="Fysen forsiden">
+    <a className="fysenLogoLink" href={citySwitchHref(city)} aria-label="Fysen forsiden">
       {mark}
     </a>
   );

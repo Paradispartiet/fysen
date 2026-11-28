@@ -62,7 +62,7 @@ function findAdditionalThumbnail(dishId: string) {
 // Pizza margherita (0), Cheeseburger (1), Sushi (5), Ramen (6), Carbonara (10), Butter chicken (11), Pad thai med reker (12), Tiramisu (14), Gyoza (17), Tom yum (33), Pad kra pao (34), Bánh mì (35), Bún chả (36), Gỏi cuốn (37), Tandoorikylling (38), Naan (39), Dal makhani (40), Idli (41), Sambar (42), and Medu vada (43) use separate sharp AVIF files.
 // Editorial photos are clearly labelled; all other images are representative AI illustrations, never restaurant photographs.
 // Keep individual restaurant listings separate from these editorial images.
-export function DishPhotoGallery() {
+export function DishPhotoGallery({ city = "Oslo" }: { city?: string } = {}) {
   return (
     <details className="dishPhotos" aria-labelledby="dish-photos-title">
       <summary className="dishPhotosPreview">
@@ -92,7 +92,7 @@ export function DishPhotoGallery() {
             <div key={dish.id} className="dishPhotoCard">
               <DishEditorialImage dishId={dish.id} className="dishPhotoThumb" />
               <div className="dishPhotoCardContent">
-                <a href={dishSearchHref(dish.query)} className="dishPhotoSearch">
+                <a href={dishSearchHref(dish.query, city)} className="dishPhotoSearch">
                   <strong>{dish.label}</strong>
                   <span className="dishPhotoAction">Se menytreff <span aria-hidden="true">→</span></span>
                 </a>
