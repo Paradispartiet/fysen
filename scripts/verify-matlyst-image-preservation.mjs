@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
 
-const dishCount = 44;
+const originalDishCount = 44;
 const approvedFields = [
   "atlas",
   "kind",
@@ -21,8 +21,8 @@ const approvedFields = [
 ];
 
 function verifyShape(manifest, label) {
-  if (!manifest || !Array.isArray(manifest.images) || manifest.images.length !== dishCount) {
-    throw new Error(label + ": Matlyst must retain exactly " + dishCount + " dishes");
+  if (!manifest || !Array.isArray(manifest.images) || manifest.images.length < originalDishCount) {
+    throw new Error(label + ": Matlyst must retain at least " + originalDishCount + " dishes");
   }
   const seen = new Set();
   for (const [index, dish] of manifest.images.entries()) {
@@ -66,9 +66,10 @@ function requireNewApprovalEvidence(dish) {
 export function verifyPreservedMatlystApprovals(baseline, candidate) {
   verifyShape(baseline, "Base");
   verifyShape(candidate, "Candidate");
+  if (candidate.images.length < baseline.images.length) throw new Error("Matlyst cannot remove existing image slots");
   let preserved = 0;
   let added = 0;
-  for (let i = 0; i < dishCount; i += 1) {
+  for (let i = 0; i < baseline.images.length; i += 1) {
     const previous = baseline.images[i];
     const current = candidate.images[i];
     if (previous.id !== current.id) {
@@ -89,7 +90,17 @@ export function verifyPreservedMatlystApprovals(baseline, candidate) {
       added += 1;
     }
   }
-  return { dishes: dishCount, preserved, added, totalApproved: preserved + added };
+  const mappedIds = new Set(candidate.images.slice(0, baseline.images.length).flatMap(image => [image.id, image.catalogId].filter(Boolean)));
+  for (const image of candidate.images.slice(baseline.images.length)) {
+    if (image.catalogId !== image.id || mappedIds.has(image.id) || !image.label?.trim() || !image.query?.trim() || image.surface !== "Matlyst") {
+      throw new Error(image.id + ": appended image needs unique exact catalog ID, label and query");
+    }
+    if (image.largeViewEnabled !== true) throw new Error(image.id + ": appended image needs an approved master");
+    requireNewApprovalEvidence(image);
+    mappedIds.add(image.id);
+    added += 1;
+  }
+  return { dishes: candidate.images.length, preserved, added, totalApproved: preserved + added };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
