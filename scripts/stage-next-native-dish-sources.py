@@ -6,7 +6,7 @@ from urllib.parse import quote, urlparse
 from urllib.request import Request, urlopen
 from PIL import Image, ImageDraw, ImageFilter, ImageChops
 ROOT=Path(__file__).resolve().parents[1]
-SOURCES=json.loads("[{\"id\":\"hummus\",\"filename\":\"صحن_حمص.JPG\",\"photographer\":\"Sheam k\",\"size\":[3072,2304],\"license\":\"CC BY-SA 3.0\",\"license_url\":\"https://creativecommons.org/licenses/by-sa/3.0/\",\"variant\":\"Hummus with olive oil and chickpeas\",\"slot\":\"alternative-sheam-k\"},{\"id\":\"shawarma\",\"filename\":\"Handmade_Chicken_Shawarma_Wrap_-_Lavash.jpg\",\"photographer\":\"Andy Li\",\"size\":[4032,3024],\"license\":\"CC0 1.0\",\"license_url\":\"https://creativecommons.org/publicdomain/zero/1.0/\",\"variant\":\"Chicken shawarma wrap\",\"slot\":\"alternative-andy-li\"},{\"id\":\"arancini\",\"filename\":\"The_famous_arancine.jpg\",\"photographer\":\"Madmartigand\",\"size\":[3647,2665],\"license\":\"CC BY-SA 2.0\",\"license_url\":\"https://creativecommons.org/licenses/by-sa/2.0/\",\"variant\":\"Sicilian arancine\"},{\"id\":\"pasta-alla-norma\",\"filename\":\"Pasta_alla_Norma_-_Wiki_Loves_Sicilia.jpg\",\"photographer\":\"8w9d\",\"size\":[3820,2747],\"license\":\"CC0 1.0\",\"license_url\":\"https://creativecommons.org/publicdomain/zero/1.0/\",\"variant\":\"Pasta alla Norma\"}]")
+SOURCES=json.loads("[{\"id\":\"hummus\",\"filename\":\"Hummus_plate.jpg\",\"photographer\":\"Orenrosenfeld\",\"size\":[3264,2448],\"license\":\"CC BY-SA 4.0\",\"license_url\":\"https://creativecommons.org/licenses/by-sa/4.0/\",\"variant\":\"Hummus as main dish\",\"slot\":\"alternative-orenrosenfeld\"},{\"id\":\"hummus\",\"filename\":\"Homemade_hummus_and_pita_03.jpg\",\"photographer\":\"Satdeep Gill\",\"size\":[4000,3000],\"license\":\"CC BY-SA 4.0\",\"license_url\":\"https://creativecommons.org/licenses/by-sa/4.0/\",\"variant\":\"Hummus with pita\",\"slot\":\"alternative-satdeep-gill\"},{\"id\":\"arancini\",\"filename\":\"Arancini_Al_Ragu'_-_Giuseppes_2026-06-11.jpg\",\"photographer\":\"Andy Li\",\"size\":[8160,6144],\"license\":\"CC0 1.0\",\"license_url\":\"https://creativecommons.org/publicdomain/zero/1.0/\",\"variant\":\"Sicilian rice balls with ragù\",\"slot\":\"alternative-andy-li\"}]")
 MAX_BYTES=30*1024*1024
 def stage(row):
     filename=row["filename"]
@@ -70,7 +70,7 @@ def stage_biryani():
 def stage_reviewed_plate(dish, relative, digest, preview_size, points):
     base=ROOT/"assets/fysen-image-candidates"/dish/"licensed-native-20261128"
     if relative: base=base/relative
-    out=base/"refined-v1"
+    out=base/"refined-v2"
     if out.exists(): return
     data=(base/"source.jpg").read_bytes()
     meta=json.loads((base/"review.json").read_text())
@@ -81,6 +81,34 @@ def stage_reviewed_plate(dish, relative, digest, preview_size, points):
     pw,ph=preview_size
     mask=Image.new("L",im.size)
     ImageDraw.Draw(mask).polygon([(round(x*w/pw),round(y*h/ph)) for x,y in points],fill=255)
+    # Restrict the second correction to regions with observed residual background.
+    # Map v1 preview coordinates back to the original pixels.
+    v1=json.loads((base/"refined-v1/review.json").read_text())
+    x0,y0,x1,y1=v1["native_crop"]
+    vw=1000; vh=round((y1-y0)*1000/(x1-x0))
+    def orig(poly):return [(round(x0+x*(x1-x0)/vw),round(y0+y*(y1-y0)/vh)) for x,y in poly]
+    dmask=ImageDraw.Draw(mask)
+    if dish=="shawarma":
+        # Remove visible wood outside the dark plate rim, left/lower and upper edges.
+        dmask.polygon(orig([(0,430),(22,430),(28,510),(50,577),(89,633),(135,678),(200,720),(267,749),(342,768),(426,780),(500,784),(610,779),(690,765),(730,750),(730,815),(0,815)]),fill=0)
+        # Upper protruding leaf: remove adjacent tan board with color filter within a small zone.
+        zone=[(494,0),(635,0),(654,107),(590,90),(546,49),(500,35)]
+        zm=Image.new("L",im.size);ImageDraw.Draw(zm).polygon(orig(zone),fill=255)
+        z=zm.load();m=mask.load();p=im.load();bb=zm.getbbox()
+        for y in range(bb[1],bb[3]):
+            for x in range(bb[0],bb[2]):
+                if z[x,y] and m[x,y]:
+                    r,g,b=p[x,y]
+                    if r>g*1.12 and g>b*1.1:m[x,y]=0
+    else:
+        # Basil top has a gray wall sliver; remove neutral background in this narrow top zone.
+        zm=Image.new("L",im.size);ImageDraw.Draw(zm).polygon(orig([(475,0),(650,0),(650,110),(610,105),(480,109)]),fill=255)
+        z=zm.load();m=mask.load();p=im.load();bb=zm.getbbox()
+        for y in range(bb[1],bb[3]):
+            for x in range(bb[0],bb[2]):
+                if z[x,y] and m[x,y]:
+                    r,g,b=p[x,y]
+                    if max(r,g,b)-min(r,g,b)<35 and g<r*1.12:m[x,y]=0
     a,b,c,d=mask.getbbox()
     pad=round(min(w,h)*.025)
     crop=(max(0,a-pad),max(0,b-pad),min(w,c+pad),min(h,d+pad))
@@ -113,4 +141,7 @@ if __name__=="__main__":
     ]:
         try:stage_reviewed_plate(*args);done+=1
         except Exception as exc:print("BLOCKED",args[0],str(exc))
+    for row in SOURCES:
+        try:stage(row);done+=1
+        except Exception as exc:print("BLOCKED",row["id"],str(exc))
     if not done:raise SystemExit("No eligible plate candidates")
