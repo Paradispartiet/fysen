@@ -69,3 +69,14 @@ test('Ensjø photo keeps attribution and rejects other branches', () => {
   assert.equal(photo.interior, null);
   assert.equal(restaurantVisuals({name: 'Peppes Pizza - Ensjø', address: 'Rolf Hofmos gate 340'}), null);
 });
+
+test('Stortingsgata photo stays on its own branch with credit', () => {
+ const make = (address) => restaurantVisuals({name: 'Peppes Pizza Stortingsgata', address});
+ const photo = make('Stortingsgata 4, 0158 Oslo');
+ assert.ok(photo);
+ assert.equal(photo.photoCredit, 'Kjetil Ree');
+ assert.equal(photo.photoDate, '2017-01-08');
+ assert.match(photo.exterior, /peppes-stortingsgata/u);
+ assert.equal(make('Stortingsgata 40'), null);
+ assert.equal(make('Rolf Hofmos gate 34'), null);
+});
