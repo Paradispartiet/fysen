@@ -14606,5 +14606,1651 @@ export const draftInternationalArticles = {
         "Bulgur im Salat nicht dominieren lassen, wenn eine kräuterbetonte Variante gewünscht ist."
       ]
     }
+  },
+  "farikal": {
+    "en": {
+      "overview": "Meat and cabbage are layered in a pot with a little water.",
+      "history": "Fårikål is a Norwegian national dish, particularly associated with the autumn lamb season.",
+      "flavor": "Mild cabbage sweetness, rich meat flavour and pepper.",
+      "technique": "Simmer gently with the lid on until the meat comes away easily from the bone.",
+      "essentials": [
+        "1.2 kg bone-in lamb or mutton for fårikål",
+        "1.2 kg white cabbage",
+        "2 tsp whole black peppercorns"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2.5 hours",
+        "ingredients": [
+          "1.2 kg bone-in lamb or mutton for fårikål",
+          "1.2 kg white cabbage",
+          "2 tsp whole black peppercorns",
+          "salt",
+          "300 ml water"
+        ],
+        "steps": [
+          "Cut the cabbage into wedges.",
+          "Layer the meat and cabbage with salt and pepper.",
+          "Add water and simmer covered for about two hours, until the meat is tender.",
+          "Season with salt."
+        ]
+      },
+      "variants": [
+        "Some people thicken the broth lightly with flour."
+      ],
+      "serving": [
+        "Serve with boiled potatoes."
+      ],
+      "commonMistakes": [
+        "Avoid vigorous boiling and too much water."
+      ]
+    },
+    "fr": {
+      "overview": "La viande et le chou sont disposés en couches dans une marmite avec un peu d’eau.",
+      "history": "Le fårikål est un plat national norvégien, particulièrement associé à la saison de l’agneau en automne.",
+      "flavor": "Douceur légère du chou, saveur prononcée de viande et poivre.",
+      "technique": "Laisser mijoter doucement à couvert jusqu’à ce que la viande se détache facilement de l’os.",
+      "essentials": [
+        "1,2 kg d’agneau ou de mouton avec os pour fårikål",
+        "1,2 kg de chou blanc",
+        "2 c. à café de grains de poivre noir"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2,5 heures",
+        "ingredients": [
+          "1,2 kg d’agneau ou de mouton avec os pour fårikål",
+          "1,2 kg de chou blanc",
+          "2 c. à café de grains de poivre noir",
+          "sel",
+          "300 ml d’eau"
+        ],
+        "steps": [
+          "Couper le chou en quartiers.",
+          "Disposer la viande et le chou en couches avec du sel et du poivre.",
+          "Ajouter l’eau et laisser mijoter à couvert environ deux heures, jusqu’à ce que la viande soit tendre.",
+          "Rectifier l’assaisonnement en sel."
+        ]
+      },
+      "variants": [
+        "Certains épaississent légèrement le bouillon avec de la farine."
+      ],
+      "serving": [
+        "Servir avec des pommes de terre bouillies."
+      ],
+      "commonMistakes": [
+        "Éviter une forte ébullition et un excès d’eau."
+      ]
+    },
+    "pt": {
+      "overview": "A carne e a couve são dispostas em camadas num tacho com um pouco de água.",
+      "history": "O fårikål é um prato nacional norueguês, especialmente associado à época do borrego no outono.",
+      "flavor": "Doçura suave da couve, sabor intenso a carne e pimenta.",
+      "technique": "Deixe cozinhar suavemente com tampa até a carne se soltar facilmente do osso.",
+      "essentials": [
+        "1,2 kg de borrego ou carneiro com osso para fårikål",
+        "1,2 kg de couve branca",
+        "2 c. de chá de pimenta-preta em grão"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2,5 horas",
+        "ingredients": [
+          "1,2 kg de borrego ou carneiro com osso para fårikål",
+          "1,2 kg de couve branca",
+          "2 c. de chá de pimenta-preta em grão",
+          "sal",
+          "300 ml de água"
+        ],
+        "steps": [
+          "Corte a couve em gomos.",
+          "Disponha a carne e a couve em camadas com sal e pimenta.",
+          "Junte água e deixe cozinhar em lume brando com tampa durante cerca de duas horas, até a carne ficar tenra.",
+          "Tempere com sal."
+        ]
+      },
+      "variants": [
+        "Algumas pessoas engrossam ligeiramente o caldo com farinha."
+      ],
+      "serving": [
+        "Sirva com batatas cozidas."
+      ],
+      "commonMistakes": [
+        "Evite ferver intensamente e usar demasiada água."
+      ]
+    },
+    "es": {
+      "overview": "La carne y la col se disponen en capas en una olla con un poco de agua.",
+      "history": "El fårikål es un plato nacional noruego, especialmente asociado con la temporada otoñal del cordero.",
+      "flavor": "Dulzor suave de la col, sabor intenso a carne y pimienta.",
+      "technique": "Cuece suavemente con tapa hasta que la carne se desprenda fácilmente del hueso.",
+      "essentials": [
+        "1,2 kg de cordero u oveja con hueso para fårikål",
+        "1,2 kg de col blanca",
+        "2 cucharaditas de pimienta negra en grano"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2,5 horas",
+        "ingredients": [
+          "1,2 kg de cordero u oveja con hueso para fårikål",
+          "1,2 kg de col blanca",
+          "2 cucharaditas de pimienta negra en grano",
+          "sal",
+          "300 ml de agua"
+        ],
+        "steps": [
+          "Corta la col en gajos.",
+          "Coloca la carne y la col en capas con sal y pimienta.",
+          "Añade agua y cuece a fuego lento con tapa durante unas dos horas, hasta que la carne esté tierna.",
+          "Ajusta la sal."
+        ]
+      },
+      "variants": [
+        "Algunas personas espesan ligeramente el caldo con harina."
+      ],
+      "serving": [
+        "Sirve con patatas cocidas."
+      ],
+      "commonMistakes": [
+        "Evita la ebullición fuerte y el exceso de agua."
+      ]
+    },
+    "de": {
+      "overview": "Fleisch und Kohl werden mit etwas Wasser in einem Topf geschichtet.",
+      "history": "Fårikål ist ein norwegisches Nationalgericht, das besonders mit der Lammfleischsaison im Herbst verbunden ist.",
+      "flavor": "Milde Kohlsüße, kräftiger Fleischgeschmack und Pfeffer.",
+      "technique": "Zugedeckt sanft garen, bis sich das Fleisch leicht vom Knochen löst.",
+      "essentials": [
+        "1,2 kg Lamm- oder Hammelfleisch mit Knochen für Fårikål",
+        "1,2 kg Weißkohl",
+        "2 TL schwarze Pfefferkörner"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2,5 Stunden",
+        "ingredients": [
+          "1,2 kg Lamm- oder Hammelfleisch mit Knochen für Fårikål",
+          "1,2 kg Weißkohl",
+          "2 TL schwarze Pfefferkörner",
+          "Salz",
+          "300 ml Wasser"
+        ],
+        "steps": [
+          "Kohl in Spalten schneiden.",
+          "Fleisch und Kohl mit Salz und Pfeffer schichten.",
+          "Wasser hinzufügen und zugedeckt etwa zwei Stunden sanft garen, bis das Fleisch weich ist.",
+          "Mit Salz abschmecken."
+        ]
+      },
+      "variants": [
+        "Manche binden die Brühe leicht mit Mehl."
+      ],
+      "serving": [
+        "Mit Salzkartoffeln servieren."
+      ],
+      "commonMistakes": [
+        "Starkes Kochen und zu viel Wasser vermeiden."
+      ]
+    }
+  },
+  "kjottkaker": {
+    "en": {
+      "overview": "Seasoned minced meat is shaped into flat patties, browned and finished in sauce.",
+      "history": "Kjøttkaker in brown gravy are an established part of Norwegian home cooking.",
+      "flavor": "Rich meat flavour with mild seasoning and browned gravy.",
+      "technique": "Gradually incorporate cold milk into the minced mixture and brown the patties before simmering them until done.",
+      "essentials": [
+        "500 g minced meat",
+        "1 tsp salt",
+        "2 tbsp potato starch"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min",
+        "ingredients": [
+          "500 g minced meat",
+          "1 tsp salt",
+          "2 tbsp potato starch",
+          "150 ml milk",
+          "pepper and nutmeg",
+          "butter",
+          "3 tbsp wheat flour",
+          "500 ml stock"
+        ],
+        "steps": [
+          "Mix the minced meat with salt, potato starch and spices; gradually add the milk.",
+          "Shape patties and brown in butter.",
+          "Brown flour in butter and gradually whisk in stock.",
+          "Simmer the patties in the gravy until cooked through."
+        ]
+      },
+      "variants": [
+        "They are served, among other things, with creamed cabbage or mashed peas."
+      ],
+      "serving": [
+        "Serve with potatoes and lingonberries."
+      ],
+      "commonMistakes": [
+        "Do not add all the milk at once."
+      ]
+    },
+    "fr": {
+      "overview": "La viande hachée assaisonnée est façonnée en galettes, dorée puis cuite dans une sauce.",
+      "history": "Les kjøttkaker en sauce brune font partie de la cuisine familiale norvégienne traditionnelle.",
+      "flavor": "Saveur prononcée de viande, assaisonnement doux et sauce brune.",
+      "technique": "Incorporer progressivement le lait froid à la farce et dorer les galettes avant de terminer leur cuisson à feu doux.",
+      "essentials": [
+        "500 g de viande hachée",
+        "1 c. à café de sel",
+        "2 c. à soupe de fécule de pomme de terre"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min",
+        "ingredients": [
+          "500 g de viande hachée",
+          "1 c. à café de sel",
+          "2 c. à soupe de fécule de pomme de terre",
+          "150 ml de lait",
+          "poivre et noix de muscade",
+          "beurre",
+          "3 c. à soupe de farine de blé",
+          "500 ml de bouillon"
+        ],
+        "steps": [
+          "Mélanger la viande hachée avec le sel, la fécule et les épices ; incorporer progressivement le lait.",
+          "Former des galettes et les faire dorer au beurre.",
+          "Faire brunir la farine dans le beurre et incorporer progressivement le bouillon au fouet.",
+          "Laisser mijoter les galettes dans la sauce jusqu’à cuisson complète."
+        ]
+      },
+      "variants": [
+        "On les sert notamment avec du chou à la crème ou une purée de petits pois."
+      ],
+      "serving": [
+        "Servir avec des pommes de terre et des airelles rouges."
+      ],
+      "commonMistakes": [
+        "Ne pas ajouter tout le lait en une seule fois."
+      ]
+    },
+    "pt": {
+      "overview": "A carne picada temperada é moldada em bolinhos achatados, dourada e acabada de cozinhar no molho.",
+      "history": "Os kjøttkaker em molho castanho fazem parte da cozinha caseira norueguesa tradicional.",
+      "flavor": "Sabor intenso a carne com tempero suave e molho escuro.",
+      "technique": "Incorpore gradualmente leite frio na mistura de carne e doure os bolinhos antes de acabar a cozedura em lume brando.",
+      "essentials": [
+        "500 g de carne picada",
+        "1 c. de chá de sal",
+        "2 c. de sopa de fécula de batata"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min",
+        "ingredients": [
+          "500 g de carne picada",
+          "1 c. de chá de sal",
+          "2 c. de sopa de fécula de batata",
+          "150 ml de leite",
+          "pimenta e noz-moscada",
+          "manteiga",
+          "3 c. de sopa de farinha de trigo",
+          "500 ml de caldo"
+        ],
+        "steps": [
+          "Misture a carne picada com sal, fécula de batata e especiarias; incorpore gradualmente o leite.",
+          "Forme bolinhos achatados e doure-os em manteiga.",
+          "Doure a farinha na manteiga e incorpore gradualmente o caldo, batendo.",
+          "Deixe os bolinhos cozinhar em lume brando no molho até estarem bem cozinhados."
+        ]
+      },
+      "variants": [
+        "São servidos, entre outros acompanhamentos, com couve em molho cremoso ou puré de ervilhas."
+      ],
+      "serving": [
+        "Sirva com batatas e arandos-vermelhos."
+      ],
+      "commonMistakes": [
+        "Não junte todo o leite de uma vez."
+      ]
+    },
+    "es": {
+      "overview": "La carne picada condimentada se moldea en tortitas planas, se dora y se termina de cocinar en salsa.",
+      "history": "Los kjøttkaker en salsa marrón forman parte de la cocina casera tradicional noruega.",
+      "flavor": "Sabor intenso a carne con condimentos suaves y salsa dorada.",
+      "technique": "Incorpora gradualmente leche fría a la mezcla de carne y dora las tortitas antes de terminar de cocerlas a fuego lento.",
+      "essentials": [
+        "500 g de carne picada",
+        "1 cucharadita de sal",
+        "2 cucharadas de fécula de patata"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min",
+        "ingredients": [
+          "500 g de carne picada",
+          "1 cucharadita de sal",
+          "2 cucharadas de fécula de patata",
+          "150 ml de leche",
+          "pimienta y nuez moscada",
+          "mantequilla",
+          "3 cucharadas de harina de trigo",
+          "500 ml de caldo"
+        ],
+        "steps": [
+          "Mezcla la carne picada con sal, fécula de patata y especias; incorpora la leche poco a poco.",
+          "Forma tortitas y dóralas en mantequilla.",
+          "Dora la harina en mantequilla e incorpora poco a poco el caldo con unas varillas.",
+          "Cuece las tortitas a fuego lento en la salsa hasta que estén hechas por dentro."
+        ]
+      },
+      "variants": [
+        "Se sirven, entre otros acompañamientos, con col en salsa cremosa o puré de guisantes."
+      ],
+      "serving": [
+        "Sirve con patatas y arándanos rojos de montaña."
+      ],
+      "commonMistakes": [
+        "No añadas toda la leche de golpe."
+      ]
+    },
+    "de": {
+      "overview": "Gewürztes Hackfleisch wird zu flachen Frikadellen geformt, angebraten und in Sauce fertig gegart.",
+      "history": "Kjøttkaker in brauner Sauce sind ein fester Bestandteil der norwegischen Hausmannskost.",
+      "flavor": "Kräftiger Fleischgeschmack mit milder Würzung und brauner Sauce.",
+      "technique": "Kalte Milch nach und nach in die Hackmasse einarbeiten und die Frikadellen anbraten, bevor sie fertig gegart werden.",
+      "essentials": [
+        "500 g Hackfleisch",
+        "1 TL Salz",
+        "2 EL Kartoffelstärke"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min.",
+        "ingredients": [
+          "500 g Hackfleisch",
+          "1 TL Salz",
+          "2 EL Kartoffelstärke",
+          "150 ml Milch",
+          "Pfeffer und Muskat",
+          "Butter",
+          "3 EL Weizenmehl",
+          "500 ml Brühe"
+        ],
+        "steps": [
+          "Hackfleisch mit Salz, Kartoffelstärke und Gewürzen mischen; Milch nach und nach einarbeiten.",
+          "Frikadellen formen und in Butter anbraten.",
+          "Mehl in Butter bräunen und nach und nach Brühe mit dem Schneebesen einrühren.",
+          "Frikadellen in der Sauce ziehen lassen, bis sie vollständig durchgegart sind."
+        ]
+      },
+      "variants": [
+        "Sie werden unter anderem mit Rahmkohl oder Erbsenpüree serviert."
+      ],
+      "serving": [
+        "Mit Kartoffeln und Preiselbeeren servieren."
+      ],
+      "commonMistakes": [
+        "Nicht die gesamte Milch auf einmal hinzufügen."
+      ]
+    }
+  },
+  "kottbullar": {
+    "en": {
+      "overview": "A minced meat mixture with onion and soaked breadcrumbs is rolled into small balls.",
+      "history": "Köttbullar belong to Swedish home cooking and are also common on the Christmas buffet.",
+      "flavor": "Juicy, mildly spiced and rich.",
+      "technique": "Shape small, evenly sized balls and fry in batches.",
+      "essentials": [
+        "500 g minced meat",
+        "1 small onion",
+        "50 g breadcrumbs"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min",
+        "ingredients": [
+          "500 g minced meat",
+          "1 small onion",
+          "50 g breadcrumbs",
+          "100 ml milk",
+          "1 egg",
+          "salt and pepper",
+          "butter",
+          "200 ml cream",
+          "200 ml stock"
+        ],
+        "steps": [
+          "Soak the breadcrumbs in the milk.",
+          "Mix with meat, finely chopped onion, egg and spices.",
+          "Shape small balls and fry until cooked through.",
+          "Deglaze the pan with stock and cream to make a sauce."
+        ]
+      },
+      "variants": [
+        "A mixture of minced beef and pork is common."
+      ],
+      "serving": [
+        "Serve with mashed potatoes, lingonberries and optionally cucumber."
+      ],
+      "commonMistakes": [
+        "Do not overcrowd the pan."
+      ]
+    },
+    "fr": {
+      "overview": "Une farce de viande hachée, d’oignon et de chapelure trempée est roulée en petites boulettes.",
+      "history": "Les köttbullar font partie de la cuisine familiale suédoise et sont aussi courants sur le buffet de Noël.",
+      "flavor": "Juteux, légèrement épicés et généreux.",
+      "technique": "Former de petites boulettes régulières et les faire revenir par fournées.",
+      "essentials": [
+        "500 g de viande hachée",
+        "1 petit oignon",
+        "50 g de chapelure"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min",
+        "ingredients": [
+          "500 g de viande hachée",
+          "1 petit oignon",
+          "50 g de chapelure",
+          "100 ml de lait",
+          "1 œuf",
+          "sel et poivre",
+          "beurre",
+          "200 ml de crème",
+          "200 ml de bouillon"
+        ],
+        "steps": [
+          "Faire tremper la chapelure dans le lait.",
+          "Mélanger avec la viande, l’oignon finement haché, l’œuf et les épices.",
+          "Former de petites boulettes et les faire cuire à cœur.",
+          "Déglacer la poêle avec le bouillon et la crème pour former une sauce."
+        ]
+      },
+      "variants": [
+        "Un mélange de bœuf et de porc hachés est courant."
+      ],
+      "serving": [
+        "Servir avec de la purée de pommes de terre, des airelles rouges et éventuellement du concombre."
+      ],
+      "commonMistakes": [
+        "Ne pas surcharger la poêle."
+      ]
+    },
+    "pt": {
+      "overview": "Uma mistura de carne picada, cebola e pão ralado demolhado é moldada em pequenas almôndegas.",
+      "history": "As köttbullar fazem parte da cozinha caseira sueca e são também comuns no bufete de Natal.",
+      "flavor": "Suculentas, suavemente condimentadas e encorpadas.",
+      "technique": "Forme pequenas almôndegas uniformes e frite em porções.",
+      "essentials": [
+        "500 g de carne picada",
+        "1 cebola pequena",
+        "50 g de pão ralado"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min",
+        "ingredients": [
+          "500 g de carne picada",
+          "1 cebola pequena",
+          "50 g de pão ralado",
+          "100 ml de leite",
+          "1 ovo",
+          "sal e pimenta",
+          "manteiga",
+          "200 ml de natas",
+          "200 ml de caldo"
+        ],
+        "steps": [
+          "Deixe o pão ralado absorver o leite.",
+          "Misture com carne, cebola finamente picada, ovo e especiarias.",
+          "Forme pequenas almôndegas e frite até estarem bem cozinhadas.",
+          "Deglace a frigideira com caldo e natas para fazer um molho."
+        ]
+      },
+      "variants": [
+        "É comum usar uma mistura de carne picada de vaca e porco."
+      ],
+      "serving": [
+        "Sirva com puré de batata, arandos-vermelhos e, se desejar, pepino."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado a frigideira."
+      ]
+    },
+    "es": {
+      "overview": "Una mezcla de carne picada, cebolla y pan rallado remojado se moldea en pequeñas albóndigas.",
+      "history": "Las köttbullar forman parte de la cocina casera sueca y también son habituales en el bufé navideño.",
+      "flavor": "Jugosas, suavemente especiadas y sabrosas.",
+      "technique": "Forma albóndigas pequeñas y uniformes y fríelas en tandas.",
+      "essentials": [
+        "500 g de carne picada",
+        "1 cebolla pequeña",
+        "50 g de pan rallado"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min",
+        "ingredients": [
+          "500 g de carne picada",
+          "1 cebolla pequeña",
+          "50 g de pan rallado",
+          "100 ml de leche",
+          "1 huevo",
+          "sal y pimienta",
+          "mantequilla",
+          "200 ml de nata",
+          "200 ml de caldo"
+        ],
+        "steps": [
+          "Deja que el pan rallado absorba la leche.",
+          "Mezcla con carne, cebolla finamente picada, huevo y especias.",
+          "Forma albóndigas pequeñas y fríelas hasta que estén hechas por dentro.",
+          "Desglasa la sartén con caldo y nata para preparar una salsa."
+        ]
+      },
+      "variants": [
+        "Es habitual usar una mezcla de carne picada de vacuno y cerdo."
+      ],
+      "serving": [
+        "Sirve con puré de patatas, arándanos rojos de montaña y, si quieres, pepino."
+      ],
+      "commonMistakes": [
+        "No llenes demasiado la sartén."
+      ]
+    },
+    "de": {
+      "overview": "Eine Hackfleischmasse mit Zwiebeln und eingeweichten Semmelbröseln wird zu kleinen Bällchen gerollt.",
+      "history": "Köttbullar gehören zur schwedischen Hausmannskost und sind auch auf dem Weihnachtsbuffet verbreitet.",
+      "flavor": "Saftig, mild gewürzt und kräftig.",
+      "technique": "Kleine gleichmäßige Bällchen formen und portionsweise braten.",
+      "essentials": [
+        "500 g Hackfleisch",
+        "1 kleine Zwiebel",
+        "50 g Semmelbrösel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min.",
+        "ingredients": [
+          "500 g Hackfleisch",
+          "1 kleine Zwiebel",
+          "50 g Semmelbrösel",
+          "100 ml Milch",
+          "1 Ei",
+          "Salz und Pfeffer",
+          "Butter",
+          "200 ml Sahne",
+          "200 ml Brühe"
+        ],
+        "steps": [
+          "Semmelbrösel in Milch einweichen.",
+          "Mit Fleisch, fein gehackter Zwiebel, Ei und Gewürzen mischen.",
+          "Kleine Bällchen formen und vollständig durchbraten.",
+          "Bratensatz mit Brühe und Sahne ablöschen und eine Sauce zubereiten."
+        ]
+      },
+      "variants": [
+        "Gemischtes Hackfleisch aus Rind und Schwein ist üblich."
+      ],
+      "serving": [
+        "Mit Kartoffelpüree, Preiselbeeren und nach Wunsch Gurke servieren."
+      ],
+      "commonMistakes": [
+        "Pfanne nicht überfüllen."
+      ]
+    }
+  },
+  "smorrebrod": {
+    "en": {
+      "overview": "The bread is topped with carefully chosen combinations of fish, meat, eggs or vegetables.",
+      "history": "Smørrebrød is central to Danish lunch and restaurant culture.",
+      "flavor": "Contrasts between robust rye bread, creamy toppings and fresh or tangy accompaniments.",
+      "technique": "Choose complementary toppings and assemble just before serving.",
+      "essentials": [
+        "4 slices of rye bread",
+        "butter",
+        "2 boiled eggs"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 20 min",
+        "ingredients": [
+          "4 slices of rye bread",
+          "butter",
+          "2 boiled eggs",
+          "150 g cooked prawns",
+          "mayonnaise",
+          "lemon",
+          "dill"
+        ],
+        "steps": [
+          "Butter the rye bread.",
+          "Slice the eggs and place on the bread.",
+          "Distribute the prawns and a little mayonnaise.",
+          "Garnish with dill and lemon."
+        ]
+      },
+      "variants": [
+        "Herring, roast beef with remoulade and liver pâté are other common versions."
+      ],
+      "serving": [
+        "Serve for lunch with a knife and fork."
+      ],
+      "commonMistakes": [
+        "Avoid leaving moist toppings on the bread for a long time."
+      ]
+    },
+    "fr": {
+      "overview": "Le pain est garni d’associations soignées de poisson, de viande, d’œufs ou de légumes.",
+      "history": "Le smørrebrød occupe une place centrale dans la culture danoise du déjeuner et de la restauration.",
+      "flavor": "Contrastes entre le pain de seigle au goût prononcé, les garnitures crémeuses et les accompagnements frais ou acidulés.",
+      "technique": "Choisir des garnitures harmonieuses et les assembler juste avant de servir.",
+      "essentials": [
+        "4 tranches de pain de seigle",
+        "beurre",
+        "2 œufs durs"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 20 min",
+        "ingredients": [
+          "4 tranches de pain de seigle",
+          "beurre",
+          "2 œufs durs",
+          "150 g de crevettes cuites",
+          "mayonnaise",
+          "citron",
+          "aneth"
+        ],
+        "steps": [
+          "Beurrer le pain de seigle.",
+          "Couper les œufs en rondelles et les disposer sur le pain.",
+          "Répartir les crevettes et un peu de mayonnaise.",
+          "Garnir d’aneth et de citron."
+        ]
+      },
+      "variants": [
+        "Le hareng, le rosbif à la rémoulade et le pâté de foie sont d’autres variantes courantes."
+      ],
+      "serving": [
+        "Servir au déjeuner avec un couteau et une fourchette."
+      ],
+      "commonMistakes": [
+        "Éviter de laisser longtemps les garnitures humides sur le pain."
+      ]
+    },
+    "pt": {
+      "overview": "O pão é coberto com combinações bem escolhidas de peixe, carne, ovos ou legumes.",
+      "history": "O smørrebrød ocupa um lugar central na cultura dinamarquesa do almoço e dos restaurantes.",
+      "flavor": "Contrastes entre pão de centeio de sabor intenso, coberturas cremosas e acompanhamentos frescos ou ácidos.",
+      "technique": "Escolha coberturas que combinem e monte imediatamente antes de servir.",
+      "essentials": [
+        "4 fatias de pão de centeio",
+        "manteiga",
+        "2 ovos cozidos"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 20 min",
+        "ingredients": [
+          "4 fatias de pão de centeio",
+          "manteiga",
+          "2 ovos cozidos",
+          "150 g de camarão cozido",
+          "maionese",
+          "limão",
+          "endro"
+        ],
+        "steps": [
+          "Barre o pão de centeio com manteiga.",
+          "Corte os ovos em rodelas e coloque sobre o pão.",
+          "Distribua o camarão e um pouco de maionese.",
+          "Decore com endro e limão."
+        ]
+      },
+      "variants": [
+        "Arenque, rosbife com remoulade e patê de fígado são outras variantes comuns."
+      ],
+      "serving": [
+        "Sirva ao almoço com faca e garfo."
+      ],
+      "commonMistakes": [
+        "Evite deixar coberturas húmidas muito tempo sobre o pão."
+      ]
+    },
+    "es": {
+      "overview": "El pan se cubre con combinaciones cuidadosamente elegidas de pescado, carne, huevo o verduras.",
+      "history": "El smørrebrød ocupa un lugar central en la cultura danesa del almuerzo y los restaurantes.",
+      "flavor": "Contrastes entre pan de centeno intenso, coberturas cremosas y acompañamientos frescos o ácidos.",
+      "technique": "Elige ingredientes que combinen y monta justo antes de servir.",
+      "essentials": [
+        "4 rebanadas de pan de centeno",
+        "mantequilla",
+        "2 huevos cocidos"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 20 min",
+        "ingredients": [
+          "4 rebanadas de pan de centeno",
+          "mantequilla",
+          "2 huevos cocidos",
+          "150 g de gambas cocidas",
+          "mayonesa",
+          "limón",
+          "eneldo"
+        ],
+        "steps": [
+          "Unta el pan de centeno con mantequilla.",
+          "Corta los huevos en rodajas y colócalos sobre el pan.",
+          "Reparte las gambas y un poco de mayonesa.",
+          "Decora con eneldo y limón."
+        ]
+      },
+      "variants": [
+        "El arenque, el rosbif con remoulade y el paté de hígado son otras variantes habituales."
+      ],
+      "serving": [
+        "Sirve para el almuerzo con cuchillo y tenedor."
+      ],
+      "commonMistakes": [
+        "Evita dejar ingredientes húmedos mucho tiempo sobre el pan."
+      ]
+    },
+    "de": {
+      "overview": "Das Brot wird mit abgestimmten Kombinationen aus Fisch, Fleisch, Eiern oder Gemüse belegt.",
+      "history": "Smørrebrød ist ein zentraler Bestandteil der dänischen Mittags- und Restaurantkultur.",
+      "flavor": "Kontraste zwischen kräftigem Roggenbrot, cremigem Belag und frischen oder säuerlichen Beilagen.",
+      "technique": "Passende Beläge auswählen und erst kurz vor dem Servieren anrichten.",
+      "essentials": [
+        "4 Scheiben Roggenbrot",
+        "Butter",
+        "2 gekochte Eier"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 20 Min.",
+        "ingredients": [
+          "4 Scheiben Roggenbrot",
+          "Butter",
+          "2 gekochte Eier",
+          "150 g gegarte Garnelen",
+          "Mayonnaise",
+          "Zitrone",
+          "Dill"
+        ],
+        "steps": [
+          "Roggenbrot mit Butter bestreichen.",
+          "Eier in Scheiben schneiden und auf das Brot legen.",
+          "Garnelen und etwas Mayonnaise verteilen.",
+          "Mit Dill und Zitrone garnieren."
+        ]
+      },
+      "variants": [
+        "Hering, Roastbeef mit Remoulade und Leberpastete sind weitere verbreitete Varianten."
+      ],
+      "serving": [
+        "Als Mittagessen mit Messer und Gabel servieren."
+      ],
+      "commonMistakes": [
+        "Feuchte Beläge nicht lange auf dem Brot liegen lassen."
+      ]
+    }
+  },
+  "lohikeitto": {
+    "en": {
+      "overview": "Potatoes and vegetables are cooked in stock before salmon is added towards the end.",
+      "history": "Lohikeitto is a Finnish fish soup with both creamy and clear regional versions.",
+      "flavor": "Mild, rich and fresh with dill.",
+      "technique": "Poach the salmon gently, without prolonged boiling.",
+      "essentials": [
+        "500 g boneless salmon fillet",
+        "500 g potatoes",
+        "1 leek"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 35 min",
+        "ingredients": [
+          "500 g boneless salmon fillet",
+          "500 g potatoes",
+          "1 leek",
+          "2 carrots",
+          "800 ml fish stock",
+          "200 ml cream",
+          "dill",
+          "butter"
+        ],
+        "steps": [
+          "Fry the leek in butter.",
+          "Add stock, potatoes and carrots and cook until tender.",
+          "Add cream and diced salmon; simmer gently until the fish is cooked through.",
+          "Season and add dill."
+        ]
+      },
+      "variants": [
+        "In Kainuu there is a version without cream."
+      ],
+      "serving": [
+        "Serve with rye bread."
+      ],
+      "commonMistakes": [
+        "Do not cook the salmon so long that it becomes dry."
+      ]
+    },
+    "fr": {
+      "overview": "Les pommes de terre et les légumes cuisent dans le bouillon avant d’ajouter le saumon en fin de cuisson.",
+      "history": "Le lohikeitto est une soupe de poisson finlandaise aux variantes régionales crémeuses ou claires.",
+      "flavor": "Douce, généreuse et fraîche grâce à l’aneth.",
+      "technique": "Pocher délicatement le saumon, sans ébullition prolongée.",
+      "essentials": [
+        "500 g de filet de saumon sans arêtes",
+        "500 g de pommes de terre",
+        "1 poireau"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 35 min",
+        "ingredients": [
+          "500 g de filet de saumon sans arêtes",
+          "500 g de pommes de terre",
+          "1 poireau",
+          "2 carottes",
+          "800 ml de fumet de poisson",
+          "200 ml de crème",
+          "aneth",
+          "beurre"
+        ],
+        "steps": [
+          "Faire revenir le poireau dans le beurre.",
+          "Ajouter le bouillon, les pommes de terre et les carottes, puis cuire jusqu’à tendreté.",
+          "Ajouter la crème et le saumon en dés ; laisser pocher jusqu’à cuisson complète du poisson.",
+          "Rectifier l’assaisonnement et ajouter l’aneth."
+        ]
+      },
+      "variants": [
+        "Dans le Kainuu, il existe une variante sans crème."
+      ],
+      "serving": [
+        "Servir avec du pain de seigle."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire le saumon si longtemps qu’il se dessèche."
+      ]
+    },
+    "pt": {
+      "overview": "As batatas e os legumes são cozidos em caldo antes de juntar o salmão perto do fim.",
+      "history": "O lohikeitto é uma sopa de peixe finlandesa com variantes regionais cremosas e de caldo claro.",
+      "flavor": "Suave, encorpada e fresca com endro.",
+      "technique": "Coza o salmão suavemente, sem fervura prolongada.",
+      "essentials": [
+        "500 g de filete de salmão sem espinhas",
+        "500 g de batatas",
+        "1 alho-francês"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 35 min",
+        "ingredients": [
+          "500 g de filete de salmão sem espinhas",
+          "500 g de batatas",
+          "1 alho-francês",
+          "2 cenouras",
+          "800 ml de caldo de peixe",
+          "200 ml de natas",
+          "endro",
+          "manteiga"
+        ],
+        "steps": [
+          "Salteie o alho-francês em manteiga.",
+          "Junte o caldo, as batatas e as cenouras e coza até ficarem tenras.",
+          "Junte as natas e o salmão em cubos; cozinhe suavemente até o peixe estar bem cozinhado.",
+          "Retifique os temperos e junte o endro."
+        ]
+      },
+      "variants": [
+        "Em Kainuu existe uma variante sem natas."
+      ],
+      "serving": [
+        "Sirva com pão de centeio."
+      ],
+      "commonMistakes": [
+        "Não coza o salmão durante tanto tempo que fique seco."
+      ]
+    },
+    "es": {
+      "overview": "Las patatas y las verduras se cuecen en caldo antes de añadir el salmón hacia el final.",
+      "history": "El lohikeitto es una sopa de pescado finlandesa con variantes regionales cremosas y de caldo claro.",
+      "flavor": "Suave, con cuerpo y fresca por el eneldo.",
+      "technique": "Cuece el salmón suavemente, sin hervirlo durante mucho tiempo.",
+      "essentials": [
+        "500 g de filete de salmón sin espinas",
+        "500 g de patatas",
+        "1 puerro"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 35 min",
+        "ingredients": [
+          "500 g de filete de salmón sin espinas",
+          "500 g de patatas",
+          "1 puerro",
+          "2 zanahorias",
+          "800 ml de caldo de pescado",
+          "200 ml de nata",
+          "eneldo",
+          "mantequilla"
+        ],
+        "steps": [
+          "Sofríe el puerro en mantequilla.",
+          "Añade caldo, patatas y zanahorias y cuece hasta que estén tiernas.",
+          "Añade nata y salmón en dados; cuece suavemente hasta que el pescado esté hecho por dentro.",
+          "Ajusta la sazón y añade eneldo."
+        ]
+      },
+      "variants": [
+        "En Kainuu existe una variante sin nata."
+      ],
+      "serving": [
+        "Sirve con pan de centeno."
+      ],
+      "commonMistakes": [
+        "No cuezas el salmón tanto tiempo que se reseque."
+      ]
+    },
+    "de": {
+      "overview": "Kartoffeln und Gemüse werden in Brühe gekocht, bevor gegen Ende der Lachs hinzukommt.",
+      "history": "Lohikeitto ist eine finnische Fischsuppe mit cremigen und klaren regionalen Varianten.",
+      "flavor": "Mild, vollmundig und frisch durch Dill.",
+      "technique": "Lachs sanft gar ziehen lassen, ohne ihn lange zu kochen.",
+      "essentials": [
+        "500 g Lachsfilet ohne Gräten",
+        "500 g Kartoffeln",
+        "1 Stange Lauch"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 35 Min.",
+        "ingredients": [
+          "500 g Lachsfilet ohne Gräten",
+          "500 g Kartoffeln",
+          "1 Stange Lauch",
+          "2 Karotten",
+          "800 ml Fischfond",
+          "200 ml Sahne",
+          "Dill",
+          "Butter"
+        ],
+        "steps": [
+          "Lauch in Butter anschwitzen.",
+          "Brühe, Kartoffeln und Karotten hinzufügen und weich kochen.",
+          "Sahne und Lachswürfel hinzufügen und sanft ziehen lassen, bis der Fisch vollständig gar ist.",
+          "Abschmecken und Dill hinzufügen."
+        ]
+      },
+      "variants": [
+        "In Kainuu gibt es eine Variante ohne Sahne."
+      ],
+      "serving": [
+        "Mit Roggenbrot servieren."
+      ],
+      "commonMistakes": [
+        "Lachs nicht so lange garen, dass er trocken wird."
+      ]
+    }
+  },
+  "plokkfiskur": {
+    "en": {
+      "overview": "Flaked fish and potatoes are folded into a creamy sauce with onion.",
+      "history": "Plokkfiskur is traditional Icelandic everyday food and is also suitable for using leftover fish.",
+      "flavor": "Mild, creamy and filling.",
+      "technique": "Fold the fish gently into the sauce to retain some of its flaky texture.",
+      "essentials": [
+        "500 g cod or haddock",
+        "500 g potatoes",
+        "1 onion"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40 min",
+        "ingredients": [
+          "500 g cod or haddock",
+          "500 g potatoes",
+          "1 onion",
+          "40 g butter",
+          "40 g flour",
+          "400 ml milk",
+          "salt and pepper"
+        ],
+        "steps": [
+          "Boil the potatoes until tender and poach the fish until cooked through.",
+          "Fry the onion in butter and stir in the flour.",
+          "Gradually add the milk and let the sauce simmer.",
+          "Fold in potato pieces and flaked fish, heat through and season."
+        ]
+      },
+      "variants": [
+        "Some versions are gratinated with cheese."
+      ],
+      "serving": [
+        "Serve with Icelandic rye bread or other dark bread."
+      ],
+      "commonMistakes": [
+        "Do not stir so vigorously that the fish is completely mashed."
+      ]
+    },
+    "fr": {
+      "overview": "Le poisson effeuillé et les pommes de terre sont incorporés à une sauce crémeuse aux oignons.",
+      "history": "Le plokkfiskur est un plat islandais traditionnel du quotidien qui permet aussi d’utiliser les restes de poisson.",
+      "flavor": "Doux, crémeux et rassasiant.",
+      "technique": "Incorporer délicatement le poisson à la sauce pour conserver une partie de sa texture en lamelles.",
+      "essentials": [
+        "500 g de cabillaud ou d’églefin",
+        "500 g de pommes de terre",
+        "1 oignon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40 min",
+        "ingredients": [
+          "500 g de cabillaud ou d’églefin",
+          "500 g de pommes de terre",
+          "1 oignon",
+          "40 g de beurre",
+          "40 g de farine",
+          "400 ml de lait",
+          "sel et poivre"
+        ],
+        "steps": [
+          "Cuire les pommes de terre jusqu’à tendreté et pocher le poisson jusqu’à cuisson complète.",
+          "Faire revenir l’oignon dans le beurre et incorporer la farine.",
+          "Incorporer progressivement le lait et laisser mijoter la sauce.",
+          "Incorporer les morceaux de pommes de terre et le poisson effeuillé, bien réchauffer et assaisonner."
+        ]
+      },
+      "variants": [
+        "Certaines variantes sont gratinées au fromage."
+      ],
+      "serving": [
+        "Servir avec du pain de seigle islandais ou un autre pain noir."
+      ],
+      "commonMistakes": [
+        "Ne pas remuer si vigoureusement que le poisson se transforme en purée."
+      ]
+    },
+    "pt": {
+      "overview": "O peixe em lascas e as batatas são envolvidos num molho cremoso com cebola.",
+      "history": "O plokkfiskur é um prato tradicional islandês do quotidiano que também permite aproveitar sobras de peixe.",
+      "flavor": "Suave, cremoso e saciante.",
+      "technique": "Envolva cuidadosamente o peixe no molho para manter parte da textura em lascas.",
+      "essentials": [
+        "500 g de bacalhau fresco ou arinca",
+        "500 g de batatas",
+        "1 cebola"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40 min",
+        "ingredients": [
+          "500 g de bacalhau fresco ou arinca",
+          "500 g de batatas",
+          "1 cebola",
+          "40 g de manteiga",
+          "40 g de farinha",
+          "400 ml de leite",
+          "sal e pimenta"
+        ],
+        "steps": [
+          "Coza as batatas até ficarem tenras e o peixe suavemente até estar bem cozinhado.",
+          "Salteie a cebola em manteiga e incorpore a farinha.",
+          "Incorpore gradualmente o leite e deixe o molho cozinhar em lume brando.",
+          "Envolva os pedaços de batata e o peixe em lascas, aqueça bem e tempere."
+        ]
+      },
+      "variants": [
+        "Algumas variantes são gratinadas com queijo."
+      ],
+      "serving": [
+        "Sirva com pão de centeio islandês ou outro pão escuro."
+      ],
+      "commonMistakes": [
+        "Não mexa com tanta força que o peixe fique completamente desfeito."
+      ]
+    },
+    "es": {
+      "overview": "El pescado en lascas y las patatas se incorporan a una salsa cremosa con cebolla.",
+      "history": "El plokkfiskur es un plato tradicional islandés de diario que también permite aprovechar sobras de pescado.",
+      "flavor": "Suave, cremoso y saciante.",
+      "technique": "Incorpora suavemente el pescado a la salsa para conservar parte de su textura en lascas.",
+      "essentials": [
+        "500 g de bacalao fresco o eglefino",
+        "500 g de patatas",
+        "1 cebolla"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40 min",
+        "ingredients": [
+          "500 g de bacalao fresco o eglefino",
+          "500 g de patatas",
+          "1 cebolla",
+          "40 g de mantequilla",
+          "40 g de harina",
+          "400 ml de leche",
+          "sal y pimienta"
+        ],
+        "steps": [
+          "Cuece las patatas hasta que estén tiernas y el pescado suavemente hasta que esté hecho por dentro.",
+          "Sofríe la cebolla en mantequilla e incorpora la harina.",
+          "Incorpora gradualmente la leche y deja cocer la salsa a fuego lento.",
+          "Incorpora los trozos de patata y el pescado en lascas, calienta bien y sazona."
+        ]
+      },
+      "variants": [
+        "Algunas variantes se gratinan con queso."
+      ],
+      "serving": [
+        "Sirve con pan de centeno islandés u otro pan oscuro."
+      ],
+      "commonMistakes": [
+        "No remuevas con tanta fuerza que el pescado quede completamente triturado."
+      ]
+    },
+    "de": {
+      "overview": "Zerpflückter Fisch und Kartoffeln werden unter eine cremige Zwiebelsauce gehoben.",
+      "history": "Plokkfiskur ist ein traditionelles isländisches Alltagsgericht, das sich auch zur Verwertung von Fischresten eignet.",
+      "flavor": "Mild, cremig und sättigend.",
+      "technique": "Fisch vorsichtig unter die Sauce heben, damit ein Teil seiner blättrigen Struktur erhalten bleibt.",
+      "essentials": [
+        "500 g Kabeljau oder Schellfisch",
+        "500 g Kartoffeln",
+        "1 Zwiebel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40 Min.",
+        "ingredients": [
+          "500 g Kabeljau oder Schellfisch",
+          "500 g Kartoffeln",
+          "1 Zwiebel",
+          "40 g Butter",
+          "40 g Mehl",
+          "400 ml Milch",
+          "Salz und Pfeffer"
+        ],
+        "steps": [
+          "Kartoffeln weich kochen und Fisch vollständig gar ziehen lassen.",
+          "Zwiebel in Butter anschwitzen und Mehl einrühren.",
+          "Milch nach und nach einrühren und die Sauce köcheln lassen.",
+          "Kartoffelstücke und zerpflückten Fisch unterheben, durchwärmen und abschmecken."
+        ]
+      },
+      "variants": [
+        "Einige Varianten werden mit Käse überbacken."
+      ],
+      "serving": [
+        "Mit isländischem Roggenbrot oder anderem dunklem Brot servieren."
+      ],
+      "commonMistakes": [
+        "Nicht so kräftig rühren, dass der Fisch völlig zerfällt."
+      ]
+    }
+  },
+  "boeuf-bourguignon": {
+    "en": {
+      "overview": "Stewing beef is slowly braised in an aromatic sauce.",
+      "history": "The dish is associated with Burgundy’s cuisine and wine tradition.",
+      "flavor": "Deep, rich and aromatic.",
+      "technique": "Brown the meat in batches and simmer until tender.",
+      "essentials": [
+        "800 g stewing beef",
+        "100 g bacon",
+        "2 carrots"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 3 hours",
+        "ingredients": [
+          "800 g stewing beef",
+          "100 g bacon",
+          "2 carrots",
+          "1 onion",
+          "400 ml red wine",
+          "250 ml stock",
+          "200 g mushrooms",
+          "thyme",
+          "flour",
+          "butter"
+        ],
+        "steps": [
+          "Brown the beef and bacon.",
+          "Fry the onion and carrots, sprinkle with a little flour and add wine, stock and thyme.",
+          "Simmer covered until the meat is tender, about two to three hours.",
+          "Fry the mushrooms separately and fold them in before serving."
+        ]
+      },
+      "variants": [
+        "Some versions use pearl onions and overnight marinating in wine."
+      ],
+      "serving": [
+        "Serve with mashed potatoes or bread."
+      ],
+      "commonMistakes": [
+        "Avoid vigorous boiling."
+      ]
+    },
+    "fr": {
+      "overview": "La viande de bœuf à mijoter est braisée lentement dans une sauce aromatique.",
+      "history": "Le plat est associé à la cuisine et à la tradition viticole de Bourgogne.",
+      "flavor": "Profond, généreux et aromatique.",
+      "technique": "Faire dorer la viande par petites quantités et laisser mijoter jusqu’à tendreté.",
+      "essentials": [
+        "800 g de bœuf à mijoter",
+        "100 g de lardons",
+        "2 carottes"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 3 heures",
+        "ingredients": [
+          "800 g de bœuf à mijoter",
+          "100 g de lardons",
+          "2 carottes",
+          "1 oignon",
+          "400 ml de vin rouge",
+          "250 ml de bouillon",
+          "200 g de champignons",
+          "thym",
+          "farine",
+          "beurre"
+        ],
+        "steps": [
+          "Faire dorer le bœuf et les lardons.",
+          "Faire revenir l’oignon et les carottes, saupoudrer d’un peu de farine et ajouter le vin, le bouillon et le thym.",
+          "Laisser mijoter à couvert jusqu’à tendreté de la viande, environ deux à trois heures.",
+          "Faire revenir les champignons séparément et les incorporer avant de servir."
+        ]
+      },
+      "variants": [
+        "Certaines variantes utilisent des petits oignons grelots et une marinade au vin toute la nuit."
+      ],
+      "serving": [
+        "Servir avec de la purée de pommes de terre ou du pain."
+      ],
+      "commonMistakes": [
+        "Éviter une forte ébullition."
+      ]
+    },
+    "pt": {
+      "overview": "A carne de vaca para estufar é cozinhada lentamente num molho aromático.",
+      "history": "O prato está associado à cozinha e à tradição vinícola da Borgonha.",
+      "flavor": "Intenso, encorpado e aromático.",
+      "technique": "Doure a carne em porções e deixe cozinhar em lume brando até ficar tenra.",
+      "essentials": [
+        "800 g de carne de vaca para estufar",
+        "100 g de bacon",
+        "2 cenouras"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 3 horas",
+        "ingredients": [
+          "800 g de carne de vaca para estufar",
+          "100 g de bacon",
+          "2 cenouras",
+          "1 cebola",
+          "400 ml de vinho tinto",
+          "250 ml de caldo",
+          "200 g de cogumelos",
+          "tomilho",
+          "farinha",
+          "manteiga"
+        ],
+        "steps": [
+          "Doure a carne e o bacon.",
+          "Salteie a cebola e as cenouras, polvilhe com um pouco de farinha e junte vinho, caldo e tomilho.",
+          "Deixe cozinhar em lume brando com tampa até a carne ficar tenra, cerca de duas a três horas.",
+          "Salteie os cogumelos separadamente e envolva-os antes de servir."
+        ]
+      },
+      "variants": [
+        "Algumas variantes usam cebolinhas e marinada em vinho durante a noite."
+      ],
+      "serving": [
+        "Sirva com puré de batata ou pão."
+      ],
+      "commonMistakes": [
+        "Evite uma fervura intensa."
+      ]
+    },
+    "es": {
+      "overview": "La carne de vacuno para guisar se brasea lentamente en una salsa aromática.",
+      "history": "El plato se asocia con la cocina y la tradición vinícola de Borgoña.",
+      "flavor": "Intenso, con cuerpo y aromático.",
+      "technique": "Dora la carne en tandas y cuece a fuego lento hasta que esté tierna.",
+      "essentials": [
+        "800 g de carne de vacuno para guisar",
+        "100 g de beicon",
+        "2 zanahorias"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 3 horas",
+        "ingredients": [
+          "800 g de carne de vacuno para guisar",
+          "100 g de beicon",
+          "2 zanahorias",
+          "1 cebolla",
+          "400 ml de vino tinto",
+          "250 ml de caldo",
+          "200 g de setas",
+          "tomillo",
+          "harina",
+          "mantequilla"
+        ],
+        "steps": [
+          "Dora la carne y el beicon.",
+          "Sofríe la cebolla y las zanahorias, espolvorea un poco de harina y añade vino, caldo y tomillo.",
+          "Cuece a fuego lento con tapa hasta que la carne esté tierna, unas dos a tres horas.",
+          "Saltea las setas por separado e incorpóralas antes de servir."
+        ]
+      },
+      "variants": [
+        "Algunas variantes usan cebollitas y marinado en vino durante la noche."
+      ],
+      "serving": [
+        "Sirve con puré de patatas o pan."
+      ],
+      "commonMistakes": [
+        "Evita la ebullición fuerte."
+      ]
+    },
+    "de": {
+      "overview": "Schmorfleisch vom Rind wird langsam in einer aromatischen Sauce geschmort.",
+      "history": "Das Gericht ist mit der Küche und Weintradition des Burgunds verbunden.",
+      "flavor": "Tiefgründig, kräftig und aromatisch.",
+      "technique": "Fleisch portionsweise anbräunen und weich schmoren.",
+      "essentials": [
+        "800 g Rindfleisch zum Schmoren",
+        "100 g Speck",
+        "2 Karotten"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 3 Stunden",
+        "ingredients": [
+          "800 g Rindfleisch zum Schmoren",
+          "100 g Speck",
+          "2 Karotten",
+          "1 Zwiebel",
+          "400 ml Rotwein",
+          "250 ml Brühe",
+          "200 g Pilze",
+          "Thymian",
+          "Mehl",
+          "Butter"
+        ],
+        "steps": [
+          "Rindfleisch und Speck anbräunen.",
+          "Zwiebel und Karotten anschwitzen, mit etwas Mehl bestäuben und Wein, Brühe und Thymian hinzufügen.",
+          "Zugedeckt etwa zwei bis drei Stunden schmoren, bis das Fleisch weich ist.",
+          "Pilze separat braten und vor dem Servieren unterheben."
+        ]
+      },
+      "variants": [
+        "Einige Varianten verwenden Perlzwiebeln und marinieren das Fleisch über Nacht in Wein."
+      ],
+      "serving": [
+        "Mit Kartoffelpüree oder Brot servieren."
+      ],
+      "commonMistakes": [
+        "Starkes Kochen vermeiden."
+      ]
+    }
+  },
+  "coq-au-vin": {
+    "en": {
+      "overview": "Chicken pieces are browned and simmered in wine sauce with aromatics.",
+      "history": "Traditionally, older roosters requiring long cooking could be used; today chicken is often used.",
+      "flavor": "Rich, herbal and wine-forward.",
+      "technique": "Brown the chicken and let the sauce simmer gently.",
+      "essentials": [
+        "1 kg chicken thighs",
+        "100 g bacon",
+        "200 g mushrooms"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min",
+        "ingredients": [
+          "1 kg chicken thighs",
+          "100 g bacon",
+          "200 g mushrooms",
+          "150 g small onions",
+          "400 ml red wine",
+          "200 ml stock",
+          "thyme",
+          "garlic"
+        ],
+        "steps": [
+          "Brown the bacon and chicken in a pot.",
+          "Fry the onions and garlic.",
+          "Add wine, stock and thyme and simmer the chicken until cooked through and tender.",
+          "Fry the mushrooms and fold them in."
+        ]
+      },
+      "variants": [
+        "Coq au riesling is a white wine version."
+      ],
+      "serving": [
+        "Serve with potatoes or bread."
+      ],
+      "commonMistakes": [
+        "Do not boil the chicken so vigorously that the meat becomes dry."
+      ]
+    },
+    "fr": {
+      "overview": "Les morceaux de poulet sont dorés et mijotés dans une sauce au vin avec des aromates.",
+      "history": "Traditionnellement, on pouvait utiliser des coqs âgés nécessitant une longue cuisson ; aujourd’hui, on utilise souvent du poulet.",
+      "flavor": "Généreux, herbacé et marqué par le vin.",
+      "technique": "Faire dorer le poulet et laisser mijoter doucement la sauce.",
+      "essentials": [
+        "1 kg de cuisses de poulet",
+        "100 g de lardons",
+        "200 g de champignons"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min",
+        "ingredients": [
+          "1 kg de cuisses de poulet",
+          "100 g de lardons",
+          "200 g de champignons",
+          "150 g de petits oignons",
+          "400 ml de vin rouge",
+          "200 ml de bouillon",
+          "thym",
+          "ail"
+        ],
+        "steps": [
+          "Faire dorer les lardons et le poulet dans une cocotte.",
+          "Faire revenir les oignons et l’ail.",
+          "Ajouter le vin, le bouillon et le thym, puis laisser mijoter le poulet jusqu’à ce qu’il soit cuit à cœur et tendre.",
+          "Faire revenir les champignons et les incorporer."
+        ]
+      },
+      "variants": [
+        "Le coq au riesling est une variante au vin blanc."
+      ],
+      "serving": [
+        "Servir avec des pommes de terre ou du pain."
+      ],
+      "commonMistakes": [
+        "Ne pas faire bouillir le poulet si fort que la viande se dessèche."
+      ]
+    },
+    "pt": {
+      "overview": "Os pedaços de frango são dourados e cozinhados em lume brando num molho de vinho com aromáticos.",
+      "history": "Tradicionalmente podiam usar-se galos mais velhos que exigiam uma cozedura prolongada; hoje usa-se frequentemente frango.",
+      "flavor": "Encorpado, com notas de ervas e vinho.",
+      "technique": "Doure o frango e deixe o molho cozinhar suavemente em lume brando.",
+      "essentials": [
+        "1 kg de coxas de frango",
+        "100 g de bacon",
+        "200 g de cogumelos"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min",
+        "ingredients": [
+          "1 kg de coxas de frango",
+          "100 g de bacon",
+          "200 g de cogumelos",
+          "150 g de cebolas pequenas",
+          "400 ml de vinho tinto",
+          "200 ml de caldo",
+          "tomilho",
+          "alho"
+        ],
+        "steps": [
+          "Doure o bacon e o frango num tacho.",
+          "Salteie as cebolas e o alho.",
+          "Junte vinho, caldo e tomilho e deixe o frango cozinhar em lume brando até estar bem cozinhado e tenro.",
+          "Salteie os cogumelos e envolva-os."
+        ]
+      },
+      "variants": [
+        "O coq au riesling é uma variante com vinho branco."
+      ],
+      "serving": [
+        "Sirva com batatas ou pão."
+      ],
+      "commonMistakes": [
+        "Não deixe o frango ferver tão intensamente que a carne fique seca."
+      ]
+    },
+    "es": {
+      "overview": "Los trozos de pollo se doran y se cuecen a fuego lento en una salsa de vino con aromáticos.",
+      "history": "Tradicionalmente se podían usar gallos viejos que requerían una cocción prolongada; hoy se suele usar pollo.",
+      "flavor": "Con cuerpo, con notas de hierbas y vino.",
+      "technique": "Dora el pollo y deja cocer la salsa suavemente a fuego lento.",
+      "essentials": [
+        "1 kg de contramuslos de pollo",
+        "100 g de beicon",
+        "200 g de setas"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min",
+        "ingredients": [
+          "1 kg de contramuslos de pollo",
+          "100 g de beicon",
+          "200 g de setas",
+          "150 g de cebollitas",
+          "400 ml de vino tinto",
+          "200 ml de caldo",
+          "tomillo",
+          "ajo"
+        ],
+        "steps": [
+          "Dora el beicon y el pollo en una olla.",
+          "Sofríe las cebollas y el ajo.",
+          "Añade vino, caldo y tomillo y cuece el pollo a fuego lento hasta que esté hecho por dentro y tierno.",
+          "Saltea las setas e incorpóralas."
+        ]
+      },
+      "variants": [
+        "El coq au riesling es una variante con vino blanco."
+      ],
+      "serving": [
+        "Sirve con patatas o pan."
+      ],
+      "commonMistakes": [
+        "No hiervas el pollo tan fuerte que la carne se reseque."
+      ]
+    },
+    "de": {
+      "overview": "Hähnchenstücke werden angebraten und mit Aromaten in Weinsauce geschmort.",
+      "history": "Traditionell konnten ältere Hähne verwendet werden, die lange gegart werden mussten; heute wird oft Hähnchen verwendet.",
+      "flavor": "Kräftig, kräuterbetont und weinig.",
+      "technique": "Hähnchen anbräunen und Sauce sanft köcheln lassen.",
+      "essentials": [
+        "1 kg Hähnchenschenkel",
+        "100 g Speck",
+        "200 g Pilze"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min.",
+        "ingredients": [
+          "1 kg Hähnchenschenkel",
+          "100 g Speck",
+          "200 g Pilze",
+          "150 g kleine Zwiebeln",
+          "400 ml Rotwein",
+          "200 ml Brühe",
+          "Thymian",
+          "Knoblauch"
+        ],
+        "steps": [
+          "Speck und Hähnchen in einem Topf anbräunen.",
+          "Zwiebeln und Knoblauch anschwitzen.",
+          "Wein, Brühe und Thymian hinzufügen und Hähnchen sanft schmoren, bis es durchgegart und zart ist.",
+          "Pilze anbraten und unterheben."
+        ]
+      },
+      "variants": [
+        "Coq au Riesling ist eine Weißweinvariante."
+      ],
+      "serving": [
+        "Mit Kartoffeln oder Brot servieren."
+      ],
+      "commonMistakes": [
+        "Hähnchen nicht so stark kochen, dass das Fleisch trocken wird."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

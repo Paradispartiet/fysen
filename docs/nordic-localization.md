@@ -196,3 +196,7 @@ Added eight complete bodies per language: char siu, chow mein, wonton soup, swee
 ### International full article review batch 9
 
 Added eight complete bodies per language: mole poblano, ceviche, lahmacun, mantı, döner, köfte, baba ganoush and tabbouleh. Checked source list lengths and numerical recipe tokens; retained the ceviche microbiological safety caveat and cooked-prawn home version, cooking temperatures and raw-meat hygiene instructions. Original bodies and source links retained. Total 72 new bodies per language; English 105/200 including original 33, other four 72/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 10
+
+Added eight complete bodies per language: fårikål, kjøttkaker, köttbullar, smørrebrød, lohikeitto, plokkfiskur, bœuf bourguignon and coq au vin. Checked source list lengths and numerical recipe tokens, including cooking times and ingredient quantities. Previous bodies and original source links retained. Total 80 new bodies per language; English 113/200 including original 33, other four 80/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
