@@ -61,6 +61,12 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: r
     return () => window.clearTimeout(timer);
   }, [status]);
 
+  useEffect(() => {
+    if (mode !== "map" || !frameReady) return;
+    const id = window.requestAnimationFrame(() => frame.current?.contentWindow?.postMessage({ type: "fysen-map-resize" }, "*"));
+    return () => window.cancelAnimationFrame(id);
+  }, [mode, frameReady]);
+
   function requestLocation() {
     if (!navigator.geolocation) { setLocationStatus("unavailable"); return; }
     const request = ++locationRequest.current;
