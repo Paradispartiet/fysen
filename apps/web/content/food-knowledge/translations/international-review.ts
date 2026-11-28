@@ -22861,5 +22861,818 @@ export const draftInternationalArticles = {
         "Pfanne nicht überfüllen."
       ]
     }
+  },
+  "kitfo": {
+    "en": {
+      "overview": "Traditional kitfo may be served raw or lightly cooked; the home recipe uses thoroughly cooked meat.",
+      "history": "Kitfo is particularly associated with the food culture of the Gurage people in Ethiopia.",
+      "flavor": "Rich, buttery and hot.",
+      "technique": "Use fresh minced meat and cook to at least 71 °C throughout.",
+      "essentials": [
+        "500 g minced beef",
+        "3 tbsp niter kibbeh or butter",
+        "mitmita to taste"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 20 min",
+        "ingredients": [
+          "500 g minced beef",
+          "3 tbsp niter kibbeh or butter",
+          "mitmita to taste",
+          "salt"
+        ],
+        "steps": [
+          "Melt the butter gently.",
+          "Add mitmita and minced meat.",
+          "Fry while stirring until the meat is cooked through.",
+          "Season to taste and serve hot."
+        ]
+      },
+      "variants": [
+        "Leb leb is a lightly cooked variant. Raw and undercooked minced meat can pose a risk of illness."
+      ],
+      "serving": [
+        "Serve with injera, ayib and leafy green vegetables."
+      ],
+      "commonMistakes": [
+        "Do not assume that spices or hot butter make raw minced meat safe."
+      ]
+    },
+    "fr": {
+      "overview": "Le kitfo traditionnel peut être servi cru ou légèrement cuit ; la recette maison utilise de la viande cuite à cœur.",
+      "history": "Le kitfo est particulièrement associé à la culture culinaire du peuple gurage en Éthiopie.",
+      "flavor": "Généreux, beurré et piquant.",
+      "technique": "Utiliser de la viande hachée fraîche et cuire à au moins 71 °C dans toute la masse.",
+      "essentials": [
+        "500 g de bœuf haché",
+        "3 c. à soupe de niter kibbeh ou de beurre",
+        "mitmita selon le goût"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 20 min",
+        "ingredients": [
+          "500 g de bœuf haché",
+          "3 c. à soupe de niter kibbeh ou de beurre",
+          "mitmita selon le goût",
+          "sel"
+        ],
+        "steps": [
+          "Faire fondre doucement le beurre.",
+          "Ajouter le mitmita et la viande hachée.",
+          "Faire revenir en remuant jusqu’à cuisson complète de la viande.",
+          "Rectifier l’assaisonnement et servir chaud."
+        ]
+      },
+      "variants": [
+        "Le leb leb est une variante légèrement cuite. La viande hachée crue ou insuffisamment cuite peut entraîner un risque de maladie."
+      ],
+      "serving": [
+        "Servir avec de l’injera, de l’ayib et des légumes verts à feuilles."
+      ],
+      "commonMistakes": [
+        "Ne pas supposer que les épices ou le beurre chaud rendent la viande hachée crue sûre."
+      ]
+    },
+    "pt": {
+      "overview": "O kitfo tradicional pode ser servido cru ou ligeiramente cozinhado; a receita caseira usa carne bem cozinhada.",
+      "history": "O kitfo está especialmente associado à cultura gastronómica do povo gurage na Etiópia.",
+      "flavor": "Encorpado, amanteigado e picante.",
+      "technique": "Use carne picada fresca e cozinhe até atingir pelo menos 71 °C em toda a massa.",
+      "essentials": [
+        "500 g de carne de vaca picada",
+        "3 c. de sopa de niter kibbeh ou manteiga",
+        "mitmita a gosto"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 20 min",
+        "ingredients": [
+          "500 g de carne de vaca picada",
+          "3 c. de sopa de niter kibbeh ou manteiga",
+          "mitmita a gosto",
+          "sal"
+        ],
+        "steps": [
+          "Derreta suavemente a manteiga.",
+          "Junte mitmita e carne picada.",
+          "Salteie, mexendo, até a carne estar bem cozinhada.",
+          "Tempere a gosto e sirva quente."
+        ]
+      },
+      "variants": [
+        "Leb leb é uma variante ligeiramente cozinhada. A carne picada crua ou mal cozinhada pode causar doença."
+      ],
+      "serving": [
+        "Sirva com injera, ayib e legumes de folha verde."
+      ],
+      "commonMistakes": [
+        "Não suponha que as especiarias ou a manteiga quente tornam segura a carne picada crua."
+      ]
+    },
+    "es": {
+      "overview": "El kitfo tradicional puede servirse crudo o ligeramente cocinado; la receta casera utiliza carne bien hecha.",
+      "history": "El kitfo se asocia especialmente con la cultura culinaria del pueblo gurage en Etiopía.",
+      "flavor": "Intenso, mantecoso y picante.",
+      "technique": "Usa carne picada fresca y cocina hasta alcanzar al menos 71 °C en toda la mezcla.",
+      "essentials": [
+        "500 g de carne de vacuno picada",
+        "3 cucharadas de niter kibbeh o mantequilla",
+        "mitmita al gusto"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 20 min",
+        "ingredients": [
+          "500 g de carne de vacuno picada",
+          "3 cucharadas de niter kibbeh o mantequilla",
+          "mitmita al gusto",
+          "sal"
+        ],
+        "steps": [
+          "Derrite suavemente la mantequilla.",
+          "Añade mitmita y carne picada.",
+          "Saltea removiendo hasta que la carne esté bien hecha.",
+          "Ajusta la sazón y sirve caliente."
+        ]
+      },
+      "variants": [
+        "Leb leb es una variante ligeramente cocinada. La carne picada cruda o poco hecha puede provocar enfermedades."
+      ],
+      "serving": [
+        "Sirve con injera, ayib y verduras de hoja verde."
+      ],
+      "commonMistakes": [
+        "No supongas que las especias o la mantequilla caliente hacen segura la carne picada cruda."
+      ]
+    },
+    "de": {
+      "overview": "Traditionelles Kitfo kann roh oder leicht gegart serviert werden; das Hausrezept verwendet vollständig durchgegartes Fleisch.",
+      "history": "Kitfo ist besonders mit der Esskultur der Gurage in Äthiopien verbunden.",
+      "flavor": "Kräftig, butterbetont und scharf.",
+      "technique": "Frisches Hackfleisch verwenden und überall auf mindestens 71 °C erhitzen.",
+      "essentials": [
+        "500 g Rinderhackfleisch",
+        "3 EL Niter Kibbeh oder Butter",
+        "Mitmita nach Geschmack"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 20 Min.",
+        "ingredients": [
+          "500 g Rinderhackfleisch",
+          "3 EL Niter Kibbeh oder Butter",
+          "Mitmita nach Geschmack",
+          "Salz"
+        ],
+        "steps": [
+          "Butter sanft schmelzen.",
+          "Mitmita und Hackfleisch hinzufügen.",
+          "Unter Rühren vollständig durchbraten.",
+          "Abschmecken und heiß servieren."
+        ]
+      },
+      "variants": [
+        "Leb Leb ist eine leicht gegarte Variante. Rohes oder unzureichend gegartes Hackfleisch kann ein Erkrankungsrisiko darstellen."
+      ],
+      "serving": [
+        "Mit Injera, Ayib und grünem Blattgemüse servieren."
+      ],
+      "commonMistakes": [
+        "Nicht davon ausgehen, dass Gewürze oder heiße Butter rohes Hackfleisch sicher machen."
+      ]
+    }
+  },
+  "zigni": {
+    "en": {
+      "overview": "Meat is simmered for a long time in a thick, aromatic red sauce.",
+      "history": "Zigni is a well-known Eritrean stew often served with injera.",
+      "flavor": "Deep, hot and rich.",
+      "technique": "Reduce the onions before adding meat and liquid.",
+      "essentials": [
+        "700 g stewing beef",
+        "3 onions",
+        "3 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2 hours",
+        "ingredients": [
+          "700 g stewing beef",
+          "3 onions",
+          "3 garlic cloves",
+          "2 tbsp berbere, or to taste",
+          "400 g tomatoes",
+          "300 ml water",
+          "3 tbsp oil"
+        ],
+        "steps": [
+          "Finely chop the onions and let them soften in oil.",
+          "Add garlic, berbere and tomatoes and reduce.",
+          "Add meat and water and simmer covered until the meat is tender.",
+          "Reduce the sauce as needed and season with salt."
+        ]
+      },
+      "variants": [
+        "Versions with other kinds of meat exist."
+      ],
+      "serving": [
+        "Serve with injera."
+      ],
+      "commonMistakes": [
+        "Avoid burning the spices before adding the liquid."
+      ]
+    },
+    "fr": {
+      "overview": "La viande mijote longuement dans une sauce rouge épaisse et aromatique.",
+      "history": "Le zigni est un ragoût érythréen bien connu, souvent servi avec de l’injera.",
+      "flavor": "Profond, piquant et généreux.",
+      "technique": "Faire réduire les oignons avant d’ajouter la viande et le liquide.",
+      "essentials": [
+        "700 g de bœuf à mijoter",
+        "3 oignons",
+        "3 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2 heures",
+        "ingredients": [
+          "700 g de bœuf à mijoter",
+          "3 oignons",
+          "3 gousses d’ail",
+          "2 c. à soupe de berbere, ou selon le goût",
+          "400 g de tomates",
+          "300 ml d’eau",
+          "3 c. à soupe d’huile"
+        ],
+        "steps": [
+          "Hacher finement les oignons et les laisser s’attendrir dans l’huile.",
+          "Ajouter l’ail, le berbere et les tomates et faire réduire.",
+          "Ajouter la viande et l’eau et laisser mijoter à couvert jusqu’à tendreté de la viande.",
+          "Faire réduire la sauce si nécessaire et saler selon le goût."
+        ]
+      },
+      "variants": [
+        "Il existe des variantes avec d’autres viandes."
+      ],
+      "serving": [
+        "Servir avec de l’injera."
+      ],
+      "commonMistakes": [
+        "Éviter de brûler les épices avant d’ajouter le liquide."
+      ]
+    },
+    "pt": {
+      "overview": "A carne cozinha lentamente num molho vermelho espesso e aromático.",
+      "history": "O zigni é um conhecido guisado eritreu, frequentemente servido com injera.",
+      "flavor": "Intenso, picante e encorpado.",
+      "technique": "Deixe as cebolas reduzir antes de juntar a carne e o líquido.",
+      "essentials": [
+        "700 g de carne de vaca para estufar",
+        "3 cebolas",
+        "3 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2 horas",
+        "ingredients": [
+          "700 g de carne de vaca para estufar",
+          "3 cebolas",
+          "3 dentes de alho",
+          "2 c. de sopa de berbere, ou a gosto",
+          "400 g de tomate",
+          "300 ml de água",
+          "3 c. de sopa de óleo"
+        ],
+        "steps": [
+          "Pique finamente as cebolas e deixe-as amolecer em óleo.",
+          "Junte alho, berbere e tomate e deixe reduzir.",
+          "Junte carne e água e deixe cozinhar em lume brando com tampa até a carne ficar tenra.",
+          "Reduza o molho se necessário e tempere com sal."
+        ]
+      },
+      "variants": [
+        "Existem variantes com outros tipos de carne."
+      ],
+      "serving": [
+        "Sirva com injera."
+      ],
+      "commonMistakes": [
+        "Evite queimar as especiarias antes de juntar o líquido."
+      ]
+    },
+    "es": {
+      "overview": "La carne se cuece durante mucho tiempo a fuego lento en una salsa roja espesa y aromática.",
+      "history": "El zigni es un conocido guiso eritreo que suele servirse con injera.",
+      "flavor": "Intenso, picante y con cuerpo.",
+      "technique": "Reduce la cebolla antes de añadir la carne y el líquido.",
+      "essentials": [
+        "700 g de carne de vacuno para guisar",
+        "3 cebollas",
+        "3 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2 horas",
+        "ingredients": [
+          "700 g de carne de vacuno para guisar",
+          "3 cebollas",
+          "3 dientes de ajo",
+          "2 cucharadas de berbere, o al gusto",
+          "400 g de tomates",
+          "300 ml de agua",
+          "3 cucharadas de aceite"
+        ],
+        "steps": [
+          "Pica finamente la cebolla y deja que se ablande en aceite.",
+          "Añade ajo, berbere y tomate y deja reducir.",
+          "Añade carne y agua y cuece a fuego lento con tapa hasta que la carne esté tierna.",
+          "Reduce la salsa si es necesario y ajusta la sal."
+        ]
+      },
+      "variants": [
+        "Existen variantes con otros tipos de carne."
+      ],
+      "serving": [
+        "Sirve con injera."
+      ],
+      "commonMistakes": [
+        "Evita quemar las especias antes de añadir el líquido."
+      ]
+    },
+    "de": {
+      "overview": "Fleisch wird lange in einer dicken, aromatischen roten Sauce geschmort.",
+      "history": "Zigni ist ein bekanntes eritreisches Schmorgericht, das oft mit Injera serviert wird.",
+      "flavor": "Tiefgründig, scharf und kräftig.",
+      "technique": "Zwiebeln einkochen lassen, bevor Fleisch und Flüssigkeit hinzukommen.",
+      "essentials": [
+        "700 g Rindfleisch zum Schmoren",
+        "3 Zwiebeln",
+        "3 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2 Stunden",
+        "ingredients": [
+          "700 g Rindfleisch zum Schmoren",
+          "3 Zwiebeln",
+          "3 Knoblauchzehen",
+          "2 EL Berbere oder nach Geschmack",
+          "400 g Tomaten",
+          "300 ml Wasser",
+          "3 EL Öl"
+        ],
+        "steps": [
+          "Zwiebeln fein hacken und in Öl weich dünsten.",
+          "Knoblauch, Berbere und Tomaten hinzufügen und einkochen.",
+          "Fleisch und Wasser hinzufügen und zugedeckt schmoren, bis das Fleisch weich ist.",
+          "Sauce bei Bedarf einkochen und mit Salz abschmecken."
+        ]
+      },
+      "variants": [
+        "Es gibt Varianten mit anderen Fleischsorten."
+      ],
+      "serving": [
+        "Mit Injera servieren."
+      ],
+      "commonMistakes": [
+        "Gewürze vor Zugabe der Flüssigkeit nicht anbrennen lassen."
+      ]
+    }
+  },
+  "tajine": {
+    "en": {
+      "overview": "Meat or vegetables are simmered with spices under a lid. This version uses chicken, olives and preserved lemon.",
+      "history": "Tajine is central to Moroccan food traditions, with many local variants.",
+      "flavor": "Aromatic, salty-tangy and rich.",
+      "technique": "Use a pot with a tight-fitting lid and simmer the ingredients gently.",
+      "essentials": [
+        "800 g chicken thighs",
+        "2 onions",
+        "3 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 75 min",
+        "ingredients": [
+          "800 g chicken thighs",
+          "2 onions",
+          "3 garlic cloves",
+          "1 tsp ginger",
+          "1 tsp turmeric",
+          "100 g olives",
+          "½ preserved lemon",
+          "200 ml water",
+          "olive oil"
+        ],
+        "steps": [
+          "Fry the onions and garlic in oil.",
+          "Add spices, chicken and water.",
+          "Simmer covered until the chicken is cooked through and tender.",
+          "Add olives and preserved lemon towards the end."
+        ]
+      },
+      "variants": [
+        "Lamb with prunes and vegetable tajine are other variants."
+      ],
+      "serving": [
+        "Serve with bread."
+      ],
+      "commonMistakes": [
+        "Avoid vigorous boiling and unnecessarily large amounts of liquid."
+      ]
+    },
+    "fr": {
+      "overview": "La viande ou les légumes mijotent à couvert avec des épices. Cette version utilise du poulet, des olives et du citron confit au sel.",
+      "history": "Le tajine occupe une place centrale dans les traditions culinaires marocaines, avec de nombreuses variantes locales.",
+      "flavor": "Aromatique, salé-acidulé et généreux.",
+      "technique": "Utiliser une cocotte avec un couvercle bien ajusté et laisser mijoter doucement les ingrédients.",
+      "essentials": [
+        "800 g de cuisses de poulet",
+        "2 oignons",
+        "3 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 75 min",
+        "ingredients": [
+          "800 g de cuisses de poulet",
+          "2 oignons",
+          "3 gousses d’ail",
+          "1 c. à café de gingembre",
+          "1 c. à café de curcuma",
+          "100 g d’olives",
+          "½ citron confit au sel",
+          "200 ml d’eau",
+          "huile d’olive"
+        ],
+        "steps": [
+          "Faire revenir les oignons et l’ail dans l’huile.",
+          "Ajouter les épices, le poulet et l’eau.",
+          "Laisser mijoter à couvert jusqu’à ce que le poulet soit cuit à cœur et tendre.",
+          "Ajouter les olives et le citron confit en fin de cuisson."
+        ]
+      },
+      "variants": [
+        "L’agneau aux pruneaux et le tajine de légumes sont d’autres variantes."
+      ],
+      "serving": [
+        "Servir avec du pain."
+      ],
+      "commonMistakes": [
+        "Éviter une forte ébullition et un excès de liquide."
+      ]
+    },
+    "pt": {
+      "overview": "Carne ou legumes são cozinhados em lume brando com especiarias e tampa. Esta versão usa frango, azeitonas e limão em conserva de sal.",
+      "history": "O tajine é central nas tradições gastronómicas marroquinas, com muitas variantes locais.",
+      "flavor": "Aromático, salgado-ácido e encorpado.",
+      "technique": "Use um tacho com tampa bem ajustada e deixe os ingredientes cozinhar em lume brando.",
+      "essentials": [
+        "800 g de coxas de frango",
+        "2 cebolas",
+        "3 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 75 min",
+        "ingredients": [
+          "800 g de coxas de frango",
+          "2 cebolas",
+          "3 dentes de alho",
+          "1 c. de chá de gengibre",
+          "1 c. de chá de curcuma",
+          "100 g de azeitonas",
+          "½ limão em conserva de sal",
+          "200 ml de água",
+          "azeite"
+        ],
+        "steps": [
+          "Salteie as cebolas e o alho em azeite.",
+          "Junte especiarias, frango e água.",
+          "Deixe cozinhar em lume brando com tampa até o frango estar bem cozinhado e tenro.",
+          "Junte as azeitonas e o limão em conserva perto do fim."
+        ]
+      },
+      "variants": [
+        "Borrego com ameixas secas e tajine de legumes são outras variantes."
+      ],
+      "serving": [
+        "Sirva com pão."
+      ],
+      "commonMistakes": [
+        "Evite fervura intensa e excesso desnecessário de líquido."
+      ]
+    },
+    "es": {
+      "overview": "La carne o las verduras se cuecen a fuego lento con especias y tapa. Esta versión utiliza pollo, aceitunas y limón en conserva de sal.",
+      "history": "El tajín ocupa un lugar central en las tradiciones culinarias marroquíes, con numerosas variantes locales.",
+      "flavor": "Aromático, salado-ácido y con cuerpo.",
+      "technique": "Usa una olla con tapa bien ajustada y cuece suavemente los ingredientes.",
+      "essentials": [
+        "800 g de muslos de pollo",
+        "2 cebollas",
+        "3 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 75 min",
+        "ingredients": [
+          "800 g de muslos de pollo",
+          "2 cebollas",
+          "3 dientes de ajo",
+          "1 cucharadita de jengibre",
+          "1 cucharadita de cúrcuma",
+          "100 g de aceitunas",
+          "½ limón en conserva de sal",
+          "200 ml de agua",
+          "aceite de oliva"
+        ],
+        "steps": [
+          "Sofríe la cebolla y el ajo en aceite.",
+          "Añade especias, pollo y agua.",
+          "Cuece a fuego lento con tapa hasta que el pollo esté hecho por dentro y tierno.",
+          "Añade las aceitunas y el limón en conserva hacia el final."
+        ]
+      },
+      "variants": [
+        "El cordero con ciruelas pasas y el tajín de verduras son otras variantes."
+      ],
+      "serving": [
+        "Sirve con pan."
+      ],
+      "commonMistakes": [
+        "Evita la ebullición fuerte y el exceso innecesario de líquido."
+      ]
+    },
+    "de": {
+      "overview": "Fleisch oder Gemüse werden mit Gewürzen zugedeckt geschmort. Diese Variante verwendet Hähnchen, Oliven und Salzzitrone.",
+      "history": "Tajine ist eine zentrale marokkanische Esstradition mit vielen lokalen Varianten.",
+      "flavor": "Aromatisch, salzig-säuerlich und kräftig.",
+      "technique": "Einen Topf mit dicht schließendem Deckel verwenden und die Zutaten sanft schmoren.",
+      "essentials": [
+        "800 g Hähnchenschenkel",
+        "2 Zwiebeln",
+        "3 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 75 Min.",
+        "ingredients": [
+          "800 g Hähnchenschenkel",
+          "2 Zwiebeln",
+          "3 Knoblauchzehen",
+          "1 TL Ingwer",
+          "1 TL Kurkuma",
+          "100 g Oliven",
+          "½ Salzzitrone",
+          "200 ml Wasser",
+          "Olivenöl"
+        ],
+        "steps": [
+          "Zwiebeln und Knoblauch in Öl anschwitzen.",
+          "Gewürze, Hähnchen und Wasser hinzufügen.",
+          "Zugedeckt schmoren, bis das Hähnchen durchgegart und zart ist.",
+          "Oliven und Salzzitrone gegen Ende hinzufügen."
+        ]
+      },
+      "variants": [
+        "Lamm mit Trockenpflaumen und Gemüsetajine sind weitere Varianten."
+      ],
+      "serving": [
+        "Mit Brot servieren."
+      ],
+      "commonMistakes": [
+        "Starkes Kochen und unnötig viel Flüssigkeit vermeiden."
+      ]
+    }
+  },
+  "couscous": {
+    "en": {
+      "overview": "Traditionally the grains are steamed over a pot; instant couscous can be soaked in hot liquid.",
+      "history": "Knowledge and practices associated with couscous were inscribed on UNESCO’s intangible cultural heritage list in 2020 following a joint nomination by Algeria, Mauritania, Morocco and Tunisia.",
+      "flavor": "Light grains with rich broth and mildly spiced vegetables.",
+      "technique": "Gently separate the grains with a fork and adjust the liquid to the product.",
+      "essentials": [
+        "300 g instant couscous",
+        "2 carrots",
+        "1 courgette"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min",
+        "ingredients": [
+          "300 g instant couscous",
+          "2 carrots",
+          "1 courgette",
+          "1 onion",
+          "400 g cooked chickpeas",
+          "400 g tomatoes",
+          "500 ml vegetable stock",
+          "cumin",
+          "olive oil"
+        ],
+        "steps": [
+          "Fry onion and spices in oil.",
+          "Add tomatoes, stock and carrots and simmer.",
+          "Add courgette and chickpeas and cook until tender.",
+          "Prepare couscous separately according to the packet instructions and serve with vegetables and broth."
+        ]
+      },
+      "variants": [
+        "Versions with lamb, chicken or fish exist; couscous with seven vegetables is well known in Morocco."
+      ],
+      "serving": [
+        "Serve the grains on a platter with the vegetables on top."
+      ],
+      "commonMistakes": [
+        "Do not use too much liquid for instant couscous."
+      ]
+    },
+    "fr": {
+      "overview": "Traditionnellement, les grains sont cuits à la vapeur au-dessus d’une marmite ; le couscous précuit peut gonfler dans un liquide chaud.",
+      "history": "Les savoirs et pratiques liés au couscous ont été inscrits sur la liste du patrimoine culturel immatériel de l’UNESCO en 2020 à la suite d’une candidature commune de l’Algérie, de la Mauritanie, du Maroc et de la Tunisie.",
+      "flavor": "Grains légers, bouillon généreux et légumes légèrement épicés.",
+      "technique": "Égrener délicatement à la fourchette et adapter la quantité de liquide au produit.",
+      "essentials": [
+        "300 g de couscous précuit",
+        "2 carottes",
+        "1 courgette"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min",
+        "ingredients": [
+          "300 g de couscous précuit",
+          "2 carottes",
+          "1 courgette",
+          "1 oignon",
+          "400 g de pois chiches cuits",
+          "400 g de tomates",
+          "500 ml de bouillon de légumes",
+          "cumin",
+          "huile d’olive"
+        ],
+        "steps": [
+          "Faire revenir l’oignon et les épices dans l’huile.",
+          "Ajouter les tomates, le bouillon et les carottes et laisser mijoter.",
+          "Ajouter la courgette et les pois chiches et cuire jusqu’à tendreté.",
+          "Préparer le couscous séparément selon les instructions du paquet et servir avec les légumes et le bouillon."
+        ]
+      },
+      "variants": [
+        "Il existe des variantes à l’agneau, au poulet ou au poisson ; le couscous aux sept légumes est bien connu au Maroc."
+      ],
+      "serving": [
+        "Servir les grains sur un plat, avec les légumes par-dessus."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser trop de liquide pour le couscous précuit."
+      ]
+    },
+    "pt": {
+      "overview": "Tradicionalmente, os grãos são cozidos a vapor sobre um tacho; o cuscuz instantâneo pode hidratar em líquido quente.",
+      "history": "Os saberes e práticas associados ao cuscuz foram inscritos na lista do património cultural imaterial da UNESCO em 2020 após uma candidatura conjunta da Argélia, Mauritânia, Marrocos e Tunísia.",
+      "flavor": "Grãos leves com caldo encorpado e legumes suavemente condimentados.",
+      "technique": "Separe cuidadosamente os grãos com um garfo e ajuste o líquido ao produto.",
+      "essentials": [
+        "300 g de cuscuz instantâneo",
+        "2 cenouras",
+        "1 curgete"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min",
+        "ingredients": [
+          "300 g de cuscuz instantâneo",
+          "2 cenouras",
+          "1 curgete",
+          "1 cebola",
+          "400 g de grão-de-bico cozido",
+          "400 g de tomate",
+          "500 ml de caldo de legumes",
+          "cominhos",
+          "azeite"
+        ],
+        "steps": [
+          "Salteie a cebola e as especiarias em azeite.",
+          "Junte tomate, caldo e cenoura e deixe cozinhar em lume brando.",
+          "Junte curgete e grão-de-bico e cozinhe até ficarem tenros.",
+          "Prepare o cuscuz separadamente de acordo com as instruções da embalagem e sirva com legumes e caldo."
+        ]
+      },
+      "variants": [
+        "Existem variantes com borrego, frango ou peixe; em Marrocos é conhecido o cuscuz de sete legumes."
+      ],
+      "serving": [
+        "Sirva os grãos numa travessa com os legumes por cima."
+      ],
+      "commonMistakes": [
+        "Não use demasiado líquido no cuscuz instantâneo."
+      ]
+    },
+    "es": {
+      "overview": "Tradicionalmente, los granos se cuecen al vapor sobre una olla; el cuscús instantáneo puede hidratarse en líquido caliente.",
+      "history": "Los conocimientos y prácticas relacionados con el cuscús se inscribieron en la lista del patrimonio cultural inmaterial de la UNESCO en 2020 tras una candidatura conjunta de Argelia, Mauritania, Marruecos y Túnez.",
+      "flavor": "Granos ligeros con caldo sabroso y verduras suavemente especiadas.",
+      "technique": "Separa suavemente los granos con un tenedor y ajusta el líquido al producto.",
+      "essentials": [
+        "300 g de cuscús instantáneo",
+        "2 zanahorias",
+        "1 calabacín"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min",
+        "ingredients": [
+          "300 g de cuscús instantáneo",
+          "2 zanahorias",
+          "1 calabacín",
+          "1 cebolla",
+          "400 g de garbanzos cocidos",
+          "400 g de tomates",
+          "500 ml de caldo de verduras",
+          "comino",
+          "aceite de oliva"
+        ],
+        "steps": [
+          "Sofríe la cebolla y las especias en aceite.",
+          "Añade tomate, caldo y zanahoria y cuece a fuego lento.",
+          "Añade calabacín y garbanzos y cuece hasta que estén tiernos.",
+          "Prepara el cuscús por separado según las instrucciones del envase y sirve con verduras y caldo."
+        ]
+      },
+      "variants": [
+        "Existen variantes con cordero, pollo o pescado; en Marruecos es conocido el cuscús de siete verduras."
+      ],
+      "serving": [
+        "Sirve los granos en una fuente con las verduras encima."
+      ],
+      "commonMistakes": [
+        "No uses demasiado líquido para el cuscús instantáneo."
+      ]
+    },
+    "de": {
+      "overview": "Traditionell werden die Körner über einem Topf gedämpft; Instant-Couscous kann in heißer Flüssigkeit quellen.",
+      "history": "Wissen und Praktiken rund um Couscous wurden 2020 nach einer gemeinsamen Nominierung durch Algerien, Mauretanien, Marokko und Tunesien in die UNESCO-Liste des immateriellen Kulturerbes aufgenommen.",
+      "flavor": "Lockere Körner mit kräftiger Brühe und mild gewürztem Gemüse.",
+      "technique": "Körner vorsichtig mit einer Gabel auflockern und Flüssigkeitsmenge an das Produkt anpassen.",
+      "essentials": [
+        "300 g Instant-Couscous",
+        "2 Karotten",
+        "1 Zucchini"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min.",
+        "ingredients": [
+          "300 g Instant-Couscous",
+          "2 Karotten",
+          "1 Zucchini",
+          "1 Zwiebel",
+          "400 g gekochte Kichererbsen",
+          "400 g Tomaten",
+          "500 ml Gemüsebrühe",
+          "Kreuzkümmel",
+          "Olivenöl"
+        ],
+        "steps": [
+          "Zwiebel und Gewürze in Öl anschwitzen.",
+          "Tomaten, Brühe und Karotten hinzufügen und köcheln lassen.",
+          "Zucchini und Kichererbsen hinzufügen und weich garen.",
+          "Couscous separat nach Packungsanleitung zubereiten und mit Gemüse und Brühe servieren."
+        ]
+      },
+      "variants": [
+        "Es gibt Varianten mit Lamm, Hähnchen oder Fisch; in Marokko ist Couscous mit sieben Gemüsesorten bekannt."
+      ],
+      "serving": [
+        "Körner auf einer Platte anrichten und Gemüse daraufgeben."
+      ],
+      "commonMistakes": [
+        "Für Instant-Couscous nicht zu viel Flüssigkeit verwenden."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

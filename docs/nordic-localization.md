@@ -216,3 +216,7 @@ Added eight complete bodies per language: nasi goreng, mie goreng, rendang, sata
 ### International full article review batch 14
 
 Added eight complete bodies per language: sisig, lechon, pancit, kare-kare, injera, doro wat, shiro and tibs. Checked source list lengths and numerical recipe tokens, retaining fermentation and mould warnings, cooking instructions and regional distinctions. Previous bodies and original sources retained. Total 112 new bodies per language; English 145/200 including original 33, other four 112/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 15a
+
+Added kitfo, zigni, tajine and couscous in five languages. Checked source list lengths and numerical tokens, retaining the kitfo minimum internal temperature and warnings and the multinational UNESCO inscription. Total 116 new bodies per language; English 149/200 including original 33, other four 116/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
