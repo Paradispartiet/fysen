@@ -61,6 +61,22 @@ try {
       await menu.locator("summary").tap();
       await page.evaluate(() => window.scrollTo(0, 0));
 
+      await cityPicker.locator("summary").tap();
+      await cityPicker.getByRole("link", { name: "København", exact: true }).tap();
+      await page.waitForURL(url => url.searchParams.get("city") === "København" && url.pathname.endsWith("/"));
+      await page.getByRole("heading", { name: "Hva har du lyst på?" }).waitFor({ state: "visible" });
+      await page.getByLabel("By: København. Bytt by").waitFor({ state: "visible" });
+      assert.equal(await page.locator('form[role="search"] input[name="city"]').inputValue(), "København");
+      assert.equal(await page.locator("a.homeDishBrowseLink").filter({ hasText: "Se alle retter" }).count(), 1);
+      assert.equal(await page.getByRole("link", { name: /Se alle retter i København/ }).count(), 1);
+      assert.equal(await page.getByRole("link", { name: /Se alle retter i Oslo/ }).count(), 0);
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.getByLabel("By: København. Bytt by").waitFor({ state: "visible" });
+      await cityPicker.locator("summary").tap();
+      await cityPicker.getByRole("link", { name: "Oslo", exact: true }).tap();
+      await page.waitForURL(url => url.searchParams.get("city") === "Oslo" && url.pathname.endsWith("/"));
+      await page.getByLabel("By: Oslo. Bytt by").waitFor({ state: "visible" });
+
       const kitchenMenu = page.locator("details.cuisineBrowseDisclosure");
       await kitchenMenu.waitFor({ state: "visible" });
       assert.equal(await kitchenMenu.getAttribute("open"), null,
