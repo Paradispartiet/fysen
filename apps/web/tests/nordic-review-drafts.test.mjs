@@ -85,15 +85,10 @@ test("Arctic browse drafts cover all source keys and placeholders",()=>{
 });
 
 
-test("draftArcticPages preserves source keys and placeholders",()=>{
+test("Arctic page drafts cover all source keys and placeholders",()=>{
  for(const locale of ["kl","se"]){
   assert.equal(isPreviewLocale(locale),false);
-  assert.equal(Object.keys(draftArcticPages[locale]).length,25);
-  for(const [key,value] of Object.entries(draftArcticPages[locale])){
-   assert.ok(Object.hasOwn(pageMessages.nb,key));
-   assert.ok(value.trim());
-   assert.deepEqual((value.match(/\{\w+\}/gu)??[]).sort(),(pageMessages.nb[key].match(/\{\w+\}/gu)??[]).sort(),key);
-  }
+  check(pageMessages.nb,draftArcticPages[locale]);
  }
 });
 
