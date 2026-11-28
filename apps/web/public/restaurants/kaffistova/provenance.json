@@ -7,7 +7,13 @@
     "referenceImageUrl": "https://cdn.prod.website-files.com/5f73064c9adf7a0c213d5281/6926f1a19f5c47c247f5ab66_Bondeheimen_10.jpg",
     "generatedAt": "2026-11-28",
     "prompt": "Create an elegant hand-painted editorial illustration of Kaffistova restaurant Oslo, based on this official interior reference. Preserve the actual room layout: olive green bar on the left, pale wood chairs with warm tan cushions, small wood tables with folded white napkins and glasses, teal upholstered seating foreground left, tan banquette back right, dark warm gray walls and branching brass disc ceiling lights. Include the large musk ox wall image as a loosely painted decorative motif. Empty room, no people. Warm daylight, inviting Norwegian restaurant atmosphere, crisp beautiful painterly brushwork, clearly an illustration not a photo. Horizontal 1536x1024, full frame, no border no text no watermark.",
-    "processing": "WebP quality 92; no crop or upscale"
+    "processing": "WebP quality 92; no crop or upscale",
+    "accuracyReview": {
+      "date": "2026-11-28",
+      "status": "withheld",
+      "reason": "Table/chair placement, ceiling light geometry and decorative details differ from the source photograph.",
+      "assetPreserved": true
+    }
   },
   "logo": {
     "sourceUrl": "https://cdn.prod.website-files.com/5f73064c9adf7a0c213d5281/6926f194dad75abbedaa3820_logo.png",
