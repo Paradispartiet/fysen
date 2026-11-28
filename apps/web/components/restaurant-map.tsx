@@ -10,12 +10,26 @@ import { MapRestaurantArtwork } from "./map-restaurant-artwork";
 import { MapRestaurantMenu } from "./map-restaurant-menu";
 import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
 import { SaveMinMatButton } from "./save-min-mat-button";
+import { restaurantFavoritesKey, parseRestaurantFavorites, toggleRestaurantFavorite } from "../lib/map-favorites.mjs";
 
 export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: readonly CoordinateRow[]; dishQuery?: string; evidence?: MapEvidenceBySlug }) {
   const frame = useRef<HTMLIFrameElement>(null);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
   const [limit, setLimit] = useState(30);
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [favoritesNotice, setFavoritesNotice] = useState("");
+  useEffect(() => {
+    try { setFavorites(parseRestaurantFavorites(window.localStorage.getItem(restaurantFavoritesKey))); }
+    catch { setFavoritesNotice("Favoritter kan ikke lagres på denne enheten."); }
+  }, []);
+  function toggleFavorite(slug: string) {
+    const next = toggleRestaurantFavorite(favorites, slug);
+    setFavorites(next);
+    try { window.localStorage.setItem(restaurantFavoritesKey, JSON.stringify(next)); setFavoritesNotice(""); }
+    catch { setFavoritesNotice("Favoritten er bare tilgjengelig i denne økten."); }
+  }
   const [mode, setMode] = useState<"map" | "list">("map");
   const [location, setLocation] = useState<[number, number] | null>(null);
   const [locationStatus, setLocationStatus] = useState<"idle" | "loading" | "unavailable">("idle");
@@ -26,8 +40,8 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: r
   const all = useMemo(() => restaurantMapFeatures(rows), [rows]);
   const filtered = useMemo(() => {
     const term = query.trim().toLocaleLowerCase("nb-NO");
-    return { ...all, features: all.features.filter(f => !term || (f.properties.name + " " + f.properties.address).toLocaleLowerCase("nb-NO").includes(term)) };
-  }, [all, query]);
+    return { ...all, features: all.features.filter(f => (!favoritesOnly || favorites.includes(f.id)) && (!term || (f.properties.name + " " + f.properties.address).toLocaleLowerCase("nb-NO").includes(term))) };
+  }, [all, query, favorites, favoritesOnly]);
   const nearest = useMemo(() => location ? nearestMapFeatures(filtered.features, location, 4) : [], [filtered, location]);
   const current = filtered.features.find(f => f.id === selected);
   const currentEvidence = current && Object.hasOwn(evidence, current.id) ? evidence[current.id] ?? [] : [];
@@ -124,8 +138,11 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: r
         <button type="button" aria-pressed={mode === "list"} onClick={() => setMode("list")}>Liste</button>
       </div>
       <button className={styles.more} type="button" disabled={locationStatus === "loading"} onClick={requestLocation}>{locationStatus === "loading" ? "Henter posisjon…" : location ? "Oppdater posisjon" : "Nær meg"}</button>
+      <button className={styles.more} type="button" aria-pressed={favoritesOnly} onClick={() => { setFavoritesOnly(value => !value); setLimit(30); }}>♡ Favoritter ({favorites.length})</button>
       {location && <button className={styles.more} type="button" onClick={clearLocation}>Slå av posisjon</button>}
     </div>
+    {favoritesOnly && <p>Viser restaurantfavoritter lagret på denne enheten, ikke i AHA.</p>}
+    {favoritesNotice && <p role="status">{favoritesNotice}</p>}
     {locationStatus === "unavailable" && <p role="status">Posisjon er ikke tilgjengelig. Du kan fortsatt utforske kartet.</p>}
     {location && <section className={styles.nearest} aria-label="Fire nærmeste spisesteder">
       <div className={styles.nearestTitle}><h2>{dishQuery ? "Nærmeste menytreff" : "Nærmeste spisesteder"}</h2><button className={styles.more} type="button" onClick={() => { setMode("list"); setLimit(filtered.features.length); }}>Se mer →</button></div>
@@ -139,6 +156,7 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: r
         {current && <article className={styles.selected} aria-live="polite">
           <div><h2>{current.properties.name}</h2><p>{current.properties.address}</p></div>
           <button type="button" onClick={() => setSelected(null)} aria-label="Lukk restaurantkort">Lukk</button>
+          <button type="button" aria-pressed={favorites.includes(current.id)} onClick={() => toggleFavorite(current.id)}>{favorites.includes(current.id) ? "♥ Fjern favoritt" : "♡ Lagre restaurant"}</button>
           <MapRestaurantArtwork key={current.id} restaurant={current.properties} />
           <MapRestaurantMenu key={current.id + "-menu"} slug={current.id} />
           {currentEvidence.length > 0 && <ul className={styles.evidence}>
