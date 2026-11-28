@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Serveres med basmatiris, naan eller roti.","En frisk salat eller syrlig pickle balanserer den rike sausen."],
   commonMistakes: ["Å koke rå kylling direkte i sausen uten stekeflate.","For mye sukker som gjør retten dessertaktig.","Å la fløte dominere slik at tomat og krydder forsvinner."],
   relatedDishIds: ["tandoori","naan","chana-masala","biryani"],
-  sources: []
+  sources: [{"label":"National Geographic – Butter chicken og omdiskutert opphav","href":"https://www.nationalgeographic.com/travel/article/what-is-butter-chicken"}]
 };

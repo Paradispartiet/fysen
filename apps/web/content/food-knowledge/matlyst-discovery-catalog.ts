@@ -3,15 +3,6 @@ import type { FoodDishCatalogEntry } from "./types";
 
 const ethiopianMatlystDishes: readonly FoodDishCatalogEntry[] = [
   {
-    id: "doro-wat",
-    name: "Doro wat",
-    query: "doro wet",
-    aliases: ["doro wat", "doro wot"],
-    cuisine: "Etiopisk",
-    region: "Etiopia",
-    explorerPriority: 100,
-  },
-  {
     id: "key-wat",
     name: "Key wat",
     query: "key wet",
@@ -19,15 +10,6 @@ const ethiopianMatlystDishes: readonly FoodDishCatalogEntry[] = [
     cuisine: "Etiopisk",
     region: "Etiopia",
     explorerPriority: 96,
-  },
-  {
-    id: "tibs",
-    name: "Tibs",
-    query: "tibis",
-    aliases: ["tibs", "tibis"],
-    cuisine: "Etiopisk",
-    region: "Etiopia",
-    explorerPriority: 94,
   },
   {
     id: "awaze-tibs",
@@ -64,17 +46,6 @@ const ethiopianMatlystDishes: readonly FoodDishCatalogEntry[] = [
     cuisine: "Etiopisk",
     region: "Etiopia",
     explorerPriority: 82,
-  },
-  {
-    id: "shiro",
-    name: "Shiro",
-    query: "shiro w salad",
-    aliases: ["shiro meser", "shiro v"],
-    // Bare "Shiro" also names a sushi dish in the Oslo menus.
-    matchLabel: false,
-    cuisine: "Etiopisk",
-    region: "Etiopia",
-    explorerPriority: 80,
   },
 ];
 

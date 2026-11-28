@@ -2,4 +2,4 @@ import { orderedFoodKnowledgeDishes, type FoodKnowledgeDish } from "../content/f
 
 export type DishLearningDetail = FoodKnowledgeDish;
 export const learningDishes: readonly DishLearningDetail[] = orderedFoodKnowledgeDishes;
-export const featuredLearningDishCount = 6;
+export const featuredLearningDishCount = 18;

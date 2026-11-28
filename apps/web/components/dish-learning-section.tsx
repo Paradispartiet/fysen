@@ -102,7 +102,7 @@ export function DishLearningSection() {
               </button>
             </h3>
             <p lang={localizedSummary(dish.id, dish.summary, locale).lang}>{localizedSummary(dish.id, dish.summary, locale).text}</p>
-            <a href={dishSearchHref(dish.query)}>{t("find", { name: dishDisplayName(dish.id, dish.name, locale).toLocaleLowerCase(locale) })} <span aria-hidden="true">→</span></a>
+            <a href={dishSearchHref(dish.query)} aria-label={`${resultText(locale, "menuMatches")}: ${dishDisplayName(dish.id, dish.name, locale)}`}>{resultText(locale, "menuMatches")} <span aria-hidden="true">→</span></a>
           </article>
         ))}
       </div>

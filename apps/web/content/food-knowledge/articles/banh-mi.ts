@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Spises fersk mens brødet fortsatt er sprøtt.","Ekstra chili og frisk koriander gir typisk løft."],
   commonMistakes: ["Tung, tett baguette som overdøver fyllet.","For søte pickles uten tydelig syre.","Å fylle sandwichen lenge før servering slik at brødet blir bløtt."],
   relatedDishIds: ["pho","bun-cha","vietnamese-spring-rolls","bao"],
-  sources: []
+  sources: [{"label":"Vietnam Tourism – Bánh mì i Vietnam","href":"https://vietnam.travel/things-to-do/banh-mi-in-vietnam"}]
 };

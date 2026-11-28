@@ -34,6 +34,7 @@ import { article as pozole } from "../content/food-knowledge/articles/pozole.ts"
 import { article as fishTaco } from "../content/food-knowledge/articles/fish-taco.ts";
 import { article as smashburger } from "../content/food-knowledge/articles/smashburger.ts";
 import { foodKnowledgeDishIds } from "../content/food-knowledge/manifest.ts";
+import { additionalDishes } from "../content/food-knowledge/articles/additional-dishes.ts";
 import { previewLocales } from "../lib/locale-messages.ts";
 import { localizedArticleBody, translatedArticleIds } from "../lib/dish-article-translations.ts";
 
@@ -71,6 +72,17 @@ test("original article remains the exact fallback for missing translations", () 
   assert.equal(result.body, unregistered);
 });
 
-test("full article translation registry covers the canonical encyclopedia manifest", () => {
-  assert.deepEqual([...translatedArticleIds].sort(), [...foodKnowledgeDishIds].sort());
+test("translated articles cover the original 33 canonical IDs; expanded articles retain exact Bokmål fallback", () => {
+  const addedIds = new Set(additionalDishes.map((dish) => dish.dishId));
+  const originalIds = foodKnowledgeDishIds.filter((id) => !addedIds.has(id));
+  assert.equal(originalIds.length, 33);
+  assert.deepEqual([...translatedArticleIds].sort(), [...originalIds].sort());
+  assert.equal(addedIds.size + originalIds.length, foodKnowledgeDishIds.length);
+  for (const original of additionalDishes) {
+    for (const locale of previewLocales) {
+      const result = localizedArticleBody(original, locale);
+      assert.equal(result.lang, "nb", original.dishId);
+      assert.equal(result.body, original, original.dishId);
+    }
+  }
 });

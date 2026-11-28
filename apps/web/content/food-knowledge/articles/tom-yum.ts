@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Serveres rykende varm som suppe eller del av et større måltid.","Ris ved siden av demper hete og syre."],
   commonMistakes: ["Å koke limejuice lenge og miste frisk aroma.","Å bruke store mengder sukker for å runde av syren.","Å overkoke reker eller sopp."],
   relatedDishIds: ["pad-thai","green-curry","pad-kra-pao","pho"],
-  sources: []
+  sources: [{"label":"Tourism Authority of Thailand – Thai recipes","href":"https://www.tourismthailand.my/thaifood_recipes.php"}]
 };
