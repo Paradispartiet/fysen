@@ -164,3 +164,7 @@ Added the final 62 canonical summaries in each of five languages (310 new workin
 ### International full article review batch 1
 
 Added complete review-only article bodies for sambar, idli, vada, naan, yakitori, green curry, udon and dumplings in English, French, European Portuguese, Spanish and German (40 bodies). Includes all original editorial sections, recipe labels, yields, times, ingredients, ordered steps, variants, serving and mistakes. All original numeric tokens and list lengths were compared before committing. Summaries already exist; related IDs and original source links remain in the original articles and must be composed unchanged on activation. Existing 33 English article bodies remain untouched. Review counts: English 41/200, other four 8/200. No runtime activation, CI or native review. Main reconciliation remains pending.
+
+### International full article review batch 2
+
+Added eight complete bodies in each of five languages: pad kra pao, bún chả, Vietnamese fresh spring rolls, pizza marinara, Peking duck, dan dan noodles, amatriciana and saltimbocca. All source list lengths and numerical recipe tokens were checked, including the Peking duck temperatures (180 °C oven and minimum 74 °C internal). Existing eight bodies and original source links were preserved. Total 16 new bodies per language; English has 49/200 including original 33, other four 16/200. Review-only, no activation. CI and linguistic review remain pending.
