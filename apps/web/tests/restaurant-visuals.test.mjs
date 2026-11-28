@@ -104,3 +104,14 @@ test('batch photos preserve branch boundaries, date and license', () => {
  assert.equal(restaurantVisuals({name,address:"Other street 3"}),null);
  }
 });
+
+test('Schrøder interior carries separate date, source and license', () => {
+ const p = restaurantVisuals({name:'Restaurant Schrøder',address:'Waldemar Thranes gate 8'});
+ assert.match(p.interior, /schroder\/interior\.jpg/u);
+ assert.equal(p.interiorPhoto.photoDate,'2016-01-22');
+ assert.equal(p.interiorPhoto.photoCredit,'Helge Høifødt');
+ assert.ok(p.interiorPhoto.sourceUrl.includes('Youngstorget'));
+ assert.ok(p.interiorPhoto.licenseUrl.includes('/4.0/'));
+ assert.notEqual(p.interiorPhoto.licenseUrl,p.licenseUrl);
+ assert.equal(p.photoDate,'2007-06-09');
+});
