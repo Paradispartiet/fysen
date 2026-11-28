@@ -71,5 +71,5 @@ export function canonicalCity(value: string | null | undefined): string {
 export function citySwitchHref(city: string, query = ""): string {
   const params = new URLSearchParams({ city: canonicalCity(city) });
   if (query.trim().length >= 2) params.set("q", query.trim().slice(0, 80));
-  return `${withPublicBasePath("/")}?\${params.toString()}`;
+  return `${withPublicBasePath("/")}?${params.toString()}`;
 }
