@@ -32,6 +32,13 @@ faktiske serveringen på en bestemt restaurant**.
 
 ## Kvalitet og videre produksjon
 
+### Fast komposisjonsregel: maten i sentrum (28. november 2026)
+
+- Helsvart bakgrunn; maten, ikke serviset, skal dominere motivet.
+- Foretrekk mørkt eller svart servise. Hvitt servise kan bare vises som en diskret kant; store hvite tallerkenflater avvises.
+- Velg et naturlig, tett utsnitt uten å beskjære selve retten eller skjule karakteristiske ingredienser. Ikke fargelegg serviset kunstig for å omgå kravet.
+- Kontroller komposisjonen både i storbildet og miniatyren før godkjenning. Gjelder alle nye og erstattede rettbilder i Fysen.
+
 ### Ny akseptanseport: skarphet også i stor visning (17. november 2026)
 
 Kravet gjelder **alle** rettbildene, ikke bare bildene i den kompakte oversikten.
