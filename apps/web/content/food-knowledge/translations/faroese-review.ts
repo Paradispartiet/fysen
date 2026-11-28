@@ -903,5 +903,296 @@ export const draftFaroeseArticles = {
       "Ov nógv vatn, so rætturin verður tunn kikertusúpa.",
       "At gloyma súrleikan og enda við fløtum, tungum kryddsmakki."
     ]
+  },
+  "dosa": {
+    "overview": "Dosa fær sín serliga dám frá fermentering: rís og urad dal verða malin til slætta deiggjblanding, sum fær súrleika og anga og kann verða bæði broyskin og løtt. Dosa kann borðreiðast uttan fyllu ella við fyllu, serliga kryddaðum eplum í masala dosa.",
+    "history": "Dosa hevur langar siðir í Suðurindia og finst í nógvum staðbundnum sløgum. Nútímans matstovur hava alt frá pappírstunnum paper dosa til tjúkkari, bleytari sløg ella sløg úr korni.",
+    "flavor": "Mildur súrleiki, nøtakendur og ristaður smakkur við broysknari konsistens, sum verður javnað við sambar og kremutari chutney.",
+    "technique": "Fermenteringin skal fáa nóg mikið av tíð. Pannan skal vera heit, men ikki so heit, at deiggið stívnar, áðrenn tað verður smurt tunt út. Lat feitt rundan um kantin aftaná.",
+    "essentials": [
+      "Rís og urad dal, løgd í blot hvør sær.",
+      "Fermentering, ið gevur súrleika, luft og góðar steikiegindir.",
+      "Fløt, væl hitað panna ella tawa.",
+      "Sambar, kokoschutney og møguliga eplafylla."
+    ],
+    "recipe": {
+      "label": "Masala dosa heima",
+      "yield": "8–10 dosa",
+      "time": "uml. 45 min + tíð í blot og fermentering",
+      "ingredients": [
+        "300 g rís",
+        "100 g urad dal",
+        "1/2 tesk. bukkehornkløvarafræ, um ynskt",
+        "salt",
+        "neutral olja ella ghee",
+        "500 g kókað epli",
+        "1 leykur",
+        "1 tesk. sinnopfræ",
+        "gurkumeja og chili",
+        "karríbløð, um ynskt"
+      ],
+      "steps": [
+        "Legg rís og urad dal í blot hvør sær í minsta lagi fýra tímar og mala við vatni til slætta deiggjblanding.",
+        "Blanda og lat fermentera á lunum staði, til blandingin er luftug og lætt súrlig.",
+        "Steik leyk, sinnopfræ og krydd og blanda grovt knúst epli í til turra fyllu.",
+        "Stoyt deiggj á heita pannu og spjað tað skjótt í tunnar rundingar, áðrenn olja verður latin rundan um kantin.",
+        "Tá dosa er broyskin og losnar frá pannuni, legg eplafyllu á, legg saman og borðreið beinanvegin."
+      ]
+    },
+    "variants": [
+      "Plain dosa uttan fyllu.",
+      "Masala dosa við kryddaðum eplum.",
+      "Paper dosa – eyka stór og sera tunn.",
+      "Neer dosa og onnur staðbundin sløg við øðrum deiggi og mannagongdum."
+    ],
+    "serving": [
+      "Borðreið beint av pannuni, meðan yvirflatan enn er broyskin.",
+      "Sambar og chutney geva vætu, súrleika og krydd til turru, broysknu dosa."
+    ],
+    "commonMistakes": [
+      "Ov stutt fermentering, sum gevur flatan smakk og vánaliga konsistens.",
+      "Ov tjúkt deiggj, ið ikki kann smyrjast tunt út.",
+      "At leggja lidnar dosa hvørja omaná aðra, so dampurin ger tær bleytar."
+    ]
+  },
+  "cacio-e-pepe": {
+    "overview": "Cacio e pepe vísir pastatøkni sera væl: við fáum rávørum mugu ostur, hiti og pastavatn virka væl saman. Sósin er ein emulsjón, ikki bara bræddur ostur omaná pasta.",
+    "history": "Rætturin hoyrir heima í Róm og Lazio og verður ofta settur í samband við einfaldan hirða- og gerandismat úr turrum, haldgóðum rávørum. Nútímans matstovuútgávur leggja stóran dent á emulsjón og rætta konsistens.",
+    "flavor": "Hvassur, saltur pecorino møtir angandi, heitum pipari og søtuni í hveitipasta. Smakkurin skal vera sterkur uttan at verða tungur.",
+    "technique": "Osturin skal møta vætu, ið er nóg heit til at bræða hann, men ikki so heit, at eggjahvítaevnini klumpa. Fínt rivin ostur og pastavatn, ið verður rørt í so líðandi, geva stýring.",
+    "essentials": [
+      "Pasta við nógvum stívilsi á yvirflatuni, ofta tonnarelli ella spaghetti.",
+      "Fínt rivin pecorino romano.",
+      "Nýmalaður svartur pipar, lætt ristaður.",
+      "Stívilseríkt pastavatn, ið bindur sósina."
+    ],
+    "recipe": {
+      "label": "Cacio e pepe",
+      "yield": "4 portiónir",
+      "time": "uml. 25 min",
+      "ingredients": [
+        "400 g spaghetti ella tonnarelli",
+        "150 g fínt rivin pecorino romano",
+        "2 tesk. grovt knústur svartur pipar",
+        "salt",
+        "nógv pastavatn"
+      ],
+      "steps": [
+        "Rista piparin stutt á stórari pannu, til hann angar.",
+        "Kóka pasta í hóvliga saltaðum vatni og goym fleiri desilitrar av pastavatni.",
+        "Rør pecorino við eitt sindur av kólnaðum pastavatni til tjúkkan, slættan krem.",
+        "Vend næstan liðuga pasta við pipari og eitt sindur av pastavatni á pannuni og tak hana av hitanum.",
+        "Rør ostakremin í so líðandi og tillaga við pastavatni, til sósin er glitrandi og leggur seg rundan um pasta."
+      ]
+    },
+    "variants": [
+      "Tonnarelli gevur eyka bit og stívilsi.",
+      "Spaghetti er ein vanlig og løtt atkomulig útgáva.",
+      "Summir kokkar mala piparin í ymiskar støddir fyri meira anga."
+    ],
+    "serving": [
+      "Borðreið beinanvegin; sósin tjúknar skjótt, tá hon kólnar.",
+      "Eyka pipar omaná skal anga, ikki køva ostin."
+    ],
+    "commonMistakes": [
+      "At lata pecorino í ov heita pannu og fáa ostaklumpar.",
+      "Ov lítið pastavatn til at halda emulsjónini flótandi.",
+      "Ov nógv salt í kókivatninum saman við sera søltum osti."
+    ]
+  },
+  "pizza-margherita": {
+    "overview": "Margherita sær einføld út, men vísir góðskuna á hvørjari rávøru. Deiggið skal vera elastiskt við luftugum kanti, miðjan tunn og bleyt, tomatin frísk og osturin bræddur uttan at gera botnin vátan.",
+    "history": "Pizza hevur sterkar søguligar røtur í Napoli, meðan søgan um navnið Margherita og vitjanina hjá drotningini verður søgd á ymiskan hátt. Samanrenningin av tomat, mozzarella og basilikum er vorðin heimsumfatandi ímynd av napolitanskari pizza.",
+    "flavor": "Súrlig tomat, mjólkakendur mozzarella, feskt basilikum og ristað deiggj. Rávørurnar skulu bera smakkin.",
+    "technique": "Nóg long fermentering mennir anga og ger deiggið lætt at strekkja. Forma við hondunum, so luftin varðveitist í kantinum, og baka so heitt og skjótt sum gjørligt heima.",
+    "essentials": [
+      "Gott hveitideiggj við stýrdari fermentering.",
+      "Knústar tomatir við reinum smakki og hóvligari vætu.",
+      "Mozzarella, ið fær at renna av áðrenn nýtslu.",
+      "Basilikum, olivenolja og høgur bakihiti."
+    ],
+    "recipe": {
+      "label": "Margherita á bakisteini ella stálplátu heima",
+      "yield": "4 pizzaer",
+      "time": "uml. 45 min + 8–24 t fermentering",
+      "ingredients": [
+        "600 g pizzamjøl ella sterkt hveitimjøl",
+        "390 g vatn",
+        "15 g salt",
+        "2 g turrger",
+        "1 blikk av góðum heilum tomatum",
+        "400 g mozzarella",
+        "basilikum",
+        "extra virgin olivenolja"
+      ],
+      "steps": [
+        "Blanda mjøl, vatn, ger og salt til smidligt deiggj og lat fermentera kalt ella við stovuhita eftir tíðarætlan.",
+        "Být í fýra partar og lat teir fáa stovuhita, til teir eru bleytir og luftugir.",
+        "Hita pizzastál ella stein á hægsta ovnhita í minsta lagi 45 minuttir.",
+        "Forma deiggið við hondunum, legg eitt tunt lag av tomat og hóvliga nógv mozzarella á.",
+        "Baka so skjótt sum gjørligt, til kanturin er væl brúnur, og enda við basilikum og olivenolju."
+      ]
+    },
+    "variants": [
+      "Pizza marinara uttan ost, við tomat, hvítleyki, oregano og olju.",
+      "Napolitanskur stílur við bleytari miðju og luftugum cornicione.",
+      "Útgáva í heimaovni á stáli við eitt sindur minni vatni í deigginum."
+    ],
+    "serving": [
+      "Borðreið beinanvegin, meðan kanturin enn er broyskin uttan og bleytur innan.",
+      "Ov nógv omanátilfar er óneyðugt; Margherita byggir á javnvágina millum fáar rávørur."
+    ],
+    "commonMistakes": [
+      "Ov vátur mozzarella, sum ger miðjuna bleyta.",
+      "At brúka bakirullu og trýsta alla luft úr kantinum.",
+      "Ov køld bakiflata, so pizza torna áðrenn hon fær lit."
+    ]
+  },
+  "arancini": {
+    "overview": "Arancini gera kókað rís til gøtumat, ið kann etast við hondunum: rísið verður kølt, formað um konsentreraða fyllu, vent í panering og friterað. Kjarnin skal vera saftigur og hanga saman, meðan skorpan skal vera turr og broyskin.",
+    "history": "Fyltir og friteraðir rísrættir hava langar siðir á Sisilia; skap og navn eru ymisk eftir øki, millum annað arancini og arancine. Í dag finnast tey bæði sum siðbundin gøtumatur og í nútímans matstovum.",
+    "flavor": "Milt, stívilseríkt rís javnar salta fyllu, ofta úr tomat og kjøti, bræddan ost og ristaða skorpu.",
+    "technique": "Rísið skal vera nóg klebrið til at halda skapinum, men ikki vátt. Fyllan skal vera tjøtt og køld, og bollarnir skulu kølast áðrenn panering og fritering.",
+    "essentials": [
+      "Kølt rís, gjarna kókað við soði og eitt sindur av safrani.",
+      "Føst fylla sum ragù, ostur, ertrar ella soppar.",
+      "Mjøl ella deiggjblanding og breyðmolar til tætta skorpu.",
+      "Fritering við jøvnum hita til turra skorpu."
+    ],
+    "recipe": {
+      "label": "Arancini við mozzarella og tomatragù",
+      "yield": "10–12 stk.",
+      "time": "uml. 90 min + køling",
+      "ingredients": [
+        "350 g risottorís",
+        "9 dl soð",
+        "1 lítil klípa av safrani, um ynskt",
+        "40 g parmesan",
+        "250 g tjúkk kjøt- ella linsuragù",
+        "150 g mozzarella í terningum",
+        "80 g hveitimjøl",
+        "2 egg",
+        "150 g breyðmolar",
+        "neutral olja til fritering"
+      ],
+      "steps": [
+        "Kóka rísið við soði, til tað er moyrt og rættiliga turt, rør parmesan í og køl heilt á einari plátu.",
+        "Ansa eftir, at ragù er tjúkk og køld, og at mozzarella er væl avrunnið.",
+        "Forma rís rundan um eitt sindur av ragù og mozzarella og trýst til fastar kúlur ella keilur.",
+        "Vend í mjøli, eggi og breyðmolum og køl arancini í minsta lagi 20 minuttir.",
+        "Fritera til javna gullbrúna skorpu og lat oljuna renna stutt av á rist áðrenn borðreiðing."
+      ]
+    },
+    "variants": [
+      "Al ragù við kjøtsós, ertrum og osti.",
+      "Al burro við osti og ofta skinku ella béchamel-líkari fyllu.",
+      "Vegetarisk sløg við soppum, auberginu ella spinati."
+    ],
+    "serving": [
+      "Borðreið heit, gjarna eftir nakrar minuttir í hvíld, so fyllan setur seg.",
+      "Hóska sum snarl, antipasto ella gøtumatur."
+    ],
+    "commonMistakes": [
+      "Ov vátt rís, ið dettur sundur undir fritering.",
+      "Heit ella tunn fylla, ið rennur út.",
+      "Ov lágur frityrhiti, sum gevur feita skorpu."
+    ]
+  },
+  "pasta-alla-norma": {
+    "overview": "Pasta alla Norma byggir ein heilan rætt úr fáum greiðum lutum: tomatsós, stokt ella friterað aubergina, pasta, feskt basilikum og ricotta salata. Styrkin liggur í mótsetninginum millum søta tomat, kremuta auberginu og salta ostin.",
+    "history": "Rætturin verður settur í samband við Catania, og navnið verður siðbundið knýtt at operuni Norma eftir Bellini, hóast upprunin til navnið verður sagdur á ymiskan hátt. Í dag er hann ein av kendastu pastarættunum á Sisilia.",
+    "flavor": "Søt og súrlig tomat møtir bleytari auberginu, piparkendum basilikum og týðiliga saltari ricotta. Smakkurin skal vera konsentreraður uttan at verða tungur.",
+    "technique": "Auberginan skal fáa góðan lit og missa ráa vatnsmakkin. Kóka tomatsósina inn, so hon kann leggja seg um pasta, og brúka eitt sindur av pastavatni til at binda sósina, áðrenn aubergina og ostur verða latin í.",
+    "essentials": [
+      "Búnar tomatir ella góðar tomatir úr blikki.",
+      "Aubergina, stokt ella friterað til gullbrún og bleyt.",
+      "Ricotta salata, ikki vanlig feskt ricotta.",
+      "Basilikum og pasta við góðum biti."
+    ],
+    "recipe": {
+      "label": "Pasta alla Norma heima",
+      "yield": "4 portiónir",
+      "time": "uml. 50 min",
+      "ingredients": [
+        "400 g rigatoni, maccheroni ella spaghetti",
+        "2 auberginur",
+        "700 g hakkaðar ella heilar tomatir úr blikki",
+        "2 hvítleyksgeirar",
+        "olivenolja",
+        "1 tyssi av basilikum",
+        "80–100 g ricotta salata",
+        "salt og svartur pipar"
+      ],
+      "steps": [
+        "Sker auberginu í flísar ella terningar, salta lætt og turka møguliga vætu av yvirflatuni.",
+        "Steik auberginu í olivenolju, til hon er djúpt gullbrún og bleyt; legg til viks.",
+        "Steik hvítleyk stutt, lat tomat í og lat sósina smákóka, til hon er konsentrerað.",
+        "Kóka pasta al dente og goym ein kopp av pastavatni.",
+        "Vend pasta í tomatsósini við eitt sindur av pastavatni, lat meginpartin av auberginuni og basilikum í.",
+        "Borðreið við restini av auberginuni og nógvum rivnum ricotta salata."
+      ]
+    },
+    "variants": [
+      "Catania-stílur við maccheroni ella aðrari stuttari pasta.",
+      "Summastaðni verður ovnbakað aubergina brúkt til lættari útgávu.",
+      "Ricotta salata kann vera ymiskt salt og turt eftir framleiðara."
+    ],
+    "serving": [
+      "Borðreið beinanvegin, meðan pasta glitrar av sós og osturin enn merkist væl.",
+      "Einfalt grønt hjámeti er nóg mikið; rætturin stendur væl einsamallur."
+    ],
+    "commonMistakes": [
+      "At brúka ráa ella bleika auberginu, sum gevur svampakenda konsistens.",
+      "At brúka feska ricotta beinleiðis í staðin fyri ricotta salata.",
+      "Ov nógv sós, so pasta svimur í tomat."
+    ]
+  },
+  "hummus": {
+    "overview": "Hummus sær einfalt út, men konsistensurin veldst um, hvussu kikertur verða kókaðar og malnar. Tahini gevur nøtakendan smakk, beiskleika og fyldu, meðan sitrón og salt skulu javna mildu kikertuna.",
+    "history": "Samansetingin av kikertum og sesam hevur langar røtur í økinum, og hummus er ein týðandi partur av matmentanini í fleiri londum í Levantinum og Miðeystri. Uppruni og ognarskapur verða ofta umrødd, so neyvari er at lýsa rættin sum staðbundnan í økinum enn at geva honum ein einstakan tjóðskaparligan uppruna.",
+    "flavor": "Kremutur, nøtakendur og frískur sitrussmakkur við mildum hvítleyki; olivenolja og krydd geva anga at enda.",
+    "technique": "Sera moyrar kikertur og gott tahini eru týdningarmest. At píska tahini við sitrón og ísakøldum vatni, áðrenn kikertur verða latnar í, kann geva lættari og slættari konsistens.",
+    "essentials": [
+      "Væl kókaðar kikertur.",
+      "Tahini úr sesamfræi.",
+      "Sitrón, hvítleykur og salt.",
+      "Olivenolja og omanátilfar sum paprika, spískumman ella heilar kikertur."
+    ],
+    "recipe": {
+      "label": "Serliga kremutur hummus",
+      "yield": "1 stór skál",
+      "time": "uml. 20 min",
+      "ingredients": [
+        "500 g sera moyrar kókaðar kikertur",
+        "120 g tahini",
+        "1 stór sitrón",
+        "1–2 hvítleyksgeirar",
+        "1 tesk. salt",
+        "0,5–1 dl ísakalt vatn",
+        "2 súpsk. olivenolja",
+        "paprika ella spískumman omaná"
+      ],
+      "steps": [
+        "Mala tahini, sitrón, hvítleyk og salt í nakrar sekundir, til blandingin tjúknar.",
+        "Lat ísakalt vatn í eitt sindur í senn, til tahini verður ljóst og luftugt.",
+        "Lat heitar ella stovuheitar, sera moyrar kikertur í og mala leingi, til blandingin er heilt sløtt.",
+        "Tillaga við vatni, sitrón og salti, til konsistensurin er bleytur og smakkurin í javnvág.",
+        "Legg í grunna skál og enda við olivenolju og kryddi eftir ynski."
+      ]
+    },
+    "variants": [
+      "Hummus við eyka tahini og sera slættari konsistens.",
+      "Omanátilfar av kryddaðum kjøti, soppum ella heilum kikertum.",
+      "Hummus fatteh sameinir hummuslíkt tilfar við breyði og øðrum løgum."
+    ],
+    "serving": [
+      "Borðreið sum morgunmat, mezze, hjámeti ella part av máltíð.",
+      "Heitt breyð, rátt grønmeti og súltað grønmeti geva mótsetning."
+    ],
+    "commonMistakes": [
+      "Ikki nóg kókaðar kikertur, sum geva kornuta konsistens.",
+      "Ov lítið tahini ella súrleiki, sum gevur flatan smakk.",
+      "At borðreiða hummus ísakaldan beint úr køliskápinum, tá angin er veikari."
+    ]
   }
 } as const satisfies Record<string,ArticleBody>;
