@@ -4,6 +4,10 @@ import { DishBrowse } from "../../components/dish-browse";
 import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
 import { archiveHasCity, getPublicMenuArchive, searchPublicMenuArchive, reconcileMenuVersions, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
+import { RestaurantMap } from "../../components/restaurant-map";
+import { restaurantCoordinateRows } from "../../lib/restaurant-coordinate-data";
+import { formatDishPrice } from "../../lib/dish-price";
+import { safeMapMenuUrl, type MapEvidenceBySlug } from "../../lib/map-menu-evidence";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
 import { GlobalHeader } from "../../components/global-header";
@@ -126,6 +130,26 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
         : "Ingen treff"
     : "Søk på retten du har lyst på.";
 
+  const mapView = first(params.view) === "map" && city.toLowerCase() === "oslo" && q.length >= 2;
+  const mapEvidence: MapEvidenceBySlug = Object.create(null);
+  if (mapView) {
+    for (const result of primaryResults) {
+      if (!safeMapMenuUrl(result.menu.sourceUrl)) continue;
+      (mapEvidence[result.restaurant.slug] ??= []).push({
+        name: result.dish.name, sourceUrl: result.menu.sourceUrl,
+        date: result.menu.lastCheckedAt, origin: "live", price: formatDishPrice(result.dish),
+      });
+    }
+    for (const result of archiveMatches) {
+      if (!safeMapMenuUrl(result.sourceUrl)) continue;
+      (mapEvidence[result.restaurantSlug] ??= []).push({
+        name: result.name, sourceUrl: result.sourceUrl, date: result.observedAt, origin: "archive",
+      });
+    }
+  }
+  const mappedRows = mapView ? restaurantCoordinateRows.filter(row => Object.hasOwn(mapEvidence, row[0])) : [];
+  const missingMapCount = mapView ? Object.keys(mapEvidence).length - mappedRows.length : 0;
+
   return (
     <div className="resultsPage">
       <GlobalHeader results city={city} query={q}>
@@ -173,6 +197,18 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 <p className="resultsCount">{countLabel}</p>
                 {q.length >= 2 ? <LocationControls hasLocation={hasLocation} sort={sort} /> : null}
               </div>
+
+              {city.toLowerCase() === "oslo" && q.length >= 2 ? (
+                <p><a href={mapView ? searchHref(q, city, latitude, longitude, sort) : searchHref(q, city, latitude, longitude, sort) + "&view=map"}>{mapView ? "Tilbake til rettslisten" : "Vis menytreff på kartet"}</a></p>
+              ) : null}
+
+              {mapView ? (
+                <>
+                  {error && !archive ? <p role="status">Menydata kunne ikke hentes akkurat nå.</p> : null}
+                  {missingMapCount > 0 ? <p>{missingMapCount} spisesteder med menytreff mangler katalogposisjon. Se rettslisten.</p> : null}
+                  <RestaurantMap key={q} rows={mappedRows} dishQuery={q} evidence={mapEvidence} />
+                </>
+              ) : null}
 
               <DishKnowledgeNote query={q} />
 
