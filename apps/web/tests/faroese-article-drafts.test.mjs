@@ -26,7 +26,16 @@ import { article as original20 } from "../content/food-knowledge/articles/pizza-
 import { article as original21 } from "../content/food-knowledge/articles/arancini.ts";
 import { article as original22 } from "../content/food-knowledge/articles/pasta-alla-norma.ts";
 import { article as original23 } from "../content/food-knowledge/articles/hummus.ts";
-const originals=[original0,original1,original2,original3,original4,original5,original6,original7,original8,original9,original10,original11,original12,original13,original14,original15,original16,original17,original18,original19,original20,original21,original22,original23];
+import { article as original24 } from "../content/food-knowledge/articles/shawarma.ts";
+import { article as original25 } from "../content/food-knowledge/articles/manakish.ts";
+import { article as original26 } from "../content/food-knowledge/articles/koshari.ts";
+import { article as original27 } from "../content/food-knowledge/articles/pide.ts";
+import { article as original28 } from "../content/food-knowledge/articles/birria.ts";
+import { article as original29 } from "../content/food-knowledge/articles/cochinita-pibil.ts";
+import { article as original30 } from "../content/food-knowledge/articles/pozole.ts";
+import { article as original31 } from "../content/food-knowledge/articles/fish-taco.ts";
+import { article as original32 } from "../content/food-knowledge/articles/smashburger.ts";
+const originals=[original0,original1,original2,original3,original4,original5,original6,original7,original8,original9,original10,original11,original12,original13,original14,original15,original16,original17,original18,original19,original20,original21,original22,original23,original24,original25,original26,original27,original28,original29,original30,original31,original32];
 const nums=s=>s.match(/[0-9]+|[½¼¾]/gu)??[];
 test("Faroese article drafts preserve original recipe structure and numeric tokens",()=>{
  assert.deepEqual(Object.keys(draftFaroeseArticles).sort(),originals.map(a=>a.dishId).sort());
