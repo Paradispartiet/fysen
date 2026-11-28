@@ -96,7 +96,7 @@ test("Matlyst gallery is closed by default and shows all approved images only on
   assert.match(gallery, /className="dishPhotosInside"/u);
   assert.ok(gallery.indexOf('className="dishPhotosInside"') < gallery.indexOf("illustratedDishes.map"));
   assert.ok(manifest.images.length >= 36, "Approved image count must not regress");
-  assert.match(gallery, new RegExp(`Utforsk ${manifest.images.length} retter`, "u"));
+  assert.match(gallery, /Utforsk \{illustratedDishes\.length\} retter/u);
 });
 
 test("Matlyst, menu search and knowledge cards display approved originals inline", () => {
