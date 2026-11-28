@@ -7,7 +7,7 @@ import { browseDishes } from "../lib/fysen-api";
 import { getPublicMenuArchive, reconcileMenuVersions } from "../lib/verified-menu-archive";
 import { summarizeArchivedMatlyst, type ArchivedMatlystCoverage } from "../lib/archived-matlyst-coverage";
 import { homeCuisines } from "../components/cuisine-explorer-data";
-import { dishBrowseHref, nordicCities } from "../lib/public-path";
+import { dishBrowseHref, nordicCities, withPublicBasePath } from "../lib/public-path";
 
 export default async function HomePage() {
   let browseData: DishBrowseResponse | null = null;
@@ -54,6 +54,7 @@ export default async function HomePage() {
             </p>
             <DishSearch />
             <nav aria-label="Finn retter i en by">
+              <a className="homeDishBrowseLink" href={withPublicBasePath("/kart")}>Utforsk Oslo på kartet <span aria-hidden="true">→</span></a>
               {nordicCities.map(({ name }) => (
                 <a key={name} className="homeDishBrowseLink" href={dishBrowseHref(name)}>
                   Se alle retter i {name}
