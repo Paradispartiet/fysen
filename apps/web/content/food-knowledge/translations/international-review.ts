@@ -12950,5 +12950,1661 @@ export const draftInternationalArticles = {
         "Chips nicht lange kochen, wenn eine knusprige Konsistenz gewünscht ist."
       ]
     }
+  },
+  "mole-poblano": {
+    "en": {
+      "overview": "A range of toasted ingredients are ground and cooked together into a complex sauce.",
+      "history": "Mole poblano is particularly associated with Puebla; accounts of its origins vary.",
+      "flavor": "Deep, spiced, slightly bitter and sweetish.",
+      "technique": "Toast the chillies carefully and let the sauce simmer.",
+      "essentials": [
+        "4 dried ancho chillies",
+        "2 dried pasilla chillies",
+        "30 g sesame seeds"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 75 min",
+        "ingredients": [
+          "4 dried ancho chillies",
+          "2 dried pasilla chillies",
+          "30 g sesame seeds",
+          "40 g almonds",
+          "1 onion",
+          "2 garlic cloves",
+          "1 tomato",
+          "400 ml stock",
+          "20 g dark chocolate",
+          "cinnamon",
+          "600 g cooked chicken"
+        ],
+        "steps": [
+          "Remove the stems and seeds from the chillies, toast briefly and soak.",
+          "Toast the seeds and almonds and fry the onion, garlic and tomato.",
+          "Blend with the chillies, stock and spices until smooth.",
+          "Simmer the sauce, stir in the chocolate and heat the chicken in it."
+        ]
+      },
+      "variants": [
+        "This recipe is a simplified home version of an extensive sauce tradition."
+      ],
+      "serving": [
+        "Serve with rice and sesame seeds."
+      ],
+      "commonMistakes": [
+        "Do not burn the chillies or let the chocolate dominate."
+      ]
+    },
+    "fr": {
+      "overview": "Divers ingrédients grillés sont broyés et cuits ensemble pour obtenir une sauce complexe.",
+      "history": "Le mole poblano est particulièrement associé à Puebla ; les récits de son origine varient.",
+      "flavor": "Profond, épicé, légèrement amer et sucré.",
+      "technique": "Griller les piments avec précaution et laisser mijoter la sauce.",
+      "essentials": [
+        "4 piments ancho séchés",
+        "2 piments pasilla séchés",
+        "30 g de graines de sésame"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 75 min",
+        "ingredients": [
+          "4 piments ancho séchés",
+          "2 piments pasilla séchés",
+          "30 g de graines de sésame",
+          "40 g d’amandes",
+          "1 oignon",
+          "2 gousses d’ail",
+          "1 tomate",
+          "400 ml de bouillon",
+          "20 g de chocolat noir",
+          "cannelle",
+          "600 g de poulet cuit"
+        ],
+        "steps": [
+          "Retirer les tiges et les graines des piments, les griller brièvement et les faire tremper.",
+          "Griller les graines et les amandes, puis faire revenir l’oignon, l’ail et la tomate.",
+          "Mixer avec les piments, le bouillon et les épices jusqu’à obtenir une sauce lisse.",
+          "Laisser mijoter la sauce, incorporer le chocolat et y réchauffer le poulet."
+        ]
+      },
+      "variants": [
+        "Cette recette est une version maison simplifiée d’une vaste tradition de sauces."
+      ],
+      "serving": [
+        "Servir avec du riz et des graines de sésame."
+      ],
+      "commonMistakes": [
+        "Ne pas brûler les piments ni laisser le chocolat dominer."
+      ]
+    },
+    "pt": {
+      "overview": "Vários ingredientes tostados são triturados e cozinhados em conjunto para obter um molho complexo.",
+      "history": "O mole poblano está especialmente associado a Puebla; os relatos sobre a sua origem variam.",
+      "flavor": "Intenso, condimentado, ligeiramente amargo e doce.",
+      "technique": "Toste cuidadosamente as malaguetas e deixe o molho cozinhar em lume brando.",
+      "essentials": [
+        "4 malaguetas ancho secas",
+        "2 malaguetas pasilla secas",
+        "30 g de sementes de sésamo"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 75 min",
+        "ingredients": [
+          "4 malaguetas ancho secas",
+          "2 malaguetas pasilla secas",
+          "30 g de sementes de sésamo",
+          "40 g de amêndoas",
+          "1 cebola",
+          "2 dentes de alho",
+          "1 tomate",
+          "400 ml de caldo",
+          "20 g de chocolate negro",
+          "canela",
+          "600 g de frango cozinhado"
+        ],
+        "steps": [
+          "Retire os pés e as sementes das malaguetas, toste brevemente e demolhe.",
+          "Toste as sementes e as amêndoas e salteie a cebola, o alho e o tomate.",
+          "Triture com as malaguetas, o caldo e as especiarias até obter um molho liso.",
+          "Deixe o molho cozinhar em lume brando, incorpore o chocolate e aqueça nele o frango."
+        ]
+      },
+      "variants": [
+        "Esta receita é uma versão caseira simplificada de uma vasta tradição de molhos."
+      ],
+      "serving": [
+        "Sirva com arroz e sementes de sésamo."
+      ],
+      "commonMistakes": [
+        "Não queime as malaguetas nem deixe o chocolate dominar."
+      ]
+    },
+    "es": {
+      "overview": "Diversos ingredientes tostados se muelen y se cuecen juntos para obtener una salsa compleja.",
+      "history": "El mole poblano se asocia especialmente con Puebla; los relatos sobre su origen varían.",
+      "flavor": "Intenso, especiado, ligeramente amargo y dulce.",
+      "technique": "Tuesta los chiles con cuidado y deja cocer la salsa a fuego lento.",
+      "essentials": [
+        "4 chiles ancho secos",
+        "2 chiles pasilla secos",
+        "30 g de semillas de sésamo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 75 min",
+        "ingredients": [
+          "4 chiles ancho secos",
+          "2 chiles pasilla secos",
+          "30 g de semillas de sésamo",
+          "40 g de almendras",
+          "1 cebolla",
+          "2 dientes de ajo",
+          "1 tomate",
+          "400 ml de caldo",
+          "20 g de chocolate negro",
+          "canela",
+          "600 g de pollo cocinado"
+        ],
+        "steps": [
+          "Retira los tallos y las semillas de los chiles, tuéstalos brevemente y remójalos.",
+          "Tuesta las semillas y las almendras y sofríe la cebolla, el ajo y el tomate.",
+          "Tritura con los chiles, el caldo y las especias hasta obtener una salsa lisa.",
+          "Cuece la salsa a fuego lento, incorpora el chocolate y calienta el pollo en ella."
+        ]
+      },
+      "variants": [
+        "Esta receta es una versión casera simplificada de una amplia tradición de salsas."
+      ],
+      "serving": [
+        "Sirve con arroz y semillas de sésamo."
+      ],
+      "commonMistakes": [
+        "No quemes los chiles ni dejes que domine el chocolate."
+      ]
+    },
+    "de": {
+      "overview": "Verschiedene geröstete Zutaten werden gemahlen und zu einer komplexen Sauce gekocht.",
+      "history": "Mole Poblano ist besonders mit Puebla verbunden; die Ursprungserzählungen variieren.",
+      "flavor": "Tiefgründig, würzig, leicht bitter und süßlich.",
+      "technique": "Chilis vorsichtig rösten und die Sauce köcheln lassen.",
+      "essentials": [
+        "4 getrocknete Ancho-Chilis",
+        "2 getrocknete Pasilla-Chilis",
+        "30 g Sesamsamen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 75 Min.",
+        "ingredients": [
+          "4 getrocknete Ancho-Chilis",
+          "2 getrocknete Pasilla-Chilis",
+          "30 g Sesamsamen",
+          "40 g Mandeln",
+          "1 Zwiebel",
+          "2 Knoblauchzehen",
+          "1 Tomate",
+          "400 ml Brühe",
+          "20 g Zartbitterschokolade",
+          "Zimt",
+          "600 g gegartes Hähnchen"
+        ],
+        "steps": [
+          "Stiele und Samen der Chilis entfernen, kurz rösten und einweichen.",
+          "Samen und Mandeln rösten, Zwiebel, Knoblauch und Tomate anbraten.",
+          "Mit Chilis, Brühe und Gewürzen glatt pürieren.",
+          "Sauce köcheln lassen, Schokolade einrühren und Hähnchen darin erwärmen."
+        ]
+      },
+      "variants": [
+        "Das Rezept ist eine vereinfachte Hausvariante einer umfangreichen Saucen-Tradition."
+      ],
+      "serving": [
+        "Mit Reis und Sesamsamen servieren."
+      ],
+      "commonMistakes": [
+        "Chilis nicht verbrennen und Schokolade nicht dominieren lassen."
+      ]
+    }
+  },
+  "ceviche": {
+    "en": {
+      "overview": "In classic versions, raw fish is marinated in citrus; the acid changes the texture but does not make the fish microbiologically safe.",
+      "history": "Ceviche holds a particularly important place in Peru and exists in various forms along Latin America's coasts, including Mexico.",
+      "flavor": "Fresh, tangy, salty and aromatic.",
+      "technique": "Keep the seafood cold; this home version uses fully cooked prawns.",
+      "essentials": [
+        "400 g cooked, chilled prawns",
+        "4 limes",
+        "1 red onion"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 20 min",
+        "ingredients": [
+          "400 g cooked, chilled prawns",
+          "4 limes",
+          "1 red onion",
+          "chilli",
+          "coriander",
+          "1 cucumber",
+          "salt"
+        ],
+        "steps": [
+          "Cut the onion and cucumber into small pieces.",
+          "Mix lime juice, chilli and salt.",
+          "Fold in the cold, cooked prawns and vegetables.",
+          "Keep chilled and serve immediately with coriander."
+        ]
+      },
+      "variants": [
+        "Peruvian fish-based versions and Mexican versions with prawns, tomato or avocado."
+      ],
+      "serving": [
+        "Serve with tostadas or, Peruvian style, maize and sweet potato."
+      ],
+      "commonMistakes": [
+        "Do not rely on lime juice to kill parasites or disease-causing bacteria."
+      ]
+    },
+    "fr": {
+      "overview": "Dans les versions classiques, le poisson cru est mariné dans du jus d’agrumes ; l’acidité modifie sa texture mais ne garantit pas sa sécurité microbiologique.",
+      "history": "Le ceviche occupe une place particulièrement importante au Pérou et existe sous diverses formes le long des côtes d’Amérique latine, notamment au Mexique.",
+      "flavor": "Frais, acidulé, salé et aromatique.",
+      "technique": "Garder les fruits de mer au froid ; cette version maison utilise des crevettes entièrement cuites.",
+      "essentials": [
+        "400 g de crevettes cuites et refroidies",
+        "4 citrons verts",
+        "1 oignon rouge"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 20 min",
+        "ingredients": [
+          "400 g de crevettes cuites et refroidies",
+          "4 citrons verts",
+          "1 oignon rouge",
+          "piment",
+          "coriandre",
+          "1 concombre",
+          "sel"
+        ],
+        "steps": [
+          "Couper l’oignon et le concombre en petits morceaux.",
+          "Mélanger le jus de citron vert, le piment et le sel.",
+          "Incorporer les crevettes cuites et froides et les légumes.",
+          "Garder au frais et servir immédiatement avec de la coriandre."
+        ]
+      },
+      "variants": [
+        "Variantes péruviennes à base de poisson et variantes mexicaines aux crevettes, à la tomate ou à l’avocat."
+      ],
+      "serving": [
+        "Servir avec des tostadas ou, à la péruvienne, avec du maïs et de la patate douce."
+      ],
+      "commonMistakes": [
+        "Ne pas compter sur le jus de citron vert pour tuer les parasites ou les bactéries pathogènes."
+      ]
+    },
+    "pt": {
+      "overview": "Nas versões clássicas, o peixe cru é marinado em citrinos; a acidez altera a textura, mas não torna o peixe microbiologicamente seguro.",
+      "history": "O ceviche ocupa um lugar particularmente importante no Peru e existe em várias formas nas costas da América Latina, incluindo no México.",
+      "flavor": "Fresco, ácido, salgado e aromático.",
+      "technique": "Mantenha o marisco frio; esta versão caseira utiliza camarão completamente cozido.",
+      "essentials": [
+        "400 g de camarão cozido e arrefecido",
+        "4 limas",
+        "1 cebola roxa"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 20 min",
+        "ingredients": [
+          "400 g de camarão cozido e arrefecido",
+          "4 limas",
+          "1 cebola roxa",
+          "malagueta",
+          "coentros",
+          "1 pepino",
+          "sal"
+        ],
+        "steps": [
+          "Corte a cebola e o pepino em pedaços pequenos.",
+          "Misture sumo de lima, malagueta e sal.",
+          "Envolva o camarão cozido e frio e os legumes.",
+          "Mantenha refrigerado e sirva imediatamente com coentros."
+        ]
+      },
+      "variants": [
+        "Variantes peruanas à base de peixe e mexicanas com camarão, tomate ou abacate."
+      ],
+      "serving": [
+        "Sirva com tostadas ou, ao estilo peruano, com milho e batata-doce."
+      ],
+      "commonMistakes": [
+        "Não conte com o sumo de lima para eliminar parasitas ou bactérias patogénicas."
+      ]
+    },
+    "es": {
+      "overview": "En las versiones clásicas, el pescado crudo se marina en cítricos; el ácido cambia la textura, pero no garantiza su seguridad microbiológica.",
+      "history": "El ceviche ocupa un lugar especialmente importante en Perú y existe en distintas formas a lo largo de las costas de América Latina, también en México.",
+      "flavor": "Fresco, ácido, salado y aromático.",
+      "technique": "Mantén el marisco frío; esta versión casera utiliza gambas completamente cocidas.",
+      "essentials": [
+        "400 g de gambas cocidas y enfriadas",
+        "4 limas",
+        "1 cebolla morada"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 20 min",
+        "ingredients": [
+          "400 g de gambas cocidas y enfriadas",
+          "4 limas",
+          "1 cebolla morada",
+          "chile",
+          "cilantro",
+          "1 pepino",
+          "sal"
+        ],
+        "steps": [
+          "Corta la cebolla y el pepino en trozos pequeños.",
+          "Mezcla zumo de lima, chile y sal.",
+          "Incorpora las gambas cocidas y frías y las verduras.",
+          "Mantén refrigerado y sirve inmediatamente con cilantro."
+        ]
+      },
+      "variants": [
+        "Variantes peruanas a base de pescado y mexicanas con gambas, tomate o aguacate."
+      ],
+      "serving": [
+        "Sirve con tostadas o, al estilo peruano, con maíz y boniato."
+      ],
+      "commonMistakes": [
+        "No confíes en el zumo de lima para eliminar parásitos o bacterias patógenas."
+      ]
+    },
+    "de": {
+      "overview": "Bei klassischen Varianten wird roher Fisch in Zitrussaft mariniert; die Säure verändert die Konsistenz, macht den Fisch aber nicht mikrobiologisch sicher.",
+      "history": "Ceviche hat in Peru einen besonders hohen Stellenwert und kommt in unterschiedlichen Formen an den Küsten Lateinamerikas vor, unter anderem in Mexiko.",
+      "flavor": "Frisch, säuerlich, salzig und aromatisch.",
+      "technique": "Meeresfrüchte kühl halten; diese Hausvariante verwendet vollständig gegarte Garnelen.",
+      "essentials": [
+        "400 g gegarte, gekühlte Garnelen",
+        "4 Limetten",
+        "1 rote Zwiebel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 20 Min.",
+        "ingredients": [
+          "400 g gegarte, gekühlte Garnelen",
+          "4 Limetten",
+          "1 rote Zwiebel",
+          "Chili",
+          "Koriander",
+          "1 Gurke",
+          "Salz"
+        ],
+        "steps": [
+          "Zwiebel und Gurke klein schneiden.",
+          "Limettensaft, Chili und Salz mischen.",
+          "Kalte, gegarte Garnelen und Gemüse unterheben.",
+          "Kühl halten und sofort mit Koriander servieren."
+        ]
+      },
+      "variants": [
+        "Peruanische Fischvarianten und mexikanische Varianten mit Garnelen, Tomate oder Avocado."
+      ],
+      "serving": [
+        "Mit Tostadas oder nach peruanischer Art mit Mais und Süßkartoffeln servieren."
+      ],
+      "commonMistakes": [
+        "Nicht darauf verlassen, dass Limettensaft Parasiten oder krankheitserregende Bakterien abtötet."
+      ]
+    }
+  },
+  "lahmacun": {
+    "en": {
+      "overview": "A finely minced meat mixture is spread over thin dough and baked at high heat.",
+      "history": "Lahmacun is widespread in Türkiye, with regional versions including those of Gaziantep and Şanlıurfa.",
+      "flavor": "Crisp edges, juicy topping and aromatic spices.",
+      "technique": "Roll the dough thinly and use a thin layer of topping.",
+      "essentials": [
+        "300 g wheat flour",
+        "170 ml water",
+        "salt"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min",
+        "ingredients": [
+          "300 g wheat flour",
+          "170 ml water",
+          "salt",
+          "250 g minced lamb or beef",
+          "1 tomato",
+          "1 onion",
+          "parsley",
+          "paprika powder"
+        ],
+        "steps": [
+          "Knead the flour, water and salt into a smooth dough and let it rest.",
+          "Finely chop the vegetables and mix with meat and spices.",
+          "Divide the dough into six and roll thinly; spread the meat mixture over it.",
+          "Bake at 240–250 °C until the dough is golden and the meat topping is cooked through."
+        ]
+      },
+      "variants": [
+        "Spices and the amount of garlic vary by region."
+      ],
+      "serving": [
+        "Serve with parsley, onion and lemon."
+      ],
+      "commonMistakes": [
+        "Do not add a thick, wet layer of topping."
+      ]
+    },
+    "fr": {
+      "overview": "Un mélange de viande finement hachée est réparti sur une pâte fine et cuit à haute température.",
+      "history": "Le lahmacun est répandu en Turquie, avec des variantes régionales notamment à Gaziantep et Şanlıurfa.",
+      "flavor": "Bords croustillants, garniture juteuse et épices aromatiques.",
+      "technique": "Étaler finement la pâte et utiliser une fine couche de garniture.",
+      "essentials": [
+        "300 g de farine de blé",
+        "170 ml d’eau",
+        "sel"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min",
+        "ingredients": [
+          "300 g de farine de blé",
+          "170 ml d’eau",
+          "sel",
+          "250 g d’agneau ou de bœuf haché",
+          "1 tomate",
+          "1 oignon",
+          "persil",
+          "paprika en poudre"
+        ],
+        "steps": [
+          "Pétrir la farine, l’eau et le sel pour obtenir une pâte lisse, puis laisser reposer.",
+          "Hacher finement les légumes et les mélanger à la viande et aux épices.",
+          "Diviser la pâte en six et l’étaler finement ; répartir le mélange de viande.",
+          "Cuire à 240–250 °C jusqu’à ce que la pâte soit dorée et la viande cuite à cœur."
+        ]
+      },
+      "variants": [
+        "Les épices et la quantité d’ail varient selon les régions."
+      ],
+      "serving": [
+        "Servir avec du persil, de l’oignon et du citron."
+      ],
+      "commonMistakes": [
+        "Ne pas mettre une couche épaisse et humide de garniture."
+      ]
+    },
+    "pt": {
+      "overview": "Uma mistura de carne finamente picada é espalhada sobre massa fina e cozida a temperatura elevada.",
+      "history": "O lahmacun é comum na Turquia, com variantes regionais, nomeadamente em Gaziantep e Şanlıurfa.",
+      "flavor": "Bordos crocantes, recheio suculento e especiarias aromáticas.",
+      "technique": "Estenda a massa finamente e use uma camada fina de recheio.",
+      "essentials": [
+        "300 g de farinha de trigo",
+        "170 ml de água",
+        "sal"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min",
+        "ingredients": [
+          "300 g de farinha de trigo",
+          "170 ml de água",
+          "sal",
+          "250 g de carne picada de borrego ou vaca",
+          "1 tomate",
+          "1 cebola",
+          "salsa",
+          "pimentão em pó"
+        ],
+        "steps": [
+          "Amasse a farinha, a água e o sal até obter uma massa lisa e deixe repousar.",
+          "Pique finamente os legumes e misture com a carne e as especiarias.",
+          "Divida a massa em seis e estenda finamente; distribua a mistura de carne.",
+          "Coza a 240–250 °C até a massa estar dourada e a carne bem cozinhada."
+        ]
+      },
+      "variants": [
+        "As especiarias e a quantidade de alho variam por região."
+      ],
+      "serving": [
+        "Sirva com salsa, cebola e limão."
+      ],
+      "commonMistakes": [
+        "Não coloque uma camada grossa e húmida de recheio."
+      ]
+    },
+    "es": {
+      "overview": "Una mezcla de carne finamente picada se extiende sobre masa fina y se hornea a temperatura alta.",
+      "history": "El lahmacun está muy extendido en Turquía, con variantes regionales, entre ellas las de Gaziantep y Şanlıurfa.",
+      "flavor": "Bordes crujientes, relleno jugoso y especias aromáticas.",
+      "technique": "Estira la masa fina y utiliza una capa fina de relleno.",
+      "essentials": [
+        "300 g de harina de trigo",
+        "170 ml de agua",
+        "sal"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min",
+        "ingredients": [
+          "300 g de harina de trigo",
+          "170 ml de agua",
+          "sal",
+          "250 g de carne picada de cordero o vacuno",
+          "1 tomate",
+          "1 cebolla",
+          "perejil",
+          "pimentón"
+        ],
+        "steps": [
+          "Amasa harina, agua y sal hasta obtener una masa lisa y deja reposar.",
+          "Pica finamente las verduras y mezcla con la carne y las especias.",
+          "Divide la masa en seis y estírala fina; reparte la mezcla de carne.",
+          "Hornea a 240–250 °C hasta que la masa esté dorada y la carne hecha por dentro."
+        ]
+      },
+      "variants": [
+        "Las especias y la cantidad de ajo varían según la región."
+      ],
+      "serving": [
+        "Sirve con perejil, cebolla y limón."
+      ],
+      "commonMistakes": [
+        "No pongas una capa gruesa y húmeda de relleno."
+      ]
+    },
+    "de": {
+      "overview": "Eine fein gehackte Fleischmischung wird auf dünnem Teig verteilt und bei hoher Hitze gebacken.",
+      "history": "Lahmacun ist in der Türkei weit verbreitet, mit regionalen Varianten unter anderem in Gaziantep und Şanlıurfa.",
+      "flavor": "Knusprige Ränder, saftiger Belag und aromatische Gewürze.",
+      "technique": "Teig dünn ausrollen und den Belag dünn auftragen.",
+      "essentials": [
+        "300 g Weizenmehl",
+        "170 ml Wasser",
+        "Salz"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min.",
+        "ingredients": [
+          "300 g Weizenmehl",
+          "170 ml Wasser",
+          "Salz",
+          "250 g Lamm- oder Rinderhackfleisch",
+          "1 Tomate",
+          "1 Zwiebel",
+          "Petersilie",
+          "Paprikapulver"
+        ],
+        "steps": [
+          "Mehl, Wasser und Salz zu einem glatten Teig kneten und ruhen lassen.",
+          "Gemüse fein hacken und mit Fleisch und Gewürzen mischen.",
+          "Teig in sechs Teile teilen und dünn ausrollen; Fleischmischung darauf verteilen.",
+          "Bei 240–250 °C backen, bis der Teig goldbraun und der Fleischbelag durchgegart ist."
+        ]
+      },
+      "variants": [
+        "Gewürze und Knoblauchmenge variieren regional."
+      ],
+      "serving": [
+        "Mit Petersilie, Zwiebel und Zitrone servieren."
+      ],
+      "commonMistakes": [
+        "Keine dicke, feuchte Schicht Belag auftragen."
+      ]
+    }
+  },
+  "manti": {
+    "en": {
+      "overview": "Thin pieces of dough are filled, sealed and boiled before sauce is added.",
+      "history": "Kayseri is particularly known for its small mantı; other regions have larger versions.",
+      "flavor": "Soft dough, juicy filling and tangy yoghurt.",
+      "technique": "Keep the dough covered while shaping small parcels.",
+      "essentials": [
+        "300 g wheat flour",
+        "1 egg",
+        "water and salt"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 90 min",
+        "ingredients": [
+          "300 g wheat flour",
+          "1 egg",
+          "water and salt",
+          "250 g minced meat",
+          "1 small onion",
+          "300 g yoghurt",
+          "2 garlic cloves",
+          "butter",
+          "paprika flakes"
+        ],
+        "steps": [
+          "Knead flour, egg, water and salt into a firm dough and let it rest.",
+          "Mix the minced meat with grated onion and salt.",
+          "Roll out, cut into small squares, fill and seal.",
+          "Boil until the dough is tender and the meat cooked through; top with garlic yoghurt and paprika butter."
+        ]
+      },
+      "variants": [
+        "Kayseri mantısı and larger hingel versions."
+      ],
+      "serving": [
+        "Serve hot with cool yoghurt."
+      ],
+      "commonMistakes": [
+        "Do not overfill the small dough parcels."
+      ]
+    },
+    "fr": {
+      "overview": "De fins morceaux de pâte sont garnis, fermés et cuits à l’eau avant d’ajouter la sauce.",
+      "history": "Kayseri est particulièrement connue pour ses petits mantı ; d’autres régions en proposent de plus grands.",
+      "flavor": "Pâte tendre, farce juteuse et yaourt acidulé.",
+      "technique": "Garder la pâte couverte pendant le façonnage des petits raviolis.",
+      "essentials": [
+        "300 g de farine de blé",
+        "1 œuf",
+        "eau et sel"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 90 min",
+        "ingredients": [
+          "300 g de farine de blé",
+          "1 œuf",
+          "eau et sel",
+          "250 g de viande hachée",
+          "1 petit oignon",
+          "300 g de yaourt",
+          "2 gousses d’ail",
+          "beurre",
+          "flocons de paprika"
+        ],
+        "steps": [
+          "Pétrir la farine, l’œuf, l’eau et le sel pour obtenir une pâte ferme, puis laisser reposer.",
+          "Mélanger la viande hachée avec l’oignon râpé et le sel.",
+          "Étaler, découper en petits carrés, garnir et fermer.",
+          "Cuire à l’eau jusqu’à ce que la pâte soit tendre et la viande cuite à cœur ; garnir de yaourt à l’ail et de beurre au paprika."
+        ]
+      },
+      "variants": [
+        "Kayseri mantısı et variantes de hingel plus grandes."
+      ],
+      "serving": [
+        "Servir chaud avec du yaourt frais."
+      ],
+      "commonMistakes": [
+        "Ne pas trop garnir les petits raviolis."
+      ]
+    },
+    "pt": {
+      "overview": "Pedaços finos de massa são recheados, fechados e cozidos antes de juntar o molho.",
+      "history": "Kayseri é especialmente conhecida pelos seus pequenos mantı; outras regiões têm versões maiores.",
+      "flavor": "Massa macia, recheio suculento e iogurte ácido.",
+      "technique": "Mantenha a massa tapada enquanto molda os pequenos embrulhos.",
+      "essentials": [
+        "300 g de farinha de trigo",
+        "1 ovo",
+        "água e sal"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 90 min",
+        "ingredients": [
+          "300 g de farinha de trigo",
+          "1 ovo",
+          "água e sal",
+          "250 g de carne picada",
+          "1 cebola pequena",
+          "300 g de iogurte",
+          "2 dentes de alho",
+          "manteiga",
+          "flocos de pimentão"
+        ],
+        "steps": [
+          "Amasse farinha, ovo, água e sal até obter uma massa firme e deixe repousar.",
+          "Misture a carne picada com cebola ralada e sal.",
+          "Estenda, corte em pequenos quadrados, recheie e feche.",
+          "Coza até a massa estar tenra e a carne bem cozinhada; cubra com iogurte de alho e manteiga de pimentão."
+        ]
+      },
+      "variants": [
+        "Kayseri mantısı e variantes maiores de hingel."
+      ],
+      "serving": [
+        "Sirva quente com iogurte fresco."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado os pequenos embrulhos de massa."
+      ]
+    },
+    "es": {
+      "overview": "Las piezas finas de masa se rellenan, se cierran y se cuecen antes de añadir la salsa.",
+      "history": "Kayseri es especialmente conocida por sus pequeños mantı; otras regiones tienen variantes mayores.",
+      "flavor": "Masa suave, relleno jugoso y yogur ácido.",
+      "technique": "Mantén la masa cubierta mientras formas los pequeños paquetes.",
+      "essentials": [
+        "300 g de harina de trigo",
+        "1 huevo",
+        "agua y sal"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 90 min",
+        "ingredients": [
+          "300 g de harina de trigo",
+          "1 huevo",
+          "agua y sal",
+          "250 g de carne picada",
+          "1 cebolla pequeña",
+          "300 g de yogur",
+          "2 dientes de ajo",
+          "mantequilla",
+          "copos de pimentón"
+        ],
+        "steps": [
+          "Amasa harina, huevo, agua y sal hasta obtener una masa firme y deja reposar.",
+          "Mezcla la carne picada con cebolla rallada y sal.",
+          "Estira, corta en cuadrados pequeños, rellena y sella.",
+          "Cuece hasta que la masa esté tierna y la carne hecha por dentro; cubre con yogur de ajo y mantequilla de pimentón."
+        ]
+      },
+      "variants": [
+        "Kayseri mantısı y variantes mayores de hingel."
+      ],
+      "serving": [
+        "Sirve caliente con yogur frío."
+      ],
+      "commonMistakes": [
+        "No rellenes demasiado los pequeños paquetes de masa."
+      ]
+    },
+    "de": {
+      "overview": "Dünne Teigstücke werden gefüllt, verschlossen und gekocht, bevor Sauce hinzugefügt wird.",
+      "history": "Kayseri ist besonders für kleine Mantı bekannt; andere Regionen haben größere Varianten.",
+      "flavor": "Weicher Teig, saftige Füllung und säuerlicher Joghurt.",
+      "technique": "Teig beim Formen der kleinen Taschen abgedeckt halten.",
+      "essentials": [
+        "300 g Weizenmehl",
+        "1 Ei",
+        "Wasser und Salz"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 90 Min.",
+        "ingredients": [
+          "300 g Weizenmehl",
+          "1 Ei",
+          "Wasser und Salz",
+          "250 g Hackfleisch",
+          "1 kleine Zwiebel",
+          "300 g Joghurt",
+          "2 Knoblauchzehen",
+          "Butter",
+          "Paprikaflocken"
+        ],
+        "steps": [
+          "Mehl, Ei, Wasser und Salz zu einem festen Teig kneten und ruhen lassen.",
+          "Hackfleisch mit geriebener Zwiebel und Salz mischen.",
+          "Ausrollen, in kleine Quadrate schneiden, füllen und verschließen.",
+          "Kochen, bis der Teig weich und das Fleisch durchgegart ist; Knoblauchjoghurt und Paprikabutter darübergeben."
+        ]
+      },
+      "variants": [
+        "Kayseri Mantısı und größere Hingel-Varianten."
+      ],
+      "serving": [
+        "Heiß mit kühlem Joghurt servieren."
+      ],
+      "commonMistakes": [
+        "Kleine Teigtaschen nicht überfüllen."
+      ]
+    }
+  },
+  "doner": {
+    "en": {
+      "overview": "The meat is sliced off thinly as the surface cooks.",
+      "history": "Döner is an established Turkish meat and street-food tradition and is also served as a plated dish.",
+      "flavor": "Roasted, juicy and spiced.",
+      "technique": "The home version uses thin slices of meat in a hot pan rather than a rotating spit.",
+      "essentials": [
+        "600 g boneless chicken thigh",
+        "2 tbsp yoghurt",
+        "1 tbsp oil"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30 min + marinating",
+        "ingredients": [
+          "600 g boneless chicken thigh",
+          "2 tbsp yoghurt",
+          "1 tbsp oil",
+          "paprika powder",
+          "cumin",
+          "garlic",
+          "salt",
+          "bread and salad"
+        ],
+        "steps": [
+          "Cut the chicken into thin strips.",
+          "Marinate with yoghurt, oil and spices in the refrigerator.",
+          "Fry in small batches over high heat until cooked through.",
+          "Serve in bread or on a plate with salad."
+        ]
+      },
+      "variants": [
+        "Lamb, beef or chicken döner; dürüm in rolled flatbread."
+      ],
+      "serving": [
+        "Serve with onion, tomato and your preferred sauce."
+      ],
+      "commonMistakes": [
+        "Do not overcrowd the pan or use raw marinade as sauce."
+      ]
+    },
+    "fr": {
+      "overview": "La viande est découpée en fines tranches à mesure que sa surface cuit.",
+      "history": "Le döner appartient à une tradition turque établie de viande et de cuisine de rue ; il est aussi servi à l’assiette.",
+      "flavor": "Grillé, juteux et épicé.",
+      "technique": "La version maison utilise de fines tranches de viande dans une poêle chaude, plutôt qu’une broche rotative.",
+      "essentials": [
+        "600 g de hauts de cuisse de poulet désossés",
+        "2 c. à soupe de yaourt",
+        "1 c. à soupe d’huile"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30 min + marinade",
+        "ingredients": [
+          "600 g de hauts de cuisse de poulet désossés",
+          "2 c. à soupe de yaourt",
+          "1 c. à soupe d’huile",
+          "paprika en poudre",
+          "cumin",
+          "ail",
+          "sel",
+          "pain et salade"
+        ],
+        "steps": [
+          "Couper le poulet en fines lanières.",
+          "Faire mariner au réfrigérateur avec du yaourt, de l’huile et des épices.",
+          "Faire revenir par petites quantités à feu vif jusqu’à cuisson complète.",
+          "Servir dans du pain ou à l’assiette avec de la salade."
+        ]
+      },
+      "variants": [
+        "Döner à l’agneau, au bœuf ou au poulet ; dürüm dans un pain plat roulé."
+      ],
+      "serving": [
+        "Servir avec de l’oignon, de la tomate et la sauce de son choix."
+      ],
+      "commonMistakes": [
+        "Ne pas surcharger la poêle ni utiliser la marinade crue comme sauce."
+      ]
+    },
+    "pt": {
+      "overview": "A carne é cortada em fatias finas à medida que a superfície cozinha.",
+      "history": "O döner é uma tradição turca consolidada de carne e comida de rua e também é servido no prato.",
+      "flavor": "Tostado, suculento e condimentado.",
+      "technique": "A versão caseira usa fatias finas de carne numa frigideira quente, não um espeto rotativo.",
+      "essentials": [
+        "600 g de coxa de frango desossada",
+        "2 c. de sopa de iogurte",
+        "1 c. de sopa de óleo"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30 min + marinada",
+        "ingredients": [
+          "600 g de coxa de frango desossada",
+          "2 c. de sopa de iogurte",
+          "1 c. de sopa de óleo",
+          "pimentão em pó",
+          "cominhos",
+          "alho",
+          "sal",
+          "pão e salada"
+        ],
+        "steps": [
+          "Corte o frango em tiras finas.",
+          "Marine no frigorífico com iogurte, óleo e especiarias.",
+          "Salteie em pequenas porções em lume forte até estar bem cozinhado.",
+          "Sirva no pão ou no prato com salada."
+        ]
+      },
+      "variants": [
+        "Döner de borrego, vaca ou frango; dürüm em pão achatado enrolado."
+      ],
+      "serving": [
+        "Sirva com cebola, tomate e molho a gosto."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado a frigideira nem use a marinada crua como molho."
+      ]
+    },
+    "es": {
+      "overview": "La carne se corta en lonchas finas a medida que se cocina la superficie.",
+      "history": "El döner es una tradición turca consolidada de carne y comida callejera y también se sirve en plato.",
+      "flavor": "Tostado, jugoso y especiado.",
+      "technique": "La versión casera utiliza lonchas finas de carne en una sartén caliente, no un asador giratorio.",
+      "essentials": [
+        "600 g de contramuslo de pollo deshuesado",
+        "2 cucharadas de yogur",
+        "1 cucharada de aceite"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30 min + marinado",
+        "ingredients": [
+          "600 g de contramuslo de pollo deshuesado",
+          "2 cucharadas de yogur",
+          "1 cucharada de aceite",
+          "pimentón",
+          "comino",
+          "ajo",
+          "sal",
+          "pan y ensalada"
+        ],
+        "steps": [
+          "Corta el pollo en tiras finas.",
+          "Marina en el frigorífico con yogur, aceite y especias.",
+          "Saltea en tandas pequeñas a fuego fuerte hasta que esté hecho por dentro.",
+          "Sirve en pan o en plato con ensalada."
+        ]
+      },
+      "variants": [
+        "Döner de cordero, vacuno o pollo; dürüm en pan plano enrollado."
+      ],
+      "serving": [
+        "Sirve con cebolla, tomate y la salsa que prefieras."
+      ],
+      "commonMistakes": [
+        "No llenes demasiado la sartén ni uses la marinada cruda como salsa."
+      ]
+    },
+    "de": {
+      "overview": "Das Fleisch wird in dünnen Scheiben abgeschnitten, sobald die Oberfläche gar ist.",
+      "history": "Döner ist eine etablierte türkische Fleisch- und Streetfood-Tradition und wird auch als Tellergericht serviert.",
+      "flavor": "Röstig, saftig und würzig.",
+      "technique": "Die Hausvariante verwendet dünne Fleischscheiben in einer heißen Pfanne statt eines Drehspießes.",
+      "essentials": [
+        "600 g Hähnchenschenkelfilet ohne Knochen",
+        "2 EL Joghurt",
+        "1 EL Öl"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30 Min. + Marinierzeit",
+        "ingredients": [
+          "600 g Hähnchenschenkelfilet ohne Knochen",
+          "2 EL Joghurt",
+          "1 EL Öl",
+          "Paprikapulver",
+          "Kreuzkümmel",
+          "Knoblauch",
+          "Salz",
+          "Brot und Salat"
+        ],
+        "steps": [
+          "Hähnchen in dünne Streifen schneiden.",
+          "Mit Joghurt, Öl und Gewürzen im Kühlschrank marinieren.",
+          "Portionsweise bei hoher Hitze vollständig durchbraten.",
+          "Im Brot oder auf einem Teller mit Salat servieren."
+        ]
+      },
+      "variants": [
+        "Döner aus Lamm, Rind oder Hähnchen; Dürüm im gerollten Fladenbrot."
+      ],
+      "serving": [
+        "Mit Zwiebel, Tomate und Sauce nach Wahl servieren."
+      ],
+      "commonMistakes": [
+        "Pfanne nicht überfüllen und rohe Marinade nicht als Sauce verwenden."
+      ]
+    }
+  },
+  "kofte": {
+    "en": {
+      "overview": "Minced meat is shaped with onion and spices; the composition varies by region.",
+      "history": "Türkiye has numerous local köfte traditions, including in Tekirdağ and Burdur.",
+      "flavor": "Juicy, roasted and aromatic.",
+      "technique": "Shape evenly sized patties and cook through.",
+      "essentials": [
+        "500 g minced meat",
+        "1 small onion",
+        "2 tbsp breadcrumbs"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40 min",
+        "ingredients": [
+          "500 g minced meat",
+          "1 small onion",
+          "2 tbsp breadcrumbs",
+          "parsley",
+          "cumin",
+          "pepper",
+          "salt"
+        ],
+        "steps": [
+          "Grate the onion and mix with the meat and spices.",
+          "Shape small, flat patties.",
+          "Let rest chilled for 20 minutes.",
+          "Grill or pan-fry until cooked through."
+        ]
+      },
+      "variants": [
+        "Şiş köfte on skewers and İzmir köfte with tomato sauce."
+      ],
+      "serving": [
+        "Serve with salad, bread or piyaz."
+      ],
+      "commonMistakes": [
+        "Do not cook over such high heat that the outside burns before the centre is done."
+      ]
+    },
+    "fr": {
+      "overview": "La viande hachée est façonnée avec de l’oignon et des épices ; la composition varie selon les régions.",
+      "history": "La Turquie compte de nombreuses traditions locales de köfte, notamment à Tekirdağ et Burdur.",
+      "flavor": "Juteux, grillé et aromatique.",
+      "technique": "Former des galettes de taille régulière et les cuire à cœur.",
+      "essentials": [
+        "500 g de viande hachée",
+        "1 petit oignon",
+        "2 c. à soupe de chapelure"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40 min",
+        "ingredients": [
+          "500 g de viande hachée",
+          "1 petit oignon",
+          "2 c. à soupe de chapelure",
+          "persil",
+          "cumin",
+          "poivre",
+          "sel"
+        ],
+        "steps": [
+          "Râper l’oignon et mélanger avec la viande et les épices.",
+          "Former de petites galettes plates.",
+          "Laisser reposer au frais pendant 20 minutes.",
+          "Griller ou poêler jusqu’à cuisson complète."
+        ]
+      },
+      "variants": [
+        "Şiş köfte en brochettes et İzmir köfte à la sauce tomate."
+      ],
+      "serving": [
+        "Servir avec de la salade, du pain ou du piyaz."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire à feu si vif que l’extérieur brûle avant que le centre soit cuit."
+      ]
+    },
+    "pt": {
+      "overview": "A carne picada é moldada com cebola e especiarias; a composição varia por região.",
+      "history": "A Turquia tem várias tradições locais de köfte, nomeadamente em Tekirdağ e Burdur.",
+      "flavor": "Suculento, tostado e aromático.",
+      "technique": "Forme bolinhos de tamanho uniforme e cozinhe completamente.",
+      "essentials": [
+        "500 g de carne picada",
+        "1 cebola pequena",
+        "2 c. de sopa de pão ralado"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40 min",
+        "ingredients": [
+          "500 g de carne picada",
+          "1 cebola pequena",
+          "2 c. de sopa de pão ralado",
+          "salsa",
+          "cominhos",
+          "pimenta",
+          "sal"
+        ],
+        "steps": [
+          "Rale a cebola e misture com a carne e as especiarias.",
+          "Forme pequenos bolinhos achatados.",
+          "Deixe repousar no frio durante 20 minutos.",
+          "Grelhe ou frite na frigideira até estarem bem cozinhados."
+        ]
+      },
+      "variants": [
+        "Şiş köfte em espetadas e İzmir köfte com molho de tomate."
+      ],
+      "serving": [
+        "Sirva com salada, pão ou piyaz."
+      ],
+      "commonMistakes": [
+        "Não cozinhe em lume tão forte que o exterior queime antes de o centro estar cozinhado."
+      ]
+    },
+    "es": {
+      "overview": "La carne picada se moldea con cebolla y especias; la composición varía según la región.",
+      "history": "Turquía tiene numerosas tradiciones locales de köfte, entre ellas las de Tekirdağ y Burdur.",
+      "flavor": "Jugoso, tostado y aromático.",
+      "technique": "Forma tortitas de tamaño uniforme y cocina por completo.",
+      "essentials": [
+        "500 g de carne picada",
+        "1 cebolla pequeña",
+        "2 cucharadas de pan rallado"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40 min",
+        "ingredients": [
+          "500 g de carne picada",
+          "1 cebolla pequeña",
+          "2 cucharadas de pan rallado",
+          "perejil",
+          "comino",
+          "pimienta",
+          "sal"
+        ],
+        "steps": [
+          "Ralla la cebolla y mezcla con la carne y las especias.",
+          "Forma pequeñas tortitas planas.",
+          "Deja reposar en frío durante 20 minutos.",
+          "Asa a la parrilla o fríe en sartén hasta que estén hechas por dentro."
+        ]
+      },
+      "variants": [
+        "Şiş köfte en brochetas e İzmir köfte con salsa de tomate."
+      ],
+      "serving": [
+        "Sirve con ensalada, pan o piyaz."
+      ],
+      "commonMistakes": [
+        "No cocines a fuego tan fuerte que el exterior se queme antes de que el centro esté hecho."
+      ]
+    },
+    "de": {
+      "overview": "Hackfleisch wird mit Zwiebeln und Gewürzen geformt; die Zusammensetzung variiert regional.",
+      "history": "In der Türkei gibt es zahlreiche lokale Köfte-Traditionen, unter anderem in Tekirdağ und Burdur.",
+      "flavor": "Saftig, röstig und aromatisch.",
+      "technique": "Gleich große Frikadellen formen und vollständig durchgaren.",
+      "essentials": [
+        "500 g Hackfleisch",
+        "1 kleine Zwiebel",
+        "2 EL Semmelbrösel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40 Min.",
+        "ingredients": [
+          "500 g Hackfleisch",
+          "1 kleine Zwiebel",
+          "2 EL Semmelbrösel",
+          "Petersilie",
+          "Kreuzkümmel",
+          "Pfeffer",
+          "Salz"
+        ],
+        "steps": [
+          "Zwiebel reiben und mit Fleisch und Gewürzen mischen.",
+          "Kleine flache Frikadellen formen.",
+          "20 Minuten kühl ruhen lassen.",
+          "Grillen oder in der Pfanne vollständig durchbraten."
+        ]
+      },
+      "variants": [
+        "Şiş Köfte am Spieß und İzmir Köfte mit Tomatensauce."
+      ],
+      "serving": [
+        "Mit Salat, Brot oder Piyaz servieren."
+      ],
+      "commonMistakes": [
+        "Nicht bei so hoher Hitze braten, dass die Außenseite verbrennt, bevor die Mitte gar ist."
+      ]
+    }
+  },
+  "baba-ganoush": {
+    "en": {
+      "overview": "The aubergine is grilled or roasted until soft and mixed with seasonings.",
+      "history": "The dish belongs to Levantine mezze traditions; names and ingredients vary locally.",
+      "flavor": "Smoky, tangy and creamy.",
+      "technique": "Let the cooked aubergine drain before mashing it.",
+      "essentials": [
+        "2 large aubergines",
+        "2 tbsp tahini",
+        "1 lemon"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 50 min",
+        "ingredients": [
+          "2 large aubergines",
+          "2 tbsp tahini",
+          "1 lemon",
+          "1 garlic clove",
+          "olive oil",
+          "salt"
+        ],
+        "steps": [
+          "Prick the aubergines and roast at 230 °C until completely soft.",
+          "Cool slightly, split and scoop out the flesh.",
+          "Let excess liquid drain off.",
+          "Mash with tahini, lemon, garlic and salt; top with oil."
+        ]
+      },
+      "variants": [
+        "Tahini-based versions are also called mutabbal in parts of the Levant."
+      ],
+      "serving": [
+        "Serve with pitta bread and other small dishes."
+      ],
+      "commonMistakes": [
+        "Do not use aubergine that is still firm inside."
+      ]
+    },
+    "fr": {
+      "overview": "L’aubergine est grillée ou rôtie jusqu’à tendreté, puis mélangée aux assaisonnements.",
+      "history": "Le plat fait partie des traditions levantines du mezzé ; les noms et ingrédients varient localement.",
+      "flavor": "Fumé, acidulé et crémeux.",
+      "technique": "Laisser égoutter l’aubergine cuite avant de l’écraser.",
+      "essentials": [
+        "2 grosses aubergines",
+        "2 c. à soupe de tahini",
+        "1 citron"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 50 min",
+        "ingredients": [
+          "2 grosses aubergines",
+          "2 c. à soupe de tahini",
+          "1 citron",
+          "1 gousse d’ail",
+          "huile d’olive",
+          "sel"
+        ],
+        "steps": [
+          "Piquer les aubergines et les rôtir à 230 °C jusqu’à ce qu’elles soient complètement tendres.",
+          "Laisser refroidir légèrement, couper en deux et prélever la chair.",
+          "Laisser s’écouler l’excédent de liquide.",
+          "Écraser avec le tahini, le citron, l’ail et le sel ; arroser d’huile."
+        ]
+      },
+      "variants": [
+        "Les variantes à base de tahini sont aussi appelées mutabbal dans certaines parties du Levant."
+      ],
+      "serving": [
+        "Servir avec du pain pita et d’autres petits plats."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser d’aubergine encore ferme à l’intérieur."
+      ]
+    },
+    "pt": {
+      "overview": "A beringela é grelhada ou assada até ficar macia e misturada com temperos.",
+      "history": "O prato faz parte das tradições levantinas de meze; os nomes e ingredientes variam localmente.",
+      "flavor": "Fumado, ácido e cremoso.",
+      "technique": "Deixe a beringela cozinhada escorrer antes de a esmagar.",
+      "essentials": [
+        "2 beringelas grandes",
+        "2 c. de sopa de tahini",
+        "1 limão"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 50 min",
+        "ingredients": [
+          "2 beringelas grandes",
+          "2 c. de sopa de tahini",
+          "1 limão",
+          "1 dente de alho",
+          "azeite",
+          "sal"
+        ],
+        "steps": [
+          "Pique as beringelas e asse a 230 °C até ficarem completamente macias.",
+          "Deixe arrefecer um pouco, abra e retire a polpa.",
+          "Deixe escorrer o excesso de líquido.",
+          "Esmague com tahini, limão, alho e sal; regue com azeite."
+        ]
+      },
+      "variants": [
+        "As variantes com tahini também são chamadas mutabbal em partes do Levante."
+      ],
+      "serving": [
+        "Sirva com pão pita e outros pratos pequenos."
+      ],
+      "commonMistakes": [
+        "Não use beringela ainda firme no interior."
+      ]
+    },
+    "es": {
+      "overview": "La berenjena se asa a la parrilla o al horno hasta quedar tierna y se mezcla con condimentos.",
+      "history": "El plato forma parte de las tradiciones levantinas de mezze; los nombres e ingredientes varían localmente.",
+      "flavor": "Ahumado, ácido y cremoso.",
+      "technique": "Deja escurrir la berenjena asada antes de triturarla.",
+      "essentials": [
+        "2 berenjenas grandes",
+        "2 cucharadas de tahini",
+        "1 limón"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 50 min",
+        "ingredients": [
+          "2 berenjenas grandes",
+          "2 cucharadas de tahini",
+          "1 limón",
+          "1 diente de ajo",
+          "aceite de oliva",
+          "sal"
+        ],
+        "steps": [
+          "Pincha las berenjenas y ásalas a 230 °C hasta que estén completamente tiernas.",
+          "Deja enfriar un poco, abre y extrae la pulpa.",
+          "Deja escurrir el exceso de líquido.",
+          "Tritura con tahini, limón, ajo y sal; añade aceite por encima."
+        ]
+      },
+      "variants": [
+        "Las variantes a base de tahini también se llaman mutabbal en algunas zonas del Levante."
+      ],
+      "serving": [
+        "Sirve con pan de pita y otros platos pequeños."
+      ],
+      "commonMistakes": [
+        "No uses berenjena que siga firme por dentro."
+      ]
+    },
+    "de": {
+      "overview": "Auberginen werden weich gegrillt oder im Ofen gebacken und mit Würzzutaten gemischt.",
+      "history": "Das Gericht gehört zu den levantinischen Mezze-Traditionen; Namen und Zutaten variieren lokal.",
+      "flavor": "Rauchig, säuerlich und cremig.",
+      "technique": "Gegarte Auberginen vor dem Zerdrücken abtropfen lassen.",
+      "essentials": [
+        "2 große Auberginen",
+        "2 EL Tahini",
+        "1 Zitrone"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 50 Min.",
+        "ingredients": [
+          "2 große Auberginen",
+          "2 EL Tahini",
+          "1 Zitrone",
+          "1 Knoblauchzehe",
+          "Olivenöl",
+          "Salz"
+        ],
+        "steps": [
+          "Auberginen einstechen und bei 230 °C ganz weich backen.",
+          "Etwas abkühlen lassen, aufschneiden und das Fruchtfleisch herauslösen.",
+          "Überschüssige Flüssigkeit abtropfen lassen.",
+          "Mit Tahini, Zitrone, Knoblauch und Salz zerdrücken; mit Öl beträufeln."
+        ]
+      },
+      "variants": [
+        "Varianten mit Tahini werden in Teilen der Levante auch Mutabbal genannt."
+      ],
+      "serving": [
+        "Mit Pitabrot und anderen kleinen Gerichten servieren."
+      ],
+      "commonMistakes": [
+        "Keine Auberginen verwenden, die innen noch fest sind."
+      ]
+    }
+  },
+  "tabbouleh": {
+    "en": {
+      "overview": "Finely chopped herbs are mixed with a little bulgur and a simple lemon and oil dressing.",
+      "history": "Tabbouleh is particularly well known in Lebanese and Syrian food culture and is often served as mezze.",
+      "flavor": "Fresh, tangy and herbal.",
+      "technique": "Dry the herbs well and finely chop with a sharp knife.",
+      "essentials": [
+        "2 large bunches flat-leaf parsley",
+        "1 small bunch mint",
+        "3 tomatoes"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 25 min",
+        "ingredients": [
+          "2 large bunches flat-leaf parsley",
+          "1 small bunch mint",
+          "3 tomatoes",
+          "50 g fine bulgur",
+          "2 spring onions",
+          "1–2 lemons",
+          "3 tbsp olive oil",
+          "salt"
+        ],
+        "steps": [
+          "Prepare the bulgur according to the packet instructions and drain.",
+          "Wash and dry the herbs; finely chop them.",
+          "Finely chop the tomatoes and spring onions.",
+          "Mix everything with lemon juice, olive oil and salt."
+        ]
+      },
+      "variants": [
+        "The ratio of bulgur to herbs varies; parsley dominates in many Levantine versions."
+      ],
+      "serving": [
+        "Serve chilled as mezze or with grilled food."
+      ],
+      "commonMistakes": [
+        "Do not let the bulgur dominate the salad if you want an herb-forward version."
+      ]
+    },
+    "fr": {
+      "overview": "Des herbes finement hachées sont mélangées à un peu de boulgour et à un assaisonnement simple au citron et à l’huile.",
+      "history": "Le taboulé est particulièrement connu dans les cultures culinaires libanaise et syrienne et souvent servi en mezzé.",
+      "flavor": "Frais, acidulé et herbacé.",
+      "technique": "Bien sécher les herbes et les hacher finement avec un couteau tranchant.",
+      "essentials": [
+        "2 gros bouquets de persil plat",
+        "1 petit bouquet de menthe",
+        "3 tomates"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 25 min",
+        "ingredients": [
+          "2 gros bouquets de persil plat",
+          "1 petit bouquet de menthe",
+          "3 tomates",
+          "50 g de boulgour fin",
+          "2 oignons nouveaux",
+          "1–2 citrons",
+          "3 c. à soupe d’huile d’olive",
+          "sel"
+        ],
+        "steps": [
+          "Préparer le boulgour selon les instructions du paquet et l’égoutter.",
+          "Laver et sécher les herbes ; les hacher finement.",
+          "Couper les tomates et les oignons nouveaux en petits morceaux.",
+          "Mélanger le tout avec le jus de citron, l’huile d’olive et le sel."
+        ]
+      },
+      "variants": [
+        "La proportion de boulgour et d’herbes varie ; le persil domine dans de nombreuses variantes levantines."
+      ],
+      "serving": [
+        "Servir frais en mezzé ou avec des grillades."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser le boulgour dominer la salade si l’on souhaite une version riche en herbes."
+      ]
+    },
+    "pt": {
+      "overview": "Ervas finamente picadas são misturadas com um pouco de bulgur e um molho simples de limão e azeite.",
+      "history": "O tabule é especialmente conhecido nas culturas gastronómicas libanesa e síria e é frequentemente servido como meze.",
+      "flavor": "Fresco, ácido e herbáceo.",
+      "technique": "Seque bem as ervas e pique-as finamente com uma faca afiada.",
+      "essentials": [
+        "2 molhos grandes de salsa de folha lisa",
+        "1 molho pequeno de hortelã",
+        "3 tomates"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 25 min",
+        "ingredients": [
+          "2 molhos grandes de salsa de folha lisa",
+          "1 molho pequeno de hortelã",
+          "3 tomates",
+          "50 g de bulgur fino",
+          "2 cebolinhas verdes",
+          "1–2 limões",
+          "3 c. de sopa de azeite",
+          "sal"
+        ],
+        "steps": [
+          "Prepare o bulgur de acordo com as instruções da embalagem e escorra.",
+          "Lave e seque as ervas; pique-as finamente.",
+          "Corte o tomate e a cebolinha verde em pedaços pequenos.",
+          "Misture tudo com sumo de limão, azeite e sal."
+        ]
+      },
+      "variants": [
+        "A proporção de bulgur e ervas varia; a salsa predomina em muitas variantes levantinas."
+      ],
+      "serving": [
+        "Sirva fresco como meze ou com grelhados."
+      ],
+      "commonMistakes": [
+        "Não deixe o bulgur dominar a salada se pretende uma versão rica em ervas."
+      ]
+    },
+    "es": {
+      "overview": "Las hierbas finamente picadas se mezclan con un poco de bulgur y un aliño sencillo de limón y aceite.",
+      "history": "El tabulé es especialmente conocido en las culturas culinarias libanesa y siria y suele servirse como mezze.",
+      "flavor": "Fresco, ácido y herbáceo.",
+      "technique": "Seca bien las hierbas y pícalas finamente con un cuchillo afilado.",
+      "essentials": [
+        "2 manojos grandes de perejil de hoja plana",
+        "1 manojo pequeño de menta",
+        "3 tomates"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 25 min",
+        "ingredients": [
+          "2 manojos grandes de perejil de hoja plana",
+          "1 manojo pequeño de menta",
+          "3 tomates",
+          "50 g de bulgur fino",
+          "2 cebolletas",
+          "1–2 limones",
+          "3 cucharadas de aceite de oliva",
+          "sal"
+        ],
+        "steps": [
+          "Prepara el bulgur según las instrucciones del envase y escúrrelo.",
+          "Lava y seca las hierbas; pícalas finamente.",
+          "Corta los tomates y las cebolletas en trozos pequeños.",
+          "Mezcla todo con zumo de limón, aceite de oliva y sal."
+        ]
+      },
+      "variants": [
+        "La proporción de bulgur y hierbas varía; el perejil predomina en muchas variantes levantinas."
+      ],
+      "serving": [
+        "Sirve frío como mezze o con alimentos a la parrilla."
+      ],
+      "commonMistakes": [
+        "No dejes que el bulgur domine la ensalada si buscas una versión rica en hierbas."
+      ]
+    },
+    "de": {
+      "overview": "Fein gehackte Kräuter werden mit etwas Bulgur und einem einfachen Zitronen-Öl-Dressing vermischt.",
+      "history": "Taboulé ist besonders aus der libanesischen und syrischen Esskultur bekannt und wird oft als Mezze serviert.",
+      "flavor": "Frisch, säuerlich und kräuterbetont.",
+      "technique": "Kräuter gut trocknen und mit einem scharfen Messer fein hacken.",
+      "essentials": [
+        "2 große Bund glatte Petersilie",
+        "1 kleines Bund Minze",
+        "3 Tomaten"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 25 Min.",
+        "ingredients": [
+          "2 große Bund glatte Petersilie",
+          "1 kleines Bund Minze",
+          "3 Tomaten",
+          "50 g feiner Bulgur",
+          "2 Frühlingszwiebeln",
+          "1–2 Zitronen",
+          "3 EL Olivenöl",
+          "Salz"
+        ],
+        "steps": [
+          "Bulgur nach Packungsanleitung zubereiten und abtropfen lassen.",
+          "Kräuter waschen, trocknen und fein hacken.",
+          "Tomaten und Frühlingszwiebeln klein schneiden.",
+          "Alles mit Zitronensaft, Olivenöl und Salz vermischen."
+        ]
+      },
+      "variants": [
+        "Das Verhältnis von Bulgur zu Kräutern variiert; Petersilie dominiert in vielen levantinischen Varianten."
+      ],
+      "serving": [
+        "Kühl als Mezze oder zu Grillgerichten servieren."
+      ],
+      "commonMistakes": [
+        "Bulgur im Salat nicht dominieren lassen, wenn eine kräuterbetonte Variante gewünscht ist."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;
