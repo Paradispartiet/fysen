@@ -13,7 +13,7 @@ test("each preview locale has exactly the Bokmål message keys", () => {
 });
 
 test("planned but unreviewed locales are not selectable in the preview", () => {
-  for (const locale of ["fo", "kl", "se", "de", "constructor"]) assert.equal(isPreviewLocale(locale), false);
+  for (const locale of ["fo", "kl", "se", "fr", "pt", "es", "de", "constructor"]) assert.equal(isPreviewLocale(locale), false);
 });
 
 test("city substitution preserves the actual city and never changes search identity", () => {

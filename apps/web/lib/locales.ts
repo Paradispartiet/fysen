@@ -11,6 +11,10 @@ export const locales = {
   kl: { label: "Kalaallisut", intl: "kl-GL" },
   se: { label: "Davvisámegiella", intl: "se" },
   en: { label: "English", intl: "en" },
+  fr: { label: "Français", intl: "fr-FR" },
+  pt: { label: "Português", intl: "pt-PT" },
+  es: { label: "Español", intl: "es-ES" },
+  de: { label: "Deutsch", intl: "de-DE" },
 } as const;
 
 export type Locale = keyof typeof locales;
