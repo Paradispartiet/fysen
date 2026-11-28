@@ -1,0 +1,5 @@
+Chicken Biryani in plate — Chinchu.c / Wikimedia Commons
+Original: https://commons.wikimedia.org/wiki/File:Chicken_Biryani_in_plate.jpg
+License: CC BY-SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
+Changes: manual background isolation, crop and AVIF encoding; thumbnail resize only. Adapted files are distributed under CC BY-SA 4.0. Representative editorial image, not a Fysen restaurant photograph.

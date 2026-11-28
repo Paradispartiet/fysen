@@ -1059,6 +1059,32 @@
       "aiMaskProcessed": true,
       "generatedFoodPixels": false,
       "upscaled": false
+    },
+    {
+      "id": "biryani",
+      "label": "Kyllingbiryani med tilbehør",
+      "query": "biryani",
+      "index": 44,
+      "atlas": "biryani-thumb-512.avif",
+      "surface": "Matlyst",
+      "kind": "Redaksjonelt rettfoto",
+      "catalogId": "biryani",
+      "variantCaution": "Kyllingbiryani med papadum og tilbehør. Én regional serveringsvariant; ikke restaurantfoto fra Fysen. Ingredienser og allergener kan ikke utledes fra bildet.",
+      "largeSource": "biryani-master-3075.avif",
+      "largeSourceOriginalPath": "assets/fysen-dish-originals/biryani.png",
+      "largeSourceNativeWidth": 3075,
+      "largeSourceNativeHeight": 3000,
+      "largeSourceMethod": "independent-original",
+      "largeViewEnabled": true,
+      "largeSourceSha256": "931d30910c0bdce723f62c5c8c318b67c12f73f3f1e1d8095d033855e78fdfec",
+      "largeSourceOriginalSha256": "d4d4d48770f7ae11b9c1a9c514934c9affcc7c6fce43c6442cf6501d2cbe416c",
+      "largeSourceReview": "docs/fysen-image-reviews/biryani.md",
+      "photoCredit": "Chinchu.c / Wikimedia Commons · CC BY-SA 4.0 · manuell frilegging",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Chicken_Biryani_in_plate.jpg",
+      "photoLicense": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "photoLicenseNotice": "/dish-images/biryani-LICENSE.txt",
+      "generatedFoodPixels": false,
+      "upscaled": false
     }
   ]
 }
