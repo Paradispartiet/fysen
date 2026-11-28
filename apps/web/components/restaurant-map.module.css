@@ -52,3 +52,9 @@
 .scenes img { display: block; width: 100%; height: auto; max-height: 260px; object-fit: contain; object-position: left center; background: #F4F0E8; border-radius: 5px; }
 .scenes figcaption { display: grid; gap: 4px; padding-top: 5px; font-size: .8rem; color: #69675F; }
 .scenes figcaption span { line-height: 1.5; }
+
+.fullMenu { flex: 1 0 100%; min-width: 0; display: grid; gap: 10px; }
+.fullMenu ul { margin: 0; padding: 0; list-style: none; }
+.fullMenu li { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 5px 12px; padding: 10px 0; border-bottom: 1px solid #ded7cc; }
+.fullMenu li small { grid-column: 1 / -1; color: #69675F; }
+.fullMenu p { font-size: .9rem; }
