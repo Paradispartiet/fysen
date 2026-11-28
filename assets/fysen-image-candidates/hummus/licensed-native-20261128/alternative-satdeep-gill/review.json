@@ -1,0 +1,19 @@
+{
+  "id": "hummus",
+  "filename": "Homemade_hummus_and_pita_03.jpg",
+  "photographer": "Satdeep Gill",
+  "size": [
+    4000,
+    3000
+  ],
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "variant": "Hummus with pita",
+  "slot": "alternative-satdeep-gill",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Homemade_hummus_and_pita_03.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Homemade_hummus_and_pita_03.jpg",
+  "source_sha256": "a86bf1e9d0b527e48df6ad64f56f0b66a40781350532983343ea518897f07aa6",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false
+}

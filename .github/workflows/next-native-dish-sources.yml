@@ -1,0 +1,34 @@
+name: Fysen native sources (next dishes, review only)
+on:
+  push:
+    branches: [art/next-native-dish-sources-20261128]
+    paths:
+      - scripts/stage-next-native-dish-sources.py
+      - .github/workflows/next-native-dish-sources.yml
+permissions:
+  contents: write
+jobs:
+  source-review:
+    if: github.repository == 'Paradispartiet/fysen' && github.ref == 'refs/heads/art/next-native-dish-sources-20261128'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install Pillow==11.3.0
+      - run: python scripts/stage-next-native-dish-sources.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: next-native-originals-review
+          path: assets/fysen-image-candidates/*/licensed-native-20261128/
+          retention-days: 7
+      - name: Commit source evidence only on this review branch
+        run: |
+          test "$GITHUB_REF" = refs/heads/art/next-native-dish-sources-20261128
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fysen-image-candidates/*/licensed-native-20261128/
+          git commit -m "Stage licensed originals for visual review"
+          git push origin HEAD:refs/heads/art/next-native-dish-sources-20261128

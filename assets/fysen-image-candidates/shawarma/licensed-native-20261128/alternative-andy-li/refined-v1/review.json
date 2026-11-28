@@ -1,0 +1,36 @@
+{
+  "id": "shawarma",
+  "filename": "Handmade_Chicken_Shawarma_Wrap_-_Lavash.jpg",
+  "photographer": "Andy Li",
+  "size": [
+    4032,
+    3024
+  ],
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "variant": "Chicken shawarma wrap",
+  "slot": "alternative-andy-li",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Handmade_Chicken_Shawarma_Wrap_-_Lavash.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Handmade_Chicken_Shawarma_Wrap_-_Lavash.jpg",
+  "source_sha256": "cd9385263df218171e023358f1f467037125e169138fff1476af1133a16aec13",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "native_crop": [
+    343,
+    170,
+    3694,
+    2899
+  ],
+  "native_size": [
+    3351,
+    2729
+  ],
+  "sha256": {
+    "shawarma.png": "56c4096a7cae992e422132d20b48e343fbe0448ea4b5bd7b945a02ebd3f87401",
+    "native-mask.png": "04ccbe7a5bcf033f9b29335bcf7e6ede9d369553eb69846d285d352d7ad5b074",
+    "shawarma-master-3351.avif": "2ddfe5b2b7b077ff822d38a8b33844c046b6f157f55038da261591000541d32b",
+    "shawarma-thumb-512.avif": "d26b810ee45129b147ae8dc09f9e0e44160dab610b217cd4de601bfe6948684e"
+  },
+  "modification": "Manual native-resolution plate contour; no upscale or generated food pixels"
+}
