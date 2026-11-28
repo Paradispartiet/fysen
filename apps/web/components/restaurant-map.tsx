@@ -6,6 +6,7 @@ import { fysenMapFrame } from "../lib/fysen-map-frame";
 import { withPublicBasePath } from "../lib/public-path";
 import type { MapEvidenceBySlug } from "../lib/map-menu-evidence";
 import styles from "./restaurant-map.module.css";
+import { MapRestaurantArtwork } from "./map-restaurant-artwork";
 
 export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: readonly CoordinateRow[]; dishQuery?: string; evidence?: MapEvidenceBySlug }) {
   const frame = useRef<HTMLIFrameElement>(null);
@@ -135,11 +136,12 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {} }: { rows: r
         {current && <article className={styles.selected} aria-live="polite">
           <div><h2>{current.properties.name}</h2><p>{current.properties.address}</p></div>
           <button type="button" onClick={() => setSelected(null)} aria-label="Lukk restaurantkort">Lukk</button>
+          <MapRestaurantArtwork key={current.id} restaurant={current.properties} />
           {currentEvidence.length > 0 && <ul className={styles.evidence}>
             {currentEvidence.map((entry, index) => <li key={entry.sourceUrl + entry.name + index}>
-              <strong>{entry.name}{entry.price ? " · " + entry.price : ""}</strong>
+              {entry.origin !== "catalog" && <strong>{entry.name}{entry.price ? " · " + entry.price : ""}</strong>}
               {entry.date && <span>{entry.origin === "archive" ? "Meny sist registrert" : "Meny sist kontrollert"} <time dateTime={entry.date}>{entry.date.slice(0, 10)}</time></span>}
-              <a href={entry.sourceUrl} target="_blank" rel="noreferrer">{entry.origin === "catalog" ? "Registrert menykilde" : "Se meny"} ↗</a>
+              <a href={entry.sourceUrl} target="_blank" rel="noreferrer">{"Se meny"} ↗</a>
             </li>)}
           </ul>}
           <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(current.geometry.coordinates.slice().reverse().join(","))}`} target="_blank" rel="noreferrer">Veibeskrivelse ↗</a>
