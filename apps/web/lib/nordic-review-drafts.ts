@@ -480,7 +480,7 @@ export const draftArcticKnowledge = {
   }
 } as const satisfies Record<"kl" | "se", Record<KnowledgeKey,string>>;
 
-// Unreviewed display-only copy; missing keys are intentional.
+// Unreviewed full dictionary; never activate without native-language review.
 export const draftArcticBrowse = {
   "kl": {
     "allCity": "{city}: nerisassat tamarmik",
@@ -611,7 +611,7 @@ export const draftArcticBrowse = {
 } as const satisfies Record<"kl" | "se", Record<BrowseKey,string>>;
 
 
-// Unreviewed display-only copy; missing keys are intentional.
+// Unreviewed full dictionary; never activate without native-language review.
 export const draftArcticPages = {
   "kl": {
     "myFood": "Nerisassakka",
@@ -638,7 +638,48 @@ export const draftArcticPages = {
     "saving": "Toqqorneqarpoq …",
     "savedTo": "Nerisassakka-ni toqqorneqarpoq",
     "saveRetry": "Toqqoqqinniarlugu misiliguuk",
-    "save": "Nerisassakka-ni toqqoruk"
+    "save": "Nerisassakka-ni toqqoruk",
+    "collect": "Nerisassat eqqaamarusutat katersukkit. Ujarnerit oqaluttuarisaanerat uani toqqorneqanngilaq AHA-milu kinaassutsinnut atassuserneqarani.",
+    "paused": "Nerisassakka kingusinnerusukkut misilinneqartussatut pilersaarutaavoq, maannalu nutaanik isertoqarsinnaanngilaq.",
+    "handoffFailed": "Ingerlatitseqqinnermut atassut atorneqarsinnaanngilaq",
+    "handoffHelp": "Atassut pisoqalisoorsimasinnaavoq imaluunniit atorneqareersimasinnaalluni. Katersatit Nerisassakka-mi suli isumannaatsumik toqqorsimapput; ataasiarluni atorneqarsinnaasumik nutaamik atassusiiniarlutit misileqqiguk.",
+    "pilotPaused": "Misiliineq unitsikkallarneqarpoq",
+    "searchStill": "Suli nerisassanik ujaasinnaavutit Oslomilu neriniartarfiit nassaarisinnaallugit.",
+    "takeCollection": "Katersatit nassakkit",
+    "signInHelp": "AHA atorlugu iserit, atortuni assigiinngitsuni nerisassat toqqorsinnaaniarlugit AHA-milu katersavit qaqugu misissoqqissaarneqarnissaat toqqarsinnaaniarlugu.",
+    "signIn": "AHA atorlugu iserit",
+    "privacy": "Fysen Nerisassakka-mut AHA-mi kinaassutsimik taaguummik ilumoortuunngitsumik pissarsisarpoq. Tamanna Restaurant Claim-imut imaluunniit Fysen Pro-mut isersinnaatitsinngisaannarpoq.",
+    "emptyHelp": "Nerisassaq ujaruk, inernerlu toqqorusutat pillugu «Nerisassakka-ni toqqoruk» toqqaruk.",
+    "emptyPaused": "Nerisassanik toqqorsimasoqanngilaq. Nutaanik toqqorsineq unitsikkallarneqarpoq.",
+    "handoffLabel": "Ingerlatitseqqinneq nammineq toqqagaq",
+    "analyzeTitle": "Katersatit AHA-mi misissuataakkit",
+    "analyzeHelp": "Toortagaangavit Nerisassakka-miittut amerlanerpaamik 50-it kisimik ingerlateqqinneqartarput. Misissueqqissaarnissaq toqqartinnagu AHA nutaamik siumoortumik takutitsisarpoq.",
+    "analyze": "AHA-mi misissoqqissaaruk",
+    "logoutBusy": "Anisoqarpoq …",
+    "logout": "AHA-mut atassut kipiguk",
+    "removeError": "Nerisassaq piiarneqarsinnaanngilaq.",
+    "aboutLead": "Fysen nerisassaq nererusutat tunngavigalugu neriniartarfinnik nassaarnissamut, neriniartarfiullu nammineq nerisassaatinik misissuinissamut ikiortaraatit.",
+    "matchesTitle": "Nerisassaatini ujarnerup inerneri ima paasineqassapput",
+    "matchesHelp": "Nerisassaatini paasissutissat allanngorsinnaapput. Aallartinnak akit, ammasarfiit nerisassallu pissarsiarineqarsinnaanerat neriniartarfiup nammineq nerisassaatini tamatigut misissukkit.",
+    "menusTitle": "Nerisassaatini paasissutissat pillugit",
+    "menusHelp": "Fysen neriniartarfiit tamanut ammasumik nerisassaatini nerisassanik akiinillu katersisarpoq. Nerisassaatit ingerlaavartumik misissorlugillu nutartertarpavut. Ujarneq nalinginnaasoq inerneqanngippat Fysen aamma nerisassaatinit paasissutissat pitsaassusii misissorneqarsimasut atortarpai.",
+    "notRealtime": "Nerisassaatini ujarnerup inernera nerisassaq maannakkorpiaq sassaalliutigineqartoq uppernarsaatiginngilaa. Misissuineritta akornanni neriniartarfiit neqeroorutit, akit ammasarfiillu allanngortissinnaavaat. Taamaattumik neriniartarfiup nammineq nerisassaatini misissukkit.",
+    "established": "Paasissutissat katersorneqarnerat: {date}",
+    "updated": "Indeksi kingullermik nutarterneqarpoq: {date}",
+    "datesHelp": "Nerisassaatinut paasissutissarsiffiit ataasiakkaat indeksimit allaanerusumik misissuinermut ullulerneqarsinnaapput.",
+    "noLocation": "Internetimut alakkarterutivit sumiissuseq tapersersunngilaa.",
+    "denied": "Sumiissuseq avinneqanngilaq. Taanna atornagu suli ujaasinnaavutit.",
+    "unavailable": "Sumiissutsit maanna pissarsiarisinnaanngilarput.",
+    "locating": "Sumiissuseq pissarsiarineqarpoq …",
+    "useLocation": "Sumiissusera atoruk",
+    "active": "Ujarnerni sumiissuseq atorneqassaaq",
+    "clear": "Sumiissuseq piiaruk",
+    "count": "Nerisassaatini inernerit {count}",
+    "countLimited": "Inernerit pissarsiarineqartut akornanni nerisassaatini inernerit {count}",
+    "noExact": "Naapertuuttut nassaassaanngillat",
+    "noResults": "Inerneqanngilaq",
+    "searchError": "Ujarneq maanna ingerlanngilaq.",
+    "noQueryMatches": "«{query}» pillugu inerneqanngilaq"
   },
   "se": {
     "myFood": "Mu borramušat",
@@ -665,12 +706,53 @@ export const draftArcticPages = {
     "saving": "Vurkejuvvo …",
     "savedTo": "Vurkejuvvon Mu borramušat -čoakkáldahkii",
     "saveRetry": "Geahččal vurket fas",
-    "save": "Vurke Mu borramušat -čoakkáldahkii"
+    "save": "Vurke Mu borramušat -čoakkáldahkii",
+    "collect": "Čohkke borramušaid maid háliidat muitit. Du ohcanhistorjá ii vurkejuvvo dása iige čatno du AHA-identitehtii.",
+    "paused": "Mu borramušat lea maŋit pilottaprošeakta, ja dál ii leat rabas ođđa sisaloggemii.",
+    "handoffFailed": "Sirdinliŋkka ii sáhttán geavahit",
+    "handoffHelp": "Liŋka sáhttá leat boarásnuvvan dahje juo geavahuvvon. Du čoakkáldat lea ain sihkkaris Mu borramušain; geahččal fas ráhkadit ođđa oktageardánliŋkka.",
+    "pilotPaused": "Pilottaprošeakta lea gaskaboddosaččat bissehuvvon",
+    "searchStill": "Sáhtát ain ohcat borramušaid ja gávdnat restauráŋŋaid Oslos.",
+    "takeCollection": "Váldde čoakkáldat mielde",
+    "signInHelp": "Logge sisa AHA bokte vai sáhtát vurket borramušaid iešguđetlágan ovttadagain ja válljet goas háliidat analyserejet čoakkáldaga AHAs.",
+    "signIn": "Logge sisa AHA bokte",
+    "privacy": "Fysen oažžu pseudonyma AHA-identitehta Mu borramušaid várás. Dát ii atte goassege beassama Restaurant Claimii dahje Fysen Pro:i.",
+    "emptyHelp": "Oza borramuša ja vállje «Vurke Mu borramušat -čoakkáldahkii» dan bohtosii maid háliidat vurket.",
+    "emptyPaused": "Dus eai leat vurkejuvvon borramušat. Ođđa vurken lea gaskaboddosaččat bissehuvvon.",
+    "handoffLabel": "Čielga válljejuvvon sirdin",
+    "analyzeTitle": "Suokkardala čoakkáldaga AHAs",
+    "analyzeHelp": "Dušše dat eanemustá 50 borramuša mat leat Mu borramušain go deaddilat, sirdásit viidáset. AHA čájeha ođđa ovdačájeheami ovdal go válljet analysa.",
+    "analyze": "Analysere AHAs",
+    "logoutBusy": "Loggemin olggos …",
+    "logout": "Boatkke oktavuođa AHAi",
+    "removeError": "Borramuša ii sáhttán sihkkut.",
+    "aboutLead": "Fysen veahkeha du gávdnat restauráŋŋaid dan borramuša vuođul maid háliidat borrat, ja dahká álkit dárkkistit restauráŋŋa iežas borramušlisttu.",
+    "matchesTitle": "Nu doibmet borramušlistaohcanbohtosat",
+    "matchesHelp": "Borramušlisttuid dieđut sáhttet rievdat. Dárkkis álo restauráŋŋa iežas borramušlisttu hatti, rabasáiggiid ja olámuttusvuođa dáfus ovdal go manat.",
+    "menusTitle": "Borramušlisttuid dieđuid birra",
+    "menusHelp": "Fysen čohkke borramušaid ja hattiid almmolaš restauráŋŋaborramušlisttuin. Mii dárkkistit ja ođasmahttit listtuid dađistaga. Go dábálaš ohcanbálvalusas eai leat olámuttus bohtosat, Fysen geavaha maid iežas kvalitehtadárkkistuvvon borramušlistodieđuid.",
+    "notRealtime": "Borramušlistaohcanbohtos ii leat áigeguovdilis duođaštus das ahte borramuš lea fálus aiddo dál. Restauráŋŋat sáhttet rievdadit fálaldaga, hattiid ja rabasáiggiid min dárkkistemiid gaskkas. Dárkkis danin restauráŋŋa iežas borramušlisttu.",
+    "established": "Vuođđu ásahuvvon: {date}",
+    "updated": "Indeavssa maŋemus ođasmahttin: {date}",
+    "datesHelp": "Juohke borramušlistogáldus sáhttá leat eará dárkkistanbeaivi go indeavssas.",
+    "noLocation": "Du fierbmebláđđi ii doarjjo báikedieđuid.",
+    "denied": "Báikediehtu ii juogaduvvon. Sáhtát ain ohcat dan haga.",
+    "unavailable": "Ii sáhttán viežžat du báikedieđu dál.",
+    "locating": "Viežžamin báikedieđu …",
+    "useLocation": "Geavat mu báikedieđu",
+    "active": "Báikediehtu geavahuvvo ohcamis",
+    "clear": "Sihko báikedieđu",
+    "count": "{count} borramušlistaohcanbohtosa",
+    "countLimited": "{count} borramušlistaohcanbohtosa viežžon bohtosiid gaskkas",
+    "noExact": "Eai leat dárkilis bohtosat",
+    "noResults": "Eai leat bohtosat",
+    "searchError": "Ohcan ii doaimma dál.",
+    "noQueryMatches": "Eai leat bohtosat ohcamii «{query}»"
   }
-} as const satisfies Record<"kl" | "se", Partial<Record<PageKey,string>>>;
+} as const satisfies Record<"kl" | "se", Record<PageKey,string>>;
 
 
-// Unreviewed display-only copy; missing keys are intentional.
+// Unreviewed full dictionary; never activate without native-language review.
 export const draftArcticVisuals = {
   "kl": {
     "kicker": "Nererusunneq · Isumassarsiorneq",
