@@ -80,3 +80,12 @@ test('Stortingsgata photo stays on its own branch with credit', () => {
  assert.equal(make('Stortingsgata 40'), null);
  assert.equal(make('Rolf Hofmos gate 34'), null);
 });
+
+test('Lorry photo retains its own year and license', () => {
+ const p = restaurantVisuals({name:'Lorry Restaurant', address:'Parkveien 12, 0350 Oslo'});
+ assert.ok(p);
+ assert.equal(p.photoCredit, 'Helge Høifødt');
+ assert.equal(p.photoDate, '2020-04-22');
+ assert.match(p.licenseUrl, /4\.0/u);
+ assert.equal(restaurantVisuals({name:'Lorry Restaurant',address:'Parkveien 120'}),null);
+});
