@@ -3129,5 +3129,1596 @@ export const draftInternationalArticles = {
         "Dünne Kalbfleischscheiben nicht zu lange braten."
       ]
     }
+  },
+  "cannoli": {
+    "en": {
+      "overview": "Fried shells are filled with a cream of drained ricotta.",
+      "history": "Cannoli are a familiar part of Sicily’s pastry-making tradition.",
+      "flavor": "Crisp shell and mild, creamy sweetness.",
+      "technique": "Drain the ricotta and fill the shells just before serving.",
+      "essentials": [
+        "12 ready-made cannoli shells",
+        "500 g ricotta",
+        "100 g icing sugar"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 20 min + draining",
+        "ingredients": [
+          "12 ready-made cannoli shells",
+          "500 g ricotta",
+          "100 g icing sugar",
+          "50 g dark chocolate",
+          "pistachios"
+        ],
+        "steps": [
+          "Drain the ricotta in the refrigerator.",
+          "Mix until smooth with icing sugar and chopped chocolate.",
+          "Fill the shells using a piping bag.",
+          "Decorate the ends with chopped pistachios."
+        ]
+      },
+      "variants": [
+        "Fill with candied orange peel or chocolate."
+      ],
+      "serving": [
+        "Serve freshly filled as a dessert."
+      ],
+      "commonMistakes": [
+        "Do not fill the shells long before serving."
+      ]
+    },
+    "fr": {
+      "overview": "Les coques frites sont garnies d’une crème de ricotta égouttée.",
+      "history": "Les cannoli font partie de la tradition pâtissière sicilienne.",
+      "flavor": "Coque croustillante et douceur crémeuse et délicate.",
+      "technique": "Égoutter la ricotta et garnir les coques juste avant de servir.",
+      "essentials": [
+        "12 coques de cannoli prêtes à garnir",
+        "500 g de ricotta",
+        "100 g de sucre glace"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 20 min + égouttage",
+        "ingredients": [
+          "12 coques de cannoli prêtes à garnir",
+          "500 g de ricotta",
+          "100 g de sucre glace",
+          "50 g de chocolat noir",
+          "pistaches"
+        ],
+        "steps": [
+          "Laisser égoutter la ricotta au réfrigérateur.",
+          "Mélanger jusqu’à obtenir une texture lisse avec le sucre glace et le chocolat haché.",
+          "Garnir les coques à l’aide d’une poche à douille.",
+          "Décorer les extrémités de pistaches hachées."
+        ]
+      },
+      "variants": [
+        "Garnir d’écorces d’orange confites ou de chocolat."
+      ],
+      "serving": [
+        "Servir en dessert, juste après avoir garni les coques."
+      ],
+      "commonMistakes": [
+        "Ne pas garnir les coques longtemps à l’avance."
+      ]
+    },
+    "pt": {
+      "overview": "Os tubos fritos são recheados com um creme de ricotta escorrida.",
+      "history": "Os cannoli fazem parte da tradição de pastelaria siciliana.",
+      "flavor": "Casca crocante e doçura suave e cremosa.",
+      "technique": "Deixe escorrer a ricotta e recheie os tubos imediatamente antes de servir.",
+      "essentials": [
+        "12 tubos de cannoli já preparados",
+        "500 g de ricotta",
+        "100 g de açúcar em pó"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 20 min + tempo para escorrer",
+        "ingredients": [
+          "12 tubos de cannoli já preparados",
+          "500 g de ricotta",
+          "100 g de açúcar em pó",
+          "50 g de chocolate negro",
+          "pistácios"
+        ],
+        "steps": [
+          "Deixe a ricotta escorrer no frigorífico.",
+          "Misture com o açúcar em pó e o chocolate picado até obter uma textura lisa.",
+          "Recheie os tubos com um saco de pasteleiro.",
+          "Decore as extremidades com pistácios picados."
+        ]
+      },
+      "variants": [
+        "Recheie com casca de laranja cristalizada ou chocolate."
+      ],
+      "serving": [
+        "Sirva como sobremesa, acabados de rechear."
+      ],
+      "commonMistakes": [
+        "Não recheie os tubos com muita antecedência."
+      ]
+    },
+    "es": {
+      "overview": "Los tubos fritos se rellenan con una crema de ricotta escurrida.",
+      "history": "Los cannoli forman parte de la tradición pastelera siciliana.",
+      "flavor": "Cubierta crujiente y dulzor suave y cremoso.",
+      "technique": "Escurre la ricotta y rellena los tubos justo antes de servir.",
+      "essentials": [
+        "12 tubos de cannoli preparados",
+        "500 g de ricotta",
+        "100 g de azúcar glas"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 20 min + escurrido",
+        "ingredients": [
+          "12 tubos de cannoli preparados",
+          "500 g de ricotta",
+          "100 g de azúcar glas",
+          "50 g de chocolate negro",
+          "pistachos"
+        ],
+        "steps": [
+          "Deja escurrir la ricotta en el frigorífico.",
+          "Mezcla hasta obtener una crema lisa con el azúcar glas y el chocolate picado.",
+          "Rellena los tubos con una manga pastelera.",
+          "Decora los extremos con pistachos picados."
+        ]
+      },
+      "variants": [
+        "Rellena con piel de naranja confitada o chocolate."
+      ],
+      "serving": [
+        "Sirve como postre, recién rellenos."
+      ],
+      "commonMistakes": [
+        "No rellenes los tubos con demasiada antelación."
+      ]
+    },
+    "de": {
+      "overview": "Frittierte Hüllen werden mit einer Creme aus abgetropftem Ricotta gefüllt.",
+      "history": "Cannoli sind ein bekannter Bestandteil der sizilianischen Konditoreitradition.",
+      "flavor": "Knusprige Hülle und milde, cremige Süße.",
+      "technique": "Ricotta abtropfen lassen und die Hüllen erst kurz vor dem Servieren füllen.",
+      "essentials": [
+        "12 fertige Cannoli-Hüllen",
+        "500 g Ricotta",
+        "100 g Puderzucker"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 20 Min. + Abtropfzeit",
+        "ingredients": [
+          "12 fertige Cannoli-Hüllen",
+          "500 g Ricotta",
+          "100 g Puderzucker",
+          "50 g Zartbitterschokolade",
+          "Pistazien"
+        ],
+        "steps": [
+          "Ricotta im Kühlschrank abtropfen lassen.",
+          "Mit Puderzucker und gehackter Schokolade glatt rühren.",
+          "Die Hüllen mit einem Spritzbeutel füllen.",
+          "Die Enden mit gehackten Pistazien verzieren."
+        ]
+      },
+      "variants": [
+        "Mit kandierter Orangenschale oder Schokolade füllen."
+      ],
+      "serving": [
+        "Frisch gefüllt als Dessert servieren."
+      ],
+      "commonMistakes": [
+        "Die Hüllen nicht lange vor dem Servieren füllen."
+      ]
+    }
+  },
+  "quesadilla": {
+    "en": {
+      "overview": "Cheese is common, but the filling and use of cheese vary by region.",
+      "history": "Quesadillas exist in many forms in everyday Mexican cooking and street food.",
+      "flavor": "Toasted tortilla with juicy filling and, optionally, melted cheese.",
+      "technique": "Cook over medium heat so the tortilla does not burn before the filling is hot.",
+      "essentials": [
+        "8 tortillas",
+        "250 g cheese suitable for melting",
+        "150 g mushrooms"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–45 min",
+        "ingredients": [
+          "8 tortillas",
+          "250 g cheese suitable for melting",
+          "150 g mushrooms",
+          "1 onion",
+          "oil",
+          "salsa"
+        ],
+        "steps": [
+          "Fry the mushrooms and onion until the liquid has evaporated.",
+          "Place the filling and cheese on the tortillas.",
+          "Fold and cook on both sides.",
+          "Cut into pieces and serve with salsa."
+        ]
+      },
+      "variants": [
+        "Fillings can include mushrooms, squash blossoms or meat; cheese is not required everywhere."
+      ],
+      "serving": [
+        "Serve with salsa and, if desired, guacamole."
+      ],
+      "commonMistakes": [
+        "Avoid overly wet or excessive filling."
+      ]
+    },
+    "fr": {
+      "overview": "Le fromage est courant, mais la garniture et l’utilisation du fromage varient selon les régions.",
+      "history": "Les quesadillas se déclinent sous de nombreuses formes dans la cuisine quotidienne et de rue mexicaine.",
+      "flavor": "Tortilla grillée à la garniture juteuse, éventuellement avec du fromage fondu.",
+      "technique": "Cuire à feu moyen pour éviter que la tortilla brûle avant que la garniture soit chaude.",
+      "essentials": [
+        "8 tortillas",
+        "250 g de fromage à faire fondre",
+        "150 g de champignons"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–45 min",
+        "ingredients": [
+          "8 tortillas",
+          "250 g de fromage à faire fondre",
+          "150 g de champignons",
+          "1 oignon",
+          "huile",
+          "salsa"
+        ],
+        "steps": [
+          "Faire revenir les champignons et l’oignon jusqu’à évaporation du liquide.",
+          "Répartir la garniture et le fromage sur les tortillas.",
+          "Plier et faire dorer des deux côtés.",
+          "Découper et servir avec de la salsa."
+        ]
+      },
+      "variants": [
+        "La garniture peut contenir des champignons, des fleurs de courge ou de la viande ; le fromage n’est pas obligatoire partout."
+      ],
+      "serving": [
+        "Servir avec de la salsa et éventuellement du guacamole."
+      ],
+      "commonMistakes": [
+        "Éviter une garniture trop humide ou trop abondante."
+      ]
+    },
+    "pt": {
+      "overview": "O queijo é comum, mas o recheio e o uso de queijo variam consoante a região.",
+      "history": "As quesadillas existem em muitas formas na cozinha quotidiana e na comida de rua mexicanas.",
+      "flavor": "Tortilha tostada com recheio suculento e, eventualmente, queijo derretido.",
+      "technique": "Cozinhe em lume médio para que a tortilha não queime antes de o recheio estar quente.",
+      "essentials": [
+        "8 tortilhas",
+        "250 g de queijo para derreter",
+        "150 g de cogumelos"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–45 min",
+        "ingredients": [
+          "8 tortilhas",
+          "250 g de queijo para derreter",
+          "150 g de cogumelos",
+          "1 cebola",
+          "óleo",
+          "salsa"
+        ],
+        "steps": [
+          "Salteie os cogumelos e a cebola até o líquido evaporar.",
+          "Coloque o recheio e o queijo nas tortilhas.",
+          "Dobre e cozinhe dos dois lados.",
+          "Corte em pedaços e sirva com salsa."
+        ]
+      },
+      "variants": [
+        "O recheio pode incluir cogumelos, flores de abóbora ou carne; o queijo não é obrigatório em todas as regiões."
+      ],
+      "serving": [
+        "Sirva com salsa e, se desejar, guacamole."
+      ],
+      "commonMistakes": [
+        "Evite um recheio demasiado húmido ou abundante."
+      ]
+    },
+    "es": {
+      "overview": "El queso es habitual, pero el relleno y el uso de queso varían según la región.",
+      "history": "Las quesadillas tienen muchas formas en la cocina cotidiana y callejera mexicana.",
+      "flavor": "Tortilla tostada con relleno jugoso y, en su caso, queso fundido.",
+      "technique": "Cocina a fuego medio para que la tortilla no se queme antes de que el relleno esté caliente.",
+      "essentials": [
+        "8 tortillas",
+        "250 g de queso para fundir",
+        "150 g de setas"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–45 min",
+        "ingredients": [
+          "8 tortillas",
+          "250 g de queso para fundir",
+          "150 g de setas",
+          "1 cebolla",
+          "aceite",
+          "salsa"
+        ],
+        "steps": [
+          "Saltea las setas y la cebolla hasta que se evapore el líquido.",
+          "Coloca el relleno y el queso sobre las tortillas.",
+          "Dobla y cocina por ambos lados.",
+          "Corta en porciones y sirve con salsa."
+        ]
+      },
+      "variants": [
+        "El relleno puede ser de setas, flores de calabaza o carne; el queso no es obligatorio en todas partes."
+      ],
+      "serving": [
+        "Sirve con salsa y, si quieres, guacamole."
+      ],
+      "commonMistakes": [
+        "Evita un relleno demasiado húmedo o abundante."
+      ]
+    },
+    "de": {
+      "overview": "Käse ist üblich, doch Füllung und Verwendung von Käse unterscheiden sich regional.",
+      "history": "Quesadillas gibt es in vielen Formen in der mexikanischen Alltagsküche und beim Streetfood.",
+      "flavor": "Geröstete Tortilla mit saftiger Füllung und gegebenenfalls geschmolzenem Käse.",
+      "technique": "Bei mittlerer Hitze braten, damit die Tortilla nicht verbrennt, bevor die Füllung heiß ist.",
+      "essentials": [
+        "8 Tortillas",
+        "250 g gut schmelzender Käse",
+        "150 g Pilze"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–45 Min.",
+        "ingredients": [
+          "8 Tortillas",
+          "250 g gut schmelzender Käse",
+          "150 g Pilze",
+          "1 Zwiebel",
+          "Öl",
+          "Salsa"
+        ],
+        "steps": [
+          "Pilze und Zwiebel braten, bis die Flüssigkeit verdampft ist.",
+          "Füllung und Käse auf die Tortillas geben.",
+          "Zusammenklappen und beidseitig braten.",
+          "In Stücke schneiden und mit Salsa servieren."
+        ]
+      },
+      "variants": [
+        "Die Füllung kann aus Pilzen, Kürbisblüten oder Fleisch bestehen; Käse ist nicht überall Pflicht."
+      ],
+      "serving": [
+        "Mit Salsa und nach Wunsch Guacamole servieren."
+      ],
+      "commonMistakes": [
+        "Zu feuchte oder zu reichliche Füllung vermeiden."
+      ]
+    }
+  },
+  "bibimbap": {
+    "en": {
+      "overview": "The ingredients are prepared separately and mixed with rice at the table.",
+      "history": "Bibimbap has several regional forms, including in Jeonju.",
+      "flavor": "Hot, nutty and fresh, with contrasts between the vegetables.",
+      "technique": "Fry or blanch the vegetables separately.",
+      "essentials": [
+        "400 g cooked rice",
+        "200 g spinach",
+        "2 carrots"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–45 min",
+        "ingredients": [
+          "400 g cooked rice",
+          "200 g spinach",
+          "2 carrots",
+          "150 g bean sprouts",
+          "4 eggs",
+          "gochujang",
+          "sesame oil"
+        ],
+        "steps": [
+          "Prepare the vegetables separately and season with sesame oil.",
+          "Fry the eggs as desired.",
+          "Divide hot rice among bowls and add the vegetables and eggs.",
+          "Serve with gochujang and mix before eating."
+        ]
+      },
+      "variants": [
+        "Dolsot bibimbap is served in a hot stone bowl."
+      ],
+      "serving": [
+        "Serve with kimchi."
+      ],
+      "commonMistakes": [
+        "Avoid making all the vegetables soggy."
+      ]
+    },
+    "fr": {
+      "overview": "Les ingrédients sont préparés séparément et mélangés au riz à table.",
+      "history": "Le bibimbap existe en plusieurs versions régionales, notamment à Jeonju.",
+      "flavor": "Piquant, aux notes de noix et frais, avec des contrastes entre les légumes.",
+      "technique": "Faire sauter ou blanchir les légumes séparément.",
+      "essentials": [
+        "400 g de riz cuit",
+        "200 g d’épinards",
+        "2 carottes"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–45 min",
+        "ingredients": [
+          "400 g de riz cuit",
+          "200 g d’épinards",
+          "2 carottes",
+          "150 g de pousses de haricot",
+          "4 œufs",
+          "gochujang",
+          "huile de sésame"
+        ],
+        "steps": [
+          "Préparer les légumes séparément et assaisonner à l’huile de sésame.",
+          "Cuire les œufs à la poêle selon les préférences.",
+          "Répartir le riz chaud dans des bols et ajouter les légumes et les œufs.",
+          "Servir avec du gochujang et mélanger avant de manger."
+        ]
+      },
+      "variants": [
+        "Le dolsot bibimbap est servi dans un bol de pierre chaud."
+      ],
+      "serving": [
+        "Servir avec du kimchi."
+      ],
+      "commonMistakes": [
+        "Éviter de ramollir tous les légumes."
+      ]
+    },
+    "pt": {
+      "overview": "Os ingredientes são preparados separadamente e misturados com o arroz à mesa.",
+      "history": "O bibimbap tem várias formas regionais, nomeadamente em Jeonju.",
+      "flavor": "Picante, com notas de frutos secos e fresco, com contrastes entre os legumes.",
+      "technique": "Salteie ou escalde os legumes separadamente.",
+      "essentials": [
+        "400 g de arroz cozido",
+        "200 g de espinafres",
+        "2 cenouras"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–45 min",
+        "ingredients": [
+          "400 g de arroz cozido",
+          "200 g de espinafres",
+          "2 cenouras",
+          "150 g de rebentos de feijão",
+          "4 ovos",
+          "gochujang",
+          "óleo de sésamo"
+        ],
+        "steps": [
+          "Prepare os legumes separadamente e tempere com óleo de sésamo.",
+          "Estrele os ovos a gosto.",
+          "Distribua o arroz quente pelas tigelas e junte os legumes e os ovos.",
+          "Sirva com gochujang e misture antes de comer."
+        ]
+      },
+      "variants": [
+        "O dolsot bibimbap é servido numa tigela de pedra quente."
+      ],
+      "serving": [
+        "Sirva com kimchi."
+      ],
+      "commonMistakes": [
+        "Evite que todos os legumes fiquem demasiado moles."
+      ]
+    },
+    "es": {
+      "overview": "Los ingredientes se preparan por separado y se mezclan con el arroz en la mesa.",
+      "history": "El bibimbap tiene varias formas regionales, entre ellas la de Jeonju.",
+      "flavor": "Picante, con notas de frutos secos y fresco, con contrastes entre las verduras.",
+      "technique": "Saltea o escalda las verduras por separado.",
+      "essentials": [
+        "400 g de arroz cocido",
+        "200 g de espinacas",
+        "2 zanahorias"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–45 min",
+        "ingredients": [
+          "400 g de arroz cocido",
+          "200 g de espinacas",
+          "2 zanahorias",
+          "150 g de brotes de judía",
+          "4 huevos",
+          "gochujang",
+          "aceite de sésamo"
+        ],
+        "steps": [
+          "Prepara las verduras por separado y sazona con aceite de sésamo.",
+          "Fríe los huevos al gusto.",
+          "Reparte el arroz caliente en boles y añade las verduras y los huevos.",
+          "Sirve con gochujang y mezcla antes de comer."
+        ]
+      },
+      "variants": [
+        "El dolsot bibimbap se sirve en un bol de piedra caliente."
+      ],
+      "serving": [
+        "Sirve con kimchi."
+      ],
+      "commonMistakes": [
+        "Evita que todas las verduras queden demasiado blandas."
+      ]
+    },
+    "de": {
+      "overview": "Die Zutaten werden getrennt zubereitet und am Tisch mit dem Reis vermischt.",
+      "history": "Bibimbap gibt es in mehreren regionalen Varianten, unter anderem in Jeonju.",
+      "flavor": "Scharf, nussig und frisch, mit Kontrasten zwischen den Gemüsesorten.",
+      "technique": "Gemüse einzeln anbraten oder blanchieren.",
+      "essentials": [
+        "400 g gekochter Reis",
+        "200 g Spinat",
+        "2 Karotten"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–45 Min.",
+        "ingredients": [
+          "400 g gekochter Reis",
+          "200 g Spinat",
+          "2 Karotten",
+          "150 g Bohnensprossen",
+          "4 Eier",
+          "Gochujang",
+          "Sesamöl"
+        ],
+        "steps": [
+          "Gemüse getrennt zubereiten und mit Sesamöl abschmecken.",
+          "Eier nach Wunsch braten.",
+          "Heißen Reis auf Schalen verteilen und Gemüse und Eier daraufgeben.",
+          "Mit Gochujang servieren und vor dem Essen mischen."
+        ]
+      },
+      "variants": [
+        "Dolsot Bibimbap wird in einer heißen Steinschale serviert."
+      ],
+      "serving": [
+        "Mit Kimchi servieren."
+      ],
+      "commonMistakes": [
+        "Nicht alle Gemüsesorten weich werden lassen."
+      ]
+    }
+  },
+  "bulgogi": {
+    "en": {
+      "overview": "Soy sauce, garlic, sugar and sesame oil give the meat its characteristic flavour.",
+      "history": "Bulgogi is a familiar part of Korean barbecue.",
+      "flavor": "Slightly sweet, salty and roasted.",
+      "technique": "Slice the meat thinly across the grain and fry in small batches.",
+      "essentials": [
+        "500 g beef",
+        "3 tbsp soy sauce",
+        "1 tbsp sugar"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 25 min + marinating",
+        "ingredients": [
+          "500 g beef",
+          "3 tbsp soy sauce",
+          "1 tbsp sugar",
+          "2 garlic cloves",
+          "1 tbsp sesame oil",
+          "1 small pear",
+          "spring onions"
+        ],
+        "steps": [
+          "Grate the pear and mix the marinade.",
+          "Slice the meat thinly and marinate in the refrigerator for 30 minutes.",
+          "Fry in small batches until the meat is done.",
+          "Top with spring onions."
+        ]
+      },
+      "variants": [
+        "Versions with pork or a hot marinade also exist."
+      ],
+      "serving": [
+        "Serve with rice, lettuce leaves and banchan."
+      ],
+      "commonMistakes": [
+        "Do not overcrowd the frying pan."
+      ]
+    },
+    "fr": {
+      "overview": "La sauce soja, l’ail, le sucre et l’huile de sésame donnent à la viande sa saveur caractéristique.",
+      "history": "Le bulgogi fait partie des grillades coréennes classiques.",
+      "flavor": "Légèrement sucré, salé et grillé.",
+      "technique": "Couper la viande en fines tranches perpendiculairement aux fibres et la faire revenir par petites quantités.",
+      "essentials": [
+        "500 g de bœuf",
+        "3 c. à soupe de sauce soja",
+        "1 c. à soupe de sucre"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 25 min + marinade",
+        "ingredients": [
+          "500 g de bœuf",
+          "3 c. à soupe de sauce soja",
+          "1 c. à soupe de sucre",
+          "2 gousses d’ail",
+          "1 c. à soupe d’huile de sésame",
+          "1 petite poire",
+          "oignons nouveaux"
+        ],
+        "steps": [
+          "Râper la poire et mélanger la marinade.",
+          "Couper la viande en fines tranches et laisser mariner au réfrigérateur pendant 30 minutes.",
+          "Faire revenir par petites quantités jusqu’à ce que la viande soit cuite.",
+          "Garnir d’oignons nouveaux."
+        ]
+      },
+      "variants": [
+        "Il existe aussi des variantes au porc ou à la marinade piquante."
+      ],
+      "serving": [
+        "Servir avec du riz, des feuilles de laitue et des banchan."
+      ],
+      "commonMistakes": [
+        "Ne pas surcharger la poêle."
+      ]
+    },
+    "pt": {
+      "overview": "O molho de soja, o alho, o açúcar e o óleo de sésamo dão à carne o seu sabor característico.",
+      "history": "O bulgogi é uma parte conhecida do churrasco coreano.",
+      "flavor": "Ligeiramente doce, salgado e tostado.",
+      "technique": "Corte a carne em fatias finas contra as fibras e salteie em pequenas porções.",
+      "essentials": [
+        "500 g de carne de vaca",
+        "3 c. de sopa de molho de soja",
+        "1 c. de sopa de açúcar"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 25 min + marinada",
+        "ingredients": [
+          "500 g de carne de vaca",
+          "3 c. de sopa de molho de soja",
+          "1 c. de sopa de açúcar",
+          "2 dentes de alho",
+          "1 c. de sopa de óleo de sésamo",
+          "1 pera pequena",
+          "cebolinha verde"
+        ],
+        "steps": [
+          "Rale a pera e misture a marinada.",
+          "Corte a carne em fatias finas e deixe marinar no frigorífico durante 30 minutos.",
+          "Salteie em pequenas porções até a carne estar cozinhada.",
+          "Cubra com cebolinha verde."
+        ]
+      },
+      "variants": [
+        "Também existem variantes com carne de porco ou marinada picante."
+      ],
+      "serving": [
+        "Sirva com arroz, folhas de alface e banchan."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado a frigideira."
+      ]
+    },
+    "es": {
+      "overview": "La salsa de soja, el ajo, el azúcar y el aceite de sésamo dan a la carne su sabor característico.",
+      "history": "El bulgogi es un plato conocido de la parrillada coreana.",
+      "flavor": "Ligeramente dulce, salado y tostado.",
+      "technique": "Corta la carne en láminas finas a contrapelo y saltéala en tandas pequeñas.",
+      "essentials": [
+        "500 g de carne de vacuno",
+        "3 cucharadas de salsa de soja",
+        "1 cucharada de azúcar"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 25 min + marinado",
+        "ingredients": [
+          "500 g de carne de vacuno",
+          "3 cucharadas de salsa de soja",
+          "1 cucharada de azúcar",
+          "2 dientes de ajo",
+          "1 cucharada de aceite de sésamo",
+          "1 pera pequeña",
+          "cebolletas"
+        ],
+        "steps": [
+          "Ralla la pera y mezcla la marinada.",
+          "Corta la carne en láminas finas y deja marinar en el frigorífico durante 30 minutos.",
+          "Saltea en tandas pequeñas hasta que la carne esté hecha.",
+          "Añade cebolletas por encima."
+        ]
+      },
+      "variants": [
+        "También existen variantes con cerdo o marinada picante."
+      ],
+      "serving": [
+        "Sirve con arroz, hojas de lechuga y banchan."
+      ],
+      "commonMistakes": [
+        "No llenes demasiado la sartén."
+      ]
+    },
+    "de": {
+      "overview": "Sojasauce, Knoblauch, Zucker und Sesamöl geben dem Fleisch seinen typischen Geschmack.",
+      "history": "Bulgogi ist ein bekannter Bestandteil der koreanischen Grillküche.",
+      "flavor": "Süßlich, salzig und röstig.",
+      "technique": "Fleisch quer zur Faser dünn schneiden und portionsweise braten.",
+      "essentials": [
+        "500 g Rindfleisch",
+        "3 EL Sojasauce",
+        "1 EL Zucker"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 25 Min. + Marinierzeit",
+        "ingredients": [
+          "500 g Rindfleisch",
+          "3 EL Sojasauce",
+          "1 EL Zucker",
+          "2 Knoblauchzehen",
+          "1 EL Sesamöl",
+          "1 kleine Birne",
+          "Frühlingszwiebeln"
+        ],
+        "steps": [
+          "Birne reiben und die Marinade mischen.",
+          "Fleisch dünn schneiden und 30 Minuten im Kühlschrank marinieren.",
+          "Portionsweise braten, bis das Fleisch gar ist.",
+          "Mit Frühlingszwiebeln garnieren."
+        ]
+      },
+      "variants": [
+        "Es gibt auch Varianten mit Schweinefleisch oder scharfer Marinade."
+      ],
+      "serving": [
+        "Mit Reis, Salatblättern und Banchan servieren."
+      ],
+      "commonMistakes": [
+        "Die Pfanne nicht überfüllen."
+      ]
+    }
+  },
+  "japchae": {
+    "en": {
+      "overview": "The noodles are mixed with fried vegetables and, optionally, meat.",
+      "history": "Japchae is served both on festive occasions and as everyday food in Korea.",
+      "flavor": "Springy noodles, mild sweetness and sesame aroma.",
+      "technique": "Prepare the vegetables separately to preserve their texture.",
+      "essentials": [
+        "200 g dangmyeon",
+        "1 carrot",
+        "1 onion"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–45 min",
+        "ingredients": [
+          "200 g dangmyeon",
+          "1 carrot",
+          "1 onion",
+          "150 g spinach",
+          "100 g mushrooms",
+          "3 tbsp soy sauce",
+          "sesame oil",
+          "sugar"
+        ],
+        "steps": [
+          "Cook the noodles according to the packet instructions.",
+          "Fry the onion, carrot and mushrooms; blanch the spinach.",
+          "Mix the noodles with the vegetables, soy sauce and a little sugar.",
+          "Season with sesame oil."
+        ]
+      },
+      "variants": [
+        "Versions with beef or without meat."
+      ],
+      "serving": [
+        "Serve lukewarm or at room temperature as part of the meal."
+      ],
+      "commonMistakes": [
+        "Do not overcook the glass noodles."
+      ]
+    },
+    "fr": {
+      "overview": "Les nouilles sont mélangées à des légumes sautés et éventuellement à de la viande.",
+      "history": "Le japchae est servi en Corée aussi bien lors des fêtes qu’au quotidien.",
+      "flavor": "Nouilles élastiques, douceur légère et arôme de sésame.",
+      "technique": "Préparer les légumes séparément pour préserver leur texture.",
+      "essentials": [
+        "200 g de dangmyeon",
+        "1 carotte",
+        "1 oignon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–45 min",
+        "ingredients": [
+          "200 g de dangmyeon",
+          "1 carotte",
+          "1 oignon",
+          "150 g d’épinards",
+          "100 g de champignons",
+          "3 c. à soupe de sauce soja",
+          "huile de sésame",
+          "sucre"
+        ],
+        "steps": [
+          "Cuire les nouilles selon les instructions du paquet.",
+          "Faire revenir l’oignon, la carotte et les champignons ; blanchir les épinards.",
+          "Mélanger les nouilles avec les légumes, la sauce soja et un peu de sucre.",
+          "Assaisonner à l’huile de sésame."
+        ]
+      },
+      "variants": [
+        "Variantes au bœuf ou sans viande."
+      ],
+      "serving": [
+        "Servir tiède ou à température ambiante dans le cadre du repas."
+      ],
+      "commonMistakes": [
+        "Ne pas trop cuire les vermicelles translucides."
+      ]
+    },
+    "pt": {
+      "overview": "Os noodles são misturados com legumes salteados e, eventualmente, carne.",
+      "history": "O japchae é servido na Coreia tanto em ocasiões festivas como no quotidiano.",
+      "flavor": "Noodles elásticos, doçura suave e aroma de sésamo.",
+      "technique": "Prepare os legumes separadamente para preservar a textura.",
+      "essentials": [
+        "200 g de dangmyeon",
+        "1 cenoura",
+        "1 cebola"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–45 min",
+        "ingredients": [
+          "200 g de dangmyeon",
+          "1 cenoura",
+          "1 cebola",
+          "150 g de espinafres",
+          "100 g de cogumelos",
+          "3 c. de sopa de molho de soja",
+          "óleo de sésamo",
+          "açúcar"
+        ],
+        "steps": [
+          "Coza os noodles de acordo com as instruções da embalagem.",
+          "Salteie a cebola, a cenoura e os cogumelos; escalde os espinafres.",
+          "Misture os noodles com os legumes, o molho de soja e um pouco de açúcar.",
+          "Tempere com óleo de sésamo."
+        ]
+      },
+      "variants": [
+        "Variantes com carne de vaca ou sem carne."
+      ],
+      "serving": [
+        "Sirva morno ou à temperatura ambiente como parte da refeição."
+      ],
+      "commonMistakes": [
+        "Não coza demasiado os noodles de vidro."
+      ]
+    },
+    "es": {
+      "overview": "Los fideos se mezclan con verduras salteadas y, opcionalmente, carne.",
+      "history": "El japchae se sirve en Corea tanto en fiestas como en comidas cotidianas.",
+      "flavor": "Fideos elásticos, dulzor suave y aroma de sésamo.",
+      "technique": "Prepara las verduras por separado para conservar su textura.",
+      "essentials": [
+        "200 g de dangmyeon",
+        "1 zanahoria",
+        "1 cebolla"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–45 min",
+        "ingredients": [
+          "200 g de dangmyeon",
+          "1 zanahoria",
+          "1 cebolla",
+          "150 g de espinacas",
+          "100 g de setas",
+          "3 cucharadas de salsa de soja",
+          "aceite de sésamo",
+          "azúcar"
+        ],
+        "steps": [
+          "Cuece los fideos según las instrucciones del envase.",
+          "Saltea la cebolla, la zanahoria y las setas; escalda las espinacas.",
+          "Mezcla los fideos con las verduras, la salsa de soja y un poco de azúcar.",
+          "Sazona con aceite de sésamo."
+        ]
+      },
+      "variants": [
+        "Variantes con carne de vacuno o sin carne."
+      ],
+      "serving": [
+        "Sirve templado o a temperatura ambiente como parte de la comida."
+      ],
+      "commonMistakes": [
+        "No cuezas demasiado los fideos de cristal."
+      ]
+    },
+    "de": {
+      "overview": "Die Nudeln werden mit gebratenem Gemüse und gegebenenfalls Fleisch vermischt.",
+      "history": "Japchae wird in Korea sowohl zu Festen als auch im Alltag serviert.",
+      "flavor": "Elastische Nudeln, milde Süße und Sesamaroma.",
+      "technique": "Gemüse getrennt zubereiten, um die Konsistenz zu erhalten.",
+      "essentials": [
+        "200 g Dangmyeon",
+        "1 Karotte",
+        "1 Zwiebel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–45 Min.",
+        "ingredients": [
+          "200 g Dangmyeon",
+          "1 Karotte",
+          "1 Zwiebel",
+          "150 g Spinat",
+          "100 g Pilze",
+          "3 EL Sojasauce",
+          "Sesamöl",
+          "Zucker"
+        ],
+        "steps": [
+          "Nudeln nach Packungsanleitung kochen.",
+          "Zwiebel, Karotte und Pilze braten; Spinat blanchieren.",
+          "Nudeln mit Gemüse, Sojasauce und etwas Zucker mischen.",
+          "Mit Sesamöl abschmecken."
+        ]
+      },
+      "variants": [
+        "Varianten mit Rindfleisch oder ohne Fleisch."
+      ],
+      "serving": [
+        "Lauwarm oder bei Zimmertemperatur als Teil der Mahlzeit servieren."
+      ],
+      "commonMistakes": [
+        "Glasnudeln nicht zu lange kochen."
+      ]
+    }
+  },
+  "kimchi-jjigae": {
+    "en": {
+      "overview": "Mature kimchi gives the stew acidity, chilli heat and umami.",
+      "history": "Kimchi jjigae is a common Korean home-cooked dish.",
+      "flavor": "Tangy, hot and full-bodied.",
+      "technique": "Use well-matured kimchi and let the stew simmer.",
+      "essentials": [
+        "300 g kimchi",
+        "200 g tofu",
+        "200 g pork"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–45 min",
+        "ingredients": [
+          "300 g kimchi",
+          "200 g tofu",
+          "200 g pork",
+          "500 ml stock",
+          "1 onion",
+          "gochugaru"
+        ],
+        "steps": [
+          "Briefly fry the pork and kimchi.",
+          "Add stock, onion and chilli to taste.",
+          "Simmer until the meat is cooked through.",
+          "Add the tofu towards the end."
+        ]
+      },
+      "variants": [
+        "Versions with tuna or without meat."
+      ],
+      "serving": [
+        "Serve with rice and small side dishes."
+      ],
+      "commonMistakes": [
+        "Do not add salt before tasting the kimchi broth."
+      ]
+    },
+    "fr": {
+      "overview": "Le kimchi bien fermenté apporte au ragoût acidité, piquant et umami.",
+      "history": "Le kimchi jjigae est un plat familial coréen courant.",
+      "flavor": "Acidulé, piquant et généreux.",
+      "technique": "Utiliser du kimchi bien fermenté et laisser mijoter le ragoût.",
+      "essentials": [
+        "300 g de kimchi",
+        "200 g de tofu",
+        "200 g de porc"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–45 min",
+        "ingredients": [
+          "300 g de kimchi",
+          "200 g de tofu",
+          "200 g de porc",
+          "500 ml de bouillon",
+          "1 oignon",
+          "gochugaru"
+        ],
+        "steps": [
+          "Faire revenir brièvement le porc et le kimchi.",
+          "Ajouter le bouillon, l’oignon et du piment selon le goût.",
+          "Laisser mijoter jusqu’à cuisson complète de la viande.",
+          "Ajouter le tofu en fin de cuisson."
+        ]
+      },
+      "variants": [
+        "Variantes au thon ou sans viande."
+      ],
+      "serving": [
+        "Servir avec du riz et de petits accompagnements."
+      ],
+      "commonMistakes": [
+        "Ne pas saler avant d’avoir goûté le bouillon au kimchi."
+      ]
+    },
+    "pt": {
+      "overview": "O kimchi bem maturado dá ao guisado acidez, picante e umami.",
+      "history": "O kimchi jjigae é um prato caseiro coreano comum.",
+      "flavor": "Ácido, picante e encorpado.",
+      "technique": "Use kimchi bem maturado e deixe o guisado cozinhar em lume brando.",
+      "essentials": [
+        "300 g de kimchi",
+        "200 g de tofu",
+        "200 g de carne de porco"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–45 min",
+        "ingredients": [
+          "300 g de kimchi",
+          "200 g de tofu",
+          "200 g de carne de porco",
+          "500 ml de caldo",
+          "1 cebola",
+          "gochugaru"
+        ],
+        "steps": [
+          "Salteie brevemente a carne de porco e o kimchi.",
+          "Junte o caldo, a cebola e a malagueta a gosto.",
+          "Deixe cozinhar em lume brando até a carne estar bem cozinhada.",
+          "Junte o tofu perto do fim."
+        ]
+      },
+      "variants": [
+        "Variantes com atum ou sem carne."
+      ],
+      "serving": [
+        "Sirva com arroz e pequenos acompanhamentos."
+      ],
+      "commonMistakes": [
+        "Não junte sal antes de provar o caldo de kimchi."
+      ]
+    },
+    "es": {
+      "overview": "El kimchi bien madurado aporta al guiso acidez, picante y umami.",
+      "history": "El kimchi jjigae es un plato casero coreano habitual.",
+      "flavor": "Ácido, picante y con cuerpo.",
+      "technique": "Usa kimchi bien madurado y deja cocer el guiso a fuego lento.",
+      "essentials": [
+        "300 g de kimchi",
+        "200 g de tofu",
+        "200 g de carne de cerdo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–45 min",
+        "ingredients": [
+          "300 g de kimchi",
+          "200 g de tofu",
+          "200 g de carne de cerdo",
+          "500 ml de caldo",
+          "1 cebolla",
+          "gochugaru"
+        ],
+        "steps": [
+          "Saltea brevemente el cerdo y el kimchi.",
+          "Añade el caldo, la cebolla y el chile al gusto.",
+          "Cuece a fuego lento hasta que la carne esté hecha por dentro.",
+          "Añade el tofu hacia el final."
+        ]
+      },
+      "variants": [
+        "Variantes con atún o sin carne."
+      ],
+      "serving": [
+        "Sirve con arroz y pequeños acompañamientos."
+      ],
+      "commonMistakes": [
+        "No añadas sal antes de probar el caldo de kimchi."
+      ]
+    },
+    "de": {
+      "overview": "Gut gereifter Kimchi gibt dem Eintopf Säure, Chilischärfe und Umami.",
+      "history": "Kimchi Jjigae ist ein gängiges koreanisches Hausgericht.",
+      "flavor": "Säuerlich, scharf und vollmundig.",
+      "technique": "Gut gereiften Kimchi verwenden und den Eintopf köcheln lassen.",
+      "essentials": [
+        "300 g Kimchi",
+        "200 g Tofu",
+        "200 g Schweinefleisch"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–45 Min.",
+        "ingredients": [
+          "300 g Kimchi",
+          "200 g Tofu",
+          "200 g Schweinefleisch",
+          "500 ml Brühe",
+          "1 Zwiebel",
+          "Gochugaru"
+        ],
+        "steps": [
+          "Schweinefleisch und Kimchi kurz anbraten.",
+          "Brühe, Zwiebel und Chili nach Geschmack hinzufügen.",
+          "Köcheln lassen, bis das Fleisch vollständig durchgegart ist.",
+          "Tofu gegen Ende hinzufügen."
+        ]
+      },
+      "variants": [
+        "Varianten mit Thunfisch oder ohne Fleisch."
+      ],
+      "serving": [
+        "Mit Reis und kleinen Beilagen servieren."
+      ],
+      "commonMistakes": [
+        "Erst salzen, nachdem die Kimchi-Brühe probiert wurde."
+      ]
+    }
+  },
+  "tteokbokki": {
+    "en": {
+      "overview": "Cylindrical rice cakes are cooked in a sauce with gochujang.",
+      "history": "The red, hot version is well known in Korean street food.",
+      "flavor": "Chewy, soft, sweet and hot.",
+      "technique": "Simmer the rice cakes until tender and the sauce thickens.",
+      "essentials": [
+        "400 g Korean rice cakes",
+        "500 ml stock",
+        "2 tbsp gochujang"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–45 min",
+        "ingredients": [
+          "400 g Korean rice cakes",
+          "500 ml stock",
+          "2 tbsp gochujang",
+          "1 tbsp sugar",
+          "1 tbsp soy sauce",
+          "spring onions"
+        ],
+        "steps": [
+          "Soak the rice cakes if needed, following the packet instructions.",
+          "Bring the stock to a boil with gochujang, sugar and soy sauce.",
+          "Add the rice cakes and simmer, stirring, until tender.",
+          "Top with spring onions."
+        ]
+      },
+      "variants": [
+        "Gungjung tteokbokki uses a soy-based sauce."
+      ],
+      "serving": [
+        "Serve with fish cakes or boiled egg if desired."
+      ],
+      "commonMistakes": [
+        "Do not let the sauce boil dry before the rice cakes are tender."
+      ]
+    },
+    "fr": {
+      "overview": "Les gâteaux de riz cylindriques cuisent dans une sauce au gochujang.",
+      "history": "La version rouge et piquante est bien connue dans la cuisine de rue coréenne.",
+      "flavor": "Élastique, tendre, sucré et piquant.",
+      "technique": "Laisser mijoter les gâteaux de riz jusqu’à ce qu’ils soient tendres et que la sauce épaississe.",
+      "essentials": [
+        "400 g de gâteaux de riz coréens",
+        "500 ml de bouillon",
+        "2 c. à soupe de gochujang"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–45 min",
+        "ingredients": [
+          "400 g de gâteaux de riz coréens",
+          "500 ml de bouillon",
+          "2 c. à soupe de gochujang",
+          "1 c. à soupe de sucre",
+          "1 c. à soupe de sauce soja",
+          "oignons nouveaux"
+        ],
+        "steps": [
+          "Faire tremper les gâteaux de riz si nécessaire, selon les instructions du paquet.",
+          "Porter le bouillon à ébullition avec le gochujang, le sucre et la sauce soja.",
+          "Ajouter les gâteaux de riz et laisser mijoter en remuant jusqu’à tendreté.",
+          "Garnir d’oignons nouveaux."
+        ]
+      },
+      "variants": [
+        "Le gungjung tteokbokki utilise une sauce à base de soja."
+      ],
+      "serving": [
+        "Servir éventuellement avec des galettes de poisson ou un œuf dur."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser la sauce s’évaporer complètement avant que les gâteaux de riz soient tendres."
+      ]
+    },
+    "pt": {
+      "overview": "Os bolinhos de arroz cilíndricos são cozidos num molho com gochujang.",
+      "history": "A versão vermelha e picante é conhecida na comida de rua coreana.",
+      "flavor": "Elástico, macio, doce e picante.",
+      "technique": "Deixe os bolinhos de arroz cozinhar em lume brando até ficarem tenros e o molho engrossar.",
+      "essentials": [
+        "400 g de bolinhos de arroz coreanos",
+        "500 ml de caldo",
+        "2 c. de sopa de gochujang"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–45 min",
+        "ingredients": [
+          "400 g de bolinhos de arroz coreanos",
+          "500 ml de caldo",
+          "2 c. de sopa de gochujang",
+          "1 c. de sopa de açúcar",
+          "1 c. de sopa de molho de soja",
+          "cebolinha verde"
+        ],
+        "steps": [
+          "Demolhe os bolinhos de arroz, se necessário, de acordo com a embalagem.",
+          "Leve o caldo a ferver com gochujang, açúcar e molho de soja.",
+          "Junte os bolinhos de arroz e cozinhe em lume brando, mexendo, até ficarem tenros.",
+          "Cubra com cebolinha verde."
+        ]
+      },
+      "variants": [
+        "O gungjung tteokbokki utiliza um molho à base de soja."
+      ],
+      "serving": [
+        "Sirva, se desejar, com bolinhos de peixe ou ovo cozido."
+      ],
+      "commonMistakes": [
+        "Não deixe o molho secar antes de os bolinhos de arroz estarem tenros."
+      ]
+    },
+    "es": {
+      "overview": "Los pastelitos de arroz cilíndricos se cuecen en una salsa con gochujang.",
+      "history": "La versión roja y picante es conocida en la comida callejera coreana.",
+      "flavor": "Elástico, tierno, dulce y picante.",
+      "technique": "Cuece los pastelitos de arroz a fuego lento hasta que estén tiernos y la salsa espese.",
+      "essentials": [
+        "400 g de pastelitos de arroz coreanos",
+        "500 ml de caldo",
+        "2 cucharadas de gochujang"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–45 min",
+        "ingredients": [
+          "400 g de pastelitos de arroz coreanos",
+          "500 ml de caldo",
+          "2 cucharadas de gochujang",
+          "1 cucharada de azúcar",
+          "1 cucharada de salsa de soja",
+          "cebolletas"
+        ],
+        "steps": [
+          "Remoja los pastelitos de arroz si es necesario, según las instrucciones del envase.",
+          "Lleva el caldo a ebullición con gochujang, azúcar y salsa de soja.",
+          "Añade los pastelitos de arroz y cuece a fuego lento, removiendo, hasta que estén tiernos.",
+          "Añade cebolletas por encima."
+        ]
+      },
+      "variants": [
+        "El gungjung tteokbokki utiliza una salsa a base de soja."
+      ],
+      "serving": [
+        "Sirve, si quieres, con pasteles de pescado o huevo cocido."
+      ],
+      "commonMistakes": [
+        "No dejes que la salsa se seque antes de que los pastelitos de arroz estén tiernos."
+      ]
+    },
+    "de": {
+      "overview": "Zylindrische Reiskuchen werden in einer Sauce mit Gochujang gegart.",
+      "history": "Die rote, scharfe Variante ist aus dem koreanischen Streetfood bekannt.",
+      "flavor": "Zäh-elastisch, weich und süß-scharf.",
+      "technique": "Reiskuchen köcheln lassen, bis sie weich sind und die Sauce eindickt.",
+      "essentials": [
+        "400 g koreanische Reiskuchen",
+        "500 ml Brühe",
+        "2 EL Gochujang"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–45 Min.",
+        "ingredients": [
+          "400 g koreanische Reiskuchen",
+          "500 ml Brühe",
+          "2 EL Gochujang",
+          "1 EL Zucker",
+          "1 EL Sojasauce",
+          "Frühlingszwiebeln"
+        ],
+        "steps": [
+          "Reiskuchen bei Bedarf nach Packungsanleitung einweichen.",
+          "Brühe mit Gochujang, Zucker und Sojasauce aufkochen.",
+          "Reiskuchen zugeben und unter Rühren weich köcheln lassen.",
+          "Mit Frühlingszwiebeln garnieren."
+        ]
+      },
+      "variants": [
+        "Gungjung Tteokbokki verwendet eine Sauce auf Sojabasis."
+      ],
+      "serving": [
+        "Nach Wunsch mit Fischkuchen oder gekochtem Ei servieren."
+      ],
+      "commonMistakes": [
+        "Sauce nicht einkochen lassen, bis sie trocken ist, bevor die Reiskuchen weich sind."
+      ]
+    }
+  },
+  "samgyeopsal": {
+    "en": {
+      "overview": "The meat is often grilled at the table and eaten with lettuce leaves and accompaniments.",
+      "history": "Samgyeopsal is common in Korea’s social barbecue culture.",
+      "flavor": "Rich and roasted, balanced by fresh accompaniments.",
+      "technique": "Grill in moderate batches and allow the fat to drain.",
+      "essentials": [
+        "600 g sliced pork belly",
+        "lettuce leaves",
+        "garlic"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30–45 min",
+        "ingredients": [
+          "600 g sliced pork belly",
+          "lettuce leaves",
+          "garlic",
+          "ssamjang",
+          "kimchi",
+          "rice"
+        ],
+        "steps": [
+          "Grill the meat on a hot grill or pan until cooked through.",
+          "Cut into bite-sized pieces with clean scissors or a knife.",
+          "Place the meat, ssamjang and accompaniments in a lettuce leaf.",
+          "Serve immediately."
+        ]
+      },
+      "variants": [
+        "The thickness of the meat slices varies; the meat may be served unmarinated."
+      ],
+      "serving": [
+        "Serve with kimchi, rice and garlic."
+      ],
+      "commonMistakes": [
+        "Avoid using the same utensils for raw and cooked meat without washing them."
+      ]
+    },
+    "fr": {
+      "overview": "La viande est souvent grillée à table et dégustée avec des feuilles de laitue et des accompagnements.",
+      "history": "Le samgyeopsal est courant dans la culture coréenne des grillades conviviales.",
+      "flavor": "Généreux et grillé, équilibré par des accompagnements frais.",
+      "technique": "Griller par quantités modérées et laisser la graisse s’écouler.",
+      "essentials": [
+        "600 g de poitrine de porc en tranches",
+        "feuilles de laitue",
+        "ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30–45 min",
+        "ingredients": [
+          "600 g de poitrine de porc en tranches",
+          "feuilles de laitue",
+          "ail",
+          "ssamjang",
+          "kimchi",
+          "riz"
+        ],
+        "steps": [
+          "Griller la viande sur un gril ou dans une poêle chaude jusqu’à cuisson complète.",
+          "Découper en bouchées avec des ciseaux propres ou un couteau propre.",
+          "Déposer la viande, le ssamjang et les accompagnements dans une feuille de laitue.",
+          "Servir immédiatement."
+        ]
+      },
+      "variants": [
+        "L’épaisseur des tranches varie ; la viande peut être servie sans marinade."
+      ],
+      "serving": [
+        "Servir avec du kimchi, du riz et de l’ail."
+      ],
+      "commonMistakes": [
+        "Éviter d’utiliser les mêmes ustensiles pour la viande crue et cuite sans les laver."
+      ]
+    },
+    "pt": {
+      "overview": "A carne é muitas vezes grelhada à mesa e comida com folhas de alface e acompanhamentos.",
+      "history": "O samgyeopsal é comum na cultura coreana de churrasco em convívio.",
+      "flavor": "Rico e tostado, equilibrado por acompanhamentos frescos.",
+      "technique": "Grelhe em porções moderadas e deixe escorrer a gordura.",
+      "essentials": [
+        "600 g de barriga de porco em fatias",
+        "folhas de alface",
+        "alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30–45 min",
+        "ingredients": [
+          "600 g de barriga de porco em fatias",
+          "folhas de alface",
+          "alho",
+          "ssamjang",
+          "kimchi",
+          "arroz"
+        ],
+        "steps": [
+          "Grelhe a carne numa grelha ou frigideira quente até estar bem cozinhada.",
+          "Corte em pedaços de uma dentada com uma tesoura ou faca limpa.",
+          "Coloque a carne, o ssamjang e os acompanhamentos numa folha de alface.",
+          "Sirva imediatamente."
+        ]
+      },
+      "variants": [
+        "A espessura das fatias varia; a carne pode ser servida sem marinada."
+      ],
+      "serving": [
+        "Sirva com kimchi, arroz e alho."
+      ],
+      "commonMistakes": [
+        "Evite usar os mesmos utensílios para a carne crua e cozinhada sem os lavar."
+      ]
+    },
+    "es": {
+      "overview": "La carne se suele asar en la mesa y comer con hojas de lechuga y acompañamientos.",
+      "history": "El samgyeopsal es habitual en la cultura coreana de la parrillada compartida.",
+      "flavor": "Intenso y tostado, equilibrado por acompañamientos frescos.",
+      "technique": "Asa en tandas moderadas y deja escurrir la grasa.",
+      "essentials": [
+        "600 g de panceta de cerdo en lonchas",
+        "hojas de lechuga",
+        "ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30–45 min",
+        "ingredients": [
+          "600 g de panceta de cerdo en lonchas",
+          "hojas de lechuga",
+          "ajo",
+          "ssamjang",
+          "kimchi",
+          "arroz"
+        ],
+        "steps": [
+          "Asa la carne en una parrilla o sartén caliente hasta que esté hecha por dentro.",
+          "Corta en bocados con unas tijeras o un cuchillo limpios.",
+          "Coloca la carne, el ssamjang y los acompañamientos en una hoja de lechuga.",
+          "Sirve inmediatamente."
+        ]
+      },
+      "variants": [
+        "El grosor de las lonchas varía; la carne puede servirse sin marinar."
+      ],
+      "serving": [
+        "Sirve con kimchi, arroz y ajo."
+      ],
+      "commonMistakes": [
+        "Evita usar los mismos utensilios para carne cruda y cocinada sin lavarlos."
+      ]
+    },
+    "de": {
+      "overview": "Das Fleisch wird häufig am Tisch gegrillt und mit Salatblättern und Beilagen gegessen.",
+      "history": "Samgyeopsal ist in Koreas geselliger Grillkultur verbreitet.",
+      "flavor": "Kräftig und röstig, ausgeglichen durch frische Beilagen.",
+      "technique": "In angemessenen Portionen grillen und das Fett ablaufen lassen.",
+      "essentials": [
+        "600 g Schweinebauch in Scheiben",
+        "Salatblätter",
+        "Knoblauch"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30–45 Min.",
+        "ingredients": [
+          "600 g Schweinebauch in Scheiben",
+          "Salatblätter",
+          "Knoblauch",
+          "Ssamjang",
+          "Kimchi",
+          "Reis"
+        ],
+        "steps": [
+          "Fleisch auf einem heißen Grill oder in einer heißen Pfanne vollständig durchgaren.",
+          "Mit sauberer Schere oder sauberem Messer in mundgerechte Stücke schneiden.",
+          "Fleisch, Ssamjang und Beilagen in ein Salatblatt geben.",
+          "Sofort servieren."
+        ]
+      },
+      "variants": [
+        "Die Dicke der Fleischscheiben variiert; das Fleisch kann unmariniert serviert werden."
+      ],
+      "serving": [
+        "Mit Kimchi, Reis und Knoblauch servieren."
+      ],
+      "commonMistakes": [
+        "Dieselben Utensilien nicht ohne Reinigung für rohes und gegartes Fleisch verwenden."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

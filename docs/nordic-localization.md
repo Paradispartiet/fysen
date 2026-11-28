@@ -168,3 +168,7 @@ Added complete review-only article bodies for sambar, idli, vada, naan, yakitori
 ### International full article review batch 2
 
 Added eight complete bodies in each of five languages: pad kra pao, bún chả, Vietnamese fresh spring rolls, pizza marinara, Peking duck, dan dan noodles, amatriciana and saltimbocca. All source list lengths and numerical recipe tokens were checked, including the Peking duck temperatures (180 °C oven and minimum 74 °C internal). Existing eight bodies and original source links were preserved. Total 16 new bodies per language; English has 49/200 including original 33, other four 16/200. Review-only, no activation. CI and linguistic review remain pending.
+
+### International full article review batch 3
+
+Added eight complete bodies per language: cannoli, quesadilla, bibimbap, bulgogi, japchae, kimchi jjigae, tteokbokki and samgyeopsal. Source list lengths and numerical recipe tokens checked, including marination time and food hygiene instructions. Previous bodies and original sources retained. Total 24 new bodies per language; English 57/200 including original 33, other four 24/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
