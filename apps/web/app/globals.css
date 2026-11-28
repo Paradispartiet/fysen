@@ -841,3 +841,17 @@ a {
   .siteMenuButton { padding-inline: 10px; }
   .siteMenuButton span { display: none; }
 }
+
+
+/* Kartmodus is a first-class header action, not a menu-only link. */
+.fysenHeaderMapMode { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 6px 12px; border: 1px solid #405843; border-radius: 10px; background: #111811; color: #f5f4ed; font: inherit; font-size: .86rem; font-weight: 650; text-decoration: none; cursor: pointer; white-space: nowrap; }
+.fysenHeaderMapMode[aria-pressed="true"] { background: #b9df9a; color: #101810; border-color: #b9df9a; }
+.fysenHeaderMapMode:focus-visible { outline: 2px solid #b9df9a; outline-offset: 2px; }
+.globalHeaderTopline:has(.fysenHeaderMapMode) { gap: clamp(4px, 1vw, 14px); }
+@media (max-width: 600px) {
+  .globalHeaderTopline:has(.fysenHeaderMapMode) .fysenLogoLink { min-width: 0; flex: 0 1 auto; }
+  .globalHeaderTopline:has(.fysenHeaderMapMode) .fysenBrandLockup { min-width: 0; max-width: 112px; }
+  .globalHeaderTopline:has(.fysenHeaderMapMode) .fysenBrandMark { max-width: 100%; height: auto; }
+  .globalHeaderTopline:has(.fysenHeaderMapMode) .globalHeaderActions { gap: 5px; }
+  .fysenHeaderMapMode { padding-inline: 8px; font-size: .78rem; }
+}
