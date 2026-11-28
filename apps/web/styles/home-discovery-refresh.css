@@ -184,8 +184,10 @@
 .dishPhotoSearch:focus-visible::after { outline: 2px solid var(--color-brand); outline-offset: 2px; }
 .dishKnowledgeNote.dishKnowledgeNoteWithImage { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); align-items: center; gap: 20px; }
 .dishKnowledgeNote .dishEditorialImage { aspect-ratio: 4 / 3; }
-.dishLearningCard .dishEditorialFigure { margin-bottom: 14px; }
-.dishLearningCard .dishEditorialImage { aspect-ratio: 4 / 3; }
+.dishLearningCardHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.dishLearningCardHeading { flex: 1 1 0; min-width: 0; overflow-wrap: anywhere; }
+.dishLearningCardHeader .dishEditorialFigure { flex: 0 0 32%; max-width: 100px; margin: 0; }
+.dishLearningCardHeader .dishEditorialImage { width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
 
 @media (max-width: 1050px) {
   .dishPhotos .dishPhotosGrid {

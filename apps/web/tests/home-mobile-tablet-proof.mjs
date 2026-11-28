@@ -228,6 +228,38 @@ try {
       assert.equal(await details.getAttribute("open"), null, "Gallery should close again");
       assert.equal(await page.locator(".dishPhotosGrid").isVisible(), false);
 
+      // Verify the compact encyclopedia cards independently of the gallery.
+      const learning = page.locator(".dishLearningSection");
+      const ramen = learning.locator("#learn-card-ramen");
+      await ramen.scrollIntoViewIfNeeded();
+      const picture = ramen.locator(".dishLearningCardHeader img.dishEditorialImage");
+      await picture.waitFor({ state: "visible" });
+      const geometry = await ramen.evaluate((card) => {
+        const heading = card.querySelector(".dishLearningCardHeading").getBoundingClientRect();
+        const photo = card.querySelector(".dishEditorialImage").getBoundingClientRect();
+        const title = card.querySelector("h3").getBoundingClientRect();
+        const summary = card.querySelector(":scope > p").getBoundingClientRect();
+        return { headingRight: heading.right, photoLeft: photo.left, photoTop: photo.top,
+          photoBottom: photo.bottom, photoWidth: photo.width, headingTop: heading.top,
+          titleTop: title.top, titleBottom: title.bottom, summaryTop: summary.top };
+      });
+      assert.ok(geometry.photoLeft >= geometry.headingRight - 1, "Image must be beside, not above, the heading");
+      assert.ok(Math.abs(geometry.photoTop - geometry.headingTop) <= 2, "Image and heading start on the same row");
+      assert.ok(geometry.photoWidth > 0 && geometry.photoWidth <= 101, "Image must be compact");
+      assert.ok(geometry.summaryTop >= Math.max(geometry.photoBottom, geometry.titleBottom) - 1);
+      assert.equal(await learning.locator(".dishLearningCard .dishEditorialCredit").count(), 0);
+      assert.ok((await picture.getAttribute("src")).endsWith("/" + (manifest.images.find((entry) => entry.id === "ramen").largeSource || manifest.images.find((entry) => entry.id === "ramen").atlas)));
+      await checkOverflow("Matleksikon");
+      if (output) await ramen.screenshot({ path: path.join(output, `${viewport.name}-matleksikon-card.png`), animations: "disabled" });
+      await ramen.locator(".dishLearningTitleButton").click();
+      const ramenDialog = page.getByRole("dialog", { name: "Ramen", exact: true });
+      await ramenDialog.waitFor({ state: "visible" });
+      const credit = ramenDialog.getByRole("region", { name: "Bildekreditering" });
+      assert.match(await credit.innerText(), /Pexels/u);
+      assert.ok(await credit.getByRole("link", { name: "Lisens" }).count());
+      await ramenDialog.getByRole("button", { name: "Lukk kunnskap om Ramen" }).click();
+      await ramenDialog.waitFor({ state: "hidden" });
+
       const dishSearch = await page.goto(`${base}/search?q=dal+makhani&city=Oslo`, { timeout: 60_000 });
       assert.equal(dishSearch?.status(), 200, "The Dal makhani search page must load");
       const note = page.getByRole("complementary", { name: "Om retten Dal makhani" });

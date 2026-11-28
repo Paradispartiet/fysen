@@ -11,6 +11,7 @@ import { searchDishesClient } from "../lib/client-dish-search";
 import { formatDishPrice } from "../lib/dish-price";
 import { dishSearchHref } from "../lib/public-path";
 import { FoodIllustration } from "./food-illustration";
+import { DishEditorialAttribution } from "./dish-editorial-image";
 import { illustrationForDishName, illustrationForIngredient } from "./food-illustration-match";
 
 function primaryRestaurantResults(results: readonly DishSearchResult[], limit: number): DishSearchResult[] {
@@ -272,6 +273,8 @@ export function DishKnowledgeDialog({
               </ul>
             </section>
           ) : null}
+
+          <DishEditorialAttribution dishId={dish.id} query={dish.query} />
 
           <footer className="dishKnowledgeDialogFooter">
             <small>
