@@ -102,6 +102,14 @@ const louise = {
  licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/",
 } as const;
 
+const kaffistova = {
+ logo: "/restaurants/kaffistova/logo.png",
+ exterior: null,
+ interior: "/restaurants/kaffistova/interior.webp",
+ sourceUrl: "https://www.kaffistova.no/",
+ interiorIllustrationSource: "https://www.kaffistova.no/",
+} as const;
+
 function normalized(value: string): string {
   return value.normalize("NFKC").toLocaleLowerCase("nb-NO").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 }
@@ -109,6 +117,8 @@ function normalized(value: string): string {
 /** Match the branch and street address, independent of archive/live IDs. */
 export function restaurantVisuals(restaurant: RestaurantIdentity) {
   const address = normalized(restaurant.address);
+  if (normalized(restaurant.name) === "kaffistova" &&
+      (/^rosenkrantz ?gate 8(?: |$)/u.test(address) || /^kristian ivs gate 2(?: |$)/u.test(address))) return kaffistova;
   const name = normalized(restaurant.name);
   if (name === "restaurant schrøder" && /^waldemar thranes gate 8(?: |$)/u.test(address)) return schroder;
   if (["palmyra café", "palmyra cafe"].includes(name) && /^norbygata 15 ?a(?: |$)/u.test(address)) return palmyra;
