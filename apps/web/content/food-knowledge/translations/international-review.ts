@@ -11334,5 +11334,1621 @@ export const draftInternationalArticles = {
         "Keine flüssige Brühe in der Füllung verwenden und keine Löcher in den Teig machen."
       ]
     }
+  },
+  "char-siu": {
+    "en": {
+      "overview": "The meat is marinated with soy sauce and aromatic spices before roasting.",
+      "history": "Char siu is part of the Cantonese siu mei tradition of roasted meats.",
+      "flavor": "Sweet-salty, aromatic and roasted.",
+      "technique": "Glaze the meat towards the end to avoid burning the sugar.",
+      "essentials": [
+        "700 g pork neck",
+        "2 tbsp hoisin sauce",
+        "2 tbsp soy sauce"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 1 hour + marinating",
+        "ingredients": [
+          "700 g pork neck",
+          "2 tbsp hoisin sauce",
+          "2 tbsp soy sauce",
+          "1 tbsp honey",
+          "1 tsp five-spice powder",
+          "garlic"
+        ],
+        "steps": [
+          "Mix the marinade and reserve a clean portion for glazing.",
+          "Marinate the meat in the refrigerator for several hours.",
+          "Roast on a rack at 200 °C until the core reaches at least 63 °C; let rest for at least three minutes.",
+          "Brush with the reserved glaze towards the end and slice."
+        ]
+      },
+      "variants": [
+        "Different cuts of pork and different sweeteners are used."
+      ],
+      "serving": [
+        "Serve with rice, noodles or in bao."
+      ],
+      "commonMistakes": [
+        "Do not use marinade that has touched raw meat as a finishing glaze."
+      ]
+    },
+    "fr": {
+      "overview": "La viande est marinée dans de la sauce soja et des épices aromatiques avant d’être rôtie.",
+      "history": "Le char siu fait partie de la tradition cantonaise du siu mei, consacrée aux viandes rôties.",
+      "flavor": "Sucré-salé, aromatique et grillé.",
+      "technique": "Glacer la viande en fin de cuisson pour éviter de brûler le sucre.",
+      "essentials": [
+        "700 g d’échine de porc",
+        "2 c. à soupe de sauce hoisin",
+        "2 c. à soupe de sauce soja"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 1 heure + marinade",
+        "ingredients": [
+          "700 g d’échine de porc",
+          "2 c. à soupe de sauce hoisin",
+          "2 c. à soupe de sauce soja",
+          "1 c. à soupe de miel",
+          "1 c. à café de mélange cinq-épices",
+          "ail"
+        ],
+        "steps": [
+          "Mélanger la marinade et en réserver une portion propre pour le glaçage.",
+          "Faire mariner la viande au réfrigérateur pendant plusieurs heures.",
+          "Rôtir sur une grille à 200 °C jusqu’à une température à cœur d’au moins 63 °C ; laisser reposer au moins trois minutes.",
+          "Badigeonner du glaçage réservé en fin de cuisson et couper en tranches."
+        ]
+      },
+      "variants": [
+        "On utilise différents morceaux de porc et différents ingrédients sucrants."
+      ],
+      "serving": [
+        "Servir avec du riz, des nouilles ou dans des bao."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser comme glaçage final une marinade ayant été en contact avec de la viande crue."
+      ]
+    },
+    "pt": {
+      "overview": "A carne é marinada com molho de soja e especiarias aromáticas antes de ser assada.",
+      "history": "O char siu faz parte da tradição cantonesa de carnes assadas siu mei.",
+      "flavor": "Doce-salgado, aromático e tostado.",
+      "technique": "Pincele a carne com o glacê perto do fim para evitar queimar o açúcar.",
+      "essentials": [
+        "700 g de cachaço de porco",
+        "2 c. de sopa de molho hoisin",
+        "2 c. de sopa de molho de soja"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 1 hora + marinada",
+        "ingredients": [
+          "700 g de cachaço de porco",
+          "2 c. de sopa de molho hoisin",
+          "2 c. de sopa de molho de soja",
+          "1 c. de sopa de mel",
+          "1 c. de chá de mistura de cinco especiarias",
+          "alho"
+        ],
+        "steps": [
+          "Misture a marinada e reserve uma porção limpa para pincelar.",
+          "Marine a carne no frigorífico durante várias horas.",
+          "Asse sobre uma grelha a 200 °C até atingir pelo menos 63 °C no interior; deixe repousar pelo menos três minutos.",
+          "Pincele com o glacê reservado perto do fim e corte em fatias."
+        ]
+      },
+      "variants": [
+        "Usam-se diferentes cortes de porco e diferentes adoçantes."
+      ],
+      "serving": [
+        "Sirva com arroz, noodles ou em bao."
+      ],
+      "commonMistakes": [
+        "Não use como glacê final marinada que tenha estado em contacto com carne crua."
+      ]
+    },
+    "es": {
+      "overview": "La carne se marina con salsa de soja y especias aromáticas antes de asarla.",
+      "history": "El char siu forma parte de la tradición cantonesa de carnes asadas siu mei.",
+      "flavor": "Dulce-salado, aromático y tostado.",
+      "technique": "Glasea la carne hacia el final para evitar que se queme el azúcar.",
+      "essentials": [
+        "700 g de cabecero de lomo de cerdo",
+        "2 cucharadas de salsa hoisin",
+        "2 cucharadas de salsa de soja"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 1 hora + marinado",
+        "ingredients": [
+          "700 g de cabecero de lomo de cerdo",
+          "2 cucharadas de salsa hoisin",
+          "2 cucharadas de salsa de soja",
+          "1 cucharada de miel",
+          "1 cucharadita de cinco especias",
+          "ajo"
+        ],
+        "steps": [
+          "Mezcla la marinada y reserva una porción limpia para glasear.",
+          "Marina la carne en el frigorífico durante varias horas.",
+          "Asa sobre una rejilla a 200 °C hasta alcanzar al menos 63 °C en el centro; deja reposar al menos tres minutos.",
+          "Pincela con el glaseado reservado hacia el final y corta en lonchas."
+        ]
+      },
+      "variants": [
+        "Se utilizan distintos cortes de cerdo y distintos endulzantes."
+      ],
+      "serving": [
+        "Sirve con arroz, fideos o dentro de bao."
+      ],
+      "commonMistakes": [
+        "No uses como glaseado final marinada que haya estado en contacto con carne cruda."
+      ]
+    },
+    "de": {
+      "overview": "Das Fleisch wird vor dem Braten mit Sojasauce und aromatischen Gewürzen mariniert.",
+      "history": "Char Siu gehört zur kantonesischen Siu-Mei-Tradition der Bratengerichte.",
+      "flavor": "Süß-salzig, aromatisch und röstig.",
+      "technique": "Fleisch gegen Ende glasieren, damit der Zucker nicht verbrennt.",
+      "essentials": [
+        "700 g Schweinenacken",
+        "2 EL Hoisinsauce",
+        "2 EL Sojasauce"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 1 Stunde + Marinierzeit",
+        "ingredients": [
+          "700 g Schweinenacken",
+          "2 EL Hoisinsauce",
+          "2 EL Sojasauce",
+          "1 EL Honig",
+          "1 TL Fünf-Gewürze-Pulver",
+          "Knoblauch"
+        ],
+        "steps": [
+          "Marinade mischen und eine saubere Portion zum Glasieren zurückbehalten.",
+          "Fleisch mehrere Stunden im Kühlschrank marinieren.",
+          "Auf einem Rost bei 200 °C braten, bis die Kerntemperatur mindestens 63 °C erreicht; mindestens drei Minuten ruhen lassen.",
+          "Gegen Ende mit der zurückbehaltenen Glasur bestreichen und in Scheiben schneiden."
+        ]
+      },
+      "variants": [
+        "Verschiedene Schweinefleischstücke und Süßungsmittel werden verwendet."
+      ],
+      "serving": [
+        "Mit Reis, Nudeln oder in Bao servieren."
+      ],
+      "commonMistakes": [
+        "Keine Marinade, die mit rohem Fleisch in Kontakt war, als fertige Glasur verwenden."
+      ]
+    }
+  },
+  "chow-mein": {
+    "en": {
+      "overview": "The noodles are fried with soy sauce and other ingredients; the texture varies from soft to crisp.",
+      "history": "Chow mein has many forms in Chinese cuisines and international Chinese restaurant traditions.",
+      "flavor": "Roasted, salty and aromatic.",
+      "technique": "Cook the noodles until just tender and fry in small batches.",
+      "essentials": [
+        "350 g egg noodles",
+        "250 g chicken",
+        "150 g cabbage"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30 min",
+        "ingredients": [
+          "350 g egg noodles",
+          "250 g chicken",
+          "150 g cabbage",
+          "1 carrot",
+          "bean sprouts",
+          "2 tbsp soy sauce",
+          "1 tbsp oyster sauce",
+          "oil"
+        ],
+        "steps": [
+          "Cook the noodles according to the instructions and drain.",
+          "Cut the vegetables and chicken into thin pieces.",
+          "Cook the chicken through and add the vegetables.",
+          "Fold in the noodles and sauce and fry quickly over high heat."
+        ]
+      },
+      "variants": [
+        "Versions with crisp noodles, seafood or tofu."
+      ],
+      "serving": [
+        "Serve immediately from the wok."
+      ],
+      "commonMistakes": [
+        "Do not overcrowd the pan, or the noodles will steam instead of fry."
+      ]
+    },
+    "fr": {
+      "overview": "Les nouilles sont sautées avec de la sauce soja et des garnitures ; leur texture varie de tendre à croustillante.",
+      "history": "Le chow mein existe sous de nombreuses formes dans les cuisines chinoises et les traditions des restaurants chinois à l’étranger.",
+      "flavor": "Grillé, salé et aromatique.",
+      "technique": "Cuire les nouilles juste à point et les faire sauter par petites quantités.",
+      "essentials": [
+        "350 g de nouilles aux œufs",
+        "250 g de poulet",
+        "150 g de chou"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30 min",
+        "ingredients": [
+          "350 g de nouilles aux œufs",
+          "250 g de poulet",
+          "150 g de chou",
+          "1 carotte",
+          "pousses de haricot",
+          "2 c. à soupe de sauce soja",
+          "1 c. à soupe de sauce d’huître",
+          "huile"
+        ],
+        "steps": [
+          "Cuire les nouilles selon les instructions et les égoutter.",
+          "Couper les légumes et le poulet en morceaux fins.",
+          "Cuire le poulet à cœur et ajouter les légumes.",
+          "Incorporer les nouilles et la sauce, puis faire sauter rapidement à feu vif."
+        ]
+      },
+      "variants": [
+        "Variantes aux nouilles croustillantes, aux fruits de mer ou au tofu."
+      ],
+      "serving": [
+        "Servir immédiatement à la sortie du wok."
+      ],
+      "commonMistakes": [
+        "Ne pas surcharger la poêle, sinon les nouilles cuiront à la vapeur plutôt que de sauter."
+      ]
+    },
+    "pt": {
+      "overview": "Os noodles são salteados com molho de soja e outros ingredientes; a textura varia de macia a crocante.",
+      "history": "O chow mein tem muitas formas nas cozinhas chinesas e nas tradições internacionais de restaurantes chineses.",
+      "flavor": "Tostado, salgado e aromático.",
+      "technique": "Coza os noodles até ficarem apenas tenros e salteie em pequenas porções.",
+      "essentials": [
+        "350 g de noodles de ovo",
+        "250 g de frango",
+        "150 g de couve"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30 min",
+        "ingredients": [
+          "350 g de noodles de ovo",
+          "250 g de frango",
+          "150 g de couve",
+          "1 cenoura",
+          "rebentos de feijão",
+          "2 c. de sopa de molho de soja",
+          "1 c. de sopa de molho de ostras",
+          "óleo"
+        ],
+        "steps": [
+          "Coza os noodles de acordo com as instruções e escorra.",
+          "Corte os legumes e o frango em pedaços finos.",
+          "Cozinhe completamente o frango e junte os legumes.",
+          "Envolva os noodles e o molho e salteie rapidamente em lume forte."
+        ]
+      },
+      "variants": [
+        "Variantes com noodles crocantes, marisco ou tofu."
+      ],
+      "serving": [
+        "Sirva imediatamente, diretamente do wok."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado a frigideira, para que os noodles não cozam a vapor."
+      ]
+    },
+    "es": {
+      "overview": "Los fideos se saltean con salsa de soja y otros ingredientes; la textura varía de suave a crujiente.",
+      "history": "El chow mein tiene muchas formas en las cocinas chinas y en las tradiciones internacionales de restaurantes chinos.",
+      "flavor": "Tostado, salado y aromático.",
+      "technique": "Cuece los fideos hasta que estén justo tiernos y saltéalos en tandas pequeñas.",
+      "essentials": [
+        "350 g de fideos de huevo",
+        "250 g de pollo",
+        "150 g de col"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30 min",
+        "ingredients": [
+          "350 g de fideos de huevo",
+          "250 g de pollo",
+          "150 g de col",
+          "1 zanahoria",
+          "brotes de judía",
+          "2 cucharadas de salsa de soja",
+          "1 cucharada de salsa de ostras",
+          "aceite"
+        ],
+        "steps": [
+          "Cuece los fideos según las instrucciones y escúrrelos.",
+          "Corta las verduras y el pollo en trozos finos.",
+          "Cocina el pollo por completo y añade las verduras.",
+          "Incorpora los fideos y la salsa y saltea rápidamente a fuego fuerte."
+        ]
+      },
+      "variants": [
+        "Variantes con fideos crujientes, marisco o tofu."
+      ],
+      "serving": [
+        "Sirve inmediatamente del wok."
+      ],
+      "commonMistakes": [
+        "No llenes demasiado la sartén, pues los fideos se cocerán al vapor."
+      ]
+    },
+    "de": {
+      "overview": "Nudeln werden mit Sojasauce und weiteren Zutaten gebraten; die Konsistenz reicht von weich bis knusprig.",
+      "history": "Chow Mein gibt es in vielen Formen in chinesischen Küchen und internationalen chinesischen Restauranttraditionen.",
+      "flavor": "Röstig, salzig und aromatisch.",
+      "technique": "Nudeln gerade weich kochen und portionsweise braten.",
+      "essentials": [
+        "350 g Eiernudeln",
+        "250 g Hähnchen",
+        "150 g Kohl"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30 Min.",
+        "ingredients": [
+          "350 g Eiernudeln",
+          "250 g Hähnchen",
+          "150 g Kohl",
+          "1 Karotte",
+          "Bohnensprossen",
+          "2 EL Sojasauce",
+          "1 EL Austernsauce",
+          "Öl"
+        ],
+        "steps": [
+          "Nudeln nach Anleitung kochen und abtropfen lassen.",
+          "Gemüse und Hähnchen in dünne Stücke schneiden.",
+          "Hähnchen vollständig durchgaren und Gemüse hinzufügen.",
+          "Nudeln und Sauce unterheben und kurz bei hoher Hitze braten."
+        ]
+      },
+      "variants": [
+        "Varianten mit knusprigen Nudeln, Meeresfrüchten oder Tofu."
+      ],
+      "serving": [
+        "Sofort aus dem Wok servieren."
+      ],
+      "commonMistakes": [
+        "Pfanne nicht überfüllen, damit die Nudeln nicht gedämpft statt gebraten werden."
+      ]
+    }
+  },
+  "wonton-soup": {
+    "en": {
+      "overview": "Thin wonton wrappers are filled with meat or prawns and boiled.",
+      "history": "Wonton soup exists in several regional Chinese traditions, including Cantonese noodle soup.",
+      "flavor": "Mild, aromatic and rich, with soft dumplings.",
+      "technique": "Seal the wrappers well and boil the wontons separately if the broth should remain clear.",
+      "essentials": [
+        "24 wonton wrappers",
+        "250 g minced pork",
+        "100 g prawns"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min",
+        "ingredients": [
+          "24 wonton wrappers",
+          "250 g minced pork",
+          "100 g prawns",
+          "ginger",
+          "soy sauce",
+          "1 l chicken stock",
+          "pak choi",
+          "spring onions"
+        ],
+        "steps": [
+          "Finely chop the prawns and mix with meat, ginger and soy sauce.",
+          "Fill the wonton wrappers and seal the edges with a little water.",
+          "Boil the wontons until the filling is cooked through.",
+          "Heat the stock with pak choi and serve the wontons in the soup with spring onions."
+        ]
+      },
+      "variants": [
+        "Hong Kong style is often served with thin egg noodles."
+      ],
+      "serving": [
+        "Serve with spring onions and optionally chilli oil."
+      ],
+      "commonMistakes": [
+        "Do not overfill the thin wrappers."
+      ]
+    },
+    "fr": {
+      "overview": "De fines feuilles de pâte à wonton sont garnies de viande ou de crevettes et cuites à l’eau.",
+      "history": "La soupe de wontons existe dans plusieurs traditions régionales chinoises, notamment dans les soupes de nouilles cantonaises.",
+      "flavor": "Douce, aromatique et généreuse, avec des raviolis tendres.",
+      "technique": "Bien fermer les feuilles de pâte et cuire les wontons séparément si l’on souhaite garder le bouillon clair.",
+      "essentials": [
+        "24 feuilles de pâte à wonton",
+        "250 g de porc haché",
+        "100 g de crevettes"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min",
+        "ingredients": [
+          "24 feuilles de pâte à wonton",
+          "250 g de porc haché",
+          "100 g de crevettes",
+          "gingembre",
+          "sauce soja",
+          "1 l de bouillon de poulet",
+          "pak choï",
+          "oignons nouveaux"
+        ],
+        "steps": [
+          "Hacher finement les crevettes et les mélanger avec la viande, le gingembre et la sauce soja.",
+          "Garnir les feuilles de wonton et souder les bords avec un peu d’eau.",
+          "Cuire les wontons à l’eau jusqu’à cuisson complète de la farce.",
+          "Chauffer le bouillon avec le pak choï et servir les wontons dans la soupe avec des oignons nouveaux."
+        ]
+      },
+      "variants": [
+        "Le style de Hong Kong est souvent servi avec de fines nouilles aux œufs."
+      ],
+      "serving": [
+        "Servir avec des oignons nouveaux et éventuellement de l’huile pimentée."
+      ],
+      "commonMistakes": [
+        "Ne pas trop garnir les fines feuilles de pâte."
+      ]
+    },
+    "pt": {
+      "overview": "Folhas finas de wonton são recheadas com carne ou camarão e cozidas em água.",
+      "history": "A sopa de wonton existe em várias tradições regionais chinesas, incluindo a sopa cantonesa de noodles.",
+      "flavor": "Suave, aromática e encorpada, com dumplings macios.",
+      "technique": "Sele bem as folhas e coza os wontons separadamente se quiser manter o caldo límpido.",
+      "essentials": [
+        "24 folhas de massa para wonton",
+        "250 g de carne de porco picada",
+        "100 g de camarão"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min",
+        "ingredients": [
+          "24 folhas de massa para wonton",
+          "250 g de carne de porco picada",
+          "100 g de camarão",
+          "gengibre",
+          "molho de soja",
+          "1 l de caldo de frango",
+          "pak choi",
+          "cebolinha verde"
+        ],
+        "steps": [
+          "Pique finamente o camarão e misture com a carne, gengibre e molho de soja.",
+          "Recheie as folhas de wonton e sele as bordas com um pouco de água.",
+          "Coza os wontons em água até o recheio estar bem cozinhado.",
+          "Aqueça o caldo com pak choi e sirva os wontons na sopa com cebolinha verde."
+        ]
+      },
+      "variants": [
+        "A versão de Hong Kong é frequentemente servida com noodles finos de ovo."
+      ],
+      "serving": [
+        "Sirva com cebolinha verde e, se desejar, óleo de malagueta."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado as folhas finas de massa."
+      ]
+    },
+    "es": {
+      "overview": "Las obleas finas de wonton se rellenan de carne o gambas y se cuecen en agua.",
+      "history": "La sopa de wonton existe en varias tradiciones regionales chinas, incluida la sopa cantonesa de fideos.",
+      "flavor": "Suave, aromática y con cuerpo, con dumplings tiernos.",
+      "technique": "Sella bien las obleas y cuece los wonton por separado si quieres mantener el caldo claro.",
+      "essentials": [
+        "24 obleas de wonton",
+        "250 g de carne de cerdo picada",
+        "100 g de gambas"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min",
+        "ingredients": [
+          "24 obleas de wonton",
+          "250 g de carne de cerdo picada",
+          "100 g de gambas",
+          "jengibre",
+          "salsa de soja",
+          "1 l de caldo de pollo",
+          "pak choi",
+          "cebolletas"
+        ],
+        "steps": [
+          "Pica finamente las gambas y mezcla con la carne, el jengibre y la salsa de soja.",
+          "Rellena las obleas y sella los bordes con un poco de agua.",
+          "Cuece los wonton hasta que el relleno esté hecho por dentro.",
+          "Calienta el caldo con pak choi y sirve los wonton en la sopa con cebolletas."
+        ]
+      },
+      "variants": [
+        "La versión de Hong Kong suele servirse con fideos finos de huevo."
+      ],
+      "serving": [
+        "Sirve con cebolletas y, si quieres, aceite de chile."
+      ],
+      "commonMistakes": [
+        "No rellenes demasiado las obleas finas."
+      ]
+    },
+    "de": {
+      "overview": "Dünne Wonton-Teigblätter werden mit Fleisch oder Garnelen gefüllt und gekocht.",
+      "history": "Wonton-Suppe gibt es in mehreren regionalen chinesischen Traditionen, darunter kantonesische Nudelsuppen.",
+      "flavor": "Mild, aromatisch und vollmundig, mit weichen Teigtaschen.",
+      "technique": "Teigblätter gut verschließen und Wontons separat kochen, wenn die Brühe klar bleiben soll.",
+      "essentials": [
+        "24 Wonton-Teigblätter",
+        "250 g Schweinehackfleisch",
+        "100 g Garnelen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min.",
+        "ingredients": [
+          "24 Wonton-Teigblätter",
+          "250 g Schweinehackfleisch",
+          "100 g Garnelen",
+          "Ingwer",
+          "Sojasauce",
+          "1 l Hühnerbrühe",
+          "Pak Choi",
+          "Frühlingszwiebeln"
+        ],
+        "steps": [
+          "Garnelen fein hacken und mit Fleisch, Ingwer und Sojasauce mischen.",
+          "Wonton-Teigblätter füllen und die Ränder mit etwas Wasser verschließen.",
+          "Wontons kochen, bis die Füllung vollständig durchgegart ist.",
+          "Brühe mit Pak Choi erhitzen und Wontons in der Suppe mit Frühlingszwiebeln servieren."
+        ]
+      },
+      "variants": [
+        "Die Hongkong-Variante wird oft mit dünnen Eiernudeln serviert."
+      ],
+      "serving": [
+        "Mit Frühlingszwiebeln und nach Wunsch Chiliöl servieren."
+      ],
+      "commonMistakes": [
+        "Dünne Teigblätter nicht überfüllen."
+      ]
+    }
+  },
+  "sweet-and-sour-pork": {
+    "en": {
+      "overview": "Pieces of meat are coated and fried before being quickly tossed with sauce and vegetables.",
+      "history": "The Cantonese version gu lou yuk has become widespread in Chinese restaurants internationally.",
+      "flavor": "Sweet, tangy and crisp, with juicy meat.",
+      "technique": "Toss the meat in the sauce just before serving.",
+      "essentials": [
+        "500 g diced pork",
+        "1 egg",
+        "cornflour"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40 min",
+        "ingredients": [
+          "500 g diced pork",
+          "1 egg",
+          "cornflour",
+          "1 bell pepper",
+          "1 onion",
+          "150 g pineapple",
+          "3 tbsp vinegar",
+          "2 tbsp sugar",
+          "2 tbsp ketchup",
+          "oil"
+        ],
+        "steps": [
+          "Coat the meat in egg and starch.",
+          "Fry in small batches until golden and cooked through.",
+          "Fry bell pepper and onion, then add pineapple, vinegar, sugar and ketchup.",
+          "Let the sauce thicken slightly and toss in the meat just before serving."
+        ]
+      },
+      "variants": [
+        "Versions with chicken or other fruits exist; pineapple is not obligatory."
+      ],
+      "serving": [
+        "Serve with rice."
+      ],
+      "commonMistakes": [
+        "Do not leave the crisp fried meat in the sauce for long."
+      ]
+    },
+    "fr": {
+      "overview": "Les morceaux de viande sont enrobés et frits avant d’être rapidement mélangés à la sauce et aux légumes.",
+      "history": "La variante cantonaise gu lou yuk s’est répandue dans les restaurants chinois du monde entier.",
+      "flavor": "Sucré, acidulé et croustillant, avec une viande juteuse.",
+      "technique": "Mélanger la viande à la sauce juste avant de servir.",
+      "essentials": [
+        "500 g de porc en dés",
+        "1 œuf",
+        "fécule de maïs"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40 min",
+        "ingredients": [
+          "500 g de porc en dés",
+          "1 œuf",
+          "fécule de maïs",
+          "1 poivron",
+          "1 oignon",
+          "150 g d’ananas",
+          "3 c. à soupe de vinaigre",
+          "2 c. à soupe de sucre",
+          "2 c. à soupe de ketchup",
+          "huile"
+        ],
+        "steps": [
+          "Enrober la viande d’œuf et de fécule.",
+          "Faire frire par petites quantités jusqu’à ce que la viande soit dorée et cuite à cœur.",
+          "Faire revenir le poivron et l’oignon, puis ajouter l’ananas, le vinaigre, le sucre et le ketchup.",
+          "Laisser la sauce épaissir légèrement et incorporer la viande juste avant de servir."
+        ]
+      },
+      "variants": [
+        "Il existe des variantes au poulet ou à d’autres fruits ; l’ananas n’est pas obligatoire."
+      ],
+      "serving": [
+        "Servir avec du riz."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser longtemps la viande croustillante dans la sauce."
+      ]
+    },
+    "pt": {
+      "overview": "Os pedaços de carne são panados e fritos antes de serem rapidamente envolvidos no molho e nos legumes.",
+      "history": "A variante cantonesa gu lou yuk tornou-se comum em restaurantes chineses de todo o mundo.",
+      "flavor": "Doce, ácido e crocante, com carne suculenta.",
+      "technique": "Envolva a carne no molho imediatamente antes de servir.",
+      "essentials": [
+        "500 g de carne de porco em cubos",
+        "1 ovo",
+        "amido de milho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40 min",
+        "ingredients": [
+          "500 g de carne de porco em cubos",
+          "1 ovo",
+          "amido de milho",
+          "1 pimento",
+          "1 cebola",
+          "150 g de ananás",
+          "3 c. de sopa de vinagre",
+          "2 c. de sopa de açúcar",
+          "2 c. de sopa de ketchup",
+          "óleo"
+        ],
+        "steps": [
+          "Passe a carne por ovo e amido.",
+          "Frite em pequenas porções até a carne dourar e estar bem cozinhada.",
+          "Salteie o pimento e a cebola, junte ananás, vinagre, açúcar e ketchup.",
+          "Deixe o molho engrossar um pouco e envolva a carne imediatamente antes de servir."
+        ]
+      },
+      "variants": [
+        "Existem variantes com frango ou outras frutas; o ananás não é obrigatório."
+      ],
+      "serving": [
+        "Sirva com arroz."
+      ],
+      "commonMistakes": [
+        "Não deixe a carne frita e crocante muito tempo no molho."
+      ]
+    },
+    "es": {
+      "overview": "Los trozos de carne se rebozan y fríen antes de mezclarlos rápidamente con la salsa y las verduras.",
+      "history": "La variante cantonesa gu lou yuk se ha extendido por los restaurantes chinos de todo el mundo.",
+      "flavor": "Dulce, ácido y crujiente, con carne jugosa.",
+      "technique": "Mezcla la carne con la salsa justo antes de servir.",
+      "essentials": [
+        "500 g de cerdo en dados",
+        "1 huevo",
+        "almidón de maíz"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40 min",
+        "ingredients": [
+          "500 g de cerdo en dados",
+          "1 huevo",
+          "almidón de maíz",
+          "1 pimiento",
+          "1 cebolla",
+          "150 g de piña",
+          "3 cucharadas de vinagre",
+          "2 cucharadas de azúcar",
+          "2 cucharadas de kétchup",
+          "aceite"
+        ],
+        "steps": [
+          "Reboza la carne con huevo y almidón.",
+          "Fríe en tandas pequeñas hasta que la carne esté dorada y hecha por dentro.",
+          "Saltea el pimiento y la cebolla, añade piña, vinagre, azúcar y kétchup.",
+          "Deja que la salsa espese un poco e incorpora la carne justo antes de servir."
+        ]
+      },
+      "variants": [
+        "Existen variantes con pollo u otras frutas; la piña no es obligatoria."
+      ],
+      "serving": [
+        "Sirve con arroz."
+      ],
+      "commonMistakes": [
+        "No dejes la carne frita crujiente mucho tiempo en la salsa."
+      ]
+    },
+    "de": {
+      "overview": "Fleischstücke werden paniert und gebraten, bevor sie kurz mit Sauce und Gemüse vermischt werden.",
+      "history": "Die kantonesische Variante Gu Lou Yuk ist in chinesischen Restaurants weltweit verbreitet.",
+      "flavor": "Süß, säuerlich und knusprig mit saftigem Fleisch.",
+      "technique": "Fleisch erst kurz vor dem Servieren in der Sauce wenden.",
+      "essentials": [
+        "500 g gewürfeltes Schweinefleisch",
+        "1 Ei",
+        "Maisstärke"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40 Min.",
+        "ingredients": [
+          "500 g gewürfeltes Schweinefleisch",
+          "1 Ei",
+          "Maisstärke",
+          "1 Paprikaschote",
+          "1 Zwiebel",
+          "150 g Ananas",
+          "3 EL Essig",
+          "2 EL Zucker",
+          "2 EL Ketchup",
+          "Öl"
+        ],
+        "steps": [
+          "Fleisch in Ei und Stärke wenden.",
+          "Portionsweise goldbraun und vollständig durchbraten.",
+          "Paprika und Zwiebel anbraten, Ananas, Essig, Zucker und Ketchup hinzufügen.",
+          "Sauce etwas eindicken lassen und Fleisch kurz vor dem Servieren unterheben."
+        ]
+      },
+      "variants": [
+        "Es gibt Varianten mit Hähnchen oder anderen Früchten; Ananas ist nicht zwingend."
+      ],
+      "serving": [
+        "Mit Reis servieren."
+      ],
+      "commonMistakes": [
+        "Knusprig gebratenes Fleisch nicht lange in der Sauce liegen lassen."
+      ]
+    }
+  },
+  "enchiladas": {
+    "en": {
+      "overview": "The tortillas are filled, rolled and covered with sauce.",
+      "history": "Enchiladas exist in many regional Mexican traditions.",
+      "flavor": "Rich, mildly tangy and spiced.",
+      "technique": "Soften the tortillas before rolling them.",
+      "essentials": [
+        "12 corn tortillas",
+        "400 g cooked chicken",
+        "400 ml red enchilada sauce"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40 min",
+        "ingredients": [
+          "12 corn tortillas",
+          "400 g cooked chicken",
+          "400 ml red enchilada sauce",
+          "150 g cheese",
+          "1 onion"
+        ],
+        "steps": [
+          "Briefly warm the tortillas.",
+          "Fill with chicken and roll up.",
+          "Place in a baking dish with sauce and cheese.",
+          "Bake at 190 °C until heated through."
+        ]
+      },
+      "variants": [
+        "Enchiladas verdes with green tomatillo sauce."
+      ],
+      "serving": [
+        "Serve with onion and crema."
+      ],
+      "commonMistakes": [
+        "Do not use dry tortillas that crack."
+      ]
+    },
+    "fr": {
+      "overview": "Les tortillas sont garnies, roulées et nappées de sauce.",
+      "history": "Les enchiladas existent dans de nombreuses traditions régionales mexicaines.",
+      "flavor": "Généreuses, légèrement acidulées et épicées.",
+      "technique": "Assouplir les tortillas avant de les rouler.",
+      "essentials": [
+        "12 tortillas de maïs",
+        "400 g de poulet cuit",
+        "400 ml de sauce rouge pour enchiladas"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40 min",
+        "ingredients": [
+          "12 tortillas de maïs",
+          "400 g de poulet cuit",
+          "400 ml de sauce rouge pour enchiladas",
+          "150 g de fromage",
+          "1 oignon"
+        ],
+        "steps": [
+          "Réchauffer brièvement les tortillas.",
+          "Garnir de poulet et rouler.",
+          "Disposer dans un plat avec la sauce et le fromage.",
+          "Cuire au four à 190 °C jusqu’à ce que l’ensemble soit bien chaud."
+        ]
+      },
+      "variants": [
+        "Enchiladas verdes à la sauce verte de tomatillos."
+      ],
+      "serving": [
+        "Servir avec de l’oignon et de la crema."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser de tortillas sèches qui se fissurent."
+      ]
+    },
+    "pt": {
+      "overview": "As tortilhas são recheadas, enroladas e cobertas com molho.",
+      "history": "As enchiladas existem em muitas tradições regionais mexicanas.",
+      "flavor": "Encorpadas, ligeiramente ácidas e condimentadas.",
+      "technique": "Amoleça as tortilhas antes de as enrolar.",
+      "essentials": [
+        "12 tortilhas de milho",
+        "400 g de frango cozinhado",
+        "400 ml de molho vermelho para enchiladas"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40 min",
+        "ingredients": [
+          "12 tortilhas de milho",
+          "400 g de frango cozinhado",
+          "400 ml de molho vermelho para enchiladas",
+          "150 g de queijo",
+          "1 cebola"
+        ],
+        "steps": [
+          "Aqueça brevemente as tortilhas.",
+          "Recheie com frango e enrole.",
+          "Coloque numa forma com molho e queijo.",
+          "Leve ao forno a 190 °C até estar bem quente."
+        ]
+      },
+      "variants": [
+        "Enchiladas verdes com molho verde de tomatillo."
+      ],
+      "serving": [
+        "Sirva com cebola e crema."
+      ],
+      "commonMistakes": [
+        "Não use tortilhas secas que se partam."
+      ]
+    },
+    "es": {
+      "overview": "Las tortillas se rellenan, se enrollan y se cubren con salsa.",
+      "history": "Las enchiladas existen en muchas tradiciones regionales mexicanas.",
+      "flavor": "Intensas, ligeramente ácidas y especiadas.",
+      "technique": "Ablanda las tortillas antes de enrollarlas.",
+      "essentials": [
+        "12 tortillas de maíz",
+        "400 g de pollo cocinado",
+        "400 ml de salsa roja para enchiladas"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40 min",
+        "ingredients": [
+          "12 tortillas de maíz",
+          "400 g de pollo cocinado",
+          "400 ml de salsa roja para enchiladas",
+          "150 g de queso",
+          "1 cebolla"
+        ],
+        "steps": [
+          "Calienta brevemente las tortillas.",
+          "Rellena con pollo y enrolla.",
+          "Coloca en una fuente con salsa y queso.",
+          "Hornea a 190 °C hasta que todo esté bien caliente."
+        ]
+      },
+      "variants": [
+        "Enchiladas verdes con salsa verde de tomatillo."
+      ],
+      "serving": [
+        "Sirve con cebolla y crema."
+      ],
+      "commonMistakes": [
+        "No uses tortillas secas que se agrieten."
+      ]
+    },
+    "de": {
+      "overview": "Tortillas werden gefüllt, aufgerollt und mit Sauce bedeckt.",
+      "history": "Enchiladas gibt es in vielen regionalen mexikanischen Traditionen.",
+      "flavor": "Kräftig, mild säuerlich und würzig.",
+      "technique": "Tortillas vor dem Aufrollen weich machen.",
+      "essentials": [
+        "12 Maistortillas",
+        "400 g gegartes Hähnchen",
+        "400 ml rote Enchiladasauce"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40 Min.",
+        "ingredients": [
+          "12 Maistortillas",
+          "400 g gegartes Hähnchen",
+          "400 ml rote Enchiladasauce",
+          "150 g Käse",
+          "1 Zwiebel"
+        ],
+        "steps": [
+          "Tortillas kurz erwärmen.",
+          "Mit Hähnchen füllen und aufrollen.",
+          "Mit Sauce und Käse in eine Auflaufform legen.",
+          "Bei 190 °C backen, bis alles durchgehend heiß ist."
+        ]
+      },
+      "variants": [
+        "Enchiladas Verdes mit grüner Tomatillosauce."
+      ],
+      "serving": [
+        "Mit Zwiebeln und Crema servieren."
+      ],
+      "commonMistakes": [
+        "Keine trockenen Tortillas verwenden, die brechen."
+      ]
+    }
+  },
+  "burrito": {
+    "en": {
+      "overview": "A large, soft tortilla encloses a concentrated filling.",
+      "history": "Burritos are associated with northern Mexico and have taken many forms in the United States.",
+      "flavor": "Soft, rich and spiced.",
+      "technique": "Warm the tortilla and fold in the sides before rolling.",
+      "essentials": [
+        "4 large wheat tortillas",
+        "300 g cooked beans",
+        "300 g minced meat"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30 min",
+        "ingredients": [
+          "4 large wheat tortillas",
+          "300 g cooked beans",
+          "300 g minced meat",
+          "1 onion",
+          "cumin",
+          "salsa"
+        ],
+        "steps": [
+          "Fry onion and minced meat until the meat is cooked through.",
+          "Add spices and beans.",
+          "Warm the tortillas.",
+          "Distribute the filling and salsa and roll tightly."
+        ]
+      },
+      "variants": [
+        "Mission burritos often contain rice and several kinds of accompaniments."
+      ],
+      "serving": [
+        "Serve with salsa."
+      ],
+      "commonMistakes": [
+        "Avoid too much wet filling."
+      ]
+    },
+    "fr": {
+      "overview": "Une grande tortilla souple enveloppe une garniture concentrée.",
+      "history": "Le burrito est associé au nord du Mexique et a pris de nombreuses formes aux États-Unis.",
+      "flavor": "Moelleux, généreux et épicé.",
+      "technique": "Réchauffer la tortilla et rabattre les côtés avant de la rouler.",
+      "essentials": [
+        "4 grandes tortillas de blé",
+        "300 g de haricots cuits",
+        "300 g de viande hachée"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30 min",
+        "ingredients": [
+          "4 grandes tortillas de blé",
+          "300 g de haricots cuits",
+          "300 g de viande hachée",
+          "1 oignon",
+          "cumin",
+          "salsa"
+        ],
+        "steps": [
+          "Faire revenir l’oignon et la viande hachée jusqu’à cuisson complète de la viande.",
+          "Ajouter les épices et les haricots.",
+          "Réchauffer les tortillas.",
+          "Répartir la garniture et la salsa, puis rouler bien serré."
+        ]
+      },
+      "variants": [
+        "Les burritos Mission contiennent souvent du riz et plusieurs sortes de garnitures."
+      ],
+      "serving": [
+        "Servir avec de la salsa."
+      ],
+      "commonMistakes": [
+        "Éviter une garniture trop humide et abondante."
+      ]
+    },
+    "pt": {
+      "overview": "Uma tortilha grande e macia envolve um recheio concentrado.",
+      "history": "O burrito está associado ao norte do México e ganhou muitas formas nos Estados Unidos.",
+      "flavor": "Macio, encorpado e condimentado.",
+      "technique": "Aqueça a tortilha e dobre as laterais para dentro antes de enrolar.",
+      "essentials": [
+        "4 tortilhas grandes de trigo",
+        "300 g de feijão cozido",
+        "300 g de carne picada"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30 min",
+        "ingredients": [
+          "4 tortilhas grandes de trigo",
+          "300 g de feijão cozido",
+          "300 g de carne picada",
+          "1 cebola",
+          "cominhos",
+          "salsa"
+        ],
+        "steps": [
+          "Salteie a cebola e a carne picada até a carne estar bem cozinhada.",
+          "Junte as especiarias e o feijão.",
+          "Aqueça as tortilhas.",
+          "Distribua o recheio e a salsa e enrole firmemente."
+        ]
+      },
+      "variants": [
+        "Os burritos Mission incluem frequentemente arroz e vários acompanhamentos."
+      ],
+      "serving": [
+        "Sirva com salsa."
+      ],
+      "commonMistakes": [
+        "Evite demasiado recheio húmido."
+      ]
+    },
+    "es": {
+      "overview": "Una tortilla grande y suave envuelve un relleno concentrado.",
+      "history": "El burrito se asocia con el norte de México y ha adquirido muchas formas en Estados Unidos.",
+      "flavor": "Suave, contundente y especiado.",
+      "technique": "Calienta la tortilla y dobla los lados hacia dentro antes de enrollar.",
+      "essentials": [
+        "4 tortillas grandes de trigo",
+        "300 g de frijoles cocidos",
+        "300 g de carne picada"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30 min",
+        "ingredients": [
+          "4 tortillas grandes de trigo",
+          "300 g de frijoles cocidos",
+          "300 g de carne picada",
+          "1 cebolla",
+          "comino",
+          "salsa"
+        ],
+        "steps": [
+          "Saltea la cebolla y la carne picada hasta que la carne esté hecha por dentro.",
+          "Añade las especias y los frijoles.",
+          "Calienta las tortillas.",
+          "Reparte el relleno y la salsa y enrolla bien apretado."
+        ]
+      },
+      "variants": [
+        "Los burritos Mission suelen llevar arroz y varios tipos de acompañamientos."
+      ],
+      "serving": [
+        "Sirve con salsa."
+      ],
+      "commonMistakes": [
+        "Evita demasiado relleno húmedo."
+      ]
+    },
+    "de": {
+      "overview": "Eine große, weiche Tortilla umschließt eine konzentrierte Füllung.",
+      "history": "Burritos werden mit Nordmexiko verbunden und haben in den USA viele Formen angenommen.",
+      "flavor": "Weich, kräftig und würzig.",
+      "technique": "Tortilla erwärmen und die Seiten vor dem Aufrollen einschlagen.",
+      "essentials": [
+        "4 große Weizentortillas",
+        "300 g gekochte Bohnen",
+        "300 g Hackfleisch"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30 Min.",
+        "ingredients": [
+          "4 große Weizentortillas",
+          "300 g gekochte Bohnen",
+          "300 g Hackfleisch",
+          "1 Zwiebel",
+          "Kreuzkümmel",
+          "Salsa"
+        ],
+        "steps": [
+          "Zwiebel und Hackfleisch braten, bis das Fleisch vollständig durchgegart ist.",
+          "Gewürze und Bohnen hinzufügen.",
+          "Tortillas erwärmen.",
+          "Füllung und Salsa verteilen und fest aufrollen."
+        ]
+      },
+      "variants": [
+        "Mission-Burritos enthalten oft Reis und mehrere Arten von Beilagen."
+      ],
+      "serving": [
+        "Mit Salsa servieren."
+      ],
+      "commonMistakes": [
+        "Zu viel feuchte Füllung vermeiden."
+      ]
+    }
+  },
+  "tamales": {
+    "en": {
+      "overview": "Masa is spread on corn husks or banana leaves, filled and steamed.",
+      "history": "Tamales have pre-Columbian roots in Mesoamerica and are important in many festive traditions.",
+      "flavor": "Soft maize dough with aromatic filling.",
+      "technique": "Use masa harina intended for tamales and steam until the dough releases from the leaf.",
+      "essentials": [
+        "300 g masa harina",
+        "250–350 ml stock",
+        "100 g softened fat"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2 hours",
+        "ingredients": [
+          "300 g masa harina",
+          "250–350 ml stock",
+          "100 g softened fat",
+          "1 tsp baking powder",
+          "300 g cooked chicken",
+          "salsa",
+          "dried corn husks"
+        ],
+        "steps": [
+          "Soak the corn husks in warm water.",
+          "Beat the fat and mix with masa harina, baking powder and stock to form a soft dough.",
+          "Spread the dough on the husks, add chicken and salsa, and fold.",
+          "Steam for approximately 60–90 minutes until the dough is firm and releases from the husks."
+        ]
+      },
+      "variants": [
+        "Tamales with mole, chilli or sweet filling."
+      ],
+      "serving": [
+        "Remove the leaf before serving."
+      ],
+      "commonMistakes": [
+        "Do not let the steamer boil dry."
+      ]
+    },
+    "fr": {
+      "overview": "La masa est étalée sur des feuilles de maïs ou de bananier, garnie et cuite à la vapeur.",
+      "history": "Les tamales ont des racines précolombiennes en Mésoamérique et jouent un rôle important dans de nombreuses traditions festives.",
+      "flavor": "Pâte de maïs tendre avec une garniture aromatique.",
+      "technique": "Utiliser de la masa harina destinée aux tamales et cuire à la vapeur jusqu’à ce que la pâte se détache de la feuille.",
+      "essentials": [
+        "300 g de masa harina",
+        "250–350 ml de bouillon",
+        "100 g de matière grasse ramollie"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2 heures",
+        "ingredients": [
+          "300 g de masa harina",
+          "250–350 ml de bouillon",
+          "100 g de matière grasse ramollie",
+          "1 c. à café de levure chimique",
+          "300 g de poulet cuit",
+          "salsa",
+          "feuilles de maïs séchées"
+        ],
+        "steps": [
+          "Faire tremper les feuilles de maïs dans de l’eau chaude.",
+          "Fouetter la matière grasse et mélanger avec la masa harina, la levure chimique et le bouillon pour obtenir une pâte souple.",
+          "Étaler la pâte sur les feuilles, ajouter le poulet et la salsa, puis replier.",
+          "Cuire à la vapeur environ 60–90 minutes jusqu’à ce que la pâte soit ferme et se détache des feuilles."
+        ]
+      },
+      "variants": [
+        "Tamales au mole, au piment ou à garniture sucrée."
+      ],
+      "serving": [
+        "Retirer la feuille avant de servir."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser toute l’eau du cuiseur vapeur s’évaporer."
+      ]
+    },
+    "pt": {
+      "overview": "A masa é espalhada sobre folhas de milho ou de bananeira, recheada e cozida a vapor.",
+      "history": "Os tamales têm raízes pré-colombianas na Mesoamérica e são importantes em muitas tradições festivas.",
+      "flavor": "Massa de milho macia com recheio aromático.",
+      "technique": "Use masa harina própria para tamales e coza a vapor até a massa se soltar da folha.",
+      "essentials": [
+        "300 g de masa harina",
+        "250–350 ml de caldo",
+        "100 g de gordura amolecida"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2 horas",
+        "ingredients": [
+          "300 g de masa harina",
+          "250–350 ml de caldo",
+          "100 g de gordura amolecida",
+          "1 c. de chá de fermento em pó",
+          "300 g de frango cozinhado",
+          "salsa",
+          "folhas de milho secas"
+        ],
+        "steps": [
+          "Demolhe as folhas de milho em água quente.",
+          "Bata a gordura e misture com masa harina, fermento em pó e caldo até obter uma massa macia.",
+          "Espalhe a massa nas folhas, junte frango e salsa e dobre.",
+          "Coza a vapor durante cerca de 60–90 minutos até a massa estar firme e se soltar das folhas."
+        ]
+      },
+      "variants": [
+        "Tamales com mole, malagueta ou recheio doce."
+      ],
+      "serving": [
+        "Retire a folha antes de servir."
+      ],
+      "commonMistakes": [
+        "Não deixe a panela de vapor ficar sem água."
+      ]
+    },
+    "es": {
+      "overview": "La masa se extiende sobre hojas de maíz o de plátano, se rellena y se cuece al vapor.",
+      "history": "Los tamales tienen raíces precolombinas en Mesoamérica y son importantes en muchas tradiciones festivas.",
+      "flavor": "Masa de maíz suave con relleno aromático.",
+      "technique": "Usa masa harina para tamales y cuece al vapor hasta que la masa se desprenda de la hoja.",
+      "essentials": [
+        "300 g de masa harina",
+        "250–350 ml de caldo",
+        "100 g de grasa blanda"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2 horas",
+        "ingredients": [
+          "300 g de masa harina",
+          "250–350 ml de caldo",
+          "100 g de grasa blanda",
+          "1 cucharadita de levadura química",
+          "300 g de pollo cocinado",
+          "salsa",
+          "hojas de maíz secas"
+        ],
+        "steps": [
+          "Remoja las hojas de maíz en agua caliente.",
+          "Bate la grasa y mezcla con masa harina, levadura química y caldo hasta obtener una masa suave.",
+          "Extiende la masa sobre las hojas, añade pollo y salsa y dobla.",
+          "Cuece al vapor durante unos 60–90 minutos hasta que la masa esté firme y se desprenda de las hojas."
+        ]
+      },
+      "variants": [
+        "Tamales con mole, chile o relleno dulce."
+      ],
+      "serving": [
+        "Retira la hoja antes de servir."
+      ],
+      "commonMistakes": [
+        "No dejes que la vaporera se quede sin agua."
+      ]
+    },
+    "de": {
+      "overview": "Masa wird auf Mais- oder Bananenblätter gestrichen, gefüllt und gedämpft.",
+      "history": "Tamales haben präkolumbische Wurzeln in Mesoamerika und sind in vielen Festtraditionen wichtig.",
+      "flavor": "Weicher Maisteig mit aromatischer Füllung.",
+      "technique": "Masa Harina für Tamales verwenden und dämpfen, bis sich der Teig vom Blatt löst.",
+      "essentials": [
+        "300 g Masa Harina",
+        "250–350 ml Brühe",
+        "100 g weiches Fett"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2 Stunden",
+        "ingredients": [
+          "300 g Masa Harina",
+          "250–350 ml Brühe",
+          "100 g weiches Fett",
+          "1 TL Backpulver",
+          "300 g gegartes Hähnchen",
+          "Salsa",
+          "getrocknete Maisblätter"
+        ],
+        "steps": [
+          "Maisblätter in warmem Wasser einweichen.",
+          "Fett aufschlagen und mit Masa Harina, Backpulver und Brühe zu einem weichen Teig mischen.",
+          "Teig auf die Blätter streichen, Hähnchen und Salsa daraufgeben und zusammenfalten.",
+          "Etwa 60–90 Minuten dämpfen, bis der Teig fest ist und sich von den Blättern löst."
+        ]
+      },
+      "variants": [
+        "Tamales mit Mole, Chili oder süßer Füllung."
+      ],
+      "serving": [
+        "Blatt vor dem Servieren entfernen."
+      ],
+      "commonMistakes": [
+        "Dämpftopf nicht trocken kochen lassen."
+      ]
+    }
+  },
+  "chilaquiles": {
+    "en": {
+      "overview": "Crisp tortilla pieces are partly softened in warm salsa.",
+      "history": "Chilaquiles are a well-known Mexican breakfast dish.",
+      "flavor": "Crisp and soft, tangy and spiced.",
+      "technique": "Fold in the chips just before serving to retain some crispness.",
+      "essentials": [
+        "200 g tortilla chips",
+        "400 ml salsa roja or verde",
+        "4 eggs"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 20 min",
+        "ingredients": [
+          "200 g tortilla chips",
+          "400 ml salsa roja or verde",
+          "4 eggs",
+          "100 g queso fresco",
+          "crema",
+          "onion"
+        ],
+        "steps": [
+          "Warm the salsa in a pan.",
+          "Fry the eggs separately.",
+          "Toss the chips in the warm sauce.",
+          "Top with eggs, cheese, crema and onion."
+        ]
+      },
+      "variants": [
+        "Red and green versions with eggs or chicken."
+      ],
+      "serving": [
+        "Serve immediately."
+      ],
+      "commonMistakes": [
+        "Do not cook the chips for long if you want a crisp texture."
+      ]
+    },
+    "fr": {
+      "overview": "Des morceaux de tortilla croustillants sont partiellement ramollis dans une salsa chaude.",
+      "history": "Les chilaquiles sont un plat de petit-déjeuner mexicain bien connu.",
+      "flavor": "Croustillants et tendres, acidulés et épicés.",
+      "technique": "Incorporer les chips juste avant de servir pour préserver un peu de croustillant.",
+      "essentials": [
+        "200 g de chips de tortilla",
+        "400 ml de salsa roja ou verde",
+        "4 œufs"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 20 min",
+        "ingredients": [
+          "200 g de chips de tortilla",
+          "400 ml de salsa roja ou verde",
+          "4 œufs",
+          "100 g de queso fresco",
+          "crema",
+          "oignon"
+        ],
+        "steps": [
+          "Chauffer la salsa dans une poêle.",
+          "Cuire les œufs séparément à la poêle.",
+          "Incorporer les chips à la sauce chaude.",
+          "Garnir d’œufs, de fromage, de crema et d’oignon."
+        ]
+      },
+      "variants": [
+        "Variantes rouges et vertes avec des œufs ou du poulet."
+      ],
+      "serving": [
+        "Servir immédiatement."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire longtemps les chips si l’on souhaite une texture croustillante."
+      ]
+    },
+    "pt": {
+      "overview": "Pedaços crocantes de tortilha são parcialmente amolecidos em salsa quente.",
+      "history": "Os chilaquiles são um conhecido prato mexicano de pequeno-almoço.",
+      "flavor": "Crocantes e macios, ácidos e condimentados.",
+      "technique": "Envolva os chips imediatamente antes de servir para manter alguma crocância.",
+      "essentials": [
+        "200 g de chips de tortilha",
+        "400 ml de salsa roja ou verde",
+        "4 ovos"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 20 min",
+        "ingredients": [
+          "200 g de chips de tortilha",
+          "400 ml de salsa roja ou verde",
+          "4 ovos",
+          "100 g de queso fresco",
+          "crema",
+          "cebola"
+        ],
+        "steps": [
+          "Aqueça a salsa numa frigideira.",
+          "Estrele os ovos separadamente.",
+          "Envolva os chips no molho quente.",
+          "Cubra com ovos, queijo, crema e cebola."
+        ]
+      },
+      "variants": [
+        "Versões vermelhas e verdes com ovos ou frango."
+      ],
+      "serving": [
+        "Sirva imediatamente."
+      ],
+      "commonMistakes": [
+        "Não cozinhe os chips durante muito tempo se quiser uma textura crocante."
+      ]
+    },
+    "es": {
+      "overview": "Los trozos crujientes de tortilla se ablandan parcialmente en salsa caliente.",
+      "history": "Los chilaquiles son un conocido plato mexicano de desayuno.",
+      "flavor": "Crujientes y suaves, ácidos y especiados.",
+      "technique": "Incorpora los totopos justo antes de servir para conservar algo de textura crujiente.",
+      "essentials": [
+        "200 g de totopos de tortilla",
+        "400 ml de salsa roja o verde",
+        "4 huevos"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 20 min",
+        "ingredients": [
+          "200 g de totopos de tortilla",
+          "400 ml de salsa roja o verde",
+          "4 huevos",
+          "100 g de queso fresco",
+          "crema",
+          "cebolla"
+        ],
+        "steps": [
+          "Calienta la salsa en una sartén.",
+          "Fríe los huevos por separado.",
+          "Mezcla los totopos con la salsa caliente.",
+          "Cubre con huevos, queso, crema y cebolla."
+        ]
+      },
+      "variants": [
+        "Versiones rojas y verdes con huevos o pollo."
+      ],
+      "serving": [
+        "Sirve inmediatamente."
+      ],
+      "commonMistakes": [
+        "No cuezas los totopos mucho tiempo si quieres una textura crujiente."
+      ]
+    },
+    "de": {
+      "overview": "Knusprige Tortillastücke werden in warmer Salsa teilweise aufgeweicht.",
+      "history": "Chilaquiles sind ein bekanntes mexikanisches Frühstücksgericht.",
+      "flavor": "Knusprig und weich, säuerlich und würzig.",
+      "technique": "Chips erst kurz vor dem Servieren unterheben, damit sie etwas knusprig bleiben.",
+      "essentials": [
+        "200 g Tortillachips",
+        "400 ml Salsa Roja oder Verde",
+        "4 Eier"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 20 Min.",
+        "ingredients": [
+          "200 g Tortillachips",
+          "400 ml Salsa Roja oder Verde",
+          "4 Eier",
+          "100 g Queso Fresco",
+          "Crema",
+          "Zwiebel"
+        ],
+        "steps": [
+          "Salsa in einer Pfanne erwärmen.",
+          "Eier separat braten.",
+          "Chips in der warmen Sauce wenden.",
+          "Mit Eiern, Käse, Crema und Zwiebeln garnieren."
+        ]
+      },
+      "variants": [
+        "Rote und grüne Varianten mit Eiern oder Hähnchen."
+      ],
+      "serving": [
+        "Sofort servieren."
+      ],
+      "commonMistakes": [
+        "Chips nicht lange kochen, wenn eine knusprige Konsistenz gewünscht ist."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

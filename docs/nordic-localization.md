@@ -188,3 +188,7 @@ Added eight complete bodies per language: malai kofta, aloo gobi, lasagne alla b
 ### International full article review batch 7
 
 Added eight complete bodies per language: tempura, okonomiyaki, takoyaki, sukiyaki, shabu-shabu, katsudon, kung pao chicken and xiaolongbao. Checked source list lengths and numerical recipe tokens, including frying temperatures and chilling times. Preserved raw-egg, cross-contamination and hot-broth safety instructions. Original bodies and sources retained. Total 56 new bodies per language; English 89/200 including original 33, other four 56/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 8
+
+Added eight complete bodies per language: char siu, chow mein, wonton soup, sweet-and-sour pork, enchiladas, burrito, tamales and chilaquiles. Checked source list lengths and numerical recipe tokens, preserving cooking temperatures, rest time and marinade hygiene. Original bodies and source links retained. Total 64 new bodies per language; English 97/200 including original 33, other four 64/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
