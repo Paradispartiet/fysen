@@ -21240,5 +21240,1626 @@ export const draftInternationalArticles = {
         "Nicht die gesamte Tamarinde hinzufügen, ohne zwischendurch abzuschmecken."
       ]
     }
+  },
+  "sisig": {
+    "en": {
+      "overview": "Traditional pork sisig may use parts of the pig’s head and liver; this recipe uses pork as a readily available alternative.",
+      "history": "Sisig is associated with Kapampangan food culture and exists in many modern forms.",
+      "flavor": "Roasted, tangy and piquant.",
+      "technique": "Fry the meat until crisp before chopping and mixing it with fresh ingredients.",
+      "essentials": [
+        "500 g pork belly",
+        "1 red onion",
+        "chilli to taste"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 60 min",
+        "ingredients": [
+          "500 g pork belly",
+          "1 red onion",
+          "chilli to taste",
+          "2 tbsp calamansi or lime juice",
+          "1 tbsp soy sauce",
+          "oil"
+        ],
+        "steps": [
+          "Cook the pork belly until cooked through and golden.",
+          "Chop the meat into small pieces.",
+          "Finely chop onion and chilli and mix with the meat and citrus juice.",
+          "Heat briefly in a pan and season with soy sauce."
+        ]
+      },
+      "variants": [
+        "Versions with chicken, fish or tofu."
+      ],
+      "serving": [
+        "Serve with rice or as a small dish."
+      ],
+      "commonMistakes": [
+        "Do not add so much liquid that the meat loses all its crispness."
+      ]
+    },
+    "fr": {
+      "overview": "Le sisig de porc traditionnel peut utiliser des parties de la tête et du foie du porc ; cette recette utilise une viande de porc facile à trouver.",
+      "history": "Le sisig est associé à la culture culinaire kapampangan et existe sous de nombreuses formes modernes.",
+      "flavor": "Grillé, acidulé et piquant.",
+      "technique": "Faire dorer la viande jusqu’à ce qu’elle soit croustillante avant de la hacher et de la mélanger aux ingrédients frais.",
+      "essentials": [
+        "500 g de poitrine de porc",
+        "1 oignon rouge",
+        "piment selon le goût"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 60 min",
+        "ingredients": [
+          "500 g de poitrine de porc",
+          "1 oignon rouge",
+          "piment selon le goût",
+          "2 c. à soupe de jus de calamansi ou de citron vert",
+          "1 c. à soupe de sauce soja",
+          "huile"
+        ],
+        "steps": [
+          "Cuire la poitrine de porc jusqu’à ce qu’elle soit dorée et cuite à cœur.",
+          "Hacher la viande en petits morceaux.",
+          "Hacher finement l’oignon et le piment, puis mélanger avec la viande et le jus d’agrumes.",
+          "Réchauffer brièvement à la poêle et assaisonner avec la sauce soja."
+        ]
+      },
+      "variants": [
+        "Variantes au poulet, au poisson ou au tofu."
+      ],
+      "serving": [
+        "Servir avec du riz ou en petite portion."
+      ],
+      "commonMistakes": [
+        "Ne pas ajouter tant de liquide que la viande perde tout son croustillant."
+      ]
+    },
+    "pt": {
+      "overview": "O sisig de porco tradicional pode utilizar partes da cabeça e fígado do porco; aqui usa-se carne de porco como alternativa de fácil acesso.",
+      "history": "O sisig está associado à cultura gastronómica kapampangan e existe em muitas formas modernas.",
+      "flavor": "Tostado, ácido e picante.",
+      "technique": "Cozinhe a carne até ficar crocante antes de a picar e misturar com os ingredientes frescos.",
+      "essentials": [
+        "500 g de barriga de porco",
+        "1 cebola roxa",
+        "malagueta a gosto"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 60 min",
+        "ingredients": [
+          "500 g de barriga de porco",
+          "1 cebola roxa",
+          "malagueta a gosto",
+          "2 c. de sopa de sumo de calamansi ou lima",
+          "1 c. de sopa de molho de soja",
+          "óleo"
+        ],
+        "steps": [
+          "Cozinhe a barriga de porco até estar bem cozinhada e dourada.",
+          "Pique a carne em pedaços pequenos.",
+          "Pique finamente a cebola e a malagueta e misture com a carne e o sumo de citrinos.",
+          "Aqueça brevemente numa frigideira e tempere com molho de soja."
+        ]
+      },
+      "variants": [
+        "Variantes com frango, peixe ou tofu."
+      ],
+      "serving": [
+        "Sirva com arroz ou como petisco."
+      ],
+      "commonMistakes": [
+        "Não junte tanto líquido que a carne perca toda a crocância."
+      ]
+    },
+    "es": {
+      "overview": "El sisig tradicional de cerdo puede llevar partes de la cabeza y el hígado del cerdo; aquí se usa carne de cerdo como alternativa fácil de conseguir.",
+      "history": "El sisig se asocia con la cultura culinaria kapampangan y existe en muchas formas modernas.",
+      "flavor": "Tostado, ácido y picante.",
+      "technique": "Cocina la carne hasta que esté crujiente antes de picarla y mezclarla con los ingredientes frescos.",
+      "essentials": [
+        "500 g de panceta de cerdo",
+        "1 cebolla morada",
+        "chile al gusto"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 60 min",
+        "ingredients": [
+          "500 g de panceta de cerdo",
+          "1 cebolla morada",
+          "chile al gusto",
+          "2 cucharadas de zumo de calamansí o lima",
+          "1 cucharada de salsa de soja",
+          "aceite"
+        ],
+        "steps": [
+          "Cocina la panceta hasta que esté hecha por dentro y dorada.",
+          "Pica la carne en trozos pequeños.",
+          "Pica finamente la cebolla y el chile y mezcla con la carne y el zumo de cítricos.",
+          "Calienta brevemente en una sartén y sazona con salsa de soja."
+        ]
+      },
+      "variants": [
+        "Variantes con pollo, pescado o tofu."
+      ],
+      "serving": [
+        "Sirve con arroz o como plato pequeño."
+      ],
+      "commonMistakes": [
+        "No añadas tanto líquido que la carne pierda toda su textura crujiente."
+      ]
+    },
+    "de": {
+      "overview": "Traditionelles Sisig kann Teile des Schweinekopfs und Leber enthalten; hier wird leicht erhältliches Schweinefleisch verwendet.",
+      "history": "Sisig ist mit der Kapampangan-Esskultur verbunden und kommt in vielen modernen Formen vor.",
+      "flavor": "Röstig, säuerlich und pikant.",
+      "technique": "Fleisch knusprig braten, bevor es gehackt und mit frischen Zutaten vermischt wird.",
+      "essentials": [
+        "500 g Schweinebauch",
+        "1 rote Zwiebel",
+        "Chili nach Geschmack"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 60 Min.",
+        "ingredients": [
+          "500 g Schweinebauch",
+          "1 rote Zwiebel",
+          "Chili nach Geschmack",
+          "2 EL Calamansi- oder Limettensaft",
+          "1 EL Sojasauce",
+          "Öl"
+        ],
+        "steps": [
+          "Schweinebauch vollständig durchgaren und goldbraun braten.",
+          "Fleisch in kleine Stücke hacken.",
+          "Zwiebel und Chili fein hacken und mit Fleisch und Zitrussaft mischen.",
+          "Kurz in der Pfanne erhitzen und mit Sojasauce abschmecken."
+        ]
+      },
+      "variants": [
+        "Varianten mit Hähnchen, Fisch oder Tofu."
+      ],
+      "serving": [
+        "Mit Reis oder als kleines Gericht servieren."
+      ],
+      "commonMistakes": [
+        "Nicht so viel Flüssigkeit hinzufügen, dass das Fleisch seine Knusprigkeit völlig verliert."
+      ]
+    }
+  },
+  "lechon": {
+    "en": {
+      "overview": "A whole pig is traditionally roasted on a spit; this home version uses oven-roasted pork belly.",
+      "history": "Lechon is known as festive food in the Philippines, including in Cebu.",
+      "flavor": "Crisp, salty skin and rich meat.",
+      "technique": "Dry the skin well and roast the meat gently before increasing the heat towards the end.",
+      "essentials": [
+        "1.2 kg pork belly with skin",
+        "salt",
+        "pepper"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 3 hours",
+        "ingredients": [
+          "1.2 kg pork belly with skin",
+          "salt",
+          "pepper",
+          "garlic",
+          "2 stalks lemongrass"
+        ],
+        "steps": [
+          "Dry the skin and season the meat side with salt, pepper and aromatics.",
+          "Place the meat skin-side up in a roasting dish.",
+          "Roast at 160 °C until the meat is tender and cooked through.",
+          "Increase the heat towards the end and watch carefully until the skin is crisp."
+        ]
+      },
+      "variants": [
+        "Lechon sa hurno is oven-roasted; lechon kawali is a distinct deep-fried variant."
+      ],
+      "serving": [
+        "Serve with rice and your preferred sauce."
+      ],
+      "commonMistakes": [
+        "Do not let the skin burn during the final high-heat stage."
+      ]
+    },
+    "fr": {
+      "overview": "Traditionnellement, un porc entier est rôti à la broche ; cette version maison utilise de la poitrine de porc au four.",
+      "history": "Le lechon est un plat de fête connu aux Philippines, notamment à Cebu.",
+      "flavor": "Couenne croustillante et salée, viande savoureuse.",
+      "technique": "Bien sécher la couenne et cuire la viande doucement avant d’augmenter la température en fin de cuisson.",
+      "essentials": [
+        "1,2 kg de poitrine de porc avec couenne",
+        "sel",
+        "poivre"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 3 heures",
+        "ingredients": [
+          "1,2 kg de poitrine de porc avec couenne",
+          "sel",
+          "poivre",
+          "ail",
+          "2 tiges de citronnelle"
+        ],
+        "steps": [
+          "Sécher la couenne et assaisonner le côté chair avec du sel, du poivre et des aromates.",
+          "Disposer la viande dans un plat, couenne vers le haut.",
+          "Rôtir à 160 °C jusqu’à ce que la viande soit tendre et cuite à cœur.",
+          "Augmenter la température en fin de cuisson et surveiller attentivement jusqu’à ce que la couenne soit croustillante."
+        ]
+      },
+      "variants": [
+        "Le lechon sa hurno est rôti au four ; le lechon kawali est une variante distincte cuite en friture."
+      ],
+      "serving": [
+        "Servir avec du riz et la sauce de son choix."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser brûler la couenne pendant la cuisson finale à haute température."
+      ]
+    },
+    "pt": {
+      "overview": "Tradicionalmente assa-se um porco inteiro no espeto; esta versão caseira usa barriga de porco no forno.",
+      "history": "O lechon é conhecido como prato festivo nas Filipinas, nomeadamente em Cebu.",
+      "flavor": "Pele crocante e salgada e carne de sabor intenso.",
+      "technique": "Seque bem a pele e asse a carne lentamente antes de aumentar a temperatura perto do fim.",
+      "essentials": [
+        "1,2 kg de barriga de porco com pele",
+        "sal",
+        "pimenta"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 3 horas",
+        "ingredients": [
+          "1,2 kg de barriga de porco com pele",
+          "sal",
+          "pimenta",
+          "alho",
+          "2 talos de erva-príncipe"
+        ],
+        "steps": [
+          "Seque a pele e tempere o lado da carne com sal, pimenta e aromáticos.",
+          "Coloque a carne num tabuleiro com a pele virada para cima.",
+          "Asse a 160 °C até a carne ficar tenra e bem cozinhada.",
+          "Aumente a temperatura perto do fim e vigie atentamente até a pele ficar crocante."
+        ]
+      },
+      "variants": [
+        "O lechon sa hurno é assado no forno; o lechon kawali é uma variante distinta frita em imersão."
+      ],
+      "serving": [
+        "Sirva com arroz e molho a gosto."
+      ],
+      "commonMistakes": [
+        "Não deixe a pele queimar durante a fase final de temperatura elevada."
+      ]
+    },
+    "es": {
+      "overview": "Tradicionalmente se asa un cerdo entero en un espetón; esta versión casera usa panceta al horno.",
+      "history": "El lechon es conocido como plato festivo en Filipinas, entre otros lugares en Cebú.",
+      "flavor": "Piel crujiente y salada y carne de sabor intenso.",
+      "technique": "Seca bien la piel y asa la carne suavemente antes de aumentar la temperatura hacia el final.",
+      "essentials": [
+        "1,2 kg de panceta con piel",
+        "sal",
+        "pimienta"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 3 horas",
+        "ingredients": [
+          "1,2 kg de panceta con piel",
+          "sal",
+          "pimienta",
+          "ajo",
+          "2 tallos de hierba limón"
+        ],
+        "steps": [
+          "Seca la piel y sazona el lado de la carne con sal, pimienta y aromáticos.",
+          "Coloca la carne en una fuente con la piel hacia arriba.",
+          "Asa a 160 °C hasta que la carne esté tierna y hecha por dentro.",
+          "Aumenta la temperatura hacia el final y vigila atentamente hasta que la piel esté crujiente."
+        ]
+      },
+      "variants": [
+        "El lechon sa hurno se asa al horno; el lechon kawali es una variante distinta frita en abundante aceite."
+      ],
+      "serving": [
+        "Sirve con arroz y la salsa que prefieras."
+      ],
+      "commonMistakes": [
+        "No dejes que la piel se queme durante la fase final a temperatura alta."
+      ]
+    },
+    "de": {
+      "overview": "Traditionell wird ein ganzes Schwein am Spieß gebraten; diese Hausvariante verwendet Schweinebauch aus dem Ofen.",
+      "history": "Lechon ist auf den Philippinen, unter anderem auf Cebu, als Festessen bekannt.",
+      "flavor": "Knusprige, salzige Schwarte und kräftiges Fleisch.",
+      "technique": "Schwarte gut trocknen und Fleisch sanft braten, bevor gegen Ende die Hitze erhöht wird.",
+      "essentials": [
+        "1,2 kg Schweinebauch mit Schwarte",
+        "Salz",
+        "Pfeffer"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 3 Stunden",
+        "ingredients": [
+          "1,2 kg Schweinebauch mit Schwarte",
+          "Salz",
+          "Pfeffer",
+          "Knoblauch",
+          "2 Stängel Zitronengras"
+        ],
+        "steps": [
+          "Schwarte trocknen und Fleischseite mit Salz, Pfeffer und Aromaten würzen.",
+          "Fleisch mit der Schwarte nach oben in eine Bratform legen.",
+          "Bei 160 °C braten, bis das Fleisch weich und vollständig gar ist.",
+          "Gegen Ende die Hitze erhöhen und sorgfältig beobachten, bis die Schwarte knusprig ist."
+        ]
+      },
+      "variants": [
+        "Lechon sa Hurno wird im Ofen gebraten; Lechon Kawali ist eine eigenständige frittierte Variante."
+      ],
+      "serving": [
+        "Mit Reis und Sauce nach Wahl servieren."
+      ],
+      "commonMistakes": [
+        "Schwarte bei der abschließenden hohen Hitze nicht verbrennen lassen."
+      ]
+    }
+  },
+  "pancit": {
+    "en": {
+      "overview": "Pancit is an umbrella term; this recipe is a home version of pancit bihon with rice noodles.",
+      "history": "Noodle dishes such as pancit are common both in everyday life and at Filipino celebrations.",
+      "flavor": "Salty, aromatic and lightly roasted.",
+      "technique": "Cook the noodles until just tender in flavourful stock.",
+      "essentials": [
+        "250 g bihon rice noodles",
+        "250 g chicken",
+        "1 carrot"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40 min",
+        "ingredients": [
+          "250 g bihon rice noodles",
+          "250 g chicken",
+          "1 carrot",
+          "200 g cabbage",
+          "1 onion",
+          "2 garlic cloves",
+          "400 ml stock",
+          "soy sauce",
+          "lime"
+        ],
+        "steps": [
+          "Cut the chicken and vegetables into small pieces.",
+          "Fry the onion, garlic and chicken until the chicken is cooked through; fold in the vegetables.",
+          "Add stock and soy sauce and let the rice noodles soften according to the packet instructions.",
+          "Combine everything and season with lime."
+        ]
+      },
+      "variants": [
+        "Pancit canton uses wheat noodles; pancit palabok has a different sauce and topping."
+      ],
+      "serving": [
+        "Serve with calamansi or lime."
+      ],
+      "commonMistakes": [
+        "Do not cook the noodles until they disintegrate."
+      ]
+    },
+    "fr": {
+      "overview": "Pancit est un terme générique ; cette recette est une version maison du pancit bihon aux nouilles de riz.",
+      "history": "Les plats de nouilles comme le pancit sont courants au quotidien et lors des fêtes philippines.",
+      "flavor": "Salé, aromatique et légèrement grillé.",
+      "technique": "Cuire les nouilles juste à point dans un bouillon savoureux.",
+      "essentials": [
+        "250 g de nouilles de riz bihon",
+        "250 g de poulet",
+        "1 carotte"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40 min",
+        "ingredients": [
+          "250 g de nouilles de riz bihon",
+          "250 g de poulet",
+          "1 carotte",
+          "200 g de chou",
+          "1 oignon",
+          "2 gousses d’ail",
+          "400 ml de bouillon",
+          "sauce soja",
+          "citron vert"
+        ],
+        "steps": [
+          "Couper le poulet et les légumes en petits morceaux.",
+          "Faire revenir l’oignon, l’ail et le poulet jusqu’à cuisson complète du poulet ; incorporer les légumes.",
+          "Ajouter le bouillon et la sauce soja, puis laisser les nouilles de riz s’attendrir selon les instructions du paquet.",
+          "Mélanger le tout et assaisonner avec du citron vert."
+        ]
+      },
+      "variants": [
+        "Le pancit canton utilise des nouilles de blé ; le pancit palabok possède une sauce et une garniture différentes."
+      ],
+      "serving": [
+        "Servir avec du calamansi ou du citron vert."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire les nouilles jusqu’à ce qu’elles se désagrègent."
+      ]
+    },
+    "pt": {
+      "overview": "Pancit é uma designação abrangente; esta receita é uma versão caseira de pancit bihon com noodles de arroz.",
+      "history": "Pratos de noodles como o pancit são comuns no quotidiano e nas celebrações filipinas.",
+      "flavor": "Salgado, aromático e ligeiramente tostado.",
+      "technique": "Coza os noodles num caldo saboroso até ficarem apenas tenros.",
+      "essentials": [
+        "250 g de noodles de arroz bihon",
+        "250 g de frango",
+        "1 cenoura"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40 min",
+        "ingredients": [
+          "250 g de noodles de arroz bihon",
+          "250 g de frango",
+          "1 cenoura",
+          "200 g de couve",
+          "1 cebola",
+          "2 dentes de alho",
+          "400 ml de caldo",
+          "molho de soja",
+          "lima"
+        ],
+        "steps": [
+          "Corte o frango e os legumes em pedaços pequenos.",
+          "Salteie a cebola, o alho e o frango até este estar bem cozinhado; envolva os legumes.",
+          "Junte caldo e molho de soja e deixe os noodles de arroz amolecer de acordo com as instruções da embalagem.",
+          "Misture tudo e tempere com lima."
+        ]
+      },
+      "variants": [
+        "O pancit canton usa noodles de trigo; o pancit palabok tem outro molho e cobertura."
+      ],
+      "serving": [
+        "Sirva com calamansi ou lima."
+      ],
+      "commonMistakes": [
+        "Não coza os noodles até se desfazerem."
+      ]
+    },
+    "es": {
+      "overview": "Pancit es un término genérico; esta receta es una versión casera de pancit bihon con fideos de arroz.",
+      "history": "Los platos de fideos como el pancit son habituales tanto a diario como en las celebraciones filipinas.",
+      "flavor": "Salado, aromático y ligeramente tostado.",
+      "technique": "Cuece los fideos en un caldo sabroso hasta que estén justo tiernos.",
+      "essentials": [
+        "250 g de fideos de arroz bihon",
+        "250 g de pollo",
+        "1 zanahoria"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40 min",
+        "ingredients": [
+          "250 g de fideos de arroz bihon",
+          "250 g de pollo",
+          "1 zanahoria",
+          "200 g de col",
+          "1 cebolla",
+          "2 dientes de ajo",
+          "400 ml de caldo",
+          "salsa de soja",
+          "lima"
+        ],
+        "steps": [
+          "Corta el pollo y las verduras en trozos pequeños.",
+          "Saltea la cebolla, el ajo y el pollo hasta que esté hecho por dentro; incorpora las verduras.",
+          "Añade caldo y salsa de soja y deja que los fideos de arroz se ablanden según las instrucciones del envase.",
+          "Mezcla todo y sazona con lima."
+        ]
+      },
+      "variants": [
+        "El pancit canton utiliza fideos de trigo; el pancit palabok tiene otra salsa y otros ingredientes por encima."
+      ],
+      "serving": [
+        "Sirve con calamansí o lima."
+      ],
+      "commonMistakes": [
+        "No cuezas los fideos hasta que se deshagan."
+      ]
+    },
+    "de": {
+      "overview": "Pancit ist ein Sammelbegriff; dieses Rezept ist eine Hausvariante von Pancit Bihon mit Reisnudeln.",
+      "history": "Nudelgerichte wie Pancit sind sowohl im philippinischen Alltag als auch bei Festen verbreitet.",
+      "flavor": "Salzig, aromatisch und leicht röstig.",
+      "technique": "Nudeln in geschmackvoller Brühe gerade weich garen.",
+      "essentials": [
+        "250 g Bihon-Reisnudeln",
+        "250 g Hähnchen",
+        "1 Karotte"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40 Min.",
+        "ingredients": [
+          "250 g Bihon-Reisnudeln",
+          "250 g Hähnchen",
+          "1 Karotte",
+          "200 g Kohl",
+          "1 Zwiebel",
+          "2 Knoblauchzehen",
+          "400 ml Brühe",
+          "Sojasauce",
+          "Limette"
+        ],
+        "steps": [
+          "Hähnchen und Gemüse in kleine Stücke schneiden.",
+          "Zwiebel, Knoblauch und Hähnchen braten, bis das Hähnchen durchgegart ist; Gemüse unterheben.",
+          "Brühe und Sojasauce hinzufügen und Reisnudeln nach Packungsanleitung darin gar ziehen lassen.",
+          "Alles vermengen und mit Limette abschmecken."
+        ]
+      },
+      "variants": [
+        "Pancit Canton verwendet Weizennudeln; Pancit Palabok hat eine andere Sauce und Garnitur."
+      ],
+      "serving": [
+        "Mit Calamansi oder Limette servieren."
+      ],
+      "commonMistakes": [
+        "Nudeln nicht so lange garen, dass sie zerfallen."
+      ]
+    }
+  },
+  "kare-kare": {
+    "en": {
+      "overview": "Tender meat and vegetables are served in a nut-based sauce, often with fermented shrimp paste on the side.",
+      "history": "Kare-kare is an established Filipino stew, often made with oxtail.",
+      "flavor": "Mild, nutty and rich.",
+      "technique": "Cook the meat until tender separately before preparing the sauce.",
+      "essentials": [
+        "800 g oxtail",
+        "1 aubergine",
+        "150 g long beans"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 3 hours",
+        "ingredients": [
+          "800 g oxtail",
+          "1 aubergine",
+          "150 g long beans",
+          "pak choi",
+          "100 g unsweetened peanut butter",
+          "1 onion",
+          "2 garlic cloves",
+          "600 ml stock",
+          "2 tbsp rice flour",
+          "bagoong to taste"
+        ],
+        "steps": [
+          "Simmer the oxtail in water until tender and reserve the stock.",
+          "Fry onion and garlic, then add stock and peanut butter.",
+          "Thicken with rice flour mixed with liquid and simmer.",
+          "Add meat and vegetables and cook until the vegetables are tender."
+        ]
+      },
+      "variants": [
+        "Vegetarian versions can use tofu and mushrooms, vegetable stock and plant-based accompaniments instead of bagoong."
+      ],
+      "serving": [
+        "Serve with rice and optionally bagoong."
+      ],
+      "commonMistakes": [
+        "Do not boil the sauce so vigorously that it burns."
+      ]
+    },
+    "fr": {
+      "overview": "De la viande tendre et des légumes sont servis dans une sauce à base de fruits à coque ou d’arachides, souvent avec de la pâte de crevettes fermentée à part.",
+      "history": "Le kare-kare est un ragoût philippin traditionnel, souvent préparé avec de la queue de bœuf.",
+      "flavor": "Doux, aux notes de noix et généreux.",
+      "technique": "Cuire la viande séparément jusqu’à tendreté avant de préparer la sauce.",
+      "essentials": [
+        "800 g de queue de bœuf",
+        "1 aubergine",
+        "150 g de haricots longs"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 3 heures",
+        "ingredients": [
+          "800 g de queue de bœuf",
+          "1 aubergine",
+          "150 g de haricots longs",
+          "pak choï",
+          "100 g de beurre de cacahuète non sucré",
+          "1 oignon",
+          "2 gousses d’ail",
+          "600 ml de bouillon",
+          "2 c. à soupe de farine de riz",
+          "bagoong selon le goût"
+        ],
+        "steps": [
+          "Laisser mijoter la queue de bœuf dans l’eau jusqu’à tendreté et conserver le bouillon.",
+          "Faire revenir l’oignon et l’ail, puis ajouter le bouillon et le beurre de cacahuète.",
+          "Épaissir avec de la farine de riz délayée et laisser mijoter.",
+          "Ajouter la viande et les légumes et cuire jusqu’à tendreté des légumes."
+        ]
+      },
+      "variants": [
+        "Les variantes végétariennes peuvent utiliser du tofu et des champignons, du bouillon de légumes et un accompagnement végétal à la place du bagoong."
+      ],
+      "serving": [
+        "Servir avec du riz et éventuellement du bagoong."
+      ],
+      "commonMistakes": [
+        "Ne pas faire bouillir la sauce si fort qu’elle attache et brûle."
+      ]
+    },
+    "pt": {
+      "overview": "Carne tenra e legumes são servidos num molho à base de frutos secos ou amendoim, frequentemente com pasta de camarão fermentada à parte.",
+      "history": "O kare-kare é um guisado filipino tradicional, frequentemente feito com rabo de boi.",
+      "flavor": "Suave, com notas de frutos secos e encorpado.",
+      "technique": "Coza a carne separadamente até ficar tenra antes de preparar o molho.",
+      "essentials": [
+        "800 g de rabo de boi",
+        "1 beringela",
+        "150 g de feijão-de-metro"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 3 horas",
+        "ingredients": [
+          "800 g de rabo de boi",
+          "1 beringela",
+          "150 g de feijão-de-metro",
+          "pak choi",
+          "100 g de manteiga de amendoim sem açúcar",
+          "1 cebola",
+          "2 dentes de alho",
+          "600 ml de caldo",
+          "2 c. de sopa de farinha de arroz",
+          "bagoong a gosto"
+        ],
+        "steps": [
+          "Coza o rabo de boi em lume brando até ficar tenro e reserve o caldo.",
+          "Salteie a cebola e o alho, depois junte o caldo e a manteiga de amendoim.",
+          "Engrosse com farinha de arroz dissolvida em líquido e deixe cozinhar em lume brando.",
+          "Junte a carne e os legumes e cozinhe até os legumes ficarem tenros."
+        ]
+      },
+      "variants": [
+        "As variantes vegetarianas podem usar tofu e cogumelos, caldo de legumes e acompanhamentos vegetais em vez de bagoong."
+      ],
+      "serving": [
+        "Sirva com arroz e, se desejar, bagoong."
+      ],
+      "commonMistakes": [
+        "Não deixe o molho ferver tão intensamente que se queime."
+      ]
+    },
+    "es": {
+      "overview": "Carne tierna y verduras se sirven en una salsa a base de frutos secos o cacahuetes, a menudo con pasta de gambas fermentada aparte.",
+      "history": "El kare-kare es un guiso filipino tradicional, a menudo preparado con rabo de vacuno.",
+      "flavor": "Suave, con notas de frutos secos y con cuerpo.",
+      "technique": "Cuece la carne por separado hasta que esté tierna antes de preparar la salsa.",
+      "essentials": [
+        "800 g de rabo de vacuno",
+        "1 berenjena",
+        "150 g de judías largas"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 3 horas",
+        "ingredients": [
+          "800 g de rabo de vacuno",
+          "1 berenjena",
+          "150 g de judías largas",
+          "pak choi",
+          "100 g de crema de cacahuete sin azúcar",
+          "1 cebolla",
+          "2 dientes de ajo",
+          "600 ml de caldo",
+          "2 cucharadas de harina de arroz",
+          "bagoong al gusto"
+        ],
+        "steps": [
+          "Cuece el rabo de vacuno a fuego lento en agua hasta que esté tierno y reserva el caldo.",
+          "Sofríe la cebolla y el ajo, añade caldo y crema de cacahuete.",
+          "Espesa con harina de arroz disuelta en líquido y cuece a fuego lento.",
+          "Añade la carne y las verduras y cuece hasta que las verduras estén tiernas."
+        ]
+      },
+      "variants": [
+        "Las variantes vegetarianas pueden usar tofu y setas, caldo de verduras y acompañamientos vegetales en lugar de bagoong."
+      ],
+      "serving": [
+        "Sirve con arroz y, si quieres, bagoong."
+      ],
+      "commonMistakes": [
+        "No hiervas la salsa tan fuerte que se queme."
+      ]
+    },
+    "de": {
+      "overview": "Zartes Fleisch und Gemüse werden in einer nussbasierten Sauce serviert, oft mit fermentierter Garnelenpaste als Beilage.",
+      "history": "Kare-Kare ist ein etabliertes philippinisches Schmorgericht, oft mit Ochsenschwanz zubereitet.",
+      "flavor": "Mild, nussig und vollmundig.",
+      "technique": "Fleisch separat weich garen, bevor die Sauce zubereitet wird.",
+      "essentials": [
+        "800 g Ochsenschwanz",
+        "1 Aubergine",
+        "150 g Meterbohnen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 3 Stunden",
+        "ingredients": [
+          "800 g Ochsenschwanz",
+          "1 Aubergine",
+          "150 g Meterbohnen",
+          "Pak Choi",
+          "100 g ungesüßte Erdnussbutter",
+          "1 Zwiebel",
+          "2 Knoblauchzehen",
+          "600 ml Brühe",
+          "2 EL Reismehl",
+          "Bagoong nach Geschmack"
+        ],
+        "steps": [
+          "Ochsenschwanz in Wasser weich schmoren und Brühe aufbewahren.",
+          "Zwiebel und Knoblauch anschwitzen, Brühe und Erdnussbutter hinzufügen.",
+          "Mit angerührtem Reismehl binden und köcheln lassen.",
+          "Fleisch und Gemüse hinzufügen und garen, bis das Gemüse weich ist."
+        ]
+      },
+      "variants": [
+        "Vegetarische Varianten können Tofu und Pilze, Gemüsebrühe und pflanzliche Beilagen statt Bagoong verwenden."
+      ],
+      "serving": [
+        "Mit Reis und nach Wunsch Bagoong servieren."
+      ],
+      "commonMistakes": [
+        "Sauce nicht so stark kochen lassen, dass sie anbrennt."
+      ]
+    }
+  },
+  "injera": {
+    "en": {
+      "overview": "A fermented batter is cooked on one side so that small pores form on the surface.",
+      "history": "Injera is fundamental to Ethiopian and Eritrean meals and serves both as a base and as a means of eating stews.",
+      "flavor": "Tangy, slightly nutty and spongy.",
+      "technique": "Use a smooth batter and cook on only one side under a lid.",
+      "essentials": [
+        "300 g teff flour",
+        "100 g active teff sourdough starter",
+        "500–650 ml water as needed"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min + fermentation",
+        "ingredients": [
+          "300 g teff flour",
+          "100 g active teff sourdough starter",
+          "500–650 ml water as needed",
+          "salt"
+        ],
+        "steps": [
+          "Mix flour, sourdough starter and water in a clean bowl.",
+          "Let the batter ferment until distinctly tangy and bubbly, usually one to several days depending on the starter and temperature.",
+          "Adjust to a runny pancake batter and add a little salt.",
+          "Pour a thin layer into a hot non-stick pan, cover when pores form and cook until the surface is set.",
+          "Lift out the bread without turning it and cool separately."
+        ]
+      },
+      "variants": [
+        "Other grains may be mixed with teff; this is a simplified sourdough version."
+      ],
+      "serving": [
+        "Serve with wat, shiro or zigni."
+      ],
+      "commonMistakes": [
+        "Do not turn the bread or stack it while wet and hot. Discard the batter if there are signs of mould."
+      ]
+    },
+    "fr": {
+      "overview": "Une pâte fermentée est cuite d’un seul côté afin que de petits pores se forment à la surface.",
+      "history": "L’injera est au cœur des repas éthiopiens et érythréens et sert à la fois de support et à saisir les ragoûts.",
+      "flavor": "Acidulé, légèrement noisetté et spongieux.",
+      "technique": "Utiliser une pâte homogène et cuire d’un seul côté à couvert.",
+      "essentials": [
+        "300 g de farine de teff",
+        "100 g de levain de teff actif",
+        "500–650 ml d’eau selon les besoins"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min + fermentation",
+        "ingredients": [
+          "300 g de farine de teff",
+          "100 g de levain de teff actif",
+          "500–650 ml d’eau selon les besoins",
+          "sel"
+        ],
+        "steps": [
+          "Mélanger la farine, le levain et l’eau dans un bol propre.",
+          "Laisser fermenter jusqu’à ce que la pâte soit nettement acidulée et pétillante, généralement un à plusieurs jours selon le levain et la température.",
+          "Ajuster pour obtenir une pâte à crêpes fluide et ajouter un peu de sel.",
+          "Verser une fine couche dans une poêle antiadhésive chaude, couvrir quand les pores se forment et cuire jusqu’à ce que la surface soit ferme.",
+          "Retirer le pain sans le retourner et le laisser refroidir séparément."
+        ]
+      },
+      "variants": [
+        "D’autres céréales peuvent être mélangées au teff ; il s’agit ici d’une version simplifiée au levain."
+      ],
+      "serving": [
+        "Servir avec du wat, du shiro ou du zigni."
+      ],
+      "commonMistakes": [
+        "Ne pas retourner le pain ni l’empiler tant qu’il est humide et chaud. Jeter la pâte en présence de moisissure."
+      ]
+    },
+    "pt": {
+      "overview": "Uma massa fermentada é cozinhada apenas de um lado, formando pequenos poros à superfície.",
+      "history": "A injera é fundamental nas refeições etíopes e eritreias e serve tanto de base como para comer os guisados.",
+      "flavor": "Ácida, ligeiramente semelhante a frutos secos e esponjosa.",
+      "technique": "Use uma massa homogénea e cozinhe apenas de um lado com tampa.",
+      "essentials": [
+        "300 g de farinha de teff",
+        "100 g de massa-mãe de teff ativa",
+        "500–650 ml de água conforme necessário"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min + fermentação",
+        "ingredients": [
+          "300 g de farinha de teff",
+          "100 g de massa-mãe de teff ativa",
+          "500–650 ml de água conforme necessário",
+          "sal"
+        ],
+        "steps": [
+          "Misture farinha, massa-mãe e água numa tigela limpa.",
+          "Deixe a massa fermentar até estar nitidamente ácida e com bolhas, normalmente um a vários dias, consoante a massa-mãe e a temperatura.",
+          "Ajuste até obter uma massa líquida de panquecas e junte um pouco de sal.",
+          "Verta uma camada fina numa frigideira antiaderente quente, tape quando os poros se formarem e cozinhe até a superfície firmar.",
+          "Retire o pão sem o virar e deixe arrefecer separadamente."
+        ]
+      },
+      "variants": [
+        "Outros cereais podem ser misturados com teff; esta é uma versão simplificada com massa-mãe."
+      ],
+      "serving": [
+        "Sirva com wat, shiro ou zigni."
+      ],
+      "commonMistakes": [
+        "Não vire o pão nem o empilhe enquanto estiver húmido e quente. Deite fora a massa se apresentar sinais de bolor."
+      ]
+    },
+    "es": {
+      "overview": "Una masa fermentada se cocina por un solo lado para que se formen pequeños poros en la superficie.",
+      "history": "La injera es fundamental en las comidas etíopes y eritreas y sirve tanto de base como para comer los guisos.",
+      "flavor": "Ácida, con ligeras notas de frutos secos y esponjosa.",
+      "technique": "Usa una masa homogénea y cocina solo por un lado con tapa.",
+      "essentials": [
+        "300 g de harina de teff",
+        "100 g de masa madre de teff activa",
+        "500–650 ml de agua según sea necesario"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min + fermentación",
+        "ingredients": [
+          "300 g de harina de teff",
+          "100 g de masa madre de teff activa",
+          "500–650 ml de agua según sea necesario",
+          "sal"
+        ],
+        "steps": [
+          "Mezcla harina, masa madre y agua en un bol limpio.",
+          "Deja fermentar hasta que la masa esté claramente ácida y burbujeante, normalmente de uno a varios días según la masa madre y la temperatura.",
+          "Ajusta hasta obtener una masa líquida de tortitas y añade un poco de sal.",
+          "Vierte una capa fina en una sartén antiadherente caliente, tapa cuando se formen los poros y cocina hasta que la superficie esté firme.",
+          "Retira el pan sin darle la vuelta y deja enfriar por separado."
+        ]
+      },
+      "variants": [
+        "Se pueden mezclar otros cereales con teff; esta es una versión simplificada con masa madre."
+      ],
+      "serving": [
+        "Sirve con wat, shiro o zigni."
+      ],
+      "commonMistakes": [
+        "No des la vuelta al pan ni lo apiles mientras esté húmedo y caliente. Desecha la masa si presenta señales de moho."
+      ]
+    },
+    "de": {
+      "overview": "Ein fermentierter Teig wird einseitig gebacken, sodass sich kleine Poren an der Oberfläche bilden.",
+      "history": "Injera ist ein Grundbestandteil äthiopischer und eritreischer Mahlzeiten und dient sowohl als Unterlage als auch zum Essen von Eintöpfen.",
+      "flavor": "Säuerlich, leicht nussig und schwammartig.",
+      "technique": "Einen gleichmäßigen Teig verwenden und nur auf einer Seite zugedeckt backen.",
+      "essentials": [
+        "300 g Teffmehl",
+        "100 g aktiver Teff-Sauerteig",
+        "500–650 ml Wasser nach Bedarf"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min. + Fermentation",
+        "ingredients": [
+          "300 g Teffmehl",
+          "100 g aktiver Teff-Sauerteig",
+          "500–650 ml Wasser nach Bedarf",
+          "Salz"
+        ],
+        "steps": [
+          "Mehl, Sauerteig und Wasser in einer sauberen Schüssel mischen.",
+          "Teig fermentieren lassen, bis er deutlich säuerlich ist und Blasen bildet, meist einen bis mehrere Tage je nach Sauerteig und Temperatur.",
+          "Konsistenz eines flüssigen Pfannkuchenteigs einstellen und etwas Salz hinzufügen.",
+          "Eine dünne Schicht in eine heiße beschichtete Pfanne gießen, bei Porenbildung abdecken und backen, bis die Oberfläche fest ist.",
+          "Fladen ohne Wenden herausheben und einzeln abkühlen lassen."
+        ]
+      },
+      "variants": [
+        "Andere Getreidesorten können mit Teff gemischt werden; dies ist eine vereinfachte Sauerteigvariante."
+      ],
+      "serving": [
+        "Mit Wat, Shiro oder Zigni servieren."
+      ],
+      "commonMistakes": [
+        "Fladen nicht wenden oder stapeln, solange er feucht und heiß ist. Teig bei Anzeichen von Schimmel entsorgen."
+      ]
+    }
+  },
+  "doro-wat": {
+    "en": {
+      "overview": "Finely chopped onions are reduced to a concentrated base before chicken and spices are added.",
+      "history": "Doro wat is associated with festive meals and holidays in Ethiopia.",
+      "flavor": "Rich, hot and aromatic.",
+      "technique": "Let the onions soften and reduce before adding spices and chicken.",
+      "essentials": [
+        "800 g chicken thighs",
+        "4 onions",
+        "3 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2 hours",
+        "ingredients": [
+          "800 g chicken thighs",
+          "4 onions",
+          "3 garlic cloves",
+          "ginger",
+          "2 tbsp berbere, or to taste",
+          "3 tbsp niter kibbeh or butter",
+          "300 ml water",
+          "4 hard-boiled eggs"
+        ],
+        "steps": [
+          "Finely chop the onions and let them soften in a pot, stirring.",
+          "Add butter, garlic, ginger and berbere.",
+          "Add chicken and water and simmer covered until the chicken is cooked through and tender.",
+          "Add peeled hard-boiled eggs and heat through."
+        ]
+      },
+      "variants": [
+        "Alicha doro wat is a milder version containing turmeric, among other spices."
+      ],
+      "serving": [
+        "Serve with injera."
+      ],
+      "commonMistakes": [
+        "Do not burn the onions or berbere."
+      ]
+    },
+    "fr": {
+      "overview": "Des oignons finement hachés sont réduits en une base concentrée avant d’ajouter le poulet et les épices.",
+      "history": "Le doro wat est associé aux repas de fête et aux célébrations en Éthiopie.",
+      "flavor": "Généreux, piquant et aromatique.",
+      "technique": "Laisser les oignons s’attendrir et réduire avant d’ajouter les épices et le poulet.",
+      "essentials": [
+        "800 g de cuisses de poulet",
+        "4 oignons",
+        "3 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2 heures",
+        "ingredients": [
+          "800 g de cuisses de poulet",
+          "4 oignons",
+          "3 gousses d’ail",
+          "gingembre",
+          "2 c. à soupe de berbere, ou selon le goût",
+          "3 c. à soupe de niter kibbeh ou de beurre",
+          "300 ml d’eau",
+          "4 œufs durs"
+        ],
+        "steps": [
+          "Hacher finement les oignons et les laisser s’attendrir dans une marmite en remuant.",
+          "Ajouter le beurre, l’ail, le gingembre et le berbere.",
+          "Ajouter le poulet et l’eau et laisser mijoter à couvert jusqu’à ce que le poulet soit cuit à cœur et tendre.",
+          "Ajouter les œufs durs écalés et bien réchauffer."
+        ]
+      },
+      "variants": [
+        "L’alicha doro wat est une variante plus douce contenant notamment du curcuma."
+      ],
+      "serving": [
+        "Servir avec de l’injera."
+      ],
+      "commonMistakes": [
+        "Ne pas brûler les oignons ni le berbere."
+      ]
+    },
+    "pt": {
+      "overview": "Cebolas finamente picadas são cozinhadas até formarem uma base concentrada antes de juntar frango e especiarias.",
+      "history": "O doro wat está associado a refeições festivas e celebrações na Etiópia.",
+      "flavor": "Encorpado, picante e aromático.",
+      "technique": "Deixe as cebolas amolecer e reduzir antes de juntar especiarias e frango.",
+      "essentials": [
+        "800 g de coxas de frango",
+        "4 cebolas",
+        "3 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2 horas",
+        "ingredients": [
+          "800 g de coxas de frango",
+          "4 cebolas",
+          "3 dentes de alho",
+          "gengibre",
+          "2 c. de sopa de berbere, ou a gosto",
+          "3 c. de sopa de niter kibbeh ou manteiga",
+          "300 ml de água",
+          "4 ovos cozidos"
+        ],
+        "steps": [
+          "Pique finamente as cebolas e deixe amolecer num tacho, mexendo.",
+          "Junte manteiga, alho, gengibre e berbere.",
+          "Junte frango e água e deixe cozinhar em lume brando com tampa até o frango estar bem cozinhado e tenro.",
+          "Junte os ovos cozidos descascados e aqueça bem."
+        ]
+      },
+      "variants": [
+        "O alicha doro wat é uma variante mais suave que contém, entre outras especiarias, curcuma."
+      ],
+      "serving": [
+        "Sirva com injera."
+      ],
+      "commonMistakes": [
+        "Não deixe queimar a cebola nem o berbere."
+      ]
+    },
+    "es": {
+      "overview": "La cebolla picada fina se reduce hasta formar una base concentrada antes de añadir pollo y especias.",
+      "history": "El doro wat se asocia con comidas festivas y celebraciones en Etiopía.",
+      "flavor": "Intenso, picante y aromático.",
+      "technique": "Deja que la cebolla se ablande y reduzca antes de añadir especias y pollo.",
+      "essentials": [
+        "800 g de muslos de pollo",
+        "4 cebollas",
+        "3 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2 horas",
+        "ingredients": [
+          "800 g de muslos de pollo",
+          "4 cebollas",
+          "3 dientes de ajo",
+          "jengibre",
+          "2 cucharadas de berbere, o al gusto",
+          "3 cucharadas de niter kibbeh o mantequilla",
+          "300 ml de agua",
+          "4 huevos duros"
+        ],
+        "steps": [
+          "Pica finamente la cebolla y deja que se ablande en una olla, removiendo.",
+          "Añade mantequilla, ajo, jengibre y berbere.",
+          "Añade pollo y agua y cuece a fuego lento con tapa hasta que el pollo esté hecho por dentro y tierno.",
+          "Añade los huevos duros pelados y calienta bien."
+        ]
+      },
+      "variants": [
+        "El alicha doro wat es una variante más suave que contiene, entre otras especias, cúrcuma."
+      ],
+      "serving": [
+        "Sirve con injera."
+      ],
+      "commonMistakes": [
+        "No quemes la cebolla ni el berbere."
+      ]
+    },
+    "de": {
+      "overview": "Fein gehackte Zwiebeln werden zu einer konzentrierten Basis eingekocht, bevor Hähnchen und Gewürze hinzukommen.",
+      "history": "Doro Wat wird in Äthiopien mit Festessen und Feiertagen verbunden.",
+      "flavor": "Kräftig, scharf und aromatisch.",
+      "technique": "Zwiebeln weich werden und einkochen lassen, bevor Gewürze und Hähnchen hinzukommen.",
+      "essentials": [
+        "800 g Hähnchenschenkel",
+        "4 Zwiebeln",
+        "3 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2 Stunden",
+        "ingredients": [
+          "800 g Hähnchenschenkel",
+          "4 Zwiebeln",
+          "3 Knoblauchzehen",
+          "Ingwer",
+          "2 EL Berbere oder nach Geschmack",
+          "3 EL Niter Kibbeh oder Butter",
+          "300 ml Wasser",
+          "4 hartgekochte Eier"
+        ],
+        "steps": [
+          "Zwiebeln fein hacken und unter Rühren in einem Topf weich garen.",
+          "Butter, Knoblauch, Ingwer und Berbere hinzufügen.",
+          "Hähnchen und Wasser hinzufügen und zugedeckt schmoren, bis das Hähnchen durchgegart und zart ist.",
+          "Geschälte hartgekochte Eier hinzufügen und durchwärmen."
+        ]
+      },
+      "variants": [
+        "Alicha Doro Wat ist eine mildere Variante unter anderem mit Kurkuma."
+      ],
+      "serving": [
+        "Mit Injera servieren."
+      ],
+      "commonMistakes": [
+        "Zwiebeln und Berbere nicht anbrennen lassen."
+      ]
+    }
+  },
+  "shiro": {
+    "en": {
+      "overview": "The flour is cooked with onion, garlic and spices until a smooth sauce forms.",
+      "history": "Shiro is a common Ethiopian everyday dish and can be prepared entirely from plant ingredients for fasting days.",
+      "flavor": "Mildly nutty, creamy and spiced.",
+      "technique": "Gradually whisk the flour into the liquid to avoid lumps.",
+      "essentials": [
+        "100 g shiro flour or chickpea flour",
+        "1 onion",
+        "2 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 35 min",
+        "ingredients": [
+          "100 g shiro flour or chickpea flour",
+          "1 onion",
+          "2 garlic cloves",
+          "1 tomato",
+          "2 tbsp oil",
+          "berbere to taste",
+          "500 ml water"
+        ],
+        "steps": [
+          "Fry finely chopped onion and garlic in oil.",
+          "Add tomato and berbere and reduce.",
+          "Add water and gradually whisk in the flour.",
+          "Simmer while stirring until the flour is thoroughly cooked and the sauce is smooth."
+        ]
+      },
+      "variants": [
+        "Tegabino shiro is a thicker version; bozena shiro contains meat."
+      ],
+      "serving": [
+        "Serve with injera."
+      ],
+      "commonMistakes": [
+        "Do not pour all the flour into the pot at once."
+      ]
+    },
+    "fr": {
+      "overview": "La farine cuit avec l’oignon, l’ail et les épices jusqu’à former une sauce lisse.",
+      "history": "Le shiro est un plat éthiopien courant du quotidien qui peut être préparé entièrement avec des ingrédients végétaux pour les jours de jeûne.",
+      "flavor": "Légèrement noisetté, crémeux et épicé.",
+      "technique": "Incorporer progressivement la farine au liquide au fouet pour éviter les grumeaux.",
+      "essentials": [
+        "100 g de farine de shiro ou de pois chiches",
+        "1 oignon",
+        "2 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 35 min",
+        "ingredients": [
+          "100 g de farine de shiro ou de pois chiches",
+          "1 oignon",
+          "2 gousses d’ail",
+          "1 tomate",
+          "2 c. à soupe d’huile",
+          "berbere selon le goût",
+          "500 ml d’eau"
+        ],
+        "steps": [
+          "Faire revenir l’oignon et l’ail finement hachés dans l’huile.",
+          "Ajouter la tomate et le berbere et faire réduire.",
+          "Ajouter l’eau et incorporer progressivement la farine au fouet.",
+          "Laisser mijoter en remuant jusqu’à cuisson complète de la farine et obtention d’une sauce lisse."
+        ]
+      },
+      "variants": [
+        "Le tegabino shiro est une variante plus épaisse ; le bozena shiro contient de la viande."
+      ],
+      "serving": [
+        "Servir avec de l’injera."
+      ],
+      "commonMistakes": [
+        "Ne pas verser toute la farine dans la casserole en une seule fois."
+      ]
+    },
+    "pt": {
+      "overview": "A farinha é cozinhada com cebola, alho e especiarias até formar um molho liso.",
+      "history": "O shiro é um prato etíope comum do quotidiano e pode ser preparado apenas com ingredientes vegetais para os dias de jejum.",
+      "flavor": "Com ligeiras notas de frutos secos, cremoso e condimentado.",
+      "technique": "Incorpore gradualmente a farinha no líquido, batendo para evitar grumos.",
+      "essentials": [
+        "100 g de farinha de shiro ou de grão-de-bico",
+        "1 cebola",
+        "2 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 35 min",
+        "ingredients": [
+          "100 g de farinha de shiro ou de grão-de-bico",
+          "1 cebola",
+          "2 dentes de alho",
+          "1 tomate",
+          "2 c. de sopa de óleo",
+          "berbere a gosto",
+          "500 ml de água"
+        ],
+        "steps": [
+          "Salteie a cebola e o alho finamente picados em óleo.",
+          "Junte tomate e berbere e deixe reduzir.",
+          "Junte água e incorpore gradualmente a farinha, batendo.",
+          "Deixe cozinhar em lume brando, mexendo, até a farinha estar bem cozida e o molho liso."
+        ]
+      },
+      "variants": [
+        "O tegabino shiro é uma variante mais espessa; o bozena shiro contém carne."
+      ],
+      "serving": [
+        "Sirva com injera."
+      ],
+      "commonMistakes": [
+        "Não verta toda a farinha no tacho de uma vez."
+      ]
+    },
+    "es": {
+      "overview": "La harina se cuece con cebolla, ajo y especias hasta formar una salsa lisa.",
+      "history": "El shiro es un plato cotidiano etíope habitual y puede prepararse con ingredientes vegetales para los días de ayuno.",
+      "flavor": "Con ligeras notas de frutos secos, cremoso y especiado.",
+      "technique": "Incorpora poco a poco la harina al líquido con unas varillas para evitar grumos.",
+      "essentials": [
+        "100 g de harina de shiro o de garbanzos",
+        "1 cebolla",
+        "2 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 35 min",
+        "ingredients": [
+          "100 g de harina de shiro o de garbanzos",
+          "1 cebolla",
+          "2 dientes de ajo",
+          "1 tomate",
+          "2 cucharadas de aceite",
+          "berbere al gusto",
+          "500 ml de agua"
+        ],
+        "steps": [
+          "Sofríe la cebolla y el ajo picados finamente en aceite.",
+          "Añade tomate y berbere y deja reducir.",
+          "Añade agua e incorpora poco a poco la harina con unas varillas.",
+          "Cuece a fuego lento removiendo hasta que la harina esté bien cocida y la salsa sea lisa."
+        ]
+      },
+      "variants": [
+        "El tegabino shiro es una variante más espesa; el bozena shiro contiene carne."
+      ],
+      "serving": [
+        "Sirve con injera."
+      ],
+      "commonMistakes": [
+        "No viertas toda la harina en la olla de golpe."
+      ]
+    },
+    "de": {
+      "overview": "Mehl wird mit Zwiebeln, Knoblauch und Gewürzen zu einer glatten Sauce gekocht.",
+      "history": "Shiro ist ein verbreitetes äthiopisches Alltagsgericht und kann für Fastentage rein pflanzlich zubereitet werden.",
+      "flavor": "Mild nussig, cremig und würzig.",
+      "technique": "Mehl nach und nach in die Flüssigkeit einrühren, um Klumpen zu vermeiden.",
+      "essentials": [
+        "100 g Shiro-Mehl oder Kichererbsenmehl",
+        "1 Zwiebel",
+        "2 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 35 Min.",
+        "ingredients": [
+          "100 g Shiro-Mehl oder Kichererbsenmehl",
+          "1 Zwiebel",
+          "2 Knoblauchzehen",
+          "1 Tomate",
+          "2 EL Öl",
+          "Berbere nach Geschmack",
+          "500 ml Wasser"
+        ],
+        "steps": [
+          "Fein gehackte Zwiebel und Knoblauch in Öl anschwitzen.",
+          "Tomate und Berbere hinzufügen und einkochen.",
+          "Wasser hinzufügen und Mehl nach und nach mit dem Schneebesen einrühren.",
+          "Unter Rühren köcheln lassen, bis das Mehl vollständig gegart und die Sauce glatt ist."
+        ]
+      },
+      "variants": [
+        "Tegabino Shiro ist eine dickere Variante; Bozena Shiro enthält Fleisch."
+      ],
+      "serving": [
+        "Mit Injera servieren."
+      ],
+      "commonMistakes": [
+        "Nicht das gesamte Mehl auf einmal in den Topf geben."
+      ]
+    }
+  },
+  "tibs": {
+    "en": {
+      "overview": "Beef or lamb is fried in small pieces with vegetables and seasoned fat.",
+      "history": "Tibs is a well-known Ethiopian meat dish with many methods of preparation.",
+      "flavor": "Roasted, juicy and spiced.",
+      "technique": "Fry the meat in batches so the pan stays hot.",
+      "essentials": [
+        "600 g beef",
+        "2 onions",
+        "2 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 30 min",
+        "ingredients": [
+          "600 g beef",
+          "2 onions",
+          "2 garlic cloves",
+          "1 green chilli",
+          "2 tbsp oil or niter kibbeh",
+          "rosemary",
+          "salt"
+        ],
+        "steps": [
+          "Cut the meat into evenly sized pieces and dry the surface.",
+          "Fry the meat in small batches to the desired safe level of doneness.",
+          "Fry onion, garlic, chilli and rosemary.",
+          "Return the meat to the pan and season to taste."
+        ]
+      },
+      "variants": [
+        "Awaze tibs has a spiced chilli sauce; tibs can also be made with lamb."
+      ],
+      "serving": [
+        "Serve with injera and vegetables."
+      ],
+      "commonMistakes": [
+        "Do not overcrowd the pan."
+      ]
+    },
+    "fr": {
+      "overview": "Le bœuf ou l’agneau est sauté en petits morceaux avec des légumes et une matière grasse assaisonnée.",
+      "history": "Le tibs est un plat de viande éthiopien bien connu, aux nombreuses méthodes de préparation.",
+      "flavor": "Grillé, juteux et épicé.",
+      "technique": "Faire revenir la viande par petites quantités pour maintenir la poêle bien chaude.",
+      "essentials": [
+        "600 g de bœuf",
+        "2 oignons",
+        "2 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 30 min",
+        "ingredients": [
+          "600 g de bœuf",
+          "2 oignons",
+          "2 gousses d’ail",
+          "1 piment vert",
+          "2 c. à soupe d’huile ou de niter kibbeh",
+          "romarin",
+          "sel"
+        ],
+        "steps": [
+          "Couper la viande en morceaux réguliers et sécher leur surface.",
+          "Faire revenir la viande par petites quantités jusqu’au degré de cuisson souhaité, dans le respect des règles de sécurité alimentaire.",
+          "Faire revenir l’oignon, l’ail, le piment et le romarin.",
+          "Remettre la viande dans la poêle et rectifier l’assaisonnement."
+        ]
+      },
+      "variants": [
+        "L’awaze tibs comporte une sauce épicée au piment ; le tibs peut aussi se préparer avec de l’agneau."
+      ],
+      "serving": [
+        "Servir avec de l’injera et des légumes."
+      ],
+      "commonMistakes": [
+        "Ne pas surcharger la poêle."
+      ]
+    },
+    "pt": {
+      "overview": "Carne de vaca ou borrego é salteada em pedaços pequenos com legumes e gordura temperada.",
+      "history": "O tibs é um conhecido prato etíope de carne com muitos métodos de preparação.",
+      "flavor": "Tostado, suculento e condimentado.",
+      "technique": "Salteie a carne em porções para manter a frigideira bem quente.",
+      "essentials": [
+        "600 g de carne de vaca",
+        "2 cebolas",
+        "2 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 30 min",
+        "ingredients": [
+          "600 g de carne de vaca",
+          "2 cebolas",
+          "2 dentes de alho",
+          "1 malagueta verde",
+          "2 c. de sopa de óleo ou niter kibbeh",
+          "alecrim",
+          "sal"
+        ],
+        "steps": [
+          "Corte a carne em pedaços uniformes e seque a superfície.",
+          "Salteie a carne em pequenas porções até ao ponto desejado, garantindo uma cozedura segura.",
+          "Salteie cebola, alho, malagueta e alecrim.",
+          "Volte a colocar a carne na frigideira e tempere a gosto."
+        ]
+      },
+      "variants": [
+        "O awaze tibs tem um molho de malagueta condimentado; o tibs também pode ser feito com borrego."
+      ],
+      "serving": [
+        "Sirva com injera e legumes."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado a frigideira."
+      ]
+    },
+    "es": {
+      "overview": "La carne de vacuno o cordero se saltea en trozos pequeños con verduras y grasa condimentada.",
+      "history": "El tibs es un conocido plato etíope de carne con muchas formas de preparación.",
+      "flavor": "Tostado, jugoso y especiado.",
+      "technique": "Saltea la carne en tandas para que la sartén se mantenga bien caliente.",
+      "essentials": [
+        "600 g de carne de vacuno",
+        "2 cebollas",
+        "2 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 30 min",
+        "ingredients": [
+          "600 g de carne de vacuno",
+          "2 cebollas",
+          "2 dientes de ajo",
+          "1 chile verde",
+          "2 cucharadas de aceite o niter kibbeh",
+          "romero",
+          "sal"
+        ],
+        "steps": [
+          "Corta la carne en trozos iguales y seca la superficie.",
+          "Saltea la carne en tandas pequeñas hasta el punto deseado que garantice una cocción segura.",
+          "Saltea cebolla, ajo, chile y romero.",
+          "Devuelve la carne a la sartén y ajusta la sazón."
+        ]
+      },
+      "variants": [
+        "El awaze tibs lleva una salsa de chile especiada; el tibs también puede prepararse con cordero."
+      ],
+      "serving": [
+        "Sirve con injera y verduras."
+      ],
+      "commonMistakes": [
+        "No llenes demasiado la sartén."
+      ]
+    },
+    "de": {
+      "overview": "Rind- oder Lammfleisch wird in kleinen Stücken mit Gemüse und gewürztem Fett gebraten.",
+      "history": "Tibs ist ein bekanntes äthiopisches Fleischgericht mit vielen Zubereitungsweisen.",
+      "flavor": "Röstig, saftig und würzig.",
+      "technique": "Fleisch portionsweise braten, damit die Pfanne heiß bleibt.",
+      "essentials": [
+        "600 g Rindfleisch",
+        "2 Zwiebeln",
+        "2 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 30 Min.",
+        "ingredients": [
+          "600 g Rindfleisch",
+          "2 Zwiebeln",
+          "2 Knoblauchzehen",
+          "1 grüne Chilischote",
+          "2 EL Öl oder Niter Kibbeh",
+          "Rosmarin",
+          "Salz"
+        ],
+        "steps": [
+          "Fleisch in gleich große Stücke schneiden und die Oberfläche trocknen.",
+          "Fleisch portionsweise bis zum gewünschten sicheren Gargrad braten.",
+          "Zwiebeln, Knoblauch, Chili und Rosmarin anbraten.",
+          "Fleisch zurück in die Pfanne geben und abschmecken."
+        ]
+      },
+      "variants": [
+        "Awaze Tibs hat eine würzige Chilisauce; Tibs kann auch aus Lammfleisch zubereitet werden."
+      ],
+      "serving": [
+        "Mit Injera und Gemüse servieren."
+      ],
+      "commonMistakes": [
+        "Pfanne nicht überfüllen."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

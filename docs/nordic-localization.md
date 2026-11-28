@@ -212,3 +212,7 @@ Added eight complete bodies per language: gambas al ajillo, croquetas, moussaka,
 ### International full article review batch 13
 
 Added eight complete bodies per language: nasi goreng, mie goreng, rendang, satay, nasi lemak, laksa, pork adobo and sinigang. Checked source list lengths and numerical recipe tokens, including cooking and marination durations; preserved safe rice storage and raw marinade warnings and regional distinctions. Previous bodies and original sources retained. Total 104 new bodies per language; English 137/200 including original 33, other four 104/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 14
+
+Added eight complete bodies per language: sisig, lechon, pancit, kare-kare, injera, doro wat, shiro and tibs. Checked source list lengths and numerical recipe tokens, retaining fermentation and mould warnings, cooking instructions and regional distinctions. Previous bodies and original sources retained. Total 112 new bodies per language; English 145/200 including original 33, other four 112/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
