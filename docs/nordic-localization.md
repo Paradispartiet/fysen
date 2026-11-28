@@ -224,3 +224,7 @@ Added kitfo, zigni, tajine and couscous in five languages. Checked source list l
 ### International full article review batch 15b
 
 Added harira, pastilla, shakshuka and merguez in five languages. Checked source list lengths and numerical tokens, retaining cooking temperatures and the qualified origin account for shakshuka. Total 120 new bodies per language; English 153/200 including original 33, other four 120/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 16
+
+Added eight complete bodies per language: feijoada, moqueca, coxinha, pão de queijo, acarajé, brigadeiro, bacalhau à Brás and francesinha. Checked source list lengths and numerical recipe tokens, including recipe-specific yields, bean boiling and frying temperatures. Previous bodies and original sources retained. Total 128 new bodies per language; English 161/200 including original 33, other four 128/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
