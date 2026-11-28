@@ -8,20 +8,20 @@ import { priceProvenanceLabel } from "../lib/price-provenance.ts";
 const read = (file) => readFileSync(fileURLToPath(new URL(file, import.meta.url)), "utf8");
 
 test("new and most searched dishes are part of Matlyst rather than a separate hero section", () => {
-  const home = read("../app/page.tsx");
+  const home = read("../components/home-city-content.tsx");
   const explorer = read("../components/cuisine-explorer.tsx");
   const recent = read("../components/recent-dishes.tsx");
   const popular = read("../components/popular-dishes.tsx");
   assert.doesNotMatch(home, /<RecentDishes/u);
   assert.doesNotMatch(home, /<PopularDishes/u);
-  assert.match(explorer, /<RecentDishes dishes=\{effectiveBrowseData\?\.recentDishes \?\? \[\]\}/u);
-  assert.match(explorer, /<PopularDishes dishes=\{effectiveBrowseData\?\.popularDishes \?\? \[\]\}/u);
+  assert.match(explorer, /<RecentDishes city=\{city\} dishes=\{effectiveBrowseData\?\.recentDishes \?\? \[\]\}/u);
+  assert.match(explorer, /<PopularDishes city=\{city\} dishes=\{effectiveBrowseData\?\.popularDishes \?\? \[\]\}/u);
   assert.ok(explorer.indexOf("<RecentDishes") < explorer.indexOf('className="cuisineBrowseDisclosure"'));
   assert.match(recent, /if \(dishes\.length === 0\) return null/u);
-  assert.match(recent, /Nye retter å oppdage hos restauranter i Oslo/u);
+  assert.match(recent, /Nye retter å oppdage hos restauranter i \{city\}/u);
   assert.doesNotMatch(recent, /ikke nødvendigvis nytt på restaurantens meny/u);
   assert.match(popular, /Mest søkt/u);
-  assert.match(popular, /dishSearchHref\(dish\.query\)/u);
+  assert.match(popular, /dishSearchHref\(dish\.query, city\)/u);
 });
 
 test("price semantics are correct on cards and delivery prices are labeled", () => {
