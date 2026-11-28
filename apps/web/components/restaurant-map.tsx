@@ -208,15 +208,7 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
         <label className={styles.search}>Finn spisested
         <input type="search" value={query} placeholder="Navn eller gate" onChange={event => { setQuery(event.target.value); setSelected(null); setLimit(30); }} />
       </label>
-        <div className={styles.toolbar}>
-      <div className={styles.switcher} role="group" aria-label="Kartvisning">
-        <button type="button" aria-pressed={mode === "map"} onClick={() => { setMapActivated(true); setMode("map"); }}>Kart</button>
-        <button type="button" aria-pressed={mode === "list"} onClick={() => setMode("list")}>Liste</button>
-      </div>
-      <button className={styles.more} type="button" disabled={locationStatus === "loading"} onClick={requestLocation}>{locationStatus === "loading" ? "Henter posisjon…" : location ? "Oppdater posisjon" : "Nær meg"}</button>
-      <button className={styles.more} type="button" aria-pressed={favoritesOnly} onClick={() => { setFavoritesOnly(value => !value); setLimit(30); }}>♡ Favoritter ({favorites.length})</button>
-      {location && <button className={styles.more} type="button" onClick={clearLocation}>Slå av posisjon</button>}
-    </div>
+        {location && <button className={styles.more} type="button" onClick={clearLocation}>Slå av posisjon</button>}
         {favoritesOnly && <p>Viser restaurantfavoritter lagret på denne enheten, ikke i AHA.</p>}
     {favoritesNotice && <p role="status">{favoritesNotice}</p>}
     {locationStatus === "unavailable" && <p role="status">Posisjon er ikke tilgjengelig. Du kan fortsatt utforske kartet.</p>}
