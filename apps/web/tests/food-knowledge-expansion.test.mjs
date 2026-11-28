@@ -145,3 +145,19 @@ test("Matleksikon uses compact side-by-side pictures and keeps image credits in 
   assert.match(css, /\.dishLearningCardHeader \.dishEditorialFigure \{[^}]*max-width: 100px;[^}]*margin: 0;/u);
   assert.match(css, /\.dishLearningCardHeader \.dishEditorialImage \{[^}]*object-fit: contain;/u);
 });
+
+test("Matleksikon detail displays the native editorial image alongside the title", async () => {
+  const dialog = await readFile(path.join(webRoot, "components/dish-knowledge-dialog.tsx"), "utf8");
+  const editorial = await readFile(path.join(webRoot, "components/dish-editorial-image.tsx"), "utf8");
+  const css = await readFile(path.join(webRoot, "styles/dish-learning-dialog.css"), "utf8");
+  const manifest = JSON.parse(await readFile(path.join(webRoot, "public/dish-images/manifest.json"), "utf8"));
+  assert.match(dialog, /const dishPhoto = dish \? findDishImage\(dish.id, dish.query\)/u);
+  assert.match(dialog, /<DishEditorialImage dishId=\{dish.id\} query=\{dish.query\} className="dishKnowledgeHeroPhoto" priority showCredit=\{false\} \/>/u);
+  assert.match(editorial, /"pad-thai": "pad-thai-reker"/u);
+  assert.match(editorial, /const master = image.largeViewEnabled === true && image.largeSource/u);
+  assert.match(css, /\.dishKnowledgeDialogHeaderWithPhoto \.dishKnowledgeHeroPhoto \{[^}]*grid-column: 2;/u);
+  const padThai = manifest.images.find((image) => image.id === "pad-thai-reker");
+  assert.equal(padThai.largeViewEnabled, true);
+  assert.equal(padThai.largeSource, "pad-thai-reker-master-5472.avif");
+  assert.ok(padThai.largeSourceNativeWidth > 2000);
+});

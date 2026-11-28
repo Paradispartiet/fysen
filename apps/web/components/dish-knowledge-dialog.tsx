@@ -11,7 +11,7 @@ import { searchDishesClient } from "../lib/client-dish-search";
 import { formatDishPrice } from "../lib/dish-price";
 import { dishSearchHref } from "../lib/public-path";
 import { FoodIllustration } from "./food-illustration";
-import { DishEditorialAttribution } from "./dish-editorial-image";
+import { DishEditorialAttribution, DishEditorialImage, findDishImage } from "./dish-editorial-image";
 import { illustrationForDishName, illustrationForIngredient } from "./food-illustration-match";
 
 function primaryRestaurantResults(results: readonly DishSearchResult[], limit: number): DishSearchResult[] {
@@ -80,6 +80,7 @@ export function DishKnowledgeDialog({
   }
 
   const relatedDishes = dish ? getRelatedFoodDishes(dish) : [];
+  const dishPhoto = dish ? findDishImage(dish.id, dish.query) : undefined;
 
   return (
     <dialog
@@ -103,11 +104,11 @@ export function DishKnowledgeDialog({
             <span aria-hidden="true">×</span>
           </button>
 
-          <header className="dishKnowledgeDialogHeader">
+          <header className={`dishKnowledgeDialogHeader${dishPhoto ? " dishKnowledgeDialogHeaderWithPhoto" : ""}`}>
             <p className="dishKnowledgeDialogEyebrow">Fysen matleksikon · {dish.region}</p>
             <div className="dishKnowledgeTitleWithArtwork">
               <h2 id="dish-knowledge-title">{dish.name}</h2>
-              {illustrationForDishName(dish.name) ? (
+              {!dishPhoto && illustrationForDishName(dish.name) ? (
                 <FoodIllustration
                   name={illustrationForDishName(dish.name)!}
                   className="dishKnowledgeTitleArtwork"
@@ -120,6 +121,9 @@ export function DishKnowledgeDialog({
               <span>{dish.recipe.yield}</span>
               <span>{dish.recipe.time}</span>
             </div>
+            {dishPhoto ? (
+              <DishEditorialImage dishId={dish.id} query={dish.query} className="dishKnowledgeHeroPhoto" priority showCredit={false} />
+            ) : null}
           </header>
 
           <div className="dishKnowledgeIntroGrid">
