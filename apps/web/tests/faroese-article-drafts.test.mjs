@@ -20,7 +20,13 @@ import { article as original14 } from "../content/food-knowledge/articles/mapo-t
 import { article as original15 } from "../content/food-knowledge/articles/butter-chicken.ts";
 import { article as original16 } from "../content/food-knowledge/articles/tandoori.ts";
 import { article as original17 } from "../content/food-knowledge/articles/chana-masala.ts";
-const originals=[original0,original1,original2,original3,original4,original5,original6,original7,original8,original9,original10,original11,original12,original13,original14,original15,original16,original17];
+import { article as original18 } from "../content/food-knowledge/articles/dosa.ts";
+import { article as original19 } from "../content/food-knowledge/articles/cacio-e-pepe.ts";
+import { article as original20 } from "../content/food-knowledge/articles/pizza-margherita.ts";
+import { article as original21 } from "../content/food-knowledge/articles/arancini.ts";
+import { article as original22 } from "../content/food-knowledge/articles/pasta-alla-norma.ts";
+import { article as original23 } from "../content/food-knowledge/articles/hummus.ts";
+const originals=[original0,original1,original2,original3,original4,original5,original6,original7,original8,original9,original10,original11,original12,original13,original14,original15,original16,original17,original18,original19,original20,original21,original22,original23];
 const nums=s=>s.match(/[0-9]+|[½¼¾]/gu)??[];
 test("Faroese article drafts preserve original recipe structure and numeric tokens",()=>{
  assert.deepEqual(Object.keys(draftFaroeseArticles).sort(),originals.map(a=>a.dishId).sort());
