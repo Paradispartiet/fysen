@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { URL } from "node:url";
-import { fysenBaseStyle, FYSEN_MAP_COLORS } from "../lib/fysen-map-foundation.mjs";
+import { fysenBaseStyle } from "../lib/fysen-map-foundation.mjs";
 
 const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 
@@ -31,15 +31,18 @@ test("map startup retries its ready handshake, without sharing user location", (
   assert.doesNotMatch(map, /postMessage\([^)]*location/);
 });
 
-test("dark map labels stay legible and preserve provider attribution", () => {
+test("daylight map preserves native road and label styling within black workspace", () => {
   const style = {version:8,sources:{base:{attribution:"OSM"}},layers:[
-    {id:"road",type:"line","source-layer":"transportation"},
-    {id:"street-label",type:"symbol",layout:{"text-field":["get","name"]}},
-    {id:"land",type:"fill","source-layer":"landcover"}
+    {id:"road",type:"line","source-layer":"transportation",paint:{"line-color":"#fff"}},
+    {id:"street-label",type:"symbol",layout:{"text-field":["get","name"]},paint:{"text-color":"#333"}},
+    {id:"land",type:"fill","source-layer":"landcover",paint:{"fill-color":"#eee"}}
   ]};
   const mapped = fysenBaseStyle(style);
-  assert.equal(mapped.layers[0].paint["line-color"], FYSEN_MAP_COLORS.road);
-  assert.equal(mapped.layers[1].paint["text-color"], FYSEN_MAP_COLORS.ink);
-  assert.equal(mapped.layers[2].paint["fill-color"], FYSEN_MAP_COLORS.paper);
+  assert.deepEqual(mapped.layers, style.layers);
   assert.equal(mapped.sources.base.attribution,"OSM");
+  const frame = read("../lib/fysen-map-frame.ts");
+  assert.match(frame, /"circle-color":"#28734b"/);
+  assert.match(frame, /"text-color":"#24352c"/);
+  assert.match(frame, /cluster:false/);
+  assert.doesNotMatch(frame, /point_count|fysen-clusters/);
 });
