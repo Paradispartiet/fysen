@@ -89,3 +89,18 @@ test('Lorry photo retains its own year and license', () => {
  assert.match(p.licenseUrl, /4\.0/u);
  assert.equal(restaurantVisuals({name:'Lorry Restaurant',address:'Parkveien 120'}),null);
 });
+
+test('batch photos preserve branch boundaries, date and license', () => {
+ for (const [name,address,date,license] of [
+ ["Restaurant Schrøder","Waldemar Thranes gate 8","2007-06-09","publicdomain"],
+ ["Palmyra Café","Norbygata 15A","2017-02-12","3.0"],
+ ["D/S Louise","Stranden 3","2008-03-09","2.0"]
+ ]) {
+ const photo = restaurantVisuals({name,address});
+ assert.ok(photo);
+ assert.equal(photo.photoDate,date);
+ assert.ok(photo.licenseUrl.includes(license));
+ assert.equal(restaurantVisuals({name,address:address+"0"}),null);
+ assert.equal(restaurantVisuals({name,address:"Other street 3"}),null);
+ }
+});
