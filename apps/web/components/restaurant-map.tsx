@@ -7,6 +7,7 @@ import { withPublicBasePath } from "../lib/public-path";
 import type { MapEvidenceBySlug } from "../lib/map-menu-evidence";
 import styles from "./restaurant-map.module.css";
 import { GlobalHeader } from "./global-header";
+import { restaurantVisuals } from "../lib/restaurant-visuals";
 import { MapRestaurantArtwork } from "./map-restaurant-artwork";
 import { MapRestaurantMenu } from "./map-restaurant-menu";
 import { ahaMinMatPilotEnabled } from "../lib/aha-min-mat-pilot";
@@ -94,8 +95,15 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
   }, []);
 
   useEffect(() => {
-    if (frameReady && baseStyle) frame.current?.contentWindow?.postMessage({
-      type: "fysen-map-data", style: baseStyle, features: filtered,
+    if (!frameReady || !baseStyle) return;
+    const logos = filtered.features.flatMap(feature => {
+      const logo = restaurantVisuals(feature.properties)?.logo;
+      if (!logo || !logo.startsWith("/restaurants/")) return [];
+      return [{ slug: feature.id, name: feature.properties.name, coordinates: feature.geometry.coordinates,
+        url: new URL(withPublicBasePath(logo), window.location.origin).href }];
+    });
+    frame.current?.contentWindow?.postMessage({
+      type: "fysen-map-data", style: baseStyle, features: filtered, logos,
     }, "*");
   }, [frameReady, baseStyle, filtered]);
 
@@ -162,7 +170,7 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
     {(standalone || immersive) && <GlobalHeader city="Oslo" query={dishQuery} mapAction={<button className="fysenHeaderMapMode" type="button" aria-pressed={immersive} onClick={toggleImmersive}>{immersive ? "Avslutt kartmodus" : "Kartmodus"}</button>} />}
     <section className={styles.shell} aria-labelledby="restaurant-map-title" data-immersive={immersive}>
     <div className={styles.heading}>
-      <div className={styles.titleRow}><h1 id="restaurant-map-title">{dishQuery ? "Menytreff på kartet" : "Kart · Oslo"}</h1><span>{filtered.features.length} spisesteder</span></div>
+      <div className={styles.titleRow}><h1 id="restaurant-map-title">{dishQuery ? "Menytreff på kartet" : "Kart · Oslo"}</h1></div>
       <form className={styles.search} action={withPublicBasePath("/search")} method="get">
         <label htmlFor="map-dish-query">Hva har du lyst på?</label>
         <input id="map-dish-query" type="search" name="q" defaultValue={dishQuery} placeholder="Ramen, pizza, biff…" minLength={2} maxLength={80} required />
@@ -180,7 +188,7 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
       <div className={styles.quickActions}>
         <button type="button" className={styles.more} onClick={() => { setSelected(null); setExploreOpen(value => !value); }} aria-expanded={exploreOpen} aria-controls="fysen-map-explore">Utforsk {exploreOpen ? "▴" : "▾"}</button>
         <button type="button" className={styles.more} onClick={requestLocation} disabled={locationStatus === "loading"}>{locationStatus === "loading" ? "Henter…" : "Nær meg"}</button>
-        <button type="button" className={styles.more} aria-pressed={favoritesOnly} onClick={() => { setFavoritesOnly(value => !value); setLimit(30); }}>♡ Favoritter ({favorites.length})</button>
+        <button type="button" className={styles.more} aria-pressed={favoritesOnly} onClick={() => { setFavoritesOnly(value => !value); setLimit(30); }}>♡ Favoritter</button>
         {!immersive && <button type="button" className={styles.more} onClick={() => { if (mode === "map") setMode("list"); else { setMapActivated(true); setMode("map"); } }}>{mode === "map" ? "Liste" : "Kart"}</button>}
         {!standalone && !immersive && <button type="button" className={styles.more} onClick={toggleImmersive} aria-pressed={immersive}>{immersive ? "Avslutt kartmodus" : "Kartmodus"}</button>}
       </div>
