@@ -1,0 +1,34 @@
+{
+  "dish_id": "sambar",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Tiffin_sambar.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Tiffin_sambar.jpg",
+  "photographer": "Raksanand",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "source_size": [
+    3264,
+    4084
+  ],
+  "source_sha256": "1b0f2bb11a461e3839b465f34101dcdb06d1d48f0a527a031f52c1e88c34b405",
+  "mask_candidate_size": [
+    2721,
+    3162
+  ],
+  "mask_candidate_sha256": "2cc5c81cb241696ebccd5cbeb7abe006bb9c4edf37c65b7e2224e41fc58b08d0",
+  "variant": "Tiffin sambar, breakfast accompaniment",
+  "modification": "Native manual contour with leaf-edge cleanup, no upscale or generated food pixels",
+  "visual_review_completed": false,
+  "approved_for_fysen": false,
+  "published": false,
+  "native_mask_sha256": "377bc66db1d5e9a331389466b7da01fbc238e643a5c6e26ea8354d9c75f6622f",
+  "master_file": "sambar-master-2721.avif",
+  "master_sha256": "d108d9469a746111207daa9b7c5113eb170dda2e09f0fea36a1ed777510a8900",
+  "thumbnail_sha256": "0bbb8f60f8fa8ffa77dc98110e3cb7ee3975abeb1e18d387e714443cae6db9ff",
+  "source_pixels_unchanged": true,
+  "crop": [
+    90,
+    0,
+    2811,
+    3162
+  ]
+}
