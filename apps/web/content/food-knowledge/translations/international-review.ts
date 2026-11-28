@@ -6336,5 +6336,1661 @@ export const draftInternationalArticles = {
         "Sauce nicht unnötig mit viel Wasser verdünnen."
       ]
     }
+  },
+  "som-tam": {
+    "en": {
+      "overview": "The papaya is tossed with a dressing pounded together in a mortar.",
+      "history": "Green papaya salad has strong traditions in Laos and northeastern Thailand, with several local forms.",
+      "flavor": "Crunchy, tangy, hot and salty.",
+      "technique": "Pound the dressing lightly and fold in the papaya without crushing it.",
+      "essentials": [
+        "400 g green papaya",
+        "2 limes",
+        "2 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 25–40 min",
+        "ingredients": [
+          "400 g green papaya",
+          "2 limes",
+          "2 garlic cloves",
+          "chilli to taste",
+          "2 tbsp fish sauce",
+          "1 tbsp palm sugar",
+          "cherry tomatoes",
+          "peanuts"
+        ],
+        "steps": [
+          "Peel and shred the papaya.",
+          "Pound garlic and chilli in a mortar.",
+          "Mix in lime, fish sauce and sugar.",
+          "Fold in tomatoes, papaya and peanuts."
+        ]
+      },
+      "variants": [
+        "Som tam Thai and versions with fermented fish."
+      ],
+      "serving": [
+        "Serve with sticky rice and grilled food."
+      ],
+      "commonMistakes": [
+        "Avoid ripe, sweet papaya if the goal is a crunchy green papaya salad."
+      ]
+    },
+    "fr": {
+      "overview": "La papaye est mélangée à une sauce préparée au mortier.",
+      "history": "La salade de papaye verte est bien ancrée au Laos et dans le nord-est de la Thaïlande, avec plusieurs variantes locales.",
+      "flavor": "Croquant, acidulé, piquant et salé.",
+      "technique": "Piler légèrement la sauce et incorporer la papaye sans l’écraser.",
+      "essentials": [
+        "400 g de papaye verte",
+        "2 citrons verts",
+        "2 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 25–40 min",
+        "ingredients": [
+          "400 g de papaye verte",
+          "2 citrons verts",
+          "2 gousses d’ail",
+          "piment selon le goût",
+          "2 c. à soupe de sauce de poisson",
+          "1 c. à soupe de sucre de palme",
+          "tomates cerises",
+          "cacahuètes"
+        ],
+        "steps": [
+          "Peler et tailler la papaye en fines lanières.",
+          "Piler l’ail et le piment au mortier.",
+          "Incorporer le citron vert, la sauce de poisson et le sucre.",
+          "Incorporer les tomates, la papaye et les cacahuètes."
+        ]
+      },
+      "variants": [
+        "Som tam Thai et variantes au poisson fermenté."
+      ],
+      "serving": [
+        "Servir avec du riz gluant et des grillades."
+      ],
+      "commonMistakes": [
+        "Éviter la papaye mûre et sucrée si l’on souhaite une salade de papaye verte croquante."
+      ]
+    },
+    "pt": {
+      "overview": "A papaia é envolvida num molho preparado no almofariz.",
+      "history": "A salada de papaia verde tem fortes tradições no Laos e no nordeste da Tailândia, com várias formas locais.",
+      "flavor": "Crocante, ácido, picante e salgado.",
+      "technique": "Pise ligeiramente o molho e envolva a papaia sem a esmagar.",
+      "essentials": [
+        "400 g de papaia verde",
+        "2 limas",
+        "2 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 25–40 min",
+        "ingredients": [
+          "400 g de papaia verde",
+          "2 limas",
+          "2 dentes de alho",
+          "malagueta a gosto",
+          "2 c. de sopa de molho de peixe",
+          "1 c. de sopa de açúcar de palma",
+          "tomate-cereja",
+          "amendoins"
+        ],
+        "steps": [
+          "Descasque e corte a papaia em tiras finas.",
+          "Pise o alho e a malagueta no almofariz.",
+          "Misture a lima, o molho de peixe e o açúcar.",
+          "Envolva o tomate, a papaia e os amendoins."
+        ]
+      },
+      "variants": [
+        "Som tam Thai e variantes com peixe fermentado."
+      ],
+      "serving": [
+        "Sirva com arroz glutinoso e grelhados."
+      ],
+      "commonMistakes": [
+        "Evite papaia madura e doce se pretende uma salada crocante de papaia verde."
+      ]
+    },
+    "es": {
+      "overview": "La papaya se mezcla con un aliño majado en el mortero.",
+      "history": "La ensalada de papaya verde tiene una fuerte tradición en Laos y el noreste de Tailandia, con diversas variantes locales.",
+      "flavor": "Crujiente, ácido, picante y salado.",
+      "technique": "Maja ligeramente el aliño e incorpora la papaya sin aplastarla.",
+      "essentials": [
+        "400 g de papaya verde",
+        "2 limas",
+        "2 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 25–40 min",
+        "ingredients": [
+          "400 g de papaya verde",
+          "2 limas",
+          "2 dientes de ajo",
+          "chile al gusto",
+          "2 cucharadas de salsa de pescado",
+          "1 cucharada de azúcar de palma",
+          "tomates cherry",
+          "cacahuetes"
+        ],
+        "steps": [
+          "Pela y corta la papaya en tiras finas.",
+          "Maja el ajo y el chile en el mortero.",
+          "Incorpora la lima, la salsa de pescado y el azúcar.",
+          "Incorpora los tomates, la papaya y los cacahuetes."
+        ]
+      },
+      "variants": [
+        "Som tam Thai y variantes con pescado fermentado."
+      ],
+      "serving": [
+        "Sirve con arroz glutinoso y alimentos a la parrilla."
+      ],
+      "commonMistakes": [
+        "Evita la papaya madura y dulce si buscas una ensalada crujiente de papaya verde."
+      ]
+    },
+    "de": {
+      "overview": "Die Papaya wird mit einem im Mörser zerstoßenen Dressing vermischt.",
+      "history": "Grüner Papayasalat hat in Laos und Nordostthailand eine lange Tradition mit mehreren lokalen Varianten.",
+      "flavor": "Knackig, säuerlich, scharf und salzig.",
+      "technique": "Dressing leicht zerstoßen und Papaya unterheben, ohne sie zu zerdrücken.",
+      "essentials": [
+        "400 g grüne Papaya",
+        "2 Limetten",
+        "2 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 25–40 Min.",
+        "ingredients": [
+          "400 g grüne Papaya",
+          "2 Limetten",
+          "2 Knoblauchzehen",
+          "Chili nach Geschmack",
+          "2 EL Fischsauce",
+          "1 EL Palmzucker",
+          "Kirschtomaten",
+          "Erdnüsse"
+        ],
+        "steps": [
+          "Papaya schälen und in feine Streifen schneiden.",
+          "Knoblauch und Chili im Mörser zerstoßen.",
+          "Limette, Fischsauce und Zucker untermischen.",
+          "Tomaten, Papaya und Erdnüsse unterheben."
+        ]
+      },
+      "variants": [
+        "Som Tam Thai und Varianten mit fermentiertem Fisch."
+      ],
+      "serving": [
+        "Mit Klebreis und Grillgerichten servieren."
+      ],
+      "commonMistakes": [
+        "Reife, süße Papaya vermeiden, wenn ein knackiger grüner Papayasalat gewünscht ist."
+      ]
+    }
+  },
+  "tom-kha-gai": {
+    "en": {
+      "overview": "Coconut milk provides body, while galangal and lime give the characteristic aroma.",
+      "history": "Tom kha is a well-known Thai soup; gai means chicken.",
+      "flavor": "Creamy, tangy and aromatic, with moderate chilli heat.",
+      "technique": "Infuse the aromatics in the stock and add lime juice at the end.",
+      "essentials": [
+        "400 g chicken",
+        "400 ml coconut milk",
+        "500 ml stock"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 25–40 min",
+        "ingredients": [
+          "400 g chicken",
+          "400 ml coconut milk",
+          "500 ml stock",
+          "galangal",
+          "2 stalks lemongrass",
+          "makrut lime leaves",
+          "150 g mushrooms",
+          "lime",
+          "fish sauce"
+        ],
+        "steps": [
+          "Heat the stock with galangal, lemongrass and lime leaves.",
+          "Add coconut milk, chicken and mushrooms.",
+          "Simmer until the chicken is cooked through.",
+          "Season with lime and fish sauce."
+        ]
+      },
+      "variants": [
+        "Tom kha with mushrooms or seafood."
+      ],
+      "serving": [
+        "Serve with rice or as part of a larger meal."
+      ],
+      "commonMistakes": [
+        "Do not substitute ginger for galangal without expecting a different flavour."
+      ]
+    },
+    "fr": {
+      "overview": "Le lait de coco apporte de l’onctuosité, tandis que le galanga et le citron vert donnent l’arôme caractéristique.",
+      "history": "Le tom kha est une soupe thaïlandaise bien connue ; gai désigne le poulet.",
+      "flavor": "Crémeux, acidulé et aromatique, avec un piquant modéré.",
+      "technique": "Faire infuser les aromates dans le bouillon et ajouter le jus de citron vert à la fin.",
+      "essentials": [
+        "400 g de poulet",
+        "400 ml de lait de coco",
+        "500 ml de bouillon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 25–40 min",
+        "ingredients": [
+          "400 g de poulet",
+          "400 ml de lait de coco",
+          "500 ml de bouillon",
+          "galanga",
+          "2 tiges de citronnelle",
+          "feuilles de combava",
+          "150 g de champignons",
+          "citron vert",
+          "sauce de poisson"
+        ],
+        "steps": [
+          "Chauffer le bouillon avec le galanga, la citronnelle et les feuilles de combava.",
+          "Ajouter le lait de coco, le poulet et les champignons.",
+          "Laisser mijoter jusqu’à cuisson complète du poulet.",
+          "Assaisonner avec du citron vert et de la sauce de poisson."
+        ]
+      },
+      "variants": [
+        "Tom kha aux champignons ou aux fruits de mer."
+      ],
+      "serving": [
+        "Servir avec du riz ou dans le cadre d’un repas plus copieux."
+      ],
+      "commonMistakes": [
+        "Ne pas remplacer le galanga par du gingembre sans s’attendre à une saveur différente."
+      ]
+    },
+    "pt": {
+      "overview": "O leite de coco dá corpo, enquanto a galanga e a lima conferem o aroma característico.",
+      "history": "Tom kha é uma sopa tailandesa conhecida; gai significa frango.",
+      "flavor": "Cremoso, ácido e aromático, com picante moderado.",
+      "technique": "Deixe os aromáticos em infusão no caldo e junte o sumo de lima no final.",
+      "essentials": [
+        "400 g de frango",
+        "400 ml de leite de coco",
+        "500 ml de caldo"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 25–40 min",
+        "ingredients": [
+          "400 g de frango",
+          "400 ml de leite de coco",
+          "500 ml de caldo",
+          "galanga",
+          "2 talos de erva-príncipe",
+          "folhas de lima-makrut",
+          "150 g de cogumelos",
+          "lima",
+          "molho de peixe"
+        ],
+        "steps": [
+          "Aqueça o caldo com galanga, erva-príncipe e folhas de lima.",
+          "Junte o leite de coco, o frango e os cogumelos.",
+          "Deixe cozinhar em lume brando até o frango estar bem cozinhado.",
+          "Tempere com lima e molho de peixe."
+        ]
+      },
+      "variants": [
+        "Tom kha com cogumelos ou marisco."
+      ],
+      "serving": [
+        "Sirva com arroz ou como parte de uma refeição maior."
+      ],
+      "commonMistakes": [
+        "Não substitua a galanga por gengibre sem contar com um sabor diferente."
+      ]
+    },
+    "es": {
+      "overview": "La leche de coco aporta cuerpo y la galanga y la lima dan el aroma característico.",
+      "history": "Tom kha es una sopa tailandesa conocida; gai significa pollo.",
+      "flavor": "Cremoso, ácido y aromático, con un picante moderado.",
+      "technique": "Deja infusionar los aromáticos en el caldo y añade el zumo de lima al final.",
+      "essentials": [
+        "400 g de pollo",
+        "400 ml de leche de coco",
+        "500 ml de caldo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 25–40 min",
+        "ingredients": [
+          "400 g de pollo",
+          "400 ml de leche de coco",
+          "500 ml de caldo",
+          "galanga",
+          "2 tallos de hierba limón",
+          "hojas de lima makrut",
+          "150 g de setas",
+          "lima",
+          "salsa de pescado"
+        ],
+        "steps": [
+          "Calienta el caldo con galanga, hierba limón y hojas de lima.",
+          "Añade la leche de coco, el pollo y las setas.",
+          "Cuece a fuego lento hasta que el pollo esté hecho por dentro.",
+          "Sazona con lima y salsa de pescado."
+        ]
+      },
+      "variants": [
+        "Tom kha con setas o marisco."
+      ],
+      "serving": [
+        "Sirve con arroz o como parte de una comida más amplia."
+      ],
+      "commonMistakes": [
+        "No sustituyas la galanga por jengibre sin contar con un sabor distinto."
+      ]
+    },
+    "de": {
+      "overview": "Kokosmilch sorgt für Fülle, Galgant und Limette für das charakteristische Aroma.",
+      "history": "Tom Kha ist eine bekannte thailändische Suppenart; Gai bedeutet Hähnchen.",
+      "flavor": "Cremig, säuerlich und aromatisch mit mäßiger Chilischärfe.",
+      "technique": "Aromaten in der Brühe ziehen lassen und Limettensaft zum Schluss hinzufügen.",
+      "essentials": [
+        "400 g Hähnchen",
+        "400 ml Kokosmilch",
+        "500 ml Brühe"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 25–40 Min.",
+        "ingredients": [
+          "400 g Hähnchen",
+          "400 ml Kokosmilch",
+          "500 ml Brühe",
+          "Galgant",
+          "2 Stängel Zitronengras",
+          "Makrutlimettenblätter",
+          "150 g Pilze",
+          "Limette",
+          "Fischsauce"
+        ],
+        "steps": [
+          "Brühe mit Galgant, Zitronengras und Limettenblättern erhitzen.",
+          "Kokosmilch, Hähnchen und Pilze hinzufügen.",
+          "Köcheln lassen, bis das Hähnchen vollständig durchgegart ist.",
+          "Mit Limette und Fischsauce abschmecken."
+        ]
+      },
+      "variants": [
+        "Tom Kha mit Pilzen oder Meeresfrüchten."
+      ],
+      "serving": [
+        "Mit Reis oder als Teil einer größeren Mahlzeit servieren."
+      ],
+      "commonMistakes": [
+        "Galgant nicht durch Ingwer ersetzen, ohne mit einem anderen Geschmack zu rechnen."
+      ]
+    }
+  },
+  "pad-see-ew": {
+    "en": {
+      "overview": "The noodles are stir-fried with dark soy sauce, often with Chinese broccoli and meat.",
+      "history": "The dish belongs to Thai noodle cooking with Chinese culinary influences.",
+      "flavor": "Salty, slightly sweet and roasted.",
+      "technique": "Fry small batches over high heat so the noodles develop a seared surface.",
+      "essentials": [
+        "400 g wide rice noodles",
+        "250 g chicken",
+        "2 eggs"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 25–40 min",
+        "ingredients": [
+          "400 g wide rice noodles",
+          "250 g chicken",
+          "2 eggs",
+          "200 g gai lan",
+          "2 tbsp soy sauce",
+          "1 tbsp dark soy sauce",
+          "garlic",
+          "oil"
+        ],
+        "steps": [
+          "Prepare the noodles according to the packet instructions.",
+          "Fry the garlic and chicken until the chicken is cooked through.",
+          "Add eggs and vegetables.",
+          "Fold in the noodles and soy sauce and stir-fry quickly over high heat."
+        ]
+      },
+      "variants": [
+        "Versions with pork, beef or tofu."
+      ],
+      "serving": [
+        "Serve with chilli in vinegar to taste."
+      ],
+      "commonMistakes": [
+        "Do not overcrowd the wok or stir so vigorously that the noodles break."
+      ]
+    },
+    "fr": {
+      "overview": "Les nouilles sont sautées au wok avec de la sauce soja foncée, souvent avec du brocoli chinois et de la viande.",
+      "history": "Le plat appartient à la cuisine thaïlandaise des nouilles, influencée par la cuisine chinoise.",
+      "flavor": "Salé, légèrement sucré et grillé.",
+      "technique": "Faire sauter par petites quantités à feu vif pour que les nouilles soient bien saisies.",
+      "essentials": [
+        "400 g de larges nouilles de riz",
+        "250 g de poulet",
+        "2 œufs"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 25–40 min",
+        "ingredients": [
+          "400 g de larges nouilles de riz",
+          "250 g de poulet",
+          "2 œufs",
+          "200 g de gai lan",
+          "2 c. à soupe de sauce soja",
+          "1 c. à soupe de sauce soja foncée",
+          "ail",
+          "huile"
+        ],
+        "steps": [
+          "Préparer les nouilles selon les instructions du paquet.",
+          "Faire revenir l’ail et le poulet jusqu’à cuisson complète du poulet.",
+          "Ajouter les œufs et les légumes.",
+          "Incorporer les nouilles et la sauce soja, puis faire sauter rapidement à feu vif."
+        ]
+      },
+      "variants": [
+        "Variantes au porc, au bœuf ou au tofu."
+      ],
+      "serving": [
+        "Servir avec du piment au vinaigre selon le goût."
+      ],
+      "commonMistakes": [
+        "Ne pas surcharger le wok ni remuer si vigoureusement que les nouilles se cassent."
+      ]
+    },
+    "pt": {
+      "overview": "Os noodles são salteados no wok com molho de soja escuro, frequentemente com brócolos chineses e carne.",
+      "history": "O prato pertence à cozinha tailandesa de noodles com influência culinária chinesa.",
+      "flavor": "Salgado, ligeiramente doce e tostado.",
+      "technique": "Salteie pequenas porções em lume forte para dourar a superfície dos noodles.",
+      "essentials": [
+        "400 g de noodles largos de arroz",
+        "250 g de frango",
+        "2 ovos"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 25–40 min",
+        "ingredients": [
+          "400 g de noodles largos de arroz",
+          "250 g de frango",
+          "2 ovos",
+          "200 g de gai lan",
+          "2 c. de sopa de molho de soja",
+          "1 c. de sopa de molho de soja escuro",
+          "alho",
+          "óleo"
+        ],
+        "steps": [
+          "Prepare os noodles de acordo com as instruções da embalagem.",
+          "Salteie o alho e o frango até o frango estar bem cozinhado.",
+          "Junte os ovos e os legumes.",
+          "Envolva os noodles e o molho de soja e salteie rapidamente em lume forte."
+        ]
+      },
+      "variants": [
+        "Variantes com carne de porco, vaca ou tofu."
+      ],
+      "serving": [
+        "Sirva com malagueta em vinagre a gosto."
+      ],
+      "commonMistakes": [
+        "Não encha demasiado o wok nem mexa com tanta força que os noodles se partam."
+      ]
+    },
+    "es": {
+      "overview": "Los fideos se saltean en wok con salsa de soja oscura, a menudo con brócoli chino y carne.",
+      "history": "El plato pertenece a la cocina tailandesa de fideos con influencia culinaria china.",
+      "flavor": "Salado, ligeramente dulce y tostado.",
+      "technique": "Saltea tandas pequeñas a fuego fuerte para que los fideos se doren.",
+      "essentials": [
+        "400 g de fideos anchos de arroz",
+        "250 g de pollo",
+        "2 huevos"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 25–40 min",
+        "ingredients": [
+          "400 g de fideos anchos de arroz",
+          "250 g de pollo",
+          "2 huevos",
+          "200 g de gai lan",
+          "2 cucharadas de salsa de soja",
+          "1 cucharada de salsa de soja oscura",
+          "ajo",
+          "aceite"
+        ],
+        "steps": [
+          "Prepara los fideos según las instrucciones del envase.",
+          "Saltea el ajo y el pollo hasta que el pollo esté hecho por dentro.",
+          "Añade los huevos y las verduras.",
+          "Incorpora los fideos y la salsa de soja y saltea rápidamente a fuego fuerte."
+        ]
+      },
+      "variants": [
+        "Variantes con cerdo, vacuno o tofu."
+      ],
+      "serving": [
+        "Sirve con chile en vinagre al gusto."
+      ],
+      "commonMistakes": [
+        "No llenes demasiado el wok ni remuevas con tanta fuerza que se rompan los fideos."
+      ]
+    },
+    "de": {
+      "overview": "Die Nudeln werden mit dunkler Sojasauce im Wok gebraten, oft zusammen mit chinesischem Brokkoli und Fleisch.",
+      "history": "Das Gericht gehört zur thailändischen Nudelküche mit chinesischen kulinarischen Einflüssen.",
+      "flavor": "Salzig, leicht süß und röstig.",
+      "technique": "Kleine Portionen bei hoher Hitze braten, damit die Nudeln eine Bratkruste bekommen.",
+      "essentials": [
+        "400 g breite Reisnudeln",
+        "250 g Hähnchen",
+        "2 Eier"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 25–40 Min.",
+        "ingredients": [
+          "400 g breite Reisnudeln",
+          "250 g Hähnchen",
+          "2 Eier",
+          "200 g Gai Lan",
+          "2 EL Sojasauce",
+          "1 EL dunkle Sojasauce",
+          "Knoblauch",
+          "Öl"
+        ],
+        "steps": [
+          "Nudeln nach Packungsanleitung vorbereiten.",
+          "Knoblauch und Hähnchen braten, bis das Hähnchen vollständig durchgegart ist.",
+          "Eier und Gemüse hinzufügen.",
+          "Nudeln und Sojasauce unterheben und kurz bei hoher Hitze braten."
+        ]
+      },
+      "variants": [
+        "Varianten mit Schweinefleisch, Rindfleisch oder Tofu."
+      ],
+      "serving": [
+        "Mit Chili in Essig nach Geschmack servieren."
+      ],
+      "commonMistakes": [
+        "Wok nicht überfüllen und nicht so kräftig rühren, dass die Nudeln zerbrechen."
+      ]
+    }
+  },
+  "khao-pad": {
+    "en": {
+      "overview": "Cooked rice is fried with aromatics and seasonings in a hot pan.",
+      "history": "Khao pad is a widespread Thai everyday and restaurant dish.",
+      "flavor": "Mildly salty, aromatic and roasted.",
+      "technique": "Use cooled rice that has been stored safely, and fry quickly over high heat.",
+      "essentials": [
+        "600 g cooked rice",
+        "2 eggs",
+        "250 g chicken"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 25–40 min",
+        "ingredients": [
+          "600 g cooked rice",
+          "2 eggs",
+          "250 g chicken",
+          "2 garlic cloves",
+          "1 onion",
+          "spring onions",
+          "fish sauce",
+          "lime"
+        ],
+        "steps": [
+          "Fry garlic, onion and chicken until the chicken is cooked through.",
+          "Add the eggs and stir until set.",
+          "Fold in the rice and fry until piping hot.",
+          "Season with fish sauce and top with spring onions."
+        ]
+      },
+      "variants": [
+        "Khao pad goong with prawns and khao pad gai with chicken."
+      ],
+      "serving": [
+        "Serve with lime, cucumber and optionally chilli in fish sauce."
+      ],
+      "commonMistakes": [
+        "Do not use rice that has been left at room temperature for a long time."
+      ]
+    },
+    "fr": {
+      "overview": "Le riz cuit est sauté avec des aromates et des assaisonnements dans une poêle chaude.",
+      "history": "Le khao pad est un plat courant de la cuisine quotidienne et des restaurants thaïlandais.",
+      "flavor": "Légèrement salé, aromatique et grillé.",
+      "technique": "Utiliser du riz refroidi et conservé dans de bonnes conditions, puis le faire sauter rapidement à feu vif.",
+      "essentials": [
+        "600 g de riz cuit",
+        "2 œufs",
+        "250 g de poulet"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 25–40 min",
+        "ingredients": [
+          "600 g de riz cuit",
+          "2 œufs",
+          "250 g de poulet",
+          "2 gousses d’ail",
+          "1 oignon",
+          "oignons nouveaux",
+          "sauce de poisson",
+          "citron vert"
+        ],
+        "steps": [
+          "Faire revenir l’ail, l’oignon et le poulet jusqu’à cuisson complète du poulet.",
+          "Ajouter les œufs et remuer jusqu’à ce qu’ils prennent.",
+          "Incorporer le riz et le faire sauter jusqu’à ce qu’il soit bien chaud et fumant.",
+          "Assaisonner avec la sauce de poisson et garnir d’oignons nouveaux."
+        ]
+      },
+      "variants": [
+        "Khao pad goong aux crevettes et khao pad gai au poulet."
+      ],
+      "serving": [
+        "Servir avec du citron vert, du concombre et éventuellement du piment dans la sauce de poisson."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser de riz resté longtemps à température ambiante."
+      ]
+    },
+    "pt": {
+      "overview": "O arroz cozido é salteado com aromáticos e temperos numa frigideira quente.",
+      "history": "O khao pad é um prato tailandês comum no quotidiano e nos restaurantes.",
+      "flavor": "Ligeiramente salgado, aromático e tostado.",
+      "technique": "Use arroz arrefecido e conservado em segurança e salteie rapidamente em lume forte.",
+      "essentials": [
+        "600 g de arroz cozido",
+        "2 ovos",
+        "250 g de frango"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 25–40 min",
+        "ingredients": [
+          "600 g de arroz cozido",
+          "2 ovos",
+          "250 g de frango",
+          "2 dentes de alho",
+          "1 cebola",
+          "cebolinha verde",
+          "molho de peixe",
+          "lima"
+        ],
+        "steps": [
+          "Salteie o alho, a cebola e o frango até o frango estar bem cozinhado.",
+          "Junte os ovos e mexa até solidificarem.",
+          "Envolva o arroz e salteie até estar bem quente e a fumegar.",
+          "Tempere com molho de peixe e cubra com cebolinha verde."
+        ]
+      },
+      "variants": [
+        "Khao pad goong com camarão e khao pad gai com frango."
+      ],
+      "serving": [
+        "Sirva com lima, pepino e, se desejar, malagueta em molho de peixe."
+      ],
+      "commonMistakes": [
+        "Não use arroz que tenha ficado muito tempo à temperatura ambiente."
+      ]
+    },
+    "es": {
+      "overview": "El arroz cocido se saltea con aromáticos y condimentos en una sartén caliente.",
+      "history": "El khao pad es un plato tailandés muy común en la cocina cotidiana y en restaurantes.",
+      "flavor": "Ligeramente salado, aromático y tostado.",
+      "technique": "Usa arroz enfriado y conservado de forma segura y saltéalo rápidamente a fuego fuerte.",
+      "essentials": [
+        "600 g de arroz cocido",
+        "2 huevos",
+        "250 g de pollo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 25–40 min",
+        "ingredients": [
+          "600 g de arroz cocido",
+          "2 huevos",
+          "250 g de pollo",
+          "2 dientes de ajo",
+          "1 cebolla",
+          "cebolletas",
+          "salsa de pescado",
+          "lima"
+        ],
+        "steps": [
+          "Saltea el ajo, la cebolla y el pollo hasta que el pollo esté hecho por dentro.",
+          "Añade los huevos y remueve hasta que cuajen.",
+          "Incorpora el arroz y saltéalo hasta que esté bien caliente y humeante.",
+          "Sazona con salsa de pescado y añade cebolletas por encima."
+        ]
+      },
+      "variants": [
+        "Khao pad goong con gambas y khao pad gai con pollo."
+      ],
+      "serving": [
+        "Sirve con lima, pepino y, si quieres, chile en salsa de pescado."
+      ],
+      "commonMistakes": [
+        "No uses arroz que haya estado mucho tiempo a temperatura ambiente."
+      ]
+    },
+    "de": {
+      "overview": "Gekochter Reis wird mit Aromaten und Würzzutaten in einer heißen Pfanne gebraten.",
+      "history": "Khao Pad ist ein verbreitetes thailändisches Alltags- und Restaurantgericht.",
+      "flavor": "Mild salzig, aromatisch und röstig.",
+      "technique": "Abgekühlten, sicher gelagerten Reis verwenden und kurz bei hoher Hitze braten.",
+      "essentials": [
+        "600 g gekochter Reis",
+        "2 Eier",
+        "250 g Hähnchen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 25–40 Min.",
+        "ingredients": [
+          "600 g gekochter Reis",
+          "2 Eier",
+          "250 g Hähnchen",
+          "2 Knoblauchzehen",
+          "1 Zwiebel",
+          "Frühlingszwiebeln",
+          "Fischsauce",
+          "Limette"
+        ],
+        "steps": [
+          "Knoblauch, Zwiebel und Hähnchen braten, bis das Hähnchen vollständig durchgegart ist.",
+          "Eier hinzufügen und rühren, bis sie stocken.",
+          "Reis unterheben und braten, bis er dampfend heiß ist.",
+          "Mit Fischsauce abschmecken und mit Frühlingszwiebeln garnieren."
+        ]
+      },
+      "variants": [
+        "Khao Pad Goong mit Garnelen und Khao Pad Gai mit Hähnchen."
+      ],
+      "serving": [
+        "Mit Limette, Gurke und nach Wunsch Chili in Fischsauce servieren."
+      ],
+      "commonMistakes": [
+        "Keinen Reis verwenden, der lange bei Zimmertemperatur gestanden hat."
+      ]
+    }
+  },
+  "chicken-tikka-masala-pakistan": {
+    "en": {
+      "overview": "Chicken tikka is combined with a creamy masala sauce.",
+      "history": "The dish has South Asian roots and is particularly well known in the British curry-house tradition. Its precise origin is disputed.",
+      "flavor": "Rich, slightly tangy and aromatic.",
+      "technique": "Marinate the chicken, grill it separately and finish cooking it in the sauce.",
+      "essentials": [
+        "600 g boneless chicken thigh",
+        "150 g yoghurt",
+        "garam masala"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min + marinating",
+        "ingredients": [
+          "600 g boneless chicken thigh",
+          "150 g yoghurt",
+          "garam masala",
+          "ginger and garlic",
+          "400 g tomatoes",
+          "1 onion",
+          "100 ml cream"
+        ],
+        "steps": [
+          "Marinate the chicken in yoghurt and spices in the refrigerator.",
+          "Grill the chicken under the oven grill.",
+          "Fry onion, ginger and garlic, add tomatoes and spices and let simmer.",
+          "Add chicken and cream and cook until the chicken is cooked through."
+        ]
+      },
+      "variants": [
+        "The heat level and amount of cream vary."
+      ],
+      "serving": [
+        "Serve with rice or naan."
+      ],
+      "commonMistakes": [
+        "Do not use raw marinade as a finished sauce."
+      ]
+    },
+    "fr": {
+      "overview": "Le poulet tikka est associé à une sauce masala crémeuse.",
+      "history": "Le plat a des racines sud-asiatiques et est particulièrement connu dans la tradition britannique des restaurants de curry. Son origine exacte fait débat.",
+      "flavor": "Onctueux, légèrement acidulé et aromatique.",
+      "technique": "Faire mariner le poulet, le griller séparément et terminer sa cuisson dans la sauce.",
+      "essentials": [
+        "600 g de hauts de cuisse de poulet désossés",
+        "150 g de yaourt",
+        "garam masala"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min + marinade",
+        "ingredients": [
+          "600 g de hauts de cuisse de poulet désossés",
+          "150 g de yaourt",
+          "garam masala",
+          "gingembre et ail",
+          "400 g de tomates",
+          "1 oignon",
+          "100 ml de crème"
+        ],
+        "steps": [
+          "Faire mariner le poulet au réfrigérateur dans le yaourt et les épices.",
+          "Griller le poulet sous le gril du four.",
+          "Faire revenir l’oignon, le gingembre et l’ail, ajouter les tomates et les épices, puis laisser mijoter.",
+          "Ajouter le poulet et la crème et cuire jusqu’à cuisson complète du poulet."
+        ]
+      },
+      "variants": [
+        "Le degré de piquant et la quantité de crème varient."
+      ],
+      "serving": [
+        "Servir avec du riz ou du naan."
+      ],
+      "commonMistakes": [
+        "Ne pas utiliser la marinade crue comme sauce prête à servir."
+      ]
+    },
+    "pt": {
+      "overview": "O frango tikka é combinado com um molho masala cremoso.",
+      "history": "O prato tem raízes sul-asiáticas e é particularmente conhecido na tradição britânica de restaurantes de caril. A sua origem exata é controversa.",
+      "flavor": "Encorpado, ligeiramente ácido e aromático.",
+      "technique": "Marine o frango, grelhe-o separadamente e termine a cozedura no molho.",
+      "essentials": [
+        "600 g de coxa de frango desossada",
+        "150 g de iogurte",
+        "garam masala"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min + marinada",
+        "ingredients": [
+          "600 g de coxa de frango desossada",
+          "150 g de iogurte",
+          "garam masala",
+          "gengibre e alho",
+          "400 g de tomate",
+          "1 cebola",
+          "100 ml de natas"
+        ],
+        "steps": [
+          "Marine o frango no frigorífico com iogurte e especiarias.",
+          "Grelhe o frango sob o grill do forno.",
+          "Salteie a cebola, o gengibre e o alho, junte o tomate e as especiarias e deixe cozinhar em lume brando.",
+          "Junte o frango e as natas e cozinhe até o frango estar bem cozinhado."
+        ]
+      },
+      "variants": [
+        "O grau de picante e a quantidade de natas variam."
+      ],
+      "serving": [
+        "Sirva com arroz ou naan."
+      ],
+      "commonMistakes": [
+        "Não utilize a marinada crua como molho pronto a servir."
+      ]
+    },
+    "es": {
+      "overview": "El pollo tikka se combina con una salsa masala cremosa.",
+      "history": "El plato tiene raíces del sur de Asia y es especialmente conocido en la tradición británica de restaurantes de curri. Su origen exacto es objeto de debate.",
+      "flavor": "Intenso, ligeramente ácido y aromático.",
+      "technique": "Marina el pollo, ásalo por separado y termina de cocinarlo en la salsa.",
+      "essentials": [
+        "600 g de contramuslo de pollo deshuesado",
+        "150 g de yogur",
+        "garam masala"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min + marinado",
+        "ingredients": [
+          "600 g de contramuslo de pollo deshuesado",
+          "150 g de yogur",
+          "garam masala",
+          "jengibre y ajo",
+          "400 g de tomates",
+          "1 cebolla",
+          "100 ml de nata"
+        ],
+        "steps": [
+          "Marina el pollo en el frigorífico con yogur y especias.",
+          "Asa el pollo bajo el gratinador del horno.",
+          "Saltea la cebolla, el jengibre y el ajo, añade el tomate y las especias y cuece a fuego lento.",
+          "Añade el pollo y la nata y cocina hasta que el pollo esté hecho por dentro."
+        ]
+      },
+      "variants": [
+        "El grado de picante y la cantidad de nata varían."
+      ],
+      "serving": [
+        "Sirve con arroz o naan."
+      ],
+      "commonMistakes": [
+        "No uses la marinada cruda como salsa lista para servir."
+      ]
+    },
+    "de": {
+      "overview": "Chicken Tikka wird mit einer cremigen Masala-Sauce kombiniert.",
+      "history": "Das Gericht hat südasiatische Wurzeln und ist besonders aus der britischen Curryrestauranttradition bekannt. Seine genaue Herkunft ist umstritten.",
+      "flavor": "Kräftig, leicht säuerlich und aromatisch.",
+      "technique": "Hähnchen marinieren, separat grillen und in der Sauce fertig garen.",
+      "essentials": [
+        "600 g Hähnchenschenkelfilet",
+        "150 g Joghurt",
+        "Garam Masala"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min. + Marinierzeit",
+        "ingredients": [
+          "600 g Hähnchenschenkelfilet",
+          "150 g Joghurt",
+          "Garam Masala",
+          "Ingwer und Knoblauch",
+          "400 g Tomaten",
+          "1 Zwiebel",
+          "100 ml Sahne"
+        ],
+        "steps": [
+          "Hähnchen mit Joghurt und Gewürzen im Kühlschrank marinieren.",
+          "Hähnchen unter dem Backofengrill grillen.",
+          "Zwiebel, Ingwer und Knoblauch anbraten, Tomaten und Gewürze hinzufügen und köcheln lassen.",
+          "Hähnchen und Sahne hinzufügen und kochen, bis das Hähnchen vollständig durchgegart ist."
+        ]
+      },
+      "variants": [
+        "Schärfegrad und Sahnemenge variieren."
+      ],
+      "serving": [
+        "Mit Reis oder Naan servieren."
+      ],
+      "commonMistakes": [
+        "Rohe Marinade nicht als fertige Sauce verwenden."
+      ]
+    }
+  },
+  "palak-paneer": {
+    "en": {
+      "overview": "Spinach is puréed into a green sauce surrounding cubes of fresh cheese.",
+      "history": "Palak paneer is associated with North Indian, particularly Punjabi, food culture.",
+      "flavor": "Mild, earthy and creamy.",
+      "technique": "Blanch the spinach briefly to preserve its colour.",
+      "essentials": [
+        "400 g spinach",
+        "250 g paneer",
+        "1 onion"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 40–60 min",
+        "ingredients": [
+          "400 g spinach",
+          "250 g paneer",
+          "1 onion",
+          "2 garlic cloves",
+          "ginger",
+          "cumin",
+          "garam masala",
+          "oil"
+        ],
+        "steps": [
+          "Briefly blanch the spinach and blend into a purée.",
+          "Fry onion, garlic, ginger and spices.",
+          "Add the spinach and simmer briefly.",
+          "Fold in the paneer and heat through."
+        ]
+      },
+      "variants": [
+        "Saag paneer can contain leafy greens other than spinach."
+      ],
+      "serving": [
+        "Serve with roti, naan or rice."
+      ],
+      "commonMistakes": [
+        "Do not cook the spinach longer than necessary."
+      ]
+    },
+    "fr": {
+      "overview": "Les épinards sont réduits en purée pour former une sauce verte qui entoure les cubes de fromage frais.",
+      "history": "Le palak paneer est associé à la culture culinaire du nord de l’Inde, notamment du Pendjab.",
+      "flavor": "Doux, terreux et crémeux.",
+      "technique": "Blanchir brièvement les épinards pour préserver leur couleur.",
+      "essentials": [
+        "400 g d’épinards",
+        "250 g de paneer",
+        "1 oignon"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 40–60 min",
+        "ingredients": [
+          "400 g d’épinards",
+          "250 g de paneer",
+          "1 oignon",
+          "2 gousses d’ail",
+          "gingembre",
+          "cumin",
+          "garam masala",
+          "huile"
+        ],
+        "steps": [
+          "Blanchir brièvement les épinards et les mixer en purée.",
+          "Faire revenir l’oignon, l’ail, le gingembre et les épices.",
+          "Ajouter les épinards et laisser mijoter brièvement.",
+          "Incorporer le paneer et bien réchauffer l’ensemble."
+        ]
+      },
+      "variants": [
+        "Le saag paneer peut contenir d’autres légumes-feuilles que les épinards."
+      ],
+      "serving": [
+        "Servir avec du roti, du naan ou du riz."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire les épinards plus longtemps que nécessaire."
+      ]
+    },
+    "pt": {
+      "overview": "Os espinafres são reduzidos a puré para formar um molho verde que envolve os cubos de queijo fresco.",
+      "history": "O palak paneer está associado à cultura gastronómica do norte da Índia, sobretudo do Punjab.",
+      "flavor": "Suave, terroso e cremoso.",
+      "technique": "Escalde brevemente os espinafres para preservar a cor.",
+      "essentials": [
+        "400 g de espinafres",
+        "250 g de paneer",
+        "1 cebola"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 40–60 min",
+        "ingredients": [
+          "400 g de espinafres",
+          "250 g de paneer",
+          "1 cebola",
+          "2 dentes de alho",
+          "gengibre",
+          "cominhos",
+          "garam masala",
+          "óleo"
+        ],
+        "steps": [
+          "Escalde brevemente os espinafres e triture até obter um puré.",
+          "Salteie a cebola, o alho, o gengibre e as especiarias.",
+          "Junte os espinafres e deixe cozinhar brevemente em lume brando.",
+          "Envolva o paneer e aqueça bem."
+        ]
+      },
+      "variants": [
+        "O saag paneer pode conter outros legumes de folha além dos espinafres."
+      ],
+      "serving": [
+        "Sirva com roti, naan ou arroz."
+      ],
+      "commonMistakes": [
+        "Não coza os espinafres durante mais tempo do que o necessário."
+      ]
+    },
+    "es": {
+      "overview": "Las espinacas se trituran para formar una salsa verde que envuelve los dados de queso fresco.",
+      "history": "El palak paneer se asocia con la cultura culinaria del norte de la India, especialmente del Punyab.",
+      "flavor": "Suave, terroso y cremoso.",
+      "technique": "Escalda brevemente las espinacas para conservar su color.",
+      "essentials": [
+        "400 g de espinacas",
+        "250 g de paneer",
+        "1 cebolla"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 40–60 min",
+        "ingredients": [
+          "400 g de espinacas",
+          "250 g de paneer",
+          "1 cebolla",
+          "2 dientes de ajo",
+          "jengibre",
+          "comino",
+          "garam masala",
+          "aceite"
+        ],
+        "steps": [
+          "Escalda brevemente las espinacas y tritura hasta obtener un puré.",
+          "Sofríe la cebolla, el ajo, el jengibre y las especias.",
+          "Añade las espinacas y cuece brevemente a fuego lento.",
+          "Incorpora el paneer y calienta bien el conjunto."
+        ]
+      },
+      "variants": [
+        "El saag paneer puede contener otras verduras de hoja además de las espinacas."
+      ],
+      "serving": [
+        "Sirve con roti, naan o arroz."
+      ],
+      "commonMistakes": [
+        "No cuezas las espinacas más tiempo del necesario."
+      ]
+    },
+    "de": {
+      "overview": "Spinat wird zu einer grünen Sauce püriert, die Frischkäsewürfel umgibt.",
+      "history": "Palak Paneer ist mit der nordindischen, insbesondere der Punjabi-Esskultur verbunden.",
+      "flavor": "Mild, erdig und cremig.",
+      "technique": "Spinat kurz blanchieren, damit die Farbe erhalten bleibt.",
+      "essentials": [
+        "400 g Spinat",
+        "250 g Paneer",
+        "1 Zwiebel"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 40–60 Min.",
+        "ingredients": [
+          "400 g Spinat",
+          "250 g Paneer",
+          "1 Zwiebel",
+          "2 Knoblauchzehen",
+          "Ingwer",
+          "Kreuzkümmel",
+          "Garam Masala",
+          "Öl"
+        ],
+        "steps": [
+          "Spinat kurz blanchieren und pürieren.",
+          "Zwiebel, Knoblauch, Ingwer und Gewürze anbraten.",
+          "Spinat hinzufügen und kurz köcheln lassen.",
+          "Paneer unterheben und vollständig erwärmen."
+        ]
+      },
+      "variants": [
+        "Saag Paneer kann neben Spinat auch anderes Blattgemüse enthalten."
+      ],
+      "serving": [
+        "Mit Roti, Naan oder Reis servieren."
+      ],
+      "commonMistakes": [
+        "Spinat nicht länger als nötig kochen."
+      ]
+    }
+  },
+  "rogan-josh": {
+    "en": {
+      "overview": "The meat is braised with spices and chilli that give the sauce a red colour.",
+      "history": "Rogan josh holds a central place in Kashmiri food culture, with different spice traditions.",
+      "flavor": "Rich, aromatic and warming without necessarily being very hot.",
+      "technique": "Braise the meat over low heat until tender.",
+      "essentials": [
+        "600 g stewing lamb",
+        "150 g yoghurt",
+        "2 tsp Kashmiri chilli"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2 hours",
+        "ingredients": [
+          "600 g stewing lamb",
+          "150 g yoghurt",
+          "2 tsp Kashmiri chilli",
+          "1 tsp fennel seeds",
+          "dried ginger",
+          "cardamom",
+          "cloves",
+          "oil"
+        ],
+        "steps": [
+          "Brown the meat in oil.",
+          "Gently fry the spices.",
+          "Gradually stir in the yoghurt and add a little water.",
+          "Simmer covered until the meat is tender."
+        ]
+      },
+      "variants": [
+        "Kashmiri versions vary, among other things, in their use of onion and garlic."
+      ],
+      "serving": [
+        "Serve with rice."
+      ],
+      "commonMistakes": [
+        "Do not let the spices burn in the oil."
+      ]
+    },
+    "fr": {
+      "overview": "La viande est braisée avec des épices et du piment qui donnent une couleur rouge à la sauce.",
+      "history": "Le rogan josh occupe une place centrale dans la culture culinaire du Cachemire, avec différentes traditions d’assaisonnement.",
+      "flavor": "Riche, aromatique et chaleureux sans être nécessairement très piquant.",
+      "technique": "Braiser la viande à feu doux jusqu’à tendreté.",
+      "essentials": [
+        "600 g d’agneau à mijoter",
+        "150 g de yaourt",
+        "2 c. à café de piment du Cachemire"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2 heures",
+        "ingredients": [
+          "600 g d’agneau à mijoter",
+          "150 g de yaourt",
+          "2 c. à café de piment du Cachemire",
+          "1 c. à café de graines de fenouil",
+          "gingembre séché",
+          "cardamome",
+          "clous de girofle",
+          "huile"
+        ],
+        "steps": [
+          "Faire dorer la viande dans l’huile.",
+          "Faire revenir doucement les épices.",
+          "Incorporer progressivement le yaourt et ajouter un peu d’eau.",
+          "Laisser mijoter à couvert jusqu’à ce que la viande soit tendre."
+        ]
+      },
+      "variants": [
+        "Les variantes du Cachemire diffèrent notamment par l’utilisation de l’oignon et de l’ail."
+      ],
+      "serving": [
+        "Servir avec du riz."
+      ],
+      "commonMistakes": [
+        "Ne pas laisser brûler les épices dans l’huile."
+      ]
+    },
+    "pt": {
+      "overview": "A carne é estufada com especiarias e malagueta que dão uma cor vermelha ao molho.",
+      "history": "O rogan josh ocupa um lugar central na cultura gastronómica de Caxemira, com diferentes tradições de especiarias.",
+      "flavor": "Encorpado, aromático e quente, sem ser necessariamente muito picante.",
+      "technique": "Estufe a carne em lume brando até ficar tenra.",
+      "essentials": [
+        "600 g de borrego para estufar",
+        "150 g de iogurte",
+        "2 c. de chá de malagueta de Caxemira"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2 horas",
+        "ingredients": [
+          "600 g de borrego para estufar",
+          "150 g de iogurte",
+          "2 c. de chá de malagueta de Caxemira",
+          "1 c. de chá de sementes de funcho",
+          "gengibre seco",
+          "cardamomo",
+          "cravinho",
+          "óleo"
+        ],
+        "steps": [
+          "Doure a carne em óleo.",
+          "Salteie cuidadosamente as especiarias.",
+          "Incorpore gradualmente o iogurte e junte um pouco de água.",
+          "Deixe cozinhar em lume brando com tampa até a carne ficar tenra."
+        ]
+      },
+      "variants": [
+        "As versões de Caxemira variam, entre outros aspetos, no uso de cebola e alho."
+      ],
+      "serving": [
+        "Sirva com arroz."
+      ],
+      "commonMistakes": [
+        "Não deixe as especiarias queimarem no óleo."
+      ]
+    },
+    "es": {
+      "overview": "La carne se brasea con especias y chile que dan a la salsa un color rojo.",
+      "history": "El rogan josh ocupa un lugar central en la cultura culinaria de Cachemira, con distintas tradiciones de especias.",
+      "flavor": "Intenso, aromático y cálido sin ser necesariamente muy picante.",
+      "technique": "Brasea la carne a fuego lento hasta que esté tierna.",
+      "essentials": [
+        "600 g de cordero para guisar",
+        "150 g de yogur",
+        "2 cucharaditas de chile de Cachemira"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2 horas",
+        "ingredients": [
+          "600 g de cordero para guisar",
+          "150 g de yogur",
+          "2 cucharaditas de chile de Cachemira",
+          "1 cucharadita de semillas de hinojo",
+          "jengibre seco",
+          "cardamomo",
+          "clavos de olor",
+          "aceite"
+        ],
+        "steps": [
+          "Dora la carne en aceite.",
+          "Sofríe las especias con cuidado.",
+          "Incorpora poco a poco el yogur y añade un poco de agua.",
+          "Cuece a fuego lento con tapa hasta que la carne esté tierna."
+        ]
+      },
+      "variants": [
+        "Las variantes de Cachemira varían, entre otros aspectos, en el uso de cebolla y ajo."
+      ],
+      "serving": [
+        "Sirve con arroz."
+      ],
+      "commonMistakes": [
+        "No dejes que las especias se quemen en el aceite."
+      ]
+    },
+    "de": {
+      "overview": "Das Fleisch wird mit Gewürzen und Chili geschmort, die der Sauce eine rote Farbe geben.",
+      "history": "Rogan Josh nimmt in der kaschmirischen Esskultur mit unterschiedlichen Gewürztraditionen einen zentralen Platz ein.",
+      "flavor": "Kräftig, aromatisch und wärmend, ohne unbedingt sehr scharf zu sein.",
+      "technique": "Fleisch bei niedriger Hitze weich schmoren.",
+      "essentials": [
+        "600 g Lammfleisch zum Schmoren",
+        "150 g Joghurt",
+        "2 TL Kaschmir-Chili"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2 Stunden",
+        "ingredients": [
+          "600 g Lammfleisch zum Schmoren",
+          "150 g Joghurt",
+          "2 TL Kaschmir-Chili",
+          "1 TL Fenchelsamen",
+          "getrockneter Ingwer",
+          "Kardamom",
+          "Gewürznelken",
+          "Öl"
+        ],
+        "steps": [
+          "Fleisch in Öl anbräunen.",
+          "Gewürze vorsichtig anrösten.",
+          "Joghurt nach und nach einrühren und etwas Wasser hinzufügen.",
+          "Zugedeckt ziehen lassen, bis das Fleisch weich ist."
+        ]
+      },
+      "variants": [
+        "Kaschmirische Varianten unterscheiden sich unter anderem in der Verwendung von Zwiebeln und Knoblauch."
+      ],
+      "serving": [
+        "Mit Reis servieren."
+      ],
+      "commonMistakes": [
+        "Gewürze im Öl nicht verbrennen lassen."
+      ]
+    }
+  },
+  "vindaloo": {
+    "en": {
+      "overview": "Vinegar, garlic and chilli characterise the marinade and sauce.",
+      "history": "Vindaloo has links to Portuguese marinating traditions, adapted to local ingredients and spices in Goa.",
+      "flavor": "Tangy, hot and aromatic.",
+      "technique": "Marinate the meat and braise it gently.",
+      "essentials": [
+        "600 g stewing pork",
+        "3 tbsp vinegar",
+        "5 garlic cloves"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2 hours + marinating",
+        "ingredients": [
+          "600 g stewing pork",
+          "3 tbsp vinegar",
+          "5 garlic cloves",
+          "dried chilli",
+          "cumin",
+          "coriander seeds",
+          "1 onion",
+          "oil"
+        ],
+        "steps": [
+          "Grind the chilli and spices with vinegar and garlic.",
+          "Marinate the meat in the refrigerator.",
+          "Fry the onion and add the meat and marinade.",
+          "Add a little water and braise until tender."
+        ]
+      },
+      "variants": [
+        "Restaurant versions also use chicken or lamb."
+      ],
+      "serving": [
+        "Serve with rice or bread."
+      ],
+      "commonMistakes": [
+        "Do not turn the dish into just a hot chilli sauce; acidity is important."
+      ]
+    },
+    "fr": {
+      "overview": "Le vinaigre, l’ail et le piment caractérisent la marinade et la sauce.",
+      "history": "Le vindaloo est lié aux traditions portugaises de marinade, adaptées aux ingrédients et épices locaux de Goa.",
+      "flavor": "Acidulé, piquant et aromatique.",
+      "technique": "Faire mariner la viande et la braiser doucement.",
+      "essentials": [
+        "600 g de porc à mijoter",
+        "3 c. à soupe de vinaigre",
+        "5 gousses d’ail"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2 heures + marinade",
+        "ingredients": [
+          "600 g de porc à mijoter",
+          "3 c. à soupe de vinaigre",
+          "5 gousses d’ail",
+          "piment séché",
+          "cumin",
+          "graines de coriandre",
+          "1 oignon",
+          "huile"
+        ],
+        "steps": [
+          "Broyer le piment et les épices avec le vinaigre et l’ail.",
+          "Faire mariner la viande au réfrigérateur.",
+          "Faire revenir l’oignon et ajouter la viande et la marinade.",
+          "Ajouter un peu d’eau et braiser jusqu’à tendreté."
+        ]
+      },
+      "variants": [
+        "Les versions de restaurant utilisent aussi du poulet ou de l’agneau."
+      ],
+      "serving": [
+        "Servir avec du riz ou du pain."
+      ],
+      "commonMistakes": [
+        "Ne pas réduire le plat à une simple sauce pimentée ; l’acidité est importante."
+      ]
+    },
+    "pt": {
+      "overview": "O vinagre, o alho e a malagueta caracterizam a marinada e o molho.",
+      "history": "O vindaloo tem ligações à tradição portuguesa de marinadas, adaptada aos ingredientes e especiarias locais de Goa.",
+      "flavor": "Ácido, picante e aromático.",
+      "technique": "Marine a carne e estufe-a suavemente.",
+      "essentials": [
+        "600 g de carne de porco para estufar",
+        "3 c. de sopa de vinagre",
+        "5 dentes de alho"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2 horas + marinada",
+        "ingredients": [
+          "600 g de carne de porco para estufar",
+          "3 c. de sopa de vinagre",
+          "5 dentes de alho",
+          "malagueta seca",
+          "cominhos",
+          "sementes de coentros",
+          "1 cebola",
+          "óleo"
+        ],
+        "steps": [
+          "Triture a malagueta e as especiarias com vinagre e alho.",
+          "Marine a carne no frigorífico.",
+          "Salteie a cebola e junte a carne e a marinada.",
+          "Junte um pouco de água e estufe até ficar tenra."
+        ]
+      },
+      "variants": [
+        "As versões de restaurante também usam frango ou borrego."
+      ],
+      "serving": [
+        "Sirva com arroz ou pão."
+      ],
+      "commonMistakes": [
+        "Não transforme o prato apenas num molho picante; a acidez é importante."
+      ]
+    },
+    "es": {
+      "overview": "El vinagre, el ajo y el chile caracterizan la marinada y la salsa.",
+      "history": "El vindaloo tiene vínculos con la tradición portuguesa de marinar, adaptada a los ingredientes y especias locales de Goa.",
+      "flavor": "Ácido, picante y aromático.",
+      "technique": "Marina la carne y braséala suavemente.",
+      "essentials": [
+        "600 g de carne de cerdo para guisar",
+        "3 cucharadas de vinagre",
+        "5 dientes de ajo"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2 horas + marinado",
+        "ingredients": [
+          "600 g de carne de cerdo para guisar",
+          "3 cucharadas de vinagre",
+          "5 dientes de ajo",
+          "chile seco",
+          "comino",
+          "semillas de cilantro",
+          "1 cebolla",
+          "aceite"
+        ],
+        "steps": [
+          "Tritura el chile y las especias con vinagre y ajo.",
+          "Marina la carne en el frigorífico.",
+          "Sofríe la cebolla y añade la carne y la marinada.",
+          "Añade un poco de agua y brasea hasta que esté tierna."
+        ]
+      },
+      "variants": [
+        "Las versiones de restaurante también utilizan pollo o cordero."
+      ],
+      "serving": [
+        "Sirve con arroz o pan."
+      ],
+      "commonMistakes": [
+        "No conviertas el plato en una simple salsa picante; la acidez es importante."
+      ]
+    },
+    "de": {
+      "overview": "Essig, Knoblauch und Chili prägen Marinade und Sauce.",
+      "history": "Vindaloo hat Verbindungen zur portugiesischen Marinadentradition, angepasst an lokale Zutaten und Gewürze in Goa.",
+      "flavor": "Säuerlich, scharf und aromatisch.",
+      "technique": "Fleisch marinieren und sanft schmoren.",
+      "essentials": [
+        "600 g Schweinefleisch zum Schmoren",
+        "3 EL Essig",
+        "5 Knoblauchzehen"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2 Stunden + Marinierzeit",
+        "ingredients": [
+          "600 g Schweinefleisch zum Schmoren",
+          "3 EL Essig",
+          "5 Knoblauchzehen",
+          "getrocknete Chili",
+          "Kreuzkümmel",
+          "Koriandersamen",
+          "1 Zwiebel",
+          "Öl"
+        ],
+        "steps": [
+          "Chili und Gewürze mit Essig und Knoblauch mahlen.",
+          "Fleisch im Kühlschrank marinieren.",
+          "Zwiebel anbraten und Fleisch samt Marinade hinzufügen.",
+          "Etwas Wasser hinzufügen und weich schmoren."
+        ]
+      },
+      "variants": [
+        "Restaurantvarianten verwenden auch Hähnchen oder Lamm."
+      ],
+      "serving": [
+        "Mit Reis oder Brot servieren."
+      ],
+      "commonMistakes": [
+        "Das Gericht nicht auf eine scharfe Chilisauce reduzieren; die Säure ist wichtig."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;

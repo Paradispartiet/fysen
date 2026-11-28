@@ -176,3 +176,7 @@ Added eight complete bodies per language: cannoli, quesadilla, bibimbap, bulgogi
 ### International full article review batch 4
 
 Added eight complete bodies per language: bánh xèo, bún bò Huế, cao lầu, cơm tấm, bún riêu, bánh cuốn, massaman curry and panang curry. Source list lengths and numerical recipe tokens checked, including fractions, ingredient measures, preparation durations and food safety instructions. Previous bodies and original sources retained. Total 32 new bodies per language; English 65/200 including original 33, other four 32/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 5
+
+Added eight complete bodies per language: som tam, tom kha gai, pad see ew, khao pad, chicken tikka masala, palak paneer, rogan josh and vindaloo. Source list lengths and numerical recipe tokens checked; preserved the disputed origin wording for chicken tikka masala and original food safety instructions. Previous bodies and original sources retained. Total 40 new bodies per language; English 73/200 including original 33, other four 40/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
