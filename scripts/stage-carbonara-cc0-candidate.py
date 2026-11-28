@@ -18,6 +18,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 request = urllib.request.Request(SOURCE, headers={"User-Agent": "Fysen editorial photo review/1.0"})
 with urllib.request.urlopen(request, timeout=60) as response:
     data = response.read(12 * 1024 * 1024)
+assert hashlib.sha256(data).hexdigest() == "faa681bcb10cf7cb5e2b41661c98b4ad989c8f80fefcabadae99559b2f71ce40", "Source bytes changed"
 raw = Image.open(io.BytesIO(data)).convert("RGB")
 assert raw.size == (3200, 2133), raw.size
 (OUT / "source.jpeg").write_bytes(data)
@@ -68,6 +69,11 @@ assert min(isolated.size) >= 1600, isolated.size
 assert isolated.getpixel((0,0)) == (0,0,0)
 isolated.save(OUT / "candidate.png", optimize=True)
 isolated.save(OUT / "candidate.avif", quality=88)
+# Inspectable JPEG at 1200px, separate from the untouched master.
+preview = isolated.copy()
+preview.thumbnail((1200,1200), Image.Resampling.LANCZOS)
+preview.save(OUT / "visual-review.jpeg", quality=94, subsampling=0)
+
 thumb = isolated.copy()
 thumb.thumbnail((512,512), Image.Resampling.LANCZOS)
 square = Image.new("RGB",(512,512),"black")
