@@ -65,6 +65,36 @@ const lorry = {
  licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
 } as const;
 
+const schroder = {
+ logo: null,
+ exterior: "/restaurants/schroder/exterior.jpg",
+ interior: null,
+ sourceUrl: "https://commons.wikimedia.org/wiki/File:Restaurant_Schroder.JPG",
+ photoCredit: "Helge Høifødt",
+ photoDate: "2007-06-09",
+ licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/",
+} as const;
+
+const palmyra = {
+ logo: null,
+ exterior: "/restaurants/palmyra/exterior.jpg",
+ interior: null,
+ sourceUrl: "https://commons.wikimedia.org/wiki/File:Palmyra_Cafe_-_2017-02-12.jpg",
+ photoCredit: "Kjetil Ree",
+ photoDate: "2017-02-12",
+ licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/",
+} as const;
+
+const louise = {
+ logo: null,
+ exterior: "/restaurants/louise/exterior.jpg",
+ interior: null,
+ sourceUrl: "https://commons.wikimedia.org/wiki/File:DS_Louise_Restaurant%2C_Aker_Brygge_(2327057427).jpg",
+ photoCredit: "Andy Mitchell",
+ photoDate: "2008-03-09",
+ licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0/",
+} as const;
+
 function normalized(value: string): string {
   return value.normalize("NFKC").toLocaleLowerCase("nb-NO").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 }
@@ -72,6 +102,10 @@ function normalized(value: string): string {
 /** Match the branch and street address, independent of archive/live IDs. */
 export function restaurantVisuals(restaurant: RestaurantIdentity) {
   const address = normalized(restaurant.address);
+  const name = normalized(restaurant.name);
+  if (name === "restaurant schrøder" && /^waldemar thranes gate 8(?: |$)/u.test(address)) return schroder;
+  if (["palmyra café", "palmyra cafe"].includes(name) && /^norbygata 15 ?a(?: |$)/u.test(address)) return palmyra;
+  if (["d s louise", "d s louise restaurant bar", "louise restaurant bar"].includes(name) && /^stranden 3(?: |$)/u.test(address)) return louise;
   if (normalized(restaurant.name) === "lorry restaurant" &&
       /^parkveien 12(?: |$)/u.test(address)) return lorry;
   if (normalized(restaurant.name) === "peppes pizza stortingsgata" &&

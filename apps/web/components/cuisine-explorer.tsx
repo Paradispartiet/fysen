@@ -224,7 +224,7 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
           <a className="cuisineExploreRestaurantArtSource" href={visuals.sourceUrl} target="_blank" rel="noopener noreferrer">
             {photo ? `Foto: ${photo.photoCredit} · Wikimedia Commons` : "Illustrert fra restaurantens egne bilder"}
           </a>
-          {photo ? <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">{photo.licenseUrl.includes("/4.0/") ? "CC BY-SA 4.0" : "CC BY-SA 3.0"} · Nedskalert, uten beskjæring</a> : null}
+          {photo ? <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">{photo.licenseUrl.includes("/publicdomain/") ? "Public domain" : `CC BY-SA ${photo.licenseUrl.match(/\/by-sa\/([\d.]+)\//u)?.[1] ?? ""}`} · Nedskalert, uten beskjæring</a> : null}
         </div>
       ) : null}
     </li>
