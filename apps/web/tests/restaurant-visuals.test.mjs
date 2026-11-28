@@ -12,13 +12,15 @@ test('art follows the actual branch and address, independent of archive/live IDs
   assert.equal(restaurantVisuals({ name: 'Chilango Løren', address: 'Lørenveien 40' }), null);
 });
 
-test('Karl Johan gets its own scenes and shares only the official chain logo', () => {
+test('Karl Johan retains its identity and official chain logo with scenes withheld', () => {
   const branch = { name: 'Egon Karl Johan', address: 'Karl Johans gate 37, 0162 Oslo' };
   const visuals = restaurantVisuals(branch);
   const byporten = restaurantVisuals({ name: 'Egon Byporten', address: 'Jernbanetorget 6' });
   assert.ok(visuals && byporten);
-  assert.notEqual(visuals.exterior, byporten.exterior);
-  assert.notEqual(visuals.interior, byporten.interior);
+  assert.equal(visuals.exterior, null);
+  assert.equal(byporten.exterior, null);
+  assert.equal(visuals.interior, null);
+  assert.equal(byporten.interior, null);
   assert.equal(visuals.logo, byporten.logo);
   assert.deepEqual(restaurantVisuals({ ...branch, id: 'live-uuid' }), visuals);
   assert.equal(restaurantVisuals({ ...branch, address: 'Karl Johans gate 370' }), null);
@@ -31,7 +33,7 @@ test('Nordstrand matches both address spellings and never borrows another interi
   assert.ok(visuals);
   assert.deepEqual(make('Ekebergveien 228B, 1162 Oslo'), visuals);
   assert.equal(visuals.interior, null);
-  assert.match(visuals.exterior, /egon-nordstrand/u);
+  assert.equal(visuals.exterior, null);
   assert.equal(make('Ekebergveien 228'), null);
   assert.equal(make('Ekebergveien 228C'), null);
   assert.equal(make('Ekebergveien 2280B'), null);
@@ -42,8 +44,8 @@ test('Storo scenes require the correct branch and street address', () => {
   const make = (address) => restaurantVisuals({ name: 'Egon Storo', address });
   const visuals = make('Vitaminveien 9-11, 0485 Oslo');
   assert.ok(visuals);
-  assert.match(visuals.exterior, /egon-storo/u);
-  assert.match(visuals.interior, /egon-storo/u);
+  assert.equal(visuals.exterior, null);
+  assert.equal(visuals.interior, null);
   assert.deepEqual(make('Vitaminveien 9–11 0485 Oslo'), visuals);
   assert.equal(make('Vitaminveien 9-110'), null);
   assert.equal(make('Jernbanetorget 6'), null);
@@ -53,7 +55,7 @@ test('Ullevål requires its own branch address and leaves interior pending', () 
   const make = (address) => restaurantVisuals({ name: 'Egon Ullevål', address });
   const visuals = make('Sognsveien 77c, 0855 Oslo');
   assert.ok(visuals);
-  assert.match(visuals.exterior, /egon-ullevaal/u);
+  assert.equal(visuals.exterior, null);
   assert.equal(visuals.interior, null);
   assert.deepEqual(make('Sognsveien 77 C, 0855 Oslo'), visuals);
   assert.equal(make('Sognsveien 77'), null);
@@ -144,4 +146,20 @@ test('Kaffistova uses its official identity and verified building or entrance ad
  assert.deepEqual(make('Kristian IVs gate 2'),p);
  assert.equal(make("Rosenkrantz' gate 80"),null);
  assert.equal(make('Kristian IVs gate 20'),null);
+});
+
+test('all eight Egon illustrations remain withheld after accuracy review', () => {
+ for (const [name,address] of [
+ ['Egon Byporten','Jernbanetorget 6'],
+ ['Egon Karl Johan','Karl Johans gate 37'],
+ ['Egon Nordstrand','Ekebergveien 228B'],
+ ['Egon Storo','Vitaminveien 9-11'],
+ ['Egon Ullevål','Sognsveien 77c'],
+ ]) {
+ const p=restaurantVisuals({name,address});
+ assert.ok(p);
+ assert.equal(p.exterior,null);
+ assert.equal(p.interior,null);
+ assert.equal(p.logo,'/restaurants/egon-byporten/logo.svg');
+ }
 });
