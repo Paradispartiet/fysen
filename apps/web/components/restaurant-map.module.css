@@ -39,7 +39,7 @@
 .nearest li button { background: transparent; border: 0; border-bottom: 1px solid #ded7cc; width: 100%; min-height: 44px; text-align: left; color: #171713; font: inherit; cursor: pointer; }
 .map[hidden] { display: none; }
 .layout[data-mode="list"] { grid-template-columns: minmax(0,1fr); }
-.layout[data-mode="list"] .mapColumn:has(> iframe[hidden]):not(:has(> article)) { display: none; }
+.layout[data-mode="list"] .mapColumn:not(:has(> article)) { display: none; }
 .layout[data-mode="list"] .list { max-height: none; overflow: visible; }
 @media (max-width: 480px) { .nearest ul { grid-template-columns: minmax(0,1fr); } }
 
