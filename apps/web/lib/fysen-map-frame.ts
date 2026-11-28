@@ -16,6 +16,7 @@ export const fysenMapFrame = `<!doctype html>
   window.addEventListener("message", (event) => {
     if(event.source !== parent || !event.data || typeof event.data !== "object") return;
     const message = event.data;
+    if(message.type === "fysen-map-resize") { if(map) requestAnimationFrame(() => map.resize()); return; }
     if(message.type === "fysen-map-focus" && ready && Array.isArray(message.coordinates)) {
       map.easeTo({center: message.coordinates, zoom: Math.max(map.getZoom(), 16)});
       return;
@@ -33,9 +34,10 @@ export const fysenMapFrame = `<!doctype html>
           map.addLayer({id:"fysen-clusters",type:"circle",source:"fysen",filter:["has","point_count"],paint:{"circle-color":"#B45132","circle-radius":["step",["get","point_count"],16,20,21,100,27],"circle-stroke-width":2,"circle-stroke-color":"#FCFAF5"}});
           map.addLayer({id:"fysen-count",type:"symbol",source:"fysen",filter:["has","point_count"],layout:{"text-field":["get","point_count_abbreviated"],"text-size":12,"text-font":["Open Sans Regular"]},paint:{"text-color":"#ffffff"}});
           map.addLayer({id:"fysen-points",type:"circle",source:"fysen",filter:["!",["has","point_count"]],paint:{"circle-color":"#B45132","circle-radius":["interpolate",["linear"],["zoom"],12,5,17,8],"circle-stroke-width":1.5,"circle-stroke-color":"#FCFAF5"}});
-          map.on("click","fysen-points",e=>{const f=e.features&&e.features[0];if(f&&f.properties)send("fysen-map-select",{slug:f.properties.slug});});
+          map.addLayer({id:"fysen-names",type:"symbol",source:"fysen",minzoom:15.5,filter:["!",["has","point_count"]],layout:{"text-field":["get","name"],"text-size":12,"text-font":["Open Sans Regular"],"text-anchor":"top","text-offset":[0,0.9],"text-max-width":11,"text-optional":true,"text-allow-overlap":false},paint:{"text-color":"#171713","text-halo-color":"#FCFAF5","text-halo-width":1.5}});
+          for(const id of ["fysen-points","fysen-names"]) map.on("click",id,e=>{const f=e.features&&e.features[0];if(f&&f.properties)send("fysen-map-select",{slug:f.properties.slug});});
           map.on("click","fysen-clusters",async e=>{const f=e.features&&e.features[0];if(!f)return;try{const zoom=await map.getSource("fysen").getClusterExpansionZoom(f.properties.cluster_id);map.easeTo({center:f.geometry.coordinates,zoom});}catch{map.zoomIn();}});
-          for(const id of ["fysen-points","fysen-clusters"]){map.on("mouseenter",id,()=>map.getCanvas().style.cursor="pointer");map.on("mouseleave",id,()=>map.getCanvas().style.cursor="");}
+          for(const id of ["fysen-points","fysen-clusters","fysen-names"]){map.on("mouseenter",id,()=>map.getCanvas().style.cursor="pointer");map.on("mouseleave",id,()=>map.getCanvas().style.cursor="");}
           ready=true;status.hidden=true;update();send("fysen-map-loaded");
         } catch { fail(); }
       });
