@@ -3,16 +3,51 @@
 export const fysenMapFrame = `<!doctype html>
 <html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.css">
-<style>html,body,#map{height:100%;width:100%;margin:0;background:#171c19}#status{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;font:16px system-ui;color:#e8eee6;pointer-events:none}#status[hidden]{display:none}</style>
+<style>html,body,#map{height:100%;width:100%;margin:0;background:#171c19}#status{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;font:16px system-ui;color:#e8eee6;pointer-events:none}#status[hidden]{display:none}.fysen-logo-pin{display:block;width:38px;height:25px;padding:2px;border:1px solid #38513a;border-radius:5px;background:#f5f4ed;cursor:pointer}.fysen-logo-pin img{width:100%;height:100%;object-fit:contain}.fysen-logo-pin[hidden]{display:none}</style>
 </head><body><div id="map" aria-label="Restaurantkart over Oslo"></div><div id="status" role="status">Laster kart…</div>
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.js"></script>
 <script>
 (function(){
   const status = document.getElementById("status");
-  let map, data, ready = false;
+  let map, data, ready = false, logos = [];
+  const logoMarkers = new Map();
   const send = (type, extra = {}) => parent.postMessage({type, ...extra}, "*");
   const fail = () => { status.hidden = false; status.textContent = "Kartet er ikke tilgjengelig. Bruk restaurantlisten."; send("fysen-map-error"); };
-  const update = () => { if(ready && data) map.getSource("fysen").setData(data); };
+  const syncLogos = () => {
+    if (!ready || !map) return;
+    const visible = new Map(), occupied = new Set();
+    if (map.getZoom() >= 15.5) {
+      const bounds = map.getBounds();
+      for (const logo of logos) {
+        if (!bounds.contains(logo.coordinates)) continue;
+        const pixel = map.project(logo.coordinates);
+        const cell = Math.floor(pixel.x / 55) + ":" + Math.floor(pixel.y / 44);
+        if (occupied.has(cell)) continue;
+        occupied.add(cell);
+        visible.set(logo.slug, logo);
+        if (visible.size >= 50) break;
+      }
+    }
+    for (const [slug, marker] of logoMarkers) {
+      if (!visible.has(slug)) { marker.remove(); logoMarkers.delete(slug); }
+    }
+    for (const [slug, logo] of visible) {
+      if (logoMarkers.has(slug)) continue;
+      const button = document.createElement("button");
+      button.type = "button"; button.className = "fysen-logo-pin";
+      button.setAttribute("aria-label", logo.name); button.hidden = true;
+      const image = document.createElement("img");
+      image.alt = ""; image.referrerPolicy = "no-referrer";
+      image.onload = () => { button.hidden = false; };
+      image.onerror = () => { button.hidden = true; };
+      button.append(image);
+      button.addEventListener("click", event => { event.stopPropagation(); send("fysen-map-select", {slug}); });
+      image.src = logo.url;
+      const marker = new maplibregl.Marker({element:button, anchor:"bottom", offset:[0,-7]}).setLngLat(logo.coordinates).addTo(map);
+      logoMarkers.set(slug, marker);
+    }
+  };
+  const update = () => { if(ready && data) { map.getSource("fysen").setData(data); syncLogos(); } };
   window.addEventListener("message", (event) => {
     if(event.source !== parent || !event.data || typeof event.data !== "object") return;
     const message = event.data;
@@ -23,6 +58,7 @@ export const fysenMapFrame = `<!doctype html>
     }
     if(message.type !== "fysen-map-data" || !message.features) return;
     data = message.features;
+    logos = Array.isArray(message.logos) ? message.logos : [];
     if(map) { update(); return; }
     if(!window.maplibregl || !message.style) { fail(); return; }
     try {
@@ -31,14 +67,15 @@ export const fysenMapFrame = `<!doctype html>
       map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
       map.on("load", () => {
         try {
-          map.addSource("fysen",{type:"geojson",data,cluster:true,clusterMaxZoom:14,clusterRadius:42});
-          map.addLayer({id:"fysen-clusters",type:"circle",source:"fysen",filter:["has","point_count"],paint:{"circle-color":"#b9df9a","circle-radius":["step",["get","point_count"],16,20,21,100,27],"circle-stroke-width":2,"circle-stroke-color":"#1c3021"}});
-          map.addLayer({id:"fysen-count",type:"symbol",source:"fysen",filter:["has","point_count"],layout:{"text-field":["get","point_count_abbreviated"],"text-size":12,"text-font":font},paint:{"text-color":"#101810"}});
-          map.addLayer({id:"fysen-points",type:"circle",source:"fysen",filter:["!",["has","point_count"]],paint:{"circle-color":"#b9df9a","circle-radius":["interpolate",["linear"],["zoom"],12,5,17,8],"circle-stroke-width":1.5,"circle-stroke-color":"#1c3021"}});
-          map.addLayer({id:"fysen-names",type:"symbol",source:"fysen",minzoom:15.5,filter:["!",["has","point_count"]],layout:{"text-field":["get","name"],"text-size":12,"text-font":font,"text-anchor":"top","text-offset":[0,0.9],"text-max-width":11,"text-optional":true,"text-allow-overlap":false},paint:{"text-color":"#e8eee6","text-halo-color":"#171c19","text-halo-width":1.5}});
-          for(const id of ["fysen-points","fysen-names"]) map.on("click",id,e=>{const f=e.features&&e.features[0];if(f&&f.properties)send("fysen-map-select",{slug:f.properties.slug});});
-          map.on("click","fysen-clusters",async e=>{const f=e.features&&e.features[0];if(!f)return;try{const zoom=await map.getSource("fysen").getClusterExpansionZoom(f.properties.cluster_id);map.easeTo({center:f.geometry.coordinates,zoom});}catch{map.zoomIn();}});
-          for(const id of ["fysen-points","fysen-clusters","fysen-names"]){map.on("mouseenter",id,()=>map.getCanvas().style.cursor="pointer");map.on("mouseleave",id,()=>map.getCanvas().style.cursor="");}
+          map.addSource("fysen",{type:"geojson",data,cluster:false});
+          map.addLayer({id:"fysen-points",type:"circle",source:"fysen",paint:{"circle-color":"#b9df9a","circle-radius":["interpolate",["linear"],["zoom"],9,2,12,3.5,17,6],"circle-stroke-width":1,"circle-stroke-color":"#1c3021"}});
+          map.addLayer({id:"fysen-names",type:"symbol",source:"fysen",minzoom:15.5,layout:{"text-field":["get","name"],"text-size":12,"text-font":font,"text-anchor":"top","text-offset":[0,0.9],"text-max-width":11,"text-optional":true,"text-allow-overlap":false},paint:{"text-color":"#e8eee6","text-halo-color":"#171c19","text-halo-width":1.5}});
+          for(const id of ["fysen-points","fysen-names"]) {
+            map.on("click",id,e=>{const f=e.features&&e.features[0];if(f&&f.properties)send("fysen-map-select",{slug:f.properties.slug});});
+            map.on("mouseenter",id,()=>map.getCanvas().style.cursor="pointer");
+            map.on("mouseleave",id,()=>map.getCanvas().style.cursor="");
+          }
+          map.on("moveend",syncLogos);
           ready=true;status.hidden=true;update();send("fysen-map-loaded");
         } catch { fail(); }
       });
