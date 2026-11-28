@@ -68,7 +68,13 @@ const lorry = {
 const schroder = {
  logo: null,
  exterior: "/restaurants/schroder/exterior.jpg",
- interior: null,
+ interior: "/restaurants/schroder/interior.jpg",
+ interiorPhoto: {
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:Restaurant_Schr%C3%B8der_Oslo_with_painting_of_Youngstorget.jpg",
+  photoCredit: "Helge Høifødt",
+  photoDate: "2016-01-22",
+  licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+ },
  sourceUrl: "https://commons.wikimedia.org/wiki/File:Restaurant_Schroder.JPG",
  photoCredit: "Helge Høifødt",
  photoDate: "2007-06-09",

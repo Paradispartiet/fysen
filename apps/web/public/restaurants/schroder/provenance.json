@@ -4,7 +4,13 @@
   "photoCredit": "Helge Høifødt",
   "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
   "processing": "Wikimedia 1280px thumbnail, no crop",
-  "interior": "pending",
+  "interior": {
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Restaurant_Schr%C3%B8der_Oslo_with_painting_of_Youngstorget.jpg",
+    "photoCredit": "Helge Høifødt",
+    "photoDate": "2016-01-22",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "processing": "Wikimedia 1280px thumbnail, no crop"
+  },
   "logo": "pending",
   "note": "Historical facade; year displayed."
 }
