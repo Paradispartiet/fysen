@@ -79,6 +79,9 @@ const learning = await importSource("components/dish-learning-data.ts");
 const discovery = await importSource("content/food-knowledge/matlyst-discovery-catalog.ts");
 const learningSource = await readFile(path.join(webRoot, "components/dish-learning-section.tsx"), "utf8");
 const gallerySource = await readFile(path.join(webRoot, "components/dish-photo-gallery.tsx"), "utf8");
+const { knowledgeText } = await importSource("lib/knowledge-messages.ts");
+const { resultText } = await importSource("lib/result-messages.ts");
+const { visualText } = await importSource("lib/visual-messages.ts");
 
 test("The expanded encyclopedia has at least 200 complete, uniquely registered articles", () => {
   const dishes = knowledge.foodKnowledgeDishes;
@@ -125,10 +128,13 @@ test("Existing discovery IDs remain unique and ambiguous Shiro is not mislabeled
 test("Homepage exposes all articles, explicit menu links and updated copy", () => {
   assert.equal(learning.learningDishes.length, knowledge.foodKnowledgeDishes.length);
   assert.equal(learning.featuredLearningDishCount, 18);
-  assert.ok(learningSource.includes("Vis alle ${learningDishes.length} retter"));
+  assert.ok(learningSource.includes('t("more", { count: learningDishes.length })'));
+  assert.equal(knowledgeText("nb", "more", { count: learning.learningDishes.length }), `Vis alle ${learning.learningDishes.length} retter`);
   assert.ok(learningSource.includes("dishSearchHref(dish.query)"));
-  assert.ok(learningSource.includes("Se menytreff"));
-  assert.ok(gallerySource.includes("Til inspirasjon"));
+  assert.ok(learningSource.includes('resultText(locale, "menuMatches")'));
+  assert.equal(resultText("nb", "menuMatches"), "Se menytreff");
+  assert.ok(gallerySource.includes('visualText(locale, "kicker")'));
+  assert.equal(visualText("nb", "kicker"), "Matlyst · Til inspirasjon");
   assert.ok(!gallerySource.includes("Litt inspirasjon"));
   assert.ok(!gallerySource.includes("Oppdag retter i ditt eget tempo"));
 });

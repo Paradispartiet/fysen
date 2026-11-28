@@ -1,5 +1,11 @@
 "use client";
 
+import { usePreviewLocale } from "./language-preview";
+import { browseText, type BrowseKey } from "../lib/browse-messages";
+import { cuisineLabel } from "../lib/cuisine-labels";
+import { resultText } from "../lib/result-messages";
+import { pageText } from "../lib/page-messages";
+
 import type { DishBrowseItem, DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import { useMemo, useState } from "react";
 import { foodDishCatalog } from "../content/food-knowledge/catalog";
@@ -100,6 +106,8 @@ export function DishBrowse({
   initialAreaName?: string;
   initialFoodTypeName?: string;
 }) {
+  const locale = usePreviewLocale();
+  const t = (key: BrowseKey, values?: Record<string,string|number>) => browseText(locale,key,values);
   const initialCuisine = cuisineByName.get(initialCuisineName) ?? null;
   const initialAtlas = homeCuisines.find((cuisine) => cuisine.name === initialCuisine?.name) ?? null;
   const initialType = initialAtlas
@@ -234,22 +242,22 @@ export function DishBrowse({
     <section className="dishBrowse" aria-labelledby="dish-browse-title">
       <header className="dishBrowseHeader">
         <p className="eyebrow">{city}</p>
-        <h1 id="dish-browse-title">Alle retter i {city}</h1>
+        <h1 id="dish-browse-title">{t("allCity",{city})}</h1>
         <p>
-          Utforsk rettene fra restauranter i byen. Filtrer på kjøkken eller søk etter en konkret rett.
+          {t("liveIntro")}
         </p>
       </header>
 
-      {loading ? <p className="dishBrowseStatus">Henter retter …</p> : null}
+      {loading ? <p className="dishBrowseStatus">{t("loading")}</p> : null}
 
       {!loading && error ? (
-        <SearchState title="Kunne ikke hente rettene akkurat nå." body={error} />
+        <SearchState title={t("loadError")} body={pageText(locale,"retryLater")} />
       ) : null}
 
       {!loading && !error && data && data.dishes.length === 0 ? (
         <SearchState
-          title={`Ingen retter funnet i ${city}.`}
-          body="Prøv et annet kjøkken eller søk etter en rett."
+          title={t("noneCity",{city})}
+          body={t("tryOther")}
         />
       ) : null}
 
@@ -257,7 +265,7 @@ export function DishBrowse({
         <>
           <div className="dishBrowseControls">
             <label className="dishBrowseFilter">
-              <span>Finn en rett</span>
+              <span>{t("findDish")}</span>
               <input
                 type="search"
                 value={filter}
@@ -268,10 +276,10 @@ export function DishBrowse({
             </label>
 
             <div className="dishBrowseTaxonomyLevel">
-              <span>Kjøkken</span>
-              <div className="dishBrowseCuisineFilters" aria-label="Filtrer på kjøkken">
+              <span>{t("kitchen")}</span>
+              <div className="dishBrowseCuisineFilters" aria-label={t("filterKitchen")}>
                 <button type="button" className={!selectedCuisine ? "isActive" : undefined} aria-pressed={!selectedCuisine} onClick={() => chooseCuisine(null)}>
-                  Alle kjøkken
+                  {t("allKitchen")}
                 </button>
                 {cuisineOptions.map((cuisine) => (
                   <button
@@ -281,7 +289,7 @@ export function DishBrowse({
                     aria-pressed={selectedCuisine?.name === cuisine.name}
                     onClick={() => chooseCuisine(cuisine)}
                   >
-                    {cuisine.name}
+                    {cuisineLabel(cuisine.name,locale)}
                   </button>
                 ))}
               </div>
@@ -289,15 +297,15 @@ export function DishBrowse({
 
             {selectedCuisine && cuisineAreas.length > 1 ? (
               <div className="dishBrowseTaxonomyLevel">
-                <span>{selectedCuisine.areasLabel}</span>
-                <div className="dishBrowseRegionFilters" aria-label={`Filtrer ${selectedCuisine.name} på tradisjon`}>
+                <span>{cuisineLabel(selectedCuisine.areasLabel,locale)}</span>
+                <div className="dishBrowseRegionFilters" aria-label={t("regionFilter",{name:cuisineLabel(selectedCuisine.name,locale)})}>
                   <button
                     type="button"
                     className={!selectedCuisineArea ? "isActive" : undefined}
                     aria-pressed={!selectedCuisineArea}
                     onClick={() => chooseArea(null)}
                   >
-                    Hele {selectedCuisine.name.toLocaleLowerCase("nb-NO")}
+                    {t("allOf",{name:cuisineLabel(selectedCuisine.name,locale)})}
                   </button>
                   {cuisineAreas.map((areaName) => {
                     const area = selectedAtlas?.areas.find((item) => item.name === areaName);
@@ -322,7 +330,7 @@ export function DishBrowse({
                           <FoodIllustration name={area.illustration}
                             className="dishBrowseAreaArtwork" size={38} />
                         ) : null}
-                        <span>{areaName}</span>
+                        <span>{cuisineLabel(areaName,locale)}</span>
                       </button>
                     );
                   })}
@@ -332,15 +340,15 @@ export function DishBrowse({
 
             {availableFoodTypes.length > 0 ? (
               <div className="dishBrowseTaxonomyLevel">
-                <span>Velg mattype i {selectedCuisine?.name.toLocaleLowerCase("nb")}</span>
-                <div className="dishBrowseItalianTypes" aria-label={`Filtrer ${selectedCuisine?.name} etter mattype`}>
+                <span>{t("chooseType",{name:cuisineLabel(selectedCuisine?.name ?? "",locale)})}</span>
+                <div className="dishBrowseItalianTypes" aria-label={t("typeFilter",{name:cuisineLabel(selectedCuisine?.name ?? "",locale)})}>
                   <button
                     type="button"
                     className={!selectedFoodType ? "isActive" : undefined}
                     aria-pressed={!selectedFoodType}
                     onClick={() => chooseFoodType(null)}
                   >
-                    Alle mattyper
+                    {cuisineLabel("Alle mattyper",locale)}
                   </button>
                   {availableFoodTypes.map((type) => (
                     <button
@@ -351,7 +359,7 @@ export function DishBrowse({
                       onClick={() => chooseFoodType(type.name)}
                     >
                       <FoodIllustration name={type.illustration} className="dishBrowseTypeArtwork" size={30} />
-                      <span>{type.name}</span>
+                      <span>{cuisineLabel(type.name,locale)}</span>
                     </button>
                   ))}
                 </div>
@@ -359,7 +367,7 @@ export function DishBrowse({
             ) : null}
 
             {cuisinePath.length > 0 ? (
-              <p className="dishBrowseTaxonomyPath" aria-live="polite">{cuisinePath.join(" → ")}</p>
+              <p className="dishBrowseTaxonomyPath" aria-live="polite">{cuisinePath.map(name=>cuisineLabel(name,locale)).join(" → ")}</p>
             ) : null}
           </div>
 
@@ -367,10 +375,10 @@ export function DishBrowse({
             <section className="dishBrowseEditorial" aria-labelledby="dish-browse-editorial-title">
               <div className="dishBrowseSectionHeading">
                 <div>
-                  <p className="eyebrow">Kjøkken</p>
-                  <h2 id="dish-browse-editorial-title">{selectedFoodType?.name ?? selectedCuisineArea ?? selectedCuisine.name}</h2>
+                  <p className="eyebrow">{t("kitchen")}</p>
+                  <h2 id="dish-browse-editorial-title">{cuisineLabel(selectedFoodType?.name ?? selectedCuisineArea ?? selectedCuisine.name,locale)}</h2>
                 </div>
-                <p>Utforsk retter fra dette kjøkkenet. Velg «Lær om retten» for mer matkunnskap.</p>
+                <p>{t("editorialIntro")}</p>
               </div>
 
               {editorialDishes.length > 0 ? (
@@ -382,22 +390,22 @@ export function DishBrowse({
                         <h3>{dish.label}</h3>
                         <p>
                           {restaurantCount > 0
-                            ? `Finnes hos ${restaurantCount} ${restaurantCount === 1 ? "restaurant" : "restauranter"}.`
-                            : "Ingen treff på denne retten."}
+                            ? t(restaurantCount === 1 ? "foundOne" : "foundMany",{count:restaurantCount})
+                            : t("noDish")}
                         </p>
                       </div>
                       <DishPhotoThumbnail dishId={dish.id} label={dish.label} />
                       <div className="dishBrowseEditorialActions">
-                        <a href={dishSearchHref(dish.query, data.city)}>Se treff <span aria-hidden="true">→</span></a>
+                        <a href={dishSearchHref(dish.query, data.city)}>{resultText(locale,"menuMatches")} <span aria-hidden="true">→</span></a>
                         {dish.hasKnowledge ? (
-                          <a href={foodKnowledgeHref(dish.id)}>Lær om retten <span aria-hidden="true">↗</span></a>
+                          <a href={foodKnowledgeHref(dish.id)}>{resultText(locale,"learnDish")} <span aria-hidden="true">↗</span></a>
                         ) : null}
                       </div>
                     </article>
                   ))}
                 </div>
               ) : (
-                <p className="dishBrowseEmptyFilter">Ingen retter matcher dette filteret.</p>
+                <p className="dishBrowseEmptyFilter">{t("emptyFilter")}</p>
               )}
             </section>
           ) : null}
@@ -405,11 +413,11 @@ export function DishBrowse({
           <section className="dishBrowseLive" aria-labelledby="dish-browse-live-title">
             <div className="dishBrowseSectionHeading dishBrowseLiveHeading">
               <div>
-                <p className="eyebrow">Retter</p>
-                <h2 id="dish-browse-live-title">Finn en rett</h2>
+                <p className="eyebrow">{t("dishes")}</p>
+                <h2 id="dish-browse-live-title">{t("findDish")}</h2>
               </div>
               <div className="dishBrowseMeta">
-                <p>{visibleLiveDishes.length} av {data.count} retter</p>
+                <p>{t("count",{visible:visibleLiveDishes.length,total:data.count})}</p>
               </div>
             </div>
 
@@ -429,12 +437,12 @@ export function DishBrowse({
                         {exactPhotoDish ? <DishPhotoThumbnail dishId={exactPhotoDish.id} label={exactPhotoDish.name} /> : null}
                         <div className="dishBrowseItemContent">
                           <strong>{browseDishDisplayName(dish.name)}</strong>
-                          <span>{dish.restaurantCount} {dish.restaurantCount === 1 ? "restaurant" : "restauranter"}</span>
+                          <span>{t(dish.restaurantCount === 1 ? "restaurantsOne" : "restaurantsMany",{count:dish.restaurantCount})}</span>
                         </div>
                       </a>
                       {knowledgeDish ? (
-                        <a className="dishBrowseKnowledgeLink" href={foodKnowledgeHref(knowledgeDish.id)} aria-label={`Om ${knowledgeDish.name}`}>
-                          Om retten <span aria-hidden="true">↗</span>
+                        <a className="dishBrowseKnowledgeLink" href={foodKnowledgeHref(knowledgeDish.id)} aria-label={t("aboutDish",{name:knowledgeDish.name})}>
+                          {resultText(locale,"learnDish")} <span aria-hidden="true">↗</span>
                         </a>
                       ) : null}
                     </div>
@@ -442,7 +450,7 @@ export function DishBrowse({
                 })}
               </div>
             ) : (
-              <p className="dishBrowseEmptyFilter">Ingen canonicale retter matcher filteret.</p>
+              <p className="dishBrowseEmptyFilter">{t("canonicalEmpty")}</p>
             )}
           </section>
         </>

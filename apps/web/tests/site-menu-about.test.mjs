@@ -1,7 +1,9 @@
+import { pageText } from "../lib/page-messages.ts";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { URL } from "node:url";
+import { translate } from "../lib/locale-messages.ts";
 
 function read(relative) {
   return readFileSync(new URL(relative, import.meta.url), "utf8");
@@ -10,10 +12,13 @@ function read(relative) {
 test("the site menu offers an About Fysen page", () => {
   const header = read("../components/global-header.tsx");
   const about = read("../app/om/page.tsx");
-  assert.match(header, /<details className="siteMenu" name="fysen-header-disclosure">/u);
-  const mainMenu = header.match(/<nav className="siteMenuPanel" aria-label="Hovedmeny">([\s\S]*?)<\/nav>/u)?.[1];
-  const cityMenu = header.match(/<nav className="siteMenuPanel cityMenuPanel" aria-label="Byvalg">([\s\S]*?)<\/nav>/u)?.[1];
+  assert.match(header, /<details className="siteMenu" name="fysen-header-disclosure" lang=\{locale\}>/u);
+  const mainMenu = header.match(/<nav className="siteMenuPanel" aria-label=\{t\("mainMenu"\)\}>([\s\S]*?)<\/nav>/u)?.[1];
+  const cityMenu = header.match(/<nav className="siteMenuPanel cityMenuPanel" aria-label=\{t\("chooseCity"\)\}>([\s\S]*?)<\/nav>/u)?.[1];
   assert.ok(mainMenu && cityMenu);
+  assert.equal(translate("nb", "mainMenu"), "Hovedmeny");
+  assert.equal(translate("nb", "chooseCity"), "Velg by");
+  assert.match(mainMenu, /<LanguagePreviewSelector \/>/u);
   assert.doesNotMatch(mainMenu, /Velg by|nordicCities|citySwitchHref/u);
   assert.match(cityMenu, /nordicCities\.map/u);
   assert.match(cityMenu, /citySwitchHref\(name, query\)/u);
@@ -21,7 +26,8 @@ test("the site menu offers an About Fysen page", () => {
   assert.match(header, /withPublicBasePath\("\/om"\)/u);
   assert.match(about, /id="menydata"/u);
   assert.match(header, /#menydata/u);
-  assert.match(about, /ikke en sanntidsbekreftelse/u);
+  assert.match(about, /<PageText message="notRealtime" \/>/u);
+  assert.match(pageText("nb", "notRealtime"), /ikke en sanntidsbekreftelse/u);
 });
 
 test("ordinary pages keep status details exclusively behind the menu", () => {
@@ -39,7 +45,7 @@ test("ordinary pages keep status details exclusively behind the menu", () => {
   }
   assert.doesNotMatch(search, /" arkivtreff \(ikke sanntid\)"|title=\{`Ingen ferske/u);
   assert.doesNotMatch(result, /<FreshnessStatus/u);
-  assert.match(archive, /Alle retter i \{city\}/u);
+  assert.match(archive, /<BrowseText message="allCity" values=\{\{city\}\} \/>/u);
 });
 
 test("global navigation stays sticky while the results search scrolls normally", () => {

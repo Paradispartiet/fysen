@@ -1,5 +1,11 @@
 "use client";
 
+import { usePreviewLocale } from "./language-preview";
+import { knowledgeText, type KnowledgeKey } from "../lib/knowledge-messages";
+import { dishDisplayName } from "../lib/dish-display-names";
+import { localizedSummary } from "../lib/dish-summary-translations";
+import { resultText } from "../lib/result-messages";
+
 import { useEffect, useRef, useState } from "react";
 import { getFoodKnowledgeDish, type FoodKnowledgeDish } from "../content/food-knowledge";
 import { dishSearchHref } from "../lib/public-path";
@@ -18,6 +24,8 @@ function learningHash(dishId: string): string {
 }
 
 export function DishLearningSection() {
+  const locale = usePreviewLocale();
+  const t = (key: KnowledgeKey, values?: Record<string, string | number>) => knowledgeText(locale, key, values);
   const [selectedDish, setSelectedDish] = useState<DishLearningDetail | null>(null);
   const [showAll, setShowAll] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -69,12 +77,12 @@ export function DishLearningSection() {
   const visibleDishes = showAll ? learningDishes : learningDishes.slice(0, featuredLearningDishCount);
 
   return (
-    <section className="dishLearningSection" aria-label="Fysen matleksikon">
+    <section className="dishLearningSection" aria-label={t("lexicon")}>
       <div className="foodSectionHeading foodSectionHeadingLearning">
         <div>
-          <p className="foodSectionEyebrow">Fysen matleksikon</p>
+          <p className="foodSectionEyebrow" lang={locale}>{t("lexicon")}</p>
         </div>
-        <p>Forstå retten, smakene og teknikken, lær å lage den hjemme — og finn hvem som faktisk har den på menyen.</p>
+        <p lang={locale}>{t("intro")}</p>
       </div>
 
       <div className={`dishLearningGrid${showAll ? " dishLearningGridExpanded" : ""}`}>
@@ -89,12 +97,12 @@ export function DishLearningSection() {
                 aria-haspopup="dialog"
                 onClick={(event) => openDish(dish, event.currentTarget)}
               >
-                <span>{dish.name}</span>
-                <span className="dishLearningOpenHint">Lær om retten <span aria-hidden="true">↗</span></span>
+                <span lang={locale}>{dishDisplayName(dish.id, dish.name, locale)}</span>
+                <span className="dishLearningOpenHint">{resultText(locale, "learnDish")} <span aria-hidden="true">↗</span></span>
               </button>
             </h3>
-            <p>{dish.summary}</p>
-            <a href={dishSearchHref(dish.query)} aria-label={`Se menytreff for ${dish.name}`}>Se menytreff <span aria-hidden="true">→</span></a>
+            <p lang={localizedSummary(dish.id, dish.summary, locale).lang}>{localizedSummary(dish.id, dish.summary, locale).text}</p>
+            <a href={dishSearchHref(dish.query)} aria-label={`${resultText(locale, "menuMatches")}: ${dishDisplayName(dish.id, dish.name, locale)}`}>{resultText(locale, "menuMatches")} <span aria-hidden="true">→</span></a>
           </article>
         ))}
       </div>
@@ -102,7 +110,7 @@ export function DishLearningSection() {
       {learningDishes.length > featuredLearningDishCount ? (
         <div className="dishLearningMoreWrap">
           <button type="button" className="dishLearningMore" onClick={() => setShowAll((value) => !value)}>
-            {showAll ? "Vis færre retter" : `Vis alle ${learningDishes.length} retter`}
+            {showAll ? t("less") : t("more", { count: learningDishes.length })}
             <span aria-hidden="true">{showAll ? " ↑" : " ↓"}</span>
           </button>
         </div>

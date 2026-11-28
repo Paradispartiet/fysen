@@ -1,3 +1,4 @@
+import { LocalizedEditorialImg, EditorialCreditLabel } from "./localized-editorial-img";
 import { withPublicBasePath } from "../lib/public-path";
 import manifest from "../public/dish-images/manifest.json";
 
@@ -40,7 +41,10 @@ export function DishEditorialImage({ dishId, query, className = "", priority = f
   return (
     <figure className={`dishEditorialFigure ${className}`}>
       {/* The approved native-resolution AVIF is displayed in place, not opened in another tab. */}
-      <img
+      <LocalizedEditorialImg
+        imageId={image.id}
+        imageLabel={image.label}
+        imageKind={image.kind}
         className="dishEditorialImage"
         src={withPublicBasePath(`/dish-images/${file}`)}
         alt={`${image.kind} av ${image.label}, ikke restaurantfoto`}
@@ -52,9 +56,9 @@ export function DishEditorialImage({ dishId, query, className = "", priority = f
       {image.photoCredit ? (
         <figcaption className="dishEditorialCredit">
           {image.photoSource ? <a href={image.photoSource} target="_blank" rel="noopener noreferrer">{image.photoCredit}</a> : image.photoCredit}
-          {image.photoLicense ? <> · <a href={image.photoLicense} target="_blank" rel="noopener noreferrer">Lisens</a></> : null}
+          {image.photoLicense ? <> · <a href={image.photoLicense} target="_blank" rel="noopener noreferrer"><EditorialCreditLabel kind="license" /></a></> : null}
         </figcaption>
-      ) : image.kind.toLowerCase().includes("illustrasjon") ? <figcaption className="dishEditorialCredit">KI-illustrasjon</figcaption> : null}
+      ) : image.kind.toLowerCase().includes("illustrasjon") ? <figcaption className="dishEditorialCredit"><EditorialCreditLabel kind="ai" /></figcaption> : null}
     </figure>
   );
 }

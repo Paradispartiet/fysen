@@ -1,5 +1,11 @@
 "use client";
 
+import { usePreviewLocale } from "./language-preview";
+import { knowledgeText, type KnowledgeKey } from "../lib/knowledge-messages";
+import { dishDisplayName } from "../lib/dish-display-names";
+import { localizedSummary } from "../lib/dish-summary-translations";
+import { resultText } from "../lib/result-messages";
+
 import { useMemo, useState } from "react";
 import {
   findFoodDishByQuery,
@@ -63,6 +69,8 @@ function findKnowledge(query: string): DishKnowledge | null {
 }
 
 export function DishKnowledgeNote({ query }: { query: string }) {
+  const locale = usePreviewLocale();
+  const t = (key: KnowledgeKey, values?: Record<string, string | number>) => knowledgeText(locale, key, values);
   const knowledge = useMemo(() => findKnowledge(query), [query]);
   const [selectedDish, setSelectedDish] = useState<FoodKnowledgeDish | null>(null);
 
@@ -72,21 +80,21 @@ export function DishKnowledgeNote({ query }: { query: string }) {
     <>
       <aside
         className={knowledge.imageDishId ? "dishKnowledgeNote dishKnowledgeNoteWithImage" : "dishKnowledgeNote"}
-        aria-label={`Om retten ${knowledge.name}`}
+        aria-label={`${t("aboutDish")} ${dishDisplayName(knowledge.dish?.id ?? knowledge.imageDishId ?? "", knowledge.name, locale)}`}
       >
         {knowledge.imageDishId ? <DishEditorialImage dishId={knowledge.imageDishId} priority /> : null}
         <div className="dishKnowledgeNoteContent">
           <div className="dishKnowledgeTopline">
-            <span>{knowledge.dish ? "Fysen matleksikon" : "Om retten"}</span>
+            <span>{knowledge.dish ? t("lexicon") : t("aboutDish")}</span>
             {knowledge.origin ? <span>{knowledge.origin}</span> : null}
           </div>
-          <h2>{knowledge.name}</h2>
-          {knowledge.summary ? <p>{knowledge.summary}</p> : null}
+          <h2 lang={locale}>{dishDisplayName(knowledge.dish?.id ?? knowledge.imageDishId ?? "", knowledge.name, locale)}</h2>
+          {knowledge.summary ? <p lang={localizedSummary(knowledge.dish?.id ?? "", knowledge.summary, locale).lang}>{localizedSummary(knowledge.dish?.id ?? "", knowledge.summary, locale).text}</p> : null}
           <div className="dishKnowledgeNoteBottomline">
-            <small>{knowledge.imageDishId ? "Rettbilde og generell matkunnskap" : "Generell matkunnskap"} · ikke menybevis</small>
+            <small>{knowledge.imageDishId ? t("picture") : t("general")} · {t("notEvidence")}</small>
             {knowledge.dish ? (
               <button type="button" onClick={() => setSelectedDish(knowledge.dish)}>
-                Lær om retten <span aria-hidden="true">↗</span>
+                {resultText(locale, "learnDish")} <span aria-hidden="true">↗</span>
               </button>
             ) : null}
           </div>

@@ -1,0 +1,155 @@
+import type { Locale } from "./locales.ts";
+
+// Draft UI copy. Full product translation and linguistic review remain release gates.
+export const previewLocales = ["nb", "nn", "sv", "da", "fi", "is", "en"] as const satisfies readonly Locale[];
+export type PreviewLocale = (typeof previewLocales)[number];
+export const messages = {
+  "nb": {
+    "hero": "Hva har du lyst på?",
+    "proof": "Søk etter en rett og finn restauranter som har den på menyen.",
+    "cityBrowse": "Finn retter i en by",
+    "allDishes": "Se alle retter i {city}",
+    "menu": "Meny",
+    "mainMenu": "Hovedmeny",
+    "home": "Forsiden",
+    "findDishes": "Finn retter",
+    "chooseCity": "Velg by",
+    "selectedCity": "Valgt by: {city}",
+    "myFood": "Min mat",
+    "about": "Om Fysen",
+    "aboutMenus": "Om menydata",
+    "dishLabel": "Retten du vil spise",
+    "searchButton": "Finn retten",
+    "placeholder": "Biff tartar, ramen, carbonara …",
+    "language": "Språk",
+    "previewNotice": "Språkforhåndsvisning – deler av Fysen er fortsatt på norsk."
+  },
+  "nn": {
+    "hero": "Kva har du lyst på?",
+    "proof": "Søk etter ein rett og finn restaurantar som har han på menyen.",
+    "cityBrowse": "Finn rettar i ein by",
+    "allDishes": "Sjå alle rettar i {city}",
+    "menu": "Meny",
+    "mainMenu": "Hovudmeny",
+    "home": "Framsida",
+    "findDishes": "Finn rettar",
+    "chooseCity": "Vel by",
+    "selectedCity": "Vald by: {city}",
+    "myFood": "Min mat",
+    "about": "Om Fysen",
+    "aboutMenus": "Om menydata",
+    "dishLabel": "Retten du vil ete",
+    "searchButton": "Finn retten",
+    "placeholder": "Bifftartar, ramen, carbonara …",
+    "language": "Språk",
+    "previewNotice": "Språkførehandsvising – delar av Fysen er framleis på norsk."
+  },
+  "sv": {
+    "hero": "Vad är du sugen på?",
+    "proof": "Sök efter en maträtt och hitta restauranger som har den på menyn.",
+    "cityBrowse": "Hitta maträtter i en stad",
+    "allDishes": "Se alla maträtter i {city}",
+    "menu": "Meny",
+    "mainMenu": "Huvudmeny",
+    "home": "Startsidan",
+    "findDishes": "Hitta maträtter",
+    "chooseCity": "Välj stad",
+    "selectedCity": "Vald stad: {city}",
+    "myFood": "Min mat",
+    "about": "Om Fysen",
+    "aboutMenus": "Om menydata",
+    "dishLabel": "Maträtten du vill äta",
+    "searchButton": "Hitta maträtten",
+    "placeholder": "Råbiff, ramen, carbonara …",
+    "language": "Språk",
+    "previewNotice": "Språkförhandsvisning – delar av Fysen är fortfarande på norska."
+  },
+  "da": {
+    "hero": "Hvad har du lyst til?",
+    "proof": "Søg efter en ret, og find restauranter, der har den på menuen.",
+    "cityBrowse": "Find retter i en by",
+    "allDishes": "Se alle retter i {city}",
+    "menu": "Menu",
+    "mainMenu": "Hovedmenu",
+    "home": "Forsiden",
+    "findDishes": "Find retter",
+    "chooseCity": "Vælg by",
+    "selectedCity": "Valgt by: {city}",
+    "myFood": "Min mad",
+    "about": "Om Fysen",
+    "aboutMenus": "Om menudata",
+    "dishLabel": "Retten du vil spise",
+    "searchButton": "Find retten",
+    "placeholder": "Tatar, ramen, carbonara …",
+    "language": "Sprog",
+    "previewNotice": "Sprogforhåndsvisning – dele af Fysen er stadig på norsk."
+  },
+  "fi": {
+    "hero": "Mitä sinun tekee mieli?",
+    "proof": "Etsi ruokalajia ja löydä ravintolat, joiden ruokalistalla se on.",
+    "cityBrowse": "Etsi ruokalajeja kaupungista",
+    "allDishes": "Katso kaikki ruokalajit: {city}",
+    "menu": "Valikko",
+    "mainMenu": "Päävalikko",
+    "home": "Etusivu",
+    "findDishes": "Etsi ruokalajeja",
+    "chooseCity": "Valitse kaupunki",
+    "selectedCity": "Valittu kaupunki: {city}",
+    "myFood": "Oma ruoka",
+    "about": "Tietoa Fysenistä",
+    "aboutMenus": "Tietoa ruokalistatiedoista",
+    "dishLabel": "Ruokalaji, jonka haluat syödä",
+    "searchButton": "Etsi ruokalaji",
+    "placeholder": "Tartar, ramen, carbonara …",
+    "language": "Kieli",
+    "previewNotice": "Kielen esikatselu – osa Fysenistä on edelleen norjaksi."
+  },
+  "is": {
+    "hero": "Hvað langar þig í?",
+    "proof": "Leitaðu að rétti og finndu veitingastaði sem hafa hann á matseðlinum.",
+    "cityBrowse": "Finndu rétti í borg",
+    "allDishes": "Sjá alla rétti: {city}",
+    "menu": "Valmynd",
+    "mainMenu": "Aðalvalmynd",
+    "home": "Forsíða",
+    "findDishes": "Finndu rétti",
+    "chooseCity": "Veldu borg",
+    "selectedCity": "Valin borg: {city}",
+    "myFood": "Maturinn minn",
+    "about": "Um Fysen",
+    "aboutMenus": "Um matseðilsgögn",
+    "dishLabel": "Rétturinn sem þú vilt borða",
+    "searchButton": "Finndu réttinn",
+    "placeholder": "Tartar, ramen, carbonara …",
+    "language": "Tungumál",
+    "previewNotice": "Forskoðun tungumáls – hlutar Fysen eru enn á norsku."
+  },
+  "en": {
+    "hero": "What are you craving?",
+    "proof": "Search for a dish and find restaurants that have it on the menu.",
+    "cityBrowse": "Find dishes in a city",
+    "allDishes": "See all dishes in {city}",
+    "menu": "Menu",
+    "mainMenu": "Main menu",
+    "home": "Home",
+    "findDishes": "Find dishes",
+    "chooseCity": "Choose city",
+    "selectedCity": "Selected city: {city}",
+    "myFood": "My food",
+    "about": "About Fysen",
+    "aboutMenus": "About menu data",
+    "dishLabel": "The dish you want to eat",
+    "searchButton": "Find the dish",
+    "placeholder": "Steak tartare, ramen, carbonara …",
+    "language": "Language",
+    "previewNotice": "Language preview – parts of Fysen are still in Norwegian."
+  }
+} as const;
+export type MessageKey = keyof typeof messages.nb;
+export function isPreviewLocale(value: string): value is PreviewLocale {
+  return (previewLocales as readonly string[]).includes(value);
+}
+export function translate(locale: PreviewLocale, key: MessageKey, city?: string): string {
+  const value: string = messages[locale][key];
+  return city === undefined ? value : value.replace("{city}", () => city);
+}

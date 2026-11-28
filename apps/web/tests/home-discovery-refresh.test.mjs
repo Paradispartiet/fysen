@@ -1,4 +1,7 @@
+import { visualText } from "../lib/visual-messages.ts";
 import assert from "node:assert/strict";
+import { translate } from "../lib/locale-messages.ts";
+import { resultText } from "../lib/result-messages.ts";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -19,14 +22,16 @@ const manifest = JSON.parse(read("public/dish-images/manifest.json"));
 
 test("home page keeps dish search as the primary action", () => {
   assert.ok(home.indexOf("<DishSearch />") < home.indexOf("<CuisineExplorer"));
-  assert.ok(home.includes("Hva har du lyst på?"));
+  assert.ok(home.includes('<LocalizedText message="hero" />'));
+  assert.equal(translate("nb", "hero"), "Hva har du lyst på?");
   assert.match(css, /\.homePage \.homeHero/u);
 });
 
 test("Utforsk matretter is a closed-by-default accordion before the optional photo gallery", () => {
   assert.match(explorer, /<details className="cuisineBrowseDisclosure" aria-labelledby="cuisine-browse-title">/u);
   assert.match(explorer, /<summary className="cuisineBrowsePreview">/u);
-  assert.match(explorer, /Utforsk matretter/u);
+  assert.ok(explorer.includes('resultText(locale, "explore")'));
+  assert.equal(resultText("nb", "explore"), "Utforsk matretter");
   assert.doesNotMatch(explorer, /<details className="cuisineBrowseDisclosure"[^>]*\sopen(?:\s|>)/u);
   assert.ok(explorer.indexOf('className="cuisineBrowseList"') < explorer.indexOf("<DishPhotoGallery />"));
   assert.match(explorer, /<details className="cuisineBrowseDisclosure"/u);
@@ -69,20 +74,23 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
   assert.match(explorer, /<DishPhotoThumbnail dishId=\{dish\.id\} label=\{dish\.label\} \/>/u);
   assert.match(explorer, /className="cuisineExploreDishEvidence"/u);
   assert.match(explorer, /restaurantCount > 0/u);
-  assert.match(explorer, /menuEvidenceLabel\(evidenceKind, restaurantCount\)/u);
+  assert.match(explorer, /menuEvidenceLabel\(evidenceKind, restaurantCount, locale\)/u);
   assert.match(explorer, /evidenceKind: "unavailable"/u);
   assert.match(explorer, /evidenceKind: coverage \? "archive" : "unchecked"/u);
-  assert.match(explorer, /"Søk etter retten"/u);
+  assert.ok(explorer.includes('resultText(locale, "searchDish")'));
+  assert.equal(resultText("nb", "searchDish"), "Søk etter retten");
   assert.match(explorer, /const restaurantPreviewLimit = 4/u);
   assert.match(explorer, /\(ranked \? known : restaurants\)\.slice\(0, restaurantPreviewLimit\)/u);
   assert.match(explorer, /restaurants\.slice\(restaurantPreviewLimit\)/u);
   assert.match(explorer, /href=\{restaurant.sourceUrl\}/u);
   assert.match(explorer, /<details className="cuisineExploreRestaurantDetails">/u);
   assert.doesNotMatch(explorer, /<details className="cuisineExploreRestaurantDetails" open>/u);
-  assert.match(explorer, /Se mer/u);
+  assert.match(explorer, /browseText\(locale,"more",/u);
   assert.match(explorer, /<small>\{restaurant.address\}/u);
-  assert.match(explorer, /Fasade · Illustrasjon/u);
-  assert.match(explorer, /Interiør · Illustrasjon/u);
+  assert.match(explorer, /visualText\(locale, "exterior"\)/u);
+  assert.equal(visualText("nb", "exterior"), "Fasade · Illustrasjon");
+  assert.match(explorer, /visualText\(locale, "interior"\)/u);
+  assert.equal(visualText("nb", "interior"), "Interiør · Illustrasjon");
   assert.match(styles, /\.cuisineExploreDishIdentity \.dishPhotoSmall/u);
   assert.match(styles, /width: 38px;\s*height: 38px/u);
   assert.match(styles, /width: 34px;\s*height: 34px/u);
@@ -90,13 +98,14 @@ test("kitchen dishes use small imagery and opt-in restaurant examples without in
 });
 
 test("Matlyst gallery is closed by default and shows all approved images only on request", () => {
-  assert.match(gallery, /<details className="dishPhotos" aria-labelledby="dish-photos-title">/u);
+  assert.match(gallery, /<details className="dishPhotos" lang=\{locale\} aria-labelledby="dish-photos-title">/u);
   assert.doesNotMatch(gallery, /<details[^>]+\sopen(?:\s|>)/u);
   assert.match(gallery, /<summary className="dishPhotosPreview">/u);
   assert.match(gallery, /className="dishPhotosInside"/u);
   assert.ok(gallery.indexOf('className="dishPhotosInside"') < gallery.indexOf("illustratedDishes.map"));
   assert.ok(manifest.images.length >= 36, "Approved image count must not regress");
-  assert.match(gallery, new RegExp(`Utforsk ${manifest.images.length} retter`, "u"));
+  assert.match(gallery, /visualText\(locale, "explore", \{ count: illustratedDishes.length \}\)/u);
+  assert.equal(visualText("nb", "explore", { count: manifest.images.length }), `Utforsk ${manifest.images.length} retter`);
 });
 
 test("Matlyst, menu search and knowledge cards display approved originals inline", () => {
@@ -116,15 +125,16 @@ test("Matlyst, menu search and knowledge cards display approved originals inline
 });
 
 test("disclosure uses semantic HTML with no Javascript dependency or fake availability", () => {
-  assert.match(gallery, /Illustrasjoner og foto av rettetyper, ikke restaurantbilder/u);
+  assert.match(gallery, /visualText\(locale, "disclaimer"\)/u);
+  assert.equal(visualText("nb", "disclaimer"), "Illustrasjoner og foto av rettetyper, ikke restaurantbilder.");
   assert.match(gallery, /dishSearchHref\(dish\.query\)/u);
   assert.doesNotMatch(gallery, /Tilgjengelig nå|Åpent nå/u);
 });
 
 test("distance ranking is opt-in and unknown coordinates stay separate", () => {
   assert.match(explorer, /navigator\.geolocation\.getCurrentPosition/u);
-  assert.match(explorer, /Vis nærmest meg/u);
+  assert.match(explorer, /browseText\(locale,"nearestHere"\)/u);
   assert.match(explorer, /rankRestaurantsByDistance\(restaurants, location\)/u);
-  assert.match(explorer, /Uten avstandsdata/u);
+  assert.match(explorer, /browseText\(locale,"distanceUnknown"\)/u);
   assert.doesNotMatch(explorer, /localStorage|sessionStorage/u);
 });

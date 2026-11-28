@@ -25,3 +25,13 @@ test("unexamined catalog examples and unavailable coverage cannot become false z
     assert.doesNotMatch(label, /ingen treff|ikke funnet|registrert hos/u);
   }
 });
+
+test("every preview language preserves evidence-state distinctions", () => {
+ for(const locale of ["nb","nn","sv","da","fi","is","en"]) {
+  const labels=["live","archive","unchecked","unavailable"].map(kind=>menuEvidenceLabel(kind,0,locale));
+  assert.equal(new Set(labels).size,4);
+  assert.match(menuEvidenceLabel("archive",3,locale),/3/u);
+  assert.equal(menuEvidenceLabel("archive",3,locale),menuEvidenceLabel("live",3,locale));
+  assert.equal(menuEvidenceLabel("unchecked",3,locale),labels[2]);
+ }
+});

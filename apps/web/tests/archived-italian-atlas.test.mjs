@@ -1,3 +1,4 @@
+import { browseText } from "../lib/browse-messages.ts";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
@@ -50,10 +51,12 @@ test("archive keeps country flags, regional flags, and original food drawings se
   assert.ok(browse.includes("styles.atlasCountryFlag"));
   assert.ok(browse.includes("name={area.illustration}"));
   assert.ok(browse.includes("name={type.illustration}"));
-  assert.ok(browse.includes("Kilde og lisens for regionsflagget"));
+  assert.ok(browse.includes('<BrowseText message="flagSource" />'));
+  assert.equal(browseText("nb","flagSource"), "Kilde og lisens for regionsflagget");
   assert.ok(browse.includes("supplementalFoodTypeDishes"));
   assert.ok(browse.includes("visibleSuggestions.map"));
-  assert.ok(browse.includes("ikke bekreftede menytreff"));
+  assert.ok(browse.includes('<BrowseText message="suggestionOnly" />'));
+  assert.match(browseText("nb","suggestionOnly"), /ikke bekreftede menytreff/u);
   assert.ok(browse.includes("browseArchivedMenuDishes(archive, city, 48)"));
   assert.ok(browse.includes("seenSuggestionNames"));
   assert.match(css, /\.italianAtlasTiles/u);

@@ -2,6 +2,7 @@ import type { DishBrowseResponse } from "@fysen/contracts/dish-browse";
 import { CuisineExplorer } from "../components/cuisine-explorer";
 import { DishLearningSection } from "../components/dish-learning-section";
 import { DishSearch } from "../components/dish-search";
+import { LocalizedText } from "../components/language-preview";
 import { GlobalHeader } from "../components/global-header";
 import { browseDishes } from "../lib/fysen-api";
 import { getPublicMenuArchive, reconcileMenuVersions } from "../lib/verified-menu-archive";
@@ -45,18 +46,18 @@ export default async function HomePage() {
         <section className="homeHero" aria-labelledby="fysen-title">
           <div className="homeHeroTopline">
             <div className="homeHeroContent">
-              <h1 id="fysen-title">Hva har du lyst på?</h1>
+              <h1 id="fysen-title"><LocalizedText message="hero" /></h1>
             </div>
           </div>
           <div className="homeSearchWrap">
             <p className="searchProof">
-              Søk etter en rett og finn restauranter som har den på menyen.
+              <LocalizedText message="proof" />
             </p>
             <DishSearch />
             <nav aria-label="Finn retter i en by">
               {nordicCities.map(({ name }) => (
                 <a key={name} className="homeDishBrowseLink" href={dishBrowseHref(name)}>
-                  Se alle retter i {name}
+                  <LocalizedText message="allDishes" city={name} />
                   <span aria-hidden="true">→</span>
                 </a>
               ))}

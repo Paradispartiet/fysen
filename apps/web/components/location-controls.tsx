@@ -1,5 +1,8 @@
 "use client";
 
+import { usePreviewLocale } from "./language-preview";
+import { pageText, type PageKey } from "../lib/page-messages";
+
 import type { DishSearchSort } from "@fysen/contracts";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -16,9 +19,11 @@ function roundedCoordinate(value: number): string {
 }
 
 export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
+  const locale = usePreviewLocale();
+  const t = (key: PageKey) => pageText(locale,key);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<PageKey | null>(null);
   const [locating, setLocating] = useState(false);
 
   function navigate(update: (params: URLSearchParams) => void): void {
@@ -29,7 +34,7 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
 
   function useLocation(): void {
     if (!navigator.geolocation) {
-      setStatus("Nettleseren din støtter ikke posisjon.");
+      setStatus("noLocation");
       return;
     }
 
@@ -48,8 +53,8 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
         setLocating(false);
         setStatus(
           error.code === error.PERMISSION_DENIED
-            ? "Posisjon ble ikke delt. Du kan fortsatt søke uten den."
-            : "Vi fikk ikke hentet posisjonen din akkurat nå.",
+            ? "denied"
+            : "unavailable",
         );
       },
       {
@@ -82,22 +87,22 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
   const statusClassName = styles.status ?? "";
 
   return (
-    <div className={controlsClassName} aria-label="Avstand og sortering">
+    <div className={controlsClassName} aria-label={t("distanceSort")}>
       {!hasLocation ? (
         <button className={primaryClassName} type="button" onClick={useLocation} disabled={locating}>
-          {locating ? "Henter posisjon …" : "Bruk min posisjon"}
+          {locating ? t("locating") : t("useLocation")}
         </button>
       ) : (
         <>
-          <span className={styles.locationActive ?? ""}>Posisjon brukes i søket</span>
-          <div className={sortGroupClassName} role="group" aria-label="Sorter søkeresultater">
+          <span className={styles.locationActive ?? ""}>{t("active")}</span>
+          <div className={sortGroupClassName} role="group" aria-label={t("sort")}>
             <button
               className={`${sortClassName} ${sort === "relevance" ? sortActiveClassName : ""}`.trim()}
               type="button"
               onClick={() => setSort("relevance")}
               aria-pressed={sort === "relevance"}
             >
-              Beste treff
+              {t("best")}
             </button>
             <button
               className={`${sortClassName} ${sort === "distance" ? sortActiveClassName : ""}`.trim()}
@@ -105,15 +110,15 @@ export function LocationControls({ hasLocation, sort }: LocationControlsProps) {
               onClick={() => setSort("distance")}
               aria-pressed={sort === "distance"}
             >
-              Nærmest
+              {t("nearest")}
             </button>
           </div>
           <button className={clearClassName} type="button" onClick={clearLocation}>
-            Fjern posisjon
+            {t("clear")}
           </button>
         </>
       )}
-      {status ? <p className={statusClassName} role="status">{status}</p> : null}
+      {status ? <p className={statusClassName} role="status">{t(status)}</p> : null}
     </div>
   );
 }

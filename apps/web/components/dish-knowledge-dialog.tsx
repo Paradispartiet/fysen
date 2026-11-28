@@ -1,5 +1,11 @@
 "use client";
 
+import { usePreviewLocale } from "./language-preview";
+import { knowledgeText, type KnowledgeKey } from "../lib/knowledge-messages";
+import { dishDisplayName } from "../lib/dish-display-names";
+import { localizedArticleBody } from "../lib/dish-article-translations";
+import { localizedSummary } from "../lib/dish-summary-translations";
+
 import type { DishSearchResult } from "@fysen/contracts";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -34,6 +40,8 @@ export function DishKnowledgeDialog({
   onClosed: () => void;
   onOpenDish: (dish: FoodKnowledgeDish) => void;
 }) {
+  const locale = usePreviewLocale();
+  const t = (key: KnowledgeKey, values?: Record<string, string | number>) => knowledgeText(locale, key, values);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [restaurantResults, setRestaurantResults] = useState<readonly DishSearchResult[]>([]);
   const [restaurantLoading, setRestaurantLoading] = useState(false);
@@ -78,6 +86,7 @@ export function DishKnowledgeDialog({
     if (dialog?.open) dialog.close();
   }
 
+  const article = dish ? localizedArticleBody(dish, locale) : null;
   const relatedDishes = dish ? getRelatedFoodDishes(dish) : [];
 
   return (
@@ -91,21 +100,21 @@ export function DishKnowledgeDialog({
         if (event.target === event.currentTarget) close();
       }}
     >
-      {dish ? (
+      {dish && article ? (
         <div className="dishKnowledgeDialogShell">
           <button
             type="button"
             className="dishKnowledgeDialogClose"
-            aria-label={`Lukk kunnskap om ${dish.name}`}
+            aria-label={t("close", { name: dishDisplayName(dish.id, dish.name, locale) })}
             onClick={close}
           >
             <span aria-hidden="true">×</span>
           </button>
 
           <header className="dishKnowledgeDialogHeader">
-            <p className="dishKnowledgeDialogEyebrow">Fysen matleksikon · {dish.region}</p>
+            <p className="dishKnowledgeDialogEyebrow">{t("lexicon")} · {dish.region}</p>
             <div className="dishKnowledgeTitleWithArtwork">
-              <h2 id="dish-knowledge-title">{dish.name}</h2>
+              <h2 id="dish-knowledge-title">{dishDisplayName(dish.id, dish.name, locale)}</h2>
               {illustrationForDishName(dish.name) ? (
                 <FoodIllustration
                   name={illustrationForDishName(dish.name)!}
@@ -114,58 +123,59 @@ export function DishKnowledgeDialog({
                 />
               ) : null}
             </div>
-            <p id="dish-knowledge-summary">{dish.summary}</p>
-            <div className="dishKnowledgeRecipeMeta" aria-label="Oppskriftsinformasjon">
-              <span>{dish.recipe.yield}</span>
-              <span>{dish.recipe.time}</span>
+            <p id="dish-knowledge-summary" lang={localizedSummary(dish.id, dish.summary, locale).lang}>{localizedSummary(dish.id, dish.summary, locale).text}</p>
+            {locale !== "nb" && article.lang === "nb" ? <small lang={locale}>{t("originalText")}</small> : null}
+            <div className="dishKnowledgeRecipeMeta" aria-label={t("recipeInfo")}>
+              <span lang={article.lang}>{article.body.recipe.yield}</span>
+              <span lang={article.lang}>{article.body.recipe.time}</span>
             </div>
           </header>
 
           <div className="dishKnowledgeIntroGrid">
             <section>
-              <h3>Hva er {dish.name}?</h3>
-              <p>{dish.overview}</p>
+              <h3>{t("what", { name: dishDisplayName(dish.id, dish.name, locale) })}</h3>
+              <p lang={article.lang}>{article.body.overview}</p>
             </section>
             <section>
-              <h3>Bakgrunn og matkultur</h3>
-              <p>{dish.history}</p>
+              <h3>{t("history")}</h3>
+              <p lang={article.lang}>{article.body.history}</p>
             </section>
           </div>
 
           <div className="dishKnowledgeFocusGrid">
             <section>
               <p className="dishKnowledgeMiniEyebrow">Når du spiser den</p>
-              <h3>Smak og tekstur</h3>
-              <p>{dish.flavor}</p>
+              <h3>{t("taste")}</h3>
+              <p lang={article.lang}>{article.body.flavor}</p>
             </section>
             <section>
               <p className="dishKnowledgeMiniEyebrow">Det som gjør forskjell</p>
-              <h3>Teknikken</h3>
-              <p>{dish.technique}</p>
+              <h3>{t("technique")}</h3>
+              <p lang={article.lang}>{article.body.technique}</p>
             </section>
           </div>
 
           <section className="dishKnowledgeSection">
-            <h3>Hva består retten av?</h3>
+            <h3>{t("contents")}</h3>
             <ul className="dishKnowledgeList">
-              {dish.essentials.map((item) => <li key={item}>{item}</li>)}
+              {article.body.essentials.map((item) => <li key={item} lang={article.lang}>{item}</li>)}
             </ul>
           </section>
 
           <section className="dishKnowledgeRecipe" aria-labelledby="dish-recipe-title">
             <div className="dishKnowledgeRecipeHeading">
               <div>
-                <p>Lag den hjemme</p>
-                <h3 id="dish-recipe-title">Slik lager du {dish.name.toLocaleLowerCase("nb-NO")}</h3>
+                <p>{t("makeHome")}</p>
+                <h3 id="dish-recipe-title">{t("recipe", { name: dishDisplayName(dish.id, dish.name, locale).toLocaleLowerCase(locale) })}</h3>
               </div>
-              <span>{dish.recipe.label}</span>
+              <span lang={article.lang}>{article.body.recipe.label}</span>
             </div>
 
             <div className="dishKnowledgeRecipeGrid">
               <div>
-                <h4>Ingredienser</h4>
+                <h4>{t("ingredients")}</h4>
                 <ul className="dishKnowledgeList">
-                  {dish.recipe.ingredients.map((ingredient) => {
+                  {dish.recipe.ingredients.map((ingredient, index) => {
                     const illustration = illustrationForIngredient(ingredient);
                     return (
                       <li
@@ -175,16 +185,16 @@ export function DishKnowledgeDialog({
                         {illustration ? (
                           <FoodIllustration name={illustration} className="dishKnowledgeIngredientArtwork" size={28} />
                         ) : null}
-                        <span>{ingredient}</span>
+                        <span lang={article.lang}>{article.body.recipe.ingredients[index]}</span>
                       </li>
                     );
                   })}
                 </ul>
               </div>
               <div>
-                <h4>Fremgangsmåte</h4>
+                <h4>{t("steps")}</h4>
                 <ol className="dishKnowledgeSteps">
-                  {dish.recipe.steps.map((step) => <li key={step}>{step}</li>)}
+                  {dish.recipe.steps.map((step, index) => <li key={step} lang={article.lang}>{article.body.recipe.steps[index]}</li>)}
                 </ol>
               </div>
             </div>
@@ -192,37 +202,37 @@ export function DishKnowledgeDialog({
 
           <div className="dishKnowledgeBottomGrid">
             <section>
-              <h3>Vanlige varianter</h3>
+              <h3>{t("variants")}</h3>
               <ul className="dishKnowledgeList">
-                {dish.variants.map((variant) => <li key={variant}>{variant}</li>)}
+                {article.body.variants.map((variant) => <li key={variant} lang={article.lang}>{variant}</li>)}
               </ul>
             </section>
             <section>
-              <h3>Slik serveres den</h3>
+              <h3>{t("serving")}</h3>
               <ul className="dishKnowledgeList">
-                {dish.serving.map((item) => <li key={item}>{item}</li>)}
+                {article.body.serving.map((item) => <li key={item} lang={article.lang}>{item}</li>)}
               </ul>
             </section>
           </div>
 
           <div className="dishKnowledgeBottomGrid">
             <section>
-              <h3>Vanlige feil</h3>
+              <h3>{t("mistakes")}</h3>
               <ul className="dishKnowledgeList dishKnowledgeMistakes">
-                {dish.commonMistakes.map((mistake) => <li key={mistake}>{mistake}</li>)}
+                {article.body.commonMistakes.map((mistake) => <li key={mistake} lang={article.lang}>{mistake}</li>)}
               </ul>
             </section>
             <section>
-              <h3>Hvis du liker denne, prøv også</h3>
+              <h3>{t("related")}</h3>
               <div className="dishKnowledgeRelated">
                 {relatedDishes.map((relatedDish) => {
                   const relatedKnowledge = getFoodKnowledgeDish(relatedDish.id);
                   return relatedKnowledge ? (
                     <button type="button" key={relatedDish.id} onClick={() => onOpenDish(relatedKnowledge)}>
-                      {relatedDish.name}
+                      {dishDisplayName(relatedDish.id, relatedDish.name, locale)}
                     </button>
                   ) : (
-                    <a href={dishSearchHref(relatedDish.query)} key={relatedDish.id}>{relatedDish.name}</a>
+                    <a href={dishSearchHref(relatedDish.query)} key={relatedDish.id}>{dishDisplayName(relatedDish.id, relatedDish.name, locale)}</a>
                   );
                 })}
               </div>
@@ -232,16 +242,16 @@ export function DishKnowledgeDialog({
           <section className="dishKnowledgeRestaurants" aria-labelledby="dish-knowledge-restaurants-title">
             <div className="dishKnowledgeRestaurantsHeading">
               <div>
-                <p className="dishKnowledgeMiniEyebrow">Restauranter</p>
-                <h3 id="dish-knowledge-restaurants-title">Hvor får du {dish.name.toLocaleLowerCase("nb-NO")} i Oslo?</h3>
+                <p className="dishKnowledgeMiniEyebrow">{t("restaurants")}</p>
+                <h3 id="dish-knowledge-restaurants-title">{t("where", { name: dishDisplayName(dish.id, dish.name, locale).toLocaleLowerCase(locale) })}</h3>
               </div>
-              <a href={dishSearchHref(dish.query)}>Se alle treff <span aria-hidden="true">→</span></a>
+              <a href={dishSearchHref(dish.query)}>{t("allMatches")} <span aria-hidden="true">→</span></a>
             </div>
 
-            {restaurantLoading ? <p className="dishKnowledgeRestaurantStatus">Henter restauranter …</p> : null}
-            {!restaurantLoading && restaurantError ? <p className="dishKnowledgeRestaurantStatus">{restaurantError}</p> : null}
+            {restaurantLoading ? <p className="dishKnowledgeRestaurantStatus">{t("loading")}</p> : null}
+            {!restaurantLoading && restaurantError ? <p className="dishKnowledgeRestaurantStatus">{t("error")}</p> : null}
             {!restaurantLoading && !restaurantError && restaurantResults.length === 0 ? (
-              <p className="dishKnowledgeRestaurantStatus">Ingen treff på denne retten i Oslo akkurat nå.</p>
+              <p className="dishKnowledgeRestaurantStatus">{t("noMatches")}</p>
             ) : null}
             {!restaurantLoading && !restaurantError && restaurantResults.length > 0 ? (
               <div className="dishKnowledgeRestaurantGrid">

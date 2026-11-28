@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageText, PageDate } from "../../components/page-text";
 import { GlobalHeader } from "../../components/global-header";
 import { getPublicMenuArchive } from "../../lib/verified-menu-archive";
 import { withPublicBasePath } from "../../lib/public-path";
@@ -7,13 +8,6 @@ export const metadata: Metadata = {
   title: "Om Fysen",
   description: "Hvordan Fysen finner restaurantretter og håndterer menydata.",
 };
-
-function displayDate(value: string): string {
-  if (!Number.isFinite(Date.parse(value))) return value;
-  return new Intl.DateTimeFormat("nb-NO", {
-    day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Oslo",
-  }).format(new Date(value));
-}
 
 export default async function AboutPage() {
   let archiveDate: string | null = null;
@@ -31,46 +25,29 @@ export default async function AboutPage() {
     <div className="aboutPage">
       <GlobalHeader />
       <main className="aboutMain">
-        <p className="aboutEyebrow">Om Fysen</p>
-        <h1>Finn retten du har lyst på.</h1>
-        <p className="aboutLead">
-          Fysen hjelper deg å finne restauranter ut fra en rett du har lyst på,
-          og gjør det enklere å kontrollere menyen hos restauranten selv.
-        </p>
+        <p className="aboutEyebrow"><PageText message="about" /></p>
+        <h1><PageText message="aboutTitle" /></h1>
+        <p className="aboutLead"><PageText message="aboutLead" /></p>
 
         <section className="aboutSection">
-          <h2>Slik fungerer menytreff</h2>
-          <p>
-            Menyinformasjon kan endre seg. Se alltid restaurantens egen meny for å
-            kontrollere pris, åpningstider og tilgjengelighet før du drar.
-          </p>
+          <h2><PageText message="matchesTitle" /></h2>
+          <p><PageText message="matchesHelp" /></p>
         </section>
 
         <section className="aboutSection" id="menydata">
-          <h2>Om menydata</h2>
-          <p>
-            Fysen samler retter og priser fra offentlige restaurantmenyer. Vi
-            kontrollerer og oppdaterer menyene fortløpende. Når den vanlige
-            søketjenesten ikke har tilgjengelige resultater, bruker Fysen også
-            sitt kvalitetskontrollerte menydatagrunnlag.
-          </p>
-          <p>
-            Et menytreff er ikke en sanntidsbekreftelse på at retten serveres
-            akkurat nå. Restauranter kan endre utvalg, pris og åpningstider
-            mellom våre kontroller. Sjekk derfor menyen hos restauranten.
-          </p>
+          <h2><PageText message="menusTitle" /></h2>
+          <p><PageText message="menusHelp" /></p>
+          <p><PageText message="notRealtime" /></p>
           {archiveDate ? (
             <p className="aboutArchiveDates">
-              Grunnlag etablert: {displayDate(archiveDate)}
-              {lastRefreshAt ? " · Siste indeksoppdatering: " + displayDate(lastRefreshAt) : ""}
-              . Hver menykilde kan ha en annen kontrolldato enn indeksen.
+              <PageDate message="established" date={archiveDate} long />
+              {lastRefreshAt ? <> · <PageDate message="updated" date={lastRefreshAt} long /></> : null}
+              . <PageText message="datesHelp" />
             </p>
           ) : null}
         </section>
 
-        <a className="aboutHomeLink" href={withPublicBasePath("/")}>
-          Tilbake til forsiden
-        </a>
+        <a className="aboutHomeLink" href={withPublicBasePath("/")}><PageText message="home" /></a>
       </main>
     </div>
   );

@@ -1,4 +1,8 @@
+"use client";
+
 import { dishSearchHref } from "../lib/public-path";
+import { usePreviewLocale } from "./language-preview";
+import { galleryName, visualText } from "../lib/visual-messages";
 import { DishEditorialImage } from "./dish-editorial-image";
 
 const illustratedDishes = [
@@ -54,29 +58,30 @@ const illustratedDishes = [
 // Editorial photos are clearly labelled; all other images are representative AI illustrations, never restaurant photographs.
 // Keep individual restaurant listings separate from these editorial images.
 export function DishPhotoGallery() {
+  const locale = usePreviewLocale();
   return (
-    <details className="dishPhotos" aria-labelledby="dish-photos-title">
+    <details className="dishPhotos" lang={locale} aria-labelledby="dish-photos-title">
       <summary className="dishPhotosPreview">
         <span className="dishPhotosIntro">
-          <span className="dishPhotosKicker">Matlyst · Til inspirasjon</span>
-          <span className="dishPhotosTitle" id="dish-photos-title">Hva frister?</span>
+          <span className="dishPhotosKicker">{visualText(locale, "kicker")}</span>
+          <span className="dishPhotosTitle" id="dish-photos-title">{visualText(locale, "title")}</span>
           <span className="dishPhotosOpen">
-            Utforsk 44 retter <span aria-hidden="true">↗</span>
+            {visualText(locale, "explore", { count: illustratedDishes.length })} <span aria-hidden="true">↗</span>
           </span>
         </span>
         <span
           className="dishPhotosCover"
           role="img"
-          aria-label="Redaksjonelt foto av tom yum med reker og sopp, ikke restaurantfoto"
+          aria-label={visualText(locale, "cover")}
         />
       </summary>
       <div className="dishPhotosInside">
         <div className="dishPhotosHeading">
           <div>
-            <p>Matlyst · Bildegalleri</p>
-            <h3>Finn noe godt</h3>
+            <p>{visualText(locale, "gallery")}</p>
+            <h3>{visualText(locale, "find")}</h3>
           </div>
-          <span>Illustrasjoner og foto av rettetyper, ikke restaurantbilder.</span>
+          <span>{visualText(locale, "disclaimer")}</span>
         </div>
         <div className="dishPhotosGrid">
           {illustratedDishes.map((dish) => (
@@ -84,8 +89,8 @@ export function DishPhotoGallery() {
               <DishEditorialImage dishId={dish.id} className="dishPhotoThumb" />
               <div className="dishPhotoCardContent">
                 <a href={dishSearchHref(dish.query)} className="dishPhotoSearch">
-                  <strong>{dish.label}</strong>
-                  <span className="dishPhotoAction">Se menytreff <span aria-hidden="true">→</span></span>
+                  <strong>{galleryName(dish.id, dish.label, locale)}</strong>
+                  <span className="dishPhotoAction">{visualText(locale, "matches")} <span aria-hidden="true">→</span></span>
                 </a>
               </div>
             </div>

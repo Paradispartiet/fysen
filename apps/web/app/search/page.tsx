@@ -3,11 +3,14 @@ import type { DishSearchResponse, DishSearchSort } from "@fysen/contracts";
 import { DishBrowse } from "../../components/dish-browse";
 import { ArchivedMenuBrowse, ArchivedMenuResults } from "../../components/verified-menu-archive-view";
 import { archiveHasCity, getPublicMenuArchive, searchPublicMenuArchive, reconcileMenuVersions, type ArchivedMenuMatch, type PublicMenuArchive } from "../../lib/verified-menu-archive";
+import { NordicSearchNotice } from "../../components/nordic-search-notice";
+import { resolveNordicDishQuery } from "../../lib/nordic-dish-search";
 import { DishKnowledgeNote } from "../../components/dish-knowledge-note";
 import { SearchResults } from "../../components/search-results";
 import { DishSearch } from "../../components/dish-search";
 import { GlobalHeader } from "../../components/global-header";
 import { LocationControls } from "../../components/location-controls";
+import { PageText } from "../../components/page-text";
 import { SearchState } from "../../components/search-state";
 import { browseDishes, searchDishes } from "../../lib/fysen-api";
 import { withPublicBasePath } from "../../lib/public-path";
@@ -81,6 +84,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const params = await searchParams;
   const q = first(params.q);
   const city = first(params.city) || "Oslo";
+  const expandNordicNames = process.env.NEXT_PUBLIC_FYSEN_LANGUAGE_PREVIEW === "true";
+  const nordicQuery = expandNordicNames ? resolveNordicDishQuery(q) : null;
   const latitude = coordinate(params.lat, -90, 90);
   const longitude = coordinate(params.lon, -180, 180);
   const hasLocation = latitude !== null && longitude !== null;
@@ -106,7 +111,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
       archive = selected.archive;
       suppressedLiveSlugs = selected.suppressedLiveSlugs;
       suppressedLiveIds = selected.suppressedLiveIds;
-      if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city, Infinity);
+      if (q.length >= 2) archiveMatches = searchPublicMenuArchive(archive, q, city, Infinity, expandNordicNames);
       }
     } catch {
       // Preserve the existing clear unavailable state, never invent menu data.
@@ -117,14 +122,12 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
   const primaryResults = eligibleLive.filter((result) => result.match.type !== "fuzzy");
   const nearResults = eligibleLive.filter((result) => result.match.type === "fuzzy");
   const countLabel = archive && q.length >= 2
-    ? `${archiveMatches.length + primaryResults.length} menytreff`
+    ? <PageText message="count" values={{ count: archiveMatches.length + primaryResults.length }} />
     : data
     ? primaryResults.length > 0
-      ? `${primaryResults.length} menytreff${data.complete !== true && data.results.length >= 20 ? " blant de hentede treffene" : ""}`
-      : nearResults.length > 0
-        ? "Ingen eksakte treff"
-        : "Ingen treff"
-    : "Søk på retten du har lyst på.";
+      ? <PageText message={data.complete !== true && data.results.length >= 20 ? "countLimited" : "count"} values={{ count: primaryResults.length }} />
+      : <PageText message={nearResults.length > 0 ? "noExact" : "noResults"} />
+    : <PageText message="searchPrompt" />;
 
   return (
     <div className="resultsPage">
@@ -132,7 +135,6 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
         <DishSearch
           defaultValue={q}
           city={city}
-          buttonLabel="Finn retten"
           inputId="results-dish-query"
           latitude={hasLocation ? latitude : null}
           longitude={hasLocation ? longitude : null}
@@ -174,7 +176,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 {q.length >= 2 ? <LocationControls hasLocation={hasLocation} sort={sort} /> : null}
               </div>
 
-              <DishKnowledgeNote query={q} />
+              {nordicQuery ? <NordicSearchNotice canonicalQuery={nordicQuery.canonicalQuery} query={q} alternatives={nordicQuery.alternatives} href={searchHref(nordicQuery.canonicalQuery, city, latitude, longitude, sort)} hasArchive={Boolean(archive)} /> : null}
+              <DishKnowledgeNote query={nordicQuery?.canonicalQuery ?? q} />
 
               {archive && (archiveMatches.length > 0 || !eligibleLive.length) ? (
                 <ArchivedMenuResults results={archiveMatches} query={q} city={city} />
@@ -182,21 +185,21 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
 
               {error && !archive ? (
                 <SearchState
-                  title={error}
-                  body={q.length === 1 ? undefined : "Prøv igjen om litt."}
+                  title={<PageText message={q.length === 1 ? "tooShort" : "searchError"} />}
+                  body={q.length === 1 ? undefined : <PageText message="retryLater" />}
                   actionHref={
                     q.length > 1
                       ? searchHref(q, city, latitude, longitude, sort)
                       : undefined
                   }
-                  actionLabel={q.length > 1 ? "Prøv igjen" : undefined}
+                  actionLabel={q.length > 1 ? <PageText message="retry" /> : undefined}
                 />
               ) : null}
 
               {!error && data && data.results.length === 0 && !archive ? (
                 <SearchState
-                  title={`Ingen treff på «${q}»`}
-                  body="Prøv et annet rettnavn eller se alle retter."
+                  title={<PageText message="noQueryMatches" values={{ query: q }} />}
+                  body={<PageText message="tryOther" />}
                 />
               ) : null}
 

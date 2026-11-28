@@ -1,3 +1,4 @@
+import { resultText } from "../lib/result-messages.ts";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
@@ -42,11 +43,12 @@ describe("Search-to-restaurant mobile trust contract", () => {
     const page = read("../app/search/page.tsx");
     const card = read("../components/dish-result.tsx");
     const actions = read("../components/dish-result.module.css");
-    assert.match(read("../components/search-results.tsx"), /Lignende retter/u);
+    assert.match(read("../components/search-results.tsx"), /t\("nearTitle"\)/u);
+    assert.equal(resultText("nb", "nearTitle"), "Lignende retter");
     assert.match(page, /<SearchResults/u);
     assert.match(card, /result\.match\.type === "fuzzy"/u);
     assert.match(card, /result\.dish\.priceMinor !== null/u);
-    assert.match(card, /priceProvenanceLabel\(result\.menu\.sourceUrl\)/u);
+    assert.match(card, /priceProvenanceLabel\(result\.menu\.sourceUrl, locale\)/u);
     assert.match(actions, /min-height: 44px/u);
   });
 });

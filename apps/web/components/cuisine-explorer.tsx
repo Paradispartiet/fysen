@@ -5,6 +5,12 @@ import type {
   DishBrowseResponse,
   DishBrowseRestaurantExample,
 } from "@fysen/contracts/dish-browse";
+import { browseText } from "../lib/browse-messages";
+import { visualText } from "../lib/visual-messages";
+import { usePreviewLocale } from "./language-preview";
+import { resultText } from "../lib/result-messages";
+import { dishDisplayName } from "../lib/dish-display-names";
+import { cuisineLabel } from "../lib/cuisine-labels";
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { browseDishesClient } from "../lib/client-dish-search";
 import { RecentDishes } from "./recent-dishes";
@@ -94,6 +100,7 @@ function CuisineAreaTile({
   readonly onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   readonly active?: boolean;
 }) {
+  const locale = usePreviewLocale();
   return (
     <button
       type="button"
@@ -103,7 +110,7 @@ function CuisineAreaTile({
       title={area.flagRegion ? `${area.name} · regionsflagg for ${area.flagRegion}` : area.name}
     >
       <CuisineAreaSymbol area={area} />
-      <span>{area.name}</span>
+      <span lang={locale}>{cuisineLabel(area.name, locale)}</span>
     </button>
   );
 }
@@ -182,6 +189,7 @@ function restaurantInitials(name: string): string {
 }
 
 function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample }) {
+  const locale = usePreviewLocale();
   const visuals = restaurantVisuals(restaurant);
   const photo = visuals && "photoCredit" in visuals ? visuals : null;
   const [failedLogo, setFailedLogo] = useState<string | null>(null);
@@ -211,18 +219,18 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
         <div className="cuisineExploreRestaurantArtwork">
           <div className="cuisineExploreRestaurantScenes">
             <figure>
-              <img src={withPublicBasePath(visuals.exterior)} alt={`${photo ? "Foto" : "Illustrasjon"} av fasaden til ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
-              <figcaption>{photo ? "Fasade · Foto fra 2017" : "Fasade · Illustrasjon"}</figcaption>
+              <img src={withPublicBasePath(visuals.exterior)} alt={photo ? `Foto av fasaden til ${restaurant.name}` : visualText(locale, "exteriorAlt", { name: restaurant.name })} width={1536} height={1024} loading="lazy" decoding="async" />
+              <figcaption>{photo ? "Fasade · Foto fra 2017" : visualText(locale, "exterior")}</figcaption>
             </figure>
             {visuals.interior ? (
             <figure>
-              <img src={withPublicBasePath(visuals.interior)} alt={`Illustrasjon av interiøret hos ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
-              <figcaption>Interiør · Illustrasjon</figcaption>
+              <img src={withPublicBasePath(visuals.interior)} alt={visualText(locale, "interiorAlt", { name: restaurant.name })} width={1536} height={1024} loading="lazy" decoding="async" />
+              <figcaption>{visualText(locale, "interior")}</figcaption>
             </figure>
             ) : null}
           </div>
           <a className="cuisineExploreRestaurantArtSource" href={visuals.sourceUrl} target="_blank" rel="noopener noreferrer">
-            {photo ? `Foto: ${photo.photoCredit} · Wikimedia Commons` : "Illustrert fra restaurantens egne bilder"}
+            {photo ? `Foto: ${photo.photoCredit} · Wikimedia Commons` : visualText(locale, "restaurantSource")}
           </a>
           {photo ? <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">CC BY-SA 3.0 · Nedskalert, uten beskjæring</a> : null}
         </div>
@@ -246,6 +254,7 @@ function RestaurantPreview({ restaurants, dishLabel, location }: {
   readonly dishLabel: string;
   readonly location: Coordinates | null;
 }) {
+  const locale = usePreviewLocale();
   const { known, unknown } = rankRestaurantsByDistance(restaurants, location);
   const ranked = known.length > 0;
   const preview = (ranked ? known : restaurants).slice(0, restaurantPreviewLimit);
@@ -255,16 +264,16 @@ function RestaurantPreview({ restaurants, dishLabel, location }: {
       {location ? (
         <p className="cuisineExploreDistanceNote">
           {ranked
-            ? `Nærmest blant ${known.length} treff med kjent posisjon${unknown.length ? ` · ${unknown.length} uten avstandsdata` : ""}`
-            : "Ingen avstandsdata for disse treffene"}
+            ? browseText(locale,"nearestKnown",{count:known.length}) + (unknown.length ? ` · ${unknown.length} ${browseText(locale,"distanceUnknown").toLocaleLowerCase(locale)}` : "")
+            : browseText(locale,"noDistance")}
         </p>
       ) : null}
       <RestaurantNames restaurants={preview} />
       {remaining.length > 0 ? (
         <details className="cuisineExploreRestaurantDetails">
-          <summary aria-label={`Flere restauranter med ${dishLabel}`}>
-            <span className="cuisineExploreRestaurantMoreLabel">Se mer ({remaining.length})</span>
-            <span className="cuisineExploreRestaurantLessLabel">Vis mindre</span>
+          <summary aria-label={browseText(locale,"moreRestaurants",{name:dishLabel})}>
+            <span className="cuisineExploreRestaurantMoreLabel">{browseText(locale,"more",{count:remaining.length})}</span>
+            <span className="cuisineExploreRestaurantLessLabel">{browseText(locale,"less")}</span>
             <span className="cuisineExploreRestaurantChevron" aria-hidden="true">⌄</span>
           </summary>
           {ranked ? (
@@ -272,7 +281,7 @@ function RestaurantPreview({ restaurants, dishLabel, location }: {
               {known.length > restaurantPreviewLimit ? <RestaurantNames restaurants={known.slice(restaurantPreviewLimit)} /> : null}
               {unknown.length > 0 ? (
                 <>
-                  <p className="cuisineExploreDistanceNote">Uten avstandsdata</p>
+                  <p className="cuisineExploreDistanceNote">{browseText(locale,"distanceUnknown")}</p>
                   <RestaurantNames restaurants={unknown} />
                 </>
               ) : null}
@@ -293,6 +302,7 @@ function DiscoveryDishList({
   readonly location: Coordinates | null;
   readonly onOpenKnowledge: (dishId: string) => void;
 }) {
+  const locale = usePreviewLocale();
   return (
     <div className="cuisineExploreDishList">
       {coverage.map(({ dish, restaurantCount, restaurantExamples, evidenceKind }) => (
@@ -305,20 +315,20 @@ function DiscoveryDishList({
             <div className="cuisineExploreDishIdentity">
               <DishPhotoThumbnail dishId={dish.id} label={dish.label} />
               <div className="cuisineExploreDishCopy">
-                <h4>{dish.label}</h4>
+                <h4 lang={locale}>{dishDisplayName(dish.id, dish.label, locale)}</h4>
                 <p className="cuisineExploreDishEvidence">
-                  {menuEvidenceLabel(evidenceKind, restaurantCount)}
+                  {menuEvidenceLabel(evidenceKind, restaurantCount, locale)}
                 </p>
               </div>
             </div>
             <div className="cuisineExploreDishActions">
               {dish.hasKnowledge ? (
                 <button type="button" onClick={() => onOpenKnowledge(dish.id)}>
-                  Lær om retten <span aria-hidden="true">↗</span>
+                  {resultText(locale, "learnDish")} <span aria-hidden="true">↗</span>
                 </button>
               ) : null}
               <a href={dishSearchHref(dish.query)}>
-                {restaurantCount > 0 ? "Se menytreff" : "Søk etter retten"} <span aria-hidden="true">→</span>
+                {restaurantCount > 0 ? resultText(locale, "menuMatches") : resultText(locale, "searchDish")} <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>
@@ -338,6 +348,7 @@ export function CuisineExplorer({
   readonly browseData: DishBrowseResponse | null;
   readonly archiveCoverage: ArchivedMatlystCoverage | null;
 }) {
+  const locale = usePreviewLocale();
   const [previewBrowseData, setPreviewBrowseData] = useState<DishBrowseResponse | null>(null);
   const [selectedCuisine, setSelectedCuisine] = useState<Cuisine | null>(null);
   const [selectedAreaName, setSelectedAreaName] = useState<string>("");
@@ -480,13 +491,13 @@ export function CuisineExplorer({
         <summary className="cuisineBrowsePreview">
           <span className="cuisineBrowsePreviewCopy">
             <span className="foodSectionEyebrow">Matlyst</span>
-            <span className="cuisineBrowsePreviewTitle" id="cuisine-browse-title">Utforsk matretter</span>
-            <span className="cuisineBrowsePreviewHint">Kjøkken, regioner og mattyper</span>
+            <span className="cuisineBrowsePreviewTitle" id="cuisine-browse-title" lang={locale}>{resultText(locale, "explore")}</span>
+            <span className="cuisineBrowsePreviewHint" lang={locale}>{resultText(locale, "exploreHint")}</span>
           </span>
           <span className="cuisineBrowsePreviewChevron" aria-hidden="true">⌄</span>
         </summary>
         <div className="cuisineBrowseInside">
-          <ul className="cuisineBrowseList" aria-label="Velg kjøkken">
+          <ul className="cuisineBrowseList" lang={locale} aria-label={resultText(locale, "chooseCuisine")}>
             {homeCuisines.map((cuisine) => (
                 <li key={cuisine.name}>
                   <button
@@ -495,9 +506,9 @@ export function CuisineExplorer({
                     aria-haspopup="dialog"
                     onClick={(event) => openCuisine(cuisine, event.currentTarget)}
                   >
-                    <span className="cuisineBrowseChoiceName">{cuisine.name}</span>
+                    <span className="cuisineBrowseChoiceName">{cuisineLabel(cuisine.name, locale)}</span>
                     <span className="cuisineBrowseChoiceCount">
-                      {cuisine.areas.length} {cuisine.areas.length === 1 ? "underkategori" : "underkategorier"}
+                      {browseText(locale,cuisine.areas.length === 1 ? "subOne" : "subMany",{count:cuisine.areas.length})}
                     </span>
                   </button>
                 </li>
@@ -522,25 +533,25 @@ export function CuisineExplorer({
             <button
               type="button"
               className="cuisineExploreDialogClose"
-              aria-label={`Lukk ${selectedCuisine.name}`}
+              aria-label={browseText(locale,"close",{name:cuisineLabel(selectedCuisine.name,locale)})}
               onClick={closeCuisine}
             >
               <span aria-hidden="true">×</span>
             </button>
 
             <header className="cuisineExploreDialogHeader">
-              <p>Utforsk kjøkken</p>
-              <h2 id="cuisine-dialog-title">{selectedCuisine.name}</h2>
+              <p lang={locale}>{resultText(locale, "exploreCuisine")}</p>
+              <h2 id="cuisine-dialog-title" lang={locale}>{cuisineLabel(selectedCuisine.name, locale)}</h2>
               <span>{selectedCuisine.context}</span>
             </header>
 
-            <div className="cuisineExploreFilterGroup" aria-label="Velg hvordan du vil utforske">
+            <div className="cuisineExploreFilterGroup" aria-label={browseText(locale,"exploreHow")}>
               <details className="cuisineExploreFilter cuisineExploreAreas" name="cuisine-discovery-filter">
                 <summary className="cuisineExploreFilterSummary">
-                  <span>{selectedCuisine.areasLabel}</span>
-                  <strong>{selectedFoodType ? "Velg land eller region" : selectedArea?.name ?? allAreasLabel}</strong>
+                  <span lang={locale}>{cuisineLabel(selectedCuisine.areasLabel, locale)}</span>
+                  <strong>{selectedFoodType ? "Velg land eller region" : cuisineLabel(selectedArea?.name ?? allAreasLabel, locale)}</strong>
                 </summary>
-                <div className="cuisineExploreAreaGrid" aria-label={selectedCuisine.areasLabel}>
+                <div className="cuisineExploreAreaGrid" aria-label={cuisineLabel(selectedCuisine.areasLabel, locale)}>
                 <button
                   type="button"
                   className="cuisineExploreResetChoice"
@@ -551,7 +562,7 @@ export function CuisineExplorer({
                     setShowAllDishes(false);
                     event.currentTarget.closest("details")?.removeAttribute("open");
                   }}
-                >{allAreasLabel}</button>
+                >{cuisineLabel(allAreasLabel, locale)}</button>
                 {selectedCuisine.areas.map((area) => (
                   <CuisineAreaTile
                     key={area.name}
@@ -572,7 +583,7 @@ export function CuisineExplorer({
                 <details className="cuisineExploreFilter cuisineExploreFoodTypes" name="cuisine-discovery-filter">
                   <summary className="cuisineExploreFilterSummary">
                     <span>Mattype</span>
-                    <strong>{selectedFoodType?.name ?? "Velg mattype"}</strong>
+                    <strong>{selectedFoodType ? cuisineLabel(selectedFoodType.name, locale) : "Velg mattype"}</strong>
                   </summary>
                   <div className="cuisineExploreTypeGrid" aria-label={`Mattyper i ${selectedCuisine.name}`}>
                   <button
@@ -585,7 +596,7 @@ export function CuisineExplorer({
                       setShowAllDishes(false);
                       event.currentTarget.closest("details")?.removeAttribute("open");
                     }}
-                  >Alle mattyper</button>
+                  >{cuisineLabel("Alle mattyper", locale)}</button>
                   {availableFoodTypes.map((type) => (
                     <button
                       type="button"
@@ -600,7 +611,7 @@ export function CuisineExplorer({
                       }}
                     >
                       <FoodIllustration name={type.illustration} className="cuisineItalianArtwork" size={38} />
-                      <strong>{type.name}</strong>
+                      <strong lang={locale}>{cuisineLabel(type.name, locale)}</strong>
                     </button>
                   ))}
                   </div>
@@ -611,17 +622,17 @@ export function CuisineExplorer({
             <section className="cuisineExploreResults" aria-live="polite">
               <div className="cuisineExploreResultsHeading">
                 <div>
-                  <p>{selectedFoodType?.name ?? selectedArea?.name ?? allAreasLabel}</p>
-                  <h3>Retter og hvor du kan få dem</h3>
+                  <p lang={locale}>{cuisineLabel(selectedFoodType?.name ?? selectedArea?.name ?? allAreasLabel, locale)}</p>
+                  <h3 lang={locale}>{resultText(locale, "dishesWhere")}</h3>
                 </div>
-                <span>{selectedDishCoverage.length} rettforslag · Oslo</span>
+                <span>{browseText(locale,"proposals",{count:selectedDishCoverage.length})}</span>
               </div>
 
               <div className="cuisineExploreLocation">
                 <button type="button" disabled={locating} onClick={location ? () => { setLocation(null); setLocationStatus(""); } : requestLocation}>
-                  {location ? "Slå av avstandssortering" : locating ? "Henter posisjon …" : "Vis nærmest meg"}
+                  {location ? browseText(locale,"disableDistance") : locating ? "Henter posisjon …" : browseText(locale,"nearestHere")}
                 </button>
-                <span role="status">{location ? "Sortert etter luftlinje der posisjon er kjent." : locationStatus || "Posisjon brukes bare i denne nettleseren."}</span>
+                <span role="status">{location ? browseText(locale,"sortedDistance") : locationStatus || browseText(locale,"localOnly")}</span>
               </div>
               <DiscoveryDishList
                 location={location}
@@ -635,13 +646,13 @@ export function CuisineExplorer({
                   aria-expanded={showAllDishes}
                   onClick={() => setShowAllDishes((value) => !value)}
                 >
-                  {showAllDishes ? "Vis færre retter" : `Vis alle ${selectedDishCoverage.length} rettforslag`}
+                  {showAllDishes ? browseText(locale,"showFewer") : browseText(locale,"showAll",{count:selectedDishCoverage.length})}
                 </button>
               ) : null}
             </section>
 
             <footer className="cuisineExploreDialogFooter">
-              <span>Restaurantnavn bygger på registrerte menyer. Avstand er bare tilgjengelig for treff med kjent posisjon. Se menytreff for mer informasjon.</span>
+              <span>{browseText(locale,"sourceNote")}</span>
               {selectedArea?.flagFile && !selectedFoodType ? (
                 <a
                   href={`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(selectedArea.flagFile)}`}

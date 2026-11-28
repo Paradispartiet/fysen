@@ -1,3 +1,4 @@
+import { resultText } from "../lib/result-messages.ts";
 import assert from "node:assert/strict";
 import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -117,7 +118,8 @@ test("Matlyst beholder alle tolv kjøkkenene i samme rekkefølge inne i utbrettm
   assert.match(explorerSource, /<CuisineAreaTile/u);
   assert.doesNotMatch(explorerSource, /className="cuisineDishPreview"/u);
   assert.doesNotMatch(explorerSource, /className="cuisineAreaList"/u);
-  assert.match(explorerSource, /Retter og hvor du kan få dem/u);
+  assert.match(explorerSource, /resultText\(locale, "dishesWhere"\)/u);
+  assert.equal(resultText("nb", "dishesWhere"), "Retter og hvor du kan få dem");
   assert.doesNotMatch(explorerSource, /matlystCuisineDirectory/u);
   assert.doesNotMatch(explorerSource, /matlyst-cuisine-filter/u);
   assert.doesNotMatch(explorerSource, /Vis alle kjøkken/u);
@@ -125,7 +127,8 @@ test("Matlyst beholder alle tolv kjøkkenene i samme rekkefølge inne i utbrettm
 });
 
 test("Matlyst keeps restaurant coverage behind cuisine selection without status banners", () => {
-  assert.match(explorerSource, /Retter og hvor du kan få dem/u);
+  assert.match(explorerSource, /resultText\(locale, "dishesWhere"\)/u);
+  assert.equal(resultText("nb", "dishesWhere"), "Retter og hvor du kan få dem");
   assert.match(explorerSource, /<DiscoveryDishList/u);
   assert.match(explorerSource, /restaurantExamples/u);
   assert.match(explorerSource, /browseDishesClient/u);

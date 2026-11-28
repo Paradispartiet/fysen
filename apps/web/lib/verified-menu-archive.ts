@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { gunzipSync } from "node:zlib";
+import { matchesNordicDishAlternative, resolveNordicDishQuery } from "./nordic-dish-search.ts";
 
 const publicIndexBase =
   "https://raw.githubusercontent.com/Paradispartiet/fysen/fysen-free-public-index/";
@@ -207,9 +208,11 @@ export function searchPublicMenuArchive(
   query: string,
   city = "Oslo",
   limit = 20,
+  expandNordicNames = false,
 ): ArchivedMenuMatch[] {
   const normalized = normalizeArchiveQuery(query);
   if (normalized.length < 2 || !archiveCityCurrency(city)) return [];
+  const alternatives = expandNordicNames ? resolveNordicDishQuery(query)?.alternatives ?? [] : [];
   const candidates: Array<{ score: number; result: ArchivedMenuMatch }> = [];
   for (const row of archive.items) {
     const sourceIndex = row[0];
@@ -222,8 +225,9 @@ export function searchPublicMenuArchive(
     const currency = itemCurrency(archive.version ?? 1, restaurant[3], row);
     if (!currency) continue;
     const name = normalizeArchiveQuery(row[2]);
-    if (!name.includes(normalized)) continue;
-    const score = name === normalized ? 3 : name.startsWith(normalized) ? 2 : 1;
+    const literal = name.includes(normalized);
+    if (!literal && !matchesNordicDishAlternative(name, alternatives)) continue;
+    const score = literal ? (name === normalized ? 3 : name.startsWith(normalized) ? 2 : 1) : 0;
     candidates.push({
       score,
       result: {

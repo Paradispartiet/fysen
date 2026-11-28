@@ -148,15 +148,15 @@ test("a successful empty live API response still exposes the historical menu rou
   const home = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
   const preview = readFileSync(new URL("../components/static-preview-search-page.tsx", import.meta.url), "utf8");
   const archivedView = readFileSync(new URL("../components/verified-menu-archive-view.tsx", import.meta.url), "utf8");
-  assert.match(search, /searchPublicMenuArchive\(archive, q, city, Infinity\)/u);
+  assert.match(search, /searchPublicMenuArchive\(archive, q, city, Infinity, expandNordicNames\)/u);
   assert.match(search, /archive=\{archive\}/u);
   assert.match(home, /browseData\.dishes\.length === 0/u);
   assert.match(home, /reconcileMenuVersions\(stored, browseData\?\.menuVersions/u);
   assert.match(preview, /response\.browse\?\.dishes\.length === 0/u);
   assert.match(preview, /response\.search\?\.results\.length === 0/u);
   assert.match(archivedView, /browseArchivedMenuDishes\(archive, city, 48\)/u);
-  assert.match(archivedView, /Alle retter i \{city\}/u);
-  assert.match(archivedView, /Finn retten/u);
+  assert.match(archivedView, /<BrowseText message="allCity" values=\{\{city\}\} \/>/u);
+  assert.match(archivedView, /<LocalizedText message="searchButton" \/>/u);
   assert.doesNotMatch(archivedView, /arkivtreff|Meny sist kontrollert|Fersksøket har ingen treff/u);
 });
 
