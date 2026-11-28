@@ -144,3 +144,7 @@ Added French (fr-FR), European Portuguese (pt-PT), Spanish (es-ES) and German (d
 ### Complete international original UI review dictionaries
 
 French, European Portuguese, Spanish and German now each have all 239 original UI keys: 18 core, 46 results, 31 knowledge, 61 browse, 66 page/account and 17 visual. The 144 new keys per locale include location/permission wording, menu evidence and limitations, account transfer and privacy wording, gallery attribution and image distinctions. All remain review-only, excluded from runtime selection. Exact keys and interpolation tokens checked before commits; regression tests cover all six dictionaries. Language review, CI and main reconciliation remain pending. No new article translations, search aliases or menu evidence changes in this batch.
+
+### International editorial food display labels
+
+French, European Portuguese, Spanish and German now have 162/162 cuisine/category labels, 44/44 exact gallery-variant captions and 11/11 localized dish display names per language, in a separate review-only module. All keys were compared against source registries, and gallery rows retain the exact Norwegian original label. International culinary names and canonical identifiers remain intact. Added regression assertions for exact key coverage, nonempty labels and original gallery variants; no changes to menu matching, query aliases, article translations or production locale selection. Native review, CI and main reconciliation remain pending.

@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { draftInternationalCuisines, draftInternationalGalleryNames, draftInternationalDishNames } from "../lib/international-food-drafts.ts";
+import { galleryNames } from "../lib/visual-messages.ts";
 import { pageMessages } from "../lib/page-messages.ts";
 import { visualMessages } from "../lib/visual-messages.ts";
 import { browseMessages } from "../lib/browse-messages.ts";
@@ -20,6 +23,21 @@ for (const locale of internationalReviewLocales) {
         assert.ok(value.trim(), key);
         assert.deepEqual(tokens(value), tokens(source[key]), key);
       }
+    }
+  });
+}
+
+const sourceKeys = (file) => [...readFileSync(new URL(file, import.meta.url), "utf8").matchAll(/^ {2}"([^"]+)": \[/gmu)].map((match) => match[1]).sort();
+for (const locale of internationalReviewLocales) {
+  test(`International display drafts ${locale} preserve canonical keys and exact gallery variants`, () => {
+    assert.equal(isPreviewLocale(locale), false);
+    assert.deepEqual(Object.keys(draftInternationalCuisines[locale]).sort(), sourceKeys("../lib/cuisine-labels.ts"));
+    assert.deepEqual(Object.keys(draftInternationalDishNames[locale]).sort(), sourceKeys("../lib/dish-display-names.ts"));
+    assert.deepEqual(Object.keys(draftInternationalGalleryNames[locale]).sort(), Object.keys(galleryNames).sort());
+    for (const label of [...Object.values(draftInternationalCuisines[locale]), ...Object.values(draftInternationalDishNames[locale])]) assert.ok(label.trim());
+    for (const [id, row] of Object.entries(draftInternationalGalleryNames[locale])) {
+      assert.equal(row.original, galleryNames[id][0]);
+      assert.ok(row.text.trim());
     }
   });
 }
