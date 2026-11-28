@@ -11,6 +11,7 @@ const imageRoot = path.join(web, "public", "dish-images");
 const repoRoot = path.resolve(web, "../..");
 const manifest = JSON.parse(readFileSync(path.join(imageRoot, "manifest.json"), "utf8"));
 const reusedPhotoProvenance = {
+  "kebab-pita": ["https://commons.wikimedia.org/wiki/File:Doener_Kebab_(9682662957).jpg","Lauren Travis / Wikimedia Commons · CC BY 2.0 · AI-assistert frilegging","https://creativecommons.org/licenses/by/2.0/","/dish-images/kebab-pita-LICENSE.txt"],
   "bao": [
     "https://commons.wikimedia.org/wiki/File:Red_Braised_Pork_Belly_Bao_-_Tiger_Bites_Pig_2025-11-20.jpg",
     "Andy Li / Wikimedia Commons · CC0 1.0",

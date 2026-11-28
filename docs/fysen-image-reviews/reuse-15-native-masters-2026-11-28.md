@@ -21,3 +21,7 @@ This isolated draft reuses the existing blobs and exact image metadata; it does 
 - dal-makhani — 3520 × 2880 — dhiraj jain / Pexels · Pexels-lisensen
 - idli — 3072 × 3072 — Sarathprabhavu / Wikimedia Commons · CC BY 4.0
 - vada — 8160 × 6144 — Andy Li / Wikimedia Commons · CC0 1.0 · AI-assistert frilegging
+
+## Follow-up: Kebab i pita
+
+Reused the existing reviewed Lauren Travis CC BY 2.0 photograph (4000 × 3000 native, AI-assisted mask only). Original illustration is retained on disk; the active manifest now references the documented photograph. Candidate: 43/44 native masters. Sambar remains a thumbnail-only illustration because the 3072px candidate is explicitly upscaled and not a native master. No production deployment.
