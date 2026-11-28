@@ -247,6 +247,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
                 <SearchResults
                   primaryResults={primaryResults}
                   nearResults={nearResults}
+                  city={city}
+                  query={q}
+                  mapAlreadyVisible={mapView}
                   hasLocation={hasLocation}
                   searchLimitReached={data.complete !== true && data.results.length >= 20}
                 />
