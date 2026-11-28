@@ -172,3 +172,7 @@ Added eight complete bodies in each of five languages: pad kra pao, bún chả, 
 ### International full article review batch 3
 
 Added eight complete bodies per language: cannoli, quesadilla, bibimbap, bulgogi, japchae, kimchi jjigae, tteokbokki and samgyeopsal. Source list lengths and numerical recipe tokens checked, including marination time and food hygiene instructions. Previous bodies and original sources retained. Total 24 new bodies per language; English 57/200 including original 33, other four 24/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.
+
+### International full article review batch 4
+
+Added eight complete bodies per language: bánh xèo, bún bò Huế, cao lầu, cơm tấm, bún riêu, bánh cuốn, massaman curry and panang curry. Source list lengths and numerical recipe tokens checked, including fractions, ingredient measures, preparation durations and food safety instructions. Previous bodies and original sources retained. Total 32 new bodies per language; English 65/200 including original 33, other four 32/200. Review-only; no runtime activation or CI execution. Linguistic review and main reconciliation remain pending.

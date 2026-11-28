@@ -4720,5 +4720,1621 @@ export const draftInternationalArticles = {
         "Dieselben Utensilien nicht ohne Reinigung für rohes und gegartes Fleisch verwenden."
       ]
     }
+  },
+  "banh-xeo": {
+    "en": {
+      "overview": "A thin batter is fried until crisp and folded over the filling.",
+      "history": "The dish exists in several regional forms in Vietnam.",
+      "flavor": "Crisp, mildly spiced and fresh with herbs.",
+      "technique": "Use a hot pan and a thin layer of batter.",
+      "essentials": [
+        "200 g rice flour",
+        "300 ml water",
+        "100 ml coconut milk"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min",
+        "ingredients": [
+          "200 g rice flour",
+          "300 ml water",
+          "100 ml coconut milk",
+          "½ tsp turmeric",
+          "200 g prawns",
+          "150 g bean sprouts",
+          "oil"
+        ],
+        "steps": [
+          "Mix the flour, water, coconut milk and turmeric.",
+          "Fry the prawns until cooked through.",
+          "Pour a thin layer of batter into a hot oiled pan.",
+          "Add the prawns and sprouts, fry until crisp and fold."
+        ]
+      },
+      "variants": [
+        "Small pancakes in central Vietnam and larger versions in the south."
+      ],
+      "serving": [
+        "Serve with lettuce, herbs and nước chấm."
+      ],
+      "commonMistakes": [
+        "Avoid overly thick batter."
+      ]
+    },
+    "fr": {
+      "overview": "Une pâte fluide est cuite jusqu’à devenir croustillante, puis repliée sur la garniture.",
+      "history": "Le plat existe sous plusieurs formes régionales au Vietnam.",
+      "flavor": "Croustillant, légèrement épicé et frais grâce aux herbes.",
+      "technique": "Utiliser une poêle chaude et une fine couche de pâte.",
+      "essentials": [
+        "200 g de farine de riz",
+        "300 ml d’eau",
+        "100 ml de lait de coco"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min",
+        "ingredients": [
+          "200 g de farine de riz",
+          "300 ml d’eau",
+          "100 ml de lait de coco",
+          "½ c. à café de curcuma",
+          "200 g de crevettes",
+          "150 g de pousses de haricot",
+          "huile"
+        ],
+        "steps": [
+          "Mélanger la farine, l’eau, le lait de coco et le curcuma.",
+          "Faire revenir les crevettes jusqu’à cuisson complète.",
+          "Verser une fine couche de pâte dans une poêle chaude huilée.",
+          "Ajouter les crevettes et les pousses, cuire jusqu’à ce que la pâte soit croustillante, puis replier."
+        ]
+      },
+      "variants": [
+        "Petites crêpes dans le centre du Vietnam et versions plus grandes dans le sud."
+      ],
+      "serving": [
+        "Servir avec de la laitue, des herbes et du nước chấm."
+      ],
+      "commonMistakes": [
+        "Éviter une pâte trop épaisse."
+      ]
+    },
+    "pt": {
+      "overview": "Uma massa fina é frita até ficar crocante e dobrada sobre o recheio.",
+      "history": "O prato existe em várias formas regionais no Vietname.",
+      "flavor": "Crocante, ligeiramente condimentado e fresco com ervas.",
+      "technique": "Use uma frigideira quente e uma camada fina de massa.",
+      "essentials": [
+        "200 g de farinha de arroz",
+        "300 ml de água",
+        "100 ml de leite de coco"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min",
+        "ingredients": [
+          "200 g de farinha de arroz",
+          "300 ml de água",
+          "100 ml de leite de coco",
+          "½ c. de chá de curcuma",
+          "200 g de camarão",
+          "150 g de rebentos de feijão",
+          "óleo"
+        ],
+        "steps": [
+          "Misture a farinha, a água, o leite de coco e a curcuma.",
+          "Salteie o camarão até estar bem cozinhado.",
+          "Verta uma camada fina de massa numa frigideira quente untada com óleo.",
+          "Junte o camarão e os rebentos, cozinhe até ficar crocante e dobre."
+        ]
+      },
+      "variants": [
+        "Panquecas pequenas no centro do Vietname e versões maiores no sul."
+      ],
+      "serving": [
+        "Sirva com alface, ervas e nước chấm."
+      ],
+      "commonMistakes": [
+        "Evite uma massa demasiado espessa."
+      ]
+    },
+    "es": {
+      "overview": "Una masa fina se fríe hasta quedar crujiente y se dobla sobre el relleno.",
+      "history": "El plato existe en varias formas regionales en Vietnam.",
+      "flavor": "Crujiente, ligeramente especiado y fresco gracias a las hierbas.",
+      "technique": "Usa una sartén caliente y una capa fina de masa.",
+      "essentials": [
+        "200 g de harina de arroz",
+        "300 ml de agua",
+        "100 ml de leche de coco"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min",
+        "ingredients": [
+          "200 g de harina de arroz",
+          "300 ml de agua",
+          "100 ml de leche de coco",
+          "½ cucharadita de cúrcuma",
+          "200 g de gambas",
+          "150 g de brotes de judía",
+          "aceite"
+        ],
+        "steps": [
+          "Mezcla la harina, el agua, la leche de coco y la cúrcuma.",
+          "Saltea las gambas hasta que estén hechas por dentro.",
+          "Vierte una capa fina de masa en una sartén caliente con aceite.",
+          "Añade las gambas y los brotes, cocina hasta que esté crujiente y dobla."
+        ]
+      },
+      "variants": [
+        "Tortitas pequeñas en el centro de Vietnam y versiones más grandes en el sur."
+      ],
+      "serving": [
+        "Sirve con lechuga, hierbas y nước chấm."
+      ],
+      "commonMistakes": [
+        "Evita una masa demasiado espesa."
+      ]
+    },
+    "de": {
+      "overview": "Ein dünner Teig wird knusprig gebraten und über der Füllung zusammengeklappt.",
+      "history": "Das Gericht gibt es in Vietnam in mehreren regionalen Varianten.",
+      "flavor": "Knusprig, mild gewürzt und frisch durch Kräuter.",
+      "technique": "Eine heiße Pfanne und eine dünne Teigschicht verwenden.",
+      "essentials": [
+        "200 g Reismehl",
+        "300 ml Wasser",
+        "100 ml Kokosmilch"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min.",
+        "ingredients": [
+          "200 g Reismehl",
+          "300 ml Wasser",
+          "100 ml Kokosmilch",
+          "½ TL Kurkuma",
+          "200 g Garnelen",
+          "150 g Bohnensprossen",
+          "Öl"
+        ],
+        "steps": [
+          "Mehl, Wasser, Kokosmilch und Kurkuma mischen.",
+          "Garnelen vollständig durchbraten.",
+          "Eine dünne Teigschicht in eine heiße, geölte Pfanne gießen.",
+          "Garnelen und Sprossen hinzufügen, knusprig braten und zusammenklappen."
+        ]
+      },
+      "variants": [
+        "Kleine Pfannkuchen in Zentralvietnam und größere Varianten im Süden."
+      ],
+      "serving": [
+        "Mit Salat, Kräutern und Nước chấm servieren."
+      ],
+      "commonMistakes": [
+        "Zu dicken Teig vermeiden."
+      ]
+    }
+  },
+  "bun-bo-hue": {
+    "en": {
+      "overview": "Round rice noodles are served in aromatic meat stock, often with fermented shrimp paste.",
+      "history": "The dish is associated with Huế in central Vietnam.",
+      "flavor": "Hot, rich and citrusy.",
+      "technique": "Let the stock infuse with lemongrass and adjust the seasoning gradually.",
+      "essentials": [
+        "500 g beef for simmering",
+        "1,5 l stock",
+        "3 stalks lemongrass"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2 hours",
+        "ingredients": [
+          "500 g beef for simmering",
+          "1,5 l stock",
+          "3 stalks lemongrass",
+          "300 g thick rice noodles",
+          "chilli oil",
+          "fish sauce",
+          "shrimp paste to taste"
+        ],
+        "steps": [
+          "Simmer the meat in stock with bruised lemongrass until tender.",
+          "Season with fish sauce, chilli and a little shrimp paste.",
+          "Cook the noodles separately.",
+          "Slice the meat and serve in the broth with the noodles."
+        ]
+      },
+      "variants": [
+        "Traditional versions may also contain pork and other meat products."
+      ],
+      "serving": [
+        "Serve with lime, herbs and sliced onion."
+      ],
+      "commonMistakes": [
+        "Do not overpower the broth with too much shrimp paste."
+      ]
+    },
+    "fr": {
+      "overview": "Des nouilles de riz rondes sont servies dans un bouillon de viande aromatique, souvent avec de la pâte de crevettes fermentée.",
+      "history": "Le plat est associé à Huế, dans le centre du Vietnam.",
+      "flavor": "Piquant, riche et aux notes d’agrumes.",
+      "technique": "Laisser infuser le bouillon avec la citronnelle et rectifier progressivement l’assaisonnement.",
+      "essentials": [
+        "500 g de bœuf à mijoter",
+        "1,5 l de bouillon",
+        "3 tiges de citronnelle"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2 heures",
+        "ingredients": [
+          "500 g de bœuf à mijoter",
+          "1,5 l de bouillon",
+          "3 tiges de citronnelle",
+          "300 g de nouilles de riz épaisses",
+          "huile pimentée",
+          "sauce de poisson",
+          "pâte de crevettes selon le goût"
+        ],
+        "steps": [
+          "Laisser mijoter la viande dans le bouillon avec la citronnelle écrasée jusqu’à tendreté.",
+          "Assaisonner avec de la sauce de poisson, du piment et un peu de pâte de crevettes.",
+          "Cuire les nouilles séparément.",
+          "Découper la viande et servir dans le bouillon avec les nouilles."
+        ]
+      },
+      "variants": [
+        "Les versions traditionnelles peuvent aussi contenir du porc et d’autres produits carnés."
+      ],
+      "serving": [
+        "Servir avec du citron vert, des herbes et de l’oignon émincé."
+      ],
+      "commonMistakes": [
+        "Ne pas masquer le goût du bouillon avec trop de pâte de crevettes."
+      ]
+    },
+    "pt": {
+      "overview": "Os noodles de arroz redondos são servidos num caldo de carne aromático, frequentemente com pasta de camarão fermentada.",
+      "history": "O prato está associado a Huế, no centro do Vietname.",
+      "flavor": "Picante, encorpado e com notas cítricas.",
+      "technique": "Deixe o caldo ganhar sabor com a erva-príncipe e ajuste os temperos gradualmente.",
+      "essentials": [
+        "500 g de carne de vaca para cozer",
+        "1,5 l de caldo",
+        "3 talos de erva-príncipe"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2 horas",
+        "ingredients": [
+          "500 g de carne de vaca para cozer",
+          "1,5 l de caldo",
+          "3 talos de erva-príncipe",
+          "300 g de noodles de arroz grossos",
+          "óleo de malagueta",
+          "molho de peixe",
+          "pasta de camarão a gosto"
+        ],
+        "steps": [
+          "Deixe a carne cozinhar em lume brando no caldo com a erva-príncipe esmagada até ficar tenra.",
+          "Tempere com molho de peixe, malagueta e um pouco de pasta de camarão.",
+          "Coza os noodles separadamente.",
+          "Corte a carne e sirva no caldo com os noodles."
+        ]
+      },
+      "variants": [
+        "As versões tradicionais podem também incluir carne de porco e outros produtos de carne."
+      ],
+      "serving": [
+        "Sirva com lima, ervas e cebola às fatias."
+      ],
+      "commonMistakes": [
+        "Não sobreponha demasiado o sabor da pasta de camarão ao do caldo."
+      ]
+    },
+    "es": {
+      "overview": "Los fideos redondos de arroz se sirven en un caldo de carne aromático, a menudo con pasta de gambas fermentada.",
+      "history": "El plato se asocia con Huế, en el centro de Vietnam.",
+      "flavor": "Picante, intenso y con notas cítricas.",
+      "technique": "Deja infusionar el caldo con hierba limón y ajusta la sazón poco a poco.",
+      "essentials": [
+        "500 g de carne de vacuno para cocer",
+        "1,5 l de caldo",
+        "3 tallos de hierba limón"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2 horas",
+        "ingredients": [
+          "500 g de carne de vacuno para cocer",
+          "1,5 l de caldo",
+          "3 tallos de hierba limón",
+          "300 g de fideos de arroz gruesos",
+          "aceite de chile",
+          "salsa de pescado",
+          "pasta de gambas al gusto"
+        ],
+        "steps": [
+          "Cuece la carne a fuego lento en el caldo con la hierba limón machacada hasta que esté tierna.",
+          "Sazona con salsa de pescado, chile y un poco de pasta de gambas.",
+          "Cuece los fideos por separado.",
+          "Corta la carne y sirve en el caldo con los fideos."
+        ]
+      },
+      "variants": [
+        "Las versiones tradicionales también pueden contener cerdo y otros productos cárnicos."
+      ],
+      "serving": [
+        "Sirve con lima, hierbas y cebolla en rodajas."
+      ],
+      "commonMistakes": [
+        "No enmascares el sabor del caldo con demasiada pasta de gambas."
+      ]
+    },
+    "de": {
+      "overview": "Runde Reisnudeln werden in aromatischer Fleischbrühe serviert, oft mit fermentierter Garnelenpaste.",
+      "history": "Das Gericht ist mit Huế in Zentralvietnam verbunden.",
+      "flavor": "Scharf, kräftig und zitrusbetont.",
+      "technique": "Brühe mit Zitronengras ziehen lassen und nach und nach abschmecken.",
+      "essentials": [
+        "500 g Rindfleisch zum Kochen",
+        "1,5 l Brühe",
+        "3 Stängel Zitronengras"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2 Stunden",
+        "ingredients": [
+          "500 g Rindfleisch zum Kochen",
+          "1,5 l Brühe",
+          "3 Stängel Zitronengras",
+          "300 g dicke Reisnudeln",
+          "Chiliöl",
+          "Fischsauce",
+          "Garnelenpaste nach Geschmack"
+        ],
+        "steps": [
+          "Fleisch in Brühe mit angedrücktem Zitronengras weich ziehen lassen.",
+          "Mit Fischsauce, Chili und etwas Garnelenpaste abschmecken.",
+          "Nudeln getrennt kochen.",
+          "Fleisch aufschneiden und mit den Nudeln in der Brühe servieren."
+        ]
+      },
+      "variants": [
+        "Traditionelle Varianten können auch Schweinefleisch und weitere Fleischprodukte enthalten."
+      ],
+      "serving": [
+        "Mit Limette, Kräutern und geschnittener Zwiebel servieren."
+      ],
+      "commonMistakes": [
+        "Brühe nicht mit zu viel Garnelenpaste überdecken."
+      ]
+    }
+  },
+  "cao-lau": {
+    "en": {
+      "overview": "Firm noodles are served with a little stock, seasoned meat and vegetables.",
+      "history": "Cao lầu is closely associated with the local food culture of Hội An.",
+      "flavor": "Salty and fresh with herbs, with contrasts between soft and crisp textures.",
+      "technique": "Use firm noodles and concentrated cooking juices; the home version approximates the dish.",
+      "essentials": [
+        "300 g thick rice noodles",
+        "400 g pork",
+        "2 tbsp soy sauce"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2 hours",
+        "ingredients": [
+          "300 g thick rice noodles",
+          "400 g pork",
+          "2 tbsp soy sauce",
+          "garlic",
+          "200 ml stock",
+          "bean sprouts",
+          "herbs",
+          "crisp rice paper"
+        ],
+        "steps": [
+          "Braise the pork with soy sauce, garlic and stock until tender.",
+          "Cook the noodles according to the instructions.",
+          "Slice the meat and divide the noodles and vegetables among bowls.",
+          "Add a little cooking juice and crisp rice paper."
+        ]
+      },
+      "variants": [
+        "The home version uses readily available noodles instead of local cao lầu noodles."
+      ],
+      "serving": [
+        "Serve with fresh herbs and lime to taste."
+      ],
+      "commonMistakes": [
+        "Do not fill the bowl with stock as for a soup."
+      ]
+    },
+    "fr": {
+      "overview": "Des nouilles fermes sont servies avec un peu de bouillon, de la viande assaisonnée et des légumes.",
+      "history": "Le cao lầu est étroitement lié à la culture culinaire locale de Hội An.",
+      "flavor": "Salé et frais grâce aux herbes, avec des contrastes entre textures tendres et croustillantes.",
+      "technique": "Utiliser des nouilles fermes et un jus de cuisson concentré ; la version maison s’inspire du plat.",
+      "essentials": [
+        "300 g de nouilles de riz épaisses",
+        "400 g de porc",
+        "2 c. à soupe de sauce soja"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2 heures",
+        "ingredients": [
+          "300 g de nouilles de riz épaisses",
+          "400 g de porc",
+          "2 c. à soupe de sauce soja",
+          "ail",
+          "200 ml de bouillon",
+          "pousses de haricot",
+          "herbes",
+          "feuilles de riz croustillantes"
+        ],
+        "steps": [
+          "Braiser le porc avec la sauce soja, l’ail et le bouillon jusqu’à tendreté.",
+          "Cuire les nouilles selon les instructions.",
+          "Découper la viande et répartir les nouilles et les légumes dans des bols.",
+          "Ajouter un peu de jus de cuisson et des feuilles de riz croustillantes."
+        ]
+      },
+      "variants": [
+        "La version maison utilise des nouilles faciles à trouver à la place des nouilles locales de cao lầu."
+      ],
+      "serving": [
+        "Servir avec des herbes fraîches et du citron vert selon le goût."
+      ],
+      "commonMistakes": [
+        "Ne pas remplir le bol de bouillon comme pour une soupe."
+      ]
+    },
+    "pt": {
+      "overview": "Noodles firmes são servidos com pouco caldo, carne temperada e legumes.",
+      "history": "O cao lầu está intimamente ligado à cultura gastronómica local de Hội An.",
+      "flavor": "Salgado e fresco com ervas, com contrastes entre texturas macias e crocantes.",
+      "technique": "Use noodles firmes e molho de cozedura concentrado; a versão caseira procura reproduzir o prato.",
+      "essentials": [
+        "300 g de noodles de arroz grossos",
+        "400 g de carne de porco",
+        "2 c. de sopa de molho de soja"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2 horas",
+        "ingredients": [
+          "300 g de noodles de arroz grossos",
+          "400 g de carne de porco",
+          "2 c. de sopa de molho de soja",
+          "alho",
+          "200 ml de caldo",
+          "rebentos de feijão",
+          "ervas",
+          "papel de arroz crocante"
+        ],
+        "steps": [
+          "Estufe a carne de porco com molho de soja, alho e caldo até ficar tenra.",
+          "Coza os noodles de acordo com as instruções.",
+          "Corte a carne e distribua os noodles e os legumes pelas tigelas.",
+          "Junte um pouco do molho de cozedura e papel de arroz crocante."
+        ]
+      },
+      "variants": [
+        "A versão caseira usa noodles disponíveis em vez dos noodles locais de cao lầu."
+      ],
+      "serving": [
+        "Sirva com ervas frescas e lima a gosto."
+      ],
+      "commonMistakes": [
+        "Não encha a tigela de caldo como se fosse uma sopa."
+      ]
+    },
+    "es": {
+      "overview": "Los fideos firmes se sirven con poco caldo, carne condimentada y verduras.",
+      "history": "El cao lầu está estrechamente ligado a la cultura culinaria local de Hội An.",
+      "flavor": "Salado y fresco por las hierbas, con contrastes entre texturas suaves y crujientes.",
+      "technique": "Usa fideos firmes y jugos de cocción concentrados; la versión casera imita el plato.",
+      "essentials": [
+        "300 g de fideos de arroz gruesos",
+        "400 g de carne de cerdo",
+        "2 cucharadas de salsa de soja"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2 horas",
+        "ingredients": [
+          "300 g de fideos de arroz gruesos",
+          "400 g de carne de cerdo",
+          "2 cucharadas de salsa de soja",
+          "ajo",
+          "200 ml de caldo",
+          "brotes de judía",
+          "hierbas",
+          "papel de arroz crujiente"
+        ],
+        "steps": [
+          "Brasea el cerdo con salsa de soja, ajo y caldo hasta que esté tierno.",
+          "Cuece los fideos según las instrucciones.",
+          "Corta la carne y reparte los fideos y las verduras en boles.",
+          "Añade un poco de jugo de cocción y papel de arroz crujiente."
+        ]
+      },
+      "variants": [
+        "La versión casera usa fideos fáciles de conseguir en lugar de los fideos locales de cao lầu."
+      ],
+      "serving": [
+        "Sirve con hierbas frescas y lima al gusto."
+      ],
+      "commonMistakes": [
+        "No llenes el bol de caldo como si fuera una sopa."
+      ]
+    },
+    "de": {
+      "overview": "Feste Nudeln werden mit wenig Brühe, gewürztem Fleisch und Gemüse serviert.",
+      "history": "Cao lầu ist eng mit der lokalen Esskultur von Hội An verbunden.",
+      "flavor": "Salzig und kräuterfrisch, mit Kontrasten zwischen weich und knusprig.",
+      "technique": "Feste Nudeln und konzentrierten Bratensaft verwenden; die Hausvariante ist eine Annäherung an das Gericht.",
+      "essentials": [
+        "300 g dicke Reisnudeln",
+        "400 g Schweinefleisch",
+        "2 EL Sojasauce"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2 Stunden",
+        "ingredients": [
+          "300 g dicke Reisnudeln",
+          "400 g Schweinefleisch",
+          "2 EL Sojasauce",
+          "Knoblauch",
+          "200 ml Brühe",
+          "Bohnensprossen",
+          "Kräuter",
+          "knuspriges Reispapier"
+        ],
+        "steps": [
+          "Schweinefleisch mit Sojasauce, Knoblauch und Brühe weich schmoren.",
+          "Nudeln nach Anleitung kochen.",
+          "Fleisch aufschneiden, Nudeln und Gemüse auf Schalen verteilen.",
+          "Etwas Bratensaft und knuspriges Reispapier hinzufügen."
+        ]
+      },
+      "variants": [
+        "Die Hausvariante verwendet erhältliche Nudeln anstelle der lokalen Cao-lầu-Nudeln."
+      ],
+      "serving": [
+        "Mit frischen Kräutern und Limette nach Geschmack servieren."
+      ],
+      "commonMistakes": [
+        "Die Schale nicht wie bei einer Suppe mit Brühe füllen."
+      ]
+    }
+  },
+  "com-tam": {
+    "en": {
+      "overview": "Small rice grains are served with meat, pickled vegetables and a fish sauce dressing.",
+      "history": "Cơm tấm is particularly associated with southern Vietnam and Ho Chi Minh City.",
+      "flavor": "Slightly sweet, salty, roasted and fresh.",
+      "technique": "Marinate the meat and prepare the rice separately.",
+      "essentials": [
+        "300 g broken rice",
+        "4 pork chops",
+        "2 tbsp fish sauce"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min + marinating",
+        "ingredients": [
+          "300 g broken rice",
+          "4 pork chops",
+          "2 tbsp fish sauce",
+          "1 tbsp sugar",
+          "garlic",
+          "cucumber",
+          "pickled carrot"
+        ],
+        "steps": [
+          "Marinate the chops in fish sauce, sugar and garlic in the refrigerator.",
+          "Cook the rice according to the packet instructions.",
+          "Grill the meat until done.",
+          "Serve with cucumber, pickled carrot and dressing."
+        ]
+      },
+      "variants": [
+        "It can also be served with steamed egg and meat pudding or shredded pork skin."
+      ],
+      "serving": [
+        "Serve with nước chấm and spring onion oil."
+      ],
+      "commonMistakes": [
+        "Avoid burning the sugary marinade."
+      ]
+    },
+    "fr": {
+      "overview": "De petits grains de riz sont servis avec de la viande, des légumes marinés et un assaisonnement à base de sauce de poisson.",
+      "history": "Le cơm tấm est particulièrement associé au sud du Vietnam et à Hô Chi Minh-Ville.",
+      "flavor": "Légèrement sucré, salé, grillé et frais.",
+      "technique": "Faire mariner la viande et préparer le riz séparément.",
+      "essentials": [
+        "300 g de riz brisé",
+        "4 côtelettes de porc",
+        "2 c. à soupe de sauce de poisson"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min + marinade",
+        "ingredients": [
+          "300 g de riz brisé",
+          "4 côtelettes de porc",
+          "2 c. à soupe de sauce de poisson",
+          "1 c. à soupe de sucre",
+          "ail",
+          "concombre",
+          "carotte marinée"
+        ],
+        "steps": [
+          "Faire mariner les côtelettes au réfrigérateur avec la sauce de poisson, le sucre et l’ail.",
+          "Cuire le riz selon les instructions du paquet.",
+          "Griller la viande jusqu’à cuisson complète.",
+          "Servir avec du concombre, de la carotte marinée et l’assaisonnement."
+        ]
+      },
+      "variants": [
+        "On peut aussi le servir avec un flan de viande et d’œufs cuit à la vapeur ou de la couenne de porc effilée."
+      ],
+      "serving": [
+        "Servir avec du nước chấm et de l’huile aux oignons nouveaux."
+      ],
+      "commonMistakes": [
+        "Éviter de brûler la marinade sucrée."
+      ]
+    },
+    "pt": {
+      "overview": "Os pequenos grãos de arroz são servidos com carne, legumes em conserva e um tempero de molho de peixe.",
+      "history": "O cơm tấm está especialmente associado ao sul do Vietname e à Cidade de Ho Chi Minh.",
+      "flavor": "Ligeiramente doce, salgado, tostado e fresco.",
+      "technique": "Marine a carne e prepare o arroz separadamente.",
+      "essentials": [
+        "300 g de arroz partido",
+        "4 costeletas de porco",
+        "2 c. de sopa de molho de peixe"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min + marinada",
+        "ingredients": [
+          "300 g de arroz partido",
+          "4 costeletas de porco",
+          "2 c. de sopa de molho de peixe",
+          "1 c. de sopa de açúcar",
+          "alho",
+          "pepino",
+          "cenoura em conserva"
+        ],
+        "steps": [
+          "Marine as costeletas no frigorífico com molho de peixe, açúcar e alho.",
+          "Coza o arroz de acordo com as instruções da embalagem.",
+          "Grelhe a carne até estar cozinhada.",
+          "Sirva com pepino, cenoura em conserva e o tempero."
+        ]
+      },
+      "variants": [
+        "Também pode ser servido com pudim de ovo e carne cozido a vapor ou pele de porco cortada em tiras finas."
+      ],
+      "serving": [
+        "Sirva com nước chấm e óleo de cebolinha verde."
+      ],
+      "commonMistakes": [
+        "Evite queimar a marinada açucarada."
+      ]
+    },
+    "es": {
+      "overview": "Los granos pequeños de arroz se sirven con carne, verduras encurtidas y un aliño de salsa de pescado.",
+      "history": "El cơm tấm se asocia especialmente con el sur de Vietnam y Ciudad Ho Chi Minh.",
+      "flavor": "Ligeramente dulce, salado, tostado y fresco.",
+      "technique": "Marina la carne y prepara el arroz por separado.",
+      "essentials": [
+        "300 g de arroz partido",
+        "4 chuletas de cerdo",
+        "2 cucharadas de salsa de pescado"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min + marinado",
+        "ingredients": [
+          "300 g de arroz partido",
+          "4 chuletas de cerdo",
+          "2 cucharadas de salsa de pescado",
+          "1 cucharada de azúcar",
+          "ajo",
+          "pepino",
+          "zanahoria encurtida"
+        ],
+        "steps": [
+          "Marina las chuletas en el frigorífico con salsa de pescado, azúcar y ajo.",
+          "Cuece el arroz según las instrucciones del envase.",
+          "Asa la carne hasta que esté hecha.",
+          "Sirve con pepino, zanahoria encurtida y el aliño."
+        ]
+      },
+      "variants": [
+        "También se puede servir con un pudin de huevo y carne al vapor o piel de cerdo en tiras finas."
+      ],
+      "serving": [
+        "Sirve con nước chấm y aceite de cebolleta."
+      ],
+      "commonMistakes": [
+        "Evita quemar la marinada azucarada."
+      ]
+    },
+    "de": {
+      "overview": "Kleine Reiskörner werden mit Fleisch, eingelegtem Gemüse und Fischsaucendressing serviert.",
+      "history": "Cơm tấm ist besonders mit Südvietnam und Ho-Chi-Minh-Stadt verbunden.",
+      "flavor": "Süßlich, salzig, röstig und frisch.",
+      "technique": "Fleisch marinieren und Reis separat zubereiten.",
+      "essentials": [
+        "300 g Bruchreis",
+        "4 Schweinekoteletts",
+        "2 EL Fischsauce"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min. + Marinierzeit",
+        "ingredients": [
+          "300 g Bruchreis",
+          "4 Schweinekoteletts",
+          "2 EL Fischsauce",
+          "1 EL Zucker",
+          "Knoblauch",
+          "Gurke",
+          "eingelegte Karotte"
+        ],
+        "steps": [
+          "Koteletts mit Fischsauce, Zucker und Knoblauch im Kühlschrank marinieren.",
+          "Reis nach Packungsanleitung kochen.",
+          "Fleisch fertig grillen.",
+          "Mit Gurke, eingelegter Karotte und Dressing servieren."
+        ]
+      },
+      "variants": [
+        "Kann auch mit gedämpftem Eier-Fleisch-Pudding oder fein geschnittener Schweineschwarte serviert werden."
+      ],
+      "serving": [
+        "Mit Nước chấm und Frühlingszwiebelöl servieren."
+      ],
+      "commonMistakes": [
+        "Die zuckerhaltige Marinade nicht verbrennen lassen."
+      ]
+    }
+  },
+  "bun-rieu": {
+    "en": {
+      "overview": "The broth gets acidity from tomatoes and flavour from crab or other seafood products.",
+      "history": "Bún riêu exists in several regional and local versions in Vietnam.",
+      "flavor": "Tangy, fresh and rich in umami.",
+      "technique": "Let the tomato broth simmer and add the crab mixture gently.",
+      "essentials": [
+        "300 g rice noodles",
+        "1 l stock",
+        "400 g tomatoes"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min",
+        "ingredients": [
+          "300 g rice noodles",
+          "1 l stock",
+          "400 g tomatoes",
+          "200 g crab meat",
+          "2 eggs",
+          "200 g tofu",
+          "fish sauce"
+        ],
+        "steps": [
+          "Cook the tomatoes in stock until soft.",
+          "Mix the crab meat with the eggs and place small portions in the simmering broth.",
+          "Cook the egg mixture through and add the tofu.",
+          "Cook the noodles separately and serve with the broth."
+        ]
+      },
+      "variants": [
+        "Versions with snails, tofu or various meat products."
+      ],
+      "serving": [
+        "Serve with herbs and lime."
+      ],
+      "commonMistakes": [
+        "Do not stir vigorously while the crab mixture sets."
+      ]
+    },
+    "fr": {
+      "overview": "Le bouillon tire son acidité des tomates et sa saveur du crabe ou d’autres produits de la mer.",
+      "history": "Le bún riêu existe en plusieurs variantes régionales et locales au Vietnam.",
+      "flavor": "Acidulé, frais et riche en umami.",
+      "technique": "Laisser mijoter le bouillon de tomates et ajouter délicatement le mélange au crabe.",
+      "essentials": [
+        "300 g de nouilles de riz",
+        "1 l de bouillon",
+        "400 g de tomates"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min",
+        "ingredients": [
+          "300 g de nouilles de riz",
+          "1 l de bouillon",
+          "400 g de tomates",
+          "200 g de chair de crabe",
+          "2 œufs",
+          "200 g de tofu",
+          "sauce de poisson"
+        ],
+        "steps": [
+          "Cuire les tomates dans le bouillon jusqu’à ce qu’elles soient tendres.",
+          "Mélanger la chair de crabe avec les œufs et déposer de petites portions dans le bouillon frémissant.",
+          "Laisser cuire complètement le mélange aux œufs et ajouter le tofu.",
+          "Cuire les nouilles séparément et servir avec le bouillon."
+        ]
+      },
+      "variants": [
+        "Variantes aux escargots, au tofu ou à divers produits carnés."
+      ],
+      "serving": [
+        "Servir avec des herbes et du citron vert."
+      ],
+      "commonMistakes": [
+        "Ne pas remuer vigoureusement pendant que le mélange au crabe prend."
+      ]
+    },
+    "pt": {
+      "overview": "O caldo ganha acidez com o tomate e sabor com o caranguejo ou outros produtos do mar.",
+      "history": "O bún riêu existe em várias versões regionais e locais no Vietname.",
+      "flavor": "Ácido, fresco e rico em umami.",
+      "technique": "Deixe o caldo de tomate cozinhar em lume brando e junte cuidadosamente a mistura de caranguejo.",
+      "essentials": [
+        "300 g de noodles de arroz",
+        "1 l de caldo",
+        "400 g de tomate"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min",
+        "ingredients": [
+          "300 g de noodles de arroz",
+          "1 l de caldo",
+          "400 g de tomate",
+          "200 g de carne de caranguejo",
+          "2 ovos",
+          "200 g de tofu",
+          "molho de peixe"
+        ],
+        "steps": [
+          "Coza o tomate no caldo até ficar macio.",
+          "Misture a carne de caranguejo com os ovos e coloque pequenas porções no caldo em lume brando.",
+          "Deixe a mistura de ovos cozer completamente e junte o tofu.",
+          "Coza os noodles separadamente e sirva com o caldo."
+        ]
+      },
+      "variants": [
+        "Variantes com caracóis, tofu ou vários produtos de carne."
+      ],
+      "serving": [
+        "Sirva com ervas e lima."
+      ],
+      "commonMistakes": [
+        "Não mexa vigorosamente enquanto a mistura de caranguejo solidifica."
+      ]
+    },
+    "es": {
+      "overview": "El caldo obtiene acidez del tomate y sabor del cangrejo u otros productos del mar.",
+      "history": "El bún riêu existe en varias versiones regionales y locales en Vietnam.",
+      "flavor": "Ácido, fresco y rico en umami.",
+      "technique": "Deja cocer el caldo de tomate a fuego lento y añade con cuidado la mezcla de cangrejo.",
+      "essentials": [
+        "300 g de fideos de arroz",
+        "1 l de caldo",
+        "400 g de tomates"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min",
+        "ingredients": [
+          "300 g de fideos de arroz",
+          "1 l de caldo",
+          "400 g de tomates",
+          "200 g de carne de cangrejo",
+          "2 huevos",
+          "200 g de tofu",
+          "salsa de pescado"
+        ],
+        "steps": [
+          "Cuece los tomates en el caldo hasta que estén blandos.",
+          "Mezcla la carne de cangrejo con los huevos y deposita pequeñas porciones en el caldo a fuego lento.",
+          "Deja que la mezcla de huevo se cocine por completo y añade el tofu.",
+          "Cuece los fideos por separado y sirve con el caldo."
+        ]
+      },
+      "variants": [
+        "Variantes con caracoles, tofu o diversos productos cárnicos."
+      ],
+      "serving": [
+        "Sirve con hierbas y lima."
+      ],
+      "commonMistakes": [
+        "No remuevas enérgicamente mientras cuaja la mezcla de cangrejo."
+      ]
+    },
+    "de": {
+      "overview": "Die Brühe erhält Säure von Tomaten und Geschmack von Krabben oder anderen Meeresfrüchten.",
+      "history": "Bún riêu gibt es in Vietnam in mehreren regionalen und lokalen Varianten.",
+      "flavor": "Säuerlich, frisch und reich an Umami.",
+      "technique": "Tomatenbrühe köcheln lassen und die Krabbenmasse vorsichtig hinzufügen.",
+      "essentials": [
+        "300 g Reisnudeln",
+        "1 l Brühe",
+        "400 g Tomaten"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min.",
+        "ingredients": [
+          "300 g Reisnudeln",
+          "1 l Brühe",
+          "400 g Tomaten",
+          "200 g Krabbenfleisch",
+          "2 Eier",
+          "200 g Tofu",
+          "Fischsauce"
+        ],
+        "steps": [
+          "Tomaten in der Brühe weich kochen.",
+          "Krabbenfleisch mit Eiern mischen und kleine Portionen in die köchelnde Brühe geben.",
+          "Eiermasse vollständig durchgaren und Tofu hinzufügen.",
+          "Nudeln separat kochen und mit der Brühe servieren."
+        ]
+      },
+      "variants": [
+        "Varianten mit Schnecken, Tofu oder verschiedenen Fleischprodukten."
+      ],
+      "serving": [
+        "Mit Kräutern und Limette servieren."
+      ],
+      "commonMistakes": [
+        "Nicht kräftig rühren, während die Krabbenmasse stockt."
+      ]
+    }
+  },
+  "banh-cuon": {
+    "en": {
+      "overview": "Soft rice sheets are filled with fried meat and finely chopped mushrooms.",
+      "history": "The dish is particularly well known in northern Vietnamese breakfast traditions.",
+      "flavor": "Soft, mild and aromatic, with a salty, tangy dip.",
+      "technique": "Use thin batter and a short steaming time; a pan with a lid can be used at home.",
+      "essentials": [
+        "150 g rice flour",
+        "50 g tapioca starch",
+        "450 ml water"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 45 min",
+        "ingredients": [
+          "150 g rice flour",
+          "50 g tapioca starch",
+          "450 ml water",
+          "250 g minced pork",
+          "30 g dried wood ear mushrooms",
+          "onion",
+          "oil"
+        ],
+        "steps": [
+          "Mix the flour, starch and water and let the batter rest.",
+          "Soak the mushrooms and fry them with the onion and meat until cooked through.",
+          "Pour a thin layer of batter into a lightly oiled pan, cover and steam until the sheet sets.",
+          "Carefully lift out the sheet, fill and roll."
+        ]
+      },
+      "variants": [
+        "Bánh cuốn can also be served without a meat filling."
+      ],
+      "serving": [
+        "Serve with fried shallots and nước chấm."
+      ],
+      "commonMistakes": [
+        "Do not fry the rice sheets until crisp."
+      ]
+    },
+    "fr": {
+      "overview": "De tendres feuilles de riz sont garnies de viande poêlée et de champignons finement hachés.",
+      "history": "Le plat est particulièrement connu dans les traditions du petit-déjeuner du nord du Vietnam.",
+      "flavor": "Tendre, doux et aromatique, avec une sauce à tremper salée et acidulée.",
+      "technique": "Utiliser une pâte fluide et une cuisson vapeur courte ; une poêle avec couvercle convient à la maison.",
+      "essentials": [
+        "150 g de farine de riz",
+        "50 g de fécule de tapioca",
+        "450 ml d’eau"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 45 min",
+        "ingredients": [
+          "150 g de farine de riz",
+          "50 g de fécule de tapioca",
+          "450 ml d’eau",
+          "250 g de porc haché",
+          "30 g de champignons noirs séchés",
+          "oignon",
+          "huile"
+        ],
+        "steps": [
+          "Mélanger la farine, la fécule et l’eau, puis laisser reposer la pâte.",
+          "Faire tremper les champignons et les faire revenir avec l’oignon et la viande jusqu’à cuisson complète.",
+          "Verser une fine couche de pâte dans une poêle légèrement huilée, couvrir et cuire à la vapeur jusqu’à ce que la feuille prenne.",
+          "Retirer délicatement la feuille, la garnir et la rouler."
+        ]
+      },
+      "variants": [
+        "Les bánh cuốn peuvent aussi être servis sans garniture de viande."
+      ],
+      "serving": [
+        "Servir avec des échalotes frites et du nước chấm."
+      ],
+      "commonMistakes": [
+        "Ne pas faire cuire les feuilles de riz jusqu’à ce qu’elles deviennent croustillantes."
+      ]
+    },
+    "pt": {
+      "overview": "Folhas macias de arroz são recheadas com carne salteada e cogumelos finamente picados.",
+      "history": "O prato é especialmente conhecido na tradição de pequeno-almoço do norte do Vietname.",
+      "flavor": "Macio, suave e aromático, com um molho salgado e ácido.",
+      "technique": "Use uma massa fina e pouco tempo de cozedura a vapor; em casa pode usar uma frigideira com tampa.",
+      "essentials": [
+        "150 g de farinha de arroz",
+        "50 g de amido de tapioca",
+        "450 ml de água"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 45 min",
+        "ingredients": [
+          "150 g de farinha de arroz",
+          "50 g de amido de tapioca",
+          "450 ml de água",
+          "250 g de carne de porco picada",
+          "30 g de cogumelos orelha-de-judas secos",
+          "cebola",
+          "óleo"
+        ],
+        "steps": [
+          "Misture a farinha, o amido e a água e deixe a massa repousar.",
+          "Demolhe os cogumelos e salteie-os com a cebola e a carne até estarem bem cozinhados.",
+          "Verta uma camada fina de massa numa frigideira ligeiramente untada, tape e coza a vapor até a folha firmar.",
+          "Retire cuidadosamente a folha, recheie e enrole."
+        ]
+      },
+      "variants": [
+        "Os bánh cuốn também podem ser servidos sem recheio de carne."
+      ],
+      "serving": [
+        "Sirva com chalotas fritas e nước chấm."
+      ],
+      "commonMistakes": [
+        "Não cozinhe as folhas de arroz até ficarem crocantes."
+      ]
+    },
+    "es": {
+      "overview": "Las láminas suaves de arroz se rellenan con carne salteada y setas finamente picadas.",
+      "history": "El plato es especialmente conocido en la tradición del desayuno del norte de Vietnam.",
+      "flavor": "Suave, delicado y aromático, con una salsa salada y ácida para mojar.",
+      "technique": "Usa una masa fina y un tiempo breve de cocción al vapor; en casa puedes usar una sartén con tapa.",
+      "essentials": [
+        "150 g de harina de arroz",
+        "50 g de almidón de tapioca",
+        "450 ml de agua"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 45 min",
+        "ingredients": [
+          "150 g de harina de arroz",
+          "50 g de almidón de tapioca",
+          "450 ml de agua",
+          "250 g de carne de cerdo picada",
+          "30 g de setas oreja de Judas secas",
+          "cebolla",
+          "aceite"
+        ],
+        "steps": [
+          "Mezcla la harina, el almidón y el agua y deja reposar la masa.",
+          "Remoja las setas y saltéalas con la cebolla y la carne hasta que estén hechas por dentro.",
+          "Vierte una capa fina de masa en una sartén ligeramente aceitada, tapa y cuece al vapor hasta que cuaje la lámina.",
+          "Retira con cuidado la lámina, rellena y enrolla."
+        ]
+      },
+      "variants": [
+        "Los bánh cuốn también pueden servirse sin relleno de carne."
+      ],
+      "serving": [
+        "Sirve con chalotas fritas y nước chấm."
+      ],
+      "commonMistakes": [
+        "No cocines las láminas de arroz hasta que queden crujientes."
+      ]
+    },
+    "de": {
+      "overview": "Weiche Reisblätter werden mit gebratenem Fleisch und fein gehackten Pilzen gefüllt.",
+      "history": "Das Gericht ist besonders aus der nordvietnamesischen Frühstückstradition bekannt.",
+      "flavor": "Weich, mild und aromatisch mit einem salzig-säuerlichen Dip.",
+      "technique": "Dünnen Teig und kurze Dämpfzeit verwenden; zu Hause eignet sich eine Pfanne mit Deckel.",
+      "essentials": [
+        "150 g Reismehl",
+        "50 g Tapiokastärke",
+        "450 ml Wasser"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 45 Min.",
+        "ingredients": [
+          "150 g Reismehl",
+          "50 g Tapiokastärke",
+          "450 ml Wasser",
+          "250 g Schweinehackfleisch",
+          "30 g getrocknete Mu-Err-Pilze",
+          "Zwiebel",
+          "Öl"
+        ],
+        "steps": [
+          "Mehl, Stärke und Wasser mischen und den Teig ruhen lassen.",
+          "Pilze einweichen und mit Zwiebel und Fleisch vollständig durchbraten.",
+          "Eine dünne Teigschicht in eine leicht geölte Pfanne gießen, abdecken und dämpfen, bis das Blatt fest wird.",
+          "Das Blatt vorsichtig herausheben, füllen und aufrollen."
+        ]
+      },
+      "variants": [
+        "Bánh cuốn können auch ohne Fleischfüllung serviert werden."
+      ],
+      "serving": [
+        "Mit gebratenen Schalotten und Nước chấm servieren."
+      ],
+      "commonMistakes": [
+        "Reisblätter nicht knusprig braten."
+      ]
+    }
+  },
+  "massaman-curry": {
+    "en": {
+      "overview": "Meat and potatoes simmer in a rich sauce with massaman paste.",
+      "history": "Massaman is a Thai curry tradition with Muslim and South Asian culinary connections.",
+      "flavor": "Mildly hot, slightly sweet, tangy and nutty.",
+      "technique": "Let the meat become tender before finishing the potatoes.",
+      "essentials": [
+        "500 g stewing beef",
+        "400 ml coconut milk",
+        "3 tbsp massaman paste"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 2 hours",
+        "ingredients": [
+          "500 g stewing beef",
+          "400 ml coconut milk",
+          "3 tbsp massaman paste",
+          "300 g potatoes",
+          "1 onion",
+          "50 g peanuts",
+          "tamarind and fish sauce"
+        ],
+        "steps": [
+          "Fry the curry paste in a little coconut milk.",
+          "Add the meat and the remaining coconut milk; simmer until tender.",
+          "Add the potatoes and onion and cook until tender.",
+          "Season with tamarind and fish sauce and top with peanuts."
+        ]
+      },
+      "variants": [
+        "Chicken and tofu can be used instead of beef."
+      ],
+      "serving": [
+        "Serve with jasmine rice."
+      ],
+      "commonMistakes": [
+        "Do not cook the potatoes as long as tough stewing meat."
+      ]
+    },
+    "fr": {
+      "overview": "La viande et les pommes de terre mijotent dans une sauce riche à la pâte de massaman.",
+      "history": "Le massaman est une tradition de curry thaïlandaise liée aux cuisines musulmanes et sud-asiatiques.",
+      "flavor": "Légèrement piquant, légèrement sucré, acidulé et aux notes de noix.",
+      "technique": "Laisser la viande s’attendrir avant de terminer la cuisson des pommes de terre.",
+      "essentials": [
+        "500 g de bœuf à mijoter",
+        "400 ml de lait de coco",
+        "3 c. à soupe de pâte de massaman"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 2 heures",
+        "ingredients": [
+          "500 g de bœuf à mijoter",
+          "400 ml de lait de coco",
+          "3 c. à soupe de pâte de massaman",
+          "300 g de pommes de terre",
+          "1 oignon",
+          "50 g de cacahuètes",
+          "tamarin et sauce de poisson"
+        ],
+        "steps": [
+          "Faire revenir la pâte de curry dans un peu de lait de coco.",
+          "Ajouter la viande et le reste du lait de coco ; laisser mijoter jusqu’à tendreté.",
+          "Ajouter les pommes de terre et l’oignon et cuire jusqu’à tendreté.",
+          "Assaisonner avec le tamarin et la sauce de poisson, puis garnir de cacahuètes."
+        ]
+      },
+      "variants": [
+        "Le poulet et le tofu peuvent remplacer le bœuf."
+      ],
+      "serving": [
+        "Servir avec du riz jasmin."
+      ],
+      "commonMistakes": [
+        "Ne pas cuire les pommes de terre aussi longtemps qu’une viande à mijoter coriace."
+      ]
+    },
+    "pt": {
+      "overview": "A carne e as batatas cozinham em lume brando num molho rico com pasta massaman.",
+      "history": "O massaman é uma tradição de caril tailandês com ligações culinárias muçulmanas e sul-asiáticas.",
+      "flavor": "Ligeiramente picante, doce, ácido e com notas de frutos secos.",
+      "technique": "Deixe a carne ficar tenra antes de terminar a cozedura das batatas.",
+      "essentials": [
+        "500 g de carne de vaca para estufar",
+        "400 ml de leite de coco",
+        "3 c. de sopa de pasta massaman"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 2 horas",
+        "ingredients": [
+          "500 g de carne de vaca para estufar",
+          "400 ml de leite de coco",
+          "3 c. de sopa de pasta massaman",
+          "300 g de batatas",
+          "1 cebola",
+          "50 g de amendoins",
+          "tamarindo e molho de peixe"
+        ],
+        "steps": [
+          "Salteie a pasta de caril num pouco de leite de coco.",
+          "Junte a carne e o restante leite de coco; deixe cozinhar em lume brando até ficar tenra.",
+          "Junte as batatas e a cebola e coza até ficarem tenras.",
+          "Tempere com tamarindo e molho de peixe e cubra com amendoins."
+        ]
+      },
+      "variants": [
+        "Pode usar frango e tofu em vez de carne de vaca."
+      ],
+      "serving": [
+        "Sirva com arroz jasmim."
+      ],
+      "commonMistakes": [
+        "Não coza as batatas durante tanto tempo como a carne rija de estufar."
+      ]
+    },
+    "es": {
+      "overview": "La carne y las patatas se cuecen a fuego lento en una salsa intensa con pasta massaman.",
+      "history": "El massaman es una tradición de curri tailandés con vínculos culinarios musulmanes y del sur de Asia.",
+      "flavor": "Ligeramente picante, dulce, ácido y con notas de frutos secos.",
+      "technique": "Deja que la carne quede tierna antes de terminar de cocer las patatas.",
+      "essentials": [
+        "500 g de carne de vacuno para guisar",
+        "400 ml de leche de coco",
+        "3 cucharadas de pasta massaman"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 2 horas",
+        "ingredients": [
+          "500 g de carne de vacuno para guisar",
+          "400 ml de leche de coco",
+          "3 cucharadas de pasta massaman",
+          "300 g de patatas",
+          "1 cebolla",
+          "50 g de cacahuetes",
+          "tamarindo y salsa de pescado"
+        ],
+        "steps": [
+          "Sofríe la pasta de curri en un poco de leche de coco.",
+          "Añade la carne y el resto de la leche de coco; cuece a fuego lento hasta que esté tierna.",
+          "Añade las patatas y la cebolla y cuece hasta que estén tiernas.",
+          "Sazona con tamarindo y salsa de pescado y añade cacahuetes por encima."
+        ]
+      },
+      "variants": [
+        "Se puede usar pollo y tofu en lugar de carne de vacuno."
+      ],
+      "serving": [
+        "Sirve con arroz jazmín."
+      ],
+      "commonMistakes": [
+        "No cuezas las patatas tanto tiempo como la carne dura de guisar."
+      ]
+    },
+    "de": {
+      "overview": "Fleisch und Kartoffeln ziehen in einer reichhaltigen Sauce mit Massaman-Paste.",
+      "history": "Massaman ist eine thailändische Currytradition mit muslimischen und südasiatischen kulinarischen Verbindungen.",
+      "flavor": "Mild scharf, süßlich, säuerlich und nussig.",
+      "technique": "Fleisch weich garen, bevor die Kartoffeln fertig gekocht werden.",
+      "essentials": [
+        "500 g Rindfleisch zum Schmoren",
+        "400 ml Kokosmilch",
+        "3 EL Massaman-Paste"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 2 Stunden",
+        "ingredients": [
+          "500 g Rindfleisch zum Schmoren",
+          "400 ml Kokosmilch",
+          "3 EL Massaman-Paste",
+          "300 g Kartoffeln",
+          "1 Zwiebel",
+          "50 g Erdnüsse",
+          "Tamarinde und Fischsauce"
+        ],
+        "steps": [
+          "Currypaste in etwas Kokosmilch anbraten.",
+          "Fleisch und übrige Kokosmilch hinzufügen und weich ziehen lassen.",
+          "Kartoffeln und Zwiebel hinzufügen und weich kochen.",
+          "Mit Tamarinde und Fischsauce abschmecken und mit Erdnüssen garnieren."
+        ]
+      },
+      "variants": [
+        "Hähnchen und Tofu können statt Rindfleisch verwendet werden."
+      ],
+      "serving": [
+        "Mit Jasminreis servieren."
+      ],
+      "commonMistakes": [
+        "Kartoffeln nicht so lange garen wie zähes Schmorfleisch."
+      ]
+    }
+  },
+  "panang-curry": {
+    "en": {
+      "overview": "Panang often has a thicker sauce than many other Thai curries.",
+      "history": "The dish is an established part of Thai curry culture.",
+      "flavor": "Creamy, salty, slightly sweet and aromatic.",
+      "technique": "Gently reduce the coconut milk before adding the meat.",
+      "essentials": [
+        "400 g thinly sliced beef",
+        "400 ml coconut milk",
+        "2 tbsp panang paste"
+      ],
+      "recipe": {
+        "label": "Home version",
+        "yield": "approx. 4 servings",
+        "time": "approx. 25–40 min",
+        "ingredients": [
+          "400 g thinly sliced beef",
+          "400 ml coconut milk",
+          "2 tbsp panang paste",
+          "4 makrut lime leaves",
+          "fish sauce",
+          "palm sugar"
+        ],
+        "steps": [
+          "Fry the paste in the thick part of the coconut milk.",
+          "Add the rest of the milk and let the sauce thicken a little.",
+          "Add the meat and cook until done.",
+          "Season with fish sauce and sugar; top with finely sliced lime leaves."
+        ]
+      },
+      "variants": [
+        "Versions with chicken or tofu."
+      ],
+      "serving": [
+        "Serve with rice."
+      ],
+      "commonMistakes": [
+        "Do not unnecessarily dilute the sauce with a lot of water."
+      ]
+    },
+    "fr": {
+      "overview": "Le panang a souvent une sauce plus épaisse que beaucoup d’autres currys thaïlandais.",
+      "history": "Le plat fait partie intégrante de la culture thaïlandaise du curry.",
+      "flavor": "Crémeux, salé, légèrement sucré et aromatique.",
+      "technique": "Faire réduire doucement le lait de coco avant d’ajouter la viande.",
+      "essentials": [
+        "400 g de bœuf en fines tranches",
+        "400 ml de lait de coco",
+        "2 c. à soupe de pâte de panang"
+      ],
+      "recipe": {
+        "label": "Version maison",
+        "yield": "env. 4 portions",
+        "time": "env. 25–40 min",
+        "ingredients": [
+          "400 g de bœuf en fines tranches",
+          "400 ml de lait de coco",
+          "2 c. à soupe de pâte de panang",
+          "4 feuilles de combava",
+          "sauce de poisson",
+          "sucre de palme"
+        ],
+        "steps": [
+          "Faire revenir la pâte dans la partie épaisse du lait de coco.",
+          "Ajouter le reste du lait et laisser la sauce épaissir légèrement.",
+          "Ajouter la viande et cuire jusqu’à ce qu’elle soit cuite.",
+          "Assaisonner avec la sauce de poisson et le sucre ; garnir de feuilles de combava finement émincées."
+        ]
+      },
+      "variants": [
+        "Variantes au poulet ou au tofu."
+      ],
+      "serving": [
+        "Servir avec du riz."
+      ],
+      "commonMistakes": [
+        "Ne pas diluer inutilement la sauce avec beaucoup d’eau."
+      ]
+    },
+    "pt": {
+      "overview": "O panang tem geralmente um molho mais espesso do que muitos outros caris tailandeses.",
+      "history": "O prato é uma parte estabelecida da cultura tailandesa do caril.",
+      "flavor": "Cremoso, salgado, ligeiramente doce e aromático.",
+      "technique": "Reduza suavemente o leite de coco antes de juntar a carne.",
+      "essentials": [
+        "400 g de carne de vaca em fatias finas",
+        "400 ml de leite de coco",
+        "2 c. de sopa de pasta panang"
+      ],
+      "recipe": {
+        "label": "Versão caseira",
+        "yield": "cerca de 4 porções",
+        "time": "cerca de 25–40 min",
+        "ingredients": [
+          "400 g de carne de vaca em fatias finas",
+          "400 ml de leite de coco",
+          "2 c. de sopa de pasta panang",
+          "4 folhas de lima-makrut",
+          "molho de peixe",
+          "açúcar de palma"
+        ],
+        "steps": [
+          "Salteie a pasta na parte espessa do leite de coco.",
+          "Junte o restante leite e deixe o molho engrossar um pouco.",
+          "Junte a carne e cozinhe até estar pronta.",
+          "Tempere com molho de peixe e açúcar; cubra com folhas de lima cortadas finamente."
+        ]
+      },
+      "variants": [
+        "Variantes com frango ou tofu."
+      ],
+      "serving": [
+        "Sirva com arroz."
+      ],
+      "commonMistakes": [
+        "Não dilua desnecessariamente o molho com muita água."
+      ]
+    },
+    "es": {
+      "overview": "El panang suele tener una salsa más espesa que muchos otros curris tailandeses.",
+      "history": "El plato forma parte consolidada de la cultura tailandesa del curri.",
+      "flavor": "Cremoso, salado, ligeramente dulce y aromático.",
+      "technique": "Reduce suavemente la leche de coco antes de añadir la carne.",
+      "essentials": [
+        "400 g de carne de vacuno en láminas finas",
+        "400 ml de leche de coco",
+        "2 cucharadas de pasta panang"
+      ],
+      "recipe": {
+        "label": "Versión casera",
+        "yield": "aprox. 4 raciones",
+        "time": "aprox. 25–40 min",
+        "ingredients": [
+          "400 g de carne de vacuno en láminas finas",
+          "400 ml de leche de coco",
+          "2 cucharadas de pasta panang",
+          "4 hojas de lima makrut",
+          "salsa de pescado",
+          "azúcar de palma"
+        ],
+        "steps": [
+          "Sofríe la pasta en la parte espesa de la leche de coco.",
+          "Añade el resto de la leche y deja que la salsa espese un poco.",
+          "Añade la carne y cocina hasta que esté hecha.",
+          "Sazona con salsa de pescado y azúcar; añade hojas de lima cortadas en tiras finas."
+        ]
+      },
+      "variants": [
+        "Variantes con pollo o tofu."
+      ],
+      "serving": [
+        "Sirve con arroz."
+      ],
+      "commonMistakes": [
+        "No diluyas innecesariamente la salsa con mucha agua."
+      ]
+    },
+    "de": {
+      "overview": "Panang hat häufig eine dickere Sauce als viele andere thailändische Currys.",
+      "history": "Das Gericht ist ein etablierter Bestandteil der thailändischen Currykultur.",
+      "flavor": "Cremig, salzig, süßlich und aromatisch.",
+      "technique": "Kokosmilch vorsichtig einkochen, bevor das Fleisch hinzukommt.",
+      "essentials": [
+        "400 g Rindfleisch in dünnen Scheiben",
+        "400 ml Kokosmilch",
+        "2 EL Panang-Paste"
+      ],
+      "recipe": {
+        "label": "Hausgemachte Variante",
+        "yield": "ca. 4 Portionen",
+        "time": "ca. 25–40 Min.",
+        "ingredients": [
+          "400 g Rindfleisch in dünnen Scheiben",
+          "400 ml Kokosmilch",
+          "2 EL Panang-Paste",
+          "4 Makrutlimettenblätter",
+          "Fischsauce",
+          "Palmzucker"
+        ],
+        "steps": [
+          "Paste im dickflüssigen Teil der Kokosmilch anbraten.",
+          "Restliche Kokosmilch hinzufügen und die Sauce etwas eindicken lassen.",
+          "Fleisch hinzufügen und fertig garen.",
+          "Mit Fischsauce und Zucker abschmecken; mit fein geschnittenen Limettenblättern garnieren."
+        ]
+      },
+      "variants": [
+        "Varianten mit Hähnchen oder Tofu."
+      ],
+      "serving": [
+        "Mit Reis servieren."
+      ],
+      "commonMistakes": [
+        "Sauce nicht unnötig mit viel Wasser verdünnen."
+      ]
+    }
   }
 } as const satisfies Readonly<Record<string, Record<InternationalSummaryLocale, ArticleBody>>>;
