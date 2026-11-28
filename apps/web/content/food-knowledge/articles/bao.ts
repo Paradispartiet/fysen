@@ -13,5 +13,5 @@ export const article: FoodKnowledgeArticle = {
   serving: ["Serveres varme direkte fra dampkurven.","Syltede grønnsaker og friske urter balanserer rike fyll."],
   commonMistakes: ["Å overfylle dampkurven slik at bollene kleber sammen.","For kort hevetid som gir kompakt deig.","Å åpne lokket gjentatte ganger under damping og miste jevn varme."],
   relatedDishIds: ["dumplings","gyoza","mapo-tofu","peking-duck"],
-  sources: []
+  sources: [{"label":"The Woks of Life – Baozi","href":"https://thewoksoflife.com/steamed-pork-buns-baozi/"}]
 };
