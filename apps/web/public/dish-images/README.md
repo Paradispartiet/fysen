@@ -36,7 +36,9 @@ faktiske serveringen på en bestemt restaurant**.
 
 - Helsvart bakgrunn; maten, ikke serviset, skal dominere motivet.
 - Foretrekk mørkt eller svart servise. Hvitt servise kan bare vises som en diskret kant; store hvite tallerkenflater avvises.
-- Velg et naturlig, tett utsnitt uten å beskjære selve retten eller skjule karakteristiske ingredienser. Ikke fargelegg serviset kunstig for å omgå kravet.
+- Vis hele tallerkenen, bollen eller serveringsfatet og hele retten, med alle ytterkanter innenfor bildet. For retter uten servise skal hele porsjonen være synlig.
+- Bruk moderat luft rundt motivet på alle sider. Maten skal fortsatt dominere; unngå både ekstremt nærbilde og store tomme flater med servise. Foretrekk matt svart servise, naturlige farger og tydelige ingredienser. Ikke fargelegg serviset kunstig for å omgå kravet.
+- Godkjent komposisjonsreferanse 28.11.2026: Carbonara på helsvart bakgrunn, komplett svart keramikkfat med synlig ytterkant hele veien, fotografisk uttrykk og ingen avskårne kanter. Referansen er en KI-illustrasjon, ikke et restaurantfoto. Originalfilen er 1254 × 1254 piksler; dette er en komposisjonsgodkjenning, ikke en dispensasjon fra kravet om oppløsning.
 - Kontroller komposisjonen både i storbildet og miniatyren før godkjenning. Gjelder alle nye og erstattede rettbilder i Fysen.
 
 ### Ny akseptanseport: skarphet også i stor visning (17. november 2026)
