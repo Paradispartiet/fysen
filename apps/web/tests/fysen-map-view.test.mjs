@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { URL } from "node:url";
 
 const frame = readFileSync(new URL("../lib/fysen-map-frame.ts", import.meta.url), "utf8");
 const view = readFileSync(new URL("../components/restaurant-map.tsx", import.meta.url), "utf8");
