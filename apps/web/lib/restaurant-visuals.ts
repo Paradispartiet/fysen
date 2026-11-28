@@ -58,7 +58,8 @@ const peppesStortingsgata = {
 const lorry = {
  logo: "/restaurants/lorry/logo.png",
  exterior: "/restaurants/lorry/exterior.jpg",
- interior: null,
+ interior: "/restaurants/lorry/interior.webp",
+ interiorIllustrationSource: "https://lorry.no/",
  sourceUrl: "https://commons.wikimedia.org/wiki/File:Parkveien_12_med_restaurant_Lorry.jpg",
  photoCredit: "Helge Høifødt",
  photoDate: "2020-04-22",

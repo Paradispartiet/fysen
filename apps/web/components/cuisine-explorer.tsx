@@ -185,6 +185,7 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
   const visuals = restaurantVisuals(restaurant);
   const photo = visuals && "photoCredit" in visuals ? visuals : null;
   const interiorPhoto = visuals && "interiorPhoto" in visuals ? visuals.interiorPhoto : null;
+  const interiorIllustrationSource = visuals && "interiorIllustrationSource" in visuals ? visuals.interiorIllustrationSource : null;
   const [failedLogo, setFailedLogo] = useState<string | null>(null);
   const identity = (
     <>
@@ -219,6 +220,7 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
             <figure>
               <img src={withPublicBasePath(visuals.interior)} alt={`${interiorPhoto ? "Foto" : "Illustrasjon"} av interiøret hos ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
               <figcaption>{interiorPhoto ? `Interiør · Foto fra ${interiorPhoto.photoDate.slice(0, 4)}` : "Interiør · Illustrasjon"}</figcaption>
+              {interiorIllustrationSource ? <a className="cuisineExploreRestaurantArtSource" href={interiorIllustrationSource} target="_blank" rel="noopener noreferrer">Interiørillustrasjon basert på restaurantens egne bilder</a> : null}
               {interiorPhoto ? <>
                 <a className="cuisineExploreRestaurantArtSource" href={interiorPhoto.sourceUrl} target="_blank" rel="noopener noreferrer">Interiørfoto: {interiorPhoto.photoCredit} · Wikimedia Commons</a>
                 <a href={interiorPhoto.licenseUrl} target="_blank" rel="noopener noreferrer">CC BY-SA 4.0 · Nedskalert, uten beskjæring</a>

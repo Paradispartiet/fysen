@@ -7,6 +7,16 @@
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Parkveien_12_med_restaurant_Lorry.jpg",
   "changes": "Wikimedia 1280px scaled JPEG; no crop.",
-  "interiorStatus": "Pending verified reference.",
-  "logoStatus": "Monogram fallback."
+  "interiorStatus": "AI-generated illustration based on the official dining room reference; not a photograph.",
+  "logoStatus": "Official logo; see logo-source.json.",
+  "interior": {
+    "type": "ai-illustration",
+    "path": "interior.webp",
+    "sourceUrl": "https://lorry.no/",
+    "referenceImageUrl": "https://lorrys-hjemmeside.s3.eu-north-1.amazonaws.com/images/images/_1200x675_crop_center-center_none/516A1291-1-min.jpg",
+    "generatedAt": "2026-11-28",
+    "prompt": "Create a polished hand-painted editorial illustration for a restaurant profile: the dining room of Lorry Restaurant, Parkveien 12 Oslo. Use the attached official interior photograph as architectural and decor reference. Retain recognizable dark carved wooden booths, burgundy leather seats, white tablecloths, black-and-cream checkerboard floor, red-shaded pendant chandeliers and tall right-hand windows with red curtains. Warm inviting light, crisp detailed painted textures, elegant travel-guide illustration, unmistakably illustration rather than photograph. Show an empty room, no people. Reinterpret background wall art as loose indistinct decorative painterly forms rather than a detailed copy. Horizontal landscape 1536x1024 composition, fully filled frame, no words, no watermark, no border. Preserve the room's overall spatial organization.",
+    "original": "exec-7f59ac81-093e-4eea-afa6-fd5b7226e103.png",
+    "processing": "WebP quality 92; no crop or upscale"
+  }
 }
