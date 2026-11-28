@@ -3,7 +3,7 @@
 export const fysenMapFrame = `<!doctype html>
 <html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.css">
-<style>html,body,#map{height:100%;width:100%;margin:0;background:#F4F0E8}#status{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;font:16px system-ui;color:#171713;pointer-events:none}#status[hidden]{display:none}</style>
+<style>html,body,#map{height:100%;width:100%;margin:0;background:#171c19}#status{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;font:16px system-ui;color:#e8eee6;pointer-events:none}#status[hidden]{display:none}</style>
 </head><body><div id="map" aria-label="Restaurantkart over Oslo"></div><div id="status" role="status">Laster kart…</div>
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.js"></script>
 <script>
@@ -32,19 +32,22 @@ export const fysenMapFrame = `<!doctype html>
       map.on("load", () => {
         try {
           map.addSource("fysen",{type:"geojson",data,cluster:true,clusterMaxZoom:14,clusterRadius:42});
-          map.addLayer({id:"fysen-clusters",type:"circle",source:"fysen",filter:["has","point_count"],paint:{"circle-color":"#B45132","circle-radius":["step",["get","point_count"],16,20,21,100,27],"circle-stroke-width":2,"circle-stroke-color":"#FCFAF5"}});
-          map.addLayer({id:"fysen-count",type:"symbol",source:"fysen",filter:["has","point_count"],layout:{"text-field":["get","point_count_abbreviated"],"text-size":12,"text-font":font},paint:{"text-color":"#ffffff"}});
-          map.addLayer({id:"fysen-points",type:"circle",source:"fysen",filter:["!",["has","point_count"]],paint:{"circle-color":"#B45132","circle-radius":["interpolate",["linear"],["zoom"],12,5,17,8],"circle-stroke-width":1.5,"circle-stroke-color":"#FCFAF5"}});
-          map.addLayer({id:"fysen-names",type:"symbol",source:"fysen",minzoom:15.5,filter:["!",["has","point_count"]],layout:{"text-field":["get","name"],"text-size":12,"text-font":font,"text-anchor":"top","text-offset":[0,0.9],"text-max-width":11,"text-optional":true,"text-allow-overlap":false},paint:{"text-color":"#171713","text-halo-color":"#FCFAF5","text-halo-width":1.5}});
+          map.addLayer({id:"fysen-clusters",type:"circle",source:"fysen",filter:["has","point_count"],paint:{"circle-color":"#b9df9a","circle-radius":["step",["get","point_count"],16,20,21,100,27],"circle-stroke-width":2,"circle-stroke-color":"#1c3021"}});
+          map.addLayer({id:"fysen-count",type:"symbol",source:"fysen",filter:["has","point_count"],layout:{"text-field":["get","point_count_abbreviated"],"text-size":12,"text-font":font},paint:{"text-color":"#101810"}});
+          map.addLayer({id:"fysen-points",type:"circle",source:"fysen",filter:["!",["has","point_count"]],paint:{"circle-color":"#b9df9a","circle-radius":["interpolate",["linear"],["zoom"],12,5,17,8],"circle-stroke-width":1.5,"circle-stroke-color":"#1c3021"}});
+          map.addLayer({id:"fysen-names",type:"symbol",source:"fysen",minzoom:15.5,filter:["!",["has","point_count"]],layout:{"text-field":["get","name"],"text-size":12,"text-font":font,"text-anchor":"top","text-offset":[0,0.9],"text-max-width":11,"text-optional":true,"text-allow-overlap":false},paint:{"text-color":"#e8eee6","text-halo-color":"#171c19","text-halo-width":1.5}});
           for(const id of ["fysen-points","fysen-names"]) map.on("click",id,e=>{const f=e.features&&e.features[0];if(f&&f.properties)send("fysen-map-select",{slug:f.properties.slug});});
           map.on("click","fysen-clusters",async e=>{const f=e.features&&e.features[0];if(!f)return;try{const zoom=await map.getSource("fysen").getClusterExpansionZoom(f.properties.cluster_id);map.easeTo({center:f.geometry.coordinates,zoom});}catch{map.zoomIn();}});
           for(const id of ["fysen-points","fysen-clusters","fysen-names"]){map.on("mouseenter",id,()=>map.getCanvas().style.cursor="pointer");map.on("mouseleave",id,()=>map.getCanvas().style.cursor="");}
           ready=true;status.hidden=true;update();send("fysen-map-loaded");
         } catch { fail(); }
       });
-      map.on("error",()=>{if(!ready)fail();});
+      map.on("error",()=>{ /* Individual tile errors must not cancel a still-loading map. */ });
+      setTimeout(() => { if (!ready) fail(); }, 18000);
     } catch { fail(); }
   });
   send("fysen-map-ready");
+  // Parent may not have installed its listener at the first handshake. Retry until data arrives.
+  const handshake = setInterval(() => { if (data) clearInterval(handshake); else send("fysen-map-ready"); }, 500);
 })();
 </script></body></html>`;
