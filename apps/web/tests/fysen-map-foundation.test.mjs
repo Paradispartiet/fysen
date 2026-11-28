@@ -32,3 +32,31 @@ test("Fysen palette preserves source attribution, street labels and original sty
   assert.equal(style.layers[0].paint["background-color"], "#fff");
   assert.throws(() => fysenBaseStyle({ version: 7 }), TypeError);
 });
+
+
+test("green land cover is derived from real vector classes, beneath streets and buildings", () => {
+  const style = {version:8,sources:{base:{type:"vector",attribution:"OSM"}},layers:[
+    {id:"background",type:"background"},
+    {id:"landuse_residential",type:"fill",source:"base","source-layer":"landuse"},
+    {id:"building",type:"fill",source:"base","source-layer":"building"},
+    {id:"highway_minor",type:"line",source:"base","source-layer":"transportation"},
+    {id:"highway_major_inner",type:"line",source:"base","source-layer":"transportation"},
+    {id:"highway_major_casing",type:"line",source:"base","source-layer":"transportation"},
+    {id:"highway_path",type:"line",source:"base","source-layer":"transportation"},
+  ]};
+  const mapped = fysenBaseStyle(style);
+  const layer = id => mapped.layers.find(item => item.id === id);
+  assert.equal(layer("landuse_residential").paint["fill-color"], FYSEN_MAP_COLORS.paper);
+  assert.equal(layer("fysen-grass-cover").paint["fill-color"], FYSEN_MAP_COLORS.park);
+  assert.equal(layer("fysen-wood-cover").paint["fill-color"], FYSEN_MAP_COLORS.forest);
+  assert.equal(layer("fysen-grass-cover")["source-layer"], "landcover");
+  assert.ok(JSON.stringify(layer("fysen-grass-cover").filter).includes("grass"));
+  assert.ok(mapped.layers.indexOf(layer("fysen-grass-cover")) < mapped.layers.indexOf(layer("building")));
+  assert.equal(layer("highway_minor").paint["line-color"], FYSEN_MAP_COLORS.road);
+  assert.equal(layer("highway_major_inner").paint["line-color"], FYSEN_MAP_COLORS.majorRoad);
+  assert.equal(layer("highway_major_casing").paint["line-color"], FYSEN_MAP_COLORS.casing);
+  assert.equal(layer("highway_path").paint["line-color"], FYSEN_MAP_COLORS.path);
+  assert.equal(layer("highway_minor").paint["line-opacity"], 1);
+  assert.ok(layer("highway_minor").paint["line-width"].includes(1.3));
+  assert.equal(style.layers.length, 7);
+});
