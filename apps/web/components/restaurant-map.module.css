@@ -21,3 +21,7 @@
 .notice { padding: 12px; background: #FCFAF5; }
 .credit { font-size: 0.8rem; color: #69675F; margin: 14px 0 0; }
 @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } .map { height: clamp(330px, 56dvh, 600px); } .list { max-height: 360px; } .search { width: 100%; } }
+
+.evidence { flex: 1 0 100%; list-style: none; margin: 0; padding: 0; }
+.evidence li { display: grid; gap: 4px; padding: 9px 0; border-top: 1px solid #ded7cc; }
+.evidence span { font-size: .85rem; color: #69675F; }
