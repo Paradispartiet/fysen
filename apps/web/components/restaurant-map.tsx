@@ -31,6 +31,7 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
     catch { setFavoritesNotice("Favoritten er bare tilgjengelig i denne økten."); }
   }
   const [mode, setMode] = useState<"map" | "list">(initialMode);
+  const [mapActivated, setMapActivated] = useState(initialMode === "map");
   const [location, setLocation] = useState<[number, number] | null>(null);
   const [locationStatus, setLocationStatus] = useState<"idle" | "loading" | "unavailable">("idle");
   const locationRequest = useRef(0);
@@ -47,13 +48,14 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
   const currentEvidence = current && Object.hasOwn(evidence, current.id) ? evidence[current.id] ?? [] : [];
 
   useEffect(() => {
+    if (!mapActivated) return;
     const controller = new AbortController();
     fetch(FYSEN_MAP_STYLE_URL, { signal: controller.signal, credentials: "omit" })
       .then(response => { if (!response.ok) throw new Error("Kartstil utilgjengelig"); return response.json(); })
       .then(style => setBaseStyle(fysenBaseStyle(style)))
       .catch(() => { if (!controller.signal.aborted) setStatus("error"); });
     return () => controller.abort();
-  }, []);
+  }, [mapActivated]);
 
   useEffect(() => {
     function receive(event: MessageEvent) {
@@ -74,16 +76,21 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
   }, [frameReady, baseStyle, filtered]);
 
   useEffect(() => {
-    if (status !== "loading") return;
+    if (!mapActivated || status !== "loading") return;
     const timer = window.setTimeout(() => setStatus("error"), 20000);
     return () => window.clearTimeout(timer);
-  }, [status]);
+  }, [status, mapActivated]);
 
   useEffect(() => {
     if (mode !== "map" || !frameReady) return;
     const id = window.requestAnimationFrame(() => frame.current?.contentWindow?.postMessage({ type: "fysen-map-resize" }, "*"));
     return () => window.cancelAnimationFrame(id);
   }, [mode, frameReady]);
+
+  useEffect(() => {
+    if (status !== "ready" || mode !== "map" || !current) return;
+    frame.current?.contentWindow?.postMessage({ type: "fysen-map-focus", coordinates: current.geometry.coordinates }, "*");
+  }, [status, mode, current]);
 
   function requestLocation() {
     if (!navigator.geolocation) { setLocationStatus("unavailable"); return; }
@@ -111,7 +118,6 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
 
   function select(feature: MapFeature) {
     setSelected(feature.id);
-    frame.current?.contentWindow?.postMessage({ type: "fysen-map-focus", coordinates: feature.geometry.coordinates }, "*");
   }
 
   return <section className={styles.shell} aria-labelledby="restaurant-map-title">
@@ -134,7 +140,7 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
     </nav>
     <div className={styles.toolbar}>
       <div className={styles.switcher} role="group" aria-label="Kartvisning">
-        <button type="button" aria-pressed={mode === "map"} onClick={() => setMode("map")}>Kart</button>
+        <button type="button" aria-pressed={mode === "map"} onClick={() => { setMapActivated(true); setMode("map"); }}>Kart</button>
         <button type="button" aria-pressed={mode === "list"} onClick={() => setMode("list")}>Liste</button>
       </div>
       <button className={styles.more} type="button" disabled={locationStatus === "loading"} onClick={requestLocation}>{locationStatus === "loading" ? "Henter posisjon…" : location ? "Oppdater posisjon" : "Nær meg"}</button>
@@ -151,7 +157,7 @@ export function RestaurantMap({ rows, dishQuery = "", evidence = {}, initialMode
     </section>}
     <div className={styles.layout} data-mode={mode}>
       <div className={styles.mapColumn}>
-        <iframe ref={frame} title="Fysens restaurantkart" sandbox="allow-scripts" srcDoc={fysenMapFrame} className={styles.map} hidden={mode === "list"} onLoad={() => setFrameReady(true)} />
+        {mapActivated && <iframe ref={frame} title="Fysens restaurantkart" sandbox="allow-scripts" srcDoc={fysenMapFrame} className={styles.map} hidden={mode === "list"} onLoad={() => setFrameReady(true)} />}
         {mode === "map" && status === "error" && <p className={styles.notice} role="status">Bakgrunnskartet er ikke tilgjengelig akkurat nå. Restaurantlisten fungerer fortsatt.</p>}
         {current && <article className={styles.selected} aria-live="polite">
           <div><h2>{current.properties.name}</h2><p>{current.properties.address}</p></div>
