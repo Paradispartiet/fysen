@@ -28,17 +28,16 @@ export async function browseDishesClient(
   city = "Oslo",
   options: { readonly signal?: AbortSignal } = {},
 ): Promise<DishBrowseResponse> {
-  if (!clientPreviewApiBaseUrl) {
-    throw new Error("Fysen preview API is not configured");
-  }
-
   const params = new URLSearchParams({ city: city.trim() || "Oslo" });
   const requestInit: RequestInit = {
     headers: { accept: "application/json" },
   };
   if (options.signal) requestInit.signal = options.signal;
 
-  const response = await fetch(`${clientPreviewApiBaseUrl}/v1/dishes/browse?${params.toString()}`, requestInit);
+  const endpoint = configuredBasePath && clientPreviewApiBaseUrl
+    ? `${clientPreviewApiBaseUrl}/v1/dishes/browse`
+    : "/api/dishes/browse";
+  const response = await fetch(`${endpoint}?${params.toString()}`, requestInit);
   if (!response.ok) {
     throw new Error(`Fysen dish browse failed with HTTP ${response.status}`);
   }
