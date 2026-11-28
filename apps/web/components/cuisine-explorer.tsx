@@ -212,7 +212,7 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
           <div className="cuisineExploreRestaurantScenes">
             <figure>
               <img src={withPublicBasePath(visuals.exterior)} alt={`${photo ? "Foto" : "Illustrasjon"} av fasaden til ${restaurant.name}`} width={1536} height={1024} loading="lazy" decoding="async" />
-              <figcaption>{photo ? "Fasade · Foto fra 2017" : "Fasade · Illustrasjon"}</figcaption>
+              <figcaption>{photo ? `Fasade · Foto fra ${photo.photoDate.slice(0, 4)}` : "Fasade · Illustrasjon"}</figcaption>
             </figure>
             {visuals.interior ? (
             <figure>
@@ -224,7 +224,7 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
           <a className="cuisineExploreRestaurantArtSource" href={visuals.sourceUrl} target="_blank" rel="noopener noreferrer">
             {photo ? `Foto: ${photo.photoCredit} · Wikimedia Commons` : "Illustrert fra restaurantens egne bilder"}
           </a>
-          {photo ? <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">CC BY-SA 3.0 · Nedskalert, uten beskjæring</a> : null}
+          {photo ? <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">{photo.licenseUrl.includes("/4.0/") ? "CC BY-SA 4.0" : "CC BY-SA 3.0"} · Nedskalert, uten beskjæring</a> : null}
         </div>
       ) : null}
     </li>
