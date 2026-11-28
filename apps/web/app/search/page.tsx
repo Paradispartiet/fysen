@@ -131,22 +131,28 @@ export default async function SearchPage({ searchParams }: { searchParams: Searc
     : "Søk på retten du har lyst på.";
 
   const mapView = first(params.view) === "map" && city.toLowerCase() === "oslo" && q.length >= 2;
-  const mapEvidence: MapEvidenceBySlug = Object.create(null);
+  const evidenceEntries = new Map<string, MapEvidenceBySlug[string]>();
+  function addEvidence(slug: string, entry: MapEvidenceBySlug[string][number]) {
+    const entries = evidenceEntries.get(slug) ?? [];
+    entries.push(entry);
+    evidenceEntries.set(slug, entries);
+  }
   if (mapView) {
     for (const result of primaryResults) {
       if (!safeMapMenuUrl(result.menu.sourceUrl)) continue;
-      (mapEvidence[result.restaurant.slug] ??= []).push({
+      addEvidence(result.restaurant.slug, {
         name: result.dish.name, sourceUrl: result.menu.sourceUrl,
         date: result.menu.lastCheckedAt, origin: "live", price: formatDishPrice(result.dish),
       });
     }
     for (const result of archiveMatches) {
       if (!safeMapMenuUrl(result.sourceUrl)) continue;
-      (mapEvidence[result.restaurantSlug] ??= []).push({
+      addEvidence(result.restaurantSlug, {
         name: result.name, sourceUrl: result.sourceUrl, date: result.observedAt, origin: "archive",
       });
     }
   }
+  const mapEvidence: MapEvidenceBySlug = Object.fromEntries(evidenceEntries);
   const mappedRows = mapView ? restaurantCoordinateRows.filter(row => Object.hasOwn(mapEvidence, row[0])) : [];
   const missingMapCount = mapView ? Object.keys(mapEvidence).length - mappedRows.length : 0;
 
