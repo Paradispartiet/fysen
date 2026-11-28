@@ -10,6 +10,99 @@ const web = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const imageRoot = path.join(web, "public", "dish-images");
 const repoRoot = path.resolve(web, "../..");
 const manifest = JSON.parse(readFileSync(path.join(imageRoot, "manifest.json"), "utf8"));
+const reusedPhotoProvenance = {
+  "kebab-pita": ["https://commons.wikimedia.org/wiki/File:Doener_Kebab_(9682662957).jpg","Lauren Travis / Wikimedia Commons · CC BY 2.0 · AI-assistert frilegging","https://creativecommons.org/licenses/by/2.0/","/dish-images/kebab-pita-LICENSE.txt"],
+  "bao": [
+    "https://commons.wikimedia.org/wiki/File:Red_Braised_Pork_Belly_Bao_-_Tiger_Bites_Pig_2025-11-20.jpg",
+    "Andy Li / Wikimedia Commons · CC0 1.0",
+    "https://creativecommons.org/publicdomain/zero/1.0/",
+    "/dish-images/bao-braised-pork-LICENSE.txt"
+  ],
+  "dumplings": [
+    "https://commons.wikimedia.org/wiki/File:Dumplings_(Unsplash).jpg",
+    "Charles Deluvio / Wikimedia Commons · CC0 1.0",
+    "https://creativecommons.org/publicdomain/zero/1.0/",
+    "/dish-images/dumplings-LICENSE.txt"
+  ],
+  "mapo-tofu": [
+    "https://commons.wikimedia.org/wiki/File:Chen_Mapo_Tofu.jpg",
+    "ZhengZhou / Wikimedia Commons · CC BY-SA 4.0",
+    "https://creativecommons.org/licenses/by-sa/4.0/",
+    "/dish-images/mapo-tofu-LICENSE.txt"
+  ],
+  "peking-duck": [
+    "https://commons.wikimedia.org/wiki/File:Peking_Duck_and_Chinese_pancake_from_Duck_Victoria.jpg",
+    "Peachyeung316 / Wikimedia Commons · CC BY-SA 4.0",
+    "https://creativecommons.org/licenses/by-sa/4.0/",
+    "/dish-images/peking-duck-LICENSE.txt"
+  ],
+  "dan-dan-noodles": [
+    "https://commons.wikimedia.org/wiki/File:Dandan_Noodles.jpg",
+    "ZhengZhou / Wikimedia Commons · CC BY-SA 4.0",
+    "https://creativecommons.org/licenses/by-sa/4.0/",
+    "/dish-images/dan-dan-noodles-LICENSE.txt"
+  ],
+  "green-curry": [
+    "https://commons.wikimedia.org/wiki/File:Thai_green_chicken_curry_at_Highgate_Cricket_Club,_Crouch_End,_London_1.jpg",
+    "Acabashi / Wikimedia Commons · CC BY-SA 4.0",
+    "https://creativecommons.org/licenses/by-sa/4.0/",
+    "/dish-images/green-curry-LICENSE.txt"
+  ],
+  "pad-kra-pao": [
+    "https://commons.wikimedia.org/wiki/File:%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A3%E0%B8%B2%E0%B8%94%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%81%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%94%E0%B8%B2%E0%B8%A7.jpg",
+    "Vee Satayamas / Wikimedia Commons · CC BY 4.0",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "/dish-images/pad-kra-pao-LICENSE.txt"
+  ],
+  "banh-mi": [
+    "https://commons.wikimedia.org/wiki/File:20240704_%E8%B6%8A%E5%BC%8F%E7%83%A4%E8%B1%AC%E8%82%89%E6%B3%95%E5%9C%8B%E9%BA%B5%E5%8C%85.jpg",
+    "Junyu-K / Wikimedia Commons · CC BY-SA 4.0",
+    "https://creativecommons.org/licenses/by-sa/4.0/",
+    "/dish-images/banh-mi-LICENSE.txt"
+  ],
+  "bun-cha": [
+    "https://commons.wikimedia.org/wiki/File:B%C3%BAn_ch%E1%BA%A3_with_chili_peppers_and_fresh_garlic.jpg",
+    "Kiraface / Wikimedia Commons · CC BY-SA 4.0",
+    "https://creativecommons.org/licenses/by-sa/4.0/",
+    "/dish-images/bun-cha-LICENSE.txt"
+  ],
+  "vietnamese-spring-rolls": [
+    "https://commons.wikimedia.org/wiki/File:G%E1%BB%8Fi_cu%E1%BB%91n,_Hai_Duong_restaurant,_Eden_Center.jpg",
+    "Ser Amantio di Nicolao / Wikimedia Commons · CC BY-SA 4.0",
+    "https://creativecommons.org/licenses/by-sa/4.0/",
+    "/dish-images/goi-cuon-LICENSE.txt"
+  ],
+  "tandoori": [
+    "https://www.pexels.com/photo/delicious-tandoori-chicken-on-a-sizzling-plate-9738994/",
+    "Alberta Studios / Pexels · Pexels-lisensen",
+    "https://www.pexels.com/license/",
+    "/dish-images/tandoori-chicken-LICENSE.txt"
+  ],
+  "naan": [
+    "https://www.pexels.com/photo/flavorful-garlic-naan-bread-close-up-30203311/",
+    "Nosh Caterers / Pexels · Pexels-lisensen",
+    "https://www.pexels.com/license/",
+    "/dish-images/naan-LICENSE.txt"
+  ],
+  "dal-makhani": [
+    "https://www.pexels.com/photo/dal-makhani-on-a-white-bowl-12737916/",
+    "dhiraj jain / Pexels · Pexels-lisensen",
+    "https://www.pexels.com/license/",
+    "/dish-images/dal-makhani-LICENSE.txt"
+  ],
+  "idli": [
+    "https://commons.wikimedia.org/wiki/File:Idly_Chutney_Sambar.jpg",
+    "Sarathprabhavu / Wikimedia Commons · CC BY 4.0",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "/dish-images/idli-LICENSE.txt"
+  ],
+  "vada": [
+    "https://commons.wikimedia.org/wiki/File:Medu_Vada_-_Calcutta_16_2026-07-11.jpg",
+    "Andy Li / Wikimedia Commons · CC0 1.0 · AI-assistert frilegging",
+    "https://creativecommons.org/publicdomain/zero/1.0/",
+    "/dish-images/vada-LICENSE.txt"
+  ]
+};
 
 // Large viewing means up to 800 CSS px on a 2x iPad screen. Files sized for
 // 50–150px thumbnails cannot be treated as full-size originals.
@@ -266,6 +359,15 @@ test("Editorial food photos are only large-view enabled with real provenance and
       const notice = readFileSync(path.join(imageRoot, "pizza-prosciutto-LICENSE.txt"), "utf8");
       assert.match(notice, /Foto: Amin/u);
       assert.match(notice, /CC BY-SA 4\.0/u);
+    } else if (Object.hasOwn(reusedPhotoProvenance, photo.id)) {
+      const [source, credit, license, noticePath] = reusedPhotoProvenance[photo.id];
+      assert.equal(photo.photoSource, source);
+      assert.equal(photo.photoCredit, credit);
+      assert.equal(photo.photoLicense, license);
+      assert.equal(photo.photoLicenseNotice, noticePath);
+      const notice = readFileSync(path.join(imageRoot, path.basename(noticePath)), "utf8");
+      assert.ok(notice.includes(source), photo.id + " source notice");
+      assert.ok(notice.includes(license), photo.id + " license notice");
     } else {
       assert.match(photo.photoSource, /^https:\/\/www\.pexels\.com\/photo\//u);
       assert.match(photo.photoCredit, /Pexels/u);
