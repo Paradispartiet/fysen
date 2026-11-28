@@ -1,3 +1,4 @@
+import { draftArcticCuisines,draftArcticGalleryNames } from "../lib/arctic-food-drafts.ts";
 import { translatedSummaryIds } from "../lib/dish-summary-translations.ts";
 import { readFileSync } from "node:fs";
 import { URL } from "node:url";
@@ -12,7 +13,7 @@ import assert from "node:assert/strict";
 import { messages,isPreviewLocale } from "../lib/locale-messages.ts";
 import { resultMessages } from "../lib/result-messages.ts";
 import { locales,parseLocale } from "../lib/locales.ts";
-import { reviewLocales,draftCoreMessages,draftFaroeseResults,draftFaroeseKnowledge,draftFaroesePages,draftFaroeseBrowse,draftFaroeseVisuals,draftArcticResults,draftArcticKnowledge,draftArcticBrowse,reviewState } from "../lib/nordic-review-drafts.ts";
+import { reviewLocales,draftCoreMessages,draftFaroeseResults,draftFaroeseKnowledge,draftFaroesePages,draftFaroeseBrowse,draftFaroeseVisuals,draftArcticResults,draftArcticKnowledge,draftArcticBrowse,draftArcticPages,draftArcticVisuals,reviewState } from "../lib/nordic-review-drafts.ts";
 function check(source,draft){
  assert.deepEqual(Object.keys(draft).sort(),Object.keys(source).sort());
  for(const [key,value] of Object.entries(draft)){
@@ -121,5 +122,18 @@ test("draftArcticVisuals preserves source keys and placeholders",()=>{
    assert.ok(value.trim());
    assert.deepEqual((value.match(/\{\w+\}/gu)??[]).sort(),(visualMessages.nb[key].match(/\{\w+\}/gu)??[]).sort(),key);
   }
+ }
+});
+
+
+test("Arctic display drafts retain canonical category and exact gallery variant IDs",()=>{
+ const cuisineSource=readFileSync(new URL("../lib/cuisine-labels.ts",import.meta.url),"utf8");
+ const categories=new Set([...cuisineSource.matchAll(/^ {2}"([^"]+)": \[/gmu)].map(x=>x[1]));
+ for(const locale of ["kl","se"]){
+  assert.equal(isPreviewLocale(locale),false);
+  assert.equal(Object.keys(draftArcticCuisines[locale]).length,51);
+  assert.equal(Object.keys(draftArcticGalleryNames[locale]).length,39);
+  for(const [key,value] of Object.entries(draftArcticCuisines[locale])){assert.ok(categories.has(key));assert.ok(value.trim());}
+  for(const [id,row] of Object.entries(draftArcticGalleryNames[locale])){assert.equal(row.original,galleryNames[id][0]);assert.ok(row.text.trim());}
  }
 });
