@@ -125,9 +125,9 @@ test('official chain logo is shared while branch photos remain distinct', () => 
  assert.equal(restaurantVisuals({name:'D/S Louise',address:'Stranden 3'}).logo,'/restaurants/louise/logo.svg');
 });
 
-test('Lorry combines a licensed facade photo and separately sourced illustration', () => {
+test('Lorry retains its photo and logo while inaccurate illustration is withheld', () => {
  const p = restaurantVisuals({name:'Lorry Restaurant',address:'Parkveien 12'});
- assert.equal(p.interior,'/restaurants/lorry/interior.webp');
+ assert.equal(p.interior,null);
  assert.equal(p.interiorIllustrationSource,'https://lorry.no/');
  assert.equal('interiorPhoto' in p,false);
  assert.equal(p.photoDate,'2020-04-22');
@@ -140,7 +140,7 @@ test('Kaffistova uses its official identity and verified building or entrance ad
  assert.ok(p);
  assert.equal(p.exterior,null);
  assert.equal(p.logo,'/restaurants/kaffistova/logo.png');
- assert.equal(p.interior,'/restaurants/kaffistova/interior.webp');
+ assert.equal(p.interior,null);
  assert.deepEqual(make('Kristian IVs gate 2'),p);
  assert.equal(make("Rosenkrantz' gate 80"),null);
  assert.equal(make('Kristian IVs gate 20'),null);

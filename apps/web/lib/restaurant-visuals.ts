@@ -58,7 +58,7 @@ const peppesStortingsgata = {
 const lorry = {
  logo: "/restaurants/lorry/logo.png",
  exterior: "/restaurants/lorry/exterior.jpg",
- interior: "/restaurants/lorry/interior.webp",
+ interior: null,
  interiorIllustrationSource: "https://lorry.no/",
  sourceUrl: "https://commons.wikimedia.org/wiki/File:Parkveien_12_med_restaurant_Lorry.jpg",
  photoCredit: "Helge Høifødt",
@@ -105,7 +105,7 @@ const louise = {
 const kaffistova = {
  logo: "/restaurants/kaffistova/logo.png",
  exterior: null,
- interior: "/restaurants/kaffistova/interior.webp",
+ interior: null,
  sourceUrl: "https://www.kaffistova.no/",
  interiorIllustrationSource: "https://www.kaffistova.no/",
 } as const;

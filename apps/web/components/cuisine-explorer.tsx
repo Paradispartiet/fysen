@@ -209,7 +209,7 @@ function RestaurantCard({ restaurant }: { readonly restaurant: RestaurantExample
           {identity}
         </a>
       ) : <div className="cuisineExploreRestaurantName">{identity}</div>}
-      {visuals ? (
+      {visuals && (visuals.exterior || visuals.interior) ? (
         <div className="cuisineExploreRestaurantArtwork">
           <div className="cuisineExploreRestaurantScenes">
             {visuals.exterior ? <figure>
